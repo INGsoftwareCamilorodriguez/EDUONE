@@ -381,7 +381,7 @@
             position: relative;
             background: #fff;
             border-radius: var(--radius);
-            max-width: 640px;
+            max-width: 720px;
             width: 94%;
             max-height: 90vh;
             overflow-y: auto;
@@ -760,6 +760,71 @@
             margin-right: 6px;
         }
 
+        /* Colegios - Estados visuales */
+        .colegio-activo {
+            color: var(--success);
+        }
+
+        .colegio-inactivo {
+            color: var(--danger);
+        }
+
+        /* Sección de credenciales del rector */
+        .credenciales-box {
+            background: var(--primary-bg);
+            border: 1px solid var(--primary-light);
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 16px;
+            display: none;
+        }
+
+        .credenciales-box.show {
+            display: block;
+        }
+
+        .credenciales-box h4 {
+            color: var(--primary);
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+
+        .credenciales-box .cred-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            font-size: 0.85rem;
+            font-family: monospace;
+            border-bottom: 1px dashed var(--gray-200);
+        }
+
+        .credenciales-box .cred-row:last-child {
+            border-bottom: none;
+        }
+
+        .credenciales-box .cred-label {
+            color: var(--gray-600);
+            font-weight: 500;
+        }
+
+        .credenciales-box .cred-value {
+            color: var(--gray-800);
+            font-weight: 600;
+        }
+
+        .credenciales-box .btn-copy {
+            background: none;
+            border: none;
+            color: var(--primary);
+            cursor: pointer;
+            font-size: 0.8rem;
+            padding: 0 4px;
+        }
+
+        .credenciales-box .btn-copy:hover {
+            color: var(--primary-dark);
+        }
+
         /* =============================================
            RESPONSIVE
            ============================================= */
@@ -1070,11 +1135,12 @@
                                         <th>Colegio</th>
                                         <th>Ciudad</th>
                                         <th>Estado</th>
+                                        <th>Rector</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tablaUltimosColegios">
                                     <tr>
-                                        <td colspan="3" class="text-center text-muted">
+                                        <td colspan="4" class="text-center text-muted">
                                             <i class="fas fa-spinner fa-spin"></i> Cargando colegios...
                                         </td>
                                     </tr>
@@ -1114,12 +1180,13 @@
                                         <th>Departamento</th>
                                         <th>Estado</th>
                                         <th>Fecha creación</th>
+                                        <th>Rector</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tablaColegios">
                                     <tr>
-                                        <td colspan="7" class="text-center text-muted">
+                                        <td colspan="8" class="text-center text-muted">
                                             <i class="fas fa-spinner fa-spin"></i> Cargando colegios...
                                         </td>
                                     </tr>
@@ -1173,11 +1240,15 @@
         <div class="modal-overlay"></div>
         <div class="modal-content">
             <div class="modal-header">
-                <h2>Registrar nuevo colegio</h2>
+                <h2><i class="fas fa-school" style="color: var(--primary); margin-right: 8px;"></i> Registrar nuevo colegio</h2>
                 <button class="modal-close" id="closeModal">&times;</button>
             </div>
             <form id="formRegistrarColegio">
                 <div class="modal-body">
+                    <!-- Información del colegio -->
+                    <h3 style="font-size: 0.9rem; color: var(--gray-600); margin-bottom: 12px;">
+                        <i class="fas fa-building"></i> Datos del colegio
+                    </h3>
                     <div class="form-grid">
                         <div class="form-group">
                             <label for="colegioNombre">Nombre del colegio *</label>
@@ -1208,10 +1279,6 @@
                             <input type="email" id="colegioCorreo" class="form-control" placeholder="Ej: info@colegio.edu.co" />
                         </div>
                         <div class="form-group">
-                            <label for="colegioRector">Nombre del rector</label>
-                            <input type="text" id="colegioRector" class="form-control" placeholder="Ej: María Rodríguez" />
-                        </div>
-                        <div class="form-group">
                             <label for="colegioAnioEscolar">Año escolar *</label>
                             <input type="number" id="colegioAnioEscolar" class="form-control" required min="2000" max="2100" />
                         </div>
@@ -1222,6 +1289,57 @@
                                 <option value="inactivo">Inactivo</option>
                             </select>
                         </div>
+                    </div>
+
+                    <!-- Datos del rector -->
+                    <hr style="margin: 20px 0; border: none; border-top: 1px solid var(--gray-200);" />
+                    <h3 style="font-size: 0.9rem; color: var(--gray-600); margin-bottom: 12px;">
+                        <i class="fas fa-user-tie"></i> Datos del Rector (creación automática)
+                    </h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="rectorNombre">Nombre completo del rector *</label>
+                            <input type="text" id="rectorNombre" class="form-control" required placeholder="Ej: María Rodríguez" />
+                        </div>
+                        <div class="form-group">
+                            <label for="rectorEmail">Correo electrónico *</label>
+                            <input type="email" id="rectorEmail" class="form-control" required placeholder="Ej: rector@colegio.edu.co" />
+                        </div>
+                        <div class="form-group">
+                            <label for="rectorPassword">Contraseña *</label>
+                            <input type="text" id="rectorPassword" class="form-control" required placeholder="Mínimo 6 caracteres" minlength="6" />
+                        </div>
+                        <div class="form-group">
+                            <label for="rectorTelefono">Teléfono</label>
+                            <input type="text" id="rectorTelefono" class="form-control" placeholder="Ej: 3101234567" />
+                        </div>
+                    </div>
+
+                    <!-- Credenciales generadas -->
+                    <div id="credencialesBox" class="credenciales-box">
+                        <h4><i class="fas fa-key"></i> Credenciales del Rector</h4>
+                        <div class="cred-row">
+                            <span class="cred-label">Colegio:</span>
+                            <span class="cred-value" id="credColegio">-</span>
+                        </div>
+                        <div class="cred-row">
+                            <span class="cred-label">Email:</span>
+                            <span class="cred-value" id="credEmail">-</span>
+                            <button class="btn-copy" onclick="copiarTexto('credEmail')"><i class="fas fa-copy"></i></button>
+                        </div>
+                        <div class="cred-row">
+                            <span class="cred-label">Contraseña:</span>
+                            <span class="cred-value" id="credPassword">-</span>
+                            <button class="btn-copy" onclick="copiarTexto('credPassword')"><i class="fas fa-copy"></i></button>
+                        </div>
+                        <div class="cred-row">
+                            <span class="cred-label">Rol:</span>
+                            <span class="cred-value" style="color: var(--primary);">RECTOR</span>
+                        </div>
+                        <p style="font-size: 0.75rem; color: var(--gray-500); margin-top: 8px;">
+                            <i class="fas fa-info-circle"></i>
+                            Estas credenciales serán creadas automáticamente al registrar el colegio.
+                        </p>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -1257,7 +1375,8 @@
         import {
             getAuth,
             onAuthStateChanged,
-            signOut
+            signOut,
+            createUserWithEmailAndPassword
         } from "firebase/auth";
         import {
             getFirestore,
@@ -1265,13 +1384,12 @@
             addDoc,
             getDocs,
             query,
-            orderBy,
-            limit,
             serverTimestamp,
             doc,
             updateDoc,
             getDoc,
-            where
+            where,
+            setDoc
         } from "firebase/firestore";
 
         const firebaseConfig = {
@@ -1302,6 +1420,37 @@
         const modal = document.getElementById('modalRegistrarColegio');
         const formRegistrarColegio = document.getElementById('formRegistrarColegio');
         const logoutBtn = document.getElementById('logoutBtn');
+
+        // Campos del rector
+        const rectorNombre = document.getElementById('rectorNombre');
+        const rectorEmail = document.getElementById('rectorEmail');
+        const rectorPassword = document.getElementById('rectorPassword');
+        const rectorTelefono = document.getElementById('rectorTelefono');
+
+        // Credenciales
+        const credencialesBox = document.getElementById('credencialesBox');
+        const credColegio = document.getElementById('credColegio');
+        const credEmail = document.getElementById('credEmail');
+        const credPassword = document.getElementById('credPassword');
+
+        // =============================================
+        // FUNCIÓN PARA COPIAR TEXTO (global)
+        // =============================================
+        window.copiarTexto = function(elementId) {
+            const el = document.getElementById(elementId);
+            if (!el) return;
+            const text = el.textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = el.parentElement.querySelector('.btn-copy');
+                if (btn) {
+                    const original = btn.innerHTML;
+                    btn.innerHTML = '<i class="fas fa-check" style="color: var(--success);"></i>';
+                    setTimeout(() => btn.innerHTML = original, 2000);
+                }
+            }).catch(() => {
+                alert('No se pudo copiar. Selecciona el texto manualmente.');
+            });
+        };
 
         // =============================================
         // NAVEGACIÓN DEL SIDEBAR
@@ -1351,12 +1500,27 @@
         // =============================================
         function openModal() {
             modal.classList.add('show');
+            formRegistrarColegio.reset();
+            document.getElementById('colegioAnioEscolar').value = new Date().getFullYear();
+            credencialesBox.classList.remove('show');
+            const password = generarContrasena();
+            rectorPassword.value = password;
         }
 
         function closeModal() {
             modal.classList.remove('show');
             formRegistrarColegio.reset();
+            credencialesBox.classList.remove('show');
             document.getElementById('colegioAnioEscolar').value = new Date().getFullYear();
+        }
+
+        function generarContrasena() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%';
+            let password = '';
+            for (let i = 0; i < 10; i++) {
+                password += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return password;
         }
 
         document.getElementById('btnRegistrarColegio').addEventListener('click', openModal);
@@ -1365,14 +1529,33 @@
         document.getElementById('cancelarModal').addEventListener('click', closeModal);
         document.querySelector('.modal-overlay').addEventListener('click', closeModal);
 
-        // Establecer año actual
         document.getElementById('colegioAnioEscolar').value = new Date().getFullYear();
+
+        rectorNombre.addEventListener('input', actualizarCredenciales);
+        rectorEmail.addEventListener('input', actualizarCredenciales);
+        rectorPassword.addEventListener('input', actualizarCredenciales);
+
+        function actualizarCredenciales() {
+            const nombreColegio = document.getElementById('colegioNombre').value || 'Colegio';
+            const email = rectorEmail.value || 'rector@colegio.com';
+            const password = rectorPassword.value || '********';
+
+            if (nombreColegio && email && password.length >= 6) {
+                credencialesBox.classList.add('show');
+                credColegio.textContent = nombreColegio;
+                credEmail.textContent = email;
+                credPassword.textContent = password;
+            } else {
+                credencialesBox.classList.remove('show');
+            }
+        }
+
+        document.getElementById('colegioNombre').addEventListener('input', actualizarCredenciales);
 
         // =============================================
         // FUNCIONES DE FIRESTORE
         // =============================================
 
-        // Cargar estadísticas y colegios
         async function cargarDashboard() {
             try {
                 const colegiosSnapshot = await getDocs(collection(db, 'colegios'));
@@ -1382,25 +1565,40 @@
                 let inactivos = 0;
                 const colegiosList = [];
 
-                colegiosSnapshot.forEach(doc => {
-                    const data = doc.data();
+                for (const docSnapshot of colegiosSnapshot.docs) {
+                    const data = docSnapshot.data();
                     total++;
                     if (data.estado === 'activo') activos++;
                     else if (data.estado === 'inactivo') inactivos++;
-                    colegiosList.push({ id: doc.id, ...data });
-                });
+                    
+                    let rectorNombre = 'Sin asignar';
+                    try {
+                        const rectoresQuery = query(
+                            collection(db, 'usuarios'),
+                            where('colegioId', '==', docSnapshot.id),
+                            where('rol', '==', 'rector'),
+                            where('activo', '==', true)
+                        );
+                        const rectoresSnapshot = await getDocs(rectoresQuery);
+                        if (!rectoresSnapshot.empty) {
+                            rectorNombre = rectoresSnapshot.docs[0].data().nombre || 'Sin nombre';
+                        }
+                    } catch (e) {
+                        console.error('Error al buscar rector:', e);
+                    }
+                    
+                    colegiosList.push({ id: docSnapshot.id, ...data, rector: rectorNombre });
+                }
 
-                // Actualizar estadísticas
                 totalColegiosEl.textContent = total;
                 colegiosActivosEl.textContent = activos;
                 colegiosInactivosEl.textContent = inactivos;
 
-                // Últimos 5 colegios para el dashboard
                 const ultimos = colegiosList.slice(-5).reverse();
                 if (ultimos.length === 0) {
                     tablaUltimosColegios.innerHTML = `
                         <tr>
-                            <td colspan="3" class="text-center text-muted">
+                            <td colspan="4" class="text-center text-muted">
                                 No hay colegios registrados
                             </td>
                         </tr>
@@ -1415,15 +1613,15 @@
                                     ${c.estado || 'inactivo'}
                                 </span>
                             </td>
+                            <td>${c.rector || 'Sin asignar'}</td>
                         </tr>
                     `).join('');
                 }
 
-                // Tabla completa de colegios
                 if (colegiosList.length === 0) {
                     tablaColegios.innerHTML = `
                         <tr>
-                            <td colspan="7" class="text-center text-muted">
+                            <td colspan="8" class="text-center text-muted">
                                 No hay colegios registrados
                             </td>
                         </tr>
@@ -1441,8 +1639,9 @@
                                 </span>
                             </td>
                             <td>${c.fechaCreacion ? new Date(c.fechaCreacion.toDate()).toLocaleDateString() : 'N/A'}</td>
+                            <td>${c.rector || 'Sin asignar'}</td>
                             <td>
-                                <button class="btn-success btn-sm" onclick="toggleEstado('${c.id}', '${c.estado}')">
+                                <button class="btn-success btn-sm" onclick="window.toggleEstado('${c.id}', '${c.estado}')">
                                     ${c.estado === 'activo' ? 'Desactivar' : 'Activar'}
                                 </button>
                             </td>
@@ -1450,7 +1649,6 @@
                     `).join('');
                 }
 
-                // Exponer toggleEstado globalmente
                 window.toggleEstado = async function(id, estadoActual) {
                     const nuevoEstado = estadoActual === 'activo' ? 'inactivo' : 'activo';
                     if (confirm(`¿Deseas ${nuevoEstado === 'activo' ? 'activar' : 'desactivar'} este colegio?`)) {
@@ -1471,14 +1669,14 @@
                 console.error('Error al cargar dashboard:', error);
                 tablaUltimosColegios.innerHTML = `
                     <tr>
-                        <td colspan="3" class="text-center text-danger">
+                        <td colspan="4" class="text-center text-danger">
                             ❌ Error al cargar los datos
                         </td>
                     </tr>
                 `;
                 tablaColegios.innerHTML = `
                     <tr>
-                        <td colspan="7" class="text-center text-danger">
+                        <td colspan="8" class="text-center text-danger">
                             ❌ Error al cargar los datos
                         </td>
                     </tr>
@@ -1487,7 +1685,7 @@
         }
 
         // =============================================
-        // REGISTRAR COLEGIO
+        // REGISTRAR COLEGIO + RECTOR
         // =============================================
         formRegistrarColegio.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -1499,13 +1697,26 @@
             const departamento = document.getElementById('colegioDepartamento').value.trim();
             const telefono = document.getElementById('colegioTelefono').value.trim();
             const correo = document.getElementById('colegioCorreo').value.trim();
-            const rector = document.getElementById('colegioRector').value.trim();
             const anioEscolar = parseInt(document.getElementById('colegioAnioEscolar').value);
             const estado = document.getElementById('colegioEstado').value;
 
-            // Validaciones
+            const rectorNom = rectorNombre.value.trim();
+            const rectorEmailVal = rectorEmail.value.trim();
+            const rectorPass = rectorPassword.value;
+            const rectorTel = rectorTelefono.value.trim();
+
             if (!nombre || !ciudad || !anioEscolar) {
-                alert('⚠️ Por favor, completa los campos obligatorios (*)');
+                alert('⚠️ Por favor, completa los campos obligatorios del colegio (*)');
+                return;
+            }
+
+            if (!rectorNom || !rectorEmailVal || !rectorPass) {
+                alert('⚠️ Por favor, completa todos los datos del rector');
+                return;
+            }
+
+            if (rectorPass.length < 6) {
+                alert('⚠️ La contraseña debe tener al menos 6 caracteres');
                 return;
             }
 
@@ -1528,22 +1739,43 @@
                     departamento: departamento || '',
                     telefono: telefono || '',
                     correo: correo || '',
-                    rector: rector || '',
                     anioEscolar,
                     estado,
                     creadoPor: user.uid,
                     fechaCreacion: serverTimestamp()
                 };
 
-                await addDoc(collection(db, 'colegios'), nuevoColegio);
+                const colegioRef = await addDoc(collection(db, 'colegios'), nuevoColegio);
+                const colegioId = colegioRef.id;
 
-                alert('✅ Colegio registrado exitosamente');
+                const userCredential = await createUserWithEmailAndPassword(auth, rectorEmailVal, rectorPass);
+                const rectorUid = userCredential.user.uid;
+
+                await setDoc(doc(db, 'usuarios', rectorUid), {
+                    nombre: rectorNom,
+                    email: rectorEmailVal,
+                    telefono: rectorTel || '',
+                    rol: 'rector',
+                    colegioId: colegioId,
+                    activo: true,
+                    fechaCreacion: serverTimestamp(),
+                    creadoPor: user.uid
+                });
+
+                alert('✅ Colegio y Rector registrados exitosamente');
                 closeModal();
                 cargarDashboard();
 
             } catch (error) {
-                console.error('Error al registrar colegio:', error);
-                alert('❌ Error al registrar el colegio: ' + error.message);
+                console.error('Error al registrar:', error);
+                
+                let mensaje = 'Error al registrar: ';
+                if (error.code === 'auth/email-already-in-use') {
+                    mensaje = '⚠️ El correo del rector ya está registrado. Usa otro correo.';
+                } else {
+                    mensaje += error.message;
+                }
+                alert('❌ ' + mensaje);
             } finally {
                 btnGuardar.disabled = false;
                 btnGuardar.innerHTML = '<i class="fas fa-save"></i> Guardar colegio';
@@ -1553,69 +1785,66 @@
         // =============================================
         // AUTH STATE - VERIFICAR SUPERADMIN
         // =============================================
+        let isLoggingOut = false;
+
         onAuthStateChanged(auth, async (user) => {
+            // Si estamos en proceso de logout, no hacer nada
+            if (isLoggingOut) return;
+
             if (user) {
                 try {
-                    // Verificar en Firestore que sea superadmin
                     const userDoc = await getDoc(doc(db, 'usuarios', user.uid));
 
                     if (userDoc.exists()) {
                         const userData = userDoc.data();
 
                         if (userData.rol === 'superadmin' && userData.activo === true) {
-                            // Usuario autorizado
                             userNameEl.textContent = userData.nombre || user.email;
                             userRoleEl.textContent = userData.rol || 'superadmin';
-
-                            // Cargar datos
                             cargarDashboard();
                         } else {
-                            // No es superadmin o está inactivo
                             alert('⛔ Acceso denegado. No tienes permisos de superadministrador.');
                             await signOut(auth);
-                            window.location.href = 'login.html';
+                            window.location.href = '../login.html';
                         }
                     } else {
-                        // No existe en Firestore
                         alert('⛔ Usuario no registrado en el sistema.');
                         await signOut(auth);
-                        window.location.href = 'login.html';
+                        window.location.href = '../login.html';
                     }
                 } catch (error) {
                     console.error('Error al verificar usuario:', error);
                     alert('❌ Error al verificar permisos');
                     await signOut(auth);
-                    window.location.href = 'login.html';
+                    window.location.href = '../login.html';
                 }
             } else {
-                // No autenticado
-                window.location.href = 'login.html';
+                // No autenticado - redirigir al login
+                window.location.href = '../login.html';
             }
         });
 
         // =============================================
-        // LOGOUT
+        // LOGOUT - CORREGIDO
         // =============================================
         logoutBtn.addEventListener('click', async () => {
             if (confirm('¿Seguro que deseas cerrar sesión?')) {
                 try {
+                    isLoggingOut = true;
                     await signOut(auth);
-                    window.location.href = 'login.html';
+                    // Forzar redirección directa
+                    window.location.href = '../login.html';
                 } catch (error) {
                     console.error('Error al cerrar sesión:', error);
                     alert('❌ Error al cerrar sesión');
+                    isLoggingOut = false;
                 }
             }
         });
 
-        // =============================================
-        // ESCUCHAR EVENTO DE LOGOUT DESDE HTML
-        // =============================================
-        document.addEventListener('logout-requested', () => {
-            logoutBtn.click();
-        });
-
         console.log('✅ EduOne - Panel de Administración cargado correctamente');
+        console.log('📁 Ruta: PanelAdmin/AdminPanel.html');
+        console.log('🔙 Logout → ../login.html');
     </script>
 
 </body>

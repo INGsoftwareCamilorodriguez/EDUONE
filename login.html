@@ -914,11 +914,12 @@
         const btnCrearCuenta = document.getElementById('btnCrearCuenta');
 
         // =============================================
-        // MAPA DE RUTAS POR ROL
+        // MAPA DE RUTAS POR ROL (CORREGIDO)
         // =============================================
         const RUTAS = {
             superadmin: 'PanelAdmin/AdminPanel.html',
-            admin_colegio: 'panel-admin-colegio.html',
+            rector: 'colegios/colegio.html',
+            admin_colegio: 'colegios/colegio.html',
             admin_auxiliar: 'panel-admin-auxiliar.html',
             profesor: 'panel-profesor.html',
             estudiante: 'panel-estudiante.html',
@@ -929,7 +930,13 @@
         // FUNCIÓN PARA REDIRIGIR SEGÚN ROL
         // =============================================
         function redirigirSegunRol(rol) {
-            const ruta = RUTAS[rol] || 'login.html';
+            const ruta = RUTAS[rol];
+            
+            if (!ruta) {
+                console.warn(`⚠️ Rol no reconocido: ${rol}, redirigiendo a login`);
+                window.location.href = 'login.html';
+                return;
+            }
             
             console.log(`🔀 Redirigiendo al rol: ${rol} → ${ruta}`);
             window.location.href = ruta;
@@ -982,7 +989,6 @@
             modal.classList.add('show');
             document.body.style.overflow = 'hidden';
             hideModalAlert();
-            // Poner el email del login en el registro
             if (emailInput.value) {
                 regEmail.value = emailInput.value;
             }
@@ -999,7 +1005,6 @@
         cancelarModalBtn.addEventListener('click', closeModal);
         modalOverlay.addEventListener('click', closeModal);
 
-        // Cerrar modal con Escape
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && modal.classList.contains('show')) {
                 closeModal();
@@ -1029,7 +1034,11 @@
         // =============================================
         // VERIFICAR SESIÓN ACTIVA
         // =============================================
+        let isRedirecting = false;
+
         onAuthStateChanged(auth, async (user) => {
+            if (isRedirecting) return;
+            
             if (user) {
                 console.log('👤 Usuario autenticado:', user.uid);
                 try {
@@ -1038,7 +1047,7 @@
                         const data = userDoc.data();
                         console.log('📋 Datos del usuario:', data);
                         if (data.activo === true) {
-                            // Redirigir según rol
+                            isRedirecting = true;
                             redirigirSegunRol(data.rol);
                         } else {
                             console.warn('⚠️ Usuario inactivo');
@@ -1100,7 +1109,6 @@
                         loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Iniciar sesión';
                     }
                 } else {
-                    // El usuario no existe en Firestore - lo creamos como superadmin
                     console.log('🆕 Usuario nuevo, creando en Firestore como superadmin');
                     const creado = await crearUsuarioEnFirestore(user.uid, email, 'Super Admin', 'superadmin');
 
@@ -1156,7 +1164,6 @@
             const password = regPassword.value;
             const confirmPassword = regConfirmPassword.value;
 
-            // Validaciones
             if (!nombre || !email || !password || !confirmPassword) {
                 showModalAlert('⚠️ Todos los campos son obligatorios.', 'error');
                 return;
@@ -1176,12 +1183,10 @@
             btnRegistrar.innerHTML = '<span class="spinner"></span> Creando cuenta...';
 
             try {
-                // Crear usuario en Firebase Authentication
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                 const user = userCredential.user;
                 console.log('✅ Usuario creado en Authentication:', user.uid);
 
-                // Guardar en Firestore como superadmin
                 const creado = await crearUsuarioEnFirestore(user.uid, email, nombre, 'superadmin');
 
                 if (creado) {
@@ -1242,7 +1247,7 @@
         });
 
         console.log('✅ EduOne - Login cargado correctamente');
-        console.log('📁 Estructura: login.html → PanelAdmin/AdminPanel.html');
+        console.log('📁 Mapa de rutas:', RUTAS);
     </script>
 
 </body>

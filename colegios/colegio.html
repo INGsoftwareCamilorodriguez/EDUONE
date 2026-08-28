@@ -1,0 +1,3454 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>EduOne - Panel del Rector</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+
+    <style>
+        /* =============================================
+           RECTOR CSS - Panel del Rector
+           ============================================= */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --primary-light: #818cf8;
+            --primary-bg: #eef2ff;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e1;
+            --gray-400: #94a3b8;
+            --gray-500: #64748b;
+            --gray-600: #475569;
+            --gray-700: #334155;
+            --gray-800: #1e293b;
+            --gray-900: #0f172a;
+            --sidebar-width: 280px;
+            --sidebar-collapsed: 80px;
+            --header-height: 70px;
+            --radius: 12px;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 4px 24px rgba(0, 0, 0, 0.10);
+            --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        html {
+            font-size: 16px;
+        }
+
+        body {
+            font-family: var(--font);
+            background-color: var(--gray-100);
+            color: var(--gray-800);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--gray-100);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--gray-300);
+            border-radius: 8px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--gray-400);
+        }
+
+        .text-center {
+            text-align: center;
+        }
+        .text-muted {
+            color: var(--gray-500);
+        }
+        .text-success {
+            color: var(--success);
+        }
+        .text-danger {
+            color: var(--danger);
+        }
+        .text-warning {
+            color: var(--warning);
+        }
+
+        /* Botones */
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 24px;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            font-family: var(--font);
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+        }
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+        .btn-primary:active {
+            transform: scale(0.97);
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 24px;
+            background: var(--gray-200);
+            color: var(--gray-700);
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            font-family: var(--font);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-secondary:hover {
+            background: var(--gray-300);
+        }
+
+        .btn-success {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: var(--success);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            font-family: var(--font);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-success:hover {
+            background: #16a34a;
+        }
+
+        .btn-danger {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: var(--danger);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            font-family: var(--font);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        .btn-sm {
+            padding: 6px 14px;
+            font-size: 0.75rem;
+            border-radius: 6px;
+        }
+
+        .btn-outline {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            background: transparent;
+            color: var(--primary);
+            border: 1.5px solid var(--primary);
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            font-family: var(--font);
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+        }
+        .btn-outline:hover {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .badge-success {
+            background: #dcfce7;
+            color: #166534;
+        }
+        .badge-danger {
+            background: #fecaca;
+            color: #991b1b;
+        }
+        .badge-warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        .badge-info {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        /* Cards */
+        .card {
+            background: #fff;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            margin-bottom: 24px;
+        }
+        .card-header {
+            padding: 18px 24px;
+            border-bottom: 1px solid var(--gray-200);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .card-header h2 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--gray-800);
+        }
+        .card-body {
+            padding: 24px;
+        }
+
+        /* Tablas */
+        .table-responsive {
+            overflow-x: auto;
+        }
+        .table-modern {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+        .table-modern thead th {
+            background: var(--gray-50);
+            color: var(--gray-600);
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 2px solid var(--gray-200);
+        }
+        .table-modern tbody td {
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--gray-100);
+            vertical-align: middle;
+        }
+        .table-modern tbody tr:hover {
+            background: var(--gray-50);
+        }
+        .table-modern tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Formularios */
+        .form-group {
+            margin-bottom: 18px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 500;
+            font-size: 0.85rem;
+            color: var(--gray-700);
+            margin-bottom: 4px;
+        }
+        .form-control {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1.5px solid var(--gray-200);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-family: var(--font);
+            transition: border-color 0.2s, box-shadow 0.2s;
+            background: #fff;
+            color: var(--gray-800);
+        }
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+        }
+        .form-control::placeholder {
+            color: var(--gray-400);
+        }
+        select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23475569' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            padding-right: 36px;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal.show {
+            display: flex;
+        }
+        .modal-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+        }
+        .modal-content {
+            position: relative;
+            background: #fff;
+            border-radius: var(--radius);
+            max-width: 720px;
+            width: 94%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-lg);
+            animation: modalFade 0.25s ease;
+        }
+        @keyframes modalFade {
+            from {
+                opacity: 0;
+                transform: scale(0.95) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        .modal-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--gray-200);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-header h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            color: var(--gray-400);
+            cursor: pointer;
+            padding: 0 6px;
+            line-height: 1;
+            transition: color 0.2s;
+        }
+        .modal-close:hover {
+            color: var(--gray-700);
+        }
+        .modal-body {
+            padding: 24px;
+        }
+        .modal-footer {
+            padding: 16px 24px;
+            border-top: 1px solid var(--gray-200);
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .form-grid .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        /* ============================================= */
+        /* SIDEBAR - RESPONSIVE                         */
+        /* ============================================= */
+        .sidebar {
+            width: var(--sidebar-width);
+            height: 100vh;
+            background: #fff;
+            border-right: 1px solid var(--gray-200);
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            left: 0;
+            flex-shrink: 0;
+            transition: transform var(--transition), width var(--transition);
+            z-index: 1000;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .sidebar.closed {
+            transform: translateX(-100%);
+        }
+
+        .sidebar.collapsed {
+            width: var(--sidebar-collapsed);
+        }
+
+        /* Cuando está colapsado, ocultar textos */
+        .sidebar.collapsed .logo span,
+        .sidebar.collapsed .sidebar-nav ul li a span,
+        .sidebar.collapsed .sidebar-nav .nav-section,
+        .sidebar.collapsed .sidebar-colegio .colegio-nombre,
+        .sidebar.collapsed .sidebar-colegio .colegio-rol,
+        .sidebar.collapsed .btn-logout span {
+            display: none;
+        }
+        .sidebar.collapsed .sidebar-nav ul li a {
+            justify-content: center;
+            padding: 12px;
+        }
+        .sidebar.collapsed .sidebar-nav ul li a i {
+            margin: 0;
+            font-size: 1.3rem;
+        }
+        .sidebar.collapsed .btn-logout {
+            justify-content: center;
+            padding: 12px;
+        }
+        .sidebar.collapsed .sidebar-colegio {
+            text-align: center;
+            padding: 12px 8px;
+        }
+        .sidebar.collapsed .sidebar-colegio .colegio-nombre {
+            font-size: 0.65rem;
+            text-align: center;
+            display: block !important;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .sidebar.collapsed .sidebar-colegio .colegio-rol {
+            display: none;
+        }
+        .sidebar.collapsed .sidebar-header .logo span {
+            display: none;
+        }
+        .sidebar.collapsed .sidebar-toggle {
+            display: none;
+        }
+
+        .sidebar-header {
+            padding: 18px 20px;
+            border-bottom: 1px solid var(--gray-200);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: var(--header-height);
+            flex-shrink: 0;
+        }
+        .sidebar-header .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--gray-900);
+            white-space: nowrap;
+        }
+        .sidebar-header .logo i {
+            color: var(--primary);
+            font-size: 1.4rem;
+        }
+
+        .sidebar-toggle {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            color: var(--gray-500);
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+        .sidebar-toggle:hover {
+            background: var(--gray-100);
+        }
+
+        .sidebar-close-mobile {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.4rem;
+            color: var(--gray-500);
+            cursor: pointer;
+            padding: 4px 8px;
+        }
+
+        .sidebar-colegio {
+            padding: 16px 20px 12px;
+            border-bottom: 1px solid var(--gray-200);
+            flex-shrink: 0;
+        }
+        .sidebar-colegio .colegio-nombre {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--gray-800);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .sidebar-colegio .colegio-rol {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 12px 12px;
+            overflow-y: auto;
+        }
+        .sidebar-nav .nav-section {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--gray-400);
+            font-weight: 600;
+            padding: 12px 14px 6px;
+        }
+        .sidebar-nav ul li {
+            margin-bottom: 2px;
+        }
+        .sidebar-nav ul li a {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 10px 14px;
+            border-radius: 8px;
+            color: var(--gray-600);
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: background 0.15s, color 0.15s;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .sidebar-nav ul li a i {
+            width: 20px;
+            font-size: 1.1rem;
+            text-align: center;
+            flex-shrink: 0;
+        }
+        .sidebar-nav ul li a span {
+            flex: 1;
+        }
+        .sidebar-nav ul li a:hover {
+            background: var(--gray-100);
+            color: var(--gray-800);
+        }
+        .sidebar-nav ul li.active a {
+            background: var(--primary-bg);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .sidebar-footer {
+            padding: 16px 20px;
+            border-top: 1px solid var(--gray-200);
+            flex-shrink: 0;
+        }
+        .btn-logout {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            padding: 10px 14px;
+            border: none;
+            border-radius: 8px;
+            background: transparent;
+            color: var(--gray-600);
+            font-weight: 500;
+            font-size: 0.9rem;
+            font-family: var(--font);
+            cursor: pointer;
+            transition: background 0.15s, color 0.15s;
+        }
+        .btn-logout:hover {
+            background: #fef2f2;
+            color: var(--danger);
+        }
+        .btn-logout i {
+            width: 20px;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 999;
+            backdrop-filter: blur(2px);
+        }
+        .sidebar-overlay.active {
+            display: block;
+        }
+
+        /* ============================================= */
+        /* MAIN CONTENT                                 */
+        /* ============================================= */
+        .main-content {
+            flex: 1;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            margin-left: var(--sidebar-width);
+            transition: margin-left var(--transition);
+            width: 100%;
+        }
+
+        .main-content.expanded {
+            margin-left: var(--sidebar-collapsed);
+        }
+
+        .main-content.full {
+            margin-left: 0;
+        }
+
+        .top-header {
+            height: var(--header-height);
+            background: #fff;
+            border-bottom: 1px solid var(--gray-200);
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            flex-shrink: 0;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .header-left .hamburger-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.4rem;
+            color: var(--gray-600);
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+        .header-left .hamburger-btn:hover {
+            background: var(--gray-100);
+        }
+        .header-left h1 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--gray-800);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .user-info {
+            text-align: right;
+        }
+        .user-name {
+            display: block;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--gray-800);
+        }
+        .user-role {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--gray-500);
+            text-transform: capitalize;
+        }
+        .user-avatar {
+            font-size: 2.2rem;
+            color: var(--gray-400);
+        }
+
+        .content-area {
+            flex: 1;
+            padding: 24px 32px;
+        }
+
+        .page-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        .page-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+        .stat-card {
+            background: #fff;
+            border-radius: var(--radius);
+            padding: 18px 22px;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            transition: box-shadow 0.2s;
+        }
+        .stat-card:hover {
+            box-shadow: var(--shadow-lg);
+        }
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+        .stat-icon i {
+            font-size: 1.3rem;
+        }
+        .stat-card:nth-child(1) .stat-icon {
+            background: #dbeafe;
+            color: #2563eb;
+        }
+        .stat-card:nth-child(2) .stat-icon {
+            background: #dcfce7;
+            color: #16a34a;
+        }
+        .stat-card:nth-child(3) .stat-icon {
+            background: #fef3c7;
+            color: #d97706;
+        }
+        .stat-card:nth-child(4) .stat-icon {
+            background: #e0e7ff;
+            color: #4f46e5;
+        }
+        .stat-card:nth-child(5) .stat-icon {
+            background: #fce7f3;
+            color: #db2777;
+        }
+        .stat-card:nth-child(6) .stat-icon {
+            background: #d1fae5;
+            color: #059669;
+        }
+        .stat-card:nth-child(7) .stat-icon {
+            background: #fef3c7;
+            color: #d97706;
+        }
+        .stat-info {
+            flex: 1;
+        }
+        .stat-label {
+            display: block;
+            font-size: 0.7rem;
+            color: var(--gray-500);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .stat-value {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            line-height: 1.2;
+        }
+
+        /* Info colegio */
+        .info-colegio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .info-colegio-card {
+            background: #fff;
+            border-radius: var(--radius);
+            padding: 14px 18px;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .info-colegio-card .icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+        .info-colegio-card .icon.primary {
+            background: var(--primary-bg);
+            color: var(--primary);
+        }
+        .info-colegio-card .icon.success {
+            background: #dcfce7;
+            color: #16a34a;
+        }
+        .info-colegio-card .icon.warning {
+            background: #fef3c7;
+            color: #d97706;
+        }
+        .info-colegio-card .icon.danger {
+            background: #fecaca;
+            color: #dc2626;
+        }
+        .info-colegio-card .label {
+            font-size: 0.65rem;
+            color: var(--gray-500);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .info-colegio-card .value {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .welcome-banner {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: var(--radius);
+            padding: 24px 28px;
+            color: #fff;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .welcome-banner h2 {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+        .welcome-banner p {
+            opacity: 0.9;
+            margin-top: 2px;
+            font-size: 0.9rem;
+        }
+        .welcome-banner .badge-colegio {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 6px 18px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        .estado-activo {
+            color: #4ade80;
+        }
+        .estado-inactivo {
+            color: #fca5a5;
+        }
+
+        .loading-overlay {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 400px;
+            gap: 16px;
+        }
+        .loading-overlay .spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid var(--gray-200);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 0.8s ease-in-out infinite;
+        }
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        .loading-overlay p {
+            color: var(--gray-500);
+            font-size: 0.95rem;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .page-header h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--gray-800);
+        }
+
+        /* Estilos para el boletín */
+        .boletin-print {
+            padding: 20px;
+            font-family: 'Inter', sans-serif;
+        }
+        .boletin-print .header {
+            text-align: center;
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 16px;
+            margin-bottom: 20px;
+        }
+        .boletin-print .header h1 {
+            color: var(--primary);
+            font-size: 1.8rem;
+        }
+        .boletin-print .header p {
+            color: var(--gray-500);
+        }
+        .boletin-print .estudiante-info {
+            margin-bottom: 20px;
+        }
+        .boletin-print .estudiante-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+        .boletin-print .estudiante-info p {
+            margin: 4px 0;
+        }
+        .boletin-print table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+        .boletin-print table thead th {
+            background: var(--primary-bg);
+            padding: 10px 12px;
+            text-align: left;
+            border-bottom: 2px solid var(--primary);
+        }
+        .boletin-print table tbody td {
+            padding: 8px 12px;
+            border-bottom: 1px solid var(--gray-200);
+        }
+        .boletin-print .footer {
+            margin-top: 24px;
+            padding-top: 16px;
+            border-top: 2px solid var(--gray-200);
+            text-align: center;
+            color: var(--gray-500);
+            font-size: 0.8rem;
+        }
+
+        /* Horario */
+        .horario-grid {
+            display: grid;
+            grid-template-columns: 80px repeat(5, 1fr);
+            gap: 2px;
+            background: var(--gray-200);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .horario-grid .h-cell {
+            background: #fff;
+            padding: 10px 8px;
+            text-align: center;
+            font-size: 0.8rem;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        .horario-grid .h-cell.header {
+            background: var(--gray-50);
+            font-weight: 600;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: var(--gray-500);
+        }
+        .horario-grid .h-cell.hora {
+            background: var(--gray-50);
+            font-weight: 600;
+            font-size: 0.75rem;
+            color: var(--gray-600);
+        }
+        .horario-grid .h-cell.materia {
+            background: var(--primary-bg);
+            border-radius: 4px;
+            margin: 2px;
+            padding: 6px 4px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: var(--primary);
+        }
+        .horario-grid .h-cell.materia .prof {
+            font-size: 0.6rem;
+            font-weight: 400;
+            color: var(--gray-500);
+        }
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .boletin-print,
+            .boletin-print * {
+                visibility: visible;
+            }
+            .boletin-print {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                background: white;
+            }
+            .no-print {
+                display: none !important;
+            }
+        }
+
+        /* ============================================= */
+        /* RESPONSIVE                                   */
+        /* ============================================= */
+
+        /* Desktop - Sidebar colapsable (pantallas de escritorio) */
+        @media (max-width: 1400px) {
+            .sidebar:not(.closed):not(.open) {
+                width: var(--sidebar-collapsed);
+            }
+            .sidebar:not(.closed):not(.open) .logo span,
+            .sidebar:not(.closed):not(.open) .sidebar-nav ul li a span,
+            .sidebar:not(.closed):not(.open) .sidebar-nav .nav-section,
+            .sidebar:not(.closed):not(.open) .sidebar-colegio .colegio-nombre,
+            .sidebar:not(.closed):not(.open) .sidebar-colegio .colegio-rol,
+            .sidebar:not(.closed):not(.open) .btn-logout span {
+                display: none;
+            }
+            .sidebar:not(.closed):not(.open) .sidebar-nav ul li a {
+                justify-content: center;
+                padding: 12px;
+            }
+            .sidebar:not(.closed):not(.open) .sidebar-nav ul li a i {
+                margin: 0;
+                font-size: 1.3rem;
+            }
+            .sidebar:not(.closed):not(.open) .btn-logout {
+                justify-content: center;
+                padding: 12px;
+            }
+            .sidebar:not(.closed):not(.open) .sidebar-colegio {
+                text-align: center;
+                padding: 12px 8px;
+            }
+            .sidebar:not(.closed):not(.open) .sidebar-colegio .colegio-nombre {
+                font-size: 0.6rem;
+                text-align: center;
+                display: block !important;
+            }
+            .sidebar:not(.closed):not(.open) .sidebar-colegio .colegio-rol {
+                display: none;
+            }
+            .sidebar:not(.closed):not(.open) .sidebar-header .logo span {
+                display: none;
+            }
+            .sidebar:not(.closed):not(.open) .sidebar-toggle {
+                display: none;
+            }
+
+            .main-content:not(.full):not(.expanded) {
+                margin-left: var(--sidebar-collapsed);
+            }
+        }
+
+        /* Tablet y móvil - Sidebar flotante */
+        @media (max-width: 992px) {
+            .sidebar {
+                transform: translateX(-100%);
+                width: var(--sidebar-width);
+            }
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            .sidebar .logo span {
+                display: inline !important;
+            }
+            .sidebar .sidebar-nav ul li a span {
+                display: inline !important;
+            }
+            .sidebar .sidebar-nav .nav-section {
+                display: block !important;
+            }
+            .sidebar .sidebar-colegio .colegio-nombre {
+                display: block !important;
+                font-size: 0.95rem;
+                text-align: left;
+            }
+            .sidebar .sidebar-colegio .colegio-rol {
+                display: block !important;
+            }
+            .sidebar .btn-logout span {
+                display: inline !important;
+            }
+            .sidebar .btn-logout {
+                justify-content: flex-start;
+                padding: 10px 14px;
+            }
+            .sidebar .sidebar-nav ul li a {
+                justify-content: flex-start;
+                padding: 10px 14px;
+            }
+            .sidebar .sidebar-nav ul li a i {
+                font-size: 1.1rem;
+            }
+            .sidebar .sidebar-toggle {
+                display: none;
+            }
+            .sidebar .sidebar-close-mobile {
+                display: block;
+            }
+
+            .sidebar-overlay.active {
+                display: block;
+            }
+
+            .main-content {
+                margin-left: 0 !important;
+            }
+
+            .header-left .hamburger-btn {
+                display: block;
+            }
+        }
+
+        /* Móvil pequeño */
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .info-colegio-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .top-header {
+                padding: 0 16px;
+            }
+            .content-area {
+                padding: 16px;
+            }
+            .modal-content {
+                width: 96%;
+                margin: 10px;
+            }
+            .user-info {
+                display: none;
+            }
+            .welcome-banner {
+                padding: 18px;
+            }
+            .welcome-banner h2 {
+                font-size: 1.1rem;
+            }
+            .header-left h1 {
+                font-size: 1rem;
+            }
+            .horario-grid {
+                grid-template-columns: 60px repeat(5, 1fr);
+                font-size: 0.7rem;
+            }
+            .horario-grid .h-cell {
+                padding: 6px 4px;
+                min-height: 40px;
+                font-size: 0.65rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .info-colegio-grid {
+                grid-template-columns: 1fr;
+            }
+            .top-header {
+                padding: 0 12px;
+                height: 60px;
+            }
+            .content-area {
+                padding: 12px;
+            }
+            .card-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .page-header .btn-primary {
+                width: 100%;
+                justify-content: center;
+            }
+            .modal-footer {
+                flex-direction: column;
+            }
+            .modal-footer .btn-primary,
+            .modal-footer .btn-secondary {
+                width: 100%;
+                justify-content: center;
+            }
+            .welcome-banner {
+                flex-direction: column;
+                text-align: center;
+            }
+            .horario-grid {
+                grid-template-columns: 45px repeat(5, 1fr);
+                font-size: 0.6rem;
+            }
+            .horario-grid .h-cell {
+                padding: 4px 2px;
+                min-height: 30px;
+                font-size: 0.55rem;
+            }
+            .horario-grid .h-cell.materia {
+                padding: 3px 2px;
+            }
+            .horario-grid .h-cell.materia .prof {
+                font-size: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- =========================================== -->
+    <!-- OVERLAY PARA SIDEBAR EN MÓVIL              -->
+    <!-- =========================================== -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- =========================================== -->
+    <!-- SIDEBAR                                     -->
+    <!-- =========================================== -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>EduOne</span>
+            </div>
+            <button class="sidebar-close-mobile" id="sidebarCloseMobile">
+                <i class="fas fa-times"></i>
+            </button>
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <div class="sidebar-colegio">
+            <div class="colegio-nombre" id="colegioNombreSidebar">Cargando...</div>
+            <div class="colegio-rol">Rector</div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <ul>
+                <li class="active"><a href="#" data-page="inicio"><i class="fas fa-home"></i><span>Inicio</span></a></li>
+            </ul>
+
+            <div class="nav-section">GESTIÓN</div>
+            <ul>
+                <li><a href="#" data-page="estudiantes"><i class="fas fa-user-graduate"></i><span>Estudiantes</span></a></li>
+                <li><a href="#" data-page="profesores"><i class="fas fa-chalkboard-teacher"></i><span>Profesores</span></a></li>
+            </ul>
+
+            <div class="nav-section">ESTRUCTURA</div>
+            <ul>
+                <li><a href="#" data-page="grados"><i class="fas fa-layer-group"></i><span>Grados</span></a></li>
+                <li><a href="#" data-page="cursos"><i class="fas fa-users"></i><span>Cursos</span></a></li>
+                <li><a href="#" data-page="asignaturas"><i class="fas fa-book"></i><span>Asignaturas</span></a></li>
+            </ul>
+
+            <div class="nav-section">ACADÉMICO</div>
+            <ul>
+                <li><a href="#" data-page="horarios"><i class="fas fa-calendar-alt"></i><span>Horarios</span></a></li>
+                <li><a href="#" data-page="notas"><i class="fas fa-star"></i><span>Notas</span></a></li>
+                <li><a href="#" data-page="boletines"><i class="fas fa-file-pdf"></i><span>Boletines</span></a></li>
+            </ul>
+        </nav>
+
+        <div class="sidebar-footer">
+            <button id="logoutBtn" class="btn-logout">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Cerrar sesión</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- =========================================== -->
+    <!-- CONTENIDO PRINCIPAL                         -->
+    <!-- =========================================== -->
+    <main class="main-content" id="mainContent">
+        <header class="top-header">
+            <div class="header-left">
+                <button class="hamburger-btn" id="hamburgerBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1 id="pageTitle">Inicio</h1>
+            </div>
+            <div class="header-right">
+                <div class="user-info">
+                    <span class="user-name" id="userName">Cargando...</span>
+                    <span class="user-role" id="userRole">rector</span>
+                </div>
+                <div class="user-avatar">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+            </div>
+        </header>
+
+        <section class="content-area" id="contentArea">
+
+            <!-- ========================================= -->
+            <!-- LOADING                                  -->
+            <!-- ========================================= -->
+            <div id="loadingState" class="loading-overlay">
+                <div class="spinner"></div>
+                <p>Cargando información del colegio...</p>
+            </div>
+
+            <!-- ========================================= -->
+            <!-- PÁGINA: INICIO (Dashboard)               -->
+            <!-- ========================================= -->
+            <div id="page-inicio" class="page-content active">
+                <div class="welcome-banner">
+                    <div>
+                        <h2 id="bienvenidaNombre">Bienvenido, Rector</h2>
+                        <p id="bienvenidaColegio">Colegio: Cargando...</p>
+                    </div>
+                    <div>
+                        <span class="badge-colegio" id="bannerEstado">
+                            <i class="fas fa-circle estado-activo"></i> Activo
+                        </span>
+                    </div>
+                </div>
+
+                <div class="info-colegio-grid">
+                    <div class="info-colegio-card">
+                        <div class="icon primary"><i class="fas fa-school"></i></div>
+                        <div>
+                            <div class="label">Colegio</div>
+                            <div class="value" id="infoNombre">-</div>
+                        </div>
+                    </div>
+                    <div class="info-colegio-card">
+                        <div class="icon success"><i class="fas fa-map-marker-alt"></i></div>
+                        <div>
+                            <div class="label">Ciudad</div>
+                            <div class="value" id="infoCiudad">-</div>
+                        </div>
+                    </div>
+                    <div class="info-colegio-card">
+                        <div class="icon warning"><i class="fas fa-calendar-alt"></i></div>
+                        <div>
+                            <div class="label">Año escolar</div>
+                            <div class="value" id="infoAnio">-</div>
+                        </div>
+                    </div>
+                    <div class="info-colegio-card">
+                        <div class="icon danger"><i class="fas fa-id-card"></i></div>
+                        <div>
+                            <div class="label">NIT</div>
+                            <div class="value" id="infoNit">-</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Estadísticas del Colegio</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-icon"><i class="fas fa-user-graduate"></i></div>
+                                <div class="stat-info">
+                                    <span class="stat-label">Estudiantes</span>
+                                    <span class="stat-value" id="statsEstudiantes">0</span>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+                                <div class="stat-info">
+                                    <span class="stat-label">Profesores</span>
+                                    <span class="stat-value" id="statsProfesores">0</span>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon"><i class="fas fa-layer-group"></i></div>
+                                <div class="stat-info">
+                                    <span class="stat-label">Grados</span>
+                                    <span class="stat-value" id="statsGrados">0</span>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon"><i class="fas fa-users"></i></div>
+                                <div class="stat-info">
+                                    <span class="stat-label">Cursos</span>
+                                    <span class="stat-value" id="statsCursos">0</span>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon"><i class="fas fa-book"></i></div>
+                                <div class="stat-info">
+                                    <span class="stat-label">Asignaturas</span>
+                                    <span class="stat-value" id="statsAsignaturas">0</span>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon"><i class="fas fa-calendar-alt"></i></div>
+                                <div class="stat-info">
+                                    <span class="stat-label">Horarios</span>
+                                    <span class="stat-value" id="statsHorarios">0</span>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon"><i class="fas fa-star"></i></div>
+                                <div class="stat-info">
+                                    <span class="stat-label">Notas</span>
+                                    <span class="stat-value" id="statsNotas">0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========================================= -->
+            <!-- PÁGINA: ESTUDIANTES                      -->
+            <!-- ========================================= -->
+            <div id="page-estudiantes" class="page-content">
+                <div class="page-header">
+                    <h2><i class="fas fa-user-graduate" style="color: var(--primary);"></i> Gestión de Estudiantes</h2>
+                    <button class="btn-primary" id="btnRegistrarEstudiante">
+                        <i class="fas fa-plus"></i> Inscribir estudiante
+                    </button>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table-modern">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Nombres</th>
+                                        <th>Apellidos</th>
+                                        <th>Documento</th>
+                                        <th>Grado</th>
+                                        <th>Curso</th>
+                                        <th>Estado</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tablaEstudiantes">
+                                    <tr>
+                                        <td colspan="8" class="text-center text-muted">
+                                            <i class="fas fa-spinner fa-spin"></i> Cargando estudiantes...
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========================================= -->
+            <!-- PÁGINA: PROFESORES                       -->
+            <!-- ========================================= -->
+            <div id="page-profesores" class="page-content">
+                <div class="page-header">
+                    <h2><i class="fas fa-chalkboard-teacher" style="color: var(--primary);"></i> Gestión de Profesores</h2>
+                    <button class="btn-primary" id="btnRegistrarProfesor">
+                        <i class="fas fa-plus"></i> Registrar profesor
+                    </button>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table-modern">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Nombres</th>
+                                        <th>Apellidos</th>
+                                        <th>Documento</th>
+                                        <th>Correo</th>
+                                        <th>Teléfono</th>
+                                        <th>Estado</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tablaProfesores">
+                                    <tr>
+                                        <td colspan="8" class="text-center text-muted">
+                                            <i class="fas fa-spinner fa-spin"></i> Cargando profesores...
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========================================= -->
+            <!-- PÁGINA: GRADOS                           -->
+            <!-- ========================================= -->
+            <div id="page-grados" class="page-content">
+                <div class="page-header">
+                    <h2><i class="fas fa-layer-group" style="color: var(--primary);"></i> Gestión de Grados</h2>
+                    <button class="btn-primary" id="btnRegistrarGrado">
+                        <i class="fas fa-plus"></i> Registrar grado
+                    </button>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table-modern">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Nombre</th>
+                                        <th>Orden</th>
+                                        <th>Estado</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tablaGrados">
+                                    <tr>
+                                        <td colspan="5" class="text-center text-muted">
+                                            <i class="fas fa-spinner fa-spin"></i> Cargando grados...
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========================================= -->
+            <!-- PÁGINA: CURSOS                           -->
+            <!-- ========================================= -->
+            <div id="page-cursos" class="page-content">
+                <div class="page-header">
+                    <h2><i class="fas fa-users" style="color: var(--primary);"></i> Gestión de Cursos</h2>
+                    <button class="btn-primary" id="btnRegistrarCurso">
+                        <i class="fas fa-plus"></i> Registrar curso
+                    </button>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table-modern">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Nombre</th>
+                                        <th>Grado</th>
+                                        <th>Año</th>
+                                        <th>Estado</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tablaCursos">
+                                    <tr>
+                                        <td colspan="6" class="text-center text-muted">
+                                            <i class="fas fa-spinner fa-spin"></i> Cargando cursos...
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========================================= -->
+            <!-- PÁGINA: ASIGNATURAS                      -->
+            <!-- ========================================= -->
+            <div id="page-asignaturas" class="page-content">
+                <div class="page-header">
+                    <h2><i class="fas fa-book" style="color: var(--primary);"></i> Gestión de Asignaturas</h2>
+                    <button class="btn-primary" id="btnRegistrarAsignatura">
+                        <i class="fas fa-plus"></i> Registrar asignatura
+                    </button>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table-modern">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Nombre</th>
+                                        <th>Código</th>
+                                        <th>Estado</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tablaAsignaturas">
+                                    <tr>
+                                        <td colspan="5" class="text-center text-muted">
+                                            <i class="fas fa-spinner fa-spin"></i> Cargando asignaturas...
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========================================= -->
+            <!-- PÁGINA: HORARIOS                         -->
+            <!-- ========================================= -->
+            <div id="page-horarios" class="page-content">
+                <div class="page-header">
+                    <h2><i class="fas fa-calendar-alt" style="color: var(--primary);"></i> Gestión de Horarios</h2>
+                </div>
+
+                <!-- Selector de curso -->
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-grid" style="margin-bottom: 16px;">
+                            <div class="form-group">
+                                <label>Grado</label>
+                                <select id="horarioGrado" class="form-control">
+                                    <option value="">Seleccionar grado</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Curso</label>
+                                <select id="horarioCurso" class="form-control">
+                                    <option value="">Seleccionar curso</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button class="btn-primary" id="btnCargarHorario">
+                            <i class="fas fa-search"></i> Cargar horario
+                        </button>
+                        <button class="btn-success" id="btnAgregarHorario" style="margin-left: 10px;">
+                            <i class="fas fa-plus"></i> Agregar clase
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Vista del horario -->
+                <div id="horarioVista" style="display: none;">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 id="horarioTitulo">Horario - Curso</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="horario-grid" id="horarioGrid">
+                                <!-- Generado dinámicamente -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lista de clases asignadas -->
+                <div id="horarioClases" style="display: none;">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Clases asignadas</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table-modern">
+                                    <thead>
+                                        <tr>
+                                            <th>Día</th>
+                                            <th>Hora</th>
+                                            <th>Asignatura</th>
+                                            <th>Profesor</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tablaHorarioClases">
+                                        <tr>
+                                            <td colspan="5" class="text-center text-muted">No hay clases asignadas</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========================================= -->
+            <!-- PÁGINA: NOTAS                            -->
+            <!-- ========================================= -->
+            <div id="page-notas" class="page-content">
+                <div class="page-header">
+                    <h2><i class="fas fa-star" style="color: var(--primary);"></i> Consulta de Notas</h2>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-grid" style="margin-bottom: 20px;">
+                            <div class="form-group">
+                                <label>Grado</label>
+                                <select id="filtroGradoNotas" class="form-control">
+                                    <option value="">Seleccionar grado</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Curso</label>
+                                <select id="filtroCursoNotas" class="form-control">
+                                    <option value="">Seleccionar curso</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Estudiante</label>
+                                <select id="filtroEstudianteNotas" class="form-control">
+                                    <option value="">Seleccionar estudiante</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Periodo</label>
+                                <select id="filtroPeriodoNotas" class="form-control">
+                                    <option value="">Todos los periodos</option>
+                                    <option value="1">Periodo 1</option>
+                                    <option value="2">Periodo 2</option>
+                                    <option value="3">Periodo 3</option>
+                                    <option value="4">Periodo 4</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button class="btn-primary" id="btnConsultarNotas">
+                            <i class="fas fa-search"></i> Consultar notas
+                        </button>
+                        <div class="table-responsive" style="margin-top: 16px;">
+                            <table class="table-modern">
+                                <thead>
+                                    <tr>
+                                        <th>Asignatura</th>
+                                        <th>Nota 1</th>
+                                        <th>Nota 2</th>
+                                        <th>Nota 3</th>
+                                        <th>Nota 4</th>
+                                        <th>Promedio</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tablaNotas">
+                                    <tr>
+                                        <td colspan="7" class="text-center text-muted">
+                                            Selecciona un estudiante y haz clic en "Consultar notas"
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========================================= -->
+            <!-- PÁGINA: BOLETINES                        -->
+            <!-- ========================================= -->
+            <div id="page-boletines" class="page-content">
+                <div class="page-header">
+                    <h2><i class="fas fa-file-pdf" style="color: var(--primary);"></i> Generar Boletines</h2>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-grid" style="margin-bottom: 20px;">
+                            <div class="form-group">
+                                <label>Grado</label>
+                                <select id="filtroGradoBoletin" class="form-control">
+                                    <option value="">Seleccionar grado</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Curso</label>
+                                <select id="filtroCursoBoletin" class="form-control">
+                                    <option value="">Seleccionar curso</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Estudiante</label>
+                                <select id="filtroEstudianteBoletin" class="form-control">
+                                    <option value="">Seleccionar estudiante</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Periodo</label>
+                                <select id="filtroPeriodoBoletin" class="form-control">
+                                    <option value="">Todos los periodos</option>
+                                    <option value="1">Periodo 1</option>
+                                    <option value="2">Periodo 2</option>
+                                    <option value="3">Periodo 3</option>
+                                    <option value="4">Periodo 4</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button class="btn-primary" id="btnGenerarBoletin">
+                            <i class="fas fa-file-pdf"></i> Generar boletín
+                        </button>
+
+                        <div id="boletinContent" style="margin-top: 24px; display: none;">
+                            <div class="card" style="border: 2px solid var(--gray-200);">
+                                <div class="card-body" id="boletinPreview">
+                                    <!-- Contenido del boletín generado dinámicamente -->
+                                </div>
+                                <div class="card-footer no-print" style="padding: 16px 24px; border-top: 1px solid var(--gray-200); display: flex; gap: 12px; flex-wrap: wrap;">
+                                    <button class="btn-primary" onclick="window.print()">
+                                        <i class="fas fa-print"></i> Imprimir
+                                    </button>
+                                    <button class="btn-secondary" onclick="document.getElementById('boletinContent').style.display='none'">
+                                        <i class="fas fa-times"></i> Cerrar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- =========================================== -->
+    <!-- MODALES                                     -->
+    <!-- =========================================== -->
+
+    <!-- Modal: Estudiante -->
+    <div class="modal" id="modalEstudiante">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-user-graduate" style="color: var(--primary);"></i> Inscribir Estudiante</h2>
+                <button class="modal-close" id="closeEstudianteModal">&times;</button>
+            </div>
+            <form id="formEstudiante">
+                <div class="modal-body">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Nombres *</label>
+                            <input type="text" id="estNombres" class="form-control" required placeholder="Ej: Juan David" />
+                        </div>
+                        <div class="form-group">
+                            <label>Apellidos *</label>
+                            <input type="text" id="estApellidos" class="form-control" required placeholder="Ej: Pérez López" />
+                        </div>
+                        <div class="form-group">
+                            <label>Documento *</label>
+                            <input type="text" id="estDocumento" class="form-control" required placeholder="Ej: 123456789" />
+                        </div>
+                        <div class="form-group">
+                            <label>Fecha de nacimiento</label>
+                            <input type="date" id="estFechaNacimiento" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Dirección</label>
+                            <input type="text" id="estDireccion" class="form-control" placeholder="Ej: Calle 10 # 5-20" />
+                        </div>
+                        <div class="form-group">
+                            <label>Teléfono</label>
+                            <input type="text" id="estTelefono" class="form-control" placeholder="Ej: 3101234567" />
+                        </div>
+                        <div class="form-group">
+                            <label>Acudiente</label>
+                            <input type="text" id="estAcudiente" class="form-control" placeholder="Ej: María López" />
+                        </div>
+                        <div class="form-group">
+                            <label>Grado *</label>
+                            <select id="estGrado" class="form-control" required>
+                                <option value="">Seleccionar grado</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Curso *</label>
+                            <select id="estCurso" class="form-control" required>
+                                <option value="">Seleccionar curso</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Estado</label>
+                            <select id="estEstado" class="form-control">
+                                <option value="activo">Activo</option>
+                                <option value="inactivo">Inactivo</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" id="cancelEstudianteModal">Cancelar</button>
+                    <button type="submit" class="btn-primary" id="btnGuardarEstudiante">
+                        <i class="fas fa-save"></i> Guardar estudiante
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Profesor -->
+    <div class="modal" id="modalProfesor">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-chalkboard-teacher" style="color: var(--primary);"></i> Registrar Profesor</h2>
+                <button class="modal-close" id="closeProfesorModal">&times;</button>
+            </div>
+            <form id="formProfesor">
+                <div class="modal-body">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Nombres *</label>
+                            <input type="text" id="profNombres" class="form-control" required placeholder="Ej: Ana María" />
+                        </div>
+                        <div class="form-group">
+                            <label>Apellidos *</label>
+                            <input type="text" id="profApellidos" class="form-control" required placeholder="Ej: Torres" />
+                        </div>
+                        <div class="form-group">
+                            <label>Documento *</label>
+                            <input type="text" id="profDocumento" class="form-control" required placeholder="Ej: 123456789" />
+                        </div>
+                        <div class="form-group">
+                            <label>Correo electrónico</label>
+                            <input type="email" id="profCorreo" class="form-control" placeholder="Ej: ana@colegio.edu.co" />
+                        </div>
+                        <div class="form-group">
+                            <label>Teléfono</label>
+                            <input type="text" id="profTelefono" class="form-control" placeholder="Ej: 3101234567" />
+                        </div>
+                        <div class="form-group">
+                            <label>Estado</label>
+                            <select id="profEstado" class="form-control">
+                                <option value="activo">Activo</option>
+                                <option value="inactivo">Inactivo</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" id="cancelProfesorModal">Cancelar</button>
+                    <button type="submit" class="btn-primary" id="btnGuardarProfesor">
+                        <i class="fas fa-save"></i> Guardar profesor
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Grado -->
+    <div class="modal" id="modalGrado">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-layer-group" style="color: var(--primary);"></i> Registrar Grado</h2>
+                <button class="modal-close" id="closeGradoModal">&times;</button>
+            </div>
+            <form id="formGrado">
+                <div class="modal-body">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Nombre del grado *</label>
+                            <input type="text" id="gradoNombre" class="form-control" required placeholder="Ej: Tercero" />
+                        </div>
+                        <div class="form-group">
+                            <label>Orden *</label>
+                            <input type="number" id="gradoOrden" class="form-control" required placeholder="Ej: 3" min="1" max="11" />
+                        </div>
+                        <div class="form-group">
+                            <label>Estado</label>
+                            <select id="gradoEstado" class="form-control">
+                                <option value="activo">Activo</option>
+                                <option value="inactivo">Inactivo</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" id="cancelGradoModal">Cancelar</button>
+                    <button type="submit" class="btn-primary" id="btnGuardarGrado">
+                        <i class="fas fa-save"></i> Guardar grado
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Curso -->
+    <div class="modal" id="modalCurso">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-users" style="color: var(--primary);"></i> Registrar Curso</h2>
+                <button class="modal-close" id="closeCursoModal">&times;</button>
+            </div>
+            <form id="formCurso">
+                <div class="modal-body">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Nombre del curso *</label>
+                            <input type="text" id="cursoNombre" class="form-control" required placeholder="Ej: 3A" />
+                        </div>
+                        <div class="form-group">
+                            <label>Grado *</label>
+                            <select id="cursoGrado" class="form-control" required>
+                                <option value="">Seleccionar grado</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Año *</label>
+                            <input type="number" id="cursoAnio" class="form-control" required min="2000" max="2100" />
+                        </div>
+                        <div class="form-group">
+                            <label>Estado</label>
+                            <select id="cursoEstado" class="form-control">
+                                <option value="activo">Activo</option>
+                                <option value="inactivo">Inactivo</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" id="cancelCursoModal">Cancelar</button>
+                    <button type="submit" class="btn-primary" id="btnGuardarCurso">
+                        <i class="fas fa-save"></i> Guardar curso
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Asignatura -->
+    <div class="modal" id="modalAsignatura">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-book" style="color: var(--primary);"></i> Registrar Asignatura</h2>
+                <button class="modal-close" id="closeAsignaturaModal">&times;</button>
+            </div>
+            <form id="formAsignatura">
+                <div class="modal-body">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Nombre de la asignatura *</label>
+                            <input type="text" id="asigNombre" class="form-control" required placeholder="Ej: Matemáticas" />
+                        </div>
+                        <div class="form-group">
+                            <label>Código</label>
+                            <input type="text" id="asigCodigo" class="form-control" placeholder="Ej: MAT" />
+                        </div>
+                        <div class="form-group">
+                            <label>Estado</label>
+                            <select id="asigEstado" class="form-control">
+                                <option value="activo">Activo</option>
+                                <option value="inactivo">Inactivo</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" id="cancelAsignaturaModal">Cancelar</button>
+                    <button type="submit" class="btn-primary" id="btnGuardarAsignatura">
+                        <i class="fas fa-save"></i> Guardar asignatura
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Agregar Clase al Horario -->
+    <div class="modal" id="modalAgregarClase">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-calendar-plus" style="color: var(--primary);"></i> Agregar Clase al Horario</h2>
+                <button class="modal-close" id="closeClaseModal">&times;</button>
+            </div>
+            <form id="formAgregarClase">
+                <div class="modal-body">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Día *</label>
+                            <select id="claseDia" class="form-control" required>
+                                <option value="">Seleccionar día</option>
+                                <option value="Lunes">Lunes</option>
+                                <option value="Martes">Martes</option>
+                                <option value="Miércoles">Miércoles</option>
+                                <option value="Jueves">Jueves</option>
+                                <option value="Viernes">Viernes</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Hora *</label>
+                            <select id="claseHora" class="form-control" required>
+                                <option value="">Seleccionar hora</option>
+                                <option value="7:00 - 7:45">7:00 - 7:45</option>
+                                <option value="7:45 - 8:30">7:45 - 8:30</option>
+                                <option value="8:30 - 9:15">8:30 - 9:15</option>
+                                <option value="9:15 - 10:00">9:15 - 10:00</option>
+                                <option value="10:30 - 11:15">10:30 - 11:15</option>
+                                <option value="11:15 - 12:00">11:15 - 12:00</option>
+                                <option value="12:00 - 12:45">12:00 - 12:45</option>
+                                <option value="14:00 - 14:45">14:00 - 14:45</option>
+                                <option value="14:45 - 15:30">14:45 - 15:30</option>
+                                <option value="15:30 - 16:15">15:30 - 16:15</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Asignatura *</label>
+                            <select id="claseAsignatura" class="form-control" required>
+                                <option value="">Seleccionar asignatura</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Profesor *</label>
+                            <select id="claseProfesor" class="form-control" required>
+                                <option value="">Seleccionar profesor</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" id="cancelClaseModal">Cancelar</button>
+                    <button type="submit" class="btn-primary" id="btnGuardarClase">
+                        <i class="fas fa-save"></i> Agregar clase
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- =========================================== -->
+    <!-- SCRIPTS                                     -->
+    <!-- =========================================== -->
+
+    <script type="importmap">
+        {
+            "imports": {
+                "firebase/app": "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js",
+                "firebase/auth": "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js",
+                "firebase/firestore": "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js"
+            }
+        }
+    </script>
+
+    <script type="module">
+        // =============================================
+        // FIREBASE CONFIG
+        // =============================================
+        import { initializeApp } from "firebase/app";
+        import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+        import {
+            getFirestore,
+            doc, getDoc, collection, getDocs, addDoc, updateDoc, deleteDoc,
+            query, where, serverTimestamp
+        } from "firebase/firestore";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyA3U98y5BJWQwpypFCAyNioqSRfXkr9UA0",
+            authDomain: "eduone-5f7cf.firebaseapp.com",
+            projectId: "eduone-5f7cf",
+            storageBucket: "eduone-5f7cf.firebasestorage.app",
+            messagingSenderId: "541282614006",
+            appId: "1:541282614006:web:f8cf617c99f08403df0ad7",
+            measurementId: "G-Y2P0EMNYCL"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // =============================================
+        // VARIABLES GLOBALES
+        // =============================================
+        let colegioId = null;
+        let usuarioActual = null;
+        let isLoggingOut = false;
+        let horarioActual = [];
+        let cursoActual = null;
+
+        // =============================================
+        // REFERENCIAS DOM
+        // =============================================
+        const loadingState = document.getElementById('loadingState');
+        const userNameEl = document.getElementById('userName');
+        const userRoleEl = document.getElementById('userRole');
+        const colegioNombreSidebar = document.getElementById('colegioNombreSidebar');
+        const bienvenidaNombre = document.getElementById('bienvenidaNombre');
+        const bienvenidaColegio = document.getElementById('bienvenidaColegio');
+        const bannerEstado = document.getElementById('bannerEstado');
+        const infoNombre = document.getElementById('infoNombre');
+        const infoCiudad = document.getElementById('infoCiudad');
+        const infoAnio = document.getElementById('infoAnio');
+        const infoNit = document.getElementById('infoNit');
+        const statsEstudiantes = document.getElementById('statsEstudiantes');
+        const statsProfesores = document.getElementById('statsProfesores');
+        const statsGrados = document.getElementById('statsGrados');
+        const statsCursos = document.getElementById('statsCursos');
+        const statsAsignaturas = document.getElementById('statsAsignaturas');
+        const statsNotas = document.getElementById('statsNotas');
+        const logoutBtn = document.getElementById('logoutBtn');
+
+        // =============================================
+        // SIDEBAR - RESPONSIVE
+        // =============================================
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const sidebarCloseMobile = document.getElementById('sidebarCloseMobile');
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const mainContent = document.getElementById('mainContent');
+
+        function openSidebarMobile() {
+            sidebar.classList.add('open');
+            sidebarOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSidebarMobile() {
+            sidebar.classList.remove('open');
+            sidebarOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function toggleSidebarDesktop() {
+            if (window.innerWidth > 992) {
+                sidebar.classList.toggle('collapsed');
+                mainContent.classList.toggle('expanded');
+            }
+        }
+
+        if (hamburgerBtn) hamburgerBtn.addEventListener('click', openSidebarMobile);
+        if (sidebarCloseMobile) sidebarCloseMobile.addEventListener('click', closeSidebarMobile);
+        if (sidebarOverlay) sidebarOverlay.addEventListener('click', closeSidebarMobile);
+        if (sidebarToggle) sidebarToggle.addEventListener('click', toggleSidebarDesktop);
+
+        document.querySelectorAll('.sidebar-nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 992) closeSidebarMobile();
+            });
+        });
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 992) {
+                closeSidebarMobile();
+                sidebar.classList.remove('open');
+                sidebarOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // =============================================
+        // NAVEGACIÓN
+        // =============================================
+        const navLinks = document.querySelectorAll('.sidebar-nav a');
+        const pages = document.querySelectorAll('.page-content');
+        const pageTitle = document.getElementById('pageTitle');
+
+        const pageNames = {
+            inicio: 'Inicio',
+            estudiantes: 'Estudiantes',
+            profesores: 'Profesores',
+            grados: 'Grados',
+            cursos: 'Cursos',
+            asignaturas: 'Asignaturas',
+            horarios: 'Horarios',
+            notas: 'Notas',
+            boletines: 'Boletines'
+        };
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const page = link.dataset.page;
+
+                navLinks.forEach(l => l.closest('li').classList.remove('active'));
+                link.closest('li').classList.add('active');
+
+                pages.forEach(p => p.classList.remove('active'));
+                const targetPage = document.getElementById('page-' + page);
+                if (targetPage) targetPage.classList.add('active');
+
+                if (pageNames[page]) pageTitle.textContent = pageNames[page];
+
+                if (page === 'estudiantes') cargarEstudiantes();
+                if (page === 'profesores') cargarProfesores();
+                if (page === 'grados') cargarGrados();
+                if (page === 'cursos') cargarCursos();
+                if (page === 'asignaturas') cargarAsignaturas();
+                if (page === 'horarios') cargarHorarios();
+                if (page === 'notas') cargarFiltrosNotas();
+                if (page === 'boletines') cargarFiltrosBoletines();
+            });
+        });
+
+        // =============================================
+        // DASHBOARD
+        // =============================================
+        async function cargarDashboard() {
+            try {
+                const colegioDoc = await getDoc(doc(db, 'colegios', colegioId));
+                if (!colegioDoc.exists()) throw new Error('Colegio no existe');
+
+                const data = colegioDoc.data();
+
+                infoNombre.textContent = data.nombre || 'Sin nombre';
+                infoCiudad.textContent = data.ciudad || 'Sin ciudad';
+                infoAnio.textContent = data.anioEscolar || '-';
+                infoNit.textContent = data.nit || 'Sin NIT';
+
+                colegioNombreSidebar.textContent = data.nombre || 'Colegio';
+                bienvenidaNombre.textContent = `Bienvenido, ${usuarioActual?.nombre || 'Rector'}`;
+                bienvenidaColegio.textContent = `Colegio: ${data.nombre || 'Sin nombre'}`;
+
+                const estado = data.estado || 'inactivo';
+                bannerEstado.innerHTML = estado === 'activo'
+                    ? `<i class="fas fa-circle estado-activo"></i> Activo`
+                    : `<i class="fas fa-circle estado-inactivo"></i> Inactivo`;
+
+                const estudiantesSnap = await getDocs(collection(db, 'colegios', colegioId, 'estudiantes'));
+                statsEstudiantes.textContent = estudiantesSnap.size;
+
+                const profesoresSnap = await getDocs(collection(db, 'colegios', colegioId, 'profesores'));
+                statsProfesores.textContent = profesoresSnap.size;
+
+                const gradosSnap = await getDocs(collection(db, 'colegios', colegioId, 'grados'));
+                statsGrados.textContent = gradosSnap.size;
+
+                const cursosSnap = await getDocs(collection(db, 'colegios', colegioId, 'cursos'));
+                statsCursos.textContent = cursosSnap.size;
+
+                const asignaturasSnap = await getDocs(collection(db, 'colegios', colegioId, 'asignaturas'));
+                statsAsignaturas.textContent = asignaturasSnap.size;
+
+                const horariosSnap = await getDocs(collection(db, 'colegios', colegioId, 'horarios'));
+                statsNotas.textContent = horariosSnap.size;
+
+                const notasSnap = await getDocs(collection(db, 'colegios', colegioId, 'notas'));
+                document.getElementById('statsHorarios').textContent = horariosSnap.size;
+                statsNotas.textContent = notasSnap.size;
+
+                loadingState.style.display = 'none';
+
+            } catch (error) {
+                console.error('Error al cargar dashboard:', error);
+                loadingState.innerHTML = `
+                    <div style="color: var(--danger); font-size: 2rem;">
+                        <i class="fas fa-exclamation-circle"></i>
+                    </div>
+                    <h3>Error al cargar el colegio</h3>
+                    <p>${error.message}</p>
+                    <button class="btn-primary" onclick="location.reload()">
+                        <i class="fas fa-sync"></i> Reintentar
+                    </button>
+                `;
+            }
+        }
+
+        // =============================================
+        // ESTUDIANTES
+        // =============================================
+        async function cargarEstudiantes() {
+            const tbody = document.getElementById('tablaEstudiantes');
+            try {
+                const snap = await getDocs(collection(db, 'colegios', colegioId, 'estudiantes'));
+                if (snap.empty) {
+                    tbody.innerHTML =
+                        `<tr><td colspan="8" class="text-center text-muted">No hay estudiantes registrados</td></tr>`;
+                    return;
+                }
+
+                let html = '';
+                let i = 1;
+                for (const docSnap of snap.docs) {
+                    const d = docSnap.data();
+                    let grado = '-',
+                        curso = '-';
+                    const matQ = query(
+                        collection(db, 'colegios', colegioId, 'matriculas'),
+                        where('estudianteId', '==', docSnap.id),
+                        where('estado', '==', 'activo')
+                    );
+                    const matSnap = await getDocs(matQ);
+                    if (!matSnap.empty) {
+                        const mat = matSnap.docs[0].data();
+                        const gradoDoc = await getDoc(doc(db, 'colegios', colegioId, 'grados', mat.gradoId));
+                        const cursoDoc = await getDoc(doc(db, 'colegios', colegioId, 'cursos', mat.cursoId));
+                        grado = gradoDoc.exists() ? gradoDoc.data().nombre : '-';
+                        curso = cursoDoc.exists() ? cursoDoc.data().nombre : '-';
+                    }
+
+                    html += `
+                        <tr>
+                            <td>${i++}</td>
+                            <td>${d.nombres || '-'}</td>
+                            <td>${d.apellidos || '-'}</td>
+                            <td>${d.documento || '-'}</td>
+                            <td>${grado}</td>
+                            <td>${curso}</td>
+                            <td><span class="badge ${d.estado === 'activo' ? 'badge-success' : 'badge-danger'}">${d.estado || 'inactivo'}</span></td>
+                            <td>
+                                <button class="btn-danger btn-sm" onclick="window.eliminarEstudiante('${docSnap.id}')">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                }
+                tbody.innerHTML = html;
+
+                window.eliminarEstudiante = async (id) => {
+                    if (confirm('¿Eliminar este estudiante?')) {
+                        await deleteDoc(doc(db, 'colegios', colegioId, 'estudiantes', id));
+                        cargarEstudiantes();
+                        cargarDashboard();
+                    }
+                };
+            } catch (error) {
+                console.error('Error al cargar estudiantes:', error);
+                tbody.innerHTML =
+                `<tr><td colspan="8" class="text-center text-danger">Error al cargar</td></tr>`;
+            }
+        }
+
+        // =============================================
+        // PROFESORES
+        // =============================================
+        async function cargarProfesores() {
+            const tbody = document.getElementById('tablaProfesores');
+            try {
+                const snap = await getDocs(collection(db, 'colegios', colegioId, 'profesores'));
+                if (snap.empty) {
+                    tbody.innerHTML =
+                        `<tr><td colspan="8" class="text-center text-muted">No hay profesores registrados</td></tr>`;
+                    return;
+                }
+                let html = '';
+                let i = 1;
+                snap.forEach(doc => {
+                    const d = doc.data();
+                    html += `
+                        <tr>
+                            <td>${i++}</td>
+                            <td>${d.nombres || '-'}</td>
+                            <td>${d.apellidos || '-'}</td>
+                            <td>${d.documento || '-'}</td>
+                            <td>${d.correo || '-'}</td>
+                            <td>${d.telefono || '-'}</td>
+                            <td><span class="badge ${d.estado === 'activo' ? 'badge-success' : 'badge-danger'}">${d.estado || 'inactivo'}</span></td>
+                            <td>
+                                <button class="btn-danger btn-sm" onclick="window.eliminarProfesor('${doc.id}')">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                });
+                tbody.innerHTML = html;
+
+                window.eliminarProfesor = async (id) => {
+                    if (confirm('¿Eliminar este profesor?')) {
+                        await deleteDoc(doc(db, 'colegios', colegioId, 'profesores', id));
+                        cargarProfesores();
+                        cargarDashboard();
+                    }
+                };
+            } catch (error) {
+                console.error('Error al cargar profesores:', error);
+                tbody.innerHTML =
+                `<tr><td colspan="8" class="text-center text-danger">Error al cargar</td></tr>`;
+            }
+        }
+
+        // =============================================
+        // GRADOS
+        // =============================================
+        async function cargarGrados() {
+            const tbody = document.getElementById('tablaGrados');
+            try {
+                const snap = await getDocs(collection(db, 'colegios', colegioId, 'grados'));
+                if (snap.empty) {
+                    tbody.innerHTML =
+                        `<tr><td colspan="5" class="text-center text-muted">No hay grados registrados</td></tr>`;
+                    return;
+                }
+                let html = '';
+                let i = 1;
+                snap.forEach(doc => {
+                    const d = doc.data();
+                    html += `
+                        <tr>
+                            <td>${i++}</td>
+                            <td><strong>${d.nombre || '-'}</strong></td>
+                            <td>${d.orden || '-'}</td>
+                            <td><span class="badge ${d.estado === 'activo' ? 'badge-success' : 'badge-danger'}">${d.estado || 'inactivo'}</span></td>
+                            <td>
+                                <button class="btn-danger btn-sm" onclick="window.eliminarGrado('${doc.id}')">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                });
+                tbody.innerHTML = html;
+
+                window.eliminarGrado = async (id) => {
+                    if (confirm('¿Eliminar este grado?')) {
+                        await deleteDoc(doc(db, 'colegios', colegioId, 'grados', id));
+                        cargarGrados();
+                        cargarDashboard();
+                    }
+                };
+            } catch (error) {
+                console.error('Error al cargar grados:', error);
+                tbody.innerHTML =
+                `<tr><td colspan="5" class="text-center text-danger">Error al cargar</td></tr>`;
+            }
+        }
+
+        // =============================================
+        // CURSOS
+        // =============================================
+        async function cargarCursos() {
+            const tbody = document.getElementById('tablaCursos');
+            try {
+                const snap = await getDocs(collection(db, 'colegios', colegioId, 'cursos'));
+                if (snap.empty) {
+                    tbody.innerHTML =
+                        `<tr><td colspan="6" class="text-center text-muted">No hay cursos registrados</td></tr>`;
+                    return;
+                }
+                let html = '';
+                let i = 1;
+                for (const docSnap of snap.docs) {
+                    const d = docSnap.data();
+                    let gradoNombre = '-';
+                    if (d.gradoId) {
+                        const gradoDoc = await getDoc(doc(db, 'colegios', colegioId, 'grados', d.gradoId));
+                        gradoNombre = gradoDoc.exists() ? gradoDoc.data().nombre : '-';
+                    }
+                    html += `
+                        <tr>
+                            <td>${i++}</td>
+                            <td><strong>${d.nombre || '-'}</strong></td>
+                            <td>${gradoNombre}</td>
+                            <td>${d.anio || '-'}</td>
+                            <td><span class="badge ${d.estado === 'activo' ? 'badge-success' : 'badge-danger'}">${d.estado || 'inactivo'}</span></td>
+                            <td>
+                                <button class="btn-danger btn-sm" onclick="window.eliminarCurso('${docSnap.id}')">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                }
+                tbody.innerHTML = html;
+
+                window.eliminarCurso = async (id) => {
+                    if (confirm('¿Eliminar este curso?')) {
+                        await deleteDoc(doc(db, 'colegios', colegioId, 'cursos', id));
+                        cargarCursos();
+                        cargarDashboard();
+                    }
+                };
+            } catch (error) {
+                console.error('Error al cargar cursos:', error);
+                tbody.innerHTML =
+                `<tr><td colspan="6" class="text-center text-danger">Error al cargar</td></tr>`;
+            }
+        }
+
+        // =============================================
+        // ASIGNATURAS
+        // =============================================
+        async function cargarAsignaturas() {
+            const tbody = document.getElementById('tablaAsignaturas');
+            try {
+                const snap = await getDocs(collection(db, 'colegios', colegioId, 'asignaturas'));
+                if (snap.empty) {
+                    tbody.innerHTML =
+                        `<tr><td colspan="5" class="text-center text-muted">No hay asignaturas registradas</td></tr>`;
+                    return;
+                }
+                let html = '';
+                let i = 1;
+                snap.forEach(doc => {
+                    const d = doc.data();
+                    html += `
+                        <tr>
+                            <td>${i++}</td>
+                            <td><strong>${d.nombre || '-'}</strong></td>
+                            <td>${d.codigo || '-'}</td>
+                            <td><span class="badge ${d.estado === 'activo' ? 'badge-success' : 'badge-danger'}">${d.estado || 'inactivo'}</span></td>
+                            <td>
+                                <button class="btn-danger btn-sm" onclick="window.eliminarAsignatura('${doc.id}')">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                });
+                tbody.innerHTML = html;
+
+                window.eliminarAsignatura = async (id) => {
+                    if (confirm('¿Eliminar esta asignatura?')) {
+                        await deleteDoc(doc(db, 'colegios', colegioId, 'asignaturas', id));
+                        cargarAsignaturas();
+                        cargarDashboard();
+                    }
+                };
+            } catch (error) {
+                console.error('Error al cargar asignaturas:', error);
+                tbody.innerHTML =
+                `<tr><td colspan="5" class="text-center text-danger">Error al cargar</td></tr>`;
+            }
+        }
+
+        // =============================================
+        // HORARIOS
+        // =============================================
+        async function cargarHorarios() {
+            // Cargar grados en el selector
+            const gradoSelect = document.getElementById('horarioGrado');
+            const snap = await getDocs(collection(db, 'colegios', colegioId, 'grados'));
+            gradoSelect.innerHTML = '<option value="">Seleccionar grado</option>';
+            snap.forEach(doc => {
+                const d = doc.data();
+                gradoSelect.innerHTML += `<option value="${doc.id}">${d.nombre || 'Grado'}</option>`;
+            });
+
+            // Cargar cursos según grado
+            gradoSelect.onchange = async () => {
+                const cursoSelect = document.getElementById('horarioCurso');
+                cursoSelect.innerHTML = '<option value="">Seleccionar curso</option>';
+                if (gradoSelect.value) {
+                    const q = query(collection(db, 'colegios', colegioId, 'cursos'),
+                        where('gradoId', '==', gradoSelect.value));
+                    const snap = await getDocs(q);
+                    snap.forEach(doc => {
+                        const d = doc.data();
+                        cursoSelect.innerHTML += `<option value="${doc.id}">${d.nombre || 'Curso'}</option>`;
+                    });
+                }
+            };
+
+            // Cargar asignaturas en el modal
+            const asigSelect = document.getElementById('claseAsignatura');
+            const asigSnap = await getDocs(collection(db, 'colegios', colegioId, 'asignaturas'));
+            asigSelect.innerHTML = '<option value="">Seleccionar asignatura</option>';
+            asigSnap.forEach(doc => {
+                const d = doc.data();
+                asigSelect.innerHTML += `<option value="${doc.id}">${d.nombre || 'Asignatura'}</option>`;
+            });
+
+            // Cargar profesores en el modal
+            const profSelect = document.getElementById('claseProfesor');
+            const profSnap = await getDocs(collection(db, 'colegios', colegioId, 'profesores'));
+            profSelect.innerHTML = '<option value="">Seleccionar profesor</option>';
+            profSnap.forEach(doc => {
+                const d = doc.data();
+                profSelect.innerHTML +=
+                `<option value="${doc.id}">${d.nombres || ''} ${d.apellidos || ''}</option>`;
+            });
+        }
+
+        // Cargar horario
+        document.getElementById('btnCargarHorario')?.addEventListener('click', async () => {
+            const cursoId = document.getElementById('horarioCurso').value;
+            if (!cursoId) {
+                alert('Selecciona un curso');
+                return;
+            }
+
+            cursoActual = cursoId;
+            const cursoDoc = await getDoc(doc(db, 'colegios', colegioId, 'cursos', cursoId));
+            const cursoNombre = cursoDoc.exists() ? cursoDoc.data().nombre : 'Curso';
+
+            document.getElementById('horarioTitulo').textContent = `Horario - ${cursoNombre}`;
+
+            // Cargar horarios
+            const q = query(collection(db, 'colegios', colegioId, 'horarios'),
+                where('cursoId', '==', cursoId));
+            const snap = await getDocs(q);
+            horarioActual = [];
+            snap.forEach(doc => {
+                horarioActual.push({ id: doc.id, ...doc.data() });
+            });
+
+            mostrarHorario();
+            mostrarClases();
+        });
+
+        function mostrarHorario() {
+            const grid = document.getElementById('horarioGrid');
+            const dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'];
+            const horas = ['7:00 - 7:45', '7:45 - 8:30', '8:30 - 9:15', '9:15 - 10:00',
+                '10:30 - 11:15', '11:15 - 12:00', '12:00 - 12:45',
+                '14:00 - 14:45', '14:45 - 15:30', '15:30 - 16:15'
+            ];
+
+            let html = `<div class="h-cell header"></div>`;
+            dias.forEach(d => {
+                html += `<div class="h-cell header">${d}</div>`;
+            });
+
+            horas.forEach(hora => {
+                html += `<div class="h-cell hora">${hora}</div>`;
+                dias.forEach(dia => {
+                    const clase = horarioActual.find(h => h.dia === dia && h.hora === hora);
+                    if (clase) {
+                        html += `
+                            <div class="h-cell materia">
+                                ${clase.asignaturaNombre || 'Clase'}
+                                <span class="prof">${clase.profesorNombre || 'Sin profesor'}</span>
+                            </div>
+                        `;
+                    } else {
+                        html += `<div class="h-cell"></div>`;
+                    }
+                });
+            });
+
+            grid.innerHTML = html;
+            document.getElementById('horarioVista').style.display = 'block';
+        }
+
+        async function mostrarClases() {
+            const tbody = document.getElementById('tablaHorarioClases');
+            if (horarioActual.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="text-center text-muted">No hay clases asignadas</td></tr>`;
+                document.getElementById('horarioClases').style.display = 'none';
+                return;
+            }
+
+            let html = '';
+            horarioActual.forEach((h, index) => {
+                html += `
+                    <tr>
+                        <td>${h.dia || '-'}</td>
+                        <td>${h.hora || '-'}</td>
+                        <td>${h.asignaturaNombre || '-'}</td>
+                        <td>${h.profesorNombre || '-'}</td>
+                        <td>
+                            <button class="btn-danger btn-sm" onclick="window.eliminarClase('${h.id}')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
+            document.getElementById('horarioClases').style.display = 'block';
+
+            window.eliminarClase = async (id) => {
+                if (confirm('¿Eliminar esta clase del horario?')) {
+                    await deleteDoc(doc(db, 'colegios', colegioId, 'horarios', id));
+                    alert('✅ Clase eliminada');
+                    document.getElementById('btnCargarHorario').click();
+                }
+            };
+        }
+
+        // Agregar clase al horario
+        document.getElementById('btnAgregarHorario')?.addEventListener('click', () => {
+            if (!cursoActual) {
+                alert('Primero carga un horario de curso');
+                return;
+            }
+            document.getElementById('modalAgregarClase').classList.add('show');
+        });
+
+        document.getElementById('closeClaseModal')?.addEventListener('click', () => {
+            document.getElementById('modalAgregarClase').classList.remove('show');
+        });
+        document.getElementById('cancelClaseModal')?.addEventListener('click', () => {
+            document.getElementById('modalAgregarClase').classList.remove('show');
+        });
+
+        document.getElementById('formAgregarClase')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const dia = document.getElementById('claseDia').value;
+            const hora = document.getElementById('claseHora').value;
+            const asignaturaId = document.getElementById('claseAsignatura').value;
+            const profesorId = document.getElementById('claseProfesor').value;
+
+            if (!dia || !hora || !asignaturaId || !profesorId) {
+                alert('Completa todos los campos');
+                return;
+            }
+
+            // Obtener nombres
+            const asigDoc = await getDoc(doc(db, 'colegios', colegioId, 'asignaturas', asignaturaId));
+            const profDoc = await getDoc(doc(db, 'colegios', colegioId, 'profesores', profesorId));
+
+            const data = {
+                cursoId: cursoActual,
+                dia: dia,
+                hora: hora,
+                asignaturaId: asignaturaId,
+                asignaturaNombre: asigDoc.exists() ? asigDoc.data().nombre : 'Asignatura',
+                profesorId: profesorId,
+                profesorNombre: profDoc.exists() ? `${profDoc.data().nombres || ''} ${profDoc.data().apellidos || ''}` :
+                    'Profesor',
+                fechaRegistro: serverTimestamp()
+            };
+
+            try {
+                await addDoc(collection(db, 'colegios', colegioId, 'horarios'), data);
+                alert('✅ Clase agregada al horario');
+                document.getElementById('modalAgregarClase').classList.remove('show');
+                document.getElementById('btnCargarHorario').click();
+            } catch (error) {
+                console.error('Error:', error);
+                alert('❌ Error al agregar la clase');
+            }
+        });
+
+        // =============================================
+        // FILTROS PARA NOTAS Y BOLETINES
+        // =============================================
+        async function cargarFiltrosNotas() {
+            await cargarFiltros('filtroGradoNotas', 'filtroCursoNotas', 'filtroEstudianteNotas');
+        }
+
+        async function cargarFiltrosBoletines() {
+            await cargarFiltros('filtroGradoBoletin', 'filtroCursoBoletin', 'filtroEstudianteBoletin');
+        }
+
+        async function cargarFiltros(gradoId, cursoId, estudianteId) {
+            const gradoSelect = document.getElementById(gradoId);
+            const cursoSelect = document.getElementById(cursoId);
+            const estudianteSelect = document.getElementById(estudianteId);
+
+            const gradosSnap = await getDocs(collection(db, 'colegios', colegioId, 'grados'));
+            gradoSelect.innerHTML = '<option value="">Seleccionar grado</option>';
+            gradosSnap.forEach(doc => {
+                const d = doc.data();
+                gradoSelect.innerHTML += `<option value="${doc.id}">${d.nombre || 'Grado'}</option>`;
+            });
+
+            gradoSelect.onchange = async () => {
+                const gId = gradoSelect.value;
+                cursoSelect.innerHTML = '<option value="">Seleccionar curso</option>';
+                estudianteSelect.innerHTML = '<option value="">Seleccionar estudiante</option>';
+                if (gId) {
+                    const q = query(collection(db, 'colegios', colegioId, 'cursos'), where('gradoId', '==', gId));
+                    const snap = await getDocs(q);
+                    snap.forEach(doc => {
+                        const d = doc.data();
+                        cursoSelect.innerHTML += `<option value="${doc.id}">${d.nombre || 'Curso'}</option>`;
+                    });
+                }
+            };
+
+            cursoSelect.onchange = async () => {
+                const cId = cursoSelect.value;
+                estudianteSelect.innerHTML = '<option value="">Seleccionar estudiante</option>';
+                if (cId) {
+                    const q = query(collection(db, 'colegios', colegioId, 'matriculas'),
+                        where('cursoId', '==', cId), where('estado', '==', 'activo'));
+                    const snap = await getDocs(q);
+                    for (const doc of snap.docs) {
+                        const m = doc.data();
+                        const estDoc = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', m.estudianteId));
+                        if (estDoc.exists()) {
+                            const e = estDoc.data();
+                            estudianteSelect.innerHTML +=
+                                `<option value="${m.estudianteId}">${e.nombres || ''} ${e.apellidos || ''}</option>`;
+                        }
+                    }
+                }
+            };
+        }
+
+        // =============================================
+        // CONSULTAR NOTAS
+        // =============================================
+        document.getElementById('btnConsultarNotas')?.addEventListener('click', async () => {
+            const estudianteId = document.getElementById('filtroEstudianteNotas').value;
+            const periodo = document.getElementById('filtroPeriodoNotas').value;
+            const tbody = document.getElementById('tablaNotas');
+
+            if (!estudianteId) {
+                alert('Selecciona un estudiante');
+                return;
+            }
+
+            try {
+                const q = query(
+                    collection(db, 'colegios', colegioId, 'notas'),
+                    where('estudianteId', '==', estudianteId)
+                );
+                const snap = await getDocs(q);
+
+                const notasPorAsignatura = {};
+                snap.forEach(doc => {
+                    const n = doc.data();
+                    if (periodo && n.periodo && n.periodo !== parseInt(periodo)) return;
+                    if (!notasPorAsignatura[n.asignaturaId]) {
+                        notasPorAsignatura[n.asignaturaId] = {
+                            notas: [],
+                            nombre: n.asignaturaNombre || 'Asignatura'
+                        };
+                    }
+                    notasPorAsignatura[n.asignaturaId].notas.push(parseFloat(n.valor) || 0);
+                });
+
+                if (Object.keys(notasPorAsignatura).length === 0) {
+                    tbody.innerHTML =
+                        `<tr><td colspan="7" class="text-center text-muted">No hay notas para este estudiante${periodo ? ' en el periodo '+periodo : ''}</td></tr>`;
+                    return;
+                }
+
+                let html = '';
+                for (const [asigId, data] of Object.entries(notasPorAsignatura)) {
+                    const notas = data.notas;
+                    const n1 = notas[0] || '-';
+                    const n2 = notas[1] || '-';
+                    const n3 = notas[2] || '-';
+                    const n4 = notas[3] || '-';
+                    const promedio = notas.length > 0 ? (notas.reduce((a, b) => a + b, 0) / notas.length) : 0;
+                    const estado = promedio >= 3.0 ? 'Aprobado' : (promedio > 0 ? 'Reprobado' : 'Sin nota');
+                    const color = promedio >= 3.0 ? 'var(--success)' : (promedio > 0 ? 'var(--danger)' : 'var(--gray-400)');
+
+                    html += `
+                        <tr>
+                            <td><strong>${data.nombre}</strong></td>
+                            <td>${n1}</td>
+                            <td>${n2}</td>
+                            <td>${n3}</td>
+                            <td>${n4}</td>
+                            <td><strong>${promedio.toFixed(1)}</strong></td>
+                            <td><span style="color: ${color}; font-weight: 600;">${estado}</span></td>
+                        </tr>
+                    `;
+                }
+                tbody.innerHTML = html;
+
+            } catch (error) {
+                console.error('Error al consultar notas:', error);
+                tbody.innerHTML =
+                `<tr><td colspan="7" class="text-center text-danger">Error al consultar notas</td></tr>`;
+            }
+        });
+
+        // =============================================
+        // GENERAR BOLETÍN
+        // =============================================
+        document.getElementById('btnGenerarBoletin')?.addEventListener('click', async () => {
+            const estudianteId = document.getElementById('filtroEstudianteBoletin').value;
+            const periodo = document.getElementById('filtroPeriodoBoletin').value;
+
+            if (!estudianteId) {
+                alert('Selecciona un estudiante');
+                return;
+            }
+
+            try {
+                const estDoc = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', estudianteId));
+                if (!estDoc.exists()) {
+                    alert('Estudiante no encontrado');
+                    return;
+                }
+                const estudiante = estDoc.data();
+
+                const colegioDoc = await getDoc(doc(db, 'colegios', colegioId));
+                const colegio = colegioDoc.data();
+
+                const q = query(
+                    collection(db, 'colegios', colegioId, 'notas'),
+                    where('estudianteId', '==', estudianteId)
+                );
+                const snap = await getDocs(q);
+
+                const notasPorAsignatura = {};
+                snap.forEach(doc => {
+                    const n = doc.data();
+                    if (periodo && n.periodo && n.periodo !== parseInt(periodo)) return;
+                    if (!notasPorAsignatura[n.asignaturaId]) {
+                        notasPorAsignatura[n.asignaturaId] = {
+                            notas: [],
+                            nombre: n.asignaturaNombre || 'Asignatura'
+                        };
+                    }
+                    notasPorAsignatura[n.asignaturaId].notas.push(parseFloat(n.valor) || 0);
+                });
+
+                let html = `
+                    <div class="boletin-print">
+                        <div class="header">
+                            <h1>${colegio.nombre || 'Colegio'}</h1>
+                            <p>${colegio.ciudad || ''} - ${colegio.departamento || ''}</p>
+                            <p>NIT: ${colegio.nit || '-'} | Año escolar: ${colegio.anioEscolar || '-'}</p>
+                        </div>
+                        <div class="estudiante-info">
+                            <h3>Datos del Estudiante</h3>
+                            <p><strong>Nombre:</strong> ${estudiante.nombres || ''} ${estudiante.apellidos || ''}</p>
+                            <p><strong>Documento:</strong> ${estudiante.documento || '-'}</p>
+                            <p><strong>Fecha de nacimiento:</strong> ${estudiante.fechaNacimiento || '-'}</p>
+                            <p><strong>Acudiente:</strong> ${estudiante.acudiente || '-'}</p>
+                            <p><strong>Periodo:</strong> ${periodo ? `Periodo ${periodo}` : 'Todos los periodos'}</p>
+                        </div>
+                        <div>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Asignatura</th>
+                                        <th style="text-align:center;">Nota 1</th>
+                                        <th style="text-align:center;">Nota 2</th>
+                                        <th style="text-align:center;">Nota 3</th>
+                                        <th style="text-align:center;">Nota 4</th>
+                                        <th style="text-align:center;">Promedio</th>
+                                        <th style="text-align:center;">Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                `;
+
+                if (Object.keys(notasPorAsignatura).length === 0) {
+                    html += `
+                        <tr>
+                            <td colspan="7" style="padding: 20px; text-align: center; color: var(--gray-500);">
+                                No hay notas registradas para este estudiante
+                            </td>
+                        </tr>
+                    `;
+                } else {
+                    for (const [asigId, data] of Object.entries(notasPorAsignatura)) {
+                        const notas = data.notas;
+                        const n1 = notas[0] || '-';
+                        const n2 = notas[1] || '-';
+                        const n3 = notas[2] || '-';
+                        const n4 = notas[3] || '-';
+                        const promedio = notas.length > 0 ? (notas.reduce((a, b) => a + b, 0) / notas.length) : 0;
+                        const estado = promedio >= 3.0 ? 'Aprobado' : (promedio > 0 ? 'Reprobado' : 'Sin nota');
+                        const color = promedio >= 3.0 ? '#22c55e' : (promedio > 0 ? '#ef4444' : '#94a3b8');
+
+                        html += `
+                            <tr>
+                                <td><strong>${data.nombre}</strong></td>
+                                <td style="text-align:center;">${n1}</td>
+                                <td style="text-align:center;">${n2}</td>
+                                <td style="text-align:center;">${n3}</td>
+                                <td style="text-align:center;">${n4}</td>
+                                <td style="text-align:center; font-weight: 600;">${promedio.toFixed(1)}</td>
+                                <td style="text-align:center; color: ${color}; font-weight: 600;">${estado}</td>
+                            </tr>
+                        `;
+                    }
+                }
+
+                html += `
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="footer">
+                            <p>Boletín generado el ${new Date().toLocaleDateString()}</p>
+                            <p>EduOne - Sistema de Gestión Escolar</p>
+                        </div>
+                    </div>
+                `;
+
+                document.getElementById('boletinPreview').innerHTML = html;
+                document.getElementById('boletinContent').style.display = 'block';
+
+            } catch (error) {
+                console.error('Error al generar boletín:', error);
+                alert('Error al generar el boletín');
+            }
+        });
+
+        // =============================================
+        // MODALES: ESTUDIANTE
+        // =============================================
+        document.getElementById('btnRegistrarEstudiante')?.addEventListener('click', async () => {
+            document.getElementById('modalEstudiante').classList.add('show');
+            const select = document.getElementById('estGrado');
+            const snap = await getDocs(collection(db, 'colegios', colegioId, 'grados'));
+            select.innerHTML = '<option value="">Seleccionar grado</option>';
+            snap.forEach(doc => {
+                const d = doc.data();
+                select.innerHTML += `<option value="${doc.id}">${d.nombre || 'Grado'}</option>`;
+            });
+            select.onchange = async () => {
+                const cursoSelect = document.getElementById('estCurso');
+                cursoSelect.innerHTML = '<option value="">Seleccionar curso</option>';
+                if (select.value) {
+                    const q = query(collection(db, 'colegios', colegioId, 'cursos'), where('gradoId', '==', select.value));
+                    const snap = await getDocs(q);
+                    snap.forEach(doc => {
+                        const d = doc.data();
+                        cursoSelect.innerHTML += `<option value="${doc.id}">${d.nombre || 'Curso'}</option>`;
+                    });
+                }
+            };
+        });
+
+        document.getElementById('closeEstudianteModal')?.addEventListener('click', () => {
+            document.getElementById('modalEstudiante').classList.remove('show');
+        });
+        document.getElementById('cancelEstudianteModal')?.addEventListener('click', () => {
+            document.getElementById('modalEstudiante').classList.remove('show');
+        });
+
+        document.getElementById('formEstudiante')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const data = {
+                nombres: document.getElementById('estNombres').value.trim(),
+                apellidos: document.getElementById('estApellidos').value.trim(),
+                documento: document.getElementById('estDocumento').value.trim(),
+                fechaNacimiento: document.getElementById('estFechaNacimiento').value,
+                direccion: document.getElementById('estDireccion').value.trim(),
+                telefono: document.getElementById('estTelefono').value.trim(),
+                acudiente: document.getElementById('estAcudiente').value.trim(),
+                estado: document.getElementById('estEstado').value,
+                fechaRegistro: serverTimestamp()
+            };
+
+            const gradoId = document.getElementById('estGrado').value;
+            const cursoId = document.getElementById('estCurso').value;
+
+            if (!data.nombres || !data.apellidos || !data.documento || !gradoId || !cursoId) {
+                alert('Completa todos los campos obligatorios');
+                return;
+            }
+
+            try {
+                const estRef = await addDoc(collection(db, 'colegios', colegioId, 'estudiantes'), data);
+                await addDoc(collection(db, 'colegios', colegioId, 'matriculas'), {
+                    estudianteId: estRef.id,
+                    gradoId: gradoId,
+                    cursoId: cursoId,
+                    anio: new Date().getFullYear(),
+                    estado: 'activo',
+                    fechaRegistro: serverTimestamp()
+                });
+                alert('✅ Estudiante inscrito exitosamente');
+                document.getElementById('modalEstudiante').classList.remove('show');
+                cargarEstudiantes();
+                cargarDashboard();
+            } catch (error) {
+                console.error('Error:', error);
+                alert('❌ Error al guardar estudiante');
+            }
+        });
+
+        // =============================================
+        // MODALES: PROFESOR
+        // =============================================
+        document.getElementById('btnRegistrarProfesor')?.addEventListener('click', () => {
+            document.getElementById('modalProfesor').classList.add('show');
+        });
+
+        document.getElementById('closeProfesorModal')?.addEventListener('click', () => {
+            document.getElementById('modalProfesor').classList.remove('show');
+        });
+        document.getElementById('cancelProfesorModal')?.addEventListener('click', () => {
+            document.getElementById('modalProfesor').classList.remove('show');
+        });
+
+        document.getElementById('formProfesor')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const data = {
+                nombres: document.getElementById('profNombres').value.trim(),
+                apellidos: document.getElementById('profApellidos').value.trim(),
+                documento: document.getElementById('profDocumento').value.trim(),
+                correo: document.getElementById('profCorreo').value.trim(),
+                telefono: document.getElementById('profTelefono').value.trim(),
+                estado: document.getElementById('profEstado').value,
+                fechaRegistro: serverTimestamp()
+            };
+
+            if (!data.nombres || !data.apellidos || !data.documento) {
+                alert('Completa todos los campos obligatorios');
+                return;
+            }
+
+            try {
+                await addDoc(collection(db, 'colegios', colegioId, 'profesores'), data);
+                alert('✅ Profesor registrado exitosamente');
+                document.getElementById('modalProfesor').classList.remove('show');
+                cargarProfesores();
+                cargarDashboard();
+            } catch (error) {
+                console.error('Error:', error);
+                alert('❌ Error al guardar profesor');
+            }
+        });
+
+        // =============================================
+        // MODALES: GRADO
+        // =============================================
+        document.getElementById('btnRegistrarGrado')?.addEventListener('click', () => {
+            document.getElementById('modalGrado').classList.add('show');
+        });
+
+        document.getElementById('closeGradoModal')?.addEventListener('click', () => {
+            document.getElementById('modalGrado').classList.remove('show');
+        });
+        document.getElementById('cancelGradoModal')?.addEventListener('click', () => {
+            document.getElementById('modalGrado').classList.remove('show');
+        });
+
+        document.getElementById('formGrado')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const data = {
+                nombre: document.getElementById('gradoNombre').value.trim(),
+                orden: parseInt(document.getElementById('gradoOrden').value),
+                estado: document.getElementById('gradoEstado').value,
+                fechaRegistro: serverTimestamp()
+            };
+
+            if (!data.nombre || !data.orden) {
+                alert('Completa todos los campos obligatorios');
+                return;
+            }
+
+            try {
+                await addDoc(collection(db, 'colegios', colegioId, 'grados'), data);
+                alert('✅ Grado registrado exitosamente');
+                document.getElementById('modalGrado').classList.remove('show');
+                cargarGrados();
+                cargarDashboard();
+            } catch (error) {
+                console.error('Error:', error);
+                alert('❌ Error al guardar grado');
+            }
+        });
+
+        // =============================================
+        // MODALES: CURSO
+        // =============================================
+        document.getElementById('btnRegistrarCurso')?.addEventListener('click', async () => {
+            document.getElementById('modalCurso').classList.add('show');
+            const select = document.getElementById('cursoGrado');
+            const snap = await getDocs(collection(db, 'colegios', colegioId, 'grados'));
+            select.innerHTML = '<option value="">Seleccionar grado</option>';
+            snap.forEach(doc => {
+                const d = doc.data();
+                select.innerHTML += `<option value="${doc.id}">${d.nombre || 'Grado'}</option>`;
+            });
+            document.getElementById('cursoAnio').value = new Date().getFullYear();
+        });
+
+        document.getElementById('closeCursoModal')?.addEventListener('click', () => {
+            document.getElementById('modalCurso').classList.remove('show');
+        });
+        document.getElementById('cancelCursoModal')?.addEventListener('click', () => {
+            document.getElementById('modalCurso').classList.remove('show');
+        });
+
+        document.getElementById('formCurso')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const data = {
+                nombre: document.getElementById('cursoNombre').value.trim(),
+                gradoId: document.getElementById('cursoGrado').value,
+                anio: parseInt(document.getElementById('cursoAnio').value),
+                estado: document.getElementById('cursoEstado').value,
+                fechaRegistro: serverTimestamp()
+            };
+
+            if (!data.nombre || !data.gradoId || !data.anio) {
+                alert('Completa todos los campos obligatorios');
+                return;
+            }
+
+            try {
+                await addDoc(collection(db, 'colegios', colegioId, 'cursos'), data);
+                alert('✅ Curso registrado exitosamente');
+                document.getElementById('modalCurso').classList.remove('show');
+                cargarCursos();
+                cargarDashboard();
+            } catch (error) {
+                console.error('Error:', error);
+                alert('❌ Error al guardar curso');
+            }
+        });
+
+        // =============================================
+        // MODALES: ASIGNATURA
+        // =============================================
+        document.getElementById('btnRegistrarAsignatura')?.addEventListener('click', () => {
+            document.getElementById('modalAsignatura').classList.add('show');
+        });
+
+        document.getElementById('closeAsignaturaModal')?.addEventListener('click', () => {
+            document.getElementById('modalAsignatura').classList.remove('show');
+        });
+        document.getElementById('cancelAsignaturaModal')?.addEventListener('click', () => {
+            document.getElementById('modalAsignatura').classList.remove('show');
+        });
+
+        document.getElementById('formAsignatura')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const data = {
+                nombre: document.getElementById('asigNombre').value.trim(),
+                codigo: document.getElementById('asigCodigo').value.trim(),
+                estado: document.getElementById('asigEstado').value,
+                fechaRegistro: serverTimestamp()
+            };
+
+            if (!data.nombre) {
+                alert('Completa todos los campos obligatorios');
+                return;
+            }
+
+            try {
+                await addDoc(collection(db, 'colegios', colegioId, 'asignaturas'), data);
+                alert('✅ Asignatura registrada exitosamente');
+                document.getElementById('modalAsignatura').classList.remove('show');
+                cargarAsignaturas();
+                cargarDashboard();
+            } catch (error) {
+                console.error('Error:', error);
+                alert('❌ Error al guardar asignatura');
+            }
+        });
+
+        // =============================================
+        // AUTH - VERIFICAR RECTOR
+        // =============================================
+        onAuthStateChanged(auth, async (user) => {
+            if (isLoggingOut) return;
+
+            if (!user) {
+                window.location.href = '../login.html';
+                return;
+            }
+
+            try {
+                const userDoc = await getDoc(doc(db, 'usuarios', user.uid));
+                if (!userDoc.exists()) {
+                    await signOut(auth);
+                    window.location.href = '../login.html';
+                    return;
+                }
+
+                const data = userDoc.data();
+                if (data.rol !== 'rector' || data.activo !== true || !data.colegioId) {
+                    alert('⛔ Acceso denegado. No eres rector o tu cuenta está inactiva.');
+                    await signOut(auth);
+                    window.location.href = '../login.html';
+                    return;
+                }
+
+                colegioId = data.colegioId;
+                usuarioActual = data;
+                userNameEl.textContent = data.nombre || user.email;
+                userRoleEl.textContent = 'Rector';
+
+                await cargarDashboard();
+
+            } catch (error) {
+                console.error('Error de autenticación:', error);
+                await signOut(auth);
+                window.location.href = '../login.html';
+            }
+        });
+
+        // =============================================
+        // LOGOUT
+        // =============================================
+        logoutBtn.addEventListener('click', async () => {
+            if (confirm('¿Seguro que deseas cerrar sesión?')) {
+                try {
+                    isLoggingOut = true;
+                    await signOut(auth);
+                    window.location.href = '../login.html';
+                } catch (error) {
+                    console.error('Error al cerrar sesión:', error);
+                    alert('❌ Error al cerrar sesión');
+                    isLoggingOut = false;
+                }
+            }
+        });
+
+        console.log('✅ EduOne - Panel del Rector cargado correctamente');
+        console.log('📁 Ruta: colegios/colegio.html');
+    </script>
+
+</body>
+</html>
