@@ -1,0 +1,1622 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EduOne - Panel de Administración</title>
+
+    <!-- Font Awesome para iconos -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+    <!-- Google Fonts (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap"
+        rel="stylesheet"
+    />
+
+    <style>
+        /* =============================================
+           GLOBAL CSS - EduOne
+           ============================================= */
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --primary-light: #818cf8;
+            --primary-bg: #eef2ff;
+
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e1;
+            --gray-400: #94a3b8;
+            --gray-500: #64748b;
+            --gray-600: #475569;
+            --gray-700: #334155;
+            --gray-800: #1e293b;
+            --gray-900: #0f172a;
+
+            --sidebar-width: 260px;
+            --header-height: 70px;
+            --radius: 12px;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 4px 24px rgba(0, 0, 0, 0.10);
+
+            --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        html {
+            font-size: 16px;
+        }
+
+        body {
+            font-family: var(--font);
+            background-color: var(--gray-100);
+            color: var(--gray-800);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--gray-100);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gray-300);
+            border-radius: 8px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--gray-400);
+        }
+
+        /* Utilidades */
+        .text-center {
+            text-align: center;
+        }
+
+        .text-muted {
+            color: var(--gray-500);
+        }
+
+        .text-success {
+            color: var(--success);
+        }
+
+        .text-danger {
+            color: var(--danger);
+        }
+
+        .text-warning {
+            color: var(--warning);
+        }
+
+        /* Botones */
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 24px;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            font-family: var(--font);
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.97);
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 24px;
+            background: var(--gray-200);
+            color: var(--gray-700);
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            font-family: var(--font);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-secondary:hover {
+            background: var(--gray-300);
+        }
+
+        .btn-danger {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: var(--danger);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            font-family: var(--font);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        .btn-success {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: var(--success);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            font-family: var(--font);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-success:hover {
+            background: #16a34a;
+        }
+
+        .btn-sm {
+            padding: 6px 14px;
+            font-size: 0.75rem;
+            border-radius: 6px;
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .badge-success {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .badge-danger {
+            background: #fecaca;
+            color: #991b1b;
+        }
+
+        .badge-warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .badge-info {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        /* Cards */
+        .card {
+            background: #fff;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            margin-bottom: 24px;
+        }
+
+        .card-header {
+            padding: 18px 24px;
+            border-bottom: 1px solid var(--gray-200);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-header h2 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--gray-800);
+        }
+
+        .card-body {
+            padding: 24px;
+        }
+
+        /* Tablas */
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        .table-modern {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        .table-modern thead th {
+            background: var(--gray-50);
+            color: var(--gray-600);
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 2px solid var(--gray-200);
+        }
+
+        .table-modern tbody td {
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--gray-100);
+            vertical-align: middle;
+        }
+
+        .table-modern tbody tr:hover {
+            background: var(--gray-50);
+        }
+
+        .table-modern tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Formularios */
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 500;
+            font-size: 0.85rem;
+            color: var(--gray-700);
+            margin-bottom: 4px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1.5px solid var(--gray-200);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-family: var(--font);
+            transition: border-color 0.2s, box-shadow 0.2s;
+            background: #fff;
+            color: var(--gray-800);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+        }
+
+        .form-control::placeholder {
+            color: var(--gray-400);
+        }
+
+        select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23475569' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            padding-right: 36px;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-content {
+            position: relative;
+            background: #fff;
+            border-radius: var(--radius);
+            max-width: 640px;
+            width: 94%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-lg);
+            animation: modalFade 0.25s ease;
+        }
+
+        @keyframes modalFade {
+            from {
+                opacity: 0;
+                transform: scale(0.95) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .modal-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--gray-200);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            color: var(--gray-400);
+            cursor: pointer;
+            padding: 0 6px;
+            line-height: 1;
+            transition: color 0.2s;
+        }
+
+        .modal-close:hover {
+            color: var(--gray-700);
+        }
+
+        .modal-body {
+            padding: 24px;
+        }
+
+        .modal-footer {
+            padding: 16px 24px;
+            border-top: 1px solid var(--gray-200);
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .form-grid .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        /* =============================================
+           ADMIN.CSS - Estilos específicos del panel
+           ============================================= */
+
+        /* SIDEBAR */
+        .sidebar {
+            width: var(--sidebar-width);
+            height: 100vh;
+            background: #fff;
+            border-right: 1px solid var(--gray-200);
+            display: flex;
+            flex-direction: column;
+            position: sticky;
+            top: 0;
+            flex-shrink: 0;
+            transition: width 0.3s ease, transform 0.3s ease;
+            z-index: 100;
+            overflow: hidden;
+        }
+
+        .sidebar-header {
+            padding: 18px 20px;
+            border-bottom: 1px solid var(--gray-200);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: var(--header-height);
+        }
+
+        .sidebar-header .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--gray-900);
+        }
+
+        .sidebar-header .logo i {
+            color: var(--primary);
+            font-size: 1.4rem;
+        }
+
+        .sidebar-toggle {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            color: var(--gray-500);
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 6px;
+            transition: background 0.2s;
+            display: none;
+        }
+
+        .sidebar-toggle:hover {
+            background: var(--gray-100);
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 16px 12px;
+            overflow-y: auto;
+        }
+
+        .sidebar-nav ul li {
+            margin-bottom: 2px;
+        }
+
+        .sidebar-nav ul li a {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 10px 14px;
+            border-radius: 8px;
+            color: var(--gray-600);
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: background 0.15s, color 0.15s;
+        }
+
+        .sidebar-nav ul li a i {
+            width: 20px;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+
+        .sidebar-nav ul li a:hover {
+            background: var(--gray-100);
+            color: var(--gray-800);
+        }
+
+        .sidebar-nav ul li.active a {
+            background: var(--primary-bg);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .sidebar-footer {
+            padding: 16px 20px;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .btn-logout {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            padding: 10px 14px;
+            border: none;
+            border-radius: 8px;
+            background: transparent;
+            color: var(--gray-600);
+            font-weight: 500;
+            font-size: 0.9rem;
+            font-family: var(--font);
+            cursor: pointer;
+            transition: background 0.15s, color 0.15s;
+        }
+
+        .btn-logout:hover {
+            background: #fef2f2;
+            color: var(--danger);
+        }
+
+        .btn-logout i {
+            width: 20px;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+
+        /* MAIN CONTENT */
+        .main-content {
+            flex: 1;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* TOP HEADER */
+        .top-header {
+            height: var(--header-height);
+            background: #fff;
+            border-bottom: 1px solid var(--gray-200);
+            padding: 0 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .header-left h1 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--gray-800);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .user-info {
+            text-align: right;
+        }
+
+        .user-name {
+            display: block;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--gray-800);
+        }
+
+        .user-role {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--gray-500);
+            text-transform: capitalize;
+        }
+
+        .user-avatar {
+            font-size: 2.2rem;
+            color: var(--gray-400);
+        }
+
+        /* CONTENT AREA */
+        .content-area {
+            flex: 1;
+            padding: 24px 32px;
+        }
+
+        .page-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .page-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* STATS GRID */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: #fff;
+            border-radius: var(--radius);
+            padding: 20px 24px;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            transition: box-shadow 0.2s;
+        }
+
+        .stat-card:hover {
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            flex-shrink: 0;
+        }
+
+        .stat-icon i {
+            font-size: 1.4rem;
+        }
+
+        .stat-card:nth-child(1) .stat-icon {
+            background: #dbeafe;
+            color: #2563eb;
+        }
+
+        .stat-card:nth-child(2) .stat-icon {
+            background: #dcfce7;
+            color: #16a34a;
+        }
+
+        .stat-card:nth-child(3) .stat-icon {
+            background: #fecaca;
+            color: #dc2626;
+        }
+
+        .stat-info {
+            flex: 1;
+        }
+
+        .stat-label {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--gray-500);
+            font-weight: 500;
+        }
+
+        .stat-value {
+            display: block;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            line-height: 1.2;
+        }
+
+        /* PAGE HEADER */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .page-header h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--gray-800);
+        }
+
+        .action-bar {
+            margin-top: 8px;
+        }
+
+        .text-muted i {
+            margin-right: 6px;
+        }
+
+        /* =============================================
+           RESPONSIVE
+           ============================================= */
+
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 72px;
+            }
+
+            .sidebar-header .logo span {
+                display: none;
+            }
+
+            .sidebar-nav ul li a span {
+                display: none;
+            }
+
+            .sidebar-nav ul li a {
+                justify-content: center;
+                padding: 12px;
+            }
+
+            .sidebar-nav ul li a i {
+                margin: 0;
+                font-size: 1.3rem;
+            }
+
+            .sidebar-footer .btn-logout span {
+                display: none;
+            }
+
+            .sidebar-footer .btn-logout {
+                justify-content: center;
+                padding: 12px;
+            }
+
+            .top-header {
+                padding: 0 16px;
+            }
+
+            .content-area {
+                padding: 16px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                left: 0;
+                top: 0;
+                transform: translateX(0);
+                width: var(--sidebar-width);
+                box-shadow: var(--shadow-lg);
+            }
+
+            .sidebar.collapsed {
+                transform: translateX(-100%);
+            }
+
+            .sidebar-header .logo span {
+                display: inline;
+            }
+
+            .sidebar-nav ul li a span {
+                display: inline;
+            }
+
+            .sidebar-nav ul li a {
+                justify-content: flex-start;
+                padding: 10px 14px;
+            }
+
+            .sidebar-nav ul li a i {
+                font-size: 1.1rem;
+            }
+
+            .sidebar-footer .btn-logout span {
+                display: inline;
+            }
+
+            .sidebar-footer .btn-logout {
+                justify-content: flex-start;
+                padding: 10px 14px;
+            }
+
+            .sidebar-toggle {
+                display: block;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .top-header {
+                padding: 0 16px;
+            }
+
+            .content-area {
+                padding: 16px;
+            }
+
+            .modal-content {
+                width: 96%;
+                margin: 10px;
+            }
+
+            .table-modern {
+                font-size: 0.8rem;
+            }
+
+            .table-modern thead th,
+            .table-modern tbody td {
+                padding: 10px 12px;
+            }
+
+            .card-header {
+                flex-direction: column;
+                gap: 8px;
+                align-items: flex-start;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .user-info {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .top-header {
+                padding: 0 12px;
+                height: 60px;
+            }
+
+            .header-left h1 {
+                font-size: 1rem;
+            }
+
+            .content-area {
+                padding: 12px;
+            }
+
+            .stat-card {
+                padding: 16px;
+            }
+
+            .stat-value {
+                font-size: 1.4rem;
+            }
+
+            .modal-header {
+                padding: 14px 18px;
+            }
+
+            .modal-body {
+                padding: 18px;
+            }
+
+            .modal-footer {
+                padding: 12px 18px;
+                flex-direction: column;
+            }
+
+            .modal-footer button {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- =========================================== -->
+    <!-- SIDEBAR LATERAL IZQUIERDO                   -->
+    <!-- =========================================== -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>EduOne</span>
+            </div>
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <nav class="sidebar-nav">
+            <ul>
+                <li class="active">
+                    <a href="#" data-page="dashboard">
+                        <i class="fas fa-th-large"></i>
+                        <span>Inicio</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-page="colegios">
+                        <i class="fas fa-school"></i>
+                        <span>Colegios</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-page="usuarios">
+                        <i class="fas fa-users"></i>
+                        <span>Usuarios</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-page="planes">
+                        <i class="fas fa-crown"></i>
+                        <span>Planes</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-page="configuracion">
+                        <i class="fas fa-cog"></i>
+                        <span>Configuración</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="sidebar-footer">
+            <button id="logoutBtn" class="btn-logout">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Cerrar sesión</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- =========================================== -->
+    <!-- CONTENIDO PRINCIPAL                         -->
+    <!-- =========================================== -->
+    <main class="main-content">
+
+        <!-- HEADER SUPERIOR -->
+        <header class="top-header">
+            <div class="header-left">
+                <h1 id="pageTitle">Dashboard</h1>
+            </div>
+            <div class="header-right">
+                <div class="user-info">
+                    <span class="user-name" id="userName">Cargando...</span>
+                    <span class="user-role" id="userRole">superadmin</span>
+                </div>
+                <div class="user-avatar">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+            </div>
+        </header>
+
+        <!-- ÁREA DE CONTENIDO DINÁMICO -->
+        <section class="content-area" id="contentArea">
+
+            <!-- ========================================= -->
+            <!-- DASHBOARD (vista por defecto)            -->
+            <!-- ========================================= -->
+            <div id="page-dashboard" class="page-content active">
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-school"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-label">Colegios registrados</span>
+                            <span class="stat-value" id="totalColegios">0</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-label">Colegios activos</span>
+                            <span class="stat-value" id="colegiosActivos">0</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-times-circle"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-label">Colegios inactivos</span>
+                            <span class="stat-value" id="colegiosInactivos">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Últimos colegios registrados -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Últimos colegios registrados</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table-modern">
+                                <thead>
+                                    <tr>
+                                        <th>Colegio</th>
+                                        <th>Ciudad</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tablaUltimosColegios">
+                                    <tr>
+                                        <td colspan="3" class="text-center text-muted">
+                                            <i class="fas fa-spinner fa-spin"></i> Cargando colegios...
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-bar">
+                    <button id="btnRegistrarColegio" class="btn-primary">
+                        <i class="fas fa-plus"></i> Registrar colegio
+                    </button>
+                </div>
+            </div>
+
+            <!-- ========================================= -->
+            <!-- COLEGIOS (vista de listado)              -->
+            <!-- ========================================= -->
+            <div id="page-colegios" class="page-content">
+                <div class="page-header">
+                    <h2>Gestión de Colegios</h2>
+                    <button id="btnRegistrarColegio2" class="btn-primary">
+                        <i class="fas fa-plus"></i> Registrar colegio
+                    </button>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table-modern">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Colegio</th>
+                                        <th>Ciudad</th>
+                                        <th>Departamento</th>
+                                        <th>Estado</th>
+                                        <th>Fecha creación</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tablaColegios">
+                                    <tr>
+                                        <td colspan="7" class="text-center text-muted">
+                                            <i class="fas fa-spinner fa-spin"></i> Cargando colegios...
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========================================= -->
+            <!-- OTRAS PÁGINAS (placeholder)              -->
+            <!-- ========================================= -->
+            <div id="page-usuarios" class="page-content">
+                <div class="card">
+                    <div class="card-body text-center text-muted" style="padding: 60px 20px;">
+                        <i class="fas fa-users" style="font-size: 48px; color: #cbd5e1;"></i>
+                        <h3 style="margin-top: 16px;">Módulo de Usuarios</h3>
+                        <p>Próximamente disponible</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="page-planes" class="page-content">
+                <div class="card">
+                    <div class="card-body text-center text-muted" style="padding: 60px 20px;">
+                        <i class="fas fa-crown" style="font-size: 48px; color: #cbd5e1;"></i>
+                        <h3 style="margin-top: 16px;">Módulo de Planes</h3>
+                        <p>Próximamente disponible</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="page-configuracion" class="page-content">
+                <div class="card">
+                    <div class="card-body text-center text-muted" style="padding: 60px 20px;">
+                        <i class="fas fa-cog" style="font-size: 48px; color: #cbd5e1;"></i>
+                        <h3 style="margin-top: 16px;">Configuración</h3>
+                        <p>Próximamente disponible</p>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- =========================================== -->
+    <!-- MODAL: Registrar Colegio                    -->
+    <!-- =========================================== -->
+    <div class="modal" id="modalRegistrarColegio">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Registrar nuevo colegio</h2>
+                <button class="modal-close" id="closeModal">&times;</button>
+            </div>
+            <form id="formRegistrarColegio">
+                <div class="modal-body">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="colegioNombre">Nombre del colegio *</label>
+                            <input type="text" id="colegioNombre" class="form-control" required placeholder="Ej: Colegio San José" />
+                        </div>
+                        <div class="form-group">
+                            <label for="colegioNit">NIT</label>
+                            <input type="text" id="colegioNit" class="form-control" placeholder="Ej: 123456789-0" />
+                        </div>
+                        <div class="form-group">
+                            <label for="colegioDireccion">Dirección</label>
+                            <input type="text" id="colegioDireccion" class="form-control" placeholder="Ej: Calle 10 # 5-20" />
+                        </div>
+                        <div class="form-group">
+                            <label for="colegioCiudad">Ciudad *</label>
+                            <input type="text" id="colegioCiudad" class="form-control" required placeholder="Ej: Neiva" />
+                        </div>
+                        <div class="form-group">
+                            <label for="colegioDepartamento">Departamento</label>
+                            <input type="text" id="colegioDepartamento" class="form-control" placeholder="Ej: Huila" />
+                        </div>
+                        <div class="form-group">
+                            <label for="colegioTelefono">Teléfono</label>
+                            <input type="text" id="colegioTelefono" class="form-control" placeholder="Ej: 3101234567" />
+                        </div>
+                        <div class="form-group">
+                            <label for="colegioCorreo">Correo electrónico</label>
+                            <input type="email" id="colegioCorreo" class="form-control" placeholder="Ej: info@colegio.edu.co" />
+                        </div>
+                        <div class="form-group">
+                            <label for="colegioRector">Nombre del rector</label>
+                            <input type="text" id="colegioRector" class="form-control" placeholder="Ej: María Rodríguez" />
+                        </div>
+                        <div class="form-group">
+                            <label for="colegioAnioEscolar">Año escolar *</label>
+                            <input type="number" id="colegioAnioEscolar" class="form-control" required min="2000" max="2100" />
+                        </div>
+                        <div class="form-group">
+                            <label for="colegioEstado">Estado</label>
+                            <select id="colegioEstado" class="form-control">
+                                <option value="activo">Activo</option>
+                                <option value="inactivo">Inactivo</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" id="cancelarModal">Cancelar</button>
+                    <button type="submit" class="btn-primary" id="btnGuardarColegio">
+                        <i class="fas fa-save"></i> Guardar colegio
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- =========================================== -->
+    <!-- SCRIPTS                                     -->
+    <!-- =========================================== -->
+
+    <!-- Firebase Modular SDK (vía CDN como módulo) -->
+    <script type="importmap">
+        {
+            "imports": {
+                "firebase/app": "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js",
+                "firebase/auth": "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js",
+                "firebase/firestore": "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js"
+            }
+        }
+    </script>
+
+    <script type="module">
+        // =============================================
+        // FIREBASE CONFIG
+        // =============================================
+        import { initializeApp } from "firebase/app";
+        import {
+            getAuth,
+            onAuthStateChanged,
+            signOut
+        } from "firebase/auth";
+        import {
+            getFirestore,
+            collection,
+            addDoc,
+            getDocs,
+            query,
+            orderBy,
+            limit,
+            serverTimestamp,
+            doc,
+            updateDoc,
+            getDoc,
+            where
+        } from "firebase/firestore";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyA3U98y5BJWQwpypFCAyNioqSRfXkr9UA0",
+            authDomain: "eduone-5f7cf.firebaseapp.com",
+            projectId: "eduone-5f7cf",
+            storageBucket: "eduone-5f7cf.firebasestorage.app",
+            messagingSenderId: "541282614006",
+            appId: "1:541282614006:web:f8cf617c99f08403df0ad7",
+            measurementId: "G-Y2P0EMNYCL"
+        };
+
+        // Inicializar Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // =============================================
+        // REFERENCIAS DOM
+        // =============================================
+        const userNameEl = document.getElementById('userName');
+        const userRoleEl = document.getElementById('userRole');
+        const totalColegiosEl = document.getElementById('totalColegios');
+        const colegiosActivosEl = document.getElementById('colegiosActivos');
+        const colegiosInactivosEl = document.getElementById('colegiosInactivos');
+        const tablaUltimosColegios = document.getElementById('tablaUltimosColegios');
+        const tablaColegios = document.getElementById('tablaColegios');
+        const modal = document.getElementById('modalRegistrarColegio');
+        const formRegistrarColegio = document.getElementById('formRegistrarColegio');
+        const logoutBtn = document.getElementById('logoutBtn');
+
+        // =============================================
+        // NAVEGACIÓN DEL SIDEBAR
+        // =============================================
+        const sidebar = document.getElementById('sidebar');
+        const toggleBtn = document.getElementById('sidebarToggle');
+        const navLinks = document.querySelectorAll('.sidebar-nav a');
+        const pages = document.querySelectorAll('.page-content');
+        const pageTitle = document.getElementById('pageTitle');
+
+        const pageNames = {
+            dashboard: 'Dashboard',
+            colegios: 'Gestión de Colegios',
+            usuarios: 'Usuarios',
+            planes: 'Planes',
+            configuracion: 'Configuración'
+        };
+
+        if (toggleBtn) {
+            toggleBtn.addEventListener('click', () => {
+                sidebar.classList.toggle('collapsed');
+            });
+        }
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const page = link.dataset.page;
+
+                navLinks.forEach(l => l.closest('li').classList.remove('active'));
+                link.closest('li').classList.add('active');
+
+                pages.forEach(p => p.classList.remove('active'));
+                const targetPage = document.getElementById('page-' + page);
+                if (targetPage) targetPage.classList.add('active');
+
+                if (pageNames[page]) pageTitle.textContent = pageNames[page];
+
+                if (window.innerWidth <= 768) {
+                    sidebar.classList.add('collapsed');
+                }
+            });
+        });
+
+        // =============================================
+        // MODAL
+        // =============================================
+        function openModal() {
+            modal.classList.add('show');
+        }
+
+        function closeModal() {
+            modal.classList.remove('show');
+            formRegistrarColegio.reset();
+            document.getElementById('colegioAnioEscolar').value = new Date().getFullYear();
+        }
+
+        document.getElementById('btnRegistrarColegio').addEventListener('click', openModal);
+        document.getElementById('btnRegistrarColegio2').addEventListener('click', openModal);
+        document.getElementById('closeModal').addEventListener('click', closeModal);
+        document.getElementById('cancelarModal').addEventListener('click', closeModal);
+        document.querySelector('.modal-overlay').addEventListener('click', closeModal);
+
+        // Establecer año actual
+        document.getElementById('colegioAnioEscolar').value = new Date().getFullYear();
+
+        // =============================================
+        // FUNCIONES DE FIRESTORE
+        // =============================================
+
+        // Cargar estadísticas y colegios
+        async function cargarDashboard() {
+            try {
+                const colegiosSnapshot = await getDocs(collection(db, 'colegios'));
+
+                let total = 0;
+                let activos = 0;
+                let inactivos = 0;
+                const colegiosList = [];
+
+                colegiosSnapshot.forEach(doc => {
+                    const data = doc.data();
+                    total++;
+                    if (data.estado === 'activo') activos++;
+                    else if (data.estado === 'inactivo') inactivos++;
+                    colegiosList.push({ id: doc.id, ...data });
+                });
+
+                // Actualizar estadísticas
+                totalColegiosEl.textContent = total;
+                colegiosActivosEl.textContent = activos;
+                colegiosInactivosEl.textContent = inactivos;
+
+                // Últimos 5 colegios para el dashboard
+                const ultimos = colegiosList.slice(-5).reverse();
+                if (ultimos.length === 0) {
+                    tablaUltimosColegios.innerHTML = `
+                        <tr>
+                            <td colspan="3" class="text-center text-muted">
+                                No hay colegios registrados
+                            </td>
+                        </tr>
+                    `;
+                } else {
+                    tablaUltimosColegios.innerHTML = ultimos.map(c => `
+                        <tr>
+                            <td><strong>${c.nombre || 'Sin nombre'}</strong></td>
+                            <td>${c.ciudad || 'N/A'}</td>
+                            <td>
+                                <span class="badge ${c.estado === 'activo' ? 'badge-success' : 'badge-danger'}">
+                                    ${c.estado || 'inactivo'}
+                                </span>
+                            </td>
+                        </tr>
+                    `).join('');
+                }
+
+                // Tabla completa de colegios
+                if (colegiosList.length === 0) {
+                    tablaColegios.innerHTML = `
+                        <tr>
+                            <td colspan="7" class="text-center text-muted">
+                                No hay colegios registrados
+                            </td>
+                        </tr>
+                    `;
+                } else {
+                    tablaColegios.innerHTML = colegiosList.map((c, index) => `
+                        <tr>
+                            <td>${index + 1}</td>
+                            <td><strong>${c.nombre || 'Sin nombre'}</strong></td>
+                            <td>${c.ciudad || 'N/A'}</td>
+                            <td>${c.departamento || 'N/A'}</td>
+                            <td>
+                                <span class="badge ${c.estado === 'activo' ? 'badge-success' : 'badge-danger'}">
+                                    ${c.estado || 'inactivo'}
+                                </span>
+                            </td>
+                            <td>${c.fechaCreacion ? new Date(c.fechaCreacion.toDate()).toLocaleDateString() : 'N/A'}</td>
+                            <td>
+                                <button class="btn-success btn-sm" onclick="toggleEstado('${c.id}', '${c.estado}')">
+                                    ${c.estado === 'activo' ? 'Desactivar' : 'Activar'}
+                                </button>
+                            </td>
+                        </tr>
+                    `).join('');
+                }
+
+                // Exponer toggleEstado globalmente
+                window.toggleEstado = async function(id, estadoActual) {
+                    const nuevoEstado = estadoActual === 'activo' ? 'inactivo' : 'activo';
+                    if (confirm(`¿Deseas ${nuevoEstado === 'activo' ? 'activar' : 'desactivar'} este colegio?`)) {
+                        try {
+                            await updateDoc(doc(db, 'colegios', id), {
+                                estado: nuevoEstado
+                            });
+                            alert('✅ Estado actualizado correctamente');
+                            cargarDashboard();
+                        } catch (error) {
+                            console.error('Error al actualizar estado:', error);
+                            alert('❌ Error al actualizar el estado');
+                        }
+                    }
+                };
+
+            } catch (error) {
+                console.error('Error al cargar dashboard:', error);
+                tablaUltimosColegios.innerHTML = `
+                    <tr>
+                        <td colspan="3" class="text-center text-danger">
+                            ❌ Error al cargar los datos
+                        </td>
+                    </tr>
+                `;
+                tablaColegios.innerHTML = `
+                    <tr>
+                        <td colspan="7" class="text-center text-danger">
+                            ❌ Error al cargar los datos
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+
+        // =============================================
+        // REGISTRAR COLEGIO
+        // =============================================
+        formRegistrarColegio.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const nombre = document.getElementById('colegioNombre').value.trim();
+            const nit = document.getElementById('colegioNit').value.trim();
+            const direccion = document.getElementById('colegioDireccion').value.trim();
+            const ciudad = document.getElementById('colegioCiudad').value.trim();
+            const departamento = document.getElementById('colegioDepartamento').value.trim();
+            const telefono = document.getElementById('colegioTelefono').value.trim();
+            const correo = document.getElementById('colegioCorreo').value.trim();
+            const rector = document.getElementById('colegioRector').value.trim();
+            const anioEscolar = parseInt(document.getElementById('colegioAnioEscolar').value);
+            const estado = document.getElementById('colegioEstado').value;
+
+            // Validaciones
+            if (!nombre || !ciudad || !anioEscolar) {
+                alert('⚠️ Por favor, completa los campos obligatorios (*)');
+                return;
+            }
+
+            const user = auth.currentUser;
+            if (!user) {
+                alert('❌ No hay usuario autenticado');
+                return;
+            }
+
+            const btnGuardar = document.getElementById('btnGuardarColegio');
+            btnGuardar.disabled = true;
+            btnGuardar.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
+
+            try {
+                const nuevoColegio = {
+                    nombre,
+                    nit: nit || '',
+                    direccion: direccion || '',
+                    ciudad,
+                    departamento: departamento || '',
+                    telefono: telefono || '',
+                    correo: correo || '',
+                    rector: rector || '',
+                    anioEscolar,
+                    estado,
+                    creadoPor: user.uid,
+                    fechaCreacion: serverTimestamp()
+                };
+
+                await addDoc(collection(db, 'colegios'), nuevoColegio);
+
+                alert('✅ Colegio registrado exitosamente');
+                closeModal();
+                cargarDashboard();
+
+            } catch (error) {
+                console.error('Error al registrar colegio:', error);
+                alert('❌ Error al registrar el colegio: ' + error.message);
+            } finally {
+                btnGuardar.disabled = false;
+                btnGuardar.innerHTML = '<i class="fas fa-save"></i> Guardar colegio';
+            }
+        });
+
+        // =============================================
+        // AUTH STATE - VERIFICAR SUPERADMIN
+        // =============================================
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                try {
+                    // Verificar en Firestore que sea superadmin
+                    const userDoc = await getDoc(doc(db, 'usuarios', user.uid));
+
+                    if (userDoc.exists()) {
+                        const userData = userDoc.data();
+
+                        if (userData.rol === 'superadmin' && userData.activo === true) {
+                            // Usuario autorizado
+                            userNameEl.textContent = userData.nombre || user.email;
+                            userRoleEl.textContent = userData.rol || 'superadmin';
+
+                            // Cargar datos
+                            cargarDashboard();
+                        } else {
+                            // No es superadmin o está inactivo
+                            alert('⛔ Acceso denegado. No tienes permisos de superadministrador.');
+                            await signOut(auth);
+                            window.location.href = 'login.html';
+                        }
+                    } else {
+                        // No existe en Firestore
+                        alert('⛔ Usuario no registrado en el sistema.');
+                        await signOut(auth);
+                        window.location.href = 'login.html';
+                    }
+                } catch (error) {
+                    console.error('Error al verificar usuario:', error);
+                    alert('❌ Error al verificar permisos');
+                    await signOut(auth);
+                    window.location.href = 'login.html';
+                }
+            } else {
+                // No autenticado
+                window.location.href = 'login.html';
+            }
+        });
+
+        // =============================================
+        // LOGOUT
+        // =============================================
+        logoutBtn.addEventListener('click', async () => {
+            if (confirm('¿Seguro que deseas cerrar sesión?')) {
+                try {
+                    await signOut(auth);
+                    window.location.href = 'login.html';
+                } catch (error) {
+                    console.error('Error al cerrar sesión:', error);
+                    alert('❌ Error al cerrar sesión');
+                }
+            }
+        });
+
+        // =============================================
+        // ESCUCHAR EVENTO DE LOGOUT DESDE HTML
+        // =============================================
+        document.addEventListener('logout-requested', () => {
+            logoutBtn.click();
+        });
+
+        console.log('✅ EduOne - Panel de Administración cargado correctamente');
+    </script>
+
+</body>
+</html>
