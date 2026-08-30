@@ -15,12 +15,17 @@
     --text-muted:#6b7280;
     --border:#e6e7ee;
     --red:#e0473e;
+    --red-light:#fdecec;
+    --green:#1f9d55;
+    --green-light:#e6f7ec;
+    --orange:#e08e0b;
+    --orange-light:#fdf3e0;
+    --blue:#2f6fed;
+    --blue-light:#eaf1ff;
   }
 
   *{ box-sizing:border-box; }
-
   html, body{ height:100%; }
-
   body{
     margin:0;
     font-family: "Segoe UI", Arial, Helvetica, sans-serif;
@@ -41,6 +46,9 @@
     padding:0 24px;
     height:64px;
     flex-shrink:0;
+    position:sticky;
+    top:0;
+    z-index:50;
   }
 
   .brand{
@@ -74,6 +82,7 @@
     transition:background .15s ease;
   }
   .nav-item:hover{ background:#f2f2f7; }
+  .nav-item.active-tab{ background:var(--purple-light); color:var(--purple-dark); font-weight:600; }
   .nav-item .chev{
     width:10px; height:10px;
     transition:transform .15s ease;
@@ -107,6 +116,8 @@
     position:relative;
   }
   .dropdown a:hover{ background:var(--purple-light); color:var(--purple-dark); }
+  .dropdown .has-sub > a{ display:flex; align-items:center; justify-content:space-between; padding:10px 12px; border-radius:7px; cursor:pointer; }
+  .dropdown .has-sub > a:hover{ background:var(--purple-light); color:var(--purple-dark); }
   .dropdown .has-sub > .sub-chev{ font-size:11px; color:var(--text-muted); }
 
   .submenu{
@@ -124,11 +135,7 @@
   .has-sub:hover .submenu{ display:block; }
 
   /* ===== USER MENU ===== */
-  .top-right{
-    display:flex;
-    align-items:center;
-    gap:18px;
-  }
+  .top-right{ display:flex; align-items:center; gap:18px; }
   .icon-btn{
     position:relative;
     width:36px;height:36px;
@@ -138,7 +145,7 @@
     cursor:pointer;
   }
   .icon-btn:hover{ background:#f2f2f7; }
-  .badge{
+  .badge-dot{
     position:absolute;
     top:-2px; right:-2px;
     background:var(--red);
@@ -153,99 +160,199 @@
 
   .user-menu{ position:relative; }
   .user-block{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    cursor:pointer;
-    padding:6px 8px;
-    border-radius:10px;
-    transition:background .15s ease;
+    display:flex; align-items:center; gap:10px; cursor:pointer;
+    padding:6px 8px; border-radius:10px; transition:background .15s ease;
   }
   .user-block:hover{ background:#f2f2f7; }
   .user-info{ line-height:1.2; text-align:right; }
   .user-info .name{ font-size:14px; font-weight:600; color:var(--text-dark); }
   .user-info .role{ font-size:12px; color:var(--text-muted); }
   .avatar{
-    width:34px;height:34px;
-    border-radius:50%;
-    background:#d9d9e3;
-    display:flex;align-items:center;justify-content:center;
-    color:#8b8b99;
-    flex-shrink:0;
+    width:34px;height:34px; border-radius:50%; background:var(--purple-light);
+    display:flex;align-items:center;justify-content:center; color:var(--purple-dark);
+    font-weight:700; font-size:13px; flex-shrink:0;
   }
-  .user-menu .dropdown{
-    right:0;
-    left:auto;
-    min-width:170px;
-  }
+  .user-menu .dropdown{ right:0; left:auto; min-width:170px; }
   .user-menu.open .dropdown{ display:block; }
-  .user-menu .dropdown a{
-    color:var(--text-dark);
-    justify-content:flex-start;
-    gap:10px;
-  }
-  .user-menu .dropdown a:hover{ background:#fdecec; color:var(--red); }
+  .user-menu .dropdown a{ color:var(--text-dark); justify-content:flex-start; gap:10px; }
+  .user-menu .dropdown a:hover{ background:var(--red-light); color:var(--red); }
   .user-menu .dropdown svg{ flex-shrink:0; }
 
   /* ===== MAIN CONTENT ===== */
-  .content{
-    flex:1;
-    padding:32px 24px;
-    display:flex;
-    justify-content:center;
-  }
+  .content{ flex:1; padding:28px 24px 48px; }
+  .wrap{ max-width:1100px; margin:0 auto; }
+
   .card{
     background:var(--card-bg);
     border:1px solid var(--border);
     border-radius:14px;
-    padding:36px 32px;
-    max-width:720px;
-    width:100%;
+    padding:28px 26px;
     box-shadow:0 1px 2px rgba(20,20,43,.03);
   }
-  .card h1{
-    font-size:18px;
-    font-weight:700;
-    margin:0 0 14px 0;
-  }
-  .card p{
-    font-size:14.5px;
-    line-height:1.7;
-    color:var(--text-dark);
-    margin:0 0 6px 0;
-  }
-  .card ul{
-    list-style:none;
-    margin:6px 0 14px 0;
-    padding:0;
-  }
-  .card li{
-    font-size:14.5px;
-    line-height:1.9;
-    color:var(--text-dark);
-  }
-  .card a.link{ color:var(--purple); text-decoration:none; font-weight:600; }
-  .card a.link:hover{ text-decoration:underline; }
-  .hr{
-    border:none;
-    border-top:1px solid var(--border);
-    margin:18px 0;
-  }
 
-  /* ===== FOOTER ===== */
+  .page-title{ font-size:20px; font-weight:700; margin:0 0 4px 0; }
+  .page-sub{ font-size:13.5px; color:var(--text-muted); margin:0 0 20px 0; }
+
+  .view{ display:none; }
+  .view.active{ display:block; animation:fadein .18s ease; }
+  @keyframes fadein{ from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:translateY(0);} }
+
+  /* loading / error */
+  #loadingState, #errorState{
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:12px; padding:80px 20px; color:var(--text-muted); text-align:center;
+  }
+  .spinner{
+    width:34px; height:34px; border-radius:50%;
+    border:3px solid var(--purple-light); border-top-color:var(--purple);
+    animation:spin 0.8s linear infinite;
+  }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+  #errorState{ color:var(--red); }
+
+  /* stat cards */
+  .stats-row{ display:grid; grid-template-columns:repeat(auto-fit, minmax(180px,1fr)); gap:14px; margin-bottom:22px; }
+  .stat-card{
+    background:#fff; border:1px solid var(--border); border-radius:12px;
+    padding:16px 18px;
+  }
+  .stat-card .label{ font-size:12.5px; color:var(--text-muted); margin-bottom:6px; }
+  .stat-card .value{ font-size:24px; font-weight:700; color:var(--text-dark); }
+  .stat-card .value.small{ font-size:15px; font-weight:600; }
+
+  .section-title{ font-size:15px; font-weight:700; margin:26px 0 12px 0; display:flex; align-items:center; gap:8px; }
+  .section-title:first-child{ margin-top:0; }
+
+  /* today classes */
+  .clase-mini{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:12px 14px; border:1px solid var(--border); border-radius:10px; margin-bottom:8px;
+  }
+  .clase-mini .hora{ font-size:12.5px; color:var(--text-muted); min-width:100px; }
+  .clase-mini .info{ flex:1; margin-left:10px; }
+  .clase-mini .info .asig{ font-weight:600; font-size:14px; }
+  .clase-mini .info .prof{ font-size:12.5px; color:var(--text-muted); }
+
+  .empty-msg{ color:var(--text-muted); font-size:14px; padding:18px 4px; text-align:center; }
+
+  /* badges */
+  .badge{
+    display:inline-flex; align-items:center; gap:4px;
+    font-size:11.5px; font-weight:700; padding:3px 9px; border-radius:20px;
+  }
+  .badge-purple{ background:var(--purple-light); color:var(--purple-dark); }
+  .badge-green{ background:var(--green-light); color:var(--green); }
+  .badge-orange{ background:var(--orange-light); color:var(--orange); }
+  .badge-blue{ background:var(--blue-light); color:var(--blue); }
+  .badge-red{ background:var(--red-light); color:var(--red); }
+  .badge-gray{ background:#eef0f5; color:var(--text-muted); }
+
+  /* horario grid */
+  .horario-scroll{ overflow-x:auto; }
+  .horario-grid{
+    display:grid;
+    grid-template-columns: 96px repeat(5, minmax(120px,1fr));
+    gap:4px;
+    min-width:680px;
+  }
+  .h-cell{
+    background:#fbfbfd; border:1px solid var(--border); border-radius:8px;
+    padding:8px 6px; font-size:11.5px; min-height:52px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
+  }
+  .h-cell.header{ background:var(--purple-light); color:var(--purple-dark); font-weight:700; font-size:12.5px; min-height:32px; }
+  .h-cell.hora{ background:#f2f2f7; font-weight:600; color:var(--text-muted); font-size:11px; }
+  .h-cell.materia{ background:var(--purple-light); color:var(--purple-dark); font-weight:600; line-height:1.3; }
+  .h-cell.materia .prof{ display:block; font-size:10px; font-weight:500; color:var(--text-muted); margin-top:2px; }
+
+  /* tarea filters */
+  .filter-chips{ display:flex; gap:8px; margin-bottom:18px; flex-wrap:wrap; }
+  .chip{
+    padding:7px 14px; border-radius:20px; border:1px solid var(--border);
+    background:#fff; font-size:13px; cursor:pointer; color:var(--text-muted); font-weight:600;
+    transition:all .15s ease;
+  }
+  .chip:hover{ background:#f2f2f7; }
+  .chip.active{ background:var(--purple); color:#fff; border-color:var(--purple); }
+
+  .tarea-card{
+    border:1px solid var(--border); border-radius:12px; padding:16px 18px; margin-bottom:12px;
+  }
+  .tarea-top{ display:flex; align-items:flex-start; justify-content:space-between; gap:10px; flex-wrap:wrap; }
+  .tarea-titulo{ font-size:15px; font-weight:700; margin:0 0 4px 0; }
+  .tarea-meta{ font-size:12.5px; color:var(--text-muted); display:flex; gap:10px; flex-wrap:wrap; margin-top:4px; }
+  .tarea-desc{ font-size:13.5px; color:var(--text-dark); margin:10px 0 4px 0; line-height:1.6; }
+  .tarea-bottom{ display:flex; align-items:center; justify-content:space-between; margin-top:12px; flex-wrap:wrap; gap:10px; }
+  .tarea-nota{ font-size:13.5px; font-weight:700; }
+
+  /* buttons */
+  .btn-primary{
+    background:var(--purple); color:#fff; border:none; border-radius:9px;
+    padding:9px 16px; font-size:13.5px; font-weight:600; cursor:pointer;
+  }
+  .btn-primary:hover{ background:var(--purple-dark); }
+  .btn-primary:disabled{ opacity:.6; cursor:not-allowed; }
+  .btn-outline{
+    background:#fff; color:var(--purple); border:1px solid var(--purple); border-radius:9px;
+    padding:8px 15px; font-size:13.5px; font-weight:600; cursor:pointer;
+  }
+  .btn-outline:hover{ background:var(--purple-light); }
+
+  /* notas */
+  .filter-row{ display:flex; gap:10px; align-items:center; margin-bottom:18px; flex-wrap:wrap; }
+  select.form-select{
+    padding:9px 12px; border:1px solid var(--border); border-radius:9px; font-size:13.5px; color:var(--text-dark); background:#fff;
+  }
+  table.notas-table{ width:100%; border-collapse:collapse; font-size:13.5px; }
+  table.notas-table th{
+    text-align:left; padding:10px 12px; background:#fbfbfd; color:var(--text-muted);
+    font-size:12px; text-transform:uppercase; letter-spacing:.03em; border-bottom:1px solid var(--border);
+  }
+  table.notas-table td{ padding:12px; border-bottom:1px solid var(--border); }
+  table.notas-table tr:last-child td{ border-bottom:none; }
+  .promedio-general{
+    display:flex; align-items:center; justify-content:space-between;
+    background:var(--purple-light); border-radius:12px; padding:16px 20px; margin-top:18px;
+  }
+  .promedio-general .num{ font-size:26px; font-weight:800; color:var(--purple-dark); }
+
+  /* modal */
+  .modal-overlay{
+    display:none; position:fixed; inset:0; background:rgba(20,20,40,.45);
+    align-items:center; justify-content:center; z-index:200; padding:16px;
+  }
+  .modal-overlay.show{ display:flex; }
+  .modal-box{
+    background:#fff; border-radius:14px; max-width:480px; width:100%;
+    max-height:90vh; overflow-y:auto;
+  }
+  .modal-head{ padding:20px 22px 6px; }
+  .modal-head h3{ margin:0 0 4px 0; font-size:17px; }
+  .modal-head p{ margin:0; font-size:12.5px; color:var(--text-muted); }
+  .modal-body{ padding:14px 22px; }
+  .form-group{ margin-bottom:14px; }
+  .form-group label{ display:block; font-size:12.5px; font-weight:600; color:var(--text-dark); margin-bottom:6px; }
+  .form-group textarea, .form-group input{
+    width:100%; padding:10px 12px; border:1px solid var(--border); border-radius:9px;
+    font-size:13.5px; font-family:inherit; resize:vertical;
+  }
+  .modal-foot{ padding:12px 22px 22px; display:flex; justify-content:flex-end; gap:10px; }
+  .btn-secondary{
+    background:#f2f2f7; color:var(--text-dark); border:none; border-radius:9px;
+    padding:9px 16px; font-size:13.5px; font-weight:600; cursor:pointer;
+  }
+  .alert{ display:none; padding:10px 12px; border-radius:9px; font-size:13px; margin-bottom:12px; }
+  .alert.show{ display:block; }
+  .alert-error{ background:var(--red-light); color:var(--red); }
+  .alert-success{ background:var(--green-light); color:var(--green); }
+  .entrega-info{ font-size:13px; color:var(--text-muted); background:#fbfbfd; border-radius:9px; padding:10px 12px; margin-bottom:12px; }
+
+  /* footer */
   .footer{
-    flex-shrink:0;
-    text-align:center;
-    padding:16px 20px;
-    border-top:1px solid var(--border);
-    background:#fff;
+    flex-shrink:0; text-align:center; padding:16px 20px;
+    border-top:1px solid var(--border); background:#fff;
   }
-  .footer p{
-    margin:0;
-    font-size:13px;
-    font-style:italic;
-    color:var(--text-muted);
-  }
+  .footer p{ margin:0; font-size:13px; font-style:italic; color:var(--text-muted); }
 
   @media (max-width:820px){
     .nav{ display:none; }
@@ -262,48 +369,35 @@
   </div>
 
   <div class="nav">
-    <div class="nav-item">Institucional</div>
+    <div class="nav-item" id="tabInicio" data-view="inicio">Inicio</div>
 
     <div class="nav-item" id="academicoItem">
       Académico
       <svg class="chev" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       <div class="dropdown" id="academicoDropdown">
-        <a href="#">Horarios</a>
-        <div class="has-sub">
-          <a href="#">Educación virtual <span class="sub-chev">▶</span></a>
-          <div class="submenu">
-            <a href="#">Trabajos/Tareas</a>
-            <a href="#">Aulas virtual/ Asesoría</a>
-          </div>
-        </div>
+        <a href="#" data-view="horario">Horarios</a>
+        <a href="#" data-view="tareas">Trabajos / Tareas</a>
       </div>
     </div>
 
-    <div class="nav-item">Resultado Academico</div>
-    <div class="nav-item">Estado de Cuenta</div>
+    <div class="nav-item" id="tabNotas" data-view="notas">Resultado Académico</div>
   </div>
 
   <div class="top-right">
-    <div class="icon-btn" title="Mensajes">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-    </div>
     <div class="icon-btn" title="Notificaciones">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-      <span class="badge">2</span>
     </div>
 
     <div class="user-menu" id="userMenu">
       <div class="user-block" id="userBlock">
         <div class="user-info">
-          <div class="name">Camilo</div>
-          <div class="role">Estudiante</div>
+          <div class="name" id="userNameEl">Cargando...</div>
+          <div class="role" id="userRoleSub">Estudiante</div>
         </div>
-        <div class="avatar">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0 2c-4.4 0-8 2.2-8 5v1h16v-1c0-2.8-3.6-5-8-5z"/></svg>
-        </div>
+        <div class="avatar" id="userAvatar">E</div>
       </div>
       <div class="dropdown" id="userDropdown">
-        <a href="#">
+        <a href="#" id="logoutBtn">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
           Cerrar sesión
         </a>
@@ -313,20 +407,122 @@
 </div>
 
 <div class="content">
-  <div class="card">
-    <h1>¡Bienvenido/a de nuevo!</h1>
-    <p>Accede a tus notas, horarios y información académica en este espacio. Si necesitas ayuda, no dudes en contactarnos:</p>
-    <ul>
-      <li>Soporte- <a class="link" href="#">NO AUN</a></li>
-    </ul>
-    <p>¡Disfruta tu estancia en nuestra comunidad universitaria!</p>
+  <div class="wrap">
 
-    <hr class="hr">
+    <div id="loadingState">
+      <div class="spinner"></div>
+      <p>Cargando tu información académica...</p>
+    </div>
 
-    <ul>
-      <li>Guías EduOne: <a class="link" href="#">NO AUN</a></li>
-      <li>Instructivo de ingreso Plataforma EduOne: <a class="link" href="#">NO AUN</a></li>
-    </ul>
+    <div id="errorState" style="display:none;"></div>
+
+    <div id="appContent" style="display:none;">
+
+      <!-- ===== INICIO ===== -->
+      <div class="view active" id="view-inicio">
+        <div class="card">
+          <h1 class="page-title" id="bienvenidaNombre">¡Bienvenido/a de nuevo!</h1>
+          <p class="page-sub" id="bienvenidaCurso">Accede a tus notas, horarios y tareas en este espacio.</p>
+
+          <div class="stats-row">
+            <div class="stat-card">
+              <div class="label">Tareas pendientes</div>
+              <div class="value" id="statPendientes">-</div>
+            </div>
+            <div class="stat-card">
+              <div class="label">Tareas calificadas</div>
+              <div class="value" id="statCalificadas">-</div>
+            </div>
+            <div class="stat-card">
+              <div class="label">Promedio general</div>
+              <div class="value" id="statPromedio">-</div>
+            </div>
+            <div class="stat-card">
+              <div class="label">Curso</div>
+              <div class="value small" id="statCurso">-</div>
+            </div>
+          </div>
+
+          <div class="section-title">📅 Clases de hoy</div>
+          <div id="claseHoyContainer"><div class="empty-msg">Cargando horario de hoy...</div></div>
+
+          <div class="section-title">📝 Próximas tareas</div>
+          <div id="proximasTareasContainer"><div class="empty-msg">Cargando tareas...</div></div>
+        </div>
+      </div>
+
+      <!-- ===== HORARIO ===== -->
+      <div class="view" id="view-horario">
+        <div class="card">
+          <h1 class="page-title">Mi horario</h1>
+          <p class="page-sub" id="horarioSub">Horario semanal de tu curso.</p>
+          <div class="horario-scroll">
+            <div class="horario-grid" id="horarioGrid"></div>
+          </div>
+          <div class="empty-msg" id="horarioEmpty" style="display:none;">Aún no tienes clases asignadas en el horario.</div>
+        </div>
+      </div>
+
+      <!-- ===== TAREAS ===== -->
+      <div class="view" id="view-tareas">
+        <div class="card">
+          <h1 class="page-title">Trabajos / Tareas</h1>
+          <p class="page-sub">Envía tus trabajos y consulta el estado de cada tarea asignada.</p>
+
+          <div class="filter-chips" id="filtroTareas">
+            <div class="chip active" data-filtro="todas">Todas</div>
+            <div class="chip" data-filtro="pendiente">Pendientes</div>
+            <div class="chip" data-filtro="entregado">Entregadas</div>
+            <div class="chip" data-filtro="calificado">Calificadas</div>
+          </div>
+
+          <div id="tareasContainer"><div class="empty-msg">Cargando tareas...</div></div>
+        </div>
+      </div>
+
+      <!-- ===== NOTAS ===== -->
+      <div class="view" id="view-notas">
+        <div class="card">
+          <h1 class="page-title">Resultado académico</h1>
+          <p class="page-sub">Consulta tus notas por asignatura y periodo.</p>
+
+          <div class="filter-row">
+            <select class="form-select" id="filtroPeriodoNotas">
+              <option value="">Todos los periodos</option>
+              <option value="1">Periodo 1</option>
+              <option value="2">Periodo 2</option>
+              <option value="3">Periodo 3</option>
+              <option value="4">Periodo 4</option>
+            </select>
+          </div>
+
+          <div style="overflow-x:auto;">
+            <table class="notas-table">
+              <thead>
+                <tr>
+                  <th>Asignatura</th>
+                  <th>Notas</th>
+                  <th>Promedio</th>
+                  <th>Estado</th>
+                </tr>
+              </thead>
+              <tbody id="tablaNotas">
+                <tr><td colspan="4" class="empty-msg">Cargando notas...</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="promedio-general">
+            <div>
+              <div style="font-size:13px; color:var(--purple-dark); font-weight:600;">Promedio general</div>
+              <div style="font-size:12px; color:var(--text-muted);">Calculado sobre las asignaturas con notas registradas</div>
+            </div>
+            <div class="num" id="promedioGeneral">-</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
 </div>
 
@@ -334,7 +530,133 @@
   <p>"Cada paso que das hoy construye al profesional que serás mañana."</p>
 </div>
 
-<script>
+<!-- ===== MODAL ENVIAR TAREA ===== -->
+<div class="modal-overlay" id="modalEntrega">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3 id="modalTareaTitulo">Enviar tarea</h3>
+      <p id="modalTareaMeta">Asignatura</p>
+    </div>
+    <div class="modal-body">
+      <div class="alert" id="entregaAlert"><span id="entregaAlertText"></span></div>
+      <div class="entrega-info" id="entregaInfoPrevia" style="display:none;"></div>
+      <form id="formEntrega">
+        <input type="hidden" id="entregaTareaId">
+        <div class="form-group">
+          <label>Respuesta / comentario</label>
+          <textarea id="entregaComentario" rows="4" placeholder="Escribe aquí tu respuesta o describe tu trabajo..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>Enlace del trabajo (opcional)</label>
+          <input type="url" id="entregaEnlace" placeholder="https://drive.google.com/...">
+        </div>
+      </form>
+    </div>
+    <div class="modal-foot">
+      <button type="button" class="btn-secondary" id="cerrarModalEntrega">Cancelar</button>
+      <button type="submit" form="formEntrega" class="btn-primary" id="btnGuardarEntrega">Enviar tarea</button>
+    </div>
+  </div>
+</div>
+
+<script type="importmap">
+{
+  "imports": {
+    "firebase/app": "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js",
+    "firebase/auth": "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js",
+    "firebase/firestore": "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js"
+  }
+}
+</script>
+
+<script type="module">
+  import { initializeApp } from "firebase/app";
+  import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+  import {
+    getFirestore, doc, getDoc, setDoc, collection, getDocs, query, where, serverTimestamp
+  } from "firebase/firestore";
+
+  // =============================================
+  // FIREBASE CONFIG (mismo proyecto que colegio.html / profesor.html)
+  // =============================================
+  const firebaseConfig = {
+    apiKey: "AIzaSyA3U98y5BJWQwpypFCAyNioqSRfXkr9UA0",
+    authDomain: "eduone-5f7cf.firebaseapp.com",
+    projectId: "eduone-5f7cf",
+    storageBucket: "eduone-5f7cf.firebasestorage.app",
+    messagingSenderId: "541282614006",
+    appId: "1:541282614006:web:f8cf617c99f08403df0ad7",
+    measurementId: "G-Y2P0EMNYCL"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  // =============================================
+  // VARIABLES GLOBALES
+  // =============================================
+  let colegioId = null;
+  let usuarioActual = null;
+  let estudianteId = null;
+  let estudianteData = null;
+  let cursoId = null;
+  let gradoId = null;
+  let cursoNombre = '-';
+  let gradoNombre = '-';
+  let isLoggingOut = false;
+
+  const asignaturaCache = {};
+  let tareasCache = [];
+  let horarioCache = [];
+  let filtroTareaActual = 'todas';
+
+  const DIAS = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'];
+  const HORAS = ['7:00 - 7:45', '7:45 - 8:30', '8:30 - 9:15', '9:15 - 10:00',
+    '10:30 - 11:15', '11:15 - 12:00', '12:00 - 12:45',
+    '14:00 - 14:45', '14:45 - 15:30', '15:30 - 16:15'];
+
+  // =============================================
+  // DOM
+  // =============================================
+  const loadingState = document.getElementById('loadingState');
+  const errorState = document.getElementById('errorState');
+  const appContent = document.getElementById('appContent');
+
+  function mostrarError(msg) {
+    loadingState.style.display = 'none';
+    appContent.style.display = 'none';
+    errorState.style.display = 'flex';
+    errorState.innerHTML = `<p>⚠️ ${msg}</p>`;
+  }
+
+  // =============================================
+  // NAVEGACIÓN ENTRE VISTAS
+  // =============================================
+  function switchView(view) {
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    const target = document.getElementById(`view-${view}`);
+    if (target) target.classList.add('active');
+
+    document.getElementById('tabInicio').classList.toggle('active-tab', view === 'inicio');
+    document.getElementById('tabNotas').classList.toggle('active-tab', view === 'notas');
+    document.getElementById('academicoItem').classList.toggle('active-tab', view === 'horario' || view === 'tareas');
+
+    if (view === 'horario') renderHorario();
+    if (view === 'tareas') renderTareas();
+    if (view === 'notas') cargarNotas();
+  }
+
+  document.querySelectorAll('[data-view]').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      switchView(el.dataset.view);
+      closeAcademico();
+    });
+  });
+
+  // dropdown / user menu toggling (comportamiento original conservado)
   const academicoItem = document.getElementById('academicoItem');
   const userMenu = document.getElementById('userMenu');
   const userBlock = document.getElementById('userBlock');
@@ -345,26 +667,519 @@
   academicoItem.addEventListener('click', (e) => {
     e.stopPropagation();
     const willOpen = !academicoItem.classList.contains('open');
-    closeAcademico();
-    closeUserMenu();
-    if(willOpen) academicoItem.classList.add('open');
+    closeAcademico(); closeUserMenu();
+    if (willOpen) academicoItem.classList.add('open');
   });
 
   userBlock.addEventListener('click', (e) => {
     e.stopPropagation();
     const willOpen = !userMenu.classList.contains('open');
-    closeAcademico();
-    closeUserMenu();
-    if(willOpen) userMenu.classList.add('open');
+    closeAcademico(); closeUserMenu();
+    if (willOpen) userMenu.classList.add('open');
   });
 
-  document.addEventListener('click', () => {
-    closeAcademico();
-    closeUserMenu();
-  });
-
+  document.addEventListener('click', () => { closeAcademico(); closeUserMenu(); });
   document.getElementById('academicoDropdown').addEventListener('click', (e) => e.stopPropagation());
   document.getElementById('userDropdown').addEventListener('click', (e) => e.stopPropagation());
+
+  // =============================================
+  // CARGA DE PERFIL Y MATRÍCULA
+  // =============================================
+  async function cargarPerfilYMatricula() {
+    // Buscar el documento del estudiante por su correo
+    const estQ = query(
+      collection(db, 'colegios', colegioId, 'estudiantes'),
+      where('correo', '==', usuarioActual.email)
+    );
+    const estSnap = await getDocs(estQ);
+
+    if (estSnap.empty) {
+      throw new Error('No encontramos tu registro de estudiante. Contacta a coordinación académica.');
+    }
+
+    estudianteId = estSnap.docs[0].id;
+    estudianteData = estSnap.docs[0].data();
+
+    // Buscar matrícula activa
+    const matQ = query(
+      collection(db, 'colegios', colegioId, 'matriculas'),
+      where('estudianteId', '==', estudianteId),
+      where('estado', '==', 'activo')
+    );
+    const matSnap = await getDocs(matQ);
+
+    if (matSnap.empty) {
+      throw new Error('No tienes una matrícula activa registrada. Contacta a coordinación académica.');
+    }
+
+    const mat = matSnap.docs[0].data();
+    cursoId = mat.cursoId || null;
+    gradoId = mat.gradoId || null;
+
+    if (cursoId) {
+      const cursoDoc = await getDoc(doc(db, 'colegios', colegioId, 'cursos', cursoId));
+      cursoNombre = cursoDoc.exists() ? (cursoDoc.data().nombre || '-') : '-';
+    }
+    if (gradoId) {
+      const gradoDoc = await getDoc(doc(db, 'colegios', colegioId, 'grados', gradoId));
+      gradoNombre = gradoDoc.exists() ? (gradoDoc.data().nombre || '-') : '-';
+    }
+
+    const nombreCompleto = `${estudianteData.nombres || ''} ${estudianteData.apellidos || ''}`.trim() || usuarioActual.email;
+    document.getElementById('userNameEl').textContent = nombreCompleto;
+    document.getElementById('userAvatar').textContent = (nombreCompleto[0] || 'E').toUpperCase();
+    document.getElementById('bienvenidaNombre').textContent = `¡Hola, ${estudianteData.nombres || 'estudiante'}!`;
+    document.getElementById('bienvenidaCurso').textContent = `${gradoNombre} · Curso ${cursoNombre}`;
+    document.getElementById('statCurso').textContent = `${gradoNombre} - ${cursoNombre}`;
+    document.getElementById('horarioSub').textContent = `Horario semanal · ${gradoNombre} - ${cursoNombre}`;
+  }
+
+  // =============================================
+  // ASIGNATURA (con caché)
+  // =============================================
+  async function getAsignaturaNombre(asignaturaId) {
+    if (!asignaturaId) return 'Asignatura';
+    if (asignaturaCache[asignaturaId]) return asignaturaCache[asignaturaId];
+    try {
+      const d = await getDoc(doc(db, 'colegios', colegioId, 'asignaturas', asignaturaId));
+      const nombre = d.exists() ? (d.data().nombre || 'Asignatura') : 'Asignatura';
+      asignaturaCache[asignaturaId] = nombre;
+      return nombre;
+    } catch (e) {
+      return 'Asignatura';
+    }
+  }
+
+  // =============================================
+  // HORARIO
+  // =============================================
+  async function cargarHorarioData() {
+    if (!cursoId) { horarioCache = []; return; }
+    const q = query(collection(db, 'colegios', colegioId, 'horarios'), where('cursoId', '==', cursoId));
+    const snap = await getDocs(q);
+    horarioCache = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  }
+
+  function renderHorario() {
+    const grid = document.getElementById('horarioGrid');
+    const emptyMsg = document.getElementById('horarioEmpty');
+
+    if (horarioCache.length === 0) {
+      grid.innerHTML = '';
+      emptyMsg.style.display = 'block';
+      return;
+    }
+    emptyMsg.style.display = 'none';
+
+    let html = `<div class="h-cell header"></div>`;
+    DIAS.forEach(d => { html += `<div class="h-cell header">${d}</div>`; });
+
+    HORAS.forEach(hora => {
+      html += `<div class="h-cell hora">${hora}</div>`;
+      DIAS.forEach(dia => {
+        const clase = horarioCache.find(h => h.dia === dia && h.hora === hora);
+        if (clase) {
+          html += `
+            <div class="h-cell materia">
+              ${clase.asignaturaNombre || 'Clase'}
+              <span class="prof">${clase.profesorNombre || 'Sin profesor'}</span>
+            </div>`;
+        } else {
+          html += `<div class="h-cell"></div>`;
+        }
+      });
+    });
+    grid.innerHTML = html;
+  }
+
+  function renderClasesHoy() {
+    const container = document.getElementById('claseHoyContainer');
+    const hoyIdx = new Date().getDay(); // 0=Domingo ... 6=Sábado
+    const diaMap = { 1: 'Lunes', 2: 'Martes', 3: 'Miércoles', 4: 'Jueves', 5: 'Viernes' };
+    const diaHoy = diaMap[hoyIdx];
+
+    if (!diaHoy) {
+      container.innerHTML = `<div class="empty-msg">Hoy no tienes clases programadas (fin de semana).</div>`;
+      return;
+    }
+
+    const clases = horarioCache
+      .filter(h => h.dia === diaHoy)
+      .sort((a, b) => HORAS.indexOf(a.hora) - HORAS.indexOf(b.hora));
+
+    if (clases.length === 0) {
+      container.innerHTML = `<div class="empty-msg">No tienes clases registradas para hoy.</div>`;
+      return;
+    }
+
+    container.innerHTML = clases.map(c => `
+      <div class="clase-mini">
+        <div class="hora">${c.hora || '-'}</div>
+        <div class="info">
+          <div class="asig">${c.asignaturaNombre || 'Clase'}</div>
+          <div class="prof">${c.profesorNombre || 'Sin profesor'}</div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // =============================================
+  // TAREAS
+  // =============================================
+  async function cargarTareasData() {
+    if (!cursoId) { tareasCache = []; return; }
+    const q = query(collection(db, 'colegios', colegioId, 'tareas'), where('cursoId', '==', cursoId));
+    const snap = await getDocs(q);
+
+    const lista = [];
+    for (const docSnap of snap.docs) {
+      const t = { id: docSnap.id, ...docSnap.data() };
+      if (t.estado && t.estado !== 'activo') continue; // solo tareas activas
+
+      t.asignaturaNombre = await getAsignaturaNombre(t.asignaturaId);
+
+      const entregaRef = doc(db, 'colegios', colegioId, 'entregas', `${t.id}_${estudianteId}`);
+      const entregaSnap = await getDoc(entregaRef);
+      t.entrega = entregaSnap.exists() ? entregaSnap.data() : null;
+
+      lista.push(t);
+    }
+
+    lista.sort((a, b) => {
+      if (!a.fecha) return 1;
+      if (!b.fecha) return -1;
+      return a.fecha.localeCompare(b.fecha);
+    });
+
+    tareasCache = lista;
+  }
+
+  function estadoTarea(t) {
+    if (t.entrega) return t.entrega.estado === 'calificado' ? 'calificado' : 'entregado';
+    return 'pendiente';
+  }
+
+  function renderTareas() {
+    const container = document.getElementById('tareasContainer');
+    const filtradas = filtroTareaActual === 'todas'
+      ? tareasCache
+      : tareasCache.filter(t => estadoTarea(t) === filtroTareaActual);
+
+    if (filtradas.length === 0) {
+      container.innerHTML = `<div class="empty-msg">No hay tareas ${filtroTareaActual === 'todas' ? 'asignadas' : 'en esta categoría'}.</div>`;
+      return;
+    }
+
+    const hoy = new Date().toISOString().slice(0, 10);
+
+    container.innerHTML = filtradas.map(t => {
+      const estado = estadoTarea(t);
+      const vencida = estado === 'pendiente' && t.fecha && t.fecha < hoy;
+
+      let badgeEstado = `<span class="badge badge-orange">Pendiente</span>`;
+      if (vencida) badgeEstado = `<span class="badge badge-red">Vencida</span>`;
+      if (estado === 'entregado') badgeEstado = `<span class="badge badge-blue">Entregada · en revisión</span>`;
+      if (estado === 'calificado') badgeEstado = `<span class="badge badge-green">Calificada</span>`;
+
+      let botonHtml = '';
+      if (estado === 'pendiente' || estado === 'entregado') {
+        botonHtml = `<button class="btn-primary" onclick="window.abrirModalEntrega('${t.id}')">
+          ${estado === 'entregado' ? 'Editar envío' : 'Enviar tarea'}
+        </button>`;
+      }
+
+      const notaHtml = estado === 'calificado'
+        ? `<div class="tarea-nota" style="color:${(t.entrega.nota >= 3) ? 'var(--green)' : 'var(--red)'}">Nota: ${Number(t.entrega.nota).toFixed(1)} / 5.0</div>`
+        : '';
+
+      return `
+        <div class="tarea-card">
+          <div class="tarea-top">
+            <div>
+              <p class="tarea-titulo">${t.titulo || 'Sin título'}</p>
+              <div class="tarea-meta">
+                <span>📘 ${t.asignaturaNombre}</span>
+                <span>🗓️ Periodo ${t.periodo || '-'}</span>
+                <span>⚖️ ${t.porcentaje || 0}%</span>
+                ${t.fecha ? `<span>⏰ Entrega: ${t.fecha}</span>` : ''}
+              </div>
+            </div>
+            ${badgeEstado}
+          </div>
+          ${t.descripcion ? `<p class="tarea-desc">${t.descripcion}</p>` : ''}
+          <div class="tarea-bottom">
+            ${notaHtml || '<div></div>'}
+            ${botonHtml}
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  document.getElementById('filtroTareas').addEventListener('click', (e) => {
+    const chip = e.target.closest('.chip');
+    if (!chip) return;
+    document.querySelectorAll('#filtroTareas .chip').forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    filtroTareaActual = chip.dataset.filtro;
+    renderTareas();
+  });
+
+  function renderProximasTareas() {
+    const container = document.getElementById('proximasTareasContainer');
+    const hoy = new Date().toISOString().slice(0, 10);
+    const pendientes = tareasCache
+      .filter(t => estadoTarea(t) === 'pendiente')
+      .slice(0, 4);
+
+    if (pendientes.length === 0) {
+      container.innerHTML = `<div class="empty-msg">No tienes tareas pendientes por ahora. 🎉</div>`;
+      return;
+    }
+
+    container.innerHTML = pendientes.map(t => {
+      const vencida = t.fecha && t.fecha < hoy;
+      return `
+        <div class="clase-mini">
+          <div class="hora">${t.fecha ? (vencida ? '⚠️ ' : '') + t.fecha : 'Sin fecha'}</div>
+          <div class="info">
+            <div class="asig">${t.titulo}</div>
+            <div class="prof">${t.asignaturaNombre}</div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  // =============================================
+  // MODAL ENVIAR / EDITAR ENTREGA
+  // =============================================
+  window.abrirModalEntrega = function (tareaId) {
+    const t = tareasCache.find(x => x.id === tareaId);
+    if (!t) return;
+
+    document.getElementById('entregaTareaId').value = tareaId;
+    document.getElementById('modalTareaTitulo').textContent = t.titulo || 'Enviar tarea';
+    document.getElementById('modalTareaMeta').textContent = `${t.asignaturaNombre} · Periodo ${t.periodo || '-'} · Vale ${t.porcentaje || 0}%`;
+
+    const alertEl = document.getElementById('entregaAlert');
+    alertEl.className = 'alert';
+    alertEl.classList.remove('show');
+
+    const infoPrevia = document.getElementById('entregaInfoPrevia');
+    if (t.entrega) {
+      document.getElementById('entregaComentario').value = t.entrega.comentario || '';
+      document.getElementById('entregaEnlace').value = t.entrega.enlace || '';
+      infoPrevia.style.display = 'block';
+      infoPrevia.textContent = `Ya enviaste esta tarea. Puedes editar tu respuesta mientras no haya sido calificada.`;
+    } else {
+      document.getElementById('entregaComentario').value = '';
+      document.getElementById('entregaEnlace').value = '';
+      infoPrevia.style.display = 'none';
+    }
+
+    document.getElementById('modalEntrega').classList.add('show');
+  };
+
+  document.getElementById('cerrarModalEntrega').addEventListener('click', () => {
+    document.getElementById('modalEntrega').classList.remove('show');
+  });
+
+  document.getElementById('formEntrega').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const tareaId = document.getElementById('entregaTareaId').value;
+    const comentario = document.getElementById('entregaComentario').value.trim();
+    const enlace = document.getElementById('entregaEnlace').value.trim();
+    const alertEl = document.getElementById('entregaAlert');
+    const alertText = document.getElementById('entregaAlertText');
+
+    function mostrarAlerta(msg, tipo) {
+      alertEl.className = `alert alert-${tipo} show`;
+      alertText.textContent = msg;
+    }
+
+    if (!comentario && !enlace) {
+      mostrarAlerta('Escribe una respuesta o adjunta un enlace antes de enviar.', 'error');
+      return;
+    }
+
+    const t = tareasCache.find(x => x.id === tareaId);
+    if (!t) { mostrarAlerta('No se encontró la tarea.', 'error'); return; }
+
+    const btn = document.getElementById('btnGuardarEntrega');
+    btn.disabled = true;
+    btn.textContent = 'Enviando...';
+
+    try {
+      const entregaRef = doc(db, 'colegios', colegioId, 'entregas', `${tareaId}_${estudianteId}`);
+      await setDoc(entregaRef, {
+        estudianteId: estudianteId,
+        tareaId: tareaId,
+        cursoId: cursoId,
+        profesorId: t.profesorId || '',
+        comentario: comentario,
+        enlace: enlace,
+        estado: 'entregado',
+        fechaEntrega: serverTimestamp()
+      }, { merge: true });
+
+      mostrarAlerta('✅ Tarea enviada correctamente', 'success');
+
+      setTimeout(async () => {
+        document.getElementById('modalEntrega').classList.remove('show');
+        btn.disabled = false;
+        btn.textContent = 'Enviar tarea';
+        await cargarTareasData();
+        renderTareas();
+        actualizarStats();
+      }, 900);
+
+    } catch (error) {
+      console.error('Error al enviar la tarea:', error);
+      mostrarAlerta('❌ Error al enviar: ' + error.message, 'error');
+      btn.disabled = false;
+      btn.textContent = 'Enviar tarea';
+    }
+  });
+
+  // =============================================
+  // NOTAS
+  // =============================================
+  document.getElementById('filtroPeriodoNotas').addEventListener('change', () => cargarNotas());
+
+  async function cargarNotas() {
+    const tbody = document.getElementById('tablaNotas');
+    const periodo = document.getElementById('filtroPeriodoNotas').value;
+    tbody.innerHTML = `<tr><td colspan="4" class="empty-msg">Cargando notas...</td></tr>`;
+
+    try {
+      const q = query(collection(db, 'colegios', colegioId, 'notas'), where('estudianteId', '==', estudianteId));
+      const snap = await getDocs(q);
+
+      const porAsignatura = {};
+      for (const docSnap of snap.docs) {
+        const n = docSnap.data();
+        if (periodo && n.periodo && String(n.periodo) !== periodo) continue;
+        if (!porAsignatura[n.asignaturaId]) {
+          porAsignatura[n.asignaturaId] = { notas: [], asignaturaId: n.asignaturaId };
+        }
+        porAsignatura[n.asignaturaId].notas.push(parseFloat(n.valor) || 0);
+      }
+
+      const asignaturaIds = Object.keys(porAsignatura);
+      if (asignaturaIds.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4" class="empty-msg">No hay notas registradas${periodo ? ' para el periodo ' + periodo : ''}.</td></tr>`;
+        document.getElementById('promedioGeneral').textContent = '-';
+        return;
+      }
+
+      let sumaPromedios = 0;
+      let html = '';
+      for (const asigId of asignaturaIds) {
+        const nombre = await getAsignaturaNombre(asigId);
+        const notas = porAsignatura[asigId].notas;
+        const promedio = notas.length > 0 ? notas.reduce((a, b) => a + b, 0) / notas.length : 0;
+        sumaPromedios += promedio;
+        const aprobado = promedio >= 3.0;
+
+        html += `
+          <tr>
+            <td><strong>${nombre}</strong></td>
+            <td>${notas.map(n => n.toFixed(1)).join(' · ')}</td>
+            <td><strong>${promedio.toFixed(1)}</strong></td>
+            <td><span class="badge ${aprobado ? 'badge-green' : 'badge-red'}">${aprobado ? 'Aprobado' : 'Reprobado'}</span></td>
+          </tr>
+        `;
+      }
+      tbody.innerHTML = html;
+
+      const promedioGeneral = sumaPromedios / asignaturaIds.length;
+      document.getElementById('promedioGeneral').textContent = promedioGeneral.toFixed(1);
+      document.getElementById('statPromedio').textContent = promedioGeneral.toFixed(1);
+
+    } catch (error) {
+      console.error('Error al cargar notas:', error);
+      tbody.innerHTML = `<tr><td colspan="4" class="empty-msg">Error al cargar las notas.</td></tr>`;
+    }
+  }
+
+  // =============================================
+  // STATS INICIO
+  // =============================================
+  function actualizarStats() {
+    const pendientes = tareasCache.filter(t => estadoTarea(t) === 'pendiente').length;
+    const calificadas = tareasCache.filter(t => estadoTarea(t) === 'calificado').length;
+    document.getElementById('statPendientes').textContent = pendientes;
+    document.getElementById('statCalificadas').textContent = calificadas;
+    renderProximasTareas();
+  }
+
+  // =============================================
+  // AUTENTICACIÓN
+  // =============================================
+  onAuthStateChanged(auth, async (user) => {
+    if (isLoggingOut) return;
+
+    if (!user) {
+      window.location.href = '../login.html';
+      return;
+    }
+
+    try {
+      const userDoc = await getDoc(doc(db, 'usuarios', user.uid));
+      if (!userDoc.exists()) {
+        await signOut(auth);
+        window.location.href = '../login.html';
+        return;
+      }
+
+      const data = userDoc.data();
+
+      if (data.rol !== 'estudiante' || data.activo !== true || !data.colegioId) {
+        mostrarError('No tienes acceso a este panel o tu cuenta está inactiva. Contacta a coordinación.');
+        await signOut(auth);
+        return;
+      }
+
+      colegioId = data.colegioId;
+      usuarioActual = data;
+
+      await cargarPerfilYMatricula();
+      await cargarHorarioData();
+      await cargarTareasData();
+
+      renderClasesHoy();
+      actualizarStats();
+
+      loadingState.style.display = 'none';
+      appContent.style.display = 'block';
+
+    } catch (error) {
+      console.error('Error de autenticación / carga:', error);
+      mostrarError(error.message || 'Ocurrió un error al cargar tu información.');
+    }
+  });
+
+  // =============================================
+  // LOGOUT
+  // =============================================
+  document.getElementById('logoutBtn').addEventListener('click', async (e) => {
+    e.preventDefault();
+    if (confirm('¿Seguro que deseas cerrar sesión?')) {
+      try {
+        isLoggingOut = true;
+        await signOut(auth);
+        window.location.href = '../login.html';
+      } catch (error) {
+        console.error('Error al cerrar sesión:', error);
+        alert('❌ Error al cerrar sesión');
+        isLoggingOut = false;
+      }
+    }
+  });
+
+  console.log('✅ EduOne - Portal del Estudiante cargado correctamente');
 </script>
 
 </body>

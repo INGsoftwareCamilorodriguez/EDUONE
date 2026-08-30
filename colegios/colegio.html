@@ -3025,90 +3025,108 @@
         }
 
         // =============================================
-// FORMULARIO PROFESOR - SIN CREACIÓN DE CUENTA
-// =============================================
-document.getElementById('formProfesor')?.addEventListener('submit', async (e) => {
-    e.preventDefault();
+        // FORMULARIO ESTUDIANTE - CREA ESTUDIANTE + MATRÍCULA + CUENTA
+        // =============================================
+        document.getElementById('formEstudiante')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
 
-    const nombres = document.getElementById('profNombres').value.trim();
-    const apellidos = document.getElementById('profApellidos').value.trim();
-    const documento = document.getElementById('profDocumento').value.trim();
-    const correo = document.getElementById('profCorreo').value.trim();
-    const telefono = document.getElementById('profTelefono').value.trim();
-    const password = document.getElementById('profPassword').value;
-    const estado = document.getElementById('profEstado').value;
+            const nombres = document.getElementById('estNombres').value.trim();
+            const apellidos = document.getElementById('estApellidos').value.trim();
+            const documento = document.getElementById('estDocumento').value.trim();
+            let correo = document.getElementById('estCorreo').value.trim();
+            const fechaNacimiento = document.getElementById('estFechaNacimiento').value;
+            const direccion = document.getElementById('estDireccion').value.trim();
+            const telefono = document.getElementById('estTelefono').value.trim();
+            const acudiente = document.getElementById('estAcudiente').value.trim();
+            const acudienteTelefono = document.getElementById('estAcudienteTelefono').value.trim();
+            const acudienteEmail = document.getElementById('estAcudienteEmail').value.trim();
+            const password = document.getElementById('estPassword').value;
+            const gradoId = document.getElementById('estGrado').value;
+            const cursoId = document.getElementById('estCurso').value;
+            const estado = document.getElementById('estEstado').value;
 
-    if (!nombres || !apellidos || !documento || !correo) {
-        showProfesorAlert('Completa todos los campos obligatorios (*)', 'error');
-        return;
-    }
+            if (!nombres || !apellidos || !documento || !acudiente || !acudienteEmail) {
+                showEstudianteAlert('Completa todos los campos obligatorios (*)', 'error');
+                return;
+            }
+            if (!gradoId || !cursoId) {
+                showEstudianteAlert('Selecciona el grado y el curso del estudiante', 'error');
+                return;
+            }
+            if (password && password.length < 6) {
+                showEstudianteAlert('La contraseña del estudiante debe tener al menos 6 caracteres', 'error');
+                return;
+            }
 
-    if (password && password.length < 6) {
-        showProfesorAlert('La contraseña debe tener al menos 6 caracteres', 'error');
-        return;
-    }
+            // Si no se indicó correo, se genera uno a partir del documento
+            if (!correo) correo = `${documento}@eduone.com`;
 
-    const btnGuardar = document.getElementById('btnGuardarProfesor');
-    btnGuardar.disabled = true;
-    btnGuardar.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
+            const btnGuardar = document.getElementById('btnGuardarEstudiante');
+            btnGuardar.disabled = true;
+            btnGuardar.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
 
-    try {
-        // 1. Guardar profesor en Firestore
-        await addDoc(collection(db, 'colegios', colegioId, 'profesores'), {
-            nombres: nombres,
-            apellidos: apellidos,
-            documento: documento,
-            correo: correo,
-            telefono: telefono || '',
-            estado: estado,
-            fechaRegistro: serverTimestamp()
+            try {
+                // 1. Guardar estudiante en Firestore
+                const estudianteRef = await addDoc(collection(db, 'colegios', colegioId, 'estudiantes'), {
+                    nombres,
+                    apellidos,
+                    documento,
+                    correo,
+                    fechaNacimiento: fechaNacimiento || '',
+                    direccion: direccion || '',
+                    telefono: telefono || '',
+                    acudiente,
+                    acudienteTelefono: acudienteTelefono || '',
+                    acudienteEmail,
+                    estado,
+                    fechaRegistro: serverTimestamp()
+                });
+
+                // 2. Crear la matrícula que vincula al estudiante con su grado y curso
+                await addDoc(collection(db, 'colegios', colegioId, 'matriculas'), {
+                    estudianteId: estudianteRef.id,
+                    gradoId,
+                    cursoId,
+                    estado: 'activo',
+                    fechaMatricula: serverTimestamp()
+                });
+
+                // 3. Crear la cuenta de acceso del estudiante (usuario/contraseña) si se indicó contraseña
+                if (password) {
+                    try {
+                        await crearCuentaUsuarioSinPerderSesion(correo, password, `${nombres} ${apellidos}`, 'estudiante', colegioId);
+                    } catch (authError) {
+                        if (authError.code === 'auth/email-already-in-use') {
+                            await crearUsuarioEnFirestore(correo, `${nombres} ${apellidos}`, 'estudiante', colegioId);
+                            showEstudianteAlert('⚠️ Estudiante guardado. El correo ya tenía una cuenta y fue vinculada.', 'info');
+                        } else {
+                            throw authError;
+                        }
+                    }
+                }
+
+                showEstudianteAlert('✅ Estudiante inscrito y matriculado exitosamente.', 'success');
+
+                setTimeout(() => {
+                    document.getElementById('modalEstudiante').classList.remove('show');
+                    document.getElementById('formEstudiante').reset();
+                    cargarEstudiantes();
+                    cargarDashboard();
+                    btnGuardar.disabled = false;
+                    btnGuardar.innerHTML = '<i class="fas fa-save"></i> Guardar estudiante';
+                }, 1500);
+
+            } catch (error) {
+                console.error('Error al guardar estudiante:', error);
+                showEstudianteAlert('❌ Error al guardar estudiante: ' + error.message, 'error');
+                btnGuardar.disabled = false;
+                btnGuardar.innerHTML = '<i class="fas fa-save"></i> Guardar estudiante';
+            }
         });
 
-        // 2. Guardar en Firestore (colección usuarios) sin crear cuenta en Authentication
-        try {
-            const q = query(collection(db, 'usuarios'), where('email', '==', correo));
-            const snap = await getDocs(q);
-            
-            if (snap.empty) {
-                const userRef = doc(collection(db, 'usuarios'));
-                await setDoc(userRef, {
-                    nombre: `${nombres} ${apellidos}`,
-                    email: correo,
-                    rol: 'profesor',
-                    colegioId: colegioId,
-                    activo: true,
-                    fechaCreacion: serverTimestamp()
-                });
-            } else {
-                await updateDoc(snap.docs[0].ref, {
-                    nombre: `${nombres} ${apellidos}`,
-                    rol: 'profesor',
-                    colegioId: colegioId,
-                    activo: true
-                });
-            }
-        } catch (error) {
-            console.warn('Error al guardar profesor en Firestore:', error);
-        }
-
-        showProfesorAlert('✅ Profesor registrado exitosamente.', 'success');
-
-        setTimeout(() => {
-            document.getElementById('modalProfesor').classList.remove('show');
-            cargarProfesores();
-            cargarDashboard();
-            btnGuardar.disabled = false;
-            btnGuardar.innerHTML = '<i class="fas fa-save"></i> Guardar profesor';
-        }, 2000);
-
-    } catch (error) {
-        console.error('Error:', error);
-        showProfesorAlert('❌ Error al guardar profesor: ' + error.message, 'error');
-        btnGuardar.disabled = false;
-        btnGuardar.innerHTML = '<i class="fas fa-save"></i> Guardar profesor';
-    }
-});
-
+        // =============================================
+// FORMULARIO PROFESOR - SIN CREACIÓN DE CUENTA
+// =============================================
         // =============================================
         // PROFESORES
         // =============================================
