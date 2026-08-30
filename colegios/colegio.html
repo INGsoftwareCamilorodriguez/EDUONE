@@ -356,7 +356,7 @@
             position: relative;
             background: #fff;
             border-radius: var(--radius);
-            max-width: 720px;
+            max-width: 780px;
             width: 94%;
             max-height: 90vh;
             overflow-y: auto;
@@ -416,6 +416,36 @@
             margin-bottom: 0;
         }
 
+        /* Alert dentro de modal */
+        .alert {
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+            display: none;
+        }
+        .alert.show {
+            display: block;
+        }
+        .alert-error {
+            background: #fef2f2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+        .alert-success {
+            background: #f0fdf4;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+        }
+        .alert-info {
+            background: #eff6ff;
+            color: #1e40af;
+            border: 1px solid #bfdbfe;
+        }
+        .alert i {
+            margin-right: 8px;
+        }
+
         /* ============================================= */
         /* SIDEBAR - RESPONSIVE                         */
         /* ============================================= */
@@ -444,7 +474,6 @@
             width: var(--sidebar-collapsed);
         }
 
-        /* Cuando está colapsado, ocultar textos */
         .sidebar.collapsed .logo span,
         .sidebar.collapsed .sidebar-nav ul li a span,
         .sidebar.collapsed .sidebar-nav .nav-section,
@@ -1085,7 +1114,6 @@
         /* RESPONSIVE                                   */
         /* ============================================= */
 
-        /* Desktop - Sidebar colapsable (pantallas de escritorio) */
         @media (max-width: 1400px) {
             .sidebar:not(.closed):not(.open) {
                 width: var(--sidebar-collapsed);
@@ -1134,7 +1162,6 @@
             }
         }
 
-        /* Tablet y móvil - Sidebar flotante */
         @media (max-width: 992px) {
             .sidebar {
                 transform: translateX(-100%);
@@ -1194,7 +1221,6 @@
             }
         }
 
-        /* Móvil pequeño */
         @media (max-width: 768px) {
             .stats-grid {
                 grid-template-columns: 1fr 1fr;
@@ -1516,6 +1542,8 @@
                                         <th>Nombres</th>
                                         <th>Apellidos</th>
                                         <th>Documento</th>
+                                        <th>Correo</th>
+                                        <th>Acudiente</th>
                                         <th>Grado</th>
                                         <th>Curso</th>
                                         <th>Estado</th>
@@ -1524,7 +1552,7 @@
                                 </thead>
                                 <tbody id="tablaEstudiantes">
                                     <tr>
-                                        <td colspan="8" class="text-center text-muted">
+                                        <td colspan="10" class="text-center text-muted">
                                             <i class="fas fa-spinner fa-spin"></i> Cargando estudiantes...
                                         </td>
                                     </tr>
@@ -1691,7 +1719,6 @@
                     <h2><i class="fas fa-calendar-alt" style="color: var(--primary);"></i> Gestión de Horarios</h2>
                 </div>
 
-                <!-- Selector de curso -->
                 <div class="card">
                     <div class="card-body">
                         <div class="form-grid" style="margin-bottom: 16px;">
@@ -1717,7 +1744,6 @@
                     </div>
                 </div>
 
-                <!-- Vista del horario -->
                 <div id="horarioVista" style="display: none;">
                     <div class="card">
                         <div class="card-header">
@@ -1731,7 +1757,6 @@
                     </div>
                 </div>
 
-                <!-- Lista de clases asignadas -->
                 <div id="horarioClases" style="display: none;">
                     <div class="card">
                         <div class="card-header">
@@ -1908,6 +1933,14 @@
             </div>
             <form id="formEstudiante">
                 <div class="modal-body">
+                    <div id="estudianteAlert" class="alert" style="display: none;">
+                        <i class="fas fa-info-circle"></i>
+                        <span id="estudianteAlertText">Mensaje</span>
+                    </div>
+
+                    <h3 style="font-size: 0.9rem; color: var(--gray-600); margin-bottom: 12px;">
+                        <i class="fas fa-user"></i> Datos del Estudiante
+                    </h3>
                     <div class="form-grid">
                         <div class="form-group">
                             <label>Nombres *</label>
@@ -1922,6 +1955,13 @@
                             <input type="text" id="estDocumento" class="form-control" required placeholder="Ej: 123456789" />
                         </div>
                         <div class="form-group">
+                            <label>Correo electrónico</label>
+                            <input type="email" id="estCorreo" class="form-control" placeholder="Ej: juan@email.com" />
+                            <small style="color: var(--gray-400); font-size: 0.7rem;">
+                                <i class="fas fa-info-circle"></i> Si se deja en blanco, se usará documento@eduone.com
+                            </small>
+                        </div>
+                        <div class="form-group">
                             <label>Fecha de nacimiento</label>
                             <input type="date" id="estFechaNacimiento" class="form-control" />
                         </div>
@@ -1933,9 +1973,44 @@
                             <label>Teléfono</label>
                             <input type="text" id="estTelefono" class="form-control" placeholder="Ej: 3101234567" />
                         </div>
+                    </div>
+
+                    <hr style="margin: 20px 0; border: none; border-top: 2px dashed var(--gray-200);" />
+
+                    <h3 style="font-size: 0.9rem; color: var(--gray-600); margin-bottom: 12px;">
+                        <i class="fas fa-user-friends"></i> Datos del Acudiente / Padre
+                    </h3>
+                    <div class="form-grid">
                         <div class="form-group">
-                            <label>Acudiente</label>
-                            <input type="text" id="estAcudiente" class="form-control" placeholder="Ej: María López" />
+                            <label>Nombre del acudiente *</label>
+                            <input type="text" id="estAcudiente" class="form-control" required placeholder="Ej: María López" />
+                        </div>
+                        <div class="form-group">
+                            <label>Teléfono del acudiente</label>
+                            <input type="text" id="estAcudienteTelefono" class="form-control" placeholder="Ej: 3101234567" />
+                        </div>
+                        <div class="form-group">
+                            <label>Correo del acudiente *</label>
+                            <input type="email" id="estAcudienteEmail" class="form-control" required placeholder="Ej: maria@email.com" />
+                        </div>
+                        <div class="form-group">
+                            <label>Contraseña del acudiente *</label>
+                            <input type="text" id="estAcudientePassword" class="form-control" required placeholder="Mínimo 6 caracteres" minlength="6" />
+                        </div>
+                    </div>
+
+                    <hr style="margin: 20px 0; border: none; border-top: 2px dashed var(--gray-200);" />
+
+                    <h3 style="font-size: 0.9rem; color: var(--gray-600); margin-bottom: 12px;">
+                        <i class="fas fa-key"></i> Credenciales del Estudiante
+                    </h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Contraseña del estudiante</label>
+                            <input type="text" id="estPassword" class="form-control" placeholder="Dejar en blanco para no crear cuenta" minlength="6" />
+                            <small style="color: var(--gray-400); font-size: 0.7rem;">
+                                <i class="fas fa-info-circle"></i> Mínimo 6 caracteres. Si se deja en blanco, no se creará cuenta de estudiante.
+                            </small>
                         </div>
                         <div class="form-group">
                             <label>Grado *</label>
@@ -1968,6 +2043,83 @@
         </div>
     </div>
 
+    <!-- Modal: Editar Estudiante -->
+    <div class="modal" id="modalEditarEstudiante">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-user-edit" style="color: var(--primary);"></i> Editar Estudiante</h2>
+                <button class="modal-close" id="closeEditarEstudianteModal">&times;</button>
+            </div>
+            <form id="formEditarEstudiante">
+                <div class="modal-body">
+                    <div id="editEstudianteAlert" class="alert" style="display: none;">
+                        <i class="fas fa-info-circle"></i>
+                        <span id="editEstudianteAlertText">Mensaje</span>
+                    </div>
+
+                    <input type="hidden" id="editEstudianteId" />
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Nombres *</label>
+                            <input type="text" id="editEstNombres" class="form-control" required placeholder="Ej: Juan David" />
+                        </div>
+                        <div class="form-group">
+                            <label>Apellidos *</label>
+                            <input type="text" id="editEstApellidos" class="form-control" required placeholder="Ej: Pérez López" />
+                        </div>
+                        <div class="form-group">
+                            <label>Documento *</label>
+                            <input type="text" id="editEstDocumento" class="form-control" required placeholder="Ej: 123456789" />
+                        </div>
+                        <div class="form-group">
+                            <label>Correo electrónico</label>
+                            <input type="email" id="editEstCorreo" class="form-control" placeholder="Ej: juan@email.com" />
+                        </div>
+                        <div class="form-group">
+                            <label>Fecha de nacimiento</label>
+                            <input type="date" id="editEstFechaNacimiento" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Dirección</label>
+                            <input type="text" id="editEstDireccion" class="form-control" placeholder="Ej: Calle 10 # 5-20" />
+                        </div>
+                        <div class="form-group">
+                            <label>Teléfono</label>
+                            <input type="text" id="editEstTelefono" class="form-control" placeholder="Ej: 3101234567" />
+                        </div>
+                        <div class="form-group">
+                            <label>Acudiente</label>
+                            <input type="text" id="editEstAcudiente" class="form-control" placeholder="Ej: María López" />
+                        </div>
+                        <div class="form-group">
+                            <label>Acudiente Teléfono</label>
+                            <input type="text" id="editEstAcudienteTelefono" class="form-control" placeholder="Ej: 3101234567" />
+                        </div>
+                        <div class="form-group">
+                            <label>Acudiente Email</label>
+                            <input type="email" id="editEstAcudienteEmail" class="form-control" placeholder="Ej: maria@email.com" />
+                        </div>
+                        <div class="form-group">
+                            <label>Estado</label>
+                            <select id="editEstEstado" class="form-control">
+                                <option value="activo">Activo</option>
+                                <option value="inactivo">Inactivo</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" id="cancelEditarEstudianteModal">Cancelar</button>
+                    <button type="submit" class="btn-primary" id="btnGuardarEditarEstudiante">
+                        <i class="fas fa-save"></i> Guardar cambios
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Modal: Profesor -->
     <div class="modal" id="modalProfesor">
         <div class="modal-overlay"></div>
@@ -1978,6 +2130,14 @@
             </div>
             <form id="formProfesor">
                 <div class="modal-body">
+                    <div id="profesorAlert" class="alert" style="display: none;">
+                        <i class="fas fa-info-circle"></i>
+                        <span id="profesorAlertText">Mensaje</span>
+                    </div>
+
+                    <h3 style="font-size: 0.9rem; color: var(--gray-600); margin-bottom: 12px;">
+                        <i class="fas fa-user-tie"></i> Datos del Profesor
+                    </h3>
                     <div class="form-grid">
                         <div class="form-group">
                             <label>Nombres *</label>
@@ -1992,12 +2152,16 @@
                             <input type="text" id="profDocumento" class="form-control" required placeholder="Ej: 123456789" />
                         </div>
                         <div class="form-group">
-                            <label>Correo electrónico</label>
-                            <input type="email" id="profCorreo" class="form-control" placeholder="Ej: ana@colegio.edu.co" />
+                            <label>Correo electrónico *</label>
+                            <input type="email" id="profCorreo" class="form-control" required placeholder="Ej: ana@colegio.edu.co" />
                         </div>
                         <div class="form-group">
                             <label>Teléfono</label>
                             <input type="text" id="profTelefono" class="form-control" placeholder="Ej: 3101234567" />
+                        </div>
+                        <div class="form-group">
+                            <label>Contraseña *</label>
+                            <input type="text" id="profPassword" class="form-control" required placeholder="Mínimo 6 caracteres" minlength="6" />
                         </div>
                         <div class="form-group">
                             <label>Estado</label>
@@ -2012,6 +2176,86 @@
                     <button type="button" class="btn-secondary" id="cancelProfesorModal">Cancelar</button>
                     <button type="submit" class="btn-primary" id="btnGuardarProfesor">
                         <i class="fas fa-save"></i> Guardar profesor
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Editar Profesor -->
+    <div class="modal" id="modalEditarProfesor">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-user-edit" style="color: var(--primary);"></i> Editar Profesor</h2>
+                <button class="modal-close" id="closeEditarProfesorModal">&times;</button>
+            </div>
+            <form id="formEditarProfesor">
+                <div class="modal-body">
+                    <div id="editProfesorAlert" class="alert" style="display: none;">
+                        <i class="fas fa-info-circle"></i>
+                        <span id="editProfesorAlertText">Mensaje</span>
+                    </div>
+
+                    <input type="hidden" id="editProfesorId" />
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Nombres *</label>
+                            <input type="text" id="editProfNombres" class="form-control" required placeholder="Ej: Ana María" />
+                        </div>
+                        <div class="form-group">
+                            <label>Apellidos *</label>
+                            <input type="text" id="editProfApellidos" class="form-control" required placeholder="Ej: Torres" />
+                        </div>
+                        <div class="form-group">
+                            <label>Documento *</label>
+                            <input type="text" id="editProfDocumento" class="form-control" required placeholder="Ej: 123456789" />
+                        </div>
+                        <div class="form-group">
+                            <label>Correo electrónico</label>
+                            <input type="email" id="editProfCorreo" class="form-control" placeholder="Ej: ana@colegio.edu.co" />
+                        </div>
+                        <div class="form-group">
+                            <label>Teléfono</label>
+                            <input type="text" id="editProfTelefono" class="form-control" placeholder="Ej: 3101234567" />
+                        </div>
+                        <div class="form-group">
+                            <label>Estado</label>
+                            <select id="editProfEstado" class="form-control">
+                                <option value="activo">Activo</option>
+                                <option value="inactivo">Inactivo</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <hr style="margin: 20px 0; border: none; border-top: 2px dashed var(--gray-200);" />
+
+                    <div style="background: var(--primary-bg); padding: 16px; border-radius: 10px; margin-bottom: 16px;">
+                        <h4 style="color: var(--primary); margin-bottom: 8px;">
+                            <i class="fas fa-key"></i> Credenciales de acceso
+                        </h4>
+                        <p style="font-size: 0.8rem; color: var(--gray-600); margin-bottom: 12px;">
+                            Asigna una contraseña para que el profesor pueda iniciar sesión en la plataforma.
+                        </p>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label>Contraseña</label>
+                            <div class="password-toggle" style="position: relative;">
+                                <input type="text" id="editProfPassword" class="form-control" placeholder="Dejar en blanco para no cambiar" minlength="6" />
+                                <button type="button" class="toggle-eye" id="toggleEditPassword" style="position: absolute; right: 14px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--gray-400); cursor: pointer; font-size: 1.1rem; padding: 4px;">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                            <small style="color: var(--gray-400); font-size: 0.7rem;">
+                                <i class="fas fa-info-circle"></i> Mínimo 6 caracteres. Si se deja en blanco, la contraseña no se modificará.
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" id="cancelEditarProfesorModal">Cancelar</button>
+                    <button type="submit" class="btn-primary" id="btnGuardarEditarProfesor">
+                        <i class="fas fa-save"></i> Guardar cambios
                     </button>
                 </div>
             </form>
@@ -2050,6 +2294,45 @@
                     <button type="button" class="btn-secondary" id="cancelGradoModal">Cancelar</button>
                     <button type="submit" class="btn-primary" id="btnGuardarGrado">
                         <i class="fas fa-save"></i> Guardar grado
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Editar Grado -->
+    <div class="modal" id="modalEditarGrado">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-edit" style="color: var(--primary);"></i> Editar Grado</h2>
+                <button class="modal-close" id="closeEditarGradoModal">&times;</button>
+            </div>
+            <form id="formEditarGrado">
+                <div class="modal-body">
+                    <input type="hidden" id="editGradoId" />
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Nombre del grado *</label>
+                            <input type="text" id="editGradoNombre" class="form-control" required placeholder="Ej: Tercero" />
+                        </div>
+                        <div class="form-group">
+                            <label>Orden *</label>
+                            <input type="number" id="editGradoOrden" class="form-control" required placeholder="Ej: 3" min="1" max="11" />
+                        </div>
+                        <div class="form-group">
+                            <label>Estado</label>
+                            <select id="editGradoEstado" class="form-control">
+                                <option value="activo">Activo</option>
+                                <option value="inactivo">Inactivo</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" id="cancelEditarGradoModal">Cancelar</button>
+                    <button type="submit" class="btn-primary" id="btnGuardarEditarGrado">
+                        <i class="fas fa-save"></i> Guardar cambios
                     </button>
                 </div>
             </form>
@@ -2100,6 +2383,51 @@
         </div>
     </div>
 
+    <!-- Modal: Editar Curso -->
+    <div class="modal" id="modalEditarCurso">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-edit" style="color: var(--primary);"></i> Editar Curso</h2>
+                <button class="modal-close" id="closeEditarCursoModal">&times;</button>
+            </div>
+            <form id="formEditarCurso">
+                <div class="modal-body">
+                    <input type="hidden" id="editCursoId" />
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Nombre del curso *</label>
+                            <input type="text" id="editCursoNombre" class="form-control" required placeholder="Ej: 3A" />
+                        </div>
+                        <div class="form-group">
+                            <label>Grado *</label>
+                            <select id="editCursoGrado" class="form-control" required>
+                                <option value="">Seleccionar grado</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Año *</label>
+                            <input type="number" id="editCursoAnio" class="form-control" required min="2000" max="2100" />
+                        </div>
+                        <div class="form-group">
+                            <label>Estado</label>
+                            <select id="editCursoEstado" class="form-control">
+                                <option value="activo">Activo</option>
+                                <option value="inactivo">Inactivo</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" id="cancelEditarCursoModal">Cancelar</button>
+                    <button type="submit" class="btn-primary" id="btnGuardarEditarCurso">
+                        <i class="fas fa-save"></i> Guardar cambios
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Modal: Asignatura -->
     <div class="modal" id="modalAsignatura">
         <div class="modal-overlay"></div>
@@ -2132,6 +2460,45 @@
                     <button type="button" class="btn-secondary" id="cancelAsignaturaModal">Cancelar</button>
                     <button type="submit" class="btn-primary" id="btnGuardarAsignatura">
                         <i class="fas fa-save"></i> Guardar asignatura
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Editar Asignatura -->
+    <div class="modal" id="modalEditarAsignatura">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-edit" style="color: var(--primary);"></i> Editar Asignatura</h2>
+                <button class="modal-close" id="closeEditarAsignaturaModal">&times;</button>
+            </div>
+            <form id="formEditarAsignatura">
+                <div class="modal-body">
+                    <input type="hidden" id="editAsignaturaId" />
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Nombre de la asignatura *</label>
+                            <input type="text" id="editAsigNombre" class="form-control" required placeholder="Ej: Matemáticas" />
+                        </div>
+                        <div class="form-group">
+                            <label>Código</label>
+                            <input type="text" id="editAsigCodigo" class="form-control" placeholder="Ej: MAT" />
+                        </div>
+                        <div class="form-group">
+                            <label>Estado</label>
+                            <select id="editAsigEstado" class="form-control">
+                                <option value="activo">Activo</option>
+                                <option value="inactivo">Inactivo</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" id="cancelEditarAsignaturaModal">Cancelar</button>
+                    <button type="submit" class="btn-primary" id="btnGuardarEditarAsignatura">
+                        <i class="fas fa-save"></i> Guardar cambios
                     </button>
                 </div>
             </form>
@@ -2219,11 +2586,11 @@
         // FIREBASE CONFIG
         // =============================================
         import { initializeApp } from "firebase/app";
-        import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+        import { getAuth, onAuthStateChanged, signOut, createUserWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
         import {
             getFirestore,
             doc, getDoc, collection, getDocs, addDoc, updateDoc, deleteDoc,
-            query, where, serverTimestamp
+            query, where, serverTimestamp, setDoc
         } from "firebase/firestore";
 
         const firebaseConfig = {
@@ -2248,6 +2615,7 @@
         let isLoggingOut = false;
         let horarioActual = [];
         let cursoActual = null;
+        let authCheckInProgress = false;
 
         // =============================================
         // REFERENCIAS DOM
@@ -2365,6 +2733,60 @@
         });
 
         // =============================================
+        // FUNCIONES DE UTILIDAD
+        // =============================================
+        async function crearCuentaUsuarioSinPerderSesion(email, password, nombre, rol, colegioId) {
+            try {
+                const currentUser = auth.currentUser;
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+
+                await setDoc(doc(db, 'usuarios', user.uid), {
+                    nombre: nombre,
+                    email: email,
+                    rol: rol,
+                    colegioId: colegioId,
+                    activo: true,
+                    fechaCreacion: serverTimestamp()
+                });
+
+                await signOut(auth);
+                if (currentUser) {
+                    await auth.updateCurrentUser(currentUser);
+                }
+                return user.uid;
+            } catch (error) {
+                console.error(`Error al crear cuenta de ${rol}:`, error);
+                throw error;
+            }
+        }
+
+        async function crearUsuarioEnFirestore(email, nombre, rol, colegioId) {
+            try {
+                const q = query(collection(db, 'usuarios'), where('email', '==', email));
+                const snap = await getDocs(q);
+                if (!snap.empty) {
+                    const docRef = snap.docs[0].ref;
+                    await updateDoc(docRef, { nombre, rol, colegioId, activo: true });
+                    return snap.docs[0].id;
+                }
+                const userRef = doc(collection(db, 'usuarios'));
+                await setDoc(userRef, {
+                    nombre: nombre,
+                    email: email,
+                    rol: rol,
+                    colegioId: colegioId,
+                    activo: true,
+                    fechaCreacion: serverTimestamp()
+                });
+                return userRef.id;
+            } catch (error) {
+                console.error('Error al crear usuario en Firestore:', error);
+                throw error;
+            }
+        }
+
+        // =============================================
         // DASHBOARD
         // =============================================
         async function cargarDashboard() {
@@ -2404,10 +2826,9 @@
                 statsAsignaturas.textContent = asignaturasSnap.size;
 
                 const horariosSnap = await getDocs(collection(db, 'colegios', colegioId, 'horarios'));
-                statsNotas.textContent = horariosSnap.size;
+                document.getElementById('statsHorarios').textContent = horariosSnap.size;
 
                 const notasSnap = await getDocs(collection(db, 'colegios', colegioId, 'notas'));
-                document.getElementById('statsHorarios').textContent = horariosSnap.size;
                 statsNotas.textContent = notasSnap.size;
 
                 loadingState.style.display = 'none';
@@ -2420,9 +2841,7 @@
                     </div>
                     <h3>Error al cargar el colegio</h3>
                     <p>${error.message}</p>
-                    <button class="btn-primary" onclick="location.reload()">
-                        <i class="fas fa-sync"></i> Reintentar
-                    </button>
+                    <button class="btn-primary" onclick="location.reload()">Reintentar</button>
                 `;
             }
         }
@@ -2435,8 +2854,7 @@
             try {
                 const snap = await getDocs(collection(db, 'colegios', colegioId, 'estudiantes'));
                 if (snap.empty) {
-                    tbody.innerHTML =
-                        `<tr><td colspan="8" class="text-center text-muted">No hay estudiantes registrados</td></tr>`;
+                    tbody.innerHTML = `<tr><td colspan="10" class="text-center text-muted">No hay estudiantes registrados</td></tr>`;
                     return;
                 }
 
@@ -2466,11 +2884,16 @@
                             <td>${d.nombres || '-'}</td>
                             <td>${d.apellidos || '-'}</td>
                             <td>${d.documento || '-'}</td>
+                            <td>${d.correo || '-'}</td>
+                            <td>${d.acudiente || '-'}</td>
                             <td>${grado}</td>
                             <td>${curso}</td>
                             <td><span class="badge ${d.estado === 'activo' ? 'badge-success' : 'badge-danger'}">${d.estado || 'inactivo'}</span></td>
                             <td>
-                                <button class="btn-danger btn-sm" onclick="window.eliminarEstudiante('${docSnap.id}')">
+                                <button class="btn-success btn-sm" onclick="window.editarEstudiante('${docSnap.id}')" title="Editar estudiante">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-danger btn-sm" onclick="window.eliminarEstudiante('${docSnap.id}')" title="Eliminar estudiante">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </td>
@@ -2486,12 +2909,205 @@
                         cargarDashboard();
                     }
                 };
+
             } catch (error) {
                 console.error('Error al cargar estudiantes:', error);
-                tbody.innerHTML =
-                `<tr><td colspan="8" class="text-center text-danger">Error al cargar</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="10" class="text-center text-danger">Error al cargar</td></tr>`;
             }
         }
+
+        window.editarEstudiante = async function(estudianteId) {
+            try {
+                const docRef = doc(db, 'colegios', colegioId, 'estudiantes', estudianteId);
+                const docSnap = await getDoc(docRef);
+                if (!docSnap.exists()) { alert('Estudiante no encontrado'); return; }
+                const data = docSnap.data();
+
+                document.getElementById('editEstudianteId').value = estudianteId;
+                document.getElementById('editEstNombres').value = data.nombres || '';
+                document.getElementById('editEstApellidos').value = data.apellidos || '';
+                document.getElementById('editEstDocumento').value = data.documento || '';
+                document.getElementById('editEstCorreo').value = data.correo || '';
+                document.getElementById('editEstFechaNacimiento').value = data.fechaNacimiento || '';
+                document.getElementById('editEstDireccion').value = data.direccion || '';
+                document.getElementById('editEstTelefono').value = data.telefono || '';
+                document.getElementById('editEstAcudiente').value = data.acudiente || '';
+                document.getElementById('editEstAcudienteTelefono').value = data.acudienteTelefono || '';
+                document.getElementById('editEstAcudienteEmail').value = data.acudienteEmail || '';
+                document.getElementById('editEstEstado').value = data.estado || 'activo';
+
+                document.getElementById('modalEditarEstudiante').classList.add('show');
+                document.getElementById('editEstudianteAlert').className = 'alert';
+                document.getElementById('editEstudianteAlert').classList.remove('show');
+            } catch (error) {
+                console.error('Error:', error);
+                alert('❌ Error al cargar el estudiante');
+            }
+        };
+
+        document.getElementById('closeEditarEstudianteModal')?.addEventListener('click', () => {
+            document.getElementById('modalEditarEstudiante').classList.remove('show');
+        });
+        document.getElementById('cancelEditarEstudianteModal')?.addEventListener('click', () => {
+            document.getElementById('modalEditarEstudiante').classList.remove('show');
+        });
+
+        document.getElementById('formEditarEstudiante')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const id = document.getElementById('editEstudianteId').value;
+            const data = {
+                nombres: document.getElementById('editEstNombres').value.trim(),
+                apellidos: document.getElementById('editEstApellidos').value.trim(),
+                documento: document.getElementById('editEstDocumento').value.trim(),
+                correo: document.getElementById('editEstCorreo').value.trim(),
+                fechaNacimiento: document.getElementById('editEstFechaNacimiento').value,
+                direccion: document.getElementById('editEstDireccion').value.trim(),
+                telefono: document.getElementById('editEstTelefono').value.trim(),
+                acudiente: document.getElementById('editEstAcudiente').value.trim(),
+                acudienteTelefono: document.getElementById('editEstAcudienteTelefono').value.trim(),
+                acudienteEmail: document.getElementById('editEstAcudienteEmail').value.trim(),
+                estado: document.getElementById('editEstEstado').value,
+                fechaActualizacion: serverTimestamp()
+            };
+            if (!data.nombres || !data.apellidos || !data.documento) {
+                alert('Completa los campos obligatorios');
+                return;
+            }
+            try {
+                await updateDoc(doc(db, 'colegios', colegioId, 'estudiantes', id), data);
+                alert('✅ Estudiante actualizado');
+                document.getElementById('modalEditarEstudiante').classList.remove('show');
+                cargarEstudiantes();
+                cargarDashboard();
+            } catch (error) {
+                console.error('Error:', error);
+                alert('❌ Error al actualizar estudiante');
+            }
+        });
+
+        document.getElementById('btnRegistrarEstudiante')?.addEventListener('click', async () => {
+            document.getElementById('modalEstudiante').classList.add('show');
+            const select = document.getElementById('estGrado');
+            const snap = await getDocs(collection(db, 'colegios', colegioId, 'grados'));
+            select.innerHTML = '<option value="">Seleccionar grado</option>';
+            snap.forEach(doc => {
+                const d = doc.data();
+                select.innerHTML += `<option value="${doc.id}">${d.nombre || 'Grado'}</option>`;
+            });
+            select.onchange = async () => {
+                const cursoSelect = document.getElementById('estCurso');
+                cursoSelect.innerHTML = '<option value="">Seleccionar curso</option>';
+                if (select.value) {
+                    const q = query(collection(db, 'colegios', colegioId, 'cursos'), where('gradoId', '==', select.value));
+                    const snap = await getDocs(q);
+                    snap.forEach(doc => {
+                        const d = doc.data();
+                        cursoSelect.innerHTML += `<option value="${doc.id}">${d.nombre || 'Curso'}</option>`;
+                    });
+                }
+            };
+            document.getElementById('estudianteAlert').className = 'alert';
+            document.getElementById('estudianteAlert').classList.remove('show');
+        });
+
+        document.getElementById('closeEstudianteModal')?.addEventListener('click', () => {
+            document.getElementById('modalEstudiante').classList.remove('show');
+        });
+        document.getElementById('cancelEstudianteModal')?.addEventListener('click', () => {
+            document.getElementById('modalEstudiante').classList.remove('show');
+        });
+
+        function showEstudianteAlert(message, type = 'error') {
+            const alertEl = document.getElementById('estudianteAlert');
+            const textEl = document.getElementById('estudianteAlertText');
+            alertEl.className = `alert alert-${type} show`;
+            textEl.textContent = message;
+        }
+
+        // =============================================
+// FORMULARIO PROFESOR - SIN CREACIÓN DE CUENTA
+// =============================================
+document.getElementById('formProfesor')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const nombres = document.getElementById('profNombres').value.trim();
+    const apellidos = document.getElementById('profApellidos').value.trim();
+    const documento = document.getElementById('profDocumento').value.trim();
+    const correo = document.getElementById('profCorreo').value.trim();
+    const telefono = document.getElementById('profTelefono').value.trim();
+    const password = document.getElementById('profPassword').value;
+    const estado = document.getElementById('profEstado').value;
+
+    if (!nombres || !apellidos || !documento || !correo) {
+        showProfesorAlert('Completa todos los campos obligatorios (*)', 'error');
+        return;
+    }
+
+    if (password && password.length < 6) {
+        showProfesorAlert('La contraseña debe tener al menos 6 caracteres', 'error');
+        return;
+    }
+
+    const btnGuardar = document.getElementById('btnGuardarProfesor');
+    btnGuardar.disabled = true;
+    btnGuardar.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
+
+    try {
+        // 1. Guardar profesor en Firestore
+        await addDoc(collection(db, 'colegios', colegioId, 'profesores'), {
+            nombres: nombres,
+            apellidos: apellidos,
+            documento: documento,
+            correo: correo,
+            telefono: telefono || '',
+            estado: estado,
+            fechaRegistro: serverTimestamp()
+        });
+
+        // 2. Guardar en Firestore (colección usuarios) sin crear cuenta en Authentication
+        try {
+            const q = query(collection(db, 'usuarios'), where('email', '==', correo));
+            const snap = await getDocs(q);
+            
+            if (snap.empty) {
+                const userRef = doc(collection(db, 'usuarios'));
+                await setDoc(userRef, {
+                    nombre: `${nombres} ${apellidos}`,
+                    email: correo,
+                    rol: 'profesor',
+                    colegioId: colegioId,
+                    activo: true,
+                    fechaCreacion: serverTimestamp()
+                });
+            } else {
+                await updateDoc(snap.docs[0].ref, {
+                    nombre: `${nombres} ${apellidos}`,
+                    rol: 'profesor',
+                    colegioId: colegioId,
+                    activo: true
+                });
+            }
+        } catch (error) {
+            console.warn('Error al guardar profesor en Firestore:', error);
+        }
+
+        showProfesorAlert('✅ Profesor registrado exitosamente.', 'success');
+
+        setTimeout(() => {
+            document.getElementById('modalProfesor').classList.remove('show');
+            cargarProfesores();
+            cargarDashboard();
+            btnGuardar.disabled = false;
+            btnGuardar.innerHTML = '<i class="fas fa-save"></i> Guardar profesor';
+        }, 2000);
+
+    } catch (error) {
+        console.error('Error:', error);
+        showProfesorAlert('❌ Error al guardar profesor: ' + error.message, 'error');
+        btnGuardar.disabled = false;
+        btnGuardar.innerHTML = '<i class="fas fa-save"></i> Guardar profesor';
+    }
+});
 
         // =============================================
         // PROFESORES
@@ -2501,8 +3117,7 @@
             try {
                 const snap = await getDocs(collection(db, 'colegios', colegioId, 'profesores'));
                 if (snap.empty) {
-                    tbody.innerHTML =
-                        `<tr><td colspan="8" class="text-center text-muted">No hay profesores registrados</td></tr>`;
+                    tbody.innerHTML = `<tr><td colspan="8" class="text-center text-muted">No hay profesores registrados</td></tr>`;
                     return;
                 }
                 let html = '';
@@ -2519,7 +3134,10 @@
                             <td>${d.telefono || '-'}</td>
                             <td><span class="badge ${d.estado === 'activo' ? 'badge-success' : 'badge-danger'}">${d.estado || 'inactivo'}</span></td>
                             <td>
-                                <button class="btn-danger btn-sm" onclick="window.eliminarProfesor('${doc.id}')">
+                                <button class="btn-success btn-sm" onclick="window.editarProfesor('${doc.id}')" title="Editar profesor">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-danger btn-sm" onclick="window.eliminarProfesor('${doc.id}')" title="Eliminar profesor">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </td>
@@ -2530,17 +3148,208 @@
 
                 window.eliminarProfesor = async (id) => {
                     if (confirm('¿Eliminar este profesor?')) {
-                        await deleteDoc(doc(db, 'colegios', colegioId, 'profesores', id));
-                        cargarProfesores();
-                        cargarDashboard();
+                        try {
+                            const horariosQ = query(collection(db, 'colegios', colegioId, 'horarios'), where('profesorId', '==', id));
+                            const horariosSnap = await getDocs(horariosQ);
+                            if (!horariosSnap.empty) {
+                                if (!confirm('⚠️ Este profesor tiene clases asignadas. ¿Eliminarlo de todos modos?')) return;
+                                for (const doc of horariosSnap.docs) await deleteDoc(doc.ref);
+                            }
+                            await deleteDoc(doc(db, 'colegios', colegioId, 'profesores', id));
+                            alert('✅ Profesor eliminado');
+                            cargarProfesores();
+                            cargarDashboard();
+                        } catch (error) {
+                            console.error('Error:', error);
+                            alert('❌ Error al eliminar el profesor');
+                        }
                     }
                 };
             } catch (error) {
                 console.error('Error al cargar profesores:', error);
-                tbody.innerHTML =
-                `<tr><td colspan="8" class="text-center text-danger">Error al cargar</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="8" class="text-center text-danger">Error al cargar</td></tr>`;
             }
         }
+
+        window.editarProfesor = async function(profesorId) {
+            try {
+                const docRef = doc(db, 'colegios', colegioId, 'profesores', profesorId);
+                const docSnap = await getDoc(docRef);
+                if (!docSnap.exists()) { alert('Profesor no encontrado'); return; }
+                const data = docSnap.data();
+
+                document.getElementById('editProfesorId').value = profesorId;
+                document.getElementById('editProfNombres').value = data.nombres || '';
+                document.getElementById('editProfApellidos').value = data.apellidos || '';
+                document.getElementById('editProfDocumento').value = data.documento || '';
+                document.getElementById('editProfCorreo').value = data.correo || '';
+                document.getElementById('editProfTelefono').value = data.telefono || '';
+                document.getElementById('editProfEstado').value = data.estado || 'activo';
+                document.getElementById('editProfPassword').value = '';
+
+                document.getElementById('modalEditarProfesor').classList.add('show');
+                document.getElementById('editProfesorAlert').className = 'alert';
+                document.getElementById('editProfesorAlert').classList.remove('show');
+            } catch (error) {
+                console.error('Error:', error);
+                alert('❌ Error al cargar el profesor');
+            }
+        };
+
+        document.getElementById('closeEditarProfesorModal')?.addEventListener('click', () => {
+            document.getElementById('modalEditarProfesor').classList.remove('show');
+        });
+        document.getElementById('cancelEditarProfesorModal')?.addEventListener('click', () => {
+            document.getElementById('modalEditarProfesor').classList.remove('show');
+        });
+
+        document.getElementById('toggleEditPassword')?.addEventListener('click', function() {
+            const input = document.getElementById('editProfPassword');
+            const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+            input.setAttribute('type', type);
+            const icon = this.querySelector('i');
+            icon.className = type === 'password' ? 'fas fa-eye' : 'fas fa-eye-slash';
+        });
+
+        function showEditAlert(message, type = 'error') {
+            const alertEl = document.getElementById('editProfesorAlert');
+            const textEl = document.getElementById('editProfesorAlertText');
+            alertEl.className = `alert alert-${type} show`;
+            textEl.textContent = message;
+        }
+
+        document.getElementById('formEditarProfesor')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const id = document.getElementById('editProfesorId').value;
+            const nombres = document.getElementById('editProfNombres').value.trim();
+            const apellidos = document.getElementById('editProfApellidos').value.trim();
+            const documento = document.getElementById('editProfDocumento').value.trim();
+            const correo = document.getElementById('editProfCorreo').value.trim();
+            const telefono = document.getElementById('editProfTelefono').value.trim();
+            const estado = document.getElementById('editProfEstado').value;
+            const password = document.getElementById('editProfPassword').value.trim();
+
+            if (!nombres || !apellidos || !documento) {
+                showEditAlert('Completa todos los campos obligatorios', 'error');
+                return;
+            }
+
+            const btnGuardar = document.getElementById('btnGuardarEditarProfesor');
+            btnGuardar.disabled = true;
+            btnGuardar.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
+
+            try {
+                await updateDoc(doc(db, 'colegios', colegioId, 'profesores', id), {
+                    nombres, apellidos, documento, correo: correo || '', telefono: telefono || '',
+                    estado, fechaActualizacion: serverTimestamp()
+                });
+
+                if (password && password.length >= 6 && correo) {
+                    const q = query(collection(db, 'usuarios'), where('email', '==', correo));
+                    const snap = await getDocs(q);
+                    if (snap.empty) {
+                        await crearCuentaUsuarioSinPerderSesion(correo, password, `${nombres} ${apellidos}`, 'profesor', colegioId);
+                        showEditAlert('✅ Profesor actualizado y cuenta creada.', 'success');
+                    } else {
+                        await sendPasswordResetEmail(auth, correo);
+                        showEditAlert('✅ Profesor actualizado. Se envió correo para restablecer contraseña.', 'success');
+                    }
+                } else {
+                    showEditAlert('✅ Profesor actualizado exitosamente', 'success');
+                }
+
+                setTimeout(() => {
+                    document.getElementById('modalEditarProfesor').classList.remove('show');
+                    cargarProfesores();
+                    cargarDashboard();
+                    btnGuardar.disabled = false;
+                    btnGuardar.innerHTML = '<i class="fas fa-save"></i> Guardar cambios';
+                }, 1500);
+
+            } catch (error) {
+                console.error('Error:', error);
+                showEditAlert('❌ Error al actualizar el profesor: ' + error.message, 'error');
+                btnGuardar.disabled = false;
+                btnGuardar.innerHTML = '<i class="fas fa-save"></i> Guardar cambios';
+            }
+        });
+
+        document.getElementById('btnRegistrarProfesor')?.addEventListener('click', () => {
+            document.getElementById('modalProfesor').classList.add('show');
+            document.getElementById('profesorAlert').className = 'alert';
+            document.getElementById('profesorAlert').classList.remove('show');
+        });
+
+        document.getElementById('closeProfesorModal')?.addEventListener('click', () => {
+            document.getElementById('modalProfesor').classList.remove('show');
+        });
+        document.getElementById('cancelProfesorModal')?.addEventListener('click', () => {
+            document.getElementById('modalProfesor').classList.remove('show');
+        });
+
+        function showProfesorAlert(message, type = 'error') {
+            const alertEl = document.getElementById('profesorAlert');
+            const textEl = document.getElementById('profesorAlertText');
+            alertEl.className = `alert alert-${type} show`;
+            textEl.textContent = message;
+        }
+
+        document.getElementById('formProfesor')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const nombres = document.getElementById('profNombres').value.trim();
+            const apellidos = document.getElementById('profApellidos').value.trim();
+            const documento = document.getElementById('profDocumento').value.trim();
+            const correo = document.getElementById('profCorreo').value.trim();
+            const telefono = document.getElementById('profTelefono').value.trim();
+            const password = document.getElementById('profPassword').value;
+            const estado = document.getElementById('profEstado').value;
+
+            if (!nombres || !apellidos || !documento || !correo || !password) {
+                showProfesorAlert('Completa todos los campos obligatorios (*)', 'error');
+                return;
+            }
+            if (password.length < 6) {
+                showProfesorAlert('La contraseña debe tener al menos 6 caracteres', 'error');
+                return;
+            }
+
+            const btnGuardar = document.getElementById('btnGuardarProfesor');
+            btnGuardar.disabled = true;
+            btnGuardar.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
+
+            try {
+                await addDoc(collection(db, 'colegios', colegioId, 'profesores'), {
+                    nombres, apellidos, documento, correo, telefono: telefono || '',
+                    estado, fechaRegistro: serverTimestamp()
+                });
+
+                try {
+                    await crearCuentaUsuarioSinPerderSesion(correo, password, `${nombres} ${apellidos}`, 'profesor', colegioId);
+                    showProfesorAlert('✅ Profesor registrado exitosamente.', 'success');
+                } catch (authError) {
+                    if (authError.code === 'auth/email-already-in-use') {
+                        await crearUsuarioEnFirestore(correo, `${nombres} ${apellidos}`, 'profesor', colegioId);
+                        showProfesorAlert('⚠️ El correo ya está registrado. Se vinculó al profesor.', 'info');
+                    } else {
+                        throw authError;
+                    }
+                }
+
+                setTimeout(() => {
+                    document.getElementById('modalProfesor').classList.remove('show');
+                    cargarProfesores();
+                    cargarDashboard();
+                    btnGuardar.disabled = false;
+                    btnGuardar.innerHTML = '<i class="fas fa-save"></i> Guardar profesor';
+                }, 2000);
+
+            } catch (error) {
+                console.error('Error:', error);
+                showProfesorAlert('❌ Error al guardar profesor: ' + error.message, 'error');
+                btnGuardar.disabled = false;
+                btnGuardar.innerHTML = '<i class="fas fa-save"></i> Guardar profesor';
+            }
+        });
 
         // =============================================
         // GRADOS
@@ -2550,8 +3359,7 @@
             try {
                 const snap = await getDocs(collection(db, 'colegios', colegioId, 'grados'));
                 if (snap.empty) {
-                    tbody.innerHTML =
-                        `<tr><td colspan="5" class="text-center text-muted">No hay grados registrados</td></tr>`;
+                    tbody.innerHTML = `<tr><td colspan="5" class="text-center text-muted">No hay grados registrados</td></tr>`;
                     return;
                 }
                 let html = '';
@@ -2565,7 +3373,10 @@
                             <td>${d.orden || '-'}</td>
                             <td><span class="badge ${d.estado === 'activo' ? 'badge-success' : 'badge-danger'}">${d.estado || 'inactivo'}</span></td>
                             <td>
-                                <button class="btn-danger btn-sm" onclick="window.eliminarGrado('${doc.id}')">
+                                <button class="btn-success btn-sm" onclick="window.editarGrado('${doc.id}')" title="Editar grado">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-danger btn-sm" onclick="window.eliminarGrado('${doc.id}')" title="Eliminar grado">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </td>
@@ -2574,6 +3385,23 @@
                 });
                 tbody.innerHTML = html;
 
+                window.editarGrado = async function(id) {
+                    try {
+                        const docRef = doc(db, 'colegios', colegioId, 'grados', id);
+                        const docSnap = await getDoc(docRef);
+                        if (!docSnap.exists()) { alert('Grado no encontrado'); return; }
+                        const data = docSnap.data();
+                        document.getElementById('editGradoId').value = id;
+                        document.getElementById('editGradoNombre').value = data.nombre || '';
+                        document.getElementById('editGradoOrden').value = data.orden || '';
+                        document.getElementById('editGradoEstado').value = data.estado || 'activo';
+                        document.getElementById('modalEditarGrado').classList.add('show');
+                    } catch (error) {
+                        console.error('Error:', error);
+                        alert('❌ Error al cargar el grado');
+                    }
+                };
+
                 window.eliminarGrado = async (id) => {
                     if (confirm('¿Eliminar este grado?')) {
                         await deleteDoc(doc(db, 'colegios', colegioId, 'grados', id));
@@ -2581,12 +3409,72 @@
                         cargarDashboard();
                     }
                 };
+
             } catch (error) {
                 console.error('Error al cargar grados:', error);
-                tbody.innerHTML =
-                `<tr><td colspan="5" class="text-center text-danger">Error al cargar</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="5" class="text-center text-danger">Error al cargar</td></tr>`;
             }
         }
+
+        document.getElementById('closeEditarGradoModal')?.addEventListener('click', () => {
+            document.getElementById('modalEditarGrado').classList.remove('show');
+        });
+        document.getElementById('cancelEditarGradoModal')?.addEventListener('click', () => {
+            document.getElementById('modalEditarGrado').classList.remove('show');
+        });
+
+        document.getElementById('formEditarGrado')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const id = document.getElementById('editGradoId').value;
+            const data = {
+                nombre: document.getElementById('editGradoNombre').value.trim(),
+                orden: parseInt(document.getElementById('editGradoOrden').value),
+                estado: document.getElementById('editGradoEstado').value,
+                fechaActualizacion: serverTimestamp()
+            };
+            if (!data.nombre || !data.orden) { alert('Completa todos los campos'); return; }
+            try {
+                await updateDoc(doc(db, 'colegios', colegioId, 'grados', id), data);
+                alert('✅ Grado actualizado');
+                document.getElementById('modalEditarGrado').classList.remove('show');
+                cargarGrados();
+                cargarDashboard();
+            } catch (error) {
+                console.error('Error:', error);
+                alert('❌ Error al actualizar grado');
+            }
+        });
+
+        document.getElementById('btnRegistrarGrado')?.addEventListener('click', () => {
+            document.getElementById('modalGrado').classList.add('show');
+        });
+        document.getElementById('closeGradoModal')?.addEventListener('click', () => {
+            document.getElementById('modalGrado').classList.remove('show');
+        });
+        document.getElementById('cancelGradoModal')?.addEventListener('click', () => {
+            document.getElementById('modalGrado').classList.remove('show');
+        });
+
+        document.getElementById('formGrado')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const data = {
+                nombre: document.getElementById('gradoNombre').value.trim(),
+                orden: parseInt(document.getElementById('gradoOrden').value),
+                estado: document.getElementById('gradoEstado').value,
+                fechaRegistro: serverTimestamp()
+            };
+            if (!data.nombre || !data.orden) { alert('Completa todos los campos obligatorios'); return; }
+            try {
+                await addDoc(collection(db, 'colegios', colegioId, 'grados'), data);
+                alert('✅ Grado registrado exitosamente');
+                document.getElementById('modalGrado').classList.remove('show');
+                cargarGrados();
+                cargarDashboard();
+            } catch (error) {
+                console.error('Error:', error);
+                alert('❌ Error al guardar grado');
+            }
+        });
 
         // =============================================
         // CURSOS
@@ -2596,8 +3484,7 @@
             try {
                 const snap = await getDocs(collection(db, 'colegios', colegioId, 'cursos'));
                 if (snap.empty) {
-                    tbody.innerHTML =
-                        `<tr><td colspan="6" class="text-center text-muted">No hay cursos registrados</td></tr>`;
+                    tbody.innerHTML = `<tr><td colspan="6" class="text-center text-muted">No hay cursos registrados</td></tr>`;
                     return;
                 }
                 let html = '';
@@ -2617,7 +3504,10 @@
                             <td>${d.anio || '-'}</td>
                             <td><span class="badge ${d.estado === 'activo' ? 'badge-success' : 'badge-danger'}">${d.estado || 'inactivo'}</span></td>
                             <td>
-                                <button class="btn-danger btn-sm" onclick="window.eliminarCurso('${docSnap.id}')">
+                                <button class="btn-success btn-sm" onclick="window.editarCurso('${docSnap.id}')" title="Editar curso">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-danger btn-sm" onclick="window.eliminarCurso('${docSnap.id}')" title="Eliminar curso">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </td>
@@ -2626,6 +3516,32 @@
                 }
                 tbody.innerHTML = html;
 
+                window.editarCurso = async function(id) {
+                    try {
+                        const docRef = doc(db, 'colegios', colegioId, 'cursos', id);
+                        const docSnap = await getDoc(docRef);
+                        if (!docSnap.exists()) { alert('Curso no encontrado'); return; }
+                        const data = docSnap.data();
+                        document.getElementById('editCursoId').value = id;
+                        document.getElementById('editCursoNombre').value = data.nombre || '';
+                        document.getElementById('editCursoAnio').value = data.anio || new Date().getFullYear();
+                        document.getElementById('editCursoEstado').value = data.estado || 'activo';
+
+                        const select = document.getElementById('editCursoGrado');
+                        const gradosSnap = await getDocs(collection(db, 'colegios', colegioId, 'grados'));
+                        select.innerHTML = '<option value="">Seleccionar grado</option>';
+                        gradosSnap.forEach(doc => {
+                            const d = doc.data();
+                            const selected = doc.id === data.gradoId ? 'selected' : '';
+                            select.innerHTML += `<option value="${doc.id}" ${selected}>${d.nombre || 'Grado'}</option>`;
+                        });
+                        document.getElementById('modalEditarCurso').classList.add('show');
+                    } catch (error) {
+                        console.error('Error:', error);
+                        alert('❌ Error al cargar el curso');
+                    }
+                };
+
                 window.eliminarCurso = async (id) => {
                     if (confirm('¿Eliminar este curso?')) {
                         await deleteDoc(doc(db, 'colegios', colegioId, 'cursos', id));
@@ -2633,12 +3549,83 @@
                         cargarDashboard();
                     }
                 };
+
             } catch (error) {
                 console.error('Error al cargar cursos:', error);
-                tbody.innerHTML =
-                `<tr><td colspan="6" class="text-center text-danger">Error al cargar</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="6" class="text-center text-danger">Error al cargar</td></tr>`;
             }
         }
+
+        document.getElementById('closeEditarCursoModal')?.addEventListener('click', () => {
+            document.getElementById('modalEditarCurso').classList.remove('show');
+        });
+        document.getElementById('cancelEditarCursoModal')?.addEventListener('click', () => {
+            document.getElementById('modalEditarCurso').classList.remove('show');
+        });
+
+        document.getElementById('formEditarCurso')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const id = document.getElementById('editCursoId').value;
+            const data = {
+                nombre: document.getElementById('editCursoNombre').value.trim(),
+                gradoId: document.getElementById('editCursoGrado').value,
+                anio: parseInt(document.getElementById('editCursoAnio').value),
+                estado: document.getElementById('editCursoEstado').value,
+                fechaActualizacion: serverTimestamp()
+            };
+            if (!data.nombre || !data.gradoId || !data.anio) { alert('Completa todos los campos'); return; }
+            try {
+                await updateDoc(doc(db, 'colegios', colegioId, 'cursos', id), data);
+                alert('✅ Curso actualizado');
+                document.getElementById('modalEditarCurso').classList.remove('show');
+                cargarCursos();
+                cargarDashboard();
+            } catch (error) {
+                console.error('Error:', error);
+                alert('❌ Error al actualizar curso');
+            }
+        });
+
+        document.getElementById('btnRegistrarCurso')?.addEventListener('click', async () => {
+            document.getElementById('modalCurso').classList.add('show');
+            const select = document.getElementById('cursoGrado');
+            const snap = await getDocs(collection(db, 'colegios', colegioId, 'grados'));
+            select.innerHTML = '<option value="">Seleccionar grado</option>';
+            snap.forEach(doc => {
+                const d = doc.data();
+                select.innerHTML += `<option value="${doc.id}">${d.nombre || 'Grado'}</option>`;
+            });
+            document.getElementById('cursoAnio').value = new Date().getFullYear();
+        });
+
+        document.getElementById('closeCursoModal')?.addEventListener('click', () => {
+            document.getElementById('modalCurso').classList.remove('show');
+        });
+        document.getElementById('cancelCursoModal')?.addEventListener('click', () => {
+            document.getElementById('modalCurso').classList.remove('show');
+        });
+
+        document.getElementById('formCurso')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const data = {
+                nombre: document.getElementById('cursoNombre').value.trim(),
+                gradoId: document.getElementById('cursoGrado').value,
+                anio: parseInt(document.getElementById('cursoAnio').value),
+                estado: document.getElementById('cursoEstado').value,
+                fechaRegistro: serverTimestamp()
+            };
+            if (!data.nombre || !data.gradoId || !data.anio) { alert('Completa todos los campos obligatorios'); return; }
+            try {
+                await addDoc(collection(db, 'colegios', colegioId, 'cursos'), data);
+                alert('✅ Curso registrado exitosamente');
+                document.getElementById('modalCurso').classList.remove('show');
+                cargarCursos();
+                cargarDashboard();
+            } catch (error) {
+                console.error('Error:', error);
+                alert('❌ Error al guardar curso');
+            }
+        });
 
         // =============================================
         // ASIGNATURAS
@@ -2648,8 +3635,7 @@
             try {
                 const snap = await getDocs(collection(db, 'colegios', colegioId, 'asignaturas'));
                 if (snap.empty) {
-                    tbody.innerHTML =
-                        `<tr><td colspan="5" class="text-center text-muted">No hay asignaturas registradas</td></tr>`;
+                    tbody.innerHTML = `<tr><td colspan="5" class="text-center text-muted">No hay asignaturas registradas</td></tr>`;
                     return;
                 }
                 let html = '';
@@ -2663,7 +3649,10 @@
                             <td>${d.codigo || '-'}</td>
                             <td><span class="badge ${d.estado === 'activo' ? 'badge-success' : 'badge-danger'}">${d.estado || 'inactivo'}</span></td>
                             <td>
-                                <button class="btn-danger btn-sm" onclick="window.eliminarAsignatura('${doc.id}')">
+                                <button class="btn-success btn-sm" onclick="window.editarAsignatura('${doc.id}')" title="Editar asignatura">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-danger btn-sm" onclick="window.eliminarAsignatura('${doc.id}')" title="Eliminar asignatura">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </td>
@@ -2672,6 +3661,23 @@
                 });
                 tbody.innerHTML = html;
 
+                window.editarAsignatura = async function(id) {
+                    try {
+                        const docRef = doc(db, 'colegios', colegioId, 'asignaturas', id);
+                        const docSnap = await getDoc(docRef);
+                        if (!docSnap.exists()) { alert('Asignatura no encontrada'); return; }
+                        const data = docSnap.data();
+                        document.getElementById('editAsignaturaId').value = id;
+                        document.getElementById('editAsigNombre').value = data.nombre || '';
+                        document.getElementById('editAsigCodigo').value = data.codigo || '';
+                        document.getElementById('editAsigEstado').value = data.estado || 'activo';
+                        document.getElementById('modalEditarAsignatura').classList.add('show');
+                    } catch (error) {
+                        console.error('Error:', error);
+                        alert('❌ Error al cargar la asignatura');
+                    }
+                };
+
                 window.eliminarAsignatura = async (id) => {
                     if (confirm('¿Eliminar esta asignatura?')) {
                         await deleteDoc(doc(db, 'colegios', colegioId, 'asignaturas', id));
@@ -2679,18 +3685,77 @@
                         cargarDashboard();
                     }
                 };
+
             } catch (error) {
                 console.error('Error al cargar asignaturas:', error);
-                tbody.innerHTML =
-                `<tr><td colspan="5" class="text-center text-danger">Error al cargar</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="5" class="text-center text-danger">Error al cargar</td></tr>`;
             }
         }
+
+        document.getElementById('closeEditarAsignaturaModal')?.addEventListener('click', () => {
+            document.getElementById('modalEditarAsignatura').classList.remove('show');
+        });
+        document.getElementById('cancelEditarAsignaturaModal')?.addEventListener('click', () => {
+            document.getElementById('modalEditarAsignatura').classList.remove('show');
+        });
+
+        document.getElementById('formEditarAsignatura')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const id = document.getElementById('editAsignaturaId').value;
+            const data = {
+                nombre: document.getElementById('editAsigNombre').value.trim(),
+                codigo: document.getElementById('editAsigCodigo').value.trim(),
+                estado: document.getElementById('editAsigEstado').value,
+                fechaActualizacion: serverTimestamp()
+            };
+            if (!data.nombre) { alert('Completa todos los campos'); return; }
+            try {
+                await updateDoc(doc(db, 'colegios', colegioId, 'asignaturas', id), data);
+                alert('✅ Asignatura actualizada');
+                document.getElementById('modalEditarAsignatura').classList.remove('show');
+                cargarAsignaturas();
+                cargarDashboard();
+            } catch (error) {
+                console.error('Error:', error);
+                alert('❌ Error al actualizar asignatura');
+            }
+        });
+
+        document.getElementById('btnRegistrarAsignatura')?.addEventListener('click', () => {
+            document.getElementById('modalAsignatura').classList.add('show');
+        });
+        document.getElementById('closeAsignaturaModal')?.addEventListener('click', () => {
+            document.getElementById('modalAsignatura').classList.remove('show');
+        });
+        document.getElementById('cancelAsignaturaModal')?.addEventListener('click', () => {
+            document.getElementById('modalAsignatura').classList.remove('show');
+        });
+
+        document.getElementById('formAsignatura')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const data = {
+                nombre: document.getElementById('asigNombre').value.trim(),
+                codigo: document.getElementById('asigCodigo').value.trim(),
+                estado: document.getElementById('asigEstado').value,
+                fechaRegistro: serverTimestamp()
+            };
+            if (!data.nombre) { alert('Completa todos los campos obligatorios'); return; }
+            try {
+                await addDoc(collection(db, 'colegios', colegioId, 'asignaturas'), data);
+                alert('✅ Asignatura registrada exitosamente');
+                document.getElementById('modalAsignatura').classList.remove('show');
+                cargarAsignaturas();
+                cargarDashboard();
+            } catch (error) {
+                console.error('Error:', error);
+                alert('❌ Error al guardar asignatura');
+            }
+        });
 
         // =============================================
         // HORARIOS
         // =============================================
         async function cargarHorarios() {
-            // Cargar grados en el selector
             const gradoSelect = document.getElementById('horarioGrado');
             const snap = await getDocs(collection(db, 'colegios', colegioId, 'grados'));
             gradoSelect.innerHTML = '<option value="">Seleccionar grado</option>';
@@ -2699,13 +3764,11 @@
                 gradoSelect.innerHTML += `<option value="${doc.id}">${d.nombre || 'Grado'}</option>`;
             });
 
-            // Cargar cursos según grado
             gradoSelect.onchange = async () => {
                 const cursoSelect = document.getElementById('horarioCurso');
                 cursoSelect.innerHTML = '<option value="">Seleccionar curso</option>';
                 if (gradoSelect.value) {
-                    const q = query(collection(db, 'colegios', colegioId, 'cursos'),
-                        where('gradoId', '==', gradoSelect.value));
+                    const q = query(collection(db, 'colegios', colegioId, 'cursos'), where('gradoId', '==', gradoSelect.value));
                     const snap = await getDocs(q);
                     snap.forEach(doc => {
                         const d = doc.data();
@@ -2714,7 +3777,6 @@
                 }
             };
 
-            // Cargar asignaturas en el modal
             const asigSelect = document.getElementById('claseAsignatura');
             const asigSnap = await getDocs(collection(db, 'colegios', colegioId, 'asignaturas'));
             asigSelect.innerHTML = '<option value="">Seleccionar asignatura</option>';
@@ -2723,39 +3785,28 @@
                 asigSelect.innerHTML += `<option value="${doc.id}">${d.nombre || 'Asignatura'}</option>`;
             });
 
-            // Cargar profesores en el modal
             const profSelect = document.getElementById('claseProfesor');
             const profSnap = await getDocs(collection(db, 'colegios', colegioId, 'profesores'));
             profSelect.innerHTML = '<option value="">Seleccionar profesor</option>';
             profSnap.forEach(doc => {
                 const d = doc.data();
-                profSelect.innerHTML +=
-                `<option value="${doc.id}">${d.nombres || ''} ${d.apellidos || ''}</option>`;
+                profSelect.innerHTML += `<option value="${doc.id}">${d.nombres || ''} ${d.apellidos || ''}</option>`;
             });
         }
 
-        // Cargar horario
         document.getElementById('btnCargarHorario')?.addEventListener('click', async () => {
             const cursoId = document.getElementById('horarioCurso').value;
-            if (!cursoId) {
-                alert('Selecciona un curso');
-                return;
-            }
+            if (!cursoId) { alert('Selecciona un curso'); return; }
 
             cursoActual = cursoId;
             const cursoDoc = await getDoc(doc(db, 'colegios', colegioId, 'cursos', cursoId));
             const cursoNombre = cursoDoc.exists() ? cursoDoc.data().nombre : 'Curso';
-
             document.getElementById('horarioTitulo').textContent = `Horario - ${cursoNombre}`;
 
-            // Cargar horarios
-            const q = query(collection(db, 'colegios', colegioId, 'horarios'),
-                where('cursoId', '==', cursoId));
+            const q = query(collection(db, 'colegios', colegioId, 'horarios'), where('cursoId', '==', cursoId));
             const snap = await getDocs(q);
             horarioActual = [];
-            snap.forEach(doc => {
-                horarioActual.push({ id: doc.id, ...doc.data() });
-            });
+            snap.forEach(doc => { horarioActual.push({ id: doc.id, ...doc.data() }); });
 
             mostrarHorario();
             mostrarClases();
@@ -2770,9 +3821,7 @@
             ];
 
             let html = `<div class="h-cell header"></div>`;
-            dias.forEach(d => {
-                html += `<div class="h-cell header">${d}</div>`;
-            });
+            dias.forEach(d => { html += `<div class="h-cell header">${d}</div>`; });
 
             horas.forEach(hora => {
                 html += `<div class="h-cell hora">${hora}</div>`;
@@ -2804,7 +3853,7 @@
             }
 
             let html = '';
-            horarioActual.forEach((h, index) => {
+            horarioActual.forEach((h) => {
                 html += `
                     <tr>
                         <td>${h.dia || '-'}</td>
@@ -2831,12 +3880,8 @@
             };
         }
 
-        // Agregar clase al horario
         document.getElementById('btnAgregarHorario')?.addEventListener('click', () => {
-            if (!cursoActual) {
-                alert('Primero carga un horario de curso');
-                return;
-            }
+            if (!cursoActual) { alert('Primero carga un horario de curso'); return; }
             document.getElementById('modalAgregarClase').classList.add('show');
         });
 
@@ -2849,7 +3894,6 @@
 
         document.getElementById('formAgregarClase')?.addEventListener('submit', async (e) => {
             e.preventDefault();
-
             const dia = document.getElementById('claseDia').value;
             const hora = document.getElementById('claseHora').value;
             const asignaturaId = document.getElementById('claseAsignatura').value;
@@ -2860,30 +3904,55 @@
                 return;
             }
 
-            // Obtener nombres
-            const asigDoc = await getDoc(doc(db, 'colegios', colegioId, 'asignaturas', asignaturaId));
-            const profDoc = await getDoc(doc(db, 'colegios', colegioId, 'profesores', profesorId));
-
-            const data = {
-                cursoId: cursoActual,
-                dia: dia,
-                hora: hora,
-                asignaturaId: asignaturaId,
-                asignaturaNombre: asigDoc.exists() ? asigDoc.data().nombre : 'Asignatura',
-                profesorId: profesorId,
-                profesorNombre: profDoc.exists() ? `${profDoc.data().nombres || ''} ${profDoc.data().apellidos || ''}` :
-                    'Profesor',
-                fechaRegistro: serverTimestamp()
-            };
-
             try {
-                await addDoc(collection(db, 'colegios', colegioId, 'horarios'), data);
+                const horariosQuery = query(
+                    collection(db, 'colegios', colegioId, 'horarios'),
+                    where('profesorId', '==', profesorId),
+                    where('dia', '==', dia),
+                    where('hora', '==', hora)
+                );
+                const horariosSnap = await getDocs(horariosQuery);
+                if (!horariosSnap.empty) {
+                    const claseExistente = horariosSnap.docs[0].data();
+                    const cursoDoc = await getDoc(doc(db, 'colegios', colegioId, 'cursos', claseExistente.cursoId));
+                    const cursoNombre = cursoDoc.exists() ? cursoDoc.data().nombre : 'otro curso';
+                    alert(`❌ El profesor ya tiene una clase asignada en ${dia} a las ${hora} para el curso ${cursoNombre}.`);
+                    return;
+                }
+
+                const cursoHorarioQuery = query(
+                    collection(db, 'colegios', colegioId, 'horarios'),
+                    where('cursoId', '==', cursoActual),
+                    where('dia', '==', dia),
+                    where('hora', '==', hora)
+                );
+                const cursoHorarioSnap = await getDocs(cursoHorarioQuery);
+                if (!cursoHorarioSnap.empty) {
+                    alert(`❌ El curso ya tiene una clase asignada en ${dia} a las ${hora}.`);
+                    return;
+                }
+
+                const asigDoc = await getDoc(doc(db, 'colegios', colegioId, 'asignaturas', asignaturaId));
+                const profDoc = await getDoc(doc(db, 'colegios', colegioId, 'profesores', profesorId));
+
+                await addDoc(collection(db, 'colegios', colegioId, 'horarios'), {
+                    cursoId: cursoActual,
+                    dia: dia,
+                    hora: hora,
+                    asignaturaId: asignaturaId,
+                    asignaturaNombre: asigDoc.exists() ? asigDoc.data().nombre : 'Asignatura',
+                    profesorId: profesorId,
+                    profesorNombre: profDoc.exists() ? `${profDoc.data().nombres || ''} ${profDoc.data().apellidos || ''}` : 'Profesor',
+                    fechaRegistro: serverTimestamp()
+                });
+
                 alert('✅ Clase agregada al horario');
                 document.getElementById('modalAgregarClase').classList.remove('show');
                 document.getElementById('btnCargarHorario').click();
+
             } catch (error) {
                 console.error('Error:', error);
-                alert('❌ Error al agregar la clase');
+                alert('❌ Error al agregar la clase: ' + error.message);
             }
         });
 
@@ -2945,7 +4014,7 @@
         }
 
         // =============================================
-        // CONSULTAR NOTAS
+        // CONSULTAR NOTAS - CORREGIDO
         // =============================================
         document.getElementById('btnConsultarNotas')?.addEventListener('click', async () => {
             const estudianteId = document.getElementById('filtroEstudianteNotas').value;
@@ -2958,12 +4027,32 @@
             }
 
             try {
+                // Obtener las notas del estudiante
                 const q = query(
                     collection(db, 'colegios', colegioId, 'notas'),
                     where('estudianteId', '==', estudianteId)
                 );
                 const snap = await getDocs(q);
 
+                // Obtener las tareas/actividades del estudiante
+                const tareasQ = query(
+                    collection(db, 'colegios', colegioId, 'tareas'),
+                    where('profesorId', '==', '') // Temporal: obtener todas las tareas del colegio
+                );
+                // Mejor: obtener las tareas del curso del estudiante
+                // Primero obtener el curso del estudiante
+                const matQ = query(
+                    collection(db, 'colegios', colegioId, 'matriculas'),
+                    where('estudianteId', '==', estudianteId),
+                    where('estado', '==', 'activo')
+                );
+                const matSnap = await getDocs(matQ);
+                let cursoId = null;
+                if (!matSnap.empty) {
+                    cursoId = matSnap.docs[0].data().cursoId;
+                }
+
+                // Agrupar notas por asignatura
                 const notasPorAsignatura = {};
                 snap.forEach(doc => {
                     const n = doc.data();
@@ -2971,21 +4060,29 @@
                     if (!notasPorAsignatura[n.asignaturaId]) {
                         notasPorAsignatura[n.asignaturaId] = {
                             notas: [],
-                            nombre: n.asignaturaNombre || 'Asignatura'
+                            nombre: n.asignaturaNombre || 'Asignatura',
+                            asignaturaId: n.asignaturaId
                         };
                     }
                     notasPorAsignatura[n.asignaturaId].notas.push(parseFloat(n.valor) || 0);
                 });
 
+                // Si no hay notas, mostrar mensaje
                 if (Object.keys(notasPorAsignatura).length === 0) {
-                    tbody.innerHTML =
-                        `<tr><td colspan="7" class="text-center text-muted">No hay notas para este estudiante${periodo ? ' en el periodo '+periodo : ''}</td></tr>`;
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="7" class="text-center text-muted">
+                                No hay notas para este estudiante${periodo ? ' en el periodo '+periodo : ''}
+                            </td>
+                        </tr>
+                    `;
                     return;
                 }
 
                 let html = '';
                 for (const [asigId, data] of Object.entries(notasPorAsignatura)) {
                     const notas = data.notas;
+                    // Ordenar notas y tomar las 4 más recientes o completar con -
                     const n1 = notas[0] || '-';
                     const n2 = notas[1] || '-';
                     const n3 = notas[2] || '-';
@@ -2997,10 +4094,10 @@
                     html += `
                         <tr>
                             <td><strong>${data.nombre}</strong></td>
-                            <td>${n1}</td>
-                            <td>${n2}</td>
-                            <td>${n3}</td>
-                            <td>${n4}</td>
+                            <td>${typeof n1 === 'number' ? n1.toFixed(1) : n1}</td>
+                            <td>${typeof n2 === 'number' ? n2.toFixed(1) : n2}</td>
+                            <td>${typeof n3 === 'number' ? n3.toFixed(1) : n3}</td>
+                            <td>${typeof n4 === 'number' ? n4.toFixed(1) : n4}</td>
                             <td><strong>${promedio.toFixed(1)}</strong></td>
                             <td><span style="color: ${color}; font-weight: 600;">${estado}</span></td>
                         </tr>
@@ -3010,8 +4107,7 @@
 
             } catch (error) {
                 console.error('Error al consultar notas:', error);
-                tbody.innerHTML =
-                `<tr><td colspan="7" class="text-center text-danger">Error al consultar notas</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="7" class="text-center text-danger">Error al consultar notas</td></tr>`;
             }
         });
 
@@ -3029,19 +4125,13 @@
 
             try {
                 const estDoc = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', estudianteId));
-                if (!estDoc.exists()) {
-                    alert('Estudiante no encontrado');
-                    return;
-                }
+                if (!estDoc.exists()) { alert('Estudiante no encontrado'); return; }
                 const estudiante = estDoc.data();
 
                 const colegioDoc = await getDoc(doc(db, 'colegios', colegioId));
                 const colegio = colegioDoc.data();
 
-                const q = query(
-                    collection(db, 'colegios', colegioId, 'notas'),
-                    where('estudianteId', '==', estudianteId)
-                );
+                const q = query(collection(db, 'colegios', colegioId, 'notas'), where('estudianteId', '==', estudianteId));
                 const snap = await getDocs(q);
 
                 const notasPorAsignatura = {};
@@ -3110,10 +4200,10 @@
                         html += `
                             <tr>
                                 <td><strong>${data.nombre}</strong></td>
-                                <td style="text-align:center;">${n1}</td>
-                                <td style="text-align:center;">${n2}</td>
-                                <td style="text-align:center;">${n3}</td>
-                                <td style="text-align:center;">${n4}</td>
+                                <td style="text-align:center;">${typeof n1 === 'number' ? n1.toFixed(1) : n1}</td>
+                                <td style="text-align:center;">${typeof n2 === 'number' ? n2.toFixed(1) : n2}</td>
+                                <td style="text-align:center;">${typeof n3 === 'number' ? n3.toFixed(1) : n3}</td>
+                                <td style="text-align:center;">${typeof n4 === 'number' ? n4.toFixed(1) : n4}</td>
                                 <td style="text-align:center; font-weight: 600;">${promedio.toFixed(1)}</td>
                                 <td style="text-align:center; color: ${color}; font-weight: 600;">${estado}</td>
                             </tr>
@@ -3142,260 +4232,20 @@
         });
 
         // =============================================
-        // MODALES: ESTUDIANTE
-        // =============================================
-        document.getElementById('btnRegistrarEstudiante')?.addEventListener('click', async () => {
-            document.getElementById('modalEstudiante').classList.add('show');
-            const select = document.getElementById('estGrado');
-            const snap = await getDocs(collection(db, 'colegios', colegioId, 'grados'));
-            select.innerHTML = '<option value="">Seleccionar grado</option>';
-            snap.forEach(doc => {
-                const d = doc.data();
-                select.innerHTML += `<option value="${doc.id}">${d.nombre || 'Grado'}</option>`;
-            });
-            select.onchange = async () => {
-                const cursoSelect = document.getElementById('estCurso');
-                cursoSelect.innerHTML = '<option value="">Seleccionar curso</option>';
-                if (select.value) {
-                    const q = query(collection(db, 'colegios', colegioId, 'cursos'), where('gradoId', '==', select.value));
-                    const snap = await getDocs(q);
-                    snap.forEach(doc => {
-                        const d = doc.data();
-                        cursoSelect.innerHTML += `<option value="${doc.id}">${d.nombre || 'Curso'}</option>`;
-                    });
-                }
-            };
-        });
-
-        document.getElementById('closeEstudianteModal')?.addEventListener('click', () => {
-            document.getElementById('modalEstudiante').classList.remove('show');
-        });
-        document.getElementById('cancelEstudianteModal')?.addEventListener('click', () => {
-            document.getElementById('modalEstudiante').classList.remove('show');
-        });
-
-        document.getElementById('formEstudiante')?.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const data = {
-                nombres: document.getElementById('estNombres').value.trim(),
-                apellidos: document.getElementById('estApellidos').value.trim(),
-                documento: document.getElementById('estDocumento').value.trim(),
-                fechaNacimiento: document.getElementById('estFechaNacimiento').value,
-                direccion: document.getElementById('estDireccion').value.trim(),
-                telefono: document.getElementById('estTelefono').value.trim(),
-                acudiente: document.getElementById('estAcudiente').value.trim(),
-                estado: document.getElementById('estEstado').value,
-                fechaRegistro: serverTimestamp()
-            };
-
-            const gradoId = document.getElementById('estGrado').value;
-            const cursoId = document.getElementById('estCurso').value;
-
-            if (!data.nombres || !data.apellidos || !data.documento || !gradoId || !cursoId) {
-                alert('Completa todos los campos obligatorios');
-                return;
-            }
-
-            try {
-                const estRef = await addDoc(collection(db, 'colegios', colegioId, 'estudiantes'), data);
-                await addDoc(collection(db, 'colegios', colegioId, 'matriculas'), {
-                    estudianteId: estRef.id,
-                    gradoId: gradoId,
-                    cursoId: cursoId,
-                    anio: new Date().getFullYear(),
-                    estado: 'activo',
-                    fechaRegistro: serverTimestamp()
-                });
-                alert('✅ Estudiante inscrito exitosamente');
-                document.getElementById('modalEstudiante').classList.remove('show');
-                cargarEstudiantes();
-                cargarDashboard();
-            } catch (error) {
-                console.error('Error:', error);
-                alert('❌ Error al guardar estudiante');
-            }
-        });
-
-        // =============================================
-        // MODALES: PROFESOR
-        // =============================================
-        document.getElementById('btnRegistrarProfesor')?.addEventListener('click', () => {
-            document.getElementById('modalProfesor').classList.add('show');
-        });
-
-        document.getElementById('closeProfesorModal')?.addEventListener('click', () => {
-            document.getElementById('modalProfesor').classList.remove('show');
-        });
-        document.getElementById('cancelProfesorModal')?.addEventListener('click', () => {
-            document.getElementById('modalProfesor').classList.remove('show');
-        });
-
-        document.getElementById('formProfesor')?.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const data = {
-                nombres: document.getElementById('profNombres').value.trim(),
-                apellidos: document.getElementById('profApellidos').value.trim(),
-                documento: document.getElementById('profDocumento').value.trim(),
-                correo: document.getElementById('profCorreo').value.trim(),
-                telefono: document.getElementById('profTelefono').value.trim(),
-                estado: document.getElementById('profEstado').value,
-                fechaRegistro: serverTimestamp()
-            };
-
-            if (!data.nombres || !data.apellidos || !data.documento) {
-                alert('Completa todos los campos obligatorios');
-                return;
-            }
-
-            try {
-                await addDoc(collection(db, 'colegios', colegioId, 'profesores'), data);
-                alert('✅ Profesor registrado exitosamente');
-                document.getElementById('modalProfesor').classList.remove('show');
-                cargarProfesores();
-                cargarDashboard();
-            } catch (error) {
-                console.error('Error:', error);
-                alert('❌ Error al guardar profesor');
-            }
-        });
-
-        // =============================================
-        // MODALES: GRADO
-        // =============================================
-        document.getElementById('btnRegistrarGrado')?.addEventListener('click', () => {
-            document.getElementById('modalGrado').classList.add('show');
-        });
-
-        document.getElementById('closeGradoModal')?.addEventListener('click', () => {
-            document.getElementById('modalGrado').classList.remove('show');
-        });
-        document.getElementById('cancelGradoModal')?.addEventListener('click', () => {
-            document.getElementById('modalGrado').classList.remove('show');
-        });
-
-        document.getElementById('formGrado')?.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const data = {
-                nombre: document.getElementById('gradoNombre').value.trim(),
-                orden: parseInt(document.getElementById('gradoOrden').value),
-                estado: document.getElementById('gradoEstado').value,
-                fechaRegistro: serverTimestamp()
-            };
-
-            if (!data.nombre || !data.orden) {
-                alert('Completa todos los campos obligatorios');
-                return;
-            }
-
-            try {
-                await addDoc(collection(db, 'colegios', colegioId, 'grados'), data);
-                alert('✅ Grado registrado exitosamente');
-                document.getElementById('modalGrado').classList.remove('show');
-                cargarGrados();
-                cargarDashboard();
-            } catch (error) {
-                console.error('Error:', error);
-                alert('❌ Error al guardar grado');
-            }
-        });
-
-        // =============================================
-        // MODALES: CURSO
-        // =============================================
-        document.getElementById('btnRegistrarCurso')?.addEventListener('click', async () => {
-            document.getElementById('modalCurso').classList.add('show');
-            const select = document.getElementById('cursoGrado');
-            const snap = await getDocs(collection(db, 'colegios', colegioId, 'grados'));
-            select.innerHTML = '<option value="">Seleccionar grado</option>';
-            snap.forEach(doc => {
-                const d = doc.data();
-                select.innerHTML += `<option value="${doc.id}">${d.nombre || 'Grado'}</option>`;
-            });
-            document.getElementById('cursoAnio').value = new Date().getFullYear();
-        });
-
-        document.getElementById('closeCursoModal')?.addEventListener('click', () => {
-            document.getElementById('modalCurso').classList.remove('show');
-        });
-        document.getElementById('cancelCursoModal')?.addEventListener('click', () => {
-            document.getElementById('modalCurso').classList.remove('show');
-        });
-
-        document.getElementById('formCurso')?.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const data = {
-                nombre: document.getElementById('cursoNombre').value.trim(),
-                gradoId: document.getElementById('cursoGrado').value,
-                anio: parseInt(document.getElementById('cursoAnio').value),
-                estado: document.getElementById('cursoEstado').value,
-                fechaRegistro: serverTimestamp()
-            };
-
-            if (!data.nombre || !data.gradoId || !data.anio) {
-                alert('Completa todos los campos obligatorios');
-                return;
-            }
-
-            try {
-                await addDoc(collection(db, 'colegios', colegioId, 'cursos'), data);
-                alert('✅ Curso registrado exitosamente');
-                document.getElementById('modalCurso').classList.remove('show');
-                cargarCursos();
-                cargarDashboard();
-            } catch (error) {
-                console.error('Error:', error);
-                alert('❌ Error al guardar curso');
-            }
-        });
-
-        // =============================================
-        // MODALES: ASIGNATURA
-        // =============================================
-        document.getElementById('btnRegistrarAsignatura')?.addEventListener('click', () => {
-            document.getElementById('modalAsignatura').classList.add('show');
-        });
-
-        document.getElementById('closeAsignaturaModal')?.addEventListener('click', () => {
-            document.getElementById('modalAsignatura').classList.remove('show');
-        });
-        document.getElementById('cancelAsignaturaModal')?.addEventListener('click', () => {
-            document.getElementById('modalAsignatura').classList.remove('show');
-        });
-
-        document.getElementById('formAsignatura')?.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const data = {
-                nombre: document.getElementById('asigNombre').value.trim(),
-                codigo: document.getElementById('asigCodigo').value.trim(),
-                estado: document.getElementById('asigEstado').value,
-                fechaRegistro: serverTimestamp()
-            };
-
-            if (!data.nombre) {
-                alert('Completa todos los campos obligatorios');
-                return;
-            }
-
-            try {
-                await addDoc(collection(db, 'colegios', colegioId, 'asignaturas'), data);
-                alert('✅ Asignatura registrada exitosamente');
-                document.getElementById('modalAsignatura').classList.remove('show');
-                cargarAsignaturas();
-                cargarDashboard();
-            } catch (error) {
-                console.error('Error:', error);
-                alert('❌ Error al guardar asignatura');
-            }
-        });
-
-        // =============================================
         // AUTH - VERIFICAR RECTOR
         // =============================================
         onAuthStateChanged(auth, async (user) => {
-            if (isLoggingOut) return;
+            if (authCheckInProgress) return;
+            authCheckInProgress = true;
+
+            if (isLoggingOut) {
+                authCheckInProgress = false;
+                return;
+            }
 
             if (!user) {
                 window.location.href = '../login.html';
+                authCheckInProgress = false;
                 return;
             }
 
@@ -3404,28 +4254,39 @@
                 if (!userDoc.exists()) {
                     await signOut(auth);
                     window.location.href = '../login.html';
+                    authCheckInProgress = false;
                     return;
                 }
 
                 const data = userDoc.data();
-                if (data.rol !== 'rector' || data.activo !== true || !data.colegioId) {
-                    alert('⛔ Acceso denegado. No eres rector o tu cuenta está inactiva.');
+
+                if (data.rol === 'rector' && data.activo === true && data.colegioId) {
+                    colegioId = data.colegioId;
+                    usuarioActual = data;
+                    userNameEl.textContent = data.nombre || user.email;
+                    userRoleEl.textContent = 'Rector';
+                    await cargarDashboard();
+                } else if (data.rol === 'rector' && data.activo === false) {
+                    alert('⛔ Tu cuenta está inactiva. Contacta al administrador.');
                     await signOut(auth);
                     window.location.href = '../login.html';
-                    return;
+                } else {
+                    const rolesMap = {
+                        'superadmin': '../PanelAdmin/AdminPanel.html',
+                        'profesor': 'profesor.html',
+                        'estudiante': 'estudiante.html',
+                        'acudiente': 'acudiente.html',
+                        'admin_colegio': 'admin-colegio.html'
+                    };
+                    const destino = rolesMap[data.rol] || '../login.html';
+                    window.location.href = destino;
                 }
-
-                colegioId = data.colegioId;
-                usuarioActual = data;
-                userNameEl.textContent = data.nombre || user.email;
-                userRoleEl.textContent = 'Rector';
-
-                await cargarDashboard();
 
             } catch (error) {
                 console.error('Error de autenticación:', error);
-                await signOut(auth);
                 window.location.href = '../login.html';
+            } finally {
+                authCheckInProgress = false;
             }
         });
 
