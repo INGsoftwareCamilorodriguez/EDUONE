@@ -29,6 +29,10 @@
             --warning: #f59e0b;
             --danger: #ef4444;
             --info: #3b82f6;
+            --sidebar-bg: #1E293B;
+            --sidebar-text: #CBD5E1;
+            --sidebar-active: #4f46e5;
+            --sidebar-hover: #334155;
             --gray-50: #f8fafc;
             --gray-100: #f1f5f9;
             --gray-200: #e2e8f0;
@@ -283,8 +287,8 @@
         .sidebar {
             width: var(--sidebar-width);
             height: 100vh;
-            background: #fff;
-            border-right: 1px solid var(--gray-200);
+            background: var(--sidebar-bg);
+            border-right: 1px solid rgba(255,255,255,0.08);
             display: flex;
             flex-direction: column;
             position: fixed;
@@ -338,7 +342,7 @@
 
         .sidebar-header {
             padding: 18px 20px;
-            border-bottom: 1px solid var(--gray-200);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -351,11 +355,11 @@
             gap: 10px;
             font-weight: 700;
             font-size: 1.2rem;
-            color: var(--gray-900);
+            color: #fff;
             white-space: nowrap;
         }
         .sidebar-header .logo i {
-            color: var(--primary);
+            color: var(--primary-light);
             font-size: 1.4rem;
         }
 
@@ -363,41 +367,41 @@
             background: none;
             border: none;
             font-size: 1.2rem;
-            color: var(--gray-500);
+            color: var(--sidebar-text);
             cursor: pointer;
             padding: 4px 8px;
             border-radius: 6px;
             transition: background 0.2s;
             display: none;
         }
-        .sidebar-toggle:hover { background: var(--gray-100); }
+        .sidebar-toggle:hover { background: var(--sidebar-hover); }
 
         .sidebar-close-mobile {
             display: none;
             background: none;
             border: none;
             font-size: 1.4rem;
-            color: var(--gray-500);
+            color: var(--sidebar-text);
             cursor: pointer;
             padding: 4px 8px;
         }
 
         .sidebar-colegio {
             padding: 16px 20px 12px;
-            border-bottom: 1px solid var(--gray-200);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
             flex-shrink: 0;
         }
         .sidebar-colegio .colegio-nombre {
             font-weight: 600;
             font-size: 0.95rem;
-            color: var(--gray-800);
+            color: #fff;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
         .sidebar-colegio .colegio-rol {
             font-size: 0.75rem;
-            color: var(--gray-500);
+            color: var(--sidebar-text);
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
@@ -407,11 +411,14 @@
             padding: 12px 12px;
             overflow-y: auto;
         }
+        .sidebar-nav::-webkit-scrollbar { width: 4px; }
+        .sidebar-nav::-webkit-scrollbar-track { background: transparent; }
+        .sidebar-nav::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 4px; }
         .sidebar-nav .nav-section {
             font-size: 0.65rem;
             text-transform: uppercase;
             letter-spacing: 0.8px;
-            color: var(--gray-400);
+            color: rgba(255,255,255,0.35);
             font-weight: 600;
             padding: 12px 14px 6px;
         }
@@ -422,7 +429,7 @@
             gap: 14px;
             padding: 10px 14px;
             border-radius: 8px;
-            color: var(--gray-600);
+            color: var(--sidebar-text);
             font-weight: 500;
             font-size: 0.9rem;
             transition: background 0.15s, color 0.15s;
@@ -437,18 +444,18 @@
         }
         .sidebar-nav ul li a span { flex: 1; }
         .sidebar-nav ul li a:hover {
-            background: var(--gray-100);
-            color: var(--gray-800);
+            background: var(--sidebar-hover);
+            color: #fff;
         }
         .sidebar-nav ul li.active a {
-            background: var(--primary-bg);
-            color: var(--primary);
+            background: var(--sidebar-active);
+            color: #fff;
             font-weight: 600;
         }
 
         .sidebar-footer {
             padding: 16px 20px;
-            border-top: 1px solid var(--gray-200);
+            border-top: 1px solid rgba(255,255,255,0.08);
             flex-shrink: 0;
         }
         .btn-logout {
@@ -460,7 +467,7 @@
             border: none;
             border-radius: 8px;
             background: transparent;
-            color: var(--gray-600);
+            color: var(--sidebar-text);
             font-weight: 500;
             font-size: 0.9rem;
             font-family: var(--font);
@@ -468,8 +475,8 @@
             transition: background 0.15s, color 0.15s;
         }
         .btn-logout:hover {
-            background: #fef2f2;
-            color: var(--danger);
+            background: rgba(220,38,38,0.2);
+            color: #FCA5A5;
         }
         .btn-logout i {
             width: 20px;
@@ -1310,38 +1317,6 @@
         /* ============================================= */
 
         @media (max-width: 1400px) {
-            .sidebar:not(.closed):not(.open) { width: var(--sidebar-collapsed); }
-            .sidebar:not(.closed):not(.open) .logo span,
-            .sidebar:not(.closed):not(.open) .sidebar-nav ul li a span,
-            .sidebar:not(.closed):not(.open) .sidebar-nav .nav-section,
-            .sidebar:not(.closed):not(.open) .sidebar-colegio .colegio-nombre,
-            .sidebar:not(.closed):not(.open) .sidebar-colegio .colegio-rol,
-            .sidebar:not(.closed):not(.open) .btn-logout span { display: none; }
-            .sidebar:not(.closed):not(.open) .sidebar-nav ul li a {
-                justify-content: center;
-                padding: 12px;
-            }
-            .sidebar:not(.closed):not(.open) .sidebar-nav ul li a i {
-                margin: 0;
-                font-size: 1.3rem;
-            }
-            .sidebar:not(.closed):not(.open) .btn-logout {
-                justify-content: center;
-                padding: 12px;
-            }
-            .sidebar:not(.closed):not(.open) .sidebar-colegio {
-                text-align: center;
-                padding: 12px 8px;
-            }
-            .sidebar:not(.closed):not(.open) .sidebar-colegio .colegio-nombre {
-                font-size: 0.6rem;
-                text-align: center;
-                display: block !important;
-            }
-            .sidebar:not(.closed):not(.open) .sidebar-colegio .colegio-rol { display: none; }
-            .sidebar:not(.closed):not(.open) .sidebar-header .logo span { display: none; }
-            .sidebar:not(.closed):not(.open) .sidebar-toggle { display: none; }
-            .main-content:not(.full):not(.expanded) { margin-left: var(--sidebar-collapsed); }
             .asistencia-stats { grid-template-columns: repeat(2, 1fr); }
         }
 
