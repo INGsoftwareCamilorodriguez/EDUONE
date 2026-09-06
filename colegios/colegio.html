@@ -4185,10 +4185,10 @@ onAuthStateChanged(auth, async (user) => {
             console.log(`🔀 Redirigiendo a ${data.rol}`);
             const rolesMap = {
                 'superadmin': '../PanelAdmin/AdminPanel.html',
-                'profesor': '../panel-profesor.html',
-                'estudiante': '../panel-estudiante.html',
-                'acudiente': '../panel-acudiente.html',
-                'admin_colegio': '../panel-admin-colegio.html'
+                'profesor': 'profesor.html',
+                'estudiante': 'estudiante.html',
+                'acudiente': 'acudiente.html',
+                'admin_colegio': 'colegio.html'
             };
             const destino = rolesMap[data.rol] || '../login.html';
             window.location.href = destino;
