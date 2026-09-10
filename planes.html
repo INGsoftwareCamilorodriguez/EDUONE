@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Planes y precios de EduOne: planes anuales para instituciones educativas de todos los tamaños." />
+  <title>Planes y precios | EduOne</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --primary: #1a56db; --primary-dark: #1e3a8a; --primary-light: #3b82f6;
+      --secondary: #06b6d4; --background: #f8fafc; --surface: #ffffff;
+      --text: #0f172a; --text-muted: #64748b; --border: #e2e8f0;
+      --success: #10b981; --gradient: linear-gradient(135deg, #1e3a8a 0%, #1a56db 50%, #06b6d4 100%);
+      --radius: 12px; --shadow: 0 4px 24px rgba(26,86,219,0.10); --shadow-lg: 0 8px 48px rgba(26,86,219,0.15);
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', Arial, sans-serif; background: var(--background); color: var(--text); line-height: 1.6; overflow-x: hidden; }
+
+    .navbar { position: sticky; top: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); transition: box-shadow 0.3s; }
+    .navbar.scrolled { box-shadow: 0 2px 24px rgba(26,86,219,0.12); }
+    .nav-container { max-width: 1280px; margin: 0 auto; padding: 0 24px; height: 68px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
+    .nav-logo-mark { width: 36px; height: 36px; background: var(--gradient); border-radius: 9px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 16px; }
+    .nav-logo-text { font-size: 20px; font-weight: 700; color: var(--primary-dark); letter-spacing: -0.5px; }
+    .nav-menu { display: flex; align-items: center; gap: 4px; list-style: none; }
+    .nav-link { text-decoration: none; color: var(--text-muted); font-size: 14px; font-weight: 500; padding: 8px 12px; border-radius: 8px; transition: color 0.2s, background 0.2s; white-space: nowrap; }
+    .nav-link:hover { color: var(--primary); background: rgba(26,86,219,0.06); }
+    .nav-link.active { color: var(--primary); font-weight: 600; }
+    .nav-link-cta { background: var(--primary); color: white !important; padding: 8px 18px; border-radius: 8px; font-weight: 600; }
+    .nav-link-cta:hover { background: var(--primary-dark) !important; }
+    .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 8px; border-radius: 8px; }
+    .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; transition: transform 0.3s, opacity 0.3s; }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .page-hero { background: var(--gradient); padding: 80px 24px; text-align: center; }
+    .page-hero-inner { max-width: 800px; margin: 0 auto; }
+    .page-hero-eyebrow { display: inline-block; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); border-radius: 100px; padding: 6px 18px; font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.85); margin-bottom: 20px; }
+    .page-hero h1 { font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 900; color: white; line-height: 1.15; letter-spacing: -1.5px; margin-bottom: 16px; }
+    .page-hero p { font-size: 17px; color: rgba(255,255,255,0.78); line-height: 1.7; }
+
+    .section { padding: 80px 24px; }
+    .section-inner { max-width: 1280px; margin: 0 auto; }
+    .section-eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--primary); margin-bottom: 12px; }
+    .section-title { font-size: clamp(1.7rem, 3vw, 2.5rem); font-weight: 800; color: var(--text); letter-spacing: -1px; line-height: 1.15; margin-bottom: 16px; }
+    .section-title span { color: var(--primary); }
+    .section-header { text-align: center; margin-bottom: 52px; }
+    .section-desc { font-size: 16px; color: var(--text-muted); line-height: 1.7; max-width: 640px; margin: 0 auto; }
+
+    /* PRICING */
+    .plans-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+    .plan-card { background: var(--surface); border: 1.5px solid var(--border); border-radius: 16px; padding: 32px; display: flex; flex-direction: column; transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s; position: relative; }
+    .plan-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+    .plan-card.featured { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(26,86,219,0.08), var(--shadow-lg); }
+    .plan-badge { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: var(--primary); color: white; font-size: 11px; font-weight: 700; letter-spacing: 1px; padding: 5px 16px; border-radius: 100px; white-space: nowrap; }
+    .plan-name { font-size: 18px; font-weight: 800; color: var(--text); margin-bottom: 4px; }
+    .plan-students { font-size: 13px; color: var(--text-muted); font-weight: 500; margin-bottom: 20px; }
+    .plan-price { font-size: 32px; font-weight: 900; color: var(--primary-dark); letter-spacing: -1.5px; line-height: 1; }
+    .plan-period { font-size: 13px; color: var(--text-muted); margin-top: 4px; margin-bottom: 6px; }
+    .plan-monthly { font-size: 14px; color: var(--success); font-weight: 600; margin-bottom: 24px; }
+    .plan-divider { height: 1px; background: var(--border); margin-bottom: 20px; }
+    .plan-features { list-style: none; flex: 1; margin-bottom: 24px; }
+    .plan-features li { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--text-muted); padding: 6px 0; }
+    .plan-features li::before { content: "✓"; color: var(--success); font-weight: 700; flex-shrink: 0; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 13px 24px; border-radius: 10px; font-weight: 600; font-size: 15px; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s, background 0.2s; cursor: pointer; border: none; font-family: inherit; width: 100%; }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary { background: var(--primary); color: white; box-shadow: var(--shadow); }
+    .btn-primary:hover { background: var(--primary-dark); }
+    .btn-secondary { background: var(--background); color: var(--primary); border: 1.5px solid var(--border); }
+    .btn-secondary:hover { border-color: var(--primary-light); }
+
+    /* ENTERPRISE */
+    .enterprise-card { background: var(--gradient); border-radius: 20px; padding: 48px; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 32px; }
+    .enterprise-card h2 { font-size: 24px; font-weight: 800; color: white; margin-bottom: 8px; letter-spacing: -0.5px; }
+    .enterprise-card p { font-size: 15px; color: rgba(255,255,255,0.75); line-height: 1.6; }
+    .btn-white { background: white; color: var(--primary); font-size: 15px; padding: 13px 28px; width: auto; border-radius: 10px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; transition: transform 0.2s; white-space: nowrap; }
+    .btn-white:hover { transform: translateY(-2px); }
+
+    /* INCLUDES */
+    .includes-note { background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 16px; padding: 28px 32px; display: flex; gap: 16px; align-items: flex-start; }
+    .includes-icon { font-size: 24px; flex-shrink: 0; }
+    .includes-note h3 { font-size: 15px; font-weight: 700; color: #0369a1; margin-bottom: 8px; }
+    .includes-note p { font-size: 14px; color: #0c4a6e; line-height: 1.65; }
+    .includes-note p + p { margin-top: 6px; }
+
+    /* FAQ */
+    .faq-list { display: flex; flex-direction: column; gap: 8px; }
+    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .faq-question { display: flex; align-items: center; justify-content: space-between; padding: 20px 24px; cursor: pointer; font-size: 15px; font-weight: 600; color: var(--text); transition: background 0.2s; user-select: none; }
+    .faq-question:hover { background: rgba(26,86,219,0.03); }
+    .faq-arrow { color: var(--primary); font-size: 18px; transition: transform 0.3s; flex-shrink: 0; }
+    .faq-item.open .faq-arrow { transform: rotate(180deg); }
+    .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+    .faq-answer-inner { padding: 0 24px 20px; font-size: 14px; color: var(--text-muted); line-height: 1.7; border-top: 1px solid var(--border); padding-top: 16px; }
+
+    .footer { background: var(--primary-dark); color: white; padding: 64px 24px 32px; }
+    .footer-inner { max-width: 1280px; margin: 0 auto; }
+    .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+    .footer-brand p { font-size: 14px; color: rgba(255,255,255,0.55); margin-top: 12px; line-height: 1.6; max-width: 300px; }
+    .footer-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+    .footer-logo-mark { width: 32px; height: 32px; background: rgba(255,255,255,0.15); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; }
+    .footer-logo-text { font-size: 18px; font-weight: 700; }
+    .footer-col h4 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.45); margin-bottom: 16px; }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 10px; }
+    .footer-col a { text-decoration: none; color: rgba(255,255,255,0.65); font-size: 14px; transition: color 0.2s; }
+    .footer-col a:hover { color: white; }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 28px; text-align: center; }
+    .footer-bottom p { font-size: 13px; color: rgba(255,255,255,0.4); margin-bottom: 4px; }
+
+    .back-to-top { position: fixed; bottom: 28px; right: 28px; width: 44px; height: 44px; background: var(--primary); color: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; cursor: pointer; border: none; box-shadow: 0 4px 20px rgba(26,86,219,0.35); opacity: 0; pointer-events: none; transition: opacity 0.3s, transform 0.3s; z-index: 999; }
+    .back-to-top.visible { opacity: 1; pointer-events: auto; }
+    .back-to-top:hover { transform: translateY(-3px); }
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 768px) {
+      .nav-menu { display: none; position: absolute; top: 68px; left: 0; right: 0; background: white; border-bottom: 1px solid var(--border); flex-direction: column; padding: 12px; gap: 4px; box-shadow: 0 8px 32px rgba(0,0,0,0.08); align-items: stretch; }
+      .nav-menu.open { display: flex; }
+      .nav-link { padding: 12px 16px; }
+      .nav-hamburger { display: flex; }
+      .section { padding: 56px 20px; }
+      .enterprise-card { grid-template-columns: 1fr; text-align: center; }
+      .footer-top { grid-template-columns: 1fr; gap: 32px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo" aria-label="EduOne - Inicio">
+      <div class="nav-logo-mark">E</div>
+      <span class="nav-logo-text">EduOne</span>
+    </a>
+    <button class="nav-hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-menu" id="nav-menu">
+      <li><a href="index.html" class="nav-link">Inicio</a></li>
+      <li><a href="sobrenosotros.html" class="nav-link">Sobre nosotros</a></li>
+      <li><a href="funcionalidades.html" class="nav-link">Funcionalidades</a></li>
+      <li><a href="beneficios.html" class="nav-link">Beneficios</a></li>
+      <li><a href="planes.html" class="nav-link active" aria-current="page">Planes</a></li>
+      <li><a href="implementacion.html" class="nav-link">Implementación</a></li>
+      <li><a href="contacto.html" class="nav-link">Contacto</a></li>
+      <li><a href="login.html" class="nav-link nav-link-cta">Iniciar sesión</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <div class="page-hero-eyebrow">Precios transparentes</div>
+    <h1>Planes pensados para cada institución</h1>
+    <p>En EduOne creemos que la transformación digital educativa debe ser accesible. Todos los planes son anuales e incluyen profesores, rectores, coordinadores y padres/acudientes sin costo adicional.</p>
+  </div>
+</section>
+
+<!-- PLANES PRINCIPALES -->
+<section class="section" style="background: var(--surface);">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">Planes anuales</div>
+      <h2 class="section-title">Elige el plan <span>adecuado</span></h2>
+      <p class="section-desc">Selecciona según el número de estudiantes matriculados en tu institución. Todos los planes incluyen acceso completo a las funcionalidades disponibles.</p>
+    </div>
+
+    <div class="plans-grid reveal">
+      <!-- INICIAL -->
+      <div class="plan-card">
+        <div class="plan-name">EduOne Inicial</div>
+        <div class="plan-students">Hasta 200 estudiantes</div>
+        <div class="plan-price">$1.800.000</div>
+        <div class="plan-period">por año</div>
+        <div class="plan-monthly">≈ $150.000 / mes</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li>Estudiantes, profesores y rectores</li>
+          <li>Coordinadores incluidos</li>
+          <li>Padres y acudientes</li>
+          <li>Gestión académica completa</li>
+          <li>Tareas, notas y boletines</li>
+          <li>Comunicados institucionales</li>
+          <li>Soporte y actualizaciones</li>
+        </ul>
+        <a href="contacto.html" class="btn btn-secondary">Solicitar plan</a>
+      </div>
+
+      <!-- ESENCIAL (POPULAR) -->
+      <div class="plan-card featured">
+        <div class="plan-badge">⭐ MÁS POPULAR</div>
+        <div class="plan-name">EduOne Esencial</div>
+        <div class="plan-students">Hasta 400 estudiantes</div>
+        <div class="plan-price">$2.400.000</div>
+        <div class="plan-period">por año</div>
+        <div class="plan-monthly">≈ $200.000 / mes</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li>Todo lo del plan Inicial</li>
+          <li>Hasta 400 estudiantes</li>
+          <li>Todos los roles incluidos</li>
+          <li>Gestión académica completa</li>
+          <li>Seguimiento académico</li>
+          <li>Comunicados institucionales</li>
+          <li>Soporte prioritario</li>
+          <li>Actualizaciones incluidas</li>
+        </ul>
+        <a href="contacto.html" class="btn btn-primary">Solicitar plan</a>
+      </div>
+
+      <!-- PROFESIONAL -->
+      <div class="plan-card">
+        <div class="plan-name">EduOne Profesional</div>
+        <div class="plan-students">Hasta 600 estudiantes</div>
+        <div class="plan-price">$3.000.000</div>
+        <div class="plan-period">por año</div>
+        <div class="plan-monthly">≈ $250.000 / mes</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li>Todo lo del plan Esencial</li>
+          <li>Hasta 600 estudiantes</li>
+          <li>Todos los roles incluidos</li>
+          <li>Gestión académica completa</li>
+          <li>Seguimiento académico</li>
+          <li>Soporte prioritario</li>
+          <li>Actualizaciones incluidas</li>
+        </ul>
+        <a href="contacto.html" class="btn btn-secondary">Solicitar plan</a>
+      </div>
+
+      <!-- AVANZADO -->
+      <div class="plan-card">
+        <div class="plan-name">EduOne Avanzado</div>
+        <div class="plan-students">Hasta 800 estudiantes</div>
+        <div class="plan-price">$3.600.000</div>
+        <div class="plan-period">por año</div>
+        <div class="plan-monthly">≈ $300.000 / mes</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li>Todo lo incluido en planes anteriores</li>
+          <li>Hasta 800 estudiantes</li>
+          <li>Todos los roles incluidos</li>
+          <li>Soporte prioritario</li>
+          <li>Actualizaciones continuas</li>
+        </ul>
+        <a href="contacto.html" class="btn btn-secondary">Solicitar plan</a>
+      </div>
+
+      <!-- INSTITUCIONAL -->
+      <div class="plan-card">
+        <div class="plan-name">EduOne Institucional</div>
+        <div class="plan-students">Hasta 1.000 estudiantes</div>
+        <div class="plan-price">$4.200.000</div>
+        <div class="plan-period">por año</div>
+        <div class="plan-monthly">≈ $350.000 / mes</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li>Todo lo incluido en planes anteriores</li>
+          <li>Hasta 1.000 estudiantes</li>
+          <li>Todos los roles incluidos</li>
+          <li>Soporte prioritario</li>
+          <li>Actualizaciones continuas</li>
+        </ul>
+        <a href="contacto.html" class="btn btn-secondary">Solicitar plan</a>
+      </div>
+
+      <!-- PLUS -->
+      <div class="plan-card">
+        <div class="plan-name">EduOne Plus</div>
+        <div class="plan-students">1.001 – 1.500 estudiantes</div>
+        <div class="plan-price">$5.000.000</div>
+        <div class="plan-period">por año</div>
+        <div class="plan-monthly">Grandes instituciones</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li>Cobertura ampliada</li>
+          <li>Hasta 1.500 estudiantes</li>
+          <li>Todos los roles incluidos</li>
+          <li>Soporte prioritario</li>
+          <li>Actualizaciones continuas</li>
+        </ul>
+        <a href="contacto.html" class="btn btn-secondary">Solicitar plan</a>
+      </div>
+    </div>
+
+    <!-- ENTERPRISE -->
+    <div style="margin-top: 32px;" class="reveal">
+      <div class="enterprise-card">
+        <div>
+          <h2>Más de 1.500 estudiantes</h2>
+          <p>¿Tu institución tiene más de 1.500 estudiantes? Cuéntanos sobre tu caso y construimos una cotización personalizada adaptada a tus necesidades específicas.</p>
+        </div>
+        <a href="contacto.html" class="btn-white">Solicitar cotización →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NOTA INCLUDES -->
+<section class="section" style="background: var(--background);">
+  <div class="section-inner">
+    <div class="includes-note reveal">
+      <div class="includes-icon" aria-hidden="true">ℹ️</div>
+      <div>
+        <h3>¿Qué está incluido en el plan?</h3>
+        <p>Profesores, rectores, coordinadores y padres/acudientes están incluidos dentro del plan y <strong>no generan cobros individuales adicionales</strong>.</p>
+        <p>El plan se determina principalmente según el número de estudiantes matriculados y la capacidad requerida por la institución.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section" style="background: var(--surface);">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">Preguntas frecuentes</div>
+      <h2 class="section-title">Todo lo que necesitas <span>saber</span></h2>
+    </div>
+    <div class="faq-list reveal" id="faq">
+      <div class="faq-item">
+        <div class="faq-question" tabindex="0" role="button" aria-expanded="false">
+          ¿El precio se cobra por estudiante?
+          <span class="faq-arrow" aria-hidden="true">⌄</span>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner">No. Cada institución selecciona un plan según el rango de estudiantes matriculados. El precio es fijo por rango, no por estudiante individual.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" tabindex="0" role="button" aria-expanded="false">
+          ¿Los profesores tienen costo adicional?
+          <span class="faq-arrow" aria-hidden="true">⌄</span>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner">No. Los profesores están completamente incluidos en el plan sin costo adicional, sin importar cuántos docentes tenga la institución.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" tabindex="0" role="button" aria-expanded="false">
+          ¿Los rectores tienen costo adicional?
+          <span class="faq-arrow" aria-hidden="true">⌄</span>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner">No. Los rectores y coordinadores están incluidos dentro del plan sin ningún costo adicional.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" tabindex="0" role="button" aria-expanded="false">
+          ¿Los padres de familia tienen costo adicional?
+          <span class="faq-arrow" aria-hidden="true">⌄</span>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner">No. Los padres y acudientes están incluidos en el plan. No hay cobros por cada familia o usuario adicional.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" tabindex="0" role="button" aria-expanded="false">
+          ¿La implementación inicial es obligatoria?
+          <span class="faq-arrow" aria-hidden="true">⌄</span>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner">No. La implementación es un servicio opcional. El colegio puede configurar EduOne directamente si prefiere hacerlo de manera autónoma. Ver la página de <a href="implementacion.html" style="color:var(--primary)">Implementación</a> para más detalles.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" tabindex="0" role="button" aria-expanded="false">
+          ¿La implementación se paga todos los años?
+          <span class="faq-arrow" aria-hidden="true">⌄</span>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner">No. La implementación inicial es un pago único que se realiza solo una vez. En los años siguientes, únicamente se paga el plan anual de EduOne.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" tabindex="0" role="button" aria-expanded="false">
+          ¿Qué ocurre si aumenta el número de estudiantes?
+          <span class="faq-arrow" aria-hidden="true">⌄</span>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner">En la siguiente renovación anual se actualiza al plan correspondiente según el nuevo número de estudiantes matriculados. No hay cobros adicionales durante el año en curso.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" tabindex="0" role="button" aria-expanded="false">
+          ¿Cuánto tarda la implementación inicial?
+          <span class="faq-arrow" aria-hidden="true">⌄</span>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner">Una vez recibida y validada correctamente toda la información necesaria, el equipo de EduOne puede realizar la implementación en hasta 7 días hábiles. El tiempo puede variar según la cantidad de estudiantes y la calidad de la información suministrada.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo"><div class="footer-logo-mark">E</div><span class="footer-logo-text">EduOne</span></div>
+        <p>Educación, tecnología y gestión en un solo lugar.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navegación</h4>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="sobrenosotros.html">Sobre nosotros</a></li>
+          <li><a href="funcionalidades.html">Funcionalidades</a></li>
+          <li><a href="beneficios.html">Beneficios</a></li>
+          <li><a href="planes.html">Planes</a></li>
+          <li><a href="implementacion.html">Implementación</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+          <li><a href="login.html">Iniciar sesión</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">Política de privacidad</a></li>
+          <li><a href="#">Tratamiento de datos</a></li>
+          <li><a href="#">Términos y condiciones</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 EduOne. Todos los derechos reservados.</p>
+      <p>Desarrollado por Daniel Steven Gutierrez y Camilo Rodriguez.</p>
+      <p>Escuela Tecnológica de Neiva FET.</p>
+    </div>
+  </div>
+</footer>
+
+<button class="back-to-top" id="backToTop" aria-label="Volver arriba">↑</button>
+
+<script>
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 20);
+    document.getElementById('backToTop').classList.toggle('visible', window.scrollY > 300);
+  });
+  const hamburger = document.getElementById('hamburger');
+  const navMenu = document.getElementById('nav-menu');
+  function closeMenu() { navMenu.classList.remove('open'); hamburger.classList.remove('open'); hamburger.setAttribute('aria-expanded','false'); }
+  hamburger.addEventListener('click', () => { navMenu.classList.contains('open') ? closeMenu() : (navMenu.classList.add('open'), hamburger.classList.add('open'), hamburger.setAttribute('aria-expanded','true')); });
+  navMenu.querySelectorAll('.nav-link').forEach(l => l.addEventListener('click', closeMenu));
+  document.addEventListener('click', e => { if (!navbar.contains(e.target)) closeMenu(); });
+  document.addEventListener('keydown', e => { if (e.key==='Escape') closeMenu(); });
+  document.getElementById('backToTop').addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-question').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(i => {
+        i.classList.remove('open');
+        i.querySelector('.faq-answer').style.maxHeight = null;
+        i.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+      });
+      if (!isOpen) {
+        item.classList.add('open');
+        const ans = item.querySelector('.faq-answer');
+        ans.style.maxHeight = ans.scrollHeight + 'px';
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+    btn.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); btn.click(); } });
+  });
+
+  const observer = new IntersectionObserver(entries => entries.forEach((e,i) => { if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i*80); }), {threshold:0.08});
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

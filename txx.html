@@ -1140,7 +1140,6 @@
             color: var(--primary);
         }
         .evaluacion-timer .timer.warning { color: var(--warning); }
-        .evaluacion-timer .timer.safe { color: var(--success); }
         .evaluacion-timer .timer.danger { color: var(--danger); animation: pulse 1s infinite; }
         .evaluacion-timer .info { font-size: 0.85rem; color: var(--gray-500); }
 
@@ -1273,99 +1272,6 @@
             .horario-grid .h-cell.materia .asignatura { font-size: 0.6rem; }
             .horario-grid .h-cell.materia .profesor { font-size: 0.5rem; }
             .evaluacion-pregunta .opcion { padding: 4px 8px; font-size: 0.8rem; }
-        }
-
-        .boletin-print { max-width: 100%; color: #0f172a; }
-        .boletin-print .boletin-header { text-align: center; border-bottom: 2px solid #1e293b; padding-bottom: 14px; margin-bottom: 16px; }
-        .boletin-print .boletin-header h1 { font-size: 1.5rem; text-transform: uppercase; }
-        .boletin-print .boletin-header p { font-size: 0.8rem; margin-top: 3px; }
-        .boletin-print .boletin-title { text-align: center; margin: 14px 0; font-size: 1.1rem; }
-        .boletin-print .boletin-student { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 24px; border: 1px solid #cbd5e1; padding: 12px; margin-bottom: 16px; }
-        .boletin-print .boletin-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
-        .boletin-print .boletin-table th, .boletin-print .boletin-table td { border: 1px solid #94a3b8; padding: 7px; text-align: center; }
-        .boletin-print .boletin-table th:first-child, .boletin-print .boletin-table td:first-child { text-align: left; }
-        .boletin-print .boletin-scale, .boletin-print .boletin-observations { margin-top: 18px; }
-        .boletin-print .boletin-signatures { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 50px; text-align: center; }
-        .boletin-print .signature-line { border-top: 1px solid #475569; padding-top: 6px; font-size: 0.75rem; }
-        .boletin-print .boletin-footer { text-align: center; margin-top: 28px; font-size: 0.7rem; color: #64748b; }
-        .progreso-asignatura { border-left: 4px solid var(--primary); }
-        .progreso-asignatura .progreso-bar { height: 8px; background: var(--gray-200); border-radius: 8px; overflow: hidden; margin-top: 8px; }
-        .progreso-asignatura .progreso-fill { height: 100%; background: var(--success); transition: width 0.3s; }
-        .progreso-table th, .progreso-table td { text-align: center; }
-        .progreso-table th:first-child, .progreso-table td:first-child { text-align: left; }
-        .nota-badge { display: inline-block; min-width: 48px; padding: 3px 8px; border-radius: 999px; font-weight: 700; }
-        .nota-badge.aprobado { background: #dcfce7; color: #166534; }
-        .nota-badge.reprobado { background: #fee2e2; color: #991b1b; }
-        .nota-badge.sin-nota { background: var(--gray-200); color: var(--gray-500); }
-        .eval-question-card { background: #fff; border: 1px solid var(--gray-200); border-radius: 10px; padding: 16px; margin-bottom: 14px; box-shadow: var(--shadow); }
-        .eval-question-heading { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
-        .eval-question-number { font-weight: 700; color: var(--primary); }
-        .eval-question-points { font-size: 0.75rem; color: var(--gray-500); white-space: nowrap; }
-        .eval-option-button { display: flex; align-items: center; gap: 10px; width: 100%; padding: 11px 13px; margin-top: 7px; border: 1px solid var(--gray-200); border-radius: 8px; background: #fff; cursor: pointer; text-align: left; transition: background 0.2s, border-color 0.2s; }
-        .eval-option-button:hover, .eval-option-button.selected { background: var(--primary-bg); border-color: var(--primary); }
-        .eval-option-button input { accent-color: var(--primary); }
-        .eval-character-count { display: block; text-align: right; color: var(--gray-400); font-size: 0.7rem; margin-top: 4px; }
-        .eval-result-actions { margin-top: 16px; display: flex; justify-content: center; }
-                @media print {
-            @page { margin: 1cm; }
-
-            html, body {
-                background: #fff !important;
-                display: block !important;
-                height: auto !important;
-                overflow: visible !important;
-                margin: 0 !important;
-                padding: 0 !important;
-            }
-
-            /* Ocultar todo excepto el contenido del boletín */
-            .sidebar,
-            .sidebar-overlay,
-            .top-header,
-            .toast-container,
-            .no-print,
-            button,
-            select,
-            input,
-            .modal { display: none !important; }
-
-            /* Mostrar el contenedor principal */
-            .main-content {
-                display: block !important;
-                margin: 0 !important;
-                padding: 0 !important;
-                width: 100% !important;
-            }
-            .content-area {
-                display: block !important;
-                margin: 0 !important;
-                padding: 0 !important;
-                width: 100% !important;
-            }
-
-            /* Ocultar páginas que no sean boletines */
-            .page-content { display: none !important; }
-            #page-boletines { display: block !important; }
-
-            /* Quitar estilos visuales del wrapper del boletín */
-            #page-boletines > .card,
-            #page-boletines > .card > .card-body,
-            #boletinContent,
-            #boletinContent .card,
-            #boletinContent .card-body {
-                display: block !important;
-                box-shadow: none !important;
-                border: 0 !important;
-                border-radius: 0 !important;
-                margin: 0 !important;
-                padding: 0 !important;
-                background: #fff !important;
-            }
-
-            .boletin-print {
-                width: 100% !important;
-                display: block !important;
-            }
         }
     </style>
 </head>
@@ -2048,7 +1954,7 @@
         import {
             getFirestore,
             doc, getDoc, collection, getDocs, addDoc, updateDoc, deleteDoc,
-            query, where, serverTimestamp, setDoc, orderBy
+            query, where, serverTimestamp, setDoc
         } from "firebase/firestore";
         import { getStorage, ref, uploadBytesResumable, getDownloadURL, deleteObject } from "firebase/storage";
 
@@ -2082,7 +1988,6 @@
         let evalRespuestas = {};
         let evalDataActual = null;
         let evalPreguntasActuales = [];
-        let estudianteDataGlobal = null;
 
         // =============================================
         // REFERENCIAS DOM
@@ -2322,7 +2227,6 @@
                 }
 
                 const estudiante = estudianteDoc.data();
-                estudianteDataGlobal = estudiante;
 
                 const colegioDoc = await getDoc(doc(db, 'colegios', colegioId));
                 if (colegioDoc.exists()) {
@@ -3199,6 +3103,7 @@
                 // =============================================
                 function renderizarPreguntasEvaluacion() {
                     const container = document.getElementById('evalPreguntasContainer');
+                    const total = evalPreguntasActuales.length;
 
                     let html = '';
                     evalPreguntasActuales.forEach((pregunta, index) => {
@@ -3206,12 +3111,8 @@
                         const esRespuesta = pregunta.tipo === 'respuesta';
 
                         html += `
-                            <div class="eval-question-card evaluacion-pregunta" data-pregunta-id="${pregunta.id}">
-                                <div class="eval-question-heading">
-                                    <div class="eval-question-number">Pregunta ${index + 1}</div>
-                                    <div class="eval-question-points">${pregunta.valor || 0} puntos</div>
-                                </div>
-                                <div class="enunciado">${pregunta.enunciado || 'Sin enunciado'}</div>
+                            <div class="evaluacion-pregunta" data-pregunta-id="${pregunta.id}">
+                                <div class="enunciado">${index + 1}. ${pregunta.enunciado || 'Sin enunciado'}</div>
                         `;
 
                         if (pregunta.imagenUrl) {
@@ -3226,7 +3127,7 @@
                             opciones.forEach((opcion, idx) => {
                                 const letra = String.fromCharCode(65 + idx);
                                 html += `
-                                    <div class="eval-option-button opcion" onclick="window.seleccionarOpcionEval('${pregunta.id}', ${idx})">
+                                    <div class="opcion" onclick="window.seleccionarOpcionEval('${pregunta.id}', ${idx})">
                                         <input type="radio" name="eval_${pregunta.id}" value="${idx}" />
                                         <span class="texto">${letra}. ${opcion || 'Opción sin texto'}</span>
                                     </div>
@@ -3238,8 +3139,7 @@
                         if (esRespuesta) {
                             html += `
                                 <div class="respuesta-texto">
-                                    <textarea id="eval_texto_${pregunta.id}" maxlength="1000" placeholder="Escribe tu respuesta aquí..." rows="3"></textarea>
-                                    <span class="eval-character-count" id="eval_count_${pregunta.id}">0/1000</span>
+                                    <textarea id="eval_texto_${pregunta.id}" placeholder="Escribe tu respuesta aquí..." rows="3"></textarea>
                                 </div>
                             `;
                         }
@@ -3270,8 +3170,6 @@
                         textarea.addEventListener('input', function() {
                             const preguntaId = this.closest('.evaluacion-pregunta').dataset.preguntaId;
                             evalRespuestas[preguntaId] = { tipo: 'respuesta', respuestaTexto: this.value };
-                            const counter = document.getElementById(`eval_count_${preguntaId}`);
-                            if (counter) counter.textContent = `${this.value.length}/1000`;
                             actualizarProgresoEvaluacion();
                         });
                     });
@@ -3299,8 +3197,6 @@
                     document.getElementById('evalProgresoFill').style.width = `${porcentaje}%`;
                     document.getElementById('evalProgresoTexto').textContent = `${porcentaje}%`;
                     document.getElementById('evalInfoProgreso').textContent = `${respondidas} de ${total} respondidas`;
-                    const submitButton = document.getElementById('btnEnviarEvaluacion');
-                    if (submitButton) submitButton.disabled = respondidas < total;
                 }
 
                 // =============================================
@@ -3321,8 +3217,6 @@
                             timerEl.classList.add('danger');
                         } else if (evalTiempoRestante < 180) {
                             timerEl.classList.add('warning');
-                        } else {
-                            timerEl.classList.add('safe');
                         }
 
                         if (evalTiempoRestante <= 0) {
@@ -3619,16 +3513,6 @@
                     showToast(`Descargando ${nombre}...`, 'info');
                 };
 
-            } catch (error) {
-                console.error('Error al cargar asignaturas:', error);
-                container.innerHTML = `
-                    <div class="text-center text-danger" style="padding: 20px;">
-                        Error al cargar asignaturas: ${error.message}
-                    </div>
-                `;
-            }
-        }
-
                 // =============================================
                 // MIS NOTAS
                 // =============================================
@@ -3665,34 +3549,10 @@
                         const notasMap = {};
                         notasSnap.forEach(doc => {
                             const n = doc.data();
-                            if (n.actividadId && n.valor !== undefined && n.valor !== null) {
+                            if (n.actividadId && n.valor) {
                                 notasMap[n.actividadId] = parseFloat(n.valor);
                             }
                         });
-
-                        const evaluacionesQ = query(
-                            collection(db, 'colegios', colegioId, 'evaluaciones'),
-                            where('cursoId', '==', cursoActualId)
-                        );
-                        const evaluacionesSnap = await getDocs(evaluacionesQ);
-                        const evaluaciones = [];
-                        const evalNotasMap = {};
-                        for (const evalDoc of evaluacionesSnap.docs) {
-                            const evaluacion = { id: evalDoc.id, ...evalDoc.data() };
-                            if (periodo && Number(evaluacion.periodo) !== Number(periodo)) continue;
-                            const respQ = query(
-                                collection(db, 'colegios', colegioId, 'evaluaciones', evalDoc.id, 'respuestas'),
-                                where('estudianteId', '==', estudianteId)
-                            );
-                            const respSnap = await getDocs(respQ);
-                            if (!respSnap.empty) {
-                                const respuesta = respSnap.docs[0].data();
-                                if (respuesta.nota !== undefined && respuesta.nota !== null) {
-                                    evalNotasMap[evaluacion.id] = Number(respuesta.nota);
-                                }
-                            }
-                            evaluaciones.push(evaluacion);
-                        }
 
                         let html = `
                             <div class="table-responsive">
@@ -3744,8 +3604,6 @@
                             }
                             const actSnap = await getDocs(actQ);
 
-                            const evaluacionesAsignatura = evaluaciones.filter(e => e.asignaturaId === asigId);
-
                             const notasPorSeccion = {};
                             secciones.forEach(s => { notasPorSeccion[s.id] = []; });
 
@@ -3759,19 +3617,6 @@
                                 }
                             }
 
-                            evaluaciones.filter(e => e.asignaturaId === asigId).forEach(evaluacion => {
-                                if (evaluacion.seccionId && notasPorSeccion[evaluacion.seccionId] !== undefined && Number(evaluacion.nota) > 0) {
-                                    notasPorSeccion[evaluacion.seccionId].push(Number(evaluacion.nota));
-                                }
-                            });
-
-                            for (const evaluacion of evaluacionesAsignatura) {
-                                if (evaluacion.seccionId && notasPorSeccion[evaluacion.seccionId] !== undefined) {
-                                    const nota = evalNotasMap[evaluacion.id] ?? notasMap[evaluacion.id] ?? 0;
-                                    if (nota > 0) notasPorSeccion[evaluacion.seccionId].push(nota);
-                                }
-                            }
-
                             let sumaPonderada = 0;
                             let pesoTotal = 0;
 
@@ -3779,7 +3624,7 @@
 
                             for (const s of secciones) {
                                 const notas = notasPorSeccion[s.id] || [];
-                                const promSeccion = notas.length > 0 ? notas.reduce((a, b) => a + b, 0) / notas.length : 0;
+                                const promSeccion = notas.length > 0 ? (notas.reduce((a, b) => a + b, 0) / notas.length) : 0;
                                 const peso = s.porcentaje || 0;
                                 
                                 html += `<td style="text-align: center;">${promSeccion > 0 ? promSeccion.toFixed(1) : '-'}</td>`;
@@ -3868,35 +3713,10 @@
                         const notasMap = {};
                         notasSnap.forEach(doc => {
                             const n = doc.data();
-                            if (n.actividadId && n.valor !== undefined && n.valor !== null) {
+                            if (n.actividadId && n.valor) {
                                 notasMap[n.actividadId] = parseFloat(n.valor);
                             }
                         });
-
-                        const evaluacionesQ = query(
-                            collection(db, 'colegios', colegioId, 'evaluaciones'),
-                            where('cursoId', '==', cursoActualId)
-                        );
-                        const evaluacionesSnap = await getDocs(evaluacionesQ);
-                        const evaluaciones = [];
-                        for (const evalDoc of evaluacionesSnap.docs) {
-                            const evaluacion = { id: evalDoc.id, ...evalDoc.data() };
-                            const respQ = query(
-                                collection(db, 'colegios', colegioId, 'evaluaciones', evalDoc.id, 'respuestas'),
-                                where('estudianteId', '==', estudianteId)
-                            );
-                            const respSnap = await getDocs(respQ);
-                            const respuesta = respSnap.empty ? null : respSnap.docs[0].data();
-                            evaluacion.nota = respuesta?.nota ?? notasMap[evaluacion.id] ?? 0;
-                            evaluaciones.push(evaluacion);
-                        }
-
-                        const observacionesQ = query(
-                            collection(db, 'colegios', colegioId, 'observaciones'),
-                            where('estudianteId', '==', estudianteId)
-                        );
-                        const observacionesSnap = await getDocs(observacionesQ);
-                        const observaciones = observacionesSnap.docs.map(docSnap => docSnap.data());
 
                         const todasActividadesQ = query(
                             collection(db, 'colegios', colegioId, 'actividades'),
@@ -3914,22 +3734,9 @@
                                 titulo: act.titulo || 'Sin título',
                                 periodo: act.periodo || 1,
                                 seccionId: act.seccionId,
-                                seccionNombre: act.seccionNombre || 'Sección',
-                                tipoEvaluacion: act.tipoEvaluacion || ''
+                                seccionNombre: act.seccionNombre || 'Sección'
                             });
                         });
-
-                            const evaluacionesMap = {};
-                            for (const evaluacion of evaluaciones) {
-                                const nota = evaluacion.nota || 0;
-                                if (!evaluacionesMap[evaluacion.asignaturaId]) evaluacionesMap[evaluacion.asignaturaId] = [];
-                                evaluacionesMap[evaluacion.asignaturaId].push({
-                                    ...evaluacion,
-                                    nota: Number(nota) || 0,
-                                    titulo: evaluacion.titulo || 'Evaluación',
-                                    periodo: evaluacion.periodo || 1
-                                });
-                            }
 
                         let html = '';
 
@@ -3937,61 +3744,77 @@
                             const asigDoc = await getDoc(doc(db, 'colegios', colegioId, 'asignaturas', asigId));
                             const asigNombre = asigDoc.exists() ? asigDoc.data().nombre : 'Asignatura';
 
-                            const itemsAsignatura = [...(actividadesMap[asigId] || []), ...(evaluacionesMap[asigId] || [])];
-                            const itemsConNota = itemsAsignatura.filter(item => item.nota > 0 || notasMap[item.id] > 0).length;
-                            const progresoAsignatura = itemsAsignatura.length ? Math.round((itemsConNota / itemsAsignatura.length) * 100) : 0;
-
                             html += `
-                                <div class="card progreso-asignatura" style="margin-bottom: 16px;">
+                                <div class="card" style="margin-bottom: 16px; border-left: 4px solid var(--primary);">
                                     <div class="card-header" style="background: var(--primary-light); cursor: pointer;" onclick="window.toggleMateriaProgreso(this)">
                                         <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
                                             <h3 style="font-size: 1rem; font-weight: 600;">${asigNombre}</h3>
-                                            <span><strong>${progresoAsignatura}%</strong> <span class="toggle-icon"><i class="fas fa-chevron-up"></i></span></span>
+                                            <span class="toggle-icon"><i class="fas fa-chevron-up"></i></span>
                                         </div>
-                                        <div class="progreso-bar"><div class="progreso-fill" style="width: ${progresoAsignatura}%;"></div></div>
                                     </div>
                                     <div class="card-body progreso-body">
                             `;
 
                             for (let p = 1; p <= 4; p++) {
                                 const actividadesPeriodo = (actividadesMap[asigId] || []).filter(a => a.periodo === p);
-                                const evaluacionesPeriodo = (evaluacionesMap[asigId] || []).filter(e => e.periodo === p);
                                 
-                                if (actividadesPeriodo.length === 0 && evaluacionesPeriodo.length === 0) continue;
+                                if (actividadesPeriodo.length === 0) continue;
 
                                 const notasPorSeccion = {};
-                                secciones.filter(s => Number(s.periodo) === p).forEach(s => { notasPorSeccion[s.id] = []; });
+                                secciones.forEach(s => { 
+                                    notasPorSeccion[s.id] = { 
+                                        notas: [], 
+                                        detalles: [] 
+                                    }; 
+                                });
 
                                 for (const act of actividadesPeriodo) {
                                     const nota = notasMap[act.id] || 0;
                                     if (act.seccionId && notasPorSeccion[act.seccionId]) {
-                                        notasPorSeccion[act.seccionId].push({ titulo: act.titulo, nota });
-                                    }
-                                }
-                                for (const evaluacion of evaluacionesPeriodo) {
-                                    if (evaluacion.seccionId && notasPorSeccion[evaluacion.seccionId]) {
-                                        notasPorSeccion[evaluacion.seccionId].push({ titulo: `📝 ${evaluacion.titulo}`, nota: evaluacion.nota });
+                                        if (nota > 0) {
+                                            notasPorSeccion[act.seccionId].notas.push(nota);
+                                        }
+                                        notasPorSeccion[act.seccionId].detalles.push({
+                                            titulo: act.titulo,
+                                            nota: nota
+                                        });
                                     }
                                 }
 
                                 let sumaPonderada = 0;
                                 let pesoTotal = 0;
-                                let filas = '';
 
                                 html += `
                                     <div style="margin-bottom: 16px;">
                                         <h4 style="font-size: 0.9rem; color: var(--gray-600); margin-bottom: 8px;">Periodo ${p}</h4>
                                 `;
 
-                                for (const s of secciones.filter(section => Number(section.periodo) === p)) {
-                                    const data = notasPorSeccion[s.id] || [];
-                                    const notasValidas = data.filter(item => item.nota > 0).map(item => item.nota);
-                                    const promSeccion = notasValidas.length ? notasValidas.reduce((a, b) => a + b, 0) / notasValidas.length : 0;
+                                for (const s of secciones) {
+                                    const data = notasPorSeccion[s.id] || { notas: [], detalles: [] };
+                                    const promSeccion = data.notas.length > 0 ? (data.notas.reduce((a, b) => a + b, 0) / data.notas.length) : 0;
                                     const peso = s.porcentaje || 0;
-                                    const estado = promSeccion >= 3 ? 'Aprobado' : (promSeccion > 0 ? 'Reprobado' : 'Sin nota');
-                                    const badgeClass = promSeccion >= 3 ? 'aprobado' : (promSeccion > 0 ? 'reprobado' : 'sin-nota');
-                                    filas += `<tr><td>${s.icono || '📄'} ${s.nombre || 'Sección'}</td><td>${peso}%</td><td><span class="nota-badge ${badgeClass}">${promSeccion ? promSeccion.toFixed(1) : '-'}</span></td><td>${estado}</td></tr>`;
-                                    if (notasValidas.length && peso > 0) {
+                                    
+                                    html += `
+                                        <div class="seccion-progreso" style="border-left-color: ${promSeccion > 0 ? 'var(--success)' : 'var(--gray-400)'};">
+                                            <div class="header">
+                                                <h4>${s.icono || '📄'} ${s.nombre || 'Sección'}</h4>
+                                                <span class="nota">${promSeccion > 0 ? promSeccion.toFixed(1) : '-'}</span>
+                                            </div>
+                                            <div class="detalle">
+                                                ${data.notas.length} actividades · ${peso}% del periodo
+                                            </div>
+                                            <div class="actividades-detalle">
+                                                ${data.detalles.map(d => `
+                                                    <div class="actividad-detalle">
+                                                        <span>${d.titulo}</span>
+                                                        <span class="nota-individual" style="color: ${d.nota > 0 ? 'var(--primary)' : 'var(--gray-400)'};">${d.nota > 0 ? d.nota.toFixed(1) : '-'}</span>
+                                                    </div>
+                                                `).join('')}
+                                            </div>
+                                        </div>
+                                    `;
+
+                                    if (promSeccion > 0 && peso > 0) {
                                         sumaPonderada += promSeccion * (peso / 100);
                                         pesoTotal += peso / 100;
                                     }
@@ -4001,7 +3824,13 @@
                                 const estado = promedio >= 3.0 ? 'Aprobado' : (promedio > 0 ? 'Reprobado' : 'Sin notas');
                                 const color = promedio >= 3.0 ? 'var(--success)' : (promedio > 0 ? 'var(--danger)' : 'var(--gray-400)');
 
-                                html += `<div style="margin-bottom: 18px;"><div class="table-responsive"><table class="table-modern progreso-table"><thead><tr><th>Sección</th><th>Peso</th><th>Nota sección</th><th>Estado</th></tr></thead><tbody>${filas}<tr><td colspan="2"><strong>Promedio del periodo</strong></td><td><span class="nota-badge ${promedio >= 3 ? 'aprobado' : (promedio > 0 ? 'reprobado' : 'sin-nota')}">${promedio ? promedio.toFixed(1) : '-'}</span></td><td>${estado}</td></tr></tbody></table></div></div>`;
+                                html += `
+                                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: var(--gray-50); border-radius: 6px; margin-top: 4px;">
+                                            <span style="font-weight: 600;">Promedio Periodo ${p}</span>
+                                            <span style="font-weight: 700; color: ${color};">${promedio > 0 ? promedio.toFixed(1) : '-'} - ${estado}</span>
+                                        </div>
+                                    </div>
+                                `;
                             }
 
                             html += `
@@ -4040,284 +3869,191 @@
                 async function cargarBoletines() {}
 
                 document.getElementById('btnGenerarBoletin')?.addEventListener('click', async () => {
-    const periodo = document.getElementById('boletinFiltroPeriodo').value;
+                    const periodo = document.getElementById('boletinFiltroPeriodo').value;
 
-    try {
-        const estDoc = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', estudianteId));
-        if (!estDoc.exists()) {
-            alert('Estudiante no encontrado');
-            return;
-        }
-        const estudiante = estDoc.data();
+                    try {
+                        const estDoc = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', estudianteId));
+                        if (!estDoc.exists()) {
+                            alert('Estudiante no encontrado');
+                            return;
+                        }
+                        const estudiante = estDoc.data();
 
-        const colegioDoc = await getDoc(doc(db, 'colegios', colegioId));
-        const colegio = colegioDoc.exists() ? colegioDoc.data() : {};
+                        const colegioDoc = await getDoc(doc(db, 'colegios', colegioId));
+                        const colegio = colegioDoc.exists() ? colegioDoc.data() : {};
 
-        // ===== Secciones =====
-        let seccionesQ = query(
-            collection(db, 'colegios', colegioId, 'secciones'),
-            where('cursoId', '==', cursoActualId)
-        );
-        if (periodo) {
-            seccionesQ = query(seccionesQ, where('periodo', '==', parseInt(periodo)));
-        }
-        const seccionesSnap = await getDocs(seccionesQ);
-        const secciones = [];
-        seccionesSnap.forEach(doc => {
-            secciones.push({ id: doc.id, ...doc.data() });
-        });
+                        let seccionesQ = query(
+                            collection(db, 'colegios', colegioId, 'secciones'),
+                            where('cursoId', '==', cursoActualId)
+                        );
+                        if (periodo) {
+                            seccionesQ = query(seccionesQ, where('periodo', '==', parseInt(periodo)));
+                        }
+                        const seccionesSnap = await getDocs(seccionesQ);
+                        const secciones = [];
+                        seccionesSnap.forEach(doc => {
+                            secciones.push({ id: doc.id, ...doc.data() });
+                        });
 
-        // ===== Notas (actividades + evaluaciones guardadas en 'notas') =====
-        const notasQ = query(
-            collection(db, 'colegios', colegioId, 'notas'),
-            where('estudianteId', '==', estudianteId)
-        );
-        const notasSnap = await getDocs(notasQ);
-        const notasMap = {};
-        notasSnap.forEach(doc => {
-            const n = doc.data();
-            if (n.actividadId && n.valor !== undefined && n.valor !== null) {
-                notasMap[n.actividadId] = parseFloat(n.valor);
-            }
-        });
+                        const notasQ = query(
+                            collection(db, 'colegios', colegioId, 'notas'),
+                            where('estudianteId', '==', estudianteId)
+                        );
+                        const notasSnap = await getDocs(notasQ);
+                        const notasMap = {};
+                        notasSnap.forEach(doc => {
+                            const n = doc.data();
+                            if (n.actividadId && n.valor) {
+                                notasMap[n.actividadId] = parseFloat(n.valor);
+                            }
+                        });
 
-        // ===== Entregas (respaldo para evaluaciones presenciales) =====
-        const entregasQ = query(
-            collection(db, 'colegios', colegioId, 'entregas'),
-            where('estudianteId', '==', estudianteId)
-        );
-        const entregasSnap = await getDocs(entregasQ);
-        const entregasMap = {};
-        entregasSnap.forEach(doc => {
-            const e = doc.data();
-            if (e.actividadId && e.nota !== undefined && e.nota !== null) {
-                entregasMap[e.actividadId] = parseFloat(e.nota);
-            }
-        });
+                        const horariosQ = query(
+                            collection(db, 'colegios', colegioId, 'horarios'),
+                            where('cursoId', '==', cursoActualId)
+                        );
+                        const horariosSnap = await getDocs(horariosQ);
+                        const asignaturasSet = new Set();
+                        horariosSnap.forEach(doc => {
+                            const h = doc.data();
+                            if (h.asignaturaId) {
+                                asignaturasSet.add(h.asignaturaId);
+                            }
+                        });
 
-        // ===== Evaluaciones virtuales (respuestas) =====
-        const evaluacionesQ = query(
-            collection(db, 'colegios', colegioId, 'evaluaciones'),
-            where('cursoId', '==', cursoActualId)
-        );
-        const evaluacionesSnap = await getDocs(evaluacionesQ);
-        const evaluaciones = [];
-        const evalNotasMap = {};
-        for (const evalDoc of evaluacionesSnap.docs) {
-            const evaluacion = { id: evalDoc.id, ...evalDoc.data() };
-            if (periodo && Number(evaluacion.periodo) !== Number(periodo)) continue;
+                        let cursoNombre = 'Sin curso';
+                        let gradoNombre = 'Sin grado';
+                        if (cursoActualId) {
+                            const cursoDoc = await getDoc(doc(db, 'colegios', colegioId, 'cursos', cursoActualId));
+                            if (cursoDoc.exists()) {
+                                const cursoData = cursoDoc.data();
+                                cursoNombre = cursoData.nombre || 'Sin curso';
+                                if (cursoData.gradoId) {
+                                    const gradoDoc = await getDoc(doc(db, 'colegios', colegioId, 'grados', cursoData.gradoId));
+                                    gradoNombre = gradoDoc.exists() ? gradoDoc.data().nombre : 'Sin grado';
+                                }
+                            }
+                        }
 
-            const respQ = query(
-                collection(db, 'colegios', colegioId, 'evaluaciones', evalDoc.id, 'respuestas'),
-                where('estudianteId', '==', estudianteId)
-            );
-            const respSnap = await getDocs(respQ);
-            if (!respSnap.empty) {
-                const respuesta = respSnap.docs[0].data();
-                if (respuesta.nota !== undefined && respuesta.nota !== null) {
-                    evalNotasMap[evaluacion.id] = Number(respuesta.nota);
-                }
-            }
-            evaluaciones.push(evaluacion);
-        }
+                        let html = `
+                            <div class="boletin-print">
+                                <div class="header">
+                                    <h1>${colegio.nombre || 'Colegio'}</h1>
+                                    <p>${colegio.ciudad || ''} - ${colegio.departamento || ''}</p>
+                                    <p>NIT: ${colegio.nit || '-'} | Año escolar: ${colegio.anioEscolar || '-'}</p>
+                                </div>
+                                <div class="estudiante-info">
+                                    <h3>Datos del Estudiante</h3>
+                                    <p><strong>Nombre:</strong> ${estudiante.nombres || ''} ${estudiante.apellidos || ''}</p>
+                                    <p><strong>Documento:</strong> ${estudiante.documento || '-'}</p>
+                                    <p><strong>Curso:</strong> ${gradoNombre} ${cursoNombre}</p>
+                                    <p><strong>Acudiente:</strong> ${estudiante.acudiente || '-'}</p>
+                                    <p><strong>Periodo:</strong> ${periodo ? `Periodo ${periodo}` : 'Todos los periodos'}</p>
+                                </div>
+                                <div style="overflow-x: auto;">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align: left;">Asignatura</th>
+                        `;
 
-        // ===== Horarios / asignaturas =====
-        const horariosQ = query(
-            collection(db, 'colegios', colegioId, 'horarios'),
-            where('cursoId', '==', cursoActualId)
-        );
-        const horariosSnap = await getDocs(horariosQ);
-        const asignaturasSet = new Set();
-        horariosSnap.forEach(doc => {
-            const h = doc.data();
-            if (h.asignaturaId) {
-                asignaturasSet.add(h.asignaturaId);
-            }
-        });
+                        for (const s of secciones) {
+                            html += `
+                                <th style="text-align: center;">
+                                    ${s.icono || '📄'} ${s.nombre || 'Sección'}
+                                    <br><span style="font-size: 0.6rem; font-weight: 400;">${s.porcentaje || 0}%</span>
+                                </th>
+                            `;
+                        }
 
-        // ===== Curso / grado =====
-        let cursoNombre = 'Sin curso';
-        let gradoNombre = 'Sin grado';
-        if (cursoActualId) {
-            const cursoDoc = await getDoc(doc(db, 'colegios', colegioId, 'cursos', cursoActualId));
-            if (cursoDoc.exists()) {
-                const cursoData = cursoDoc.data();
-                cursoNombre = cursoData.nombre || 'Sin curso';
-                if (cursoData.gradoId) {
-                    const gradoDoc = await getDoc(doc(db, 'colegios', colegioId, 'grados', cursoData.gradoId));
-                    gradoNombre = gradoDoc.exists() ? gradoDoc.data().nombre : 'Sin grado';
-                }
-            }
-        }
+                        html += `
+                                                <th style="text-align: center;">Promedio</th>
+                                                <th style="text-align: center;">Estado</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                        `;
 
-        // ===== Observaciones =====
-        const observacionesQ = query(
-            collection(db, 'colegios', colegioId, 'observaciones'),
-            where('estudianteId', '==', estudianteId)
-        );
-        const observacionesSnap = await getDocs(observacionesQ);
-        const observaciones = observacionesSnap.docs
-            .map(docSnap => docSnap.data())
-            .filter(obs => !periodo || Number(obs.periodo) === Number(periodo));
+                        for (const asigId of asignaturasSet) {
+                            const asigDoc = await getDoc(doc(db, 'colegios', colegioId, 'asignaturas', asigId));
+                            const asigNombre = asigDoc.exists() ? asigDoc.data().nombre : 'Asignatura';
 
-        // ===== Construir HTML del boletín =====
-        let html = `
-            <div class="boletin-print">
-                <div class="boletin-header">
-                    <h1>${colegio.nombre || 'Colegio'}</h1>
-                    <p>${colegio.ciudad || ''} - ${colegio.departamento || ''}</p>
-                    <p>NIT: ${colegio.nit || '-'} | Año escolar: ${colegio.anioEscolar || '-'}</p>
-                </div>
-                <h2 class="boletin-title">BOLETÍN DE CALIFICACIONES - ${periodo ? `PERIODO ${periodo}` : 'TODOS LOS PERIODOS'}</h2>
-                <div class="boletin-student">
-                    <h3>Datos del Estudiante</h3>
-                    <p><strong>Nombre:</strong> ${estudiante.nombres || ''} ${estudiante.apellidos || ''}</p>
-                    <p><strong>Documento:</strong> ${estudiante.documento || '-'}</p>
-                    <p><strong>Curso:</strong> ${gradoNombre} ${cursoNombre}</p>
-                    <p><strong>Acudiente:</strong> ${estudiante.acudiente || '-'}</p>
-                    <p><strong>Periodo:</strong> ${periodo ? `Periodo ${periodo}` : 'Todos los periodos'}</p>
-                </div>
-                <div style="overflow-x: auto;">
-                    <table class="boletin-table">
-                        <thead>
-                            <tr>
-                                <th style="text-align: left;">Asignatura</th>
-        `;
+                            let actQ = query(
+                                collection(db, 'colegios', colegioId, 'actividades'),
+                                where('asignaturaId', '==', asigId),
+                                where('cursoId', '==', cursoActualId)
+                            );
+                            if (periodo) {
+                                actQ = query(actQ, where('periodo', '==', parseInt(periodo)));
+                            }
+                            const actSnap = await getDocs(actQ);
 
-        for (const s of secciones) {
-            html += `
-                <th style="text-align: center;">
-                    ${s.icono || '📄'} ${s.nombre || 'Sección'}
-                    <br><span style="font-size: 0.6rem; font-weight: 400;">${s.porcentaje || 0}%</span>
-                </th>
-            `;
-        }
+                            const notasPorSeccion = {};
+                            secciones.forEach(s => { notasPorSeccion[s.id] = []; });
 
-        html += `
-                                <th style="text-align: center;">Promedio</th>
-                                <th style="text-align: center;">Estado</th>
+                            for (const actDoc of actSnap.docs) {
+                                const act = actDoc.data();
+                                if (act.seccionId && notasPorSeccion[act.seccionId] !== undefined) {
+                                    const nota = notasMap[actDoc.id] || 0;
+                                    if (nota > 0) {
+                                        notasPorSeccion[act.seccionId].push(nota);
+                                    }
+                                }
+                            }
+
+                            let sumaPonderada = 0;
+                            let pesoTotal = 0;
+
+                            html += `<tr><td style="text-align: left;"><strong>${asigNombre}</strong></td>`;
+
+                            for (const s of secciones) {
+                                const notas = notasPorSeccion[s.id] || [];
+                                const promSeccion = notas.length > 0 ? (notas.reduce((a, b) => a + b, 0) / notas.length) : 0;
+                                const peso = s.porcentaje || 0;
+                                
+                                html += `
+                                    <td style="text-align: center; font-weight: 600;">
+                                        ${promSeccion > 0 ? promSeccion.toFixed(1) : '-'}
+                                        <br><span style="font-size: 0.6rem; font-weight: 400; color: var(--gray-400);">${notas.length} act.</span>
+                                    </td>
+                                `;
+                                
+                                if (promSeccion > 0 && peso > 0) {
+                                    sumaPonderada += promSeccion * (peso / 100);
+                                    pesoTotal += peso / 100;
+                                }
+                            }
+
+                            const promedio = pesoTotal > 0 ? (sumaPonderada / pesoTotal) : 0;
+                            const estado = promedio >= 3.0 ? 'Aprobado' : (promedio > 0 ? 'Reprobado' : 'Sin nota');
+                            const color = promedio >= 3.0 ? '#22c55e' : (promedio > 0 ? '#ef4444' : '#94a3b8');
+
+                            html += `
+                                <td style="text-align: center; font-weight: 700;">${promedio > 0 ? promedio.toFixed(1) : '-'}</td>
+                                <td style="text-align: center; font-weight: 600; color: ${color};">${estado}</td>
                             </tr>
-                        </thead>
-                        <tbody>
-        `;
+                            `;
+                        }
 
-        for (const asigId of asignaturasSet) {
-            const asigDoc = await getDoc(doc(db, 'colegios', colegioId, 'asignaturas', asigId));
-            const asigNombre = asigDoc.exists() ? asigDoc.data().nombre : 'Asignatura';
+                        html += `
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="footer">
+                                    <p>Boletín generado el ${new Date().toLocaleDateString()}</p>
+                                    <p>EduOne - Sistema de Gestión Escolar</p>
+                                </div>
+                            </div>
+                        `;
 
-            // Actividades de la asignatura (con periodo si aplica)
-            let actQ = query(
-                collection(db, 'colegios', colegioId, 'actividades'),
-                where('asignaturaId', '==', asigId),
-                where('cursoId', '==', cursoActualId)
-            );
-            if (periodo) {
-                actQ = query(actQ, where('periodo', '==', parseInt(periodo)));
-            }
-            const actSnap = await getDocs(actQ);
+                        document.getElementById('boletinPreview').innerHTML = html;
+                        document.getElementById('boletinContent').style.display = 'block';
 
-            // Notas por sección
-            const notasPorSeccion = {};
-            secciones.forEach(s => { notasPorSeccion[s.id] = []; });
-
-            // Actividades normales
-            for (const actDoc of actSnap.docs) {
-                const act = actDoc.data();
-                if (act.tipoEvaluacion === 'presencial' || act.tipoEvaluacion === 'virtual') continue;
-                if (act.seccionId && notasPorSeccion[act.seccionId] !== undefined) {
-                    const nota = notasMap[actDoc.id] || 0;
-                    if (nota > 0) {
-                        notasPorSeccion[act.seccionId].push(nota);
+                    } catch (error) {
+                        console.error('Error al generar boletín:', error);
+                        alert('Error al generar el boletín: ' + error.message);
                     }
-                }
-            }
-
-            // Evaluaciones (virtuales y presenciales) de esta asignatura
-            const evaluacionesAsignatura = evaluaciones.filter(e => e.asignaturaId === asigId);
-            for (const evaluacion of evaluacionesAsignatura) {
-                if (!evaluacion.seccionId || notasPorSeccion[evaluacion.seccionId] === undefined) continue;
-                const nota = evalNotasMap[evaluacion.id] ?? notasMap[evaluacion.id] ?? entregasMap[evaluacion.id] ?? 0;
-                if (nota > 0) {
-                    notasPorSeccion[evaluacion.seccionId].push(Number(nota));
-                }
-            }
-
-            // Actividades marcadas como evaluación (presencial/virtual) que el profesor creó en la sección
-            for (const actDoc of actSnap.docs) {
-                const act = actDoc.data();
-                if (act.tipoEvaluacion !== 'presencial' && act.tipoEvaluacion !== 'virtual') continue;
-                if (!act.seccionId || notasPorSeccion[act.seccionId] === undefined) continue;
-                const nota = notasMap[actDoc.id] ?? entregasMap[actDoc.id] ?? 0;
-                if (nota > 0) {
-                    notasPorSeccion[act.seccionId].push(Number(nota));
-                }
-            }
-
-            let sumaPonderada = 0;
-            let pesoTotal = 0;
-
-            html += `<tr><td style="text-align: left;"><strong>${asigNombre}</strong></td>`;
-
-            for (const s of secciones) {
-                const notas = notasPorSeccion[s.id] || [];
-                const promSeccion = notas.length > 0 ? (notas.reduce((a, b) => a + b, 0) / notas.length) : 0;
-                const peso = s.porcentaje || 0;
-
-                html += `
-                    <td style="text-align: center; font-weight: 600;">
-                        ${promSeccion > 0 ? promSeccion.toFixed(1) : '-'}
-                        <br><span style="font-size: 0.6rem; font-weight: 400; color: #94a3b8;">${notas.length} act.</span>
-                    </td>
-                `;
-
-                if (promSeccion > 0 && peso > 0) {
-                    sumaPonderada += promSeccion * (peso / 100);
-                    pesoTotal += peso / 100;
-                }
-            }
-
-            const promedio = pesoTotal > 0 ? (sumaPonderada / pesoTotal) : 0;
-            const estado = promedio >= 3.0 ? 'Aprobado' : (promedio > 0 ? 'Reprobado' : 'Sin nota');
-            const color = promedio >= 3.0 ? '#22c55e' : (promedio > 0 ? '#ef4444' : '#94a3b8');
-
-            html += `
-                <td style="text-align: center; font-weight: 700;">${promedio > 0 ? promedio.toFixed(1) : '-'}</td>
-                <td style="text-align: center; font-weight: 600; color: ${color};">${estado}</td>
-            </tr>
-            `;
-        }
-
-        html += `
-                        </tbody>
-                    </table>
-                </div>
-                <div class="boletin-scale">
-                    <strong>Escala de valoración:</strong> Superior 4.6-5.0 · Alto 4.0-4.5 · Básico 3.0-3.9 · Bajo 1.0-2.9
-                </div>
-                <div class="boletin-observations">
-                    <strong>Observaciones del periodo</strong>
-                    <p>${observaciones.length ? observaciones.map(obs => obs.texto || '').filter(Boolean).join(' | ') : 'Sin observaciones registradas.'}</p>
-                </div>
-                <div class="boletin-signatures">
-                    <div class="signature-line">Director de grupo</div>
-                    <div class="signature-line">Coordinador</div>
-                    <div class="signature-line">Acudiente</div>
-                </div>
-                <div class="boletin-footer">
-                    <p>Boletín generado el ${new Date().toLocaleDateString()}</p>
-                    <p>EduOne - Sistema de Gestión Escolar</p>
-                </div>
-            </div>
-        `;
-
-        document.getElementById('boletinPreview').innerHTML = html;
-        document.getElementById('boletinContent').style.display = 'block';
-
-    } catch (error) {
-        console.error('Error al generar boletín:', error);
-        alert('Error al generar el boletín: ' + error.message);
-    }
-});
+                });
 
                 // =============================================
                 // COMUNICADOS
@@ -4873,227 +4609,93 @@
                     document.getElementById('modalVerActividad').classList.remove('show');
                 });
 
-               // =============================================
-        // AUTH - VERIFICAR ESTUDIANTE (CORREGIDO)
-        // =============================================
-        onAuthStateChanged(auth, async (user) => {
-            console.log('🔍 onAuthStateChanged ejecutado');
-            
-            if (isLoggingOut) return;
-
-            if (!user) {
-                console.log('❌ No hay usuario, redirigiendo a login...');
-                window.location.href = '../login.html';
-                return;
-            }
-
-            try {
-                console.log('👤 Usuario autenticado:', user.email);
-                
-                const userDoc = await getDoc(doc(db, 'usuarios', user.uid));
-                console.log('📌 userDoc existe:', userDoc.exists());
-                
-                if (!userDoc.exists()) {
-                    console.log('❌ Usuario no existe en Firestore');
-                    await signOut(auth);
-                    window.location.href = '../login.html';
-                    return;
-                }
-
-                const data = userDoc.data();
-                console.log('📋 Datos del usuario:', data);
-
-                // Verificar rol
-                if (data.rol !== 'estudiante') {
-                    console.log(`❌ Rol incorrecto: ${data.rol}`);
-                    showToast('⛔ Acceso denegado. No eres estudiante.', 'error');
-                    await signOut(auth);
-                    window.location.href = '../login.html';
-                    return;
-                }
-
-                if (data.activo !== true) {
-                    console.log('❌ Usuario inactivo');
-                    showToast('⛔ Tu cuenta está desactivada.', 'error');
-                    await signOut(auth);
-                    window.location.href = '../login.html';
-                    return;
-                }
-
                 // =============================================
-                // ASIGNAR COLEGIO SI NO TIENE
+                // AUTH - VERIFICAR ESTUDIANTE (NO TOCAR - ESTÁ BIEN)
                 // =============================================
-                let colegioIdFinal = data.colegioId;
-                
-                if (!colegioIdFinal) {
-                    console.log('⚠️ Usuario sin colegio, buscando uno...');
-                    
+                onAuthStateChanged(auth, async (user) => {
+                    if (isLoggingOut) return;
+
+                    if (!user) {
+                        window.location.href = '../login.html';
+                        return;
+                    }
+
                     try {
-                        const colegiosSnap = await getDocs(collection(db, 'colegios'));
-                        if (!colegiosSnap.empty) {
-                            colegioIdFinal = colegiosSnap.docs[0].id;
-                            console.log('✅ Colegio encontrado:', colegioIdFinal);
-                            await updateDoc(doc(db, 'usuarios', user.uid), {
-                                colegioId: colegioIdFinal
-                            });
-                        } else {
-                            colegioIdFinal = 'DEFAULT_COLEGIO';
-                            console.log('📌 Usando colegio por defecto');
+                        const userDoc = await getDoc(doc(db, 'usuarios', user.uid));
+                        if (!userDoc.exists()) {
+                            await signOut(auth);
+                            window.location.href = '../login.html';
+                            return;
                         }
+
+                        const data = userDoc.data();
+
+                        if (data.rol !== 'estudiante' || data.activo !== true || !data.colegioId) {
+                            alert('⛔ Acceso denegado. No eres estudiante o tu cuenta está inactiva.');
+                            await signOut(auth);
+                            window.location.href = '../login.html';
+                            return;
+                        }
+
+                        colegioId = data.colegioId;
+                        usuarioActual = data;
+                        estudianteId = user.uid;
+
+                        userNameEl.textContent = data.nombre || user.email;
+                        userRoleEl.textContent = 'Estudiante';
+
+                        const estQ = query(
+                            collection(db, 'colegios', colegioId, 'estudiantes'),
+                            where('correo', '==', data.email)
+                        );
+                        const estSnap = await getDocs(estQ);
+                        if (!estSnap.empty) {
+                            estudianteId = estSnap.docs[0].id;
+                        }
+
+                        await cargarDashboard();
+
                     } catch (error) {
-                        console.error('❌ Error buscando colegios:', error);
-                        colegioIdFinal = 'DEFAULT_COLEGIO';
+                        console.error('Error de autenticación:', error);
+                        await signOut(auth);
+                        window.location.href = '../login.html';
                     }
-                }
-
-                console.log('✅ Colegio ID final:', colegioIdFinal);
-                
-                colegioId = colegioIdFinal;
-                usuarioActual = data;
-                estudianteId = user.uid;
-
-                if (userNameEl) userNameEl.textContent = data.nombre || user.email;
-                if (userRoleEl) userRoleEl.textContent = 'Estudiante';
+                });
 
                 // =============================================
-                // 🔧 BUSCAR ESTUDIANTE
+                // LOGOUT
                 // =============================================
-                let estudianteEncontrado = false;
-                let estudianteData = null;
-
-                try {
-                    console.log('🔍 Buscando estudiante en colegio:', colegioId);
-                    console.log('📌 Correo a buscar:', data.email);
-                    
-                    // OBTENER TODOS LOS ESTUDIANTES DEL COLEGIO
-                    const allEstudiantes = await getDocs(collection(db, 'colegios', colegioId, 'estudiantes'));
-                    console.log('📌 Total estudiantes:', allEstudiantes.size);
-                    
-                    for (const docSnap of allEstudiantes.docs) {
-                        const estData = docSnap.data();
-                        
-                        if (estData.correo && estData.correo.toLowerCase() === data.email.toLowerCase()) {
-                            estudianteId = docSnap.id;
-                            estudianteData = estData;
-                            estudianteEncontrado = true;
-                            console.log('✅ Estudiante encontrado por correo:', estudianteId);
-                            break;
-                        }
-                        if (estData.email && estData.email.toLowerCase() === data.email.toLowerCase()) {
-                            estudianteId = docSnap.id;
-                            estudianteData = estData;
-                            estudianteEncontrado = true;
-                            console.log('✅ Estudiante encontrado por email:', estudianteId);
-                            break;
-                        }
-                    }
-                    
-                    // Si no se encuentra, CREAR ESTUDIANTE
-                    if (!estudianteEncontrado) {
-                        console.log('🆕 Estudiante no encontrado, creando uno nuevo...');
-                        
-                        // Buscar matrícula para obtener curso
-                        let cursoIdTemp = null;
+                logoutBtn.addEventListener('click', async () => {
+                    if (confirm('¿Seguro que deseas cerrar sesión?')) {
                         try {
-                            const matQ = query(
-                                collection(db, 'colegios', colegioId, 'matriculas'),
-                                where('estudianteId', '==', user.uid),
-                                where('estado', '==', 'activo')
-                            );
-                            const matSnap = await getDocs(matQ);
-                            if (!matSnap.empty) {
-                                const mat = matSnap.docs[0].data();
-                                cursoIdTemp = mat.cursoId;
-                            }
-                        } catch (e) {}
-                        
-                        const nuevoEstudiante = {
-                            nombres: data.nombre || user.displayName || 'Estudiante',
-                            apellidos: '',
-                            correo: data.email,
-                            email: data.email,
-                            uid: user.uid,
-                            documento: '',
-                            acudiente: '',
-                            acudienteTelefono: '',
-                            cursoId: cursoIdTemp || '',
-                            estado: 'activo',
-                            fechaRegistro: serverTimestamp()
-                        };
-                        
-                        const estRef = await addDoc(collection(db, 'colegios', colegioId, 'estudiantes'), nuevoEstudiante);
-                        estudianteId = estRef.id;
-                        estudianteData = nuevoEstudiante;
-                        estudianteEncontrado = true;
-                        console.log('✅ Estudiante creado:', estudianteId);
-                        showToast('✅ Perfil de estudiante creado automáticamente', 'success');
+                            isLoggingOut = true;
+                            await signOut(auth);
+                            window.location.href = '../login.html';
+                        } catch (error) {
+                            console.error('Error al cerrar sesión:', error);
+                            showToast('❌ Error al cerrar sesión', 'error');
+                            isLoggingOut = false;
+                        }
                     }
-                    
-                } catch (error) {
-                    console.error('❌ Error al buscar/crear estudiante:', error);
-                    showToast('⚠️ Error al cargar datos del estudiante: ' + error.message, 'error');
-                }
+                });
 
-                if (!estudianteEncontrado) {
-                    console.error('❌ No se pudo encontrar ni crear el estudiante');
-                    if (loadingState) {
-                        loadingState.innerHTML = `
-                            <div style="color: var(--danger); font-size: 2rem;">
-                                <i class="fas fa-exclamation-circle"></i>
-                            </div>
-                            <h3>Error al cargar el perfil del estudiante</h3>
-                            <p style="color: var(--text-secondary);">No se encontró el estudiante en la base de datos.</p>
-                            <p style="color: var(--text-secondary); font-size: 0.85rem;">Correo: ${data.email}</p>
-                            <button class="btn-primary" onclick="location.reload()">Reintentar</button>
-                            <button class="btn-secondary" onclick="window.location.href='../login.html'">Volver al login</button>
-                        `;
-                    }
-                    return;
-                }
-
-                console.log('✅ Estudiante verificado correctamente');
-                console.log('📌 Estudiante ID:', estudianteId);
-                console.log('📌 Colegio ID:', colegioId);
-
-                await cargarDashboard();
+                console.log('✅ EduOne - Panel del Estudiante cargado correctamente');
+                console.log('📁 Ruta: colegios/estudiante.html');
+                console.log('📦 Storage configurado correctamente');
 
             } catch (error) {
-                console.error('❌ Error de autenticación:', error);
-                if (loadingState) {
-                    loadingState.innerHTML = `
-                        <div style="color: var(--danger); font-size: 2rem;">
-                            <i class="fas fa-exclamation-circle"></i>
-                        </div>
-                        <h3>Error al verificar usuario</h3>
-                        <p style="color: var(--text-secondary);">${error.message}</p>
-                        <button class="btn-primary" onclick="location.reload()">Reintentar</button>
-                        <button class="btn-secondary" onclick="window.location.href='../login.html'">Volver al login</button>
-                    `;
-                }
+                // No hacer nada, el catch superior ya maneja el error
             }
-        });
+        }
 
         // =============================================
-        // LOGOUT
+        // CERRAR SESIÓN Y LIMPIAR TIMERS
         // =============================================
-        logoutBtn.addEventListener('click', async () => {
-            if (confirm('¿Seguro que deseas cerrar sesión?')) {
-                try {
-                    isLoggingOut = true;
-                    await signOut(auth);
-                    window.location.href = '../login.html';
-                } catch (error) {
-                    console.error('Error al cerrar sesión:', error);
-                    showToast('❌ Error al cerrar sesión', 'error');
-                    isLoggingOut = false;
-                }
+        window.addEventListener('beforeunload', () => {
+            if (evalTimerInterval) {
+                clearInterval(evalTimerInterval);
             }
         });
-
-        console.log('✅ EduOne - Panel del Estudiante cargado correctamente');
-        console.log('📁 Ruta: colegios/estudiante.html');
-        console.log('📦 Storage configurado correctamente');
-
     </script>
 
 </body>

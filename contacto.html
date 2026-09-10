@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Contacta con EduOne: solicita una demostración, cotización o más información sobre la plataforma educativa." />
+  <title>Contacto | EduOne</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --primary: #1a56db; --primary-dark: #1e3a8a; --primary-light: #3b82f6;
+      --secondary: #06b6d4; --background: #f8fafc; --surface: #ffffff;
+      --text: #0f172a; --text-muted: #64748b; --border: #e2e8f0;
+      --success: #10b981; --error: #ef4444;
+      --gradient: linear-gradient(135deg, #1e3a8a 0%, #1a56db 50%, #06b6d4 100%);
+      --radius: 12px; --shadow: 0 4px 24px rgba(26,86,219,0.10); --shadow-lg: 0 8px 48px rgba(26,86,219,0.15);
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', Arial, sans-serif; background: var(--background); color: var(--text); line-height: 1.6; overflow-x: hidden; }
+
+    .navbar { position: sticky; top: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); transition: box-shadow 0.3s; }
+    .navbar.scrolled { box-shadow: 0 2px 24px rgba(26,86,219,0.12); }
+    .nav-container { max-width: 1280px; margin: 0 auto; padding: 0 24px; height: 68px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
+    .nav-logo-mark { width: 36px; height: 36px; background: var(--gradient); border-radius: 9px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 16px; }
+    .nav-logo-text { font-size: 20px; font-weight: 700; color: var(--primary-dark); letter-spacing: -0.5px; }
+    .nav-menu { display: flex; align-items: center; gap: 4px; list-style: none; }
+    .nav-link { text-decoration: none; color: var(--text-muted); font-size: 14px; font-weight: 500; padding: 8px 12px; border-radius: 8px; transition: color 0.2s, background 0.2s; white-space: nowrap; }
+    .nav-link:hover { color: var(--primary); background: rgba(26,86,219,0.06); }
+    .nav-link.active { color: var(--primary); font-weight: 600; }
+    .nav-link-cta { background: var(--primary); color: white !important; padding: 8px 18px; border-radius: 8px; font-weight: 600; }
+    .nav-link-cta:hover { background: var(--primary-dark) !important; }
+    .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 8px; border-radius: 8px; }
+    .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; transition: transform 0.3s, opacity 0.3s; }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .page-hero { background: var(--gradient); padding: 80px 24px; text-align: center; }
+    .page-hero-inner { max-width: 700px; margin: 0 auto; }
+    .page-hero-eyebrow { display: inline-block; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); border-radius: 100px; padding: 6px 18px; font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.85); margin-bottom: 20px; }
+    .page-hero h1 { font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 900; color: white; line-height: 1.15; letter-spacing: -1.5px; margin-bottom: 16px; }
+    .page-hero p { font-size: 17px; color: rgba(255,255,255,0.78); line-height: 1.7; }
+
+    .section { padding: 80px 24px; }
+    .section-inner { max-width: 1280px; margin: 0 auto; }
+
+    /* CONTACT LAYOUT */
+    .contact-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 48px; align-items: start; }
+
+    /* FORM */
+    .form-card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 40px; box-shadow: var(--shadow); }
+    .form-card h2 { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 8px; letter-spacing: -0.5px; }
+    .form-card > p { font-size: 14px; color: var(--text-muted); margin-bottom: 28px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+    .form-group label { font-size: 13px; font-weight: 600; color: var(--text); }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-size: 14px;
+      font-family: inherit;
+      color: var(--text);
+      background: var(--surface);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(26,86,219,0.12);
+    }
+    .form-group input.error,
+    .form-group select.error,
+    .form-group textarea.error { border-color: var(--error); }
+    .form-group textarea { resize: vertical; min-height: 110px; }
+    .form-group .field-error { font-size: 12px; color: var(--error); font-weight: 500; display: none; }
+    .form-group .field-error.visible { display: block; }
+
+    .checkbox-group { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 24px; }
+    .checkbox-group input[type="checkbox"] { width: 18px; height: 18px; margin-top: 2px; cursor: pointer; accent-color: var(--primary); flex-shrink: 0; }
+    .checkbox-group label { font-size: 13px; color: var(--text-muted); cursor: pointer; line-height: 1.5; }
+
+    .form-submit {
+      width: 100%;
+      padding: 14px 24px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: var(--shadow);
+    }
+    .form-submit:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+    .form-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    /* SUCCESS STATE */
+    .form-success { display: none; background: #f0fdf4; border: 1.5px solid #86efac; border-radius: 16px; padding: 32px; text-align: center; }
+    .form-success.visible { display: block; }
+    .success-icon { font-size: 48px; margin-bottom: 16px; }
+    .form-success h3 { font-size: 20px; font-weight: 800; color: #166534; margin-bottom: 10px; }
+    .form-success p { font-size: 14px; color: #166534; line-height: 1.65; }
+
+    /* SIDEBAR */
+    .contact-sidebar { display: flex; flex-direction: column; gap: 20px; }
+    .info-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 24px; }
+    .info-card h3 { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 12px; }
+    .info-card p { font-size: 14px; color: var(--text-muted); line-height: 1.65; }
+    .info-list { list-style: none; }
+    .info-list li { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 14px; color: var(--text-muted); }
+    .info-list li:last-child { border-bottom: none; }
+    .info-icon { font-size: 18px; flex-shrink: 0; }
+
+    .cta-sidebar { background: var(--gradient); border-radius: 16px; padding: 28px; color: white; }
+    .cta-sidebar h3 { font-size: 17px; font-weight: 800; margin-bottom: 8px; }
+    .cta-sidebar p { font-size: 13px; opacity: 0.75; line-height: 1.6; }
+
+    .footer { background: var(--primary-dark); color: white; padding: 64px 24px 32px; }
+    .footer-inner { max-width: 1280px; margin: 0 auto; }
+    .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+    .footer-brand p { font-size: 14px; color: rgba(255,255,255,0.55); margin-top: 12px; line-height: 1.6; max-width: 300px; }
+    .footer-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+    .footer-logo-mark { width: 32px; height: 32px; background: rgba(255,255,255,0.15); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; }
+    .footer-logo-text { font-size: 18px; font-weight: 700; }
+    .footer-col h4 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.45); margin-bottom: 16px; }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 10px; }
+    .footer-col a { text-decoration: none; color: rgba(255,255,255,0.65); font-size: 14px; transition: color 0.2s; }
+    .footer-col a:hover { color: white; }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 28px; text-align: center; }
+    .footer-bottom p { font-size: 13px; color: rgba(255,255,255,0.4); margin-bottom: 4px; }
+
+    .back-to-top { position: fixed; bottom: 28px; right: 28px; width: 44px; height: 44px; background: var(--primary); color: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; cursor: pointer; border: none; box-shadow: 0 4px 20px rgba(26,86,219,0.35); opacity: 0; pointer-events: none; transition: opacity 0.3s, transform 0.3s; z-index: 999; }
+    .back-to-top.visible { opacity: 1; pointer-events: auto; }
+    .back-to-top:hover { transform: translateY(-3px); }
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 1024px) {
+      .contact-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .nav-menu { display: none; position: absolute; top: 68px; left: 0; right: 0; background: white; border-bottom: 1px solid var(--border); flex-direction: column; padding: 12px; gap: 4px; box-shadow: 0 8px 32px rgba(0,0,0,0.08); align-items: stretch; }
+      .nav-menu.open { display: flex; }
+      .nav-link { padding: 12px 16px; }
+      .nav-hamburger { display: flex; }
+      .section { padding: 56px 20px; }
+      .form-row { grid-template-columns: 1fr; }
+      .form-card { padding: 24px; }
+      .footer-top { grid-template-columns: 1fr; gap: 32px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo" aria-label="EduOne - Inicio">
+      <div class="nav-logo-mark">E</div>
+      <span class="nav-logo-text">EduOne</span>
+    </a>
+    <button class="nav-hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-menu" id="nav-menu">
+      <li><a href="index.html" class="nav-link">Inicio</a></li>
+      <li><a href="sobrenosotros.html" class="nav-link">Sobre nosotros</a></li>
+      <li><a href="funcionalidades.html" class="nav-link">Funcionalidades</a></li>
+      <li><a href="beneficios.html" class="nav-link">Beneficios</a></li>
+      <li><a href="planes.html" class="nav-link">Planes</a></li>
+      <li><a href="implementacion.html" class="nav-link">Implementación</a></li>
+      <li><a href="contacto.html" class="nav-link active" aria-current="page">Contacto</a></li>
+      <li><a href="login.html" class="nav-link nav-link-cta">Iniciar sesión</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <div class="page-hero-eyebrow">Estamos aquí para ayudarte</div>
+    <h1>Hablemos de tu institución</h1>
+    <p>Cuéntanos sobre tu colegio y descubre cómo EduOne puede ayudarte a transformar la gestión educativa.</p>
+  </div>
+</section>
+
+<section class="section" style="background: var(--background);">
+  <div class="section-inner">
+    <div class="contact-grid reveal">
+      <!-- FORMULARIO -->
+      <div>
+        <div class="form-card">
+          <h2>Envíanos tu solicitud</h2>
+          <p>Completa el formulario y te responderemos lo antes posible.</p>
+
+          <!-- FORM -->
+          <form id="contactForm" novalidate>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="nombre">Nombre completo <span aria-hidden="true" style="color:var(--error)">*</span></label>
+                <input type="text" id="nombre" name="nombre" placeholder="Tu nombre completo" aria-required="true" />
+                <span class="field-error" id="err-nombre">Por favor ingresa tu nombre completo.</span>
+              </div>
+              <div class="form-group">
+                <label for="colegio">Nombre del colegio <span aria-hidden="true" style="color:var(--error)">*</span></label>
+                <input type="text" id="colegio" name="colegio" placeholder="Nombre de la institución" aria-required="true" />
+                <span class="field-error" id="err-colegio">Por favor ingresa el nombre del colegio.</span>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="cargo">Cargo <span aria-hidden="true" style="color:var(--error)">*</span></label>
+                <input type="text" id="cargo" name="cargo" placeholder="Rector, coordinador, etc." aria-required="true" />
+                <span class="field-error" id="err-cargo">Por favor ingresa tu cargo.</span>
+              </div>
+              <div class="form-group">
+                <label for="ciudad">Ciudad <span aria-hidden="true" style="color:var(--error)">*</span></label>
+                <input type="text" id="ciudad" name="ciudad" placeholder="Ciudad de tu institución" aria-required="true" />
+                <span class="field-error" id="err-ciudad">Por favor ingresa tu ciudad.</span>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="email">Correo electrónico <span aria-hidden="true" style="color:var(--error)">*</span></label>
+                <input type="email" id="email" name="email" placeholder="correo@institucion.edu.co" aria-required="true" />
+                <span class="field-error" id="err-email">Por favor ingresa un correo electrónico válido.</span>
+              </div>
+              <div class="form-group">
+                <label for="telefono">Teléfono <span aria-hidden="true" style="color:var(--error)">*</span></label>
+                <input type="tel" id="telefono" name="telefono" placeholder="300 000 0000" aria-required="true" />
+                <span class="field-error" id="err-telefono">Por favor ingresa un número de teléfono válido.</span>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="estudiantes">Número aproximado de estudiantes <span aria-hidden="true" style="color:var(--error)">*</span></label>
+                <select id="estudiantes" name="estudiantes" aria-required="true">
+                  <option value="">Selecciona un rango</option>
+                  <option value="hasta-200">Hasta 200</option>
+                  <option value="201-400">201 – 400</option>
+                  <option value="401-600">401 – 600</option>
+                  <option value="601-800">601 – 800</option>
+                  <option value="801-1000">801 – 1.000</option>
+                  <option value="1001-1500">1.001 – 1.500</option>
+                  <option value="mas-1500">Más de 1.500</option>
+                </select>
+                <span class="field-error" id="err-estudiantes">Por favor selecciona el número de estudiantes.</span>
+              </div>
+              <div class="form-group">
+                <label for="motivo">Motivo de contacto <span aria-hidden="true" style="color:var(--error)">*</span></label>
+                <select id="motivo" name="motivo" aria-required="true">
+                  <option value="">Selecciona un motivo</option>
+                  <option value="demo">Solicitar demostración</option>
+                  <option value="cotizacion">Solicitar cotización</option>
+                  <option value="compra">Comprar plan</option>
+                  <option value="implementacion">Implementación</option>
+                  <option value="soporte">Soporte</option>
+                  <option value="informacion">Información general</option>
+                </select>
+                <span class="field-error" id="err-motivo">Por favor selecciona un motivo de contacto.</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="mensaje">Mensaje <span aria-hidden="true" style="color:var(--error)">*</span></label>
+              <textarea id="mensaje" name="mensaje" placeholder="Cuéntanos sobre tu institución y cómo podemos ayudarte..." aria-required="true"></textarea>
+              <span class="field-error" id="err-mensaje">Por favor escribe un mensaje (mínimo 10 caracteres).</span>
+            </div>
+            <div class="checkbox-group">
+              <input type="checkbox" id="privacidad" name="privacidad" aria-required="true" />
+              <label for="privacidad">He leído y acepto el <a href="#" style="color:var(--primary)">tratamiento de mis datos personales</a> conforme a la política de privacidad de EduOne.</label>
+            </div>
+            <div class="field-error" id="err-privacidad" style="margin-bottom:16px;">Debes aceptar el tratamiento de datos para continuar.</div>
+
+            <button type="submit" class="form-submit" id="submitBtn">Enviar solicitud →</button>
+          </form>
+
+          <!-- SUCCESS MESSAGE -->
+          <div class="form-success" id="formSuccess">
+            <div class="success-icon" aria-hidden="true">✅</div>
+            <h3>¡Solicitud recibida!</h3>
+            <p>Tu solicitud está lista. Próximamente nuestro equipo podrá integrar este formulario con el servicio de contacto de EduOne y te responderemos a la brevedad.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- SIDEBAR -->
+      <div class="contact-sidebar">
+        <div class="info-card">
+          <h3>¿Qué puedes solicitar?</h3>
+          <ul class="info-list">
+            <li><span class="info-icon" aria-hidden="true">🎯</span> Demostración personalizada</li>
+            <li><span class="info-icon" aria-hidden="true">💰</span> Cotización para tu colegio</li>
+            <li><span class="info-icon" aria-hidden="true">🚀</span> Servicio de implementación</li>
+            <li><span class="info-icon" aria-hidden="true">ℹ️</span> Información general</li>
+            <li><span class="info-icon" aria-hidden="true">🛠️</span> Soporte técnico</li>
+          </ul>
+        </div>
+
+        <div class="info-card">
+          <h3>Tiempos de respuesta</h3>
+          <p>Revisamos todas las solicitudes y te responderemos lo antes posible. Para implementaciones, el proceso toma hasta 7 días hábiles una vez validada la información.</p>
+        </div>
+
+        <div class="cta-sidebar">
+          <h3>¿Ya conoces los planes?</h3>
+          <p>Revisa nuestros planes anuales y elige el que mejor se adapta al tamaño de tu institución.</p>
+          <a href="planes.html" style="display:inline-block; margin-top:16px; background:rgba(255,255,255,0.2); color:white; padding:8px 18px; border-radius:8px; font-size:13px; font-weight:600; text-decoration:none; border:1px solid rgba(255,255,255,0.3);">Ver planes →</a>
+        </div>
+
+        <div class="info-card">
+          <h3>Desarrollado en Colombia</h3>
+          <p>EduOne es un proyecto desarrollado por estudiantes de la Escuela Tecnológica de Neiva FET, con el propósito de transformar la gestión educativa en Colombia.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo"><div class="footer-logo-mark">E</div><span class="footer-logo-text">EduOne</span></div>
+        <p>Educación, tecnología y gestión en un solo lugar.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navegación</h4>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="sobrenosotros.html">Sobre nosotros</a></li>
+          <li><a href="funcionalidades.html">Funcionalidades</a></li>
+          <li><a href="beneficios.html">Beneficios</a></li>
+          <li><a href="planes.html">Planes</a></li>
+          <li><a href="implementacion.html">Implementación</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+          <li><a href="login.html">Iniciar sesión</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">Política de privacidad</a></li>
+          <li><a href="#">Tratamiento de datos</a></li>
+          <li><a href="#">Términos y condiciones</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 EduOne. Todos los derechos reservados.</p>
+      <p>Desarrollado por Daniel Steven Gutierrez y Camilo Rodriguez.</p>
+      <p>Escuela Tecnológica de Neiva FET.</p>
+    </div>
+  </div>
+</footer>
+
+<button class="back-to-top" id="backToTop" aria-label="Volver arriba">↑</button>
+
+<script>
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 20);
+    document.getElementById('backToTop').classList.toggle('visible', window.scrollY > 300);
+  });
+  const hamburger = document.getElementById('hamburger');
+  const navMenu = document.getElementById('nav-menu');
+  function closeMenu() { navMenu.classList.remove('open'); hamburger.classList.remove('open'); hamburger.setAttribute('aria-expanded','false'); }
+  hamburger.addEventListener('click', () => { navMenu.classList.contains('open') ? closeMenu() : (navMenu.classList.add('open'), hamburger.classList.add('open'), hamburger.setAttribute('aria-expanded','true')); });
+  navMenu.querySelectorAll('.nav-link').forEach(l => l.addEventListener('click', closeMenu));
+  document.addEventListener('click', e => { if (!navbar.contains(e.target)) closeMenu(); });
+  document.addEventListener('keydown', e => { if (e.key==='Escape') closeMenu(); });
+  document.getElementById('backToTop').addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
+
+  // Form validation
+  const form = document.getElementById('contactForm');
+  const successDiv = document.getElementById('formSuccess');
+
+  function showError(fieldId, errId, show) {
+    const field = document.getElementById(fieldId);
+    const err = document.getElementById('err-' + errId);
+    if (!field || !err) return;
+    if (show) { field.classList.add('error'); err.classList.add('visible'); }
+    else { field.classList.remove('error'); err.classList.remove('visible'); }
+  }
+
+  function validateEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+  function validatePhone(tel) {
+    return /^[\d\s\+\-\(\)]{7,}$/.test(tel.trim());
+  }
+
+  function validateForm() {
+    let valid = true;
+    const nombre = document.getElementById('nombre').value.trim();
+    const colegio = document.getElementById('colegio').value.trim();
+    const cargo = document.getElementById('cargo').value.trim();
+    const ciudad = document.getElementById('ciudad').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const telefono = document.getElementById('telefono').value.trim();
+    const estudiantes = document.getElementById('estudiantes').value;
+    const motivo = document.getElementById('motivo').value;
+    const mensaje = document.getElementById('mensaje').value.trim();
+    const privacidad = document.getElementById('privacidad').checked;
+
+    showError('nombre', 'nombre', !nombre); if (!nombre) valid = false;
+    showError('colegio', 'colegio', !colegio); if (!colegio) valid = false;
+    showError('cargo', 'cargo', !cargo); if (!cargo) valid = false;
+    showError('ciudad', 'ciudad', !ciudad); if (!ciudad) valid = false;
+    showError('email', 'email', !validateEmail(email)); if (!validateEmail(email)) valid = false;
+    showError('telefono', 'telefono', !validatePhone(telefono)); if (!validatePhone(telefono)) valid = false;
+    showError('estudiantes', 'estudiantes', !estudiantes); if (!estudiantes) valid = false;
+    showError('motivo', 'motivo', !motivo); if (!motivo) valid = false;
+    showError('mensaje', 'mensaje', mensaje.length < 10); if (mensaje.length < 10) valid = false;
+
+    const errPriv = document.getElementById('err-privacidad');
+    if (!privacidad) { errPriv.classList.add('visible'); valid = false; }
+    else { errPriv.classList.remove('visible'); }
+
+    return valid;
+  }
+
+  // Clear errors on input
+  ['nombre','colegio','cargo','ciudad','email','telefono','estudiantes','motivo','mensaje'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', () => showError(id, id, false));
+  });
+  document.getElementById('privacidad').addEventListener('change', () => {
+    document.getElementById('err-privacidad').classList.remove('visible');
+  });
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!validateForm()) return;
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.textContent = 'Procesando...';
+    setTimeout(() => {
+      form.style.display = 'none';
+      successDiv.classList.add('visible');
+      successDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 800);
+    // TODO: integrate with Firebase or backend service
+  });
+
+  const observer = new IntersectionObserver(entries => entries.forEach((e,i) => { if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i*80); }), {threshold:0.08});
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

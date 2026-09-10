@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Descubre los beneficios de EduOne: información centralizada, comunicación eficiente y seguimiento académico." />
+  <title>Beneficios | EduOne</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --primary: #1a56db; --primary-dark: #1e3a8a; --primary-light: #3b82f6;
+      --secondary: #06b6d4; --background: #f8fafc; --surface: #ffffff;
+      --text: #0f172a; --text-muted: #64748b; --border: #e2e8f0;
+      --success: #10b981; --gradient: linear-gradient(135deg, #1e3a8a 0%, #1a56db 50%, #06b6d4 100%);
+      --radius: 12px; --shadow: 0 4px 24px rgba(26,86,219,0.10); --shadow-lg: 0 8px 48px rgba(26,86,219,0.15);
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', Arial, sans-serif; background: var(--background); color: var(--text); line-height: 1.6; overflow-x: hidden; }
+
+    .navbar { position: sticky; top: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); transition: box-shadow 0.3s; }
+    .navbar.scrolled { box-shadow: 0 2px 24px rgba(26,86,219,0.12); }
+    .nav-container { max-width: 1280px; margin: 0 auto; padding: 0 24px; height: 68px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
+    .nav-logo-mark { width: 36px; height: 36px; background: var(--gradient); border-radius: 9px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 16px; }
+    .nav-logo-text { font-size: 20px; font-weight: 700; color: var(--primary-dark); letter-spacing: -0.5px; }
+    .nav-menu { display: flex; align-items: center; gap: 4px; list-style: none; }
+    .nav-link { text-decoration: none; color: var(--text-muted); font-size: 14px; font-weight: 500; padding: 8px 12px; border-radius: 8px; transition: color 0.2s, background 0.2s; white-space: nowrap; }
+    .nav-link:hover { color: var(--primary); background: rgba(26,86,219,0.06); }
+    .nav-link.active { color: var(--primary); font-weight: 600; }
+    .nav-link-cta { background: var(--primary); color: white !important; padding: 8px 18px; border-radius: 8px; font-weight: 600; }
+    .nav-link-cta:hover { background: var(--primary-dark) !important; }
+    .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 8px; border-radius: 8px; }
+    .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; transition: transform 0.3s, opacity 0.3s; }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .page-hero { background: var(--gradient); padding: 80px 24px; text-align: center; }
+    .page-hero-inner { max-width: 800px; margin: 0 auto; }
+    .page-hero-eyebrow { display: inline-block; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); border-radius: 100px; padding: 6px 18px; font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.85); margin-bottom: 20px; }
+    .page-hero h1 { font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 900; color: white; line-height: 1.15; letter-spacing: -1.5px; margin-bottom: 16px; }
+    .page-hero p { font-size: 17px; color: rgba(255,255,255,0.78); line-height: 1.7; }
+
+    .section { padding: 80px 24px; }
+    .section-inner { max-width: 1280px; margin: 0 auto; }
+    .section-eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--primary); margin-bottom: 12px; }
+    .section-title { font-size: clamp(1.7rem, 3vw, 2.5rem); font-weight: 800; color: var(--text); letter-spacing: -1px; line-height: 1.15; margin-bottom: 16px; }
+    .section-title span { color: var(--primary); }
+    .section-header { text-align: center; margin-bottom: 52px; }
+    .section-desc { font-size: 16px; color: var(--text-muted); line-height: 1.7; max-width: 600px; margin: 0 auto; }
+
+    /* BENEFITS GRID */
+    .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+    .benefit-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 32px; transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s; }
+    .benefit-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); border-color: rgba(26,86,219,0.2); }
+    .benefit-icon { width: 56px; height: 56px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 20px; }
+    .bi-blue { background: rgba(26,86,219,0.10); }
+    .bi-cyan { background: rgba(6,182,212,0.10); }
+    .bi-green { background: rgba(16,185,129,0.10); }
+    .bi-purple { background: rgba(139,92,246,0.10); }
+    .bi-orange { background: rgba(249,115,22,0.10); }
+    .benefit-card h3 { font-size: 17px; font-weight: 700; color: var(--text); margin-bottom: 10px; letter-spacing: -0.3px; }
+    .benefit-card p { font-size: 14px; color: var(--text-muted); line-height: 1.65; }
+
+    /* COMPARISON */
+    .comparison-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .comparison-col { background: var(--surface); border-radius: 20px; padding: 36px; }
+    .comparison-col.before { border: 2px solid #fca5a5; background: #fff5f5; }
+    .comparison-col.after { border: 2px solid #86efac; background: #f0fdf4; }
+    .comparison-header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+    .comp-badge { font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 100px; letter-spacing: 0.5px; }
+    .comp-badge.before { background: #fecaca; color: #b91c1c; }
+    .comp-badge.after { background: #bbf7d0; color: #166534; }
+    .comparison-header h3 { font-size: 18px; font-weight: 800; }
+    .comparison-col.before h3 { color: #b91c1c; }
+    .comparison-col.after h3 { color: #166534; }
+    .comp-list { list-style: none; }
+    .comp-item { display: flex; align-items: center; gap: 14px; padding: 12px 0; border-bottom: 1px solid; font-size: 15px; font-weight: 500; }
+    .comparison-col.before .comp-item { border-color: #fecaca; color: #7f1d1d; }
+    .comparison-col.after .comp-item { border-color: #86efac; color: #14532d; }
+    .comp-item:last-child { border-bottom: none; }
+    .comp-icon { font-size: 18px; flex-shrink: 0; }
+
+    /* CTA BANNER */
+    .cta-banner { background: var(--gradient); border-radius: 20px; padding: 64px 48px; text-align: center; color: white; }
+    .cta-banner h2 { font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 800; margin-bottom: 16px; letter-spacing: -1px; }
+    .cta-banner p { font-size: 17px; opacity: 0.82; margin-bottom: 36px; }
+    .cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 24px; border-radius: 10px; font-weight: 600; font-size: 15px; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s, background 0.2s; cursor: pointer; border: none; font-family: inherit; }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-white { background: white; color: var(--primary); box-shadow: 0 4px 20px rgba(255,255,255,0.2); }
+    .btn-outline { background: rgba(255,255,255,0.12); color: white; border: 1.5px solid rgba(255,255,255,0.3); }
+    .btn-outline:hover { background: rgba(255,255,255,0.2); }
+
+    .footer { background: var(--primary-dark); color: white; padding: 64px 24px 32px; }
+    .footer-inner { max-width: 1280px; margin: 0 auto; }
+    .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+    .footer-brand p { font-size: 14px; color: rgba(255,255,255,0.55); margin-top: 12px; line-height: 1.6; max-width: 300px; }
+    .footer-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+    .footer-logo-mark { width: 32px; height: 32px; background: rgba(255,255,255,0.15); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; }
+    .footer-logo-text { font-size: 18px; font-weight: 700; }
+    .footer-col h4 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.45); margin-bottom: 16px; }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 10px; }
+    .footer-col a { text-decoration: none; color: rgba(255,255,255,0.65); font-size: 14px; transition: color 0.2s; }
+    .footer-col a:hover { color: white; }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 28px; text-align: center; }
+    .footer-bottom p { font-size: 13px; color: rgba(255,255,255,0.4); margin-bottom: 4px; }
+
+    .back-to-top { position: fixed; bottom: 28px; right: 28px; width: 44px; height: 44px; background: var(--primary); color: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; cursor: pointer; border: none; box-shadow: 0 4px 20px rgba(26,86,219,0.35); opacity: 0; pointer-events: none; transition: opacity 0.3s, transform 0.3s; z-index: 999; }
+    .back-to-top.visible { opacity: 1; pointer-events: auto; }
+    .back-to-top:hover { transform: translateY(-3px); }
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 768px) {
+      .nav-menu { display: none; position: absolute; top: 68px; left: 0; right: 0; background: white; border-bottom: 1px solid var(--border); flex-direction: column; padding: 12px; gap: 4px; box-shadow: 0 8px 32px rgba(0,0,0,0.08); align-items: stretch; }
+      .nav-menu.open { display: flex; }
+      .nav-link { padding: 12px 16px; }
+      .nav-hamburger { display: flex; }
+      .section { padding: 56px 20px; }
+      .comparison-grid { grid-template-columns: 1fr; }
+      .cta-banner { padding: 40px 24px; }
+      .footer-top { grid-template-columns: 1fr; gap: 32px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo" aria-label="EduOne - Inicio">
+      <div class="nav-logo-mark">E</div>
+      <span class="nav-logo-text">EduOne</span>
+    </a>
+    <button class="nav-hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-menu" id="nav-menu">
+      <li><a href="index.html" class="nav-link">Inicio</a></li>
+      <li><a href="sobrenosotros.html" class="nav-link">Sobre nosotros</a></li>
+      <li><a href="funcionalidades.html" class="nav-link">Funcionalidades</a></li>
+      <li><a href="beneficios.html" class="nav-link active" aria-current="page">Beneficios</a></li>
+      <li><a href="planes.html" class="nav-link">Planes</a></li>
+      <li><a href="implementacion.html" class="nav-link">Implementación</a></li>
+      <li><a href="contacto.html" class="nav-link">Contacto</a></li>
+      <li><a href="login.html" class="nav-link nav-link-cta">Iniciar sesión</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <div class="page-hero-eyebrow">¿Por qué EduOne?</div>
+    <h1>Más organización. Más comunicación. Más educación.</h1>
+    <p>Descubre cómo EduOne transforma la gestión de tu institución educativa con beneficios concretos y medibles.</p>
+  </div>
+</section>
+
+<!-- BENEFICIOS -->
+<section class="section" style="background: var(--surface);">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">Ventajas concretas</div>
+      <h2 class="section-title">Beneficios que <span>transforman</span></h2>
+      <p class="section-desc">Cada funcionalidad de EduOne está diseñada para generar un impacto real en el día a día de tu institución.</p>
+    </div>
+    <div class="benefits-grid reveal">
+      <div class="benefit-card">
+        <div class="benefit-icon bi-blue" aria-hidden="true">🗂️</div>
+        <h3>Información centralizada</h3>
+        <p>Toda la información académica organizada dentro de una sola plataforma. Sin archivos dispersos, sin información duplicada.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon bi-cyan" aria-hidden="true">⚙️</div>
+        <h3>Mayor organización</h3>
+        <p>Administra estudiantes, profesores, cursos, asignaturas y procesos académicos desde un mismo entorno bien estructurado.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon bi-green" aria-hidden="true">💬</div>
+        <h3>Comunicación eficiente</h3>
+        <p>Conecta a directivos, profesores, estudiantes y familias con comunicados claros y accesibles en tiempo real.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon bi-purple" aria-hidden="true">📈</div>
+        <h3>Seguimiento académico</h3>
+        <p>Facilita el acompañamiento continuo del desempeño estudiantil, permitiendo identificar oportunidades de mejora a tiempo.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon bi-orange" aria-hidden="true">📉</div>
+        <h3>Menos procesos manuales</h3>
+        <p>Reduce el uso de documentos físicos, hojas de cálculo y procesos repetitivos que consumen tiempo valioso.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon bi-cyan" aria-hidden="true">📱</div>
+        <h3>Acceso desde diferentes dispositivos</h3>
+        <p>Consulta la información utilizando computador, tablet o teléfono móvil, desde cualquier lugar con conexión a internet.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon bi-green" aria-hidden="true">✨</div>
+        <h3>Facilidad de uso</h3>
+        <p>Una experiencia intuitiva diseñada para usuarios con diferentes niveles de conocimiento tecnológico. Sin curva de aprendizaje difícil.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon bi-blue" aria-hidden="true">📦</div>
+        <h3>Escalabilidad</h3>
+        <p>EduOne puede crecer junto con cada institución. Desde colegios pequeños hasta instituciones con más de 1.500 estudiantes.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon bi-purple" aria-hidden="true">🔄</div>
+        <h3>Actualización continua</h3>
+        <p>La plataforma evoluciona constantemente mediante nuevas funcionalidades y mejoras, sin costos adicionales para el usuario.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARACIÓN -->
+<section class="section" style="background: var(--background);">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">Comparación</div>
+      <h2 class="section-title">Antes de EduOne <span>vs.</span> Con EduOne</h2>
+      <p class="section-desc">La diferencia es clara. Mira cómo EduOne transforma cada aspecto de la gestión educativa.</p>
+    </div>
+    <div class="comparison-grid reveal">
+      <div class="comparison-col before">
+        <div class="comparison-header">
+          <span class="comp-badge before">ANTES</span>
+          <h3>Sin EduOne</h3>
+        </div>
+        <ul class="comp-list">
+          <li class="comp-item"><span class="comp-icon" aria-hidden="true">📂</span> Información dispersa en múltiples fuentes</li>
+          <li class="comp-item"><span class="comp-icon" aria-hidden="true">📊</span> Archivos Excel y documentos físicos</li>
+          <li class="comp-item"><span class="comp-icon" aria-hidden="true">🔁</span> Procesos repetitivos y manuales</li>
+          <li class="comp-item"><span class="comp-icon" aria-hidden="true">🔍</span> Dificultad para consultar notas rápidamente</li>
+          <li class="comp-item"><span class="comp-icon" aria-hidden="true">📵</span> Comunicación fragmentada y lenta</li>
+        </ul>
+      </div>
+      <div class="comparison-col after">
+        <div class="comparison-header">
+          <span class="comp-badge after">CON EDUONE</span>
+          <h3>Con EduOne</h3>
+        </div>
+        <ul class="comp-list">
+          <li class="comp-item"><span class="comp-icon" aria-hidden="true">✅</span> Información centralizada y organizada</li>
+          <li class="comp-item"><span class="comp-icon" aria-hidden="true">✅</span> Procesos digitales y estructurados</li>
+          <li class="comp-item"><span class="comp-icon" aria-hidden="true">✅</span> Automatización y seguimiento claro</li>
+          <li class="comp-item"><span class="comp-icon" aria-hidden="true">✅</span> Acceso rápido a calificaciones y boletines</li>
+          <li class="comp-item"><span class="comp-icon" aria-hidden="true">✅</span> Comunicación integrada y eficiente</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section" style="background: var(--surface);">
+  <div class="section-inner">
+    <div class="cta-banner reveal">
+      <h2>¿Listo para transformar tu institución?</h2>
+      <p>Conecta a toda tu comunidad educativa con EduOne. Planes accesibles para cada institución.</p>
+      <div class="cta-actions">
+        <a href="planes.html" class="btn btn-white">Ver planes</a>
+        <a href="contacto.html" class="btn btn-outline">Contáctanos</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo"><div class="footer-logo-mark">E</div><span class="footer-logo-text">EduOne</span></div>
+        <p>Educación, tecnología y gestión en un solo lugar.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navegación</h4>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="sobrenosotros.html">Sobre nosotros</a></li>
+          <li><a href="funcionalidades.html">Funcionalidades</a></li>
+          <li><a href="beneficios.html">Beneficios</a></li>
+          <li><a href="planes.html">Planes</a></li>
+          <li><a href="implementacion.html">Implementación</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+          <li><a href="login.html">Iniciar sesión</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">Política de privacidad</a></li>
+          <li><a href="#">Tratamiento de datos</a></li>
+          <li><a href="#">Términos y condiciones</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 EduOne. Todos los derechos reservados.</p>
+      <p>Desarrollado por Daniel Steven Gutierrez y Camilo Rodriguez.</p>
+      <p>Escuela Tecnológica de Neiva FET.</p>
+    </div>
+  </div>
+</footer>
+
+<button class="back-to-top" id="backToTop" aria-label="Volver arriba">↑</button>
+
+<script>
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 20);
+    document.getElementById('backToTop').classList.toggle('visible', window.scrollY > 300);
+  });
+  const hamburger = document.getElementById('hamburger');
+  const navMenu = document.getElementById('nav-menu');
+  function closeMenu() { navMenu.classList.remove('open'); hamburger.classList.remove('open'); hamburger.setAttribute('aria-expanded','false'); }
+  hamburger.addEventListener('click', () => { navMenu.classList.contains('open') ? closeMenu() : (navMenu.classList.add('open'), hamburger.classList.add('open'), hamburger.setAttribute('aria-expanded','true')); });
+  navMenu.querySelectorAll('.nav-link').forEach(l => l.addEventListener('click', closeMenu));
+  document.addEventListener('click', e => { if (!navbar.contains(e.target)) closeMenu(); });
+  document.addEventListener('keydown', e => { if (e.key==='Escape') closeMenu(); });
+  document.getElementById('backToTop').addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
+  const observer = new IntersectionObserver(entries => entries.forEach((e,i) => { if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i*80); }), {threshold:0.08});
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

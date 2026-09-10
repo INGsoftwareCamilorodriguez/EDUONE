@@ -265,7 +265,45 @@
 
         .btn-secondary i {
             font-size: 1.1rem;
-            color: var(--success);
+            color: var(--primary);
+        }
+
+        .btn-back {
+            width: 100%;
+            padding: 14px;
+            background: transparent;
+            color: var(--gray-500);
+            border: 2px solid var(--gray-200);
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 500;
+            font-family: var(--font);
+            cursor: pointer;
+            transition: background 0.2s, border-color 0.2s, color 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .btn-back:hover {
+            background: var(--gray-50);
+            border-color: var(--gray-300);
+            color: var(--gray-700);
+        }
+
+        .btn-back:active {
+            transform: scale(0.98);
+        }
+
+        .btn-back i {
+            font-size: 1.1rem;
+            color: var(--gray-400);
+        }
+
+        .btn-back:hover i {
+            color: var(--gray-600);
         }
 
         .divider {
@@ -347,24 +385,6 @@
             color: var(--gray-600);
         }
 
-        .demo-credentials {
-            background: var(--gray-50);
-            border-radius: 10px;
-            padding: 12px 16px;
-            margin-top: 16px;
-            font-size: 0.8rem;
-            border: 1px dashed var(--gray-300);
-        }
-
-        .demo-credentials p {
-            margin: 2px 0;
-            color: var(--gray-600);
-        }
-
-        .demo-credentials strong {
-            color: var(--gray-800);
-        }
-
         /* =============================================
            RESPONSIVE - MÓVIL
            ============================================= */
@@ -418,18 +438,14 @@
             }
 
             .btn-primary,
-            .btn-secondary {
+            .btn-secondary,
+            .btn-back {
                 padding: 13px;
                 font-size: 0.95rem;
             }
 
             .divider {
                 margin: 16px 0;
-                font-size: 0.75rem;
-            }
-
-            .demo-credentials {
-                padding: 10px 14px;
                 font-size: 0.75rem;
             }
 
@@ -459,7 +475,8 @@
             }
 
             .btn-primary,
-            .btn-secondary {
+            .btn-secondary,
+            .btn-back {
                 padding: 11px;
                 font-size: 0.85rem;
             }
@@ -475,150 +492,6 @@
         @media (min-width: 481px) and (max-width: 768px) {
             .login-card {
                 padding: 32px 28px;
-            }
-        }
-
-        /* =============================================
-           MODAL - Crear cuenta
-           ============================================= */
-
-        .modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            z-index: 9999;
-            align-items: center;
-            justify-content: center;
-            padding: 16px;
-        }
-
-        .modal.show {
-            display: flex;
-        }
-
-        .modal-overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(4px);
-        }
-
-        .modal-content {
-            position: relative;
-            background: #fff;
-            border-radius: var(--radius);
-            max-width: 440px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: var(--shadow-lg);
-            animation: modalFade 0.25s ease;
-            padding: 0;
-        }
-
-        @keyframes modalFade {
-            from {
-                opacity: 0;
-                transform: scale(0.95) translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
-        }
-
-        .modal-header {
-            padding: 18px 24px;
-            border-bottom: 1px solid var(--gray-200);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            background: #fff;
-            border-radius: var(--radius) var(--radius) 0 0;
-            z-index: 1;
-        }
-
-        .modal-header h2 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--gray-800);
-        }
-
-        .modal-close {
-            background: none;
-            border: none;
-            font-size: 1.6rem;
-            color: var(--gray-400);
-            cursor: pointer;
-            padding: 0 6px;
-            line-height: 1;
-            transition: color 0.2s;
-        }
-
-        .modal-close:hover {
-            color: var(--gray-700);
-        }
-
-        .modal-body {
-            padding: 20px 24px;
-        }
-
-        .modal-footer {
-            padding: 16px 24px;
-            border-top: 1px solid var(--gray-200);
-            display: flex;
-            justify-content: flex-end;
-            gap: 12px;
-            background: var(--gray-50);
-            border-radius: 0 0 var(--radius) var(--radius);
-        }
-
-        .modal-footer .btn-primary,
-        .modal-footer .btn-secondary {
-            width: auto;
-            padding: 10px 24px;
-            font-size: 0.9rem;
-        }
-
-        .modal-footer .btn-secondary {
-            background: var(--gray-200);
-            border: none;
-        }
-
-        .modal-footer .btn-secondary:hover {
-            background: var(--gray-300);
-        }
-
-        @media (max-width: 480px) {
-            .modal-content {
-                max-width: 100%;
-                margin: 0 4px;
-                border-radius: 14px;
-            }
-
-            .modal-header {
-                padding: 14px 16px;
-            }
-
-            .modal-header h2 {
-                font-size: 1rem;
-            }
-
-            .modal-body {
-                padding: 16px;
-            }
-
-            .modal-footer {
-                padding: 12px 16px;
-                flex-direction: column;
-            }
-
-            .modal-footer .btn-primary,
-            .modal-footer .btn-secondary {
-                width: 100%;
-                justify-content: center;
             }
         }
 
@@ -717,117 +590,16 @@
                 <span>o</span>
             </div>
 
-            <!-- Botón Crear Cuenta -->
-            <button class="btn-secondary" id="btnCrearCuenta">
-                <i class="fas fa-user-plus"></i>
-                Crear cuenta (Superadmin)
-            </button>
+            <!-- Botón Volver al Inicio -->
+            <a href="index.html" class="btn-back">
+                <i class="fas fa-arrow-left"></i>
+                Volver al inicio
+            </a>
 
             <!-- Footer -->
             <div class="login-footer">
                 &copy; 2027 EduOne - Todos los derechos reservados
             </div>
-        </div>
-    </div>
-
-    <!-- =========================================== -->
-    <!-- MODAL: Crear Cuenta Superadmin              -->
-    <!-- =========================================== -->
-    <div class="modal" id="modalCrearCuenta">
-        <div class="modal-overlay" id="modalOverlay"></div>
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2><i class="fas fa-user-shield" style="color: var(--primary); margin-right: 8px;"></i> Crear cuenta SUPERADMIN</h2>
-                <button class="modal-close" id="closeModal">&times;</button>
-            </div>
-            <form id="formCrearCuenta">
-                <div class="modal-body">
-                    <div id="modalAlert" class="alert" style="display: none;">
-                        <i class="fas fa-info-circle"></i>
-                        <span id="modalAlertText">Mensaje</span>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="regNombre">
-                            <i class="fas fa-user"></i> Nombre completo *
-                        </label>
-                        <input
-                            type="text"
-                            id="regNombre"
-                            class="form-control"
-                            placeholder="Ej: Juan Pérez"
-                            required
-                            value="Super Admin"
-                        />
-                    </div>
-
-                    <div class="form-group">
-                        <label for="regEmail">
-                            <i class="fas fa-envelope"></i> Correo electrónico *
-                        </label>
-                        <input
-                            type="email"
-                            id="regEmail"
-                            class="form-control"
-                            placeholder="admin@eduone.com"
-                            required
-                            value="admin@eduone.com"
-                        />
-                    </div>
-
-                    <div class="form-group">
-                        <label for="regPassword">
-                            <i class="fas fa-lock"></i> Contraseña *
-                        </label>
-                        <div class="password-toggle">
-                            <input
-                                type="password"
-                                id="regPassword"
-                                class="form-control"
-                                placeholder="Mínimo 6 caracteres"
-                                required
-                                minlength="6"
-                                value="Admin123!"
-                            />
-                            <button
-                                type="button"
-                                class="toggle-eye"
-                                id="toggleRegPassword"
-                                aria-label="Mostrar contraseña"
-                            >
-                                <i class="fas fa-eye"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="regConfirmPassword">
-                            <i class="fas fa-check-circle"></i> Confirmar contraseña *
-                        </label>
-                        <input
-                            type="password"
-                            id="regConfirmPassword"
-                            class="form-control"
-                            placeholder="Repite la contraseña"
-                            required
-                            value="Admin123!"
-                        />
-                    </div>
-
-                    <div style="background: var(--primary-bg); padding: 12px 16px; border-radius: 10px; margin-top: 8px;">
-                        <p style="font-size: 0.8rem; color: var(--gray-700); margin: 0;">
-                            <i class="fas fa-shield-alt" style="color: var(--primary);"></i>
-                            Esta cuenta tendrá permisos de <strong>SUPERADMIN</strong> y podrá gestionar todos los colegios.
-                        </p>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn-secondary" id="cancelarModal">Cancelar</button>
-                    <button type="submit" class="btn-primary" id="btnRegistrar">
-                        <i class="fas fa-user-plus"></i> Crear cuenta
-                    </button>
-                </div>
-            </form>
         </div>
     </div>
 
@@ -854,7 +626,6 @@
         import {
             getAuth,
             signInWithEmailAndPassword,
-            createUserWithEmailAndPassword,
             setPersistence,
             browserLocalPersistence,
             browserSessionPersistence,
@@ -884,7 +655,7 @@
         const db = getFirestore(app);
 
         // =============================================
-        // REFERENCIAS DOM - LOGIN
+        // REFERENCIAS DOM
         // =============================================
         const form = document.getElementById('loginForm');
         const emailInput = document.getElementById('email');
@@ -896,25 +667,7 @@
         const togglePasswordBtn = document.getElementById('togglePassword');
 
         // =============================================
-        // REFERENCIAS DOM - MODAL
-        // =============================================
-        const modal = document.getElementById('modalCrearCuenta');
-        const modalOverlay = document.getElementById('modalOverlay');
-        const closeModalBtn = document.getElementById('closeModal');
-        const cancelarModalBtn = document.getElementById('cancelarModal');
-        const formCrearCuenta = document.getElementById('formCrearCuenta');
-        const regNombre = document.getElementById('regNombre');
-        const regEmail = document.getElementById('regEmail');
-        const regPassword = document.getElementById('regPassword');
-        const regConfirmPassword = document.getElementById('regConfirmPassword');
-        const btnRegistrar = document.getElementById('btnRegistrar');
-        const modalAlert = document.getElementById('modalAlert');
-        const modalAlertText = document.getElementById('modalAlertText');
-        const toggleRegPasswordBtn = document.getElementById('toggleRegPassword');
-        const btnCrearCuenta = document.getElementById('btnCrearCuenta');
-
-        // =============================================
-        // MAPA DE RUTAS POR ROL (CORREGIDO)
+        // MAPA DE RUTAS POR ROL
         // =============================================
         const RUTAS = {
             superadmin: 'PanelAdmin/AdminPanel.html',
@@ -955,16 +708,6 @@
             alertMessage.classList.remove('show');
         }
 
-        function showModalAlert(message, type = 'error') {
-            modalAlert.className = `alert alert-${type} show`;
-            modalAlertText.textContent = message;
-        }
-
-        function hideModalAlert() {
-            modalAlert.className = 'alert';
-            modalAlert.classList.remove('show');
-        }
-
         // =============================================
         // TOGGLE PASSWORD
         // =============================================
@@ -973,42 +716,6 @@
             passwordInput.setAttribute('type', type);
             const icon = togglePasswordBtn.querySelector('i');
             icon.className = type === 'password' ? 'fas fa-eye' : 'fas fa-eye-slash';
-        });
-
-        toggleRegPasswordBtn.addEventListener('click', () => {
-            const type = regPassword.getAttribute('type') === 'password' ? 'text' : 'password';
-            regPassword.setAttribute('type', type);
-            const icon = toggleRegPasswordBtn.querySelector('i');
-            icon.className = type === 'password' ? 'fas fa-eye' : 'fas fa-eye-slash';
-        });
-
-        // =============================================
-        // MODAL - ABRIR / CERRAR
-        // =============================================
-        function openModal() {
-            modal.classList.add('show');
-            document.body.style.overflow = 'hidden';
-            hideModalAlert();
-            if (emailInput.value) {
-                regEmail.value = emailInput.value;
-            }
-        }
-
-        function closeModal() {
-            modal.classList.remove('show');
-            document.body.style.overflow = '';
-            hideModalAlert();
-        }
-
-        btnCrearCuenta.addEventListener('click', openModal);
-        closeModalBtn.addEventListener('click', closeModal);
-        cancelarModalBtn.addEventListener('click', closeModal);
-        modalOverlay.addEventListener('click', closeModal);
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && modal.classList.contains('show')) {
-                closeModal();
-            }
         });
 
         // =============================================
@@ -1152,77 +859,6 @@
 
                 loginBtn.disabled = false;
                 loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Iniciar sesión';
-            }
-        });
-
-        // =============================================
-        // CREAR CUENTA (SUPERADMIN)
-        // =============================================
-        formCrearCuenta.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            hideModalAlert();
-
-            const nombre = regNombre.value.trim();
-            const email = regEmail.value.trim();
-            const password = regPassword.value;
-            const confirmPassword = regConfirmPassword.value;
-
-            if (!nombre || !email || !password || !confirmPassword) {
-                showModalAlert('⚠️ Todos los campos son obligatorios.', 'error');
-                return;
-            }
-
-            if (password.length < 6) {
-                showModalAlert('⚠️ La contraseña debe tener al menos 6 caracteres.', 'error');
-                return;
-            }
-
-            if (password !== confirmPassword) {
-                showModalAlert('⚠️ Las contraseñas no coinciden.', 'error');
-                return;
-            }
-
-            btnRegistrar.disabled = true;
-            btnRegistrar.innerHTML = '<span class="spinner"></span> Creando cuenta...';
-
-            try {
-                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                const user = userCredential.user;
-                console.log('✅ Usuario creado en Authentication:', user.uid);
-
-                const creado = await crearUsuarioEnFirestore(user.uid, email, nombre, 'superadmin');
-
-                if (creado) {
-                    showModalAlert('✅ Cuenta SUPERADMIN creada exitosamente. Redirigiendo...', 'success');
-                    setTimeout(() => {
-                        window.location.href = 'PanelAdmin/AdminPanel.html';
-                    }, 1500);
-                } else {
-                    showModalAlert('❌ Error al guardar el usuario en Firestore.', 'error');
-                    btnRegistrar.disabled = false;
-                    btnRegistrar.innerHTML = '<i class="fas fa-user-plus"></i> Crear cuenta';
-                }
-
-            } catch (error) {
-                console.error('❌ Error al crear cuenta:', error);
-
-                let mensaje = 'Error al crear la cuenta.';
-                switch (error.code) {
-                    case 'auth/email-already-in-use':
-                        mensaje = '⚠️ Este correo ya está registrado. Intenta iniciar sesión.';
-                        break;
-                    case 'auth/invalid-email':
-                        mensaje = '❌ Correo electrónico inválido.';
-                        break;
-                    case 'auth/weak-password':
-                        mensaje = '⚠️ La contraseña es muy débil. Usa al menos 6 caracteres.';
-                        break;
-                    default:
-                        mensaje = `❌ Error: ${error.message}`;
-                }
-                showModalAlert(mensaje, 'error');
-                btnRegistrar.disabled = false;
-                btnRegistrar.innerHTML = '<i class="fas fa-user-plus"></i> Crear cuenta';
             }
         });
 
