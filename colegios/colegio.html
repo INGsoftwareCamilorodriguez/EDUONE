@@ -76,8 +76,7 @@
             display: flex;
             min-height: 100vh;
             margin: 0;
-            overflow-x: hidden;
-        }
+            overflow-x: hidden; overflow-wrap: break-word; }
 
         a {
             text-decoration: none;
@@ -2718,6 +2717,7 @@ const sidebarToggle = document.getElementById('sidebarToggle');
 const mainContent = document.getElementById('mainContent');
 
 function openSidebarMobile() {
+    sidebar.classList.remove('collapsed');
     sidebar.classList.add('open');
     sidebarOverlay.classList.add('active');
     document.body.style.overflow = 'hidden';
