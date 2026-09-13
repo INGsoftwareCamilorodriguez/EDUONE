@@ -953,6 +953,7 @@
                             <small style="color: var(--gray-400); font-size: 0.7rem;">
                                 <i class="fas fa-info-circle"></i> Porcentaje que vale esta sección en el periodo
                             </small>
+                            <small id="seccionPorcentajeDisponible" style="display: block; margin-top: 4px; font-size: 0.7rem; font-weight: 600;"></small>
                         </div>
                         <div class="form-group">
                             <label>Ícono</label>
@@ -1613,7 +1614,7 @@
                                 <option value="respuesta" ${esRespuesta ? 'selected' : ''}>Cuadro de respuesta</option>
                             </select>
                             <input type="number" class="form-control" style="width: 80px; padding: 4px 8px; font-size: 0.8rem;" 
-                                   placeholder="Valor" value="${p.valor || ''}" 
+                                   placeholder="Valor" value="${p.valor || ''}" min="0.1" max="10" step="0.1"
                                    onchange="window.actualizarValorPregunta('${p.id}', this.value)" />
                         </div>
                         <button type="button" class="btn-danger btn-sm" onclick="window.eliminarPregunta('${p.id}')">
@@ -1706,7 +1707,12 @@
         window.actualizarValorPregunta = function(id, valor) {
             const pregunta = preguntasEvaluacion.find(p => p.id === id);
             if (!pregunta) return;
-            pregunta.valor = parseFloat(valor) || 0;
+            let numero = parseFloat(valor);
+            if (isNaN(numero) || numero <= 0) numero = 0.1;
+            numero = Math.round(numero * 10) / 10; // evitar arrastres de punto flotante (ej. 0.30000000004)
+            pregunta.valor = numero;
+            const input = document.querySelector(`.pregunta-card[data-id="${id}"] input[type="number"][placeholder="Valor"]`);
+            if (input) input.value = numero;
             actualizarInfoPuntaje();
         };
 
@@ -1868,16 +1874,18 @@
 
         function actualizarInfoPuntaje() {
             const totalPreguntas = preguntasEvaluacion.length;
-            const valorPorPregunta = parseFloat(document.getElementById('evalValorPregunta')?.value) || 0;
-            const totalPuntos = totalPreguntas * valorPorPregunta;
             const puntajeMaximo = parseFloat(document.getElementById('evalPuntajeMaximo')?.value) || 5;
-            
+            const totalPuntos = preguntasEvaluacion.reduce((sum, p) => sum + (parseFloat(p.valor) || 0), 0);
+
             const infoEl = document.getElementById('evalInfoPuntaje');
             if (infoEl) {
-                infoEl.textContent = `Total: ${totalPreguntas} preguntas × ${valorPorPregunta.toFixed(1)} = ${totalPuntos.toFixed(1)} puntos sobre ${puntajeMaximo}`;
+                infoEl.textContent = `Total: ${totalPreguntas} pregunta${totalPreguntas === 1 ? '' : 's'} = ${totalPuntos.toFixed(1)} puntos sobre ${puntajeMaximo}`;
                 if (totalPuntos > puntajeMaximo) {
                     infoEl.style.color = 'var(--danger)';
                     infoEl.textContent += ' ⚠️ ¡Excede el puntaje máximo!';
+                } else if (totalPreguntas > 0 && totalPuntos < puntajeMaximo) {
+                    infoEl.style.color = 'var(--warning, #B45309)';
+                    infoEl.textContent += ' — no alcanza el puntaje máximo';
                 } else {
                     infoEl.style.color = 'var(--text-secondary)';
                 }
@@ -3609,10 +3617,55 @@
         // =============================================
         // CREAR SECCIÓN
         // =============================================
+        // Suma el porcentaje ya asignado a otras secciones de la misma asignatura/curso/periodo
+        async function calcularPorcentajeUsadoSeccion(cursoId, asignaturaId, periodo) {
+            if (!cursoId || !asignaturaId || !periodo) return 0;
+            const q = query(
+                collection(db, 'colegios', colegioId, 'secciones'),
+                where('profesorId', '==', profesorId),
+                where('cursoId', '==', cursoId),
+                where('asignaturaId', '==', asignaturaId),
+                where('periodo', '==', parseInt(periodo))
+            );
+            const snap = await getDocs(q);
+            let total = 0;
+            snap.forEach(d => { total += Number(d.data().porcentaje) || 0; });
+            return total;
+        }
+
+        // Muestra en vivo cuánto porcentaje queda disponible mientras el profesor llena el formulario
+        async function actualizarDisponibilidadPorcentajeSeccion() {
+            const infoEl = document.getElementById('seccionPorcentajeDisponible');
+            if (!infoEl) return;
+
+            const cursoId = document.getElementById('seccionCurso').value;
+            const asignaturaId = document.getElementById('seccionAsignatura').value;
+            const periodo = document.getElementById('seccionPeriodo').value;
+            const nuevoPorcentaje = parseFloat(document.getElementById('seccionPorcentaje').value) || 0;
+
+            if (!cursoId || !asignaturaId || !periodo) {
+                infoEl.textContent = '';
+                return;
+            }
+
+            const usado = await calcularPorcentajeUsadoSeccion(cursoId, asignaturaId, periodo);
+            const disponible = Math.max(0, 100 - usado);
+            const totalConNueva = usado + nuevoPorcentaje;
+
+            if (totalConNueva > 100) {
+                infoEl.style.color = '#991B1B';
+                infoEl.innerHTML = `⚠️ Ya hay ${usado}% asignado en este periodo. Con esta sección el total quedaría en ${totalConNueva}%, superando el 100%. Solo quedan ${disponible}% disponibles.`;
+            } else {
+                infoEl.style.color = 'var(--gray-400)';
+                infoEl.innerHTML = `Usado en este periodo: ${usado}% · Disponible: ${disponible}%`;
+            }
+        }
+
         document.getElementById('btnCrearSeccion')?.addEventListener('click', async () => {
             document.getElementById('modalCrearSeccion').classList.add('show');
             document.getElementById('seccionAlert').className = 'alert';
             document.getElementById('seccionAlert').classList.remove('show');
+            document.getElementById('seccionPorcentajeDisponible').textContent = '';
 
             const cursoSelect = document.getElementById('seccionCurso');
             const { cursosList } = await obtenerCursosDelProfesor();
@@ -3632,7 +3685,11 @@
                         asigSelect.innerHTML += `<option value="${asig.id}">${asig.nombre}</option>`;
                     });
                 }
+                actualizarDisponibilidadPorcentajeSeccion();
             };
+            document.getElementById('seccionAsignatura').onchange = actualizarDisponibilidadPorcentajeSeccion;
+            document.getElementById('seccionPeriodo').onchange = actualizarDisponibilidadPorcentajeSeccion;
+            document.getElementById('seccionPorcentaje').oninput = actualizarDisponibilidadPorcentajeSeccion;
         });
 
         document.getElementById('closeSeccionModal')?.addEventListener('click', () => {
@@ -3666,6 +3723,19 @@
 
             if (porcentaje < 1 || porcentaje > 100) {
                 showSeccionAlert('El porcentaje debe estar entre 1 y 100', 'error');
+                return;
+            }
+
+            const porcentajeUsado = await calcularPorcentajeUsadoSeccion(cursoId, asignaturaId, periodo);
+            const porcentajeTotal = porcentajeUsado + porcentaje;
+            if (porcentajeTotal > 100) {
+                const disponible = Math.max(0, 100 - porcentajeUsado);
+                showSeccionAlert(
+                    `❌ No se puede crear la sección: ya tienes ${porcentajeUsado}% asignado en este periodo para esta asignatura. ` +
+                    `Agregar ${porcentaje}% llevaría el total a ${porcentajeTotal}%, superando el 100% permitido. ` +
+                    `Solo quedan ${disponible}% disponibles.`,
+                    'error'
+                );
                 return;
             }
 
@@ -5242,6 +5312,7 @@ for (const docSnap of matSnap.docs) {
             function showEvalAlert(message, type = 'error') {
                 alertEl.className = `alert alert-${type} show`;
                 alertText.textContent = message;
+                alertEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
 
             function hideEvalAlert() {
@@ -5277,6 +5348,10 @@ for (const docSnap of matSnap.docs) {
                     showEvalAlert('Todas las preguntas deben tener enunciado', 'error');
                     return;
                 }
+                if (isNaN(parseFloat(p.valor)) || parseFloat(p.valor) <= 0) {
+                    showEvalAlert('El valor de cada pregunta debe ser un número positivo mayor a 0', 'error');
+                    return;
+                }
                 if (p.tipo === 'multiple') {
                     const opcionesValidas = p.opciones.filter(o => o.trim());
                     if (opcionesValidas.length < 2) {
@@ -5291,10 +5366,11 @@ for (const docSnap of matSnap.docs) {
             }
 
             const totalPuntos = preguntasEvaluacion.reduce((sum, p) => sum + (parseFloat(p.valor) || 0), 0);
-            if (totalPuntos > puntajeMaximo * 1.1) {
-                if (!confirm(`El total de puntos (${totalPuntos.toFixed(1)}) supera el puntaje máximo (${puntajeMaximo}). ¿Continuar?`)) {
-                    return;
-                }
+            if (totalPuntos > puntajeMaximo) {
+                const mensajeError = `El total de puntos de las preguntas (${totalPuntos.toFixed(1)}) supera el puntaje máximo permitido (${puntajeMaximo}). Ajusta el valor de las preguntas o aumenta el puntaje máximo antes de guardar.`;
+                showEvalAlert('❌ ' + mensajeError, 'error');
+                showToast('❌ ' + mensajeError, 'error', 6000);
+                return;
             }
 
             const btns = [btn, btnBorrador];
