@@ -266,7 +266,9 @@
         .evaluacion-preview .estado.programada { background: #FEF3C7; color: #D97706; }
         .evaluacion-preview .estado.cerrada { background: var(--gray-200); color: var(--gray-500); }
 
-        .pregunta-card { background: var(--gray-50); border-radius: var(--radius); padding: 16px; margin-bottom: 12px; border: 1px solid var(--border); transition: border-color 0.2s; }
+        .pregunta-card { background: var(--gray-50); border-radius: var(--radius); padding: 16px; margin-bottom: 12px; border: 1px solid var(--border); transition: border-color 0.2s, box-shadow 0.3s, background 0.3s; }
+        .pregunta-card.pregunta-nueva { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-bg); background: var(--primary-bg); animation: pulsePregunta 1.4s ease-out; }
+        @keyframes pulsePregunta { 0% { box-shadow: 0 0 0 0 rgba(37,99,235,0.4); } 100% { box-shadow: 0 0 0 10px rgba(37,99,235,0); } }
         .pregunta-card:hover { border-color: var(--primary-light); }
         .pregunta-card .opcion-item { display: flex; align-items: center; gap: 10px; padding: 6px 10px; border-radius: 6px; cursor: pointer; transition: background 0.2s; }
         .pregunta-card .opcion-item:hover { background: var(--primary-bg); }
@@ -5206,6 +5208,20 @@ for (const docSnap of matSnap.docs) {
             preguntasEvaluacion.push(nuevaPregunta);
             renderizarPreguntas();
             actualizarInfoPuntaje();
+
+            // Llevar al profesor hasta la pregunta recién creada y resaltarla,
+            // para que sea evidente que se agregó (el modal es largo y se puede
+            // quedar fuera de vista al final de la lista).
+            requestAnimationFrame(() => {
+                const nuevaCard = document.querySelector(`.pregunta-card[data-id="${nuevaPregunta.id}"]`);
+                if (nuevaCard) {
+                    nuevaCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    nuevaCard.classList.add('pregunta-nueva');
+                    setTimeout(() => nuevaCard.classList.remove('pregunta-nueva'), 1600);
+                    const inputEnunciado = nuevaCard.querySelector('input[type="text"], textarea');
+                    if (inputEnunciado) inputEnunciado.focus();
+                }
+            });
         });
 
         document.getElementById('btnGuardarEvaluacionBorrador')?.addEventListener('click', async () => {
