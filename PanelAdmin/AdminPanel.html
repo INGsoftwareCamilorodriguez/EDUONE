@@ -5,1007 +5,246 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>EduOne - Panel de Administración</title>
 
-    <!-- Font Awesome para iconos -->
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    />
-
-    <!-- Google Fonts (Inter) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap"
-        rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
 
     <style>
-        /* =============================================
-           GLOBAL CSS - EduOne
-           ============================================= */
-
-        *,
-        *::before,
-        *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-            --primary: #4f46e5;
-            --primary-dark: #4338ca;
-            --primary-light: #818cf8;
-            --primary-bg: #eef2ff;
-
-            --success: #22c55e;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-            --info: #3b82f6;
-
-            --gray-50: #f8fafc;
-            --gray-100: #f1f5f9;
-            --gray-200: #e2e8f0;
-            --gray-300: #cbd5e1;
-            --gray-400: #94a3b8;
-            --gray-500: #64748b;
-            --gray-600: #475569;
-            --gray-700: #334155;
-            --gray-800: #1e293b;
+            --primary: #4f46e5; --primary-dark: #4338ca; --primary-light: #818cf8;
+            --primary-bg: #eef2ff; --success: #22c55e; --warning: #f59e0b;
+            --danger: #ef4444; --info: #3b82f6;
+            --gray-50: #f8fafc; --gray-100: #f1f5f9; --gray-200: #e2e8f0;
+            --gray-300: #cbd5e1; --gray-400: #94a3b8; --gray-500: #64748b;
+            --gray-600: #475569; --gray-700: #334155; --gray-800: #1e293b;
             --gray-900: #0f172a;
-
-            --sidebar-width: 260px;
-            --header-height: 70px;
-            --radius: 12px;
-            --shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-            --shadow-lg: 0 4px 24px rgba(0, 0, 0, 0.10);
-
+            --sidebar-width: 260px; --header-height: 70px;
+            --radius: 12px; --shadow: 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-lg: 0 4px 24px rgba(0,0,0,0.10);
             --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
-
-        html {
-            font-size: 16px;
-        }
-
+        html { font-size: 16px; }
         body {
-            font-family: var(--font);
-            background-color: var(--gray-100);
-            color: var(--gray-800);
-            line-height: 1.6;
-            display: flex;
-            min-height: 100vh;
-            margin: 0; overflow-x: hidden; overflow-wrap: break-word; }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--gray-100);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--gray-300);
-            border-radius: 8px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--gray-400);
-        }
-
-        /* Utilidades */
-        .text-center {
-            text-align: center;
-        }
-
-        .text-muted {
-            color: var(--gray-500);
-        }
-
-        .text-success {
-            color: var(--success);
-        }
-
-        .text-danger {
-            color: var(--danger);
-        }
-
-        .text-warning {
-            color: var(--warning);
-        }
-
-        /* Botones */
-        .btn-primary {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 24px;
-            background: var(--primary);
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            font-family: var(--font);
-            cursor: pointer;
-            transition: background 0.2s, transform 0.1s;
-        }
-
-        .btn-primary:hover {
-            background: var(--primary-dark);
-        }
-
-        .btn-primary:active {
-            transform: scale(0.97);
-        }
-
-        .btn-secondary {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 24px;
-            background: var(--gray-200);
-            color: var(--gray-700);
-            border: none;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            font-family: var(--font);
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .btn-secondary:hover {
-            background: var(--gray-300);
-        }
-
-        .btn-danger {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            background: var(--danger);
-            color: #fff;
-            border: none;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            font-family: var(--font);
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .btn-danger:hover {
-            background: #dc2626;
-        }
-
-        .btn-success {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            background: var(--success);
-            color: #fff;
-            border: none;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            font-family: var(--font);
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .btn-success:hover {
-            background: #16a34a;
-        }
-
-        .btn-sm {
-            padding: 6px 14px;
-            font-size: 0.75rem;
-            border-radius: 6px;
-        }
-
-        /* Badges */
-        .badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 50px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-        }
-
-        .badge-success {
-            background: #dcfce7;
-            color: #166534;
-        }
-
-        .badge-danger {
-            background: #fecaca;
-            color: #991b1b;
-        }
-
-        .badge-warning {
-            background: #fef3c7;
-            color: #92400e;
-        }
-
-        .badge-info {
-            background: #dbeafe;
-            color: #1e40af;
-        }
-
-        /* Cards */
-        .card {
-            background: #fff;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            overflow: hidden;
-            margin-bottom: 24px;
-        }
-
-        .card-header {
-            padding: 18px 24px;
-            border-bottom: 1px solid var(--gray-200);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .card-header h2 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--gray-800);
-        }
-
-        .card-body {
-            padding: 24px;
-        }
-
-        /* Tablas */
-        .table-responsive {
-            overflow-x: auto;
-        }
-
-        .table-modern {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.9rem;
-        }
-
-        .table-modern thead th {
-            background: var(--gray-50);
-            color: var(--gray-600);
-            font-weight: 600;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            padding: 12px 16px;
-            text-align: left;
-            border-bottom: 2px solid var(--gray-200);
-        }
-
-        .table-modern tbody td {
-            padding: 14px 16px;
-            border-bottom: 1px solid var(--gray-100);
-            vertical-align: middle;
-        }
-
-        .table-modern tbody tr:hover {
-            background: var(--gray-50);
-        }
-
-        .table-modern tbody tr:last-child td {
-            border-bottom: none;
-        }
-
-        /* Formularios */
-        .form-group {
-            margin-bottom: 18px;
-        }
-
-        .form-group label {
-            display: block;
-            font-weight: 500;
-            font-size: 0.85rem;
-            color: var(--gray-700);
-            margin-bottom: 4px;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 10px 14px;
-            border: 1.5px solid var(--gray-200);
-            border-radius: 8px;
-            font-size: 0.9rem;
-            font-family: var(--font);
-            transition: border-color 0.2s, box-shadow 0.2s;
-            background: #fff;
-            color: var(--gray-800);
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
-        }
-
-        .form-control::placeholder {
-            color: var(--gray-400);
-        }
-
-        select.form-control {
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23475569' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 14px center;
-            padding-right: 36px;
-        }
-
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            z-index: 9999;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal.show {
-            display: flex;
-        }
-
-        .modal-overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(4px);
-        }
-
-        .modal-content {
-            position: relative;
-            background: #fff;
-            border-radius: var(--radius);
-            max-width: 720px;
-            width: 94%;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: var(--shadow-lg);
-            animation: modalFade 0.25s ease;
-        }
-
-        @keyframes modalFade {
-            from {
-                opacity: 0;
-                transform: scale(0.95) translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
-        }
-
-        .modal-header {
-            padding: 20px 24px;
-            border-bottom: 1px solid var(--gray-200);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .modal-header h2 {
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
-
-        .modal-close {
-            background: none;
-            border: none;
-            font-size: 1.8rem;
-            color: var(--gray-400);
-            cursor: pointer;
-            padding: 0 6px;
-            line-height: 1;
-            transition: color 0.2s;
-        }
-
-        .modal-close:hover {
-            color: var(--gray-700);
-        }
-
-        .modal-body {
-            padding: 24px;
-        }
-
-        .modal-footer {
-            padding: 16px 24px;
-            border-top: 1px solid var(--gray-200);
-            display: flex;
-            justify-content: flex-end;
-            gap: 12px;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-        }
-
-        .form-grid .form-group:last-child {
-            margin-bottom: 0;
-        }
-
-        /* =============================================
-           ADMIN.CSS - Estilos específicos del panel
-           ============================================= */
-
-        /* SIDEBAR */
-        .sidebar {
-            width: var(--sidebar-width);
-            height: 100vh;
-            background: #fff;
-            border-right: 1px solid var(--gray-200);
-            display: flex;
-            flex-direction: column;
-            position: sticky;
-            top: 0;
-            flex-shrink: 0;
-            transition: width 0.3s ease, transform 0.3s ease;
-            z-index: 100;
-            overflow: hidden;
-        }
-
-        .sidebar-header {
-            padding: 18px 20px;
-            border-bottom: 1px solid var(--gray-200);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            min-height: var(--header-height);
-        }
-
-        .sidebar-header .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 700;
-            font-size: 1.2rem;
-            color: var(--gray-900);
-        }
-
-        .sidebar-header .logo i {
-            color: var(--primary);
-            font-size: 1.4rem;
-        }
-
-        .sidebar-toggle {
-            background: none;
-            border: none;
-            font-size: 1.2rem;
-            color: var(--gray-500);
-            cursor: pointer;
-            padding: 4px 8px;
-            border-radius: 6px;
-            transition: background 0.2s;
-            display: none;
-        }
-
-        .sidebar-toggle:hover {
-            background: var(--gray-100);
-        }
-
-        .sidebar-nav {
-            flex: 1;
-            padding: 16px 12px;
-            overflow-y: auto;
-        }
-
-        .sidebar-nav ul li {
-            margin-bottom: 2px;
-        }
-
-        .sidebar-nav ul li a {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 10px 14px;
-            border-radius: 8px;
-            color: var(--gray-600);
-            font-weight: 500;
-            font-size: 0.9rem;
-            transition: background 0.15s, color 0.15s;
-        }
-
-        .sidebar-nav ul li a i {
-            width: 20px;
-            font-size: 1.1rem;
-            text-align: center;
-        }
-
-        .sidebar-nav ul li a:hover {
-            background: var(--gray-100);
-            color: var(--gray-800);
-        }
-
-        .sidebar-nav ul li.active a {
-            background: var(--primary-bg);
-            color: var(--primary);
-            font-weight: 600;
-        }
-
-        .sidebar-footer {
-            padding: 16px 20px;
-            border-top: 1px solid var(--gray-200);
-        }
-
-        .btn-logout {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            width: 100%;
-            padding: 10px 14px;
-            border: none;
-            border-radius: 8px;
-            background: transparent;
-            color: var(--gray-600);
-            font-weight: 500;
-            font-size: 0.9rem;
-            font-family: var(--font);
-            cursor: pointer;
-            transition: background 0.15s, color 0.15s;
-        }
-
-        .btn-logout:hover {
-            background: #fef2f2;
-            color: var(--danger);
-        }
-
-        .btn-logout i {
-            width: 20px;
-            font-size: 1.1rem;
-            text-align: center;
-        }
-
-        /* MAIN CONTENT */
-        .main-content {
-            flex: 1;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* TOP HEADER */
-        .top-header {
-            height: var(--header-height);
-            background: #fff;
-            border-bottom: 1px solid var(--gray-200);
-            padding: 0 32px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: sticky;
-            top: 0;
-            z-index: 50;
-        }
-
-        .header-left h1 {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: var(--gray-800);
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .user-info {
-            text-align: right;
-        }
-
-        .user-name {
-            display: block;
-            font-weight: 600;
-            font-size: 0.9rem;
-            color: var(--gray-800);
-        }
-
-        .user-role {
-            display: block;
-            font-size: 0.75rem;
-            color: var(--gray-500);
-            text-transform: capitalize;
-        }
-
-        .user-avatar {
-            font-size: 2.2rem;
-            color: var(--gray-400);
-        }
-
-        /* CONTENT AREA */
-        .content-area {
-            flex: 1;
-            padding: 24px 32px;
-        }
-
-        .page-content {
-            display: none;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .page-content.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* STATS GRID */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-            margin-bottom: 24px;
-        }
-
-        .stat-card {
-            background: #fff;
-            border-radius: var(--radius);
-            padding: 20px 24px;
-            box-shadow: var(--shadow);
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            transition: box-shadow 0.2s;
-        }
-
-        .stat-card:hover {
-            box-shadow: var(--shadow-lg);
-        }
-
-        .stat-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.4rem;
-            flex-shrink: 0;
-        }
-
-        .stat-icon i {
-            font-size: 1.4rem;
-        }
-
-        .stat-card:nth-child(1) .stat-icon {
-            background: #dbeafe;
-            color: #2563eb;
-        }
-
-        .stat-card:nth-child(2) .stat-icon {
-            background: #dcfce7;
-            color: #16a34a;
-        }
-
-        .stat-card:nth-child(3) .stat-icon {
-            background: #fecaca;
-            color: #dc2626;
-        }
-
-        .stat-info {
-            flex: 1;
-        }
-
-        .stat-label {
-            display: block;
-            font-size: 0.8rem;
-            color: var(--gray-500);
-            font-weight: 500;
-        }
-
-        .stat-value {
-            display: block;
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--gray-900);
-            line-height: 1.2;
-        }
-
-        /* PAGE HEADER */
-        .page-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .page-header h2 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--gray-800);
-        }
-
-        .action-bar {
-            margin-top: 8px;
-        }
-
-        .text-muted i {
-            margin-right: 6px;
-        }
-
-        /* Colegios - Estados visuales */
-        .colegio-activo {
-            color: var(--success);
-        }
-
-        .colegio-inactivo {
-            color: var(--danger);
-        }
-
-        /* Sección de credenciales del rector */
-        .credenciales-box {
-            background: var(--primary-bg);
-            border: 1px solid var(--primary-light);
-            border-radius: 8px;
-            padding: 16px;
-            margin-top: 16px;
-            display: none;
-        }
-
-        .credenciales-box.show {
-            display: block;
-        }
-
-        .credenciales-box h4 {
-            color: var(--primary);
-            font-size: 0.9rem;
-            margin-bottom: 8px;
-        }
-
-        .credenciales-box .cred-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 4px 0;
-            font-size: 0.85rem;
-            font-family: monospace;
-            border-bottom: 1px dashed var(--gray-200);
-        }
-
-        .credenciales-box .cred-row:last-child {
-            border-bottom: none;
-        }
-
-        .credenciales-box .cred-label {
-            color: var(--gray-600);
-            font-weight: 500;
-        }
-
-        .credenciales-box .cred-value {
-            color: var(--gray-800);
-            font-weight: 600;
-        }
-
-        .credenciales-box .btn-copy {
-            background: none;
-            border: none;
-            color: var(--primary);
-            cursor: pointer;
-            font-size: 0.8rem;
-            padding: 0 4px;
-        }
-
-        .credenciales-box .btn-copy:hover {
-            color: var(--primary-dark);
-        }
-
-        /* =============================================
-           RESPONSIVE
-           ============================================= */
+            font-family: var(--font); background-color: var(--gray-100); color: var(--gray-800);
+            line-height: 1.6; display: flex; min-height: 100vh; margin: 0;
+            overflow-x: hidden; overflow-wrap: break-word;
+        }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; padding: 0; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: var(--gray-100); }
+        ::-webkit-scrollbar-thumb { background: var(--gray-300); border-radius: 8px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--gray-400); }
+
+        .text-center { text-align: center; }
+        .text-muted { color: var(--gray-500); }
+        .text-success { color: var(--success); }
+        .text-danger { color: var(--danger); }
+        .text-warning { color: var(--warning); }
+
+        .btn-primary { display: inline-flex; align-items: center; gap: 8px; padding: 10px 24px; background: var(--primary); color: #fff; border: none; border-radius: 8px; font-size: 0.9rem; font-weight: 600; font-family: var(--font); cursor: pointer; transition: background 0.2s; }
+        .btn-primary:hover { background: var(--primary-dark); }
+        .btn-secondary { display: inline-flex; align-items: center; gap: 8px; padding: 10px 24px; background: var(--gray-200); color: var(--gray-700); border: none; border-radius: 8px; font-size: 0.9rem; font-weight: 600; font-family: var(--font); cursor: pointer; }
+        .btn-secondary:hover { background: var(--gray-300); }
+        .btn-danger { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; background: var(--danger); color: #fff; border: none; border-radius: 6px; font-size: 0.8rem; font-weight: 500; font-family: var(--font); cursor: pointer; }
+        .btn-danger:hover { background: #dc2626; }
+        .btn-success { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; background: var(--success); color: #fff; border: none; border-radius: 6px; font-size: 0.8rem; font-weight: 500; font-family: var(--font); cursor: pointer; }
+        .btn-success:hover { background: #16a34a; }
+        .btn-info { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; background: var(--info); color: #fff; border: none; border-radius: 6px; font-size: 0.8rem; font-weight: 500; font-family: var(--font); cursor: pointer; }
+        .btn-info:hover { background: #2563eb; }
+        .btn-warning { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; background: var(--warning); color: #fff; border: none; border-radius: 6px; font-size: 0.8rem; font-weight: 500; font-family: var(--font); cursor: pointer; }
+        .btn-warning:hover { background: #d97706; }
+        .btn-sm { padding: 6px 12px; font-size: 0.75rem; border-radius: 6px; }
+
+        .badge { display: inline-block; padding: 4px 12px; border-radius: 50px; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.3px; }
+        .badge-success { background: #dcfce7; color: #166534; }
+        .badge-danger { background: #fecaca; color: #991b1b; }
+        .badge-warning { background: #fef3c7; color: #92400e; }
+        .badge-info { background: #dbeafe; color: #1e40af; }
+        .badge-gray { background: var(--gray-200); color: var(--gray-600); }
+
+        .card { background: #fff; border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; margin-bottom: 24px; }
+        .card-header { padding: 18px 24px; border-bottom: 1px solid var(--gray-200); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+        .card-header h2 { font-size: 1.1rem; font-weight: 600; color: var(--gray-800); }
+        .card-body { padding: 24px; }
+
+        .table-responsive { overflow-x: auto; }
+        .table-modern { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+        .table-modern thead th { background: var(--gray-50); color: var(--gray-600); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; padding: 12px 16px; text-align: left; border-bottom: 2px solid var(--gray-200); }
+        .table-modern tbody td { padding: 14px 16px; border-bottom: 1px solid var(--gray-100); vertical-align: middle; }
+        .table-modern tbody tr:hover { background: var(--gray-50); }
+        .table-modern tbody tr:last-child td { border-bottom: none; }
+
+        .form-group { margin-bottom: 18px; }
+        .form-group label { display: block; font-weight: 500; font-size: 0.85rem; color: var(--gray-700); margin-bottom: 4px; }
+        .form-control { width: 100%; padding: 10px 14px; border: 1.5px solid var(--gray-200); border-radius: 8px; font-size: 0.9rem; font-family: var(--font); transition: border-color 0.2s; background: #fff; color: var(--gray-800); }
+        .form-control:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15); }
+        select.form-control { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23475569' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
+
+        .modal { display: none; position: fixed; inset: 0; z-index: 9999; align-items: center; justify-content: center; }
+        .modal.show { display: flex; }
+        .modal-overlay { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); }
+        .modal-content { position: relative; background: #fff; border-radius: var(--radius); max-width: 720px; width: 94%; max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-lg); animation: modalFade 0.25s ease; }
+        @keyframes modalFade { from { opacity: 0; transform: scale(0.95) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+        .modal-header { padding: 20px 24px; border-bottom: 1px solid var(--gray-200); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; background: #fff; z-index: 1; }
+        .modal-header h2 { font-size: 1.2rem; font-weight: 600; }
+        .modal-close { background: none; border: none; font-size: 1.8rem; color: var(--gray-400); cursor: pointer; padding: 0 6px; line-height: 1; }
+        .modal-close:hover { color: var(--gray-700); }
+        .modal-body { padding: 24px; }
+        .modal-footer { padding: 16px 24px; border-top: 1px solid var(--gray-200); display: flex; justify-content: flex-end; gap: 12px; flex-wrap: wrap; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+        .sidebar { width: var(--sidebar-width); height: 100vh; background: #fff; border-right: 1px solid var(--gray-200); display: flex; flex-direction: column; position: sticky; top: 0; flex-shrink: 0; transition: width 0.3s ease, transform 0.3s ease; z-index: 100; overflow: hidden; }
+        .sidebar-header { padding: 18px 20px; border-bottom: 1px solid var(--gray-200); display: flex; align-items: center; justify-content: space-between; min-height: var(--header-height); }
+        .sidebar-header .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.2rem; color: var(--gray-900); }
+        .sidebar-header .logo i { color: var(--primary); font-size: 1.4rem; }
+        .sidebar-toggle { background: none; border: none; font-size: 1.2rem; color: var(--gray-500); cursor: pointer; padding: 4px 8px; border-radius: 6px; display: none; }
+        .sidebar-toggle:hover { background: var(--gray-100); }
+
+        .sidebar-nav { flex: 1; padding: 16px 12px; overflow-y: auto; }
+        .sidebar-nav ul li { margin-bottom: 2px; }
+        .sidebar-nav ul li a { display: flex; align-items: center; gap: 14px; padding: 10px 14px; border-radius: 8px; color: var(--gray-600); font-weight: 500; font-size: 0.9rem; transition: background 0.15s, color 0.15s; }
+        .sidebar-nav ul li a i { width: 20px; font-size: 1.1rem; text-align: center; }
+        .sidebar-nav ul li a:hover { background: var(--gray-100); color: var(--gray-800); }
+        .sidebar-nav ul li.active a { background: var(--primary-bg); color: var(--primary); font-weight: 600; }
+
+        .sidebar-footer { padding: 16px 20px; border-top: 1px solid var(--gray-200); }
+        .btn-logout { display: flex; align-items: center; gap: 12px; width: 100%; padding: 10px 14px; border: none; border-radius: 8px; background: transparent; color: var(--gray-600); font-weight: 500; font-size: 0.9rem; font-family: var(--font); cursor: pointer; }
+        .btn-logout:hover { background: #fef2f2; color: var(--danger); }
+        .btn-logout i { width: 20px; font-size: 1.1rem; text-align: center; }
+
+        .main-content { flex: 1; min-height: 100vh; display: flex; flex-direction: column; }
+        .top-header { height: var(--header-height); background: #fff; border-bottom: 1px solid var(--gray-200); padding: 0 32px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
+        .header-left h1 { font-size: 1.3rem; font-weight: 600; color: var(--gray-800); }
+        .header-right { display: flex; align-items: center; gap: 16px; }
+        .user-info { text-align: right; }
+        .user-name { display: block; font-weight: 600; font-size: 0.9rem; color: var(--gray-800); }
+        .user-role { display: block; font-size: 0.75rem; color: var(--gray-500); text-transform: capitalize; }
+        .user-avatar { font-size: 2.2rem; color: var(--gray-400); }
+        .content-area { flex: 1; padding: 24px 32px; }
+
+        .page-content { display: none; animation: fadeIn 0.3s ease; }
+        .page-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 24px; }
+        .stat-card { background: #fff; border-radius: var(--radius); padding: 20px 24px; box-shadow: var(--shadow); display: flex; align-items: center; gap: 16px; transition: box-shadow 0.2s; }
+        .stat-card:hover { box-shadow: var(--shadow-lg); }
+        .stat-icon { width: 50px; height: 50px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0; }
+        .stat-icon i { font-size: 1.4rem; }
+        .stat-card:nth-child(1) .stat-icon { background: #dbeafe; color: #2563eb; }
+        .stat-card:nth-child(2) .stat-icon { background: #dcfce7; color: #16a34a; }
+        .stat-card:nth-child(3) .stat-icon { background: #fecaca; color: #dc2626; }
+        .stat-card:nth-child(4) .stat-icon { background: #fef3c7; color: #d97706; }
+        .stat-card.ingresos .stat-icon { background: #dcfce7; color: #16a34a; }
+        .stat-card.egresos .stat-icon { background: #fecaca; color: #dc2626; }
+        .stat-card.balance .stat-icon { background: #dbeafe; color: #2563eb; }
+        .stat-card.mes .stat-icon { background: #fef3c7; color: #d97706; }
+        .stat-info { flex: 1; }
+        .stat-label { display: block; font-size: 0.8rem; color: var(--gray-500); font-weight: 500; }
+        .stat-value { display: block; font-size: 1.8rem; font-weight: 700; color: var(--gray-900); line-height: 1.2; }
+
+        .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
+        .page-header h2 { font-size: 1.2rem; font-weight: 600; color: var(--gray-800); }
+
+        .action-bar { margin-top: 8px; }
+
+        .credenciales-box { background: var(--primary-bg); border: 1px solid var(--primary-light); border-radius: 8px; padding: 16px; margin-top: 16px; display: none; }
+        .credenciales-box.show { display: block; }
+        .credenciales-box h4 { color: var(--primary); font-size: 0.9rem; margin-bottom: 8px; }
+        .credenciales-box .cred-row { display: flex; justify-content: space-between; align-items: center; padding: 4px 0; font-size: 0.85rem; font-family: monospace; border-bottom: 1px dashed var(--gray-200); }
+        .credenciales-box .cred-row:last-child { border-bottom: none; }
+        .credenciales-box .cred-label { color: var(--gray-600); font-weight: 500; }
+        .credenciales-box .cred-value { color: var(--gray-800); font-weight: 600; }
+        .credenciales-box .btn-copy { background: none; border: none; color: var(--primary); cursor: pointer; font-size: 0.8rem; padding: 0 4px; }
+
+        .plan-selector { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-bottom: 16px; }
+        .plan-option { border: 2px solid var(--gray-200); border-radius: 10px; padding: 12px 14px; cursor: pointer; transition: all 0.2s; background: #fff; }
+        .plan-option:hover { border-color: var(--primary-light); }
+        .plan-option.selected { border-color: var(--primary); background: var(--primary-bg); box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12); }
+        .plan-option .plan-name { font-weight: 700; font-size: 0.9rem; color: var(--gray-800); }
+        .plan-option .plan-max { font-size: 0.75rem; color: var(--gray-500); margin-top: 2px; }
+        .plan-option .plan-price { font-size: 0.85rem; font-weight: 700; color: var(--primary); margin-top: 6px; }
+
+        .logo-preview { display: flex; align-items: center; gap: 12px; padding: 12px; border: 2px dashed var(--gray-300); border-radius: 10px; background: var(--gray-50); }
+        .logo-preview img { width: 60px; height: 60px; border-radius: 8px; object-fit: cover; background: #fff; border: 1px solid var(--gray-200); }
+        .logo-placeholder { width: 60px; height: 60px; border-radius: 8px; display: flex; align-items: center; justify-content: center; background: var(--gray-200); color: var(--gray-500); font-size: 1.5rem; flex-shrink: 0; }
+
+        .color-preview { display: flex; gap: 8px; align-items: center; padding: 12px; background: var(--gray-50); border-radius: 10px; border: 1px solid var(--gray-200); }
+        .color-swatch-label { font-size: 0.75rem; color: var(--gray-500); font-family: monospace; }
+        .colegio-preview { border-radius: 10px; padding: 20px; margin-top: 12px; border: 1px solid var(--gray-200); }
+        .colegio-preview h4 { font-size: 1rem; margin-bottom: 8px; }
+        .colegio-preview p { font-size: 0.85rem; opacity: 0.8; }
+
+        .detalle-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 24px; margin-bottom: 16px; }
+        .detalle-grid .item { font-size: 0.85rem; }
+        .detalle-grid .item .label { color: var(--gray-500); font-weight: 500; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.3px; }
+        .detalle-grid .item .value { font-weight: 600; color: var(--gray-800); font-size: 0.9rem; }
+
+        .historial-pagos { max-height: 240px; overflow-y: auto; border: 1px solid var(--gray-200); border-radius: 8px; }
+        .pago-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; border-bottom: 1px solid var(--gray-100); font-size: 0.85rem; }
+        .pago-item:last-child { border-bottom: none; }
+        .pago-item .pago-fecha { color: var(--gray-500); font-size: 0.75rem; }
+
+        /* Economía */
+        .mov-tipo-entrada { color: var(--success); font-weight: 700; }
+        .mov-tipo-salida { color: var(--danger); font-weight: 700; }
+        .mov-tipo-badge { display: inline-block; padding: 2px 10px; border-radius: 50px; font-size: 0.7rem; font-weight: 600; }
+        .mov-tipo-badge.entrada { background: #dcfce7; color: #166534; }
+        .mov-tipo-badge.salida { background: #fecaca; color: #991b1b; }
+        .eco-filtros { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+        .eco-filtros select { max-width: 220px; }
 
         @media (max-width: 992px) {
-            .sidebar {
-                width: 72px;
-            }
-
-            .sidebar-header .logo span {
-                display: none;
-            }
-
-            .sidebar-nav ul li a span {
-                display: none;
-            }
-
-            .sidebar-nav ul li a {
-                justify-content: center;
-                padding: 12px;
-            }
-
-            .sidebar-nav ul li a i {
-                margin: 0;
-                font-size: 1.3rem;
-            }
-
-            .sidebar-footer .btn-logout span {
-                display: none;
-            }
-
-            .sidebar-footer .btn-logout {
-                justify-content: center;
-                padding: 12px;
-            }
-
-            .top-header {
-                padding: 0 16px;
-            }
-
-            .content-area {
-                padding: 16px;
-            }
+            .sidebar { width: 72px; }
+            .sidebar-header .logo span { display: none; }
+            .sidebar-nav ul li a span { display: none; }
+            .sidebar-nav ul li a { justify-content: center; padding: 12px; }
+            .sidebar-nav ul li a i { margin: 0; font-size: 1.3rem; }
+            .sidebar-footer .btn-logout span { display: none; }
+            .sidebar-footer .btn-logout { justify-content: center; padding: 12px; }
+            .top-header { padding: 0 16px; }
+            .content-area { padding: 16px; }
         }
-
         @media (max-width: 768px) {
-            .sidebar {
-                position: fixed;
-                left: 0;
-                top: 0;
-                transform: translateX(0);
-                width: var(--sidebar-width);
-                box-shadow: var(--shadow-lg);
-            }
-
-            .sidebar.collapsed {
-                transform: translateX(-100%);
-            }
-
-            .sidebar-header .logo span {
-                display: inline;
-            }
-
-            .sidebar-nav ul li a span {
-                display: inline;
-            }
-
-            .sidebar-nav ul li a {
-                justify-content: flex-start;
-                padding: 10px 14px;
-            }
-
-            .sidebar-nav ul li a i {
-                font-size: 1.1rem;
-            }
-
-            .sidebar-footer .btn-logout span {
-                display: inline;
-            }
-
-            .sidebar-footer .btn-logout {
-                justify-content: flex-start;
-                padding: 10px 14px;
-            }
-
-            .sidebar-toggle {
-                display: block;
-            }
-
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .top-header {
-                padding: 0 16px;
-            }
-
-            .content-area {
-                padding: 16px;
-            }
-
-            .modal-content {
-                width: 96%;
-                margin: 10px;
-            }
-
-            .table-modern {
-                font-size: 0.8rem;
-            }
-
-            .table-modern thead th,
-            .table-modern tbody td {
-                padding: 10px 12px;
-            }
-
-            .card-header {
-                flex-direction: column;
-                gap: 8px;
-                align-items: flex-start;
-            }
-
-            .page-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .user-info {
-                display: none;
-            }
+            .sidebar { position: fixed; left: 0; top: 0; transform: translateX(0); width: var(--sidebar-width); box-shadow: var(--shadow-lg); }
+            .sidebar.collapsed { transform: translateX(-100%); }
+            .sidebar-header .logo span { display: inline; }
+            .sidebar-nav ul li a span { display: inline; }
+            .sidebar-nav ul li a { justify-content: flex-start; padding: 10px 14px; }
+            .sidebar-nav ul li a i { font-size: 1.1rem; }
+            .sidebar-footer .btn-logout span { display: inline; }
+            .sidebar-footer .btn-logout { justify-content: flex-start; padding: 10px 14px; }
+            .sidebar-toggle { display: block; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .form-grid { grid-template-columns: 1fr; }
+            .detalle-grid { grid-template-columns: 1fr; }
+            .top-header { padding: 0 16px; }
+            .content-area { padding: 16px; }
+            .modal-content { width: 96%; margin: 10px; }
+            .table-modern { font-size: 0.8rem; }
+            .table-modern thead th, .table-modern tbody td { padding: 10px 12px; }
+            .card-header { flex-direction: column; gap: 8px; align-items: flex-start; }
+            .page-header { flex-direction: column; align-items: flex-start; }
+            .user-info { display: none; }
         }
-
         @media (max-width: 480px) {
-            .top-header {
-                padding: 0 12px;
-                height: 60px;
-            }
-
-            .header-left h1 {
-                font-size: 1rem;
-            }
-
-            .content-area {
-                padding: 12px;
-            }
-
-            .stat-card {
-                padding: 16px;
-            }
-
-            .stat-value {
-                font-size: 1.4rem;
-            }
-
-            .modal-header {
-                padding: 14px 18px;
-            }
-
-            .modal-body {
-                padding: 18px;
-            }
-
-            .modal-footer {
-                padding: 12px 18px;
-                flex-direction: column;
-            }
-
-            .modal-footer button {
-                width: 100%;
-                justify-content: center;
-            }
+            .top-header { padding: 0 12px; height: 60px; }
+            .header-left h1 { font-size: 1rem; }
+            .content-area { padding: 12px; }
+            .stat-card { padding: 16px; }
+            .stat-value { font-size: 1.4rem; }
+            .modal-header { padding: 14px 18px; }
+            .modal-body { padding: 18px; }
+            .modal-footer { padding: 12px 18px; flex-direction: column; }
+            .modal-footer button { width: 100%; justify-content: center; }
         }
     </style>
 </head>
 <body>
 
-    <!-- =========================================== -->
-    <!-- SIDEBAR LATERAL IZQUIERDO                   -->
-    <!-- =========================================== -->
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <div class="logo">
@@ -1019,36 +258,12 @@
 
         <nav class="sidebar-nav">
             <ul>
-                <li class="active">
-                    <a href="#" data-page="dashboard">
-                        <i class="fas fa-th-large"></i>
-                        <span>Inicio</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" data-page="colegios">
-                        <i class="fas fa-school"></i>
-                        <span>Colegios</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" data-page="usuarios">
-                        <i class="fas fa-users"></i>
-                        <span>Usuarios</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" data-page="planes">
-                        <i class="fas fa-crown"></i>
-                        <span>Planes</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" data-page="configuracion">
-                        <i class="fas fa-cog"></i>
-                        <span>Configuración</span>
-                    </a>
-                </li>
+                <li class="active"><a href="#" data-page="dashboard"><i class="fas fa-th-large"></i><span>Inicio</span></a></li>
+                <li><a href="#" data-page="colegios"><i class="fas fa-school"></i><span>Colegios</span></a></li>
+                <li><a href="#" data-page="economia"><i class="fas fa-chart-line"></i><span>Economía</span></a></li>
+                <li><a href="#" data-page="usuarios"><i class="fas fa-users"></i><span>Usuarios</span></a></li>
+                <li><a href="#" data-page="planes"><i class="fas fa-crown"></i><span>Planes</span></a></li>
+                <li><a href="#" data-page="configuracion"><i class="fas fa-cog"></i><span>Configuración</span></a></li>
             </ul>
         </nav>
 
@@ -1060,12 +275,7 @@
         </div>
     </aside>
 
-    <!-- =========================================== -->
-    <!-- CONTENIDO PRINCIPAL                         -->
-    <!-- =========================================== -->
     <main class="main-content">
-
-        <!-- HEADER SUPERIOR -->
         <header class="top-header">
             <div class="header-left">
                 <h1 id="pageTitle">Dashboard</h1>
@@ -1081,47 +291,41 @@
             </div>
         </header>
 
-        <!-- ÁREA DE CONTENIDO DINÁMICO -->
         <section class="content-area" id="contentArea">
 
-            <!-- ========================================= -->
-            <!-- DASHBOARD (vista por defecto)            -->
-            <!-- ========================================= -->
+            <!-- DASHBOARD -->
             <div id="page-dashboard" class="page-content active">
-
                 <div class="stats-grid">
                     <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-school"></i>
-                        </div>
+                        <div class="stat-icon"><i class="fas fa-school"></i></div>
                         <div class="stat-info">
                             <span class="stat-label">Colegios registrados</span>
                             <span class="stat-value" id="totalColegios">0</span>
                         </div>
                     </div>
-
                     <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-check-circle"></i>
-                        </div>
+                        <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
                         <div class="stat-info">
                             <span class="stat-label">Colegios activos</span>
                             <span class="stat-value" id="colegiosActivos">0</span>
                         </div>
                     </div>
-
                     <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-times-circle"></i>
-                        </div>
+                        <div class="stat-icon"><i class="fas fa-times-circle"></i></div>
                         <div class="stat-info">
                             <span class="stat-label">Colegios inactivos</span>
                             <span class="stat-value" id="colegiosInactivos">0</span>
                         </div>
                     </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-label">Pagos vencidos</span>
+                            <span class="stat-value" id="colegiosVencidos">0</span>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Últimos colegios registrados -->
                 <div class="card">
                     <div class="card-header">
                         <h2>Últimos colegios registrados</h2>
@@ -1132,17 +336,14 @@
                                 <thead>
                                     <tr>
                                         <th>Colegio</th>
+                                        <th>Plan</th>
                                         <th>Ciudad</th>
                                         <th>Estado</th>
                                         <th>Rector</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tablaUltimosColegios">
-                                    <tr>
-                                        <td colspan="4" class="text-center text-muted">
-                                            <i class="fas fa-spinner fa-spin"></i> Cargando colegios...
-                                        </td>
-                                    </tr>
+                                    <tr><td colspan="5" class="text-center text-muted"><i class="fas fa-spinner fa-spin"></i> Cargando colegios...</td></tr>
                                 </tbody>
                             </table>
                         </div>
@@ -1156,9 +357,7 @@
                 </div>
             </div>
 
-            <!-- ========================================= -->
-            <!-- COLEGIOS (vista de listado)              -->
-            <!-- ========================================= -->
+            <!-- COLEGIOS -->
             <div id="page-colegios" class="page-content">
                 <div class="page-header">
                     <h2>Gestión de Colegios</h2>
@@ -1175,20 +374,16 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Colegio</th>
-                                        <th>Ciudad</th>
-                                        <th>Departamento</th>
+                                        <th>Plan</th>
+                                        <th>Estudiantes</th>
+                                        <th>Pago</th>
                                         <th>Estado</th>
-                                        <th>Fecha creación</th>
                                         <th>Rector</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tablaColegios">
-                                    <tr>
-                                        <td colspan="8" class="text-center text-muted">
-                                            <i class="fas fa-spinner fa-spin"></i> Cargando colegios...
-                                        </td>
-                                    </tr>
+                                    <tr><td colspan="8" class="text-center text-muted"><i class="fas fa-spinner fa-spin"></i> Cargando colegios...</td></tr>
                                 </tbody>
                             </table>
                         </div>
@@ -1196,9 +391,92 @@
                 </div>
             </div>
 
-            <!-- ========================================= -->
-            <!-- OTRAS PÁGINAS (placeholder)              -->
-            <!-- ========================================= -->
+            <!-- ECONOMÍA -->
+            <div id="page-economia" class="page-content">
+                <div class="page-header">
+                    <h2><i class="fas fa-chart-line" style="color: var(--primary);"></i> Economía</h2>
+                    <button id="btnNuevoMovimiento" class="btn-primary">
+                        <i class="fas fa-plus"></i> Registrar movimiento
+                    </button>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card ingresos">
+                        <div class="stat-icon"><i class="fas fa-arrow-down"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-label">Ingresos totales</span>
+                            <span class="stat-value" id="ecoIngresos">$0</span>
+                        </div>
+                    </div>
+                    <div class="stat-card egresos">
+                        <div class="stat-icon"><i class="fas fa-arrow-up"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-label">Egresos totales</span>
+                            <span class="stat-value" id="ecoEgresos">$0</span>
+                        </div>
+                    </div>
+                    <div class="stat-card balance">
+                        <div class="stat-icon"><i class="fas fa-wallet"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-label">Balance</span>
+                            <span class="stat-value" id="ecoBalance">$0</span>
+                        </div>
+                    </div>
+                    <div class="stat-card mes">
+                        <div class="stat-icon"><i class="fas fa-calendar"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-label">Movimientos este mes</span>
+                            <span class="stat-value" id="ecoMes">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Historial de movimientos</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="eco-filtros">
+                            <select id="ecoFiltroTipo" class="form-control">
+                                <option value="">Todos los movimientos</option>
+                                <option value="entrada">Solo ingresos</option>
+                                <option value="salida">Solo egresos</option>
+                            </select>
+                            <select id="ecoFiltroCategoria" class="form-control">
+                                <option value="">Todas las categorías</option>
+                                <option value="Pago colegio">Pago de colegio</option>
+                                <option value="Implementación">Implementación</option>
+                                <option value="Hosting">Hosting / Servicios</option>
+                                <option value="Salarios">Salarios</option>
+                                <option value="Marketing">Marketing</option>
+                                <option value="Equipos">Equipos</option>
+                                <option value="Impuestos">Impuestos</option>
+                                <option value="Otro">Otro</option>
+                            </select>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table-modern">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Fecha</th>
+                                        <th>Tipo</th>
+                                        <th>Categoría</th>
+                                        <th>Descripción</th>
+                                        <th>Monto</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tablaEconomia">
+                                    <tr><td colspan="7" class="text-center text-muted"><i class="fas fa-spinner fa-spin"></i> Cargando movimientos...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- USUARIOS -->
             <div id="page-usuarios" class="page-content">
                 <div class="card">
                     <div class="card-body text-center text-muted" style="padding: 60px 20px;">
@@ -1209,16 +487,19 @@
                 </div>
             </div>
 
+            <!-- PLANES -->
             <div id="page-planes" class="page-content">
                 <div class="card">
-                    <div class="card-body text-center text-muted" style="padding: 60px 20px;">
-                        <i class="fas fa-crown" style="font-size: 48px; color: #cbd5e1;"></i>
-                        <h3 style="margin-top: 16px;">Módulo de Planes</h3>
-                        <p>Próximamente disponible</p>
+                    <div class="card-header">
+                        <h2>Planes disponibles en EduOne</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="plan-selector" id="planesListaGlobal"></div>
                     </div>
                 </div>
             </div>
 
+            <!-- CONFIGURACIÓN -->
             <div id="page-configuracion" class="page-content">
                 <div class="card">
                     <div class="card-body text-center text-muted" style="padding: 60px 20px;">
@@ -1244,108 +525,289 @@
             </div>
             <form id="formRegistrarColegio">
                 <div class="modal-body">
-                    <!-- Información del colegio -->
-                    <h3 style="font-size: 0.9rem; color: var(--gray-600); margin-bottom: 12px;">
-                        <i class="fas fa-building"></i> Datos del colegio
-                    </h3>
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="colegioNombre">Nombre del colegio *</label>
-                            <input type="text" id="colegioNombre" class="form-control" required placeholder="Ej: Colegio San José" />
-                        </div>
-                        <div class="form-group">
-                            <label for="colegioNit">NIT</label>
-                            <input type="text" id="colegioNit" class="form-control" placeholder="Ej: 123456789-0" />
-                        </div>
-                        <div class="form-group">
-                            <label for="colegioDireccion">Dirección</label>
-                            <input type="text" id="colegioDireccion" class="form-control" placeholder="Ej: Calle 10 # 5-20" />
-                        </div>
-                        <div class="form-group">
-                            <label for="colegioCiudad">Ciudad *</label>
-                            <input type="text" id="colegioCiudad" class="form-control" required placeholder="Ej: Neiva" />
-                        </div>
-                        <div class="form-group">
-                            <label for="colegioDepartamento">Departamento</label>
-                            <input type="text" id="colegioDepartamento" class="form-control" placeholder="Ej: Huila" />
-                        </div>
-                        <div class="form-group">
-                            <label for="colegioTelefono">Teléfono</label>
-                            <input type="text" id="colegioTelefono" class="form-control" placeholder="Ej: 3101234567" />
-                        </div>
-                        <div class="form-group">
-                            <label for="colegioCorreo">Correo electrónico</label>
-                            <input type="email" id="colegioCorreo" class="form-control" placeholder="Ej: info@colegio.edu.co" />
-                        </div>
-                        <div class="form-group">
-                            <label for="colegioAnioEscolar">Año escolar *</label>
-                            <input type="number" id="colegioAnioEscolar" class="form-control" required min="2000" max="2100" />
-                        </div>
-                        <div class="form-group">
-                            <label for="colegioEstado">Estado</label>
-                            <select id="colegioEstado" class="form-control">
-                                <option value="activo">Activo</option>
-                                <option value="inactivo">Inactivo</option>
-                            </select>
-                        </div>
-                    </div>
+                    <h3 style="font-size: 0.9rem; color: var(--gray-600); margin-bottom: 12px;"><i class="fas fa-crown"></i> Plan del colegio</h3>
+                    <div class="plan-selector" id="planSelector"></div>
 
-                    <!-- Datos del rector -->
                     <hr style="margin: 20px 0; border: none; border-top: 1px solid var(--gray-200);" />
-                    <h3 style="font-size: 0.9rem; color: var(--gray-600); margin-bottom: 12px;">
-                        <i class="fas fa-user-tie"></i> Datos del Rector (creación automática)
-                    </h3>
+                    <h3 style="font-size: 0.9rem; color: var(--gray-600); margin-bottom: 12px;"><i class="fas fa-building"></i> Datos del colegio</h3>
+                    <div class="form-grid">
+                        <div class="form-group"><label>Nombre del colegio *</label><input type="text" id="colegioNombre" class="form-control" required placeholder="Ej: Colegio San José" /></div>
+                        <div class="form-group"><label>NIT</label><input type="text" id="colegioNit" class="form-control" placeholder="Ej: 123456789-0" /></div>
+                        <div class="form-group"><label>Dirección</label><input type="text" id="colegioDireccion" class="form-control" placeholder="Ej: Calle 10 # 5-20" /></div>
+                        <div class="form-group"><label>Ciudad *</label><input type="text" id="colegioCiudad" class="form-control" required placeholder="Ej: Neiva" /></div>
+                        <div class="form-group"><label>Departamento</label><input type="text" id="colegioDepartamento" class="form-control" placeholder="Ej: Huila" /></div>
+                        <div class="form-group"><label>Teléfono</label><input type="text" id="colegioTelefono" class="form-control" placeholder="Ej: 3101234567" /></div>
+                        <div class="form-group"><label>Correo electrónico</label><input type="email" id="colegioCorreo" class="form-control" placeholder="Ej: info@colegio.edu.co" /></div>
+                        <div class="form-group"><label>Año escolar *</label><input type="number" id="colegioAnioEscolar" class="form-control" required min="2000" max="2100" /></div>
+                    </div>
+
+                    <hr style="margin: 20px 0; border: none; border-top: 1px solid var(--gray-200);" />
+                    <h3 style="font-size: 0.9rem; color: var(--gray-600); margin-bottom: 12px;"><i class="fas fa-palette"></i> Personalización visual</h3>
                     <div class="form-grid">
                         <div class="form-group">
-                            <label for="rectorNombre">Nombre completo del rector *</label>
-                            <input type="text" id="rectorNombre" class="form-control" required placeholder="Ej: María Rodríguez" />
+                            <label>Logo del colegio</label>
+                            <div class="logo-preview">
+                                <div class="logo-placeholder" id="logoPlaceholder"><i class="fas fa-image"></i></div>
+                                <img id="logoPreviewImg" style="display: none;" alt="Logo" />
+                                <div style="flex: 1;">
+                                    <input type="file" id="colegioLogoInput" accept="image/*" class="form-control" style="padding: 6px;" />
+                                    <small style="color: var(--gray-500); font-size: 0.7rem;">PNG, JPG, WEBP (máx. 2MB)</small>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label for="rectorEmail">Correo electrónico *</label>
-                            <input type="email" id="rectorEmail" class="form-control" required placeholder="Ej: rector@colegio.edu.co" />
-                        </div>
-                        <div class="form-group">
-                            <label for="rectorPassword">Contraseña *</label>
-                            <input type="text" id="rectorPassword" class="form-control" required placeholder="Mínimo 6 caracteres" minlength="6" />
-                        </div>
-                        <div class="form-group">
-                            <label for="rectorTelefono">Teléfono</label>
-                            <input type="text" id="rectorTelefono" class="form-control" placeholder="Ej: 3101234567" />
+                            <label>Colores institucionales</label>
+                            <div class="color-preview">
+                                <div>
+                                    <input type="color" id="colegioColorPrimario" value="#4f46e5" class="form-control" style="width: 60px; height: 40px; padding: 2px; cursor: pointer;" />
+                                    <div class="color-swatch-label" style="margin-top: 4px;">Primario</div>
+                                </div>
+                                <div>
+                                    <input type="color" id="colegioColorSecundario" value="#ffffff" class="form-control" style="width: 60px; height: 40px; padding: 2px; cursor: pointer;" />
+                                    <div class="color-swatch-label" style="margin-top: 4px;">Secundario</div>
+                                </div>
+                                <div style="flex: 1;">
+                                    <div class="colegio-preview" id="colorPreviewBox" style="background: #4f46e5; color: #ffffff;">
+                                        <h4>Vista previa</h4>
+                                        <p>Así se verá el panel del colegio.</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Credenciales generadas -->
+                    <hr style="margin: 20px 0; border: none; border-top: 1px solid var(--gray-200);" />
+                    <h3 style="font-size: 0.9rem; color: var(--gray-600); margin-bottom: 12px;"><i class="fas fa-user-tie"></i> Datos del Rector</h3>
+                    <div class="form-grid">
+                        <div class="form-group"><label>Nombre completo *</label><input type="text" id="rectorNombre" class="form-control" required placeholder="Ej: María Rodríguez" /></div>
+                        <div class="form-group"><label>Correo electrónico *</label><input type="email" id="rectorEmail" class="form-control" required placeholder="Ej: rector@colegio.edu.co" /></div>
+                        <div class="form-group"><label>Contraseña *</label><input type="text" id="rectorPassword" class="form-control" required placeholder="Mínimo 6 caracteres" minlength="6" /></div>
+                        <div class="form-group"><label>Teléfono</label><input type="text" id="rectorTelefono" class="form-control" placeholder="Ej: 3101234567" /></div>
+                    </div>
+
                     <div id="credencialesBox" class="credenciales-box">
                         <h4><i class="fas fa-key"></i> Credenciales del Rector</h4>
-                        <div class="cred-row">
-                            <span class="cred-label">Colegio:</span>
-                            <span class="cred-value" id="credColegio">-</span>
-                        </div>
-                        <div class="cred-row">
-                            <span class="cred-label">Email:</span>
-                            <span class="cred-value" id="credEmail">-</span>
-                            <button class="btn-copy" onclick="copiarTexto('credEmail')"><i class="fas fa-copy"></i></button>
-                        </div>
-                        <div class="cred-row">
-                            <span class="cred-label">Contraseña:</span>
-                            <span class="cred-value" id="credPassword">-</span>
-                            <button class="btn-copy" onclick="copiarTexto('credPassword')"><i class="fas fa-copy"></i></button>
-                        </div>
-                        <div class="cred-row">
-                            <span class="cred-label">Rol:</span>
-                            <span class="cred-value" style="color: var(--primary);">RECTOR</span>
-                        </div>
-                        <p style="font-size: 0.75rem; color: var(--gray-500); margin-top: 8px;">
-                            <i class="fas fa-info-circle"></i>
-                            Estas credenciales serán creadas automáticamente al registrar el colegio.
-                        </p>
+                        <div class="cred-row"><span class="cred-label">Colegio:</span><span class="cred-value" id="credColegio">-</span></div>
+                        <div class="cred-row"><span class="cred-label">Email:</span><span class="cred-value" id="credEmail">-</span><button class="btn-copy" onclick="copiarTexto('credEmail')"><i class="fas fa-copy"></i></button></div>
+                        <div class="cred-row"><span class="cred-label">Contraseña:</span><span class="cred-value" id="credPassword">-</span><button class="btn-copy" onclick="copiarTexto('credPassword')"><i class="fas fa-copy"></i></button></div>
+                        <div class="cred-row"><span class="cred-label">Rol:</span><span class="cred-value" style="color: var(--primary);">RECTOR</span></div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn-secondary" id="cancelarModal">Cancelar</button>
-                    <button type="submit" class="btn-primary" id="btnGuardarColegio">
-                        <i class="fas fa-save"></i> Guardar colegio
-                    </button>
+                    <button type="submit" class="btn-primary" id="btnGuardarColegio"><i class="fas fa-save"></i> Guardar colegio</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- =========================================== -->
+    <!-- MODAL: Editar Colegio                       -->
+    <!-- =========================================== -->
+    <div class="modal" id="modalEditarColegio">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-edit" style="color: var(--primary); margin-right: 8px;"></i> Editar colegio</h2>
+                <button class="modal-close" id="closeEditarModal">&times;</button>
+            </div>
+            <form id="formEditarColegio">
+                <div class="modal-body">
+                    <input type="hidden" id="editarColegioId" />
+
+                    <h3 style="font-size: 0.9rem; color: var(--gray-600); margin-bottom: 12px;"><i class="fas fa-building"></i> Datos del colegio</h3>
+                    <div class="form-grid">
+                        <div class="form-group"><label>Nombre *</label><input type="text" id="editarNombre" class="form-control" required /></div>
+                        <div class="form-group"><label>NIT</label><input type="text" id="editarNit" class="form-control" /></div>
+                        <div class="form-group"><label>Dirección</label><input type="text" id="editarDireccion" class="form-control" /></div>
+                        <div class="form-group"><label>Ciudad *</label><input type="text" id="editarCiudad" class="form-control" required /></div>
+                        <div class="form-group"><label>Departamento</label><input type="text" id="editarDepartamento" class="form-control" /></div>
+                        <div class="form-group"><label>Teléfono</label><input type="text" id="editarTelefono" class="form-control" /></div>
+                        <div class="form-group"><label>Correo</label><input type="email" id="editarCorreo" class="form-control" /></div>
+                        <div class="form-group"><label>Año escolar</label><input type="number" id="editarAnioEscolar" class="form-control" min="2000" max="2100" /></div>
+                        <div class="form-group">
+                            <label>Estado</label>
+                            <select id="editarEstado" class="form-control">
+                                <option value="activo">Activo</option>
+                                <option value="inactivo">Inactivo</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Estado de pago</label>
+                            <select id="editarEstadoPago" class="form-control">
+                                <option value="al-dia">Al día</option>
+                                <option value="vencido">Vencido</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <hr style="margin: 20px 0; border: none; border-top: 1px solid var(--gray-200);" />
+                    <h3 style="font-size: 0.9rem; color: var(--gray-600); margin-bottom: 12px;"><i class="fas fa-palette"></i> Logo y colores</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Logo actual</label>
+                            <div class="logo-preview">
+                                <div class="logo-placeholder" id="editarLogoPlaceholder"><i class="fas fa-image"></i></div>
+                                <img id="editarLogoPreview" style="display: none;" alt="Logo" />
+                                <div style="flex: 1;">
+                                    <input type="file" id="editarLogoInput" accept="image/*" class="form-control" style="padding: 6px;" />
+                                    <small style="color: var(--gray-500); font-size: 0.7rem;">Dejar vacío para mantener el actual</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Colores institucionales</label>
+                            <div class="color-preview">
+                                <div>
+                                    <input type="color" id="editarColorPrimario" class="form-control" style="width: 60px; height: 40px; padding: 2px; cursor: pointer;" />
+                                    <div class="color-swatch-label" style="margin-top: 4px;">Primario</div>
+                                </div>
+                                <div>
+                                    <input type="color" id="editarColorSecundario" class="form-control" style="width: 60px; height: 40px; padding: 2px; cursor: pointer;" />
+                                    <div class="color-swatch-label" style="margin-top: 4px;">Secundario</div>
+                                </div>
+                                <div style="flex: 1;">
+                                    <div class="colegio-preview" id="editarColorPreviewBox">
+                                        <h4>Vista previa</h4>
+                                        <p>Colores actualizados</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" id="cancelarEditar">Cancelar</button>
+                    <button type="submit" class="btn-primary"><i class="fas fa-save"></i> Guardar cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- =========================================== -->
+    <!-- MODAL: Ver Detalle Colegio                  -->
+    <!-- =========================================== -->
+    <div class="modal" id="modalDetalleColegio">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-info-circle" style="color: var(--primary); margin-right: 8px;"></i> Detalle del colegio</h2>
+                <button class="modal-close" id="closeDetalleModal">&times;</button>
+            </div>
+            <div class="modal-body" id="detalleColegioBody"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" id="closeDetalleBtn">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- =========================================== -->
+    <!-- MODAL: Cambiar Plan                         -->
+    <!-- =========================================== -->
+    <div class="modal" id="modalCambiarPlan">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-exchange-alt" style="color: var(--primary); margin-right: 8px;"></i> Cambiar plan</h2>
+                <button class="modal-close" id="closeCambiarPlanModal">&times;</button>
+            </div>
+            <form id="formCambiarPlan">
+                <div class="modal-body">
+                    <input type="hidden" id="cambiarPlanColegioId" />
+                    <p style="font-size: 0.9rem; margin-bottom: 12px; color: var(--gray-600);">Colegio: <strong id="cambiarPlanColegioNombre">-</strong></p>
+                    <div class="plan-selector" id="planSelectorCambio"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" id="cancelarCambiarPlan">Cancelar</button>
+                    <button type="submit" class="btn-primary"><i class="fas fa-save"></i> Guardar cambio</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- =========================================== -->
+    <!-- MODAL: Registrar Pago                       -->
+    <!-- =========================================== -->
+    <div class="modal" id="modalRegistrarPago">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-money-bill-wave" style="color: var(--primary); margin-right: 8px;"></i> Registrar pago</h2>
+                <button class="modal-close" id="closePagoModal">&times;</button>
+            </div>
+            <form id="formRegistrarPago">
+                <div class="modal-body">
+                    <input type="hidden" id="pagoColegioId" />
+                    <p style="font-size: 0.9rem; margin-bottom: 12px; color: var(--gray-600);">Colegio: <strong id="pagoColegioNombre">-</strong></p>
+                    <div class="form-grid">
+                        <div class="form-group"><label>Monto (COP) *</label><input type="number" id="pagoMonto" class="form-control" required placeholder="Ej: 2400000" min="0" /></div>
+                        <div class="form-group">
+                            <label>Método de pago *</label>
+                            <select id="pagoMetodo" class="form-control" required>
+                                <option value="Efectivo">Efectivo</option>
+                                <option value="Transferencia">Transferencia bancaria</option>
+                                <option value="Nequi">Nequi</option>
+                                <option value="Daviplata">Daviplata</option>
+                                <option value="Otro">Otro</option>
+                            </select>
+                        </div>
+                        <div class="form-group"><label>Referencia / Comprobante</label><input type="text" id="pagoReferencia" class="form-control" placeholder="Ej: TRX-12345" /></div>
+                        <div class="form-group"><label>Fecha del pago *</label><input type="date" id="pagoFecha" class="form-control" required /></div>
+                    </div>
+                    <p style="font-size: 0.8rem; color: var(--gray-500); margin-top: 8px;">
+                        <i class="fas fa-info-circle"></i> Al registrar el pago, el colegio se activará y la fecha de vencimiento se extenderá 1 año. También se registrará como ingreso en el módulo de Economía.
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" id="cancelarPago">Cancelar</button>
+                    <button type="submit" class="btn-primary"><i class="fas fa-save"></i> Registrar pago</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- =========================================== -->
+    <!-- MODAL: Nuevo Movimiento (Economía)          -->
+    <!-- =========================================== -->
+    <div class="modal" id="modalNuevoMovimiento">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-plus-circle" style="color: var(--primary); margin-right: 8px;"></i> Registrar movimiento</h2>
+                <button class="modal-close" id="closeMovimientoModal">&times;</button>
+            </div>
+            <form id="formNuevoMovimiento">
+                <div class="modal-body">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Tipo *</label>
+                            <select id="movTipo" class="form-control" required>
+                                <option value="entrada">Ingreso (entrada de dinero)</option>
+                                <option value="salida">Egreso (salida de dinero)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Categoría *</label>
+                            <select id="movCategoria" class="form-control" required>
+                                <option value="Pago colegio">Pago de colegio</option>
+                                <option value="Implementación">Implementación</option>
+                                <option value="Hosting">Hosting / Servicios</option>
+                                <option value="Salarios">Salarios</option>
+                                <option value="Marketing">Marketing</option>
+                                <option value="Equipos">Equipos</option>
+                                <option value="Impuestos">Impuestos</option>
+                                <option value="Otro">Otro</option>
+                            </select>
+                        </div>
+                        <div class="form-group"><label>Monto (COP) *</label><input type="number" id="movMonto" class="form-control" required placeholder="Ej: 500000" min="0" /></div>
+                        <div class="form-group"><label>Fecha *</label><input type="date" id="movFecha" class="form-control" required /></div>
+                        <div class="form-group" style="grid-column: span 2;"><label>Descripción *</label><input type="text" id="movDescripcion" class="form-control" required placeholder="Ej: Pago plan anual Colegio San José" /></div>
+                        <div class="form-group" style="grid-column: span 2;"><label>Referencia (opcional)</label><input type="text" id="movReferencia" class="form-control" placeholder="Ej: TRX-12345" /></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" id="cancelarMovimiento">Cancelar</button>
+                    <button type="submit" class="btn-primary"><i class="fas fa-save"></i> Guardar movimiento</button>
                 </div>
             </form>
         </div>
@@ -1354,42 +816,25 @@
     <!-- =========================================== -->
     <!-- SCRIPTS                                     -->
     <!-- =========================================== -->
-
-    <!-- Firebase Modular SDK (vía CDN como módulo) -->
     <script type="importmap">
         {
             "imports": {
                 "firebase/app": "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js",
                 "firebase/auth": "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js",
-                "firebase/firestore": "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js"
+                "firebase/firestore": "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js",
+                "firebase/storage": "https://www.gstatic.com/firebasejs/11.3.1/firebase-storage.js"
             }
         }
     </script>
 
     <script type="module">
-        // =============================================
-        // FIREBASE CONFIG
-        // =============================================
         import { initializeApp } from "firebase/app";
+        import { getAuth, onAuthStateChanged, signOut, createUserWithEmailAndPassword } from "firebase/auth";
         import {
-            getAuth,
-            onAuthStateChanged,
-            signOut,
-            createUserWithEmailAndPassword
-        } from "firebase/auth";
-        import {
-            getFirestore,
-            collection,
-            addDoc,
-            getDocs,
-            query,
-            serverTimestamp,
-            doc,
-            updateDoc,
-            getDoc,
-            where,
-            setDoc
+            getFirestore, collection, addDoc, getDocs, query, serverTimestamp,
+            doc, updateDoc, getDoc, where, setDoc, deleteDoc
         } from "firebase/firestore";
+        import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
         const firebaseConfig = {
             apiKey: "AIzaSyA3U98y5BJWQwpypFCAyNioqSRfXkr9UA0",
@@ -1401,58 +846,122 @@
             measurementId: "G-Y2P0EMNYCL"
         };
 
-        // Inicializar Firebase
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
+        const storage = getStorage(app);
+
+        const PLANES = [
+            { id: 'inicial', nombre: 'EduOne Inicial', maxEstudiantes: 200, precio: 1800000 },
+            { id: 'esencial', nombre: 'EduOne Esencial', maxEstudiantes: 400, precio: 2400000 },
+            { id: 'profesional', nombre: 'EduOne Profesional', maxEstudiantes: 600, precio: 3000000 },
+            { id: 'avanzado', nombre: 'EduOne Avanzado', maxEstudiantes: 800, precio: 3600000 },
+            { id: 'institucional', nombre: 'EduOne Institucional', maxEstudiantes: 1000, precio: 4200000 },
+            { id: 'plus', nombre: 'EduOne Plus', maxEstudiantes: 1500, precio: 5000000 },
+            { id: 'enterprise', nombre: 'Enterprise (personalizado)', maxEstudiantes: 999999, precio: 0 }
+        ];
 
         // =============================================
-        // REFERENCIAS DOM
+        // DOM
         // =============================================
         const userNameEl = document.getElementById('userName');
         const userRoleEl = document.getElementById('userRole');
         const totalColegiosEl = document.getElementById('totalColegios');
         const colegiosActivosEl = document.getElementById('colegiosActivos');
         const colegiosInactivosEl = document.getElementById('colegiosInactivos');
+        const colegiosVencidosEl = document.getElementById('colegiosVencidos');
         const tablaUltimosColegios = document.getElementById('tablaUltimosColegios');
         const tablaColegios = document.getElementById('tablaColegios');
-        const modal = document.getElementById('modalRegistrarColegio');
-        const formRegistrarColegio = document.getElementById('formRegistrarColegio');
         const logoutBtn = document.getElementById('logoutBtn');
 
-        // Campos del rector
-        const rectorNombre = document.getElementById('rectorNombre');
-        const rectorEmail = document.getElementById('rectorEmail');
-        const rectorPassword = document.getElementById('rectorPassword');
-        const rectorTelefono = document.getElementById('rectorTelefono');
-
-        // Credenciales
+        const modal = document.getElementById('modalRegistrarColegio');
+        const formRegistrarColegio = document.getElementById('formRegistrarColegio');
+        const planSelector = document.getElementById('planSelector');
+        const planSelectorCambio = document.getElementById('planSelectorCambio');
+        const colegioLogoInput = document.getElementById('colegioLogoInput');
+        const logoPreviewImg = document.getElementById('logoPreviewImg');
+        const logoPlaceholder = document.getElementById('logoPlaceholder');
+        const colegioColorPrimario = document.getElementById('colegioColorPrimario');
+        const colegioColorSecundario = document.getElementById('colegioColorSecundario');
+        const colorPreviewBox = document.getElementById('colorPreviewBox');
         const credencialesBox = document.getElementById('credencialesBox');
-        const credColegio = document.getElementById('credColegio');
-        const credEmail = document.getElementById('credEmail');
-        const credPassword = document.getElementById('credPassword');
+
+        // Economía
+        const ecoIngresos = document.getElementById('ecoIngresos');
+        const ecoEgresos = document.getElementById('ecoEgresos');
+        const ecoBalance = document.getElementById('ecoBalance');
+        const ecoMes = document.getElementById('ecoMes');
+        const tablaEconomia = document.getElementById('tablaEconomia');
+        const ecoFiltroTipo = document.getElementById('ecoFiltroTipo');
+        const ecoFiltroCategoria = document.getElementById('ecoFiltroCategoria');
+
+        let planSeleccionado = 'inicial';
+        let planSeleccionadoCambio = null;
+        let colegiosCache = [];
+        let movimientosCache = [];
 
         // =============================================
-        // FUNCIÓN PARA COPIAR TEXTO (global)
+        // UTILIDADES
         // =============================================
         window.copiarTexto = function(elementId) {
             const el = document.getElementById(elementId);
             if (!el) return;
-            const text = el.textContent;
-            navigator.clipboard.writeText(text).then(() => {
+            navigator.clipboard.writeText(el.textContent).then(() => {
                 const btn = el.parentElement.querySelector('.btn-copy');
                 if (btn) {
                     const original = btn.innerHTML;
                     btn.innerHTML = '<i class="fas fa-check" style="color: var(--success);"></i>';
                     setTimeout(() => btn.innerHTML = original, 2000);
                 }
-            }).catch(() => {
-                alert('No se pudo copiar. Selecciona el texto manualmente.');
-            });
+            }).catch(() => alert('No se pudo copiar.'));
         };
 
+        function formatearPrecio(v) {
+            if (!v && v !== 0) return 'Cotización';
+            return '$' + Number(v).toLocaleString('es-CO');
+        }
+
+        function formatearFecha(fecha) {
+            if (!fecha) return 'Sin fecha';
+            try {
+                const d = fecha.toDate ? fecha.toDate() : new Date(fecha);
+                return d.toLocaleDateString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric' });
+            } catch (e) { return 'Fecha inválida'; }
+        }
+
+        function generarContrasena() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%';
+            let p = '';
+            for (let i = 0; i < 10; i++) p += chars.charAt(Math.floor(Math.random() * chars.length));
+            return p;
+        }
+
+        function getPlanById(id) {
+            return PLANES.find(p => p.id === id) || PLANES[0];
+        }
+
         // =============================================
-        // NAVEGACIÓN DEL SIDEBAR
+        // SELECTOR DE PLANES
+        // =============================================
+        function renderPlanSelector(container, selectedId, onSelect) {
+            container.innerHTML = PLANES.map(p => `
+                <div class="plan-option ${p.id === selectedId ? 'selected' : ''}" data-plan-id="${p.id}">
+                    <div class="plan-name">${p.nombre}</div>
+                    <div class="plan-max">Hasta ${p.maxEstudiantes === 999999 ? '∞' : p.maxEstudiantes} estudiantes</div>
+                    <div class="plan-price">${formatearPrecio(p.precio)}${p.precio ? ' / año' : ''}</div>
+                </div>
+            `).join('');
+            container.querySelectorAll('.plan-option').forEach(opt => {
+                opt.addEventListener('click', () => {
+                    container.querySelectorAll('.plan-option').forEach(o => o.classList.remove('selected'));
+                    opt.classList.add('selected');
+                    onSelect(opt.dataset.planId);
+                });
+            });
+        }
+
+        // =============================================
+        // NAVEGACIÓN
         // =============================================
         const sidebar = document.getElementById('sidebar');
         const toggleBtn = document.getElementById('sidebarToggle');
@@ -1463,232 +972,133 @@
         const pageNames = {
             dashboard: 'Dashboard',
             colegios: 'Gestión de Colegios',
+            economia: 'Economía',
             usuarios: 'Usuarios',
             planes: 'Planes',
             configuracion: 'Configuración'
         };
 
-        if (toggleBtn) {
-            toggleBtn.addEventListener('click', () => {
-                sidebar.classList.toggle('collapsed');
-            });
-        }
+        if (toggleBtn) toggleBtn.addEventListener('click', () => sidebar.classList.toggle('collapsed'));
 
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 const page = link.dataset.page;
-
                 navLinks.forEach(l => l.closest('li').classList.remove('active'));
                 link.closest('li').classList.add('active');
-
                 pages.forEach(p => p.classList.remove('active'));
                 const targetPage = document.getElementById('page-' + page);
                 if (targetPage) targetPage.classList.add('active');
-
                 if (pageNames[page]) pageTitle.textContent = pageNames[page];
+                if (window.innerWidth <= 768) sidebar.classList.add('collapsed');
 
-                if (window.innerWidth <= 768) {
-                    sidebar.classList.add('collapsed');
-                }
+                if (page === 'dashboard' || page === 'colegios') cargarDashboard();
+                if (page === 'economia') cargarEconomia();
+                if (page === 'planes') renderPlanesGlobal();
             });
         });
 
+        function renderPlanesGlobal() {
+            const cont = document.getElementById('planesListaGlobal');
+            renderPlanSelector(cont, null, () => {});
+            cont.querySelectorAll('.plan-option').forEach(o => o.style.cursor = 'default');
+        }
+
         // =============================================
-        // MODAL
+        // MODAL REGISTRAR
         // =============================================
         function openModal() {
             modal.classList.add('show');
             formRegistrarColegio.reset();
             document.getElementById('colegioAnioEscolar').value = new Date().getFullYear();
             credencialesBox.classList.remove('show');
-            const password = generarContrasena();
-            rectorPassword.value = password;
+            document.getElementById('rectorPassword').value = generarContrasena();
+            planSeleccionado = 'inicial';
+            renderPlanSelector(planSelector, planSeleccionado, (id) => planSeleccionado = id);
+            logoPreviewImg.style.display = 'none';
+            logoPlaceholder.style.display = 'flex';
+            colegioColorPrimario.value = '#4f46e5';
+            colegioColorSecundario.value = '#ffffff';
+            actualizarPreviewColor();
         }
 
         function closeModal() {
             modal.classList.remove('show');
             formRegistrarColegio.reset();
             credencialesBox.classList.remove('show');
-            document.getElementById('colegioAnioEscolar').value = new Date().getFullYear();
-        }
-
-        function generarContrasena() {
-            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%';
-            let password = '';
-            for (let i = 0; i < 10; i++) {
-                password += chars.charAt(Math.floor(Math.random() * chars.length));
-            }
-            return password;
         }
 
         document.getElementById('btnRegistrarColegio').addEventListener('click', openModal);
         document.getElementById('btnRegistrarColegio2').addEventListener('click', openModal);
         document.getElementById('closeModal').addEventListener('click', closeModal);
         document.getElementById('cancelarModal').addEventListener('click', closeModal);
-        document.querySelector('.modal-overlay').addEventListener('click', closeModal);
+        document.querySelector('#modalRegistrarColegio .modal-overlay').addEventListener('click', closeModal);
 
-        document.getElementById('colegioAnioEscolar').value = new Date().getFullYear();
+        colegioLogoInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            if (file.size > 2 * 1024 * 1024) { alert('⚠️ Máx 2MB'); colegioLogoInput.value = ''; return; }
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+                logoPreviewImg.src = ev.target.result;
+                logoPreviewImg.style.display = 'block';
+                logoPlaceholder.style.display = 'none';
+            };
+            reader.readAsDataURL(file);
+        });
 
-        rectorNombre.addEventListener('input', actualizarCredenciales);
-        rectorEmail.addEventListener('input', actualizarCredenciales);
-        rectorPassword.addEventListener('input', actualizarCredenciales);
+        function actualizarPreviewColor() {
+            colorPreviewBox.style.background = colegioColorPrimario.value;
+            colorPreviewBox.style.color = colegioColorSecundario.value;
+        }
+        colegioColorPrimario.addEventListener('input', actualizarPreviewColor);
+        colegioColorSecundario.addEventListener('input', actualizarPreviewColor);
+
+        // Credenciales
+        document.getElementById('rectorNombre').addEventListener('input', actualizarCredenciales);
+        document.getElementById('rectorEmail').addEventListener('input', actualizarCredenciales);
+        document.getElementById('rectorPassword').addEventListener('input', actualizarCredenciales);
+        document.getElementById('colegioNombre').addEventListener('input', actualizarCredenciales);
 
         function actualizarCredenciales() {
             const nombreColegio = document.getElementById('colegioNombre').value || 'Colegio';
-            const email = rectorEmail.value || 'rector@colegio.com';
-            const password = rectorPassword.value || '********';
-
+            const email = document.getElementById('rectorEmail').value || 'rector@colegio.com';
+            const password = document.getElementById('rectorPassword').value || '********';
             if (nombreColegio && email && password.length >= 6) {
                 credencialesBox.classList.add('show');
-                credColegio.textContent = nombreColegio;
-                credEmail.textContent = email;
-                credPassword.textContent = password;
-            } else {
-                credencialesBox.classList.remove('show');
-            }
+                document.getElementById('credColegio').textContent = nombreColegio;
+                document.getElementById('credEmail').textContent = email;
+                document.getElementById('credPassword').textContent = password;
+            } else credencialesBox.classList.remove('show');
         }
 
-        document.getElementById('colegioNombre').addEventListener('input', actualizarCredenciales);
-
         // =============================================
-        // FUNCIONES DE FIRESTORE
+        // SUBIR LOGO
         // =============================================
-
-        async function cargarDashboard() {
-            try {
-                const colegiosSnapshot = await getDocs(collection(db, 'colegios'));
-
-                let total = 0;
-                let activos = 0;
-                let inactivos = 0;
-                const colegiosList = [];
-
-                for (const docSnapshot of colegiosSnapshot.docs) {
-                    const data = docSnapshot.data();
-                    total++;
-                    if (data.estado === 'activo') activos++;
-                    else if (data.estado === 'inactivo') inactivos++;
-                    
-                    let rectorNombre = 'Sin asignar';
-                    try {
-                        const rectoresQuery = query(
-                            collection(db, 'usuarios'),
-                            where('colegioId', '==', docSnapshot.id),
-                            where('rol', '==', 'rector'),
-                            where('activo', '==', true)
-                        );
-                        const rectoresSnapshot = await getDocs(rectoresQuery);
-                        if (!rectoresSnapshot.empty) {
-                            rectorNombre = rectoresSnapshot.docs[0].data().nombre || 'Sin nombre';
-                        }
-                    } catch (e) {
-                        console.error('Error al buscar rector:', e);
-                    }
-                    
-                    colegiosList.push({ id: docSnapshot.id, ...data, rector: rectorNombre });
-                }
-
-                totalColegiosEl.textContent = total;
-                colegiosActivosEl.textContent = activos;
-                colegiosInactivosEl.textContent = inactivos;
-
-                const ultimos = colegiosList.slice(-5).reverse();
-                if (ultimos.length === 0) {
-                    tablaUltimosColegios.innerHTML = `
-                        <tr>
-                            <td colspan="4" class="text-center text-muted">
-                                No hay colegios registrados
-                            </td>
-                        </tr>
-                    `;
-                } else {
-                    tablaUltimosColegios.innerHTML = ultimos.map(c => `
-                        <tr>
-                            <td><strong>${c.nombre || 'Sin nombre'}</strong></td>
-                            <td>${c.ciudad || 'N/A'}</td>
-                            <td>
-                                <span class="badge ${c.estado === 'activo' ? 'badge-success' : 'badge-danger'}">
-                                    ${c.estado || 'inactivo'}
-                                </span>
-                            </td>
-                            <td>${c.rector || 'Sin asignar'}</td>
-                        </tr>
-                    `).join('');
-                }
-
-                if (colegiosList.length === 0) {
-                    tablaColegios.innerHTML = `
-                        <tr>
-                            <td colspan="8" class="text-center text-muted">
-                                No hay colegios registrados
-                            </td>
-                        </tr>
-                    `;
-                } else {
-                    tablaColegios.innerHTML = colegiosList.map((c, index) => `
-                        <tr>
-                            <td>${index + 1}</td>
-                            <td><strong>${c.nombre || 'Sin nombre'}</strong></td>
-                            <td>${c.ciudad || 'N/A'}</td>
-                            <td>${c.departamento || 'N/A'}</td>
-                            <td>
-                                <span class="badge ${c.estado === 'activo' ? 'badge-success' : 'badge-danger'}">
-                                    ${c.estado || 'inactivo'}
-                                </span>
-                            </td>
-                            <td>${c.fechaCreacion ? new Date(c.fechaCreacion.toDate()).toLocaleDateString() : 'N/A'}</td>
-                            <td>${c.rector || 'Sin asignar'}</td>
-                            <td>
-                                <button class="btn-success btn-sm" onclick="window.toggleEstado('${c.id}', '${c.estado}')">
-                                    ${c.estado === 'activo' ? 'Desactivar' : 'Activar'}
-                                </button>
-                            </td>
-                        </tr>
-                    `).join('');
-                }
-
-                window.toggleEstado = async function(id, estadoActual) {
-                    const nuevoEstado = estadoActual === 'activo' ? 'inactivo' : 'activo';
-                    if (confirm(`¿Deseas ${nuevoEstado === 'activo' ? 'activar' : 'desactivar'} este colegio?`)) {
+        async function subirLogo(colegioId, file) {
+            return new Promise((resolve) => {
+                const nombreLimpio = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+                const ruta = `colegios/${colegioId}/logo/${Date.now()}_${nombreLimpio}`;
+                const storageRef = ref(storage, ruta);
+                const task = uploadBytesResumable(storageRef, file);
+                task.on('state_changed',
+                    null,
+                    (error) => resolve({ success: false, error: error.message }),
+                    async () => {
                         try {
-                            await updateDoc(doc(db, 'colegios', id), {
-                                estado: nuevoEstado
-                            });
-                            alert('✅ Estado actualizado correctamente');
-                            cargarDashboard();
-                        } catch (error) {
-                            console.error('Error al actualizar estado:', error);
-                            alert('❌ Error al actualizar el estado');
-                        }
+                            const url = await getDownloadURL(storageRef);
+                            resolve({ success: true, url, path: ruta });
+                        } catch (e) { resolve({ success: false, error: e.message }); }
                     }
-                };
-
-            } catch (error) {
-                console.error('Error al cargar dashboard:', error);
-                tablaUltimosColegios.innerHTML = `
-                    <tr>
-                        <td colspan="4" class="text-center text-danger">
-                            ❌ Error al cargar los datos
-                        </td>
-                    </tr>
-                `;
-                tablaColegios.innerHTML = `
-                    <tr>
-                        <td colspan="8" class="text-center text-danger">
-                            ❌ Error al cargar los datos
-                        </td>
-                    </tr>
-                `;
-            }
+                );
+            });
         }
 
         // =============================================
-        // REGISTRAR COLEGIO + RECTOR
+        // REGISTRAR COLEGIO
         // =============================================
         formRegistrarColegio.addEventListener('submit', async (e) => {
             e.preventDefault();
-
             const nombre = document.getElementById('colegioNombre').value.trim();
             const nit = document.getElementById('colegioNit').value.trim();
             const direccion = document.getElementById('colegioDireccion').value.trim();
@@ -1697,83 +1107,65 @@
             const telefono = document.getElementById('colegioTelefono').value.trim();
             const correo = document.getElementById('colegioCorreo').value.trim();
             const anioEscolar = parseInt(document.getElementById('colegioAnioEscolar').value);
-            const estado = document.getElementById('colegioEstado').value;
+            const rectorNom = document.getElementById('rectorNombre').value.trim();
+            const rectorEmailVal = document.getElementById('rectorEmail').value.trim();
+            const rectorPass = document.getElementById('rectorPassword').value;
+            const rectorTel = document.getElementById('rectorTelefono').value.trim();
+            const logoFile = colegioLogoInput.files[0];
+            const colorPrimario = colegioColorPrimario.value;
+            const colorSecundario = colegioColorSecundario.value;
 
-            const rectorNom = rectorNombre.value.trim();
-            const rectorEmailVal = rectorEmail.value.trim();
-            const rectorPass = rectorPassword.value;
-            const rectorTel = rectorTelefono.value.trim();
-
-            if (!nombre || !ciudad || !anioEscolar) {
-                alert('⚠️ Por favor, completa los campos obligatorios del colegio (*)');
-                return;
-            }
-
-            if (!rectorNom || !rectorEmailVal || !rectorPass) {
-                alert('⚠️ Por favor, completa todos los datos del rector');
-                return;
-            }
-
-            if (rectorPass.length < 6) {
-                alert('⚠️ La contraseña debe tener al menos 6 caracteres');
-                return;
-            }
+            if (!nombre || !ciudad || !anioEscolar) return alert('⚠️ Completa campos del colegio');
+            if (!rectorNom || !rectorEmailVal || !rectorPass) return alert('⚠️ Completa datos del rector');
+            if (rectorPass.length < 6) return alert('⚠️ Mín 6 caracteres');
 
             const user = auth.currentUser;
-            if (!user) {
-                alert('❌ No hay usuario autenticado');
-                return;
-            }
+            if (!user) return alert('❌ Sin sesión');
 
             const btnGuardar = document.getElementById('btnGuardarColegio');
             btnGuardar.disabled = true;
             btnGuardar.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
 
             try {
+                const plan = getPlanById(planSeleccionado);
                 const nuevoColegio = {
-                    nombre,
-                    nit: nit || '',
-                    direccion: direccion || '',
-                    ciudad,
-                    departamento: departamento || '',
-                    telefono: telefono || '',
-                    correo: correo || '',
-                    anioEscolar,
-                    estado,
-                    creadoPor: user.uid,
-                    fechaCreacion: serverTimestamp()
+                    nombre, nit: nit || '', direccion: direccion || '',
+                    ciudad, departamento: departamento || '',
+                    telefono: telefono || '', correo: correo || '',
+                    anioEscolar, estado: 'activo',
+                    planId: plan.id, planNombre: plan.nombre,
+                    maxEstudiantes: plan.maxEstudiantes,
+                    logoUrl: '', colorPrimario, colorSecundario,
+                    fechaUltimoPago: serverTimestamp(),
+                    fechaVencimiento: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
+                    pagos: [], estadoPago: 'al-dia',
+                    creadoPor: user.uid, fechaCreacion: serverTimestamp()
                 };
 
                 const colegioRef = await addDoc(collection(db, 'colegios'), nuevoColegio);
                 const colegioId = colegioRef.id;
 
+                if (logoFile) {
+                    const r = await subirLogo(colegioId, logoFile);
+                    if (r.success) await updateDoc(colegioRef, { logoUrl: r.url });
+                }
+
                 const userCredential = await createUserWithEmailAndPassword(auth, rectorEmailVal, rectorPass);
                 const rectorUid = userCredential.user.uid;
-
                 await setDoc(doc(db, 'usuarios', rectorUid), {
-                    nombre: rectorNom,
-                    email: rectorEmailVal,
-                    telefono: rectorTel || '',
-                    rol: 'rector',
-                    colegioId: colegioId,
-                    activo: true,
-                    fechaCreacion: serverTimestamp(),
-                    creadoPor: user.uid
+                    nombre: rectorNom, email: rectorEmailVal, telefono: rectorTel || '',
+                    rol: 'rector', colegioId, activo: true,
+                    fechaCreacion: serverTimestamp(), creadoPor: user.uid
                 });
 
-                alert('✅ Colegio y Rector registrados exitosamente');
+                alert('✅ Colegio y Rector registrados');
                 closeModal();
                 cargarDashboard();
-
             } catch (error) {
-                console.error('Error al registrar:', error);
-                
-                let mensaje = 'Error al registrar: ';
-                if (error.code === 'auth/email-already-in-use') {
-                    mensaje = '⚠️ El correo del rector ya está registrado. Usa otro correo.';
-                } else {
-                    mensaje += error.message;
-                }
+                console.error(error);
+                let mensaje = 'Error: ';
+                if (error.code === 'auth/email-already-in-use') mensaje = '⚠️ El correo del rector ya está registrado.';
+                else mensaje += error.message;
                 alert('❌ ' + mensaje);
             } finally {
                 btnGuardar.disabled = false;
@@ -1782,68 +1174,616 @@
         });
 
         // =============================================
-        // AUTH STATE - VERIFICAR SUPERADMIN
+        // CARGAR DASHBOARD
+        // =============================================
+        async function cargarDashboard() {
+            try {
+                const colegiosSnapshot = await getDocs(collection(db, 'colegios'));
+                let total = 0, activos = 0, inactivos = 0, vencidos = 0;
+                const colegiosList = [];
+                const hoy = new Date();
+
+                for (const docSnapshot of colegiosSnapshot.docs) {
+                    const data = docSnapshot.data();
+                    let estado = data.estado || 'inactivo';
+                    let estadoPago = data.estadoPago || 'al-dia';
+                    const fechaVenc = data.fechaVencimiento
+                        ? (data.fechaVencimiento.toDate ? data.fechaVencimiento.toDate() : new Date(data.fechaVencimiento))
+                        : null;
+
+                    if (fechaVenc && fechaVenc < hoy && estadoPago !== 'vencido') {
+                        estadoPago = 'vencido'; estado = 'inactivo';
+                        try { await updateDoc(doc(db, 'colegios', docSnapshot.id), { estadoPago: 'vencido', estado: 'inactivo' }); } catch (e) {}
+                    }
+
+                    // Conteo de estudiantes: intenta matrículas, si falla usa estudiantes
+                    let estudiantesActuales = 0;
+                    try {
+                        const matSnap = await getDocs(query(collection(db, 'colegios', docSnapshot.id, 'matriculas'), where('estado', '==', 'activo')));
+                        estudiantesActuales = matSnap.size;
+                    } catch (e) {}
+                    if (estudiantesActuales === 0) {
+                        try {
+                            const estSnap = await getDocs(collection(db, 'colegios', docSnapshot.id, 'estudiantes'));
+                            estudiantesActuales = estSnap.size;
+                        } catch (e) {}
+                    }
+
+                    let rectorNombreVal = 'Sin asignar';
+                    try {
+                        const rectoresSnapshot = await getDocs(query(
+                            collection(db, 'usuarios'),
+                            where('colegioId', '==', docSnapshot.id),
+                            where('rol', '==', 'rector')
+                        ));
+                        if (!rectoresSnapshot.empty) rectorNombreVal = rectoresSnapshot.docs[0].data().nombre || 'Sin nombre';
+                    } catch (e) {}
+
+                    total++;
+                    if (estado === 'activo') activos++; else inactivos++;
+                    if (estadoPago === 'vencido') vencidos++;
+
+                    colegiosList.push({ id: docSnapshot.id, ...data, estado, estadoPago, estudiantesActuales, rector: rectorNombreVal });
+                }
+
+                colegiosCache = colegiosList;
+                totalColegiosEl.textContent = total;
+                colegiosActivosEl.textContent = activos;
+                colegiosInactivosEl.textContent = inactivos;
+                colegiosVencidosEl.textContent = vencidos;
+
+                const ultimos = colegiosList.slice(-5).reverse();
+                tablaUltimosColegios.innerHTML = ultimos.length === 0
+                    ? `<tr><td colspan="5" class="text-center text-muted">No hay colegios</td></tr>`
+                    : ultimos.map(c => `
+                        <tr>
+                            <td><strong>${c.nombre || 'Sin nombre'}</strong></td>
+                            <td>${c.planNombre || 'Sin plan'}</td>
+                            <td>${c.ciudad || 'N/A'}</td>
+                            <td><span class="badge ${c.estado === 'activo' ? 'badge-success' : 'badge-danger'}">${c.estado}</span></td>
+                            <td>${c.rector}</td>
+                        </tr>
+                    `).join('');
+
+                tablaColegios.innerHTML = colegiosList.length === 0
+                    ? `<tr><td colspan="8" class="text-center text-muted">No hay colegios</td></tr>`
+                    : colegiosList.map((c, i) => {
+                        const max = c.maxEstudiantes || 0;
+                        const actual = c.estudiantesActuales || 0;
+                        const porcentaje = max > 0 ? Math.min(100, Math.round((actual / max) * 100)) : 0;
+                        const colorBarra = porcentaje >= 90 ? 'var(--danger)' : porcentaje >= 70 ? 'var(--warning)' : 'var(--success)';
+                        return `
+                        <tr>
+                            <td>${i + 1}</td>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    ${c.logoUrl ? `<img src="${c.logoUrl}" style="width:32px;height:32px;border-radius:6px;object-fit:cover;" />` : `<div style="width:32px;height:32px;border-radius:6px;background:var(--gray-200);display:flex;align-items:center;justify-content:center;"><i class="fas fa-school" style="color:var(--gray-500);font-size:0.8rem;"></i></div>`}
+                                    <strong>${c.nombre || 'Sin nombre'}</strong>
+                                </div>
+                            </td>
+                            <td>${c.planNombre || 'Sin plan'}</td>
+                            <td>
+                                <div style="min-width: 100px;">
+                                    <div style="font-size: 0.75rem; font-weight: 600;">${actual} / ${max}</div>
+                                    <div style="height: 4px; background: var(--gray-200); border-radius: 4px; margin-top: 3px; overflow: hidden;">
+                                        <div style="height: 100%; width: ${porcentaje}%; background: ${colorBarra};"></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="badge ${c.estadoPago === 'al-dia' ? 'badge-success' : 'badge-danger'}">
+                                    ${c.estadoPago === 'al-dia' ? 'Al día' : 'Vencido'}
+                                </span>
+                                <div style="font-size: 0.7rem; color: var(--gray-500); margin-top: 2px;">
+                                    ${c.fechaVencimiento ? formatearFecha(c.fechaVencimiento) : 'Sin fecha'}
+                                </div>
+                            </td>
+                            <td><span class="badge ${c.estado === 'activo' ? 'badge-success' : 'badge-danger'}">${c.estado}</span></td>
+                            <td>${c.rector}</td>
+                            <td>
+                                <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                                    <button class="btn-info btn-sm" onclick="window.verDetalle('${c.id}')" title="Ver detalle"><i class="fas fa-eye"></i></button>
+                                    <button class="btn-warning btn-sm" onclick="window.editarColegio('${c.id}')" title="Editar"><i class="fas fa-edit"></i></button>
+                                    <button class="btn-primary btn-sm" onclick="window.cambiarPlan('${c.id}')" title="Cambiar plan"><i class="fas fa-exchange-alt"></i></button>
+                                    <button class="btn-success btn-sm" onclick="window.registrarPago('${c.id}')" title="Registrar pago"><i class="fas fa-money-bill"></i></button>
+                                    <button class="btn-secondary btn-sm" onclick="window.toggleEstado('${c.id}', '${c.estado}')" title="Activar/Desactivar"><i class="fas fa-power-off"></i></button>
+                                    <button class="btn-danger btn-sm" onclick="window.eliminarColegio('${c.id}', '${(c.nombre||'').replace(/'/g, "\\'")}')" title="Eliminar"><i class="fas fa-trash"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                    }).join('');
+            } catch (error) {
+                console.error(error);
+                tablaUltimosColegios.innerHTML = `<tr><td colspan="5" class="text-center text-danger">❌ Error</td></tr>`;
+                tablaColegios.innerHTML = `<tr><td colspan="8" class="text-center text-danger">❌ Error</td></tr>`;
+            }
+        }
+
+        // =============================================
+        // VER DETALLE
+        // =============================================
+        window.verDetalle = async function(id) {
+            const modalEl = document.getElementById('modalDetalleColegio');
+            const body = document.getElementById('detalleColegioBody');
+            modalEl.classList.add('show');
+            body.innerHTML = `<div class="text-center text-muted" style="padding: 20px;"><i class="fas fa-spinner fa-spin"></i> Cargando...</div>`;
+            try {
+                const coleDoc = await getDoc(doc(db, 'colegios', id));
+                if (!coleDoc.exists()) { body.innerHTML = `<div class="text-center text-danger">No encontrado</div>`; return; }
+                const c = coleDoc.data();
+
+                let numEst = 0;
+                try { const s = await getDocs(query(collection(db, 'colegios', id, 'matriculas'), where('estado', '==', 'activo'))); numEst = s.size; } catch (e) {}
+                if (numEst === 0) { try { const s = await getDocs(collection(db, 'colegios', id, 'estudiantes')); numEst = s.size; } catch (e) {} }
+
+                let numProf = 0;
+                try { const s = await getDocs(query(collection(db, 'usuarios'), where('colegioId', '==', id), where('rol', '==', 'profesor'))); numProf = s.size; } catch (e) {}
+
+                const pagos = c.pagos || [];
+
+                body.innerHTML = `
+                    <div style="display: flex; gap: 16px; align-items: center; margin-bottom: 20px;">
+                        ${c.logoUrl ? `<img src="${c.logoUrl}" style="width:72px;height:72px;border-radius:12px;object-fit:cover;" />` : `<div style="width:72px;height:72px;border-radius:12px;background:var(--gray-200);display:flex;align-items:center;justify-content:center;"><i class="fas fa-school" style="color:var(--gray-500);font-size:1.5rem;"></i></div>`}
+                        <div>
+                            <h3 style="font-size: 1.2rem; font-weight: 700;">${c.nombre || 'Sin nombre'}</h3>
+                            <div style="display: flex; gap: 8px; margin-top: 6px; flex-wrap: wrap;">
+                                <span class="badge ${c.estado === 'activo' ? 'badge-success' : 'badge-danger'}">${c.estado || 'inactivo'}</span>
+                                <span class="badge ${c.estadoPago === 'al-dia' ? 'badge-success' : 'badge-danger'}">${c.estadoPago || 'al-dia'}</span>
+                                <span class="badge badge-info">${c.planNombre || 'Sin plan'}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="detalle-grid">
+                        <div class="item"><div class="label">NIT</div><div class="value">${c.nit || '-'}</div></div>
+                        <div class="item"><div class="label">Teléfono</div><div class="value">${c.telefono || '-'}</div></div>
+                        <div class="item"><div class="label">Ciudad</div><div class="value">${c.ciudad || '-'}</div></div>
+                        <div class="item"><div class="label">Departamento</div><div class="value">${c.departamento || '-'}</div></div>
+                        <div class="item"><div class="label">Correo</div><div class="value">${c.correo || '-'}</div></div>
+                        <div class="item"><div class="label">Dirección</div><div class="value">${c.direccion || '-'}</div></div>
+                        <div class="item"><div class="label">Año escolar</div><div class="value">${c.anioEscolar || '-'}</div></div>
+                        <div class="item"><div class="label">Plan</div><div class="value">${c.planNombre || '-'}</div></div>
+                        <div class="item"><div class="label">Estudiantes</div><div class="value">${numEst} / ${c.maxEstudiantes || '∞'}</div></div>
+                        <div class="item"><div class="label">Profesores</div><div class="value">${numProf}</div></div>
+                        <div class="item"><div class="label">Último pago</div><div class="value">${c.fechaUltimoPago ? formatearFecha(c.fechaUltimoPago) : 'Sin registro'}</div></div>
+                        <div class="item"><div class="label">Vence</div><div class="value">${c.fechaVencimiento ? formatearFecha(c.fechaVencimiento) : '-'}</div></div>
+                        <div class="item"><div class="label">Color primario</div><div class="value"><span style="display:inline-block;width:16px;height:16px;background:${c.colorPrimario || '#4f46e5'};border-radius:4px;vertical-align:middle;margin-right:6px;"></span>${c.colorPrimario || '-'}</div></div>
+                        <div class="item"><div class="label">Color secundario</div><div class="value"><span style="display:inline-block;width:16px;height:16px;background:${c.colorSecundario || '#ffffff'};border:1px solid #ccc;border-radius:4px;vertical-align:middle;margin-right:6px;"></span>${c.colorSecundario || '-'}</div></div>
+                    </div>
+
+                    <h4 style="margin-top: 16px; font-size: 0.95rem;">Historial de pagos (${pagos.length})</h4>
+                    <div class="historial-pagos" style="margin-top: 8px;">
+                        ${pagos.length === 0
+                            ? `<div class="text-center text-muted" style="padding: 16px; font-size: 0.85rem;">Sin pagos registrados</div>`
+                            : pagos.slice().reverse().map(p => `
+                                <div class="pago-item">
+                                    <div>
+                                        <div><strong>${formatearPrecio(p.monto)}</strong> · ${p.metodo || 'N/A'}</div>
+                                        <div class="pago-fecha">${p.fecha || ''} ${p.referencia ? '· Ref: ' + p.referencia : ''}</div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                    </div>
+
+                    <div class="colegio-preview" style="background: ${c.colorPrimario || '#4f46e5'}; color: ${c.colorSecundario || '#ffffff'}; margin-top: 16px;">
+                        <h4>Vista previa del panel</h4>
+                        <p>Así se verán los colores institucionales del colegio.</p>
+                    </div>
+                `;
+            } catch (error) {
+                body.innerHTML = `<div class="text-center text-danger">Error: ${error.message}</div>`;
+            }
+        };
+
+        document.getElementById('closeDetalleModal').addEventListener('click', () => document.getElementById('modalDetalleColegio').classList.remove('show'));
+        document.getElementById('closeDetalleBtn').addEventListener('click', () => document.getElementById('modalDetalleColegio').classList.remove('show'));
+        document.querySelector('#modalDetalleColegio .modal-overlay').addEventListener('click', () => document.getElementById('modalDetalleColegio').classList.remove('show'));
+
+        // =============================================
+        // EDITAR COLEGIO
+        // =============================================
+        window.editarColegio = async function(id) {
+            try {
+                const coleDoc = await getDoc(doc(db, 'colegios', id));
+                if (!coleDoc.exists()) return alert('Colegio no encontrado');
+                const c = coleDoc.data();
+
+                document.getElementById('editarColegioId').value = id;
+                document.getElementById('editarNombre').value = c.nombre || '';
+                document.getElementById('editarNit').value = c.nit || '';
+                document.getElementById('editarDireccion').value = c.direccion || '';
+                document.getElementById('editarCiudad').value = c.ciudad || '';
+                document.getElementById('editarDepartamento').value = c.departamento || '';
+                document.getElementById('editarTelefono').value = c.telefono || '';
+                document.getElementById('editarCorreo').value = c.correo || '';
+                document.getElementById('editarAnioEscolar').value = c.anioEscolar || '';
+                document.getElementById('editarEstado').value = c.estado || 'activo';
+                document.getElementById('editarEstadoPago').value = c.estadoPago || 'al-dia';
+                document.getElementById('editarColorPrimario').value = c.colorPrimario || '#4f46e5';
+                document.getElementById('editarColorSecundario').value = c.colorSecundario || '#ffffff';
+                document.getElementById('editarLogoInput').value = '';
+
+                if (c.logoUrl) {
+                    document.getElementById('editarLogoPreview').src = c.logoUrl;
+                    document.getElementById('editarLogoPreview').style.display = 'block';
+                    document.getElementById('editarLogoPlaceholder').style.display = 'none';
+                } else {
+                    document.getElementById('editarLogoPreview').style.display = 'none';
+                    document.getElementById('editarLogoPlaceholder').style.display = 'flex';
+                }
+
+                actualizarPreviewColorEditar();
+                document.getElementById('modalEditarColegio').classList.add('show');
+            } catch (e) {
+                alert('Error: ' + e.message);
+            }
+        };
+
+        function actualizarPreviewColorEditar() {
+            const box = document.getElementById('editarColorPreviewBox');
+            if (!box) return;
+            box.style.background = document.getElementById('editarColorPrimario').value;
+            box.style.color = document.getElementById('editarColorSecundario').value;
+        }
+        document.getElementById('editarColorPrimario').addEventListener('input', actualizarPreviewColorEditar);
+        document.getElementById('editarColorSecundario').addEventListener('input', actualizarPreviewColorEditar);
+
+        document.getElementById('editarLogoInput').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            if (file.size > 2 * 1024 * 1024) { alert('⚠️ Máx 2MB'); e.target.value = ''; return; }
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+                document.getElementById('editarLogoPreview').src = ev.target.result;
+                document.getElementById('editarLogoPreview').style.display = 'block';
+                document.getElementById('editarLogoPlaceholder').style.display = 'none';
+            };
+            reader.readAsDataURL(file);
+        });
+
+        document.getElementById('closeEditarModal').addEventListener('click', () => document.getElementById('modalEditarColegio').classList.remove('show'));
+        document.getElementById('cancelarEditar').addEventListener('click', () => document.getElementById('modalEditarColegio').classList.remove('show'));
+        document.querySelector('#modalEditarColegio .modal-overlay').addEventListener('click', () => document.getElementById('modalEditarColegio').classList.remove('show'));
+
+        document.getElementById('formEditarColegio').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const id = document.getElementById('editarColegioId').value;
+            if (!id) return;
+
+            const btnSubmit = e.target.querySelector('button[type="submit"]');
+            const original = btnSubmit.innerHTML;
+            btnSubmit.disabled = true;
+            btnSubmit.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
+
+            try {
+                const datos = {
+                    nombre: document.getElementById('editarNombre').value.trim(),
+                    nit: document.getElementById('editarNit').value.trim(),
+                    direccion: document.getElementById('editarDireccion').value.trim(),
+                    ciudad: document.getElementById('editarCiudad').value.trim(),
+                    departamento: document.getElementById('editarDepartamento').value.trim(),
+                    telefono: document.getElementById('editarTelefono').value.trim(),
+                    correo: document.getElementById('editarCorreo').value.trim(),
+                    anioEscolar: parseInt(document.getElementById('editarAnioEscolar').value) || null,
+                    estado: document.getElementById('editarEstado').value,
+                    estadoPago: document.getElementById('editarEstadoPago').value,
+                    colorPrimario: document.getElementById('editarColorPrimario').value,
+                    colorSecundario: document.getElementById('editarColorSecundario').value
+                };
+
+                const logoFile = document.getElementById('editarLogoInput').files[0];
+                if (logoFile) {
+                    const r = await subirLogo(id, logoFile);
+                    if (r.success) datos.logoUrl = r.url;
+                }
+
+                await updateDoc(doc(db, 'colegios', id), datos);
+                alert('✅ Colegio actualizado');
+                document.getElementById('modalEditarColegio').classList.remove('show');
+                cargarDashboard();
+            } catch (err) {
+                alert('❌ Error: ' + err.message);
+            } finally {
+                btnSubmit.disabled = false;
+                btnSubmit.innerHTML = original;
+            }
+        });
+
+        // =============================================
+        // CAMBIAR PLAN
+        // =============================================
+        window.cambiarPlan = async function(id) {
+            try {
+                const coleDoc = await getDoc(doc(db, 'colegios', id));
+                if (!coleDoc.exists()) { alert('No encontrado'); return; }
+                const c = coleDoc.data();
+                document.getElementById('cambiarPlanColegioId').value = id;
+                document.getElementById('cambiarPlanColegioNombre').textContent = c.nombre || 'Sin nombre';
+                planSeleccionadoCambio = c.planId || 'inicial';
+                renderPlanSelector(planSelectorCambio, planSeleccionadoCambio, (pid) => planSeleccionadoCambio = pid);
+                document.getElementById('modalCambiarPlan').classList.add('show');
+            } catch (e) { alert('Error: ' + e.message); }
+        };
+
+        document.getElementById('closeCambiarPlanModal').addEventListener('click', () => document.getElementById('modalCambiarPlan').classList.remove('show'));
+        document.getElementById('cancelarCambiarPlan').addEventListener('click', () => document.getElementById('modalCambiarPlan').classList.remove('show'));
+        document.querySelector('#modalCambiarPlan .modal-overlay').addEventListener('click', () => document.getElementById('modalCambiarPlan').classList.remove('show'));
+
+        document.getElementById('formCambiarPlan').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const id = document.getElementById('cambiarPlanColegioId').value;
+            if (!id || !planSeleccionadoCambio) return;
+            const plan = getPlanById(planSeleccionadoCambio);
+            try {
+                await updateDoc(doc(db, 'colegios', id), {
+                    planId: plan.id, planNombre: plan.nombre, maxEstudiantes: plan.maxEstudiantes
+                });
+                alert('✅ Plan actualizado');
+                document.getElementById('modalCambiarPlan').classList.remove('show');
+                cargarDashboard();
+            } catch (e) { alert('❌ Error: ' + e.message); }
+        });
+
+        // =============================================
+        // REGISTRAR PAGO
+        // =============================================
+        window.registrarPago = async function(id) {
+            try {
+                const coleDoc = await getDoc(doc(db, 'colegios', id));
+                if (!coleDoc.exists()) { alert('No encontrado'); return; }
+                const c = coleDoc.data();
+                document.getElementById('pagoColegioId').value = id;
+                document.getElementById('pagoColegioNombre').textContent = c.nombre || 'Sin nombre';
+                document.getElementById('pagoMonto').value = c.precioPlan || '';
+                document.getElementById('pagoMetodo').value = 'Transferencia';
+                document.getElementById('pagoReferencia').value = '';
+                document.getElementById('pagoFecha').value = new Date().toISOString().split('T')[0];
+                document.getElementById('modalRegistrarPago').classList.add('show');
+            } catch (e) { alert('Error: ' + e.message); }
+        };
+
+        document.getElementById('closePagoModal').addEventListener('click', () => document.getElementById('modalRegistrarPago').classList.remove('show'));
+        document.getElementById('cancelarPago').addEventListener('click', () => document.getElementById('modalRegistrarPago').classList.remove('show'));
+        document.querySelector('#modalRegistrarPago .modal-overlay').addEventListener('click', () => document.getElementById('modalRegistrarPago').classList.remove('show'));
+
+        document.getElementById('formRegistrarPago').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const id = document.getElementById('pagoColegioId').value;
+            const monto = parseFloat(document.getElementById('pagoMonto').value);
+            const metodo = document.getElementById('pagoMetodo').value;
+            const referencia = document.getElementById('pagoReferencia').value.trim();
+            const fecha = document.getElementById('pagoFecha').value;
+
+            if (!id || !monto || !fecha) return;
+
+            try {
+                const coleDoc = await getDoc(doc(db, 'colegios', id));
+                const c = coleDoc.data();
+                const pagos = c.pagos || [];
+                pagos.push({ monto, metodo, referencia, fecha });
+
+                const nuevaFechaVenc = new Date(fecha);
+                nuevaFechaVenc.setFullYear(nuevaFechaVenc.getFullYear() + 1);
+
+                await updateDoc(doc(db, 'colegios', id), {
+                    pagos,
+                    fechaUltimoPago: new Date(fecha),
+                    fechaVencimiento: nuevaFechaVenc,
+                    estadoPago: 'al-dia',
+                    estado: 'activo'
+                });
+
+                // ✅ Registrar también en Economía (colección movimientos)
+                await addDoc(collection(db, 'movimientos'), {
+                    tipo: 'entrada',
+                    categoria: 'Pago colegio',
+                    monto,
+                    metodo,
+                    descripcion: `Pago plan ${c.planNombre || ''} - ${c.nombre || 'Colegio'}`,
+                    referencia: referencia || '',
+                    fecha,
+                    colegioId: id,
+                    colegioNombre: c.nombre || '',
+                    creadoPor: auth.currentUser?.uid || '',
+                    fechaCreacion: serverTimestamp()
+                });
+
+                alert('✅ Pago registrado. Colegio activado por 1 año.');
+                document.getElementById('modalRegistrarPago').classList.remove('show');
+                cargarDashboard();
+            } catch (e) { alert('❌ Error: ' + e.message); }
+        });
+
+        // =============================================
+        // TOGGLE / ELIMINAR
+        // =============================================
+        window.toggleEstado = async function(id, estadoActual) {
+            const nuevo = estadoActual === 'activo' ? 'inactivo' : 'activo';
+            if (!confirm(`¿${nuevo === 'activo' ? 'Activar' : 'Desactivar'} este colegio?`)) return;
+            try {
+                await updateDoc(doc(db, 'colegios', id), { estado: nuevo });
+                cargarDashboard();
+            } catch (e) { alert('❌ Error: ' + e.message); }
+        };
+
+        window.eliminarColegio = async function(id, nombre) {
+            if (!confirm(`⚠️ ¿Eliminar "${nombre}"?\n\nSe eliminarán también todos sus usuarios.`)) return;
+            if (!confirm('¿ESTÁS SEGURO? Irreversible.')) return;
+            try {
+                const usersSnap = await getDocs(query(collection(db, 'usuarios'), where('colegioId', '==', id)));
+                for (const u of usersSnap.docs) await deleteDoc(u.ref);
+                await deleteDoc(doc(db, 'colegios', id));
+                alert('✅ Eliminado');
+                cargarDashboard();
+            } catch (e) { alert('❌ Error: ' + e.message); }
+        };
+
+        // =============================================
+        // ECONOMÍA
+        // =============================================
+        async function cargarEconomia() {
+            try {
+                const snap = await getDocs(collection(db, 'movimientos'));
+                movimientosCache = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                renderEconomia();
+            } catch (e) {
+                console.error('Error economía:', e);
+                tablaEconomia.innerHTML = `<tr><td colspan="7" class="text-center text-danger">❌ Error: ${e.message}</td></tr>`;
+            }
+        }
+
+        function renderEconomia() {
+            const filtroTipo = ecoFiltroTipo.value;
+            const filtroCat = ecoFiltroCategoria.value;
+
+            const lista = movimientosCache.filter(m => {
+                if (filtroTipo && m.tipo !== filtroTipo) return false;
+                if (filtroCat && m.categoria !== filtroCat) return false;
+                return true;
+            });
+
+            const totalIngresos = movimientosCache.filter(m => m.tipo === 'entrada').reduce((a, m) => a + (Number(m.monto) || 0), 0);
+            const totalEgresos = movimientosCache.filter(m => m.tipo === 'salida').reduce((a, m) => a + (Number(m.monto) || 0), 0);
+            const balance = totalIngresos - totalEgresos;
+
+            const hoy = new Date();
+            const mesActual = hoy.getMonth(), anioActual = hoy.getFullYear();
+            const movMes = movimientosCache.filter(m => {
+                if (!m.fecha) return false;
+                const d = new Date(m.fecha);
+                return d.getMonth() === mesActual && d.getFullYear() === anioActual;
+            }).length;
+
+            ecoIngresos.textContent = formatearPrecio(totalIngresos);
+            ecoEgresos.textContent = formatearPrecio(totalEgresos);
+            ecoBalance.textContent = formatearPrecio(balance);
+            ecoBalance.style.color = balance >= 0 ? 'var(--success)' : 'var(--danger)';
+            ecoMes.textContent = movMes;
+
+            if (lista.length === 0) {
+                tablaEconomia.innerHTML = `<tr><td colspan="7" class="text-center text-muted">No hay movimientos registrados</td></tr>`;
+                return;
+            }
+
+            // Ordenar por fecha desc
+            lista.sort((a, b) => new Date(b.fecha || 0) - new Date(a.fecha || 0));
+
+            tablaEconomia.innerHTML = lista.map((m, i) => `
+                <tr>
+                    <td>${i + 1}</td>
+                    <td>${m.fecha || '-'}</td>
+                    <td><span class="mov-tipo-badge ${m.tipo === 'entrada' ? 'entrada' : 'salida'}">${m.tipo === 'entrada' ? '↓ Ingreso' : '↑ Egreso'}</span></td>
+                    <td>${m.categoria || '-'}</td>
+                    <td>
+                        ${m.descripcion || '-'}
+                        ${m.referencia ? `<div style="font-size:0.7rem;color:var(--gray-500);">Ref: ${m.referencia}</div>` : ''}
+                    </td>
+                    <td class="${m.tipo === 'entrada' ? 'mov-tipo-entrada' : 'mov-tipo-salida'}">
+                        ${m.tipo === 'entrada' ? '+' : '-'} ${formatearPrecio(m.monto)}
+                    </td>
+                    <td>
+                        <button class="btn-danger btn-sm" onclick="window.eliminarMovimiento('${m.id}')" title="Eliminar"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        ecoFiltroTipo.addEventListener('change', renderEconomia);
+        ecoFiltroCategoria.addEventListener('change', renderEconomia);
+
+        window.eliminarMovimiento = async function(id) {
+            if (!confirm('¿Eliminar este movimiento?')) return;
+            try {
+                await deleteDoc(doc(db, 'movimientos', id));
+                cargarEconomia();
+            } catch (e) { alert('❌ Error: ' + e.message); }
+        };
+
+        // Modal nuevo movimiento
+        document.getElementById('btnNuevoMovimiento').addEventListener('click', () => {
+            document.getElementById('formNuevoMovimiento').reset();
+            document.getElementById('movFecha').value = new Date().toISOString().split('T')[0];
+            document.getElementById('modalNuevoMovimiento').classList.add('show');
+        });
+        document.getElementById('closeMovimientoModal').addEventListener('click', () => document.getElementById('modalNuevoMovimiento').classList.remove('show'));
+        document.getElementById('cancelarMovimiento').addEventListener('click', () => document.getElementById('modalNuevoMovimiento').classList.remove('show'));
+        document.querySelector('#modalNuevoMovimiento .modal-overlay').addEventListener('click', () => document.getElementById('modalNuevoMovimiento').classList.remove('show'));
+
+        document.getElementById('formNuevoMovimiento').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const tipo = document.getElementById('movTipo').value;
+            const categoria = document.getElementById('movCategoria').value;
+            const monto = parseFloat(document.getElementById('movMonto').value);
+            const fecha = document.getElementById('movFecha').value;
+            const descripcion = document.getElementById('movDescripcion').value.trim();
+            const referencia = document.getElementById('movReferencia').value.trim();
+
+            if (!tipo || !categoria || !monto || !fecha || !descripcion) return;
+
+            try {
+                await addDoc(collection(db, 'movimientos'), {
+                    tipo, categoria, monto, fecha, descripcion,
+                    referencia: referencia || '',
+                    creadoPor: auth.currentUser?.uid || '',
+                    fechaCreacion: serverTimestamp()
+                });
+                alert('✅ Movimiento registrado');
+                document.getElementById('modalNuevoMovimiento').classList.remove('show');
+                cargarEconomia();
+            } catch (e) { alert('❌ Error: ' + e.message); }
+        });
+
+        // =============================================
+        // AUTH
         // =============================================
         let isLoggingOut = false;
-
         onAuthStateChanged(auth, async (user) => {
-            // Si estamos en proceso de logout, no hacer nada
             if (isLoggingOut) return;
-
             if (user) {
                 try {
                     const userDoc = await getDoc(doc(db, 'usuarios', user.uid));
-
                     if (userDoc.exists()) {
                         const userData = userDoc.data();
-
                         if (userData.rol === 'superadmin' && userData.activo === true) {
                             userNameEl.textContent = userData.nombre || user.email;
                             userRoleEl.textContent = userData.rol || 'superadmin';
                             cargarDashboard();
                         } else {
-                            alert('⛔ Acceso denegado. No tienes permisos de superadministrador.');
+                            alert('⛔ Acceso denegado.');
                             await signOut(auth);
                             window.location.href = '../login.html';
                         }
                     } else {
-                        alert('⛔ Usuario no registrado en el sistema.');
+                        alert('⛔ Usuario no registrado.');
                         await signOut(auth);
                         window.location.href = '../login.html';
                     }
                 } catch (error) {
-                    console.error('Error al verificar usuario:', error);
+                    console.error(error);
                     alert('❌ Error al verificar permisos');
                     await signOut(auth);
                     window.location.href = '../login.html';
                 }
             } else {
-                // No autenticado - redirigir al login
                 window.location.href = '../login.html';
             }
         });
 
-        // =============================================
-        // LOGOUT - CORREGIDO
-        // =============================================
         logoutBtn.addEventListener('click', async () => {
-            if (confirm('¿Seguro que deseas cerrar sesión?')) {
+            if (confirm('¿Cerrar sesión?')) {
                 try {
                     isLoggingOut = true;
                     await signOut(auth);
-                    // Forzar redirección directa
                     window.location.href = '../login.html';
                 } catch (error) {
-                    console.error('Error al cerrar sesión:', error);
-                    alert('❌ Error al cerrar sesión');
+                    alert('❌ Error');
                     isLoggingOut = false;
                 }
             }
         });
 
-        console.log('✅ EduOne - Panel de Administración cargado correctamente');
-        console.log('📁 Ruta: PanelAdmin/AdminPanel.html');
-        console.log('🔙 Logout → ../login.html');
+        console.log('✅ EduOne Panel cargado');
     </script>
 
 </body>
