@@ -63,7 +63,10 @@
             align-items: center;
             justify-content: center;
             padding: 16px;
-            margin: 0; overflow-x: hidden; overflow-wrap: break-word; }
+            margin: 0;
+            overflow-x: hidden;
+            overflow-wrap: break-word;
+        }
 
         .login-container {
             width: 100%;
@@ -233,38 +236,6 @@
 
         .btn-primary i {
             font-size: 1.1rem;
-        }
-
-        .btn-secondary {
-            width: 100%;
-            padding: 14px;
-            background: var(--gray-100);
-            color: var(--gray-700);
-            border: 2px solid var(--gray-200);
-            border-radius: 10px;
-            font-size: 1rem;
-            font-weight: 600;
-            font-family: var(--font);
-            cursor: pointer;
-            transition: background 0.2s, border-color 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .btn-secondary:hover {
-            background: var(--gray-200);
-            border-color: var(--gray-300);
-        }
-
-        .btn-secondary:active {
-            transform: scale(0.98);
-        }
-
-        .btn-secondary i {
-            font-size: 1.1rem;
-            color: var(--primary);
         }
 
         .btn-back {
@@ -437,7 +408,6 @@
             }
 
             .btn-primary,
-            .btn-secondary,
             .btn-back {
                 padding: 13px;
                 font-size: 0.95rem;
@@ -474,7 +444,6 @@
             }
 
             .btn-primary,
-            .btn-secondary,
             .btn-back {
                 padding: 11px;
                 font-size: 0.85rem;
@@ -666,32 +635,82 @@
         const togglePasswordBtn = document.getElementById('togglePassword');
 
         // =============================================
-        // MAPA DE RUTAS POR ROL
+        // MAPA DE RUTAS POR ROL (ACTUALIZADO)
         // =============================================
         const RUTAS = {
+            // ── GLOBAL ──
             superadmin: 'PanelAdmin/AdminPanel.html',
+
+            // ── INSTITUCIONAL (Rector y admin del colegio) ──
             rector: 'colegios/colegio.html',
             admin_colegio: 'colegios/colegio.html',
-            admin_auxiliar: 'panel-admin-auxiliar.html',
+            admin_auxiliar: 'colegios/colegio.html',
+
+            // ── ACADÉMICO ──
             profesor: 'colegios/profesor.html',
             estudiante: 'colegios/estudiante.html',
-            acudiente: 'colegios/acudiente.html'
+            acudiente: 'colegios/acudiente.html',
+
+            // ── PERSONAL ADMINISTRATIVO ──
+            contador: 'contador.html',
+            coord_academico: 'colegios/coordinador-academico.html',
+            coord_convivencia: 'colegios/coordinador-convivencia.html',
+            secretaria: 'colegios/secretaria.html',
+            orientador: 'colegios/orientador.html'
         };
 
         // =============================================
-        // FUNCIÓN PARA REDIRIGIR SEGÚN ROL
+        // ROLES SIN PANEL TODAVÍA
+        // (si en el futuro agregas más roles y no tienen panel,
+        //  se pueden listar aquí para mostrar "en construcción")
+        // =============================================
+        const ROLES_PENDIENTES = {
+            // Ejemplo:
+            // bibliotecario: 'Bibliotecario',
+        };
+
+        // =============================================
+        // REDIRECCIÓN POR ROL
         // =============================================
         function redirigirSegunRol(rol) {
-            const ruta = RUTAS[rol];
-            
-            if (!ruta) {
-                console.warn(`⚠️ Rol no reconocido: ${rol}, redirigiendo a login`);
+            if (!rol) {
+                console.warn('⚠️ Rol vacío, redirigiendo a login');
                 window.location.href = 'login.html';
                 return;
             }
-            
-            console.log(`🔀 Redirigiendo al rol: ${rol} → ${ruta}`);
-            window.location.href = ruta;
+
+            // 1) Rol con panel disponible
+            const ruta = RUTAS[rol];
+            if (ruta) {
+                console.log(`🔀 Redirigiendo: rol="${rol}" → ${ruta}`);
+                window.location.href = ruta;
+                return;
+            }
+
+            // 2) Rol existe pero sin panel todavía
+            if (ROLES_PENDIENTES[rol]) {
+                console.warn(`🚧 Panel en construcción para rol: ${rol}`);
+                showAlert(
+                    `🚧 El panel de ${ROLES_PENDIENTES[rol]} está en construcción. Contacta al administrador.`,
+                    'info'
+                );
+                setTimeout(async () => {
+                    await signOut(auth);
+                    window.location.href = 'login.html';
+                }, 3500);
+                return;
+            }
+
+            // 3) Rol desconocido
+            console.warn(`⚠️ Rol no reconocido: ${rol}`);
+            showAlert(
+                `⛔ Rol "${rol}" no tiene panel asignado. Contacta al administrador.`,
+                'error'
+            );
+            setTimeout(async () => {
+                await signOut(auth);
+                window.location.href = 'login.html';
+            }, 2500);
         }
 
         // =============================================
@@ -718,7 +737,7 @@
         });
 
         // =============================================
-        // FUNCIÓN PARA CREAR USUARIO EN FIRESTORE
+        // CREAR USUARIO EN FIRESTORE (superadmin nuevo)
         // =============================================
         async function crearUsuarioEnFirestore(uid, email, nombre, rol = 'superadmin') {
             try {
@@ -744,7 +763,7 @@
 
         onAuthStateChanged(auth, async (user) => {
             if (isRedirecting) return;
-            
+
             if (user) {
                 console.log('👤 Usuario autenticado:', user.uid);
                 try {
@@ -752,6 +771,7 @@
                     if (userDoc.exists()) {
                         const data = userDoc.data();
                         console.log('📋 Datos del usuario:', data);
+
                         if (data.activo === true) {
                             isRedirecting = true;
                             redirigirSegunRol(data.rol);
@@ -815,6 +835,7 @@
                         loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Iniciar sesión';
                     }
                 } else {
+                    // Usuario nuevo en Auth pero no en Firestore → superadmin por defecto
                     console.log('🆕 Usuario nuevo, creando en Firestore como superadmin');
                     const creado = await crearUsuarioEnFirestore(user.uid, email, 'Super Admin', 'superadmin');
 
