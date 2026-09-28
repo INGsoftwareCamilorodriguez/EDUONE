@@ -2170,7 +2170,7 @@
                             <div class="abono-info">
                                 <strong>${formatearPrecio(a.monto)}</strong>
                                 <div class="abono-fecha">
-                                    ${a.fecha} · ${esc(a.metodo || 'N/A')} 
+                                    ${a.fecha} · ${esc(a.metodo || 'N/A')}
                                     ${a.referencia ? `· Ref: ${esc(a.referencia)}` : ''}
                                 </div>
                             </div>
@@ -2243,7 +2243,7 @@
                             wrapSeleccionado.innerHTML = `
                                 <span class="selected-chip">
                                     <i class="fas fa-user-check"></i>
-                                    ${esc(est.nombres || '')} ${esc(est.apellidos || '')} 
+                                    ${esc(est.nombres || '')} ${esc(est.apellidos || '')}
                                     · ${esc(est.documento || 'Sin doc')}
                                     <button type="button" style="background:none; border:none; color: var(--primary); cursor:pointer; margin-left: 4px;" onclick="window.limpiarSeleccionPagoEstudiante()">
                                         <i class="fas fa-times"></i>
@@ -2554,7 +2554,7 @@
                             wrapSeleccionado.innerHTML = `
                                 <span class="selected-chip">
                                     <i class="fas fa-user-check"></i>
-                                    ${esc(est.nombres || '')} ${esc(est.apellidos || '')} 
+                                    ${esc(est.nombres || '')} ${esc(est.apellidos || '')}
                                     · ${esc(est.documento || 'Sin doc')}
                                     <button type="button" style="background:none; border:none; color: var(--primary); cursor:pointer; margin-left: 4px;" onclick="window.limpiarSeleccionConfigEstudiante()">
                                         <i class="fas fa-times"></i>
@@ -3020,8 +3020,8 @@
                         @media print { body { padding: 0; } }
                     </style>
                 </head>
-                <body>${contenido}</body>
-                </html>
+                <body>${contenido}<\/body>
+                <\/html>
             `);
             ventana.document.close();
             setTimeout(() => ventana.print(), 500);
@@ -3053,7 +3053,7 @@
                     document.getElementById('pagoEstudianteSeleccionadoWrap').innerHTML = `
                         <span class="selected-chip">
                             <i class="fas fa-user-check"></i>
-                            ${esc(est.nombres || '')} ${esc(est.apellidos || '')} 
+                            ${esc(est.nombres || '')} ${esc(est.apellidos || '')}
                             · ${esc(est.documento || 'Sin doc')}
                             <button type="button" style="background:none; border:none; color: var(--primary); cursor:pointer; margin-left: 4px;" onclick="window.limpiarSeleccionPagoEstudiante()">
                                 <i class="fas fa-times"></i>
