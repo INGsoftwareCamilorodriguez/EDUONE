@@ -557,6 +557,7 @@
         }
         .eco-filtros select, .eco-filtros input { max-width: 220px; }
 
+        /* Tabs de contabilidad */
         .cont-tabs {
             display: flex; gap: 4px; flex-wrap: wrap;
             border-bottom: 2px solid var(--gray-200);
@@ -595,6 +596,7 @@
             color: #fff;
         }
 
+        /* Bloque resumen de pago en modales */
         .pago-resumen {
             background: var(--primary-bg);
             padding: 16px 20px;
@@ -1124,7 +1126,7 @@
     <!-- MODALES                                      -->
     <!-- =========================================== -->
 
-    <!-- Modal Estudiante -->
+    <!-- Modal Estudiante (inscribir) -->
     <div class="modal" id="modalEstudiante">
         <div class="modal-overlay"></div>
         <div class="modal-content">
@@ -1229,6 +1231,9 @@
                     <div id="editMatriculaResumen" class="pago-resumen">
                         <div class="text-center text-muted" style="padding: 10px;">Cargando...</div>
                     </div>
+                    <p style="font-size: 0.8rem; color: var(--gray-500); margin-top: 8px;">
+                        <i class="fas fa-info-circle"></i> Para registrar un nuevo abono, usa el botón <strong>Abonar</strong> en la tabla de estudiantes.
+                    </p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn-secondary" id="cancelEditarEstudianteModal">Cancelar</button>
@@ -1249,6 +1254,7 @@
             <form id="formAbonarMatricula">
                 <div class="modal-body">
                     <div id="abonarAlert" class="alert" style="display: none;"><i class="fas fa-info-circle"></i><span id="abonarAlertText"></span></div>
+
                     <input type="hidden" id="abonarEstudianteId" />
                     <p style="font-size: 0.9rem; margin-bottom: 12px;">
                         Estudiante: <strong id="abonarEstudianteNombre">-</strong>
@@ -1264,6 +1270,7 @@
                         <div class="form-group">
                             <label>Monto del abono *</label>
                             <input type="number" id="abonarMonto" class="form-control" min="1" step="any" required />
+                            <small style="color: var(--gray-500); font-size: 0.7rem;">No puede superar el saldo pendiente.</small>
                         </div>
                         <div class="form-group">
                             <label>Método de pago</label>
@@ -1289,7 +1296,7 @@
         </div>
     </div>
 
-    <!-- Modal Personal -->
+    <!-- Modal Personal (registrar) -->
     <div class="modal" id="modalPersonal">
         <div class="modal-overlay"></div>
         <div class="modal-content">
@@ -1513,11 +1520,13 @@
                     <div class="form-group">
                         <label>Valor de la pensión este mes (si es nueva)</label>
                         <input type="number" id="pensionValorInput" class="form-control" min="0" value="0" />
+                        <small style="color: var(--gray-500); font-size: 0.7rem;">Si la pensión ya existe, este campo se autocompleta.</small>
                     </div>
 
                     <div class="form-group">
                         <label>Monto a pagar *</label>
                         <input type="number" id="pagoMonto" class="form-control" required min="1" step="any" />
+                        <small style="color: var(--gray-500); font-size: 0.7rem;">Escribe solo el monto de este pago (ej: 100000). No el total.</small>
                     </div>
 
                     <div class="form-grid">
@@ -1574,20 +1583,13 @@
                         <div class="form-group">
                             <label>Total abonado *</label>
                             <input type="number" id="editPensionAbonado" class="form-control" min="0" required />
-                            <small style="color: var(--gray-500); font-size: 0.7rem;">
-                                <i class="fas fa-info-circle"></i> Si aumentas este valor, se registrará como nuevo pago.
-                            </small>
+                            <small style="color: var(--gray-500); font-size: 0.7rem;">Modifícalo si necesitas corregir el total histórico.</small>
                         </div>
                     </div>
 
                     <div style="background: var(--gray-50); padding: 12px; border-radius: 8px; display: flex; justify-content: space-between;">
                         <span style="font-weight: 500;">Saldo resultante:</span>
                         <strong id="editPensionSaldo" style="color: var(--danger); font-size: 1.1rem;">$0</strong>
-                    </div>
-
-                    <div id="editPensionAviso" style="margin-top: 12px; padding: 10px 14px; background: #fef3c7; border-radius: 8px; font-size: 0.8rem; color: #92400e; display: none;">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        <span id="editPensionAvisoTexto"></span>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -1628,6 +1630,7 @@
                         <div class="form-group">
                             <label>Monto del abono *</label>
                             <input type="number" id="abonarPensionMonto" class="form-control" min="1" step="any" required />
+                            <small style="color: var(--gray-500); font-size: 0.7rem;">No puede superar el saldo pendiente.</small>
                         </div>
                         <div class="form-group">
                             <label>Método</label>
@@ -1783,6 +1786,9 @@
             contador: 'Contador'
         };
 
+        // =============================================
+        // HELPERS
+        // =============================================
         function formatearPrecio(v) {
             return '$' + Number(v || 0).toLocaleString('es-CO');
         }
@@ -1790,19 +1796,29 @@
         function formatearFechaHora(fechaStr, timestamp) {
             try {
                 let fecha;
-                if (timestamp && timestamp.toDate) fecha = timestamp.toDate();
-                else if (timestamp) fecha = new Date(timestamp);
-                else if (fechaStr) fecha = new Date(fechaStr + 'T12:00:00');
-                else return 'Sin fecha';
+                if (timestamp && timestamp.toDate) {
+                    fecha = timestamp.toDate();
+                } else if (timestamp) {
+                    fecha = new Date(timestamp);
+                } else if (fechaStr) {
+                    fecha = new Date(fechaStr + 'T12:00:00');
+                } else {
+                    return 'Sin fecha';
+                }
                 const dia = String(fecha.getDate()).padStart(2, '0');
                 const mes = String(fecha.getMonth() + 1).padStart(2, '0');
                 const anio = fecha.getFullYear();
                 const hh = String(fecha.getHours()).padStart(2, '0');
                 const mm = String(fecha.getMinutes()).padStart(2, '0');
                 return `${dia}/${mes}/${anio} ${hh}:${mm}`;
-            } catch (e) { return 'Fecha inválida'; }
+            } catch (e) {
+                return 'Fecha inválida';
+            }
         }
 
+        // =============================================
+        // COLORES
+        // =============================================
         function hexToRgb(hex) {
             hex = hex.replace('#', '');
             if (hex.length === 3) hex = hex.split('').map(c => c + c).join('');
@@ -1853,6 +1869,9 @@
             }
         }
 
+        // =============================================
+        // CREAR CUENTA CON APP SECUNDARIA
+        // =============================================
         let secondaryApp = null;
         function getSecondaryApp() {
             if (!secondaryApp) {
@@ -1886,6 +1905,9 @@
             }
         }
 
+        // =============================================
+        // SIDEBAR
+        // =============================================
         const sidebar = document.getElementById('sidebar');
         const sidebarOverlay = document.getElementById('sidebarOverlay');
         const hamburgerBtn = document.getElementById('hamburgerBtn');
@@ -1930,6 +1952,9 @@
             }
         });
 
+        // =============================================
+        // NAVEGACIÓN
+        // =============================================
         const navLinks = document.querySelectorAll('.sidebar-nav a');
         const pages = document.querySelectorAll('.page-content');
         const pageTitle = document.getElementById('pageTitle');
@@ -1965,6 +1990,9 @@
             });
         });
 
+        // =============================================
+        // DASHBOARD
+        // =============================================
         async function cargarDashboard() {
             try {
                 const colegioDoc = await getDoc(doc(db, 'colegios', colegioId));
@@ -2052,6 +2080,9 @@
             }
         }
 
+        // =============================================
+        // ESTUDIANTES
+        // =============================================
         async function cargarEstudiantes() {
             const tbody = document.getElementById('tablaEstudiantes');
             try {
@@ -2166,6 +2197,7 @@
                         document.getElementById('editEstAcudienteEmail').value = d.acudienteEmail || '';
                         document.getElementById('editEstEstado').value = d.estado || 'activo';
 
+                        // Cargar resumen de matrícula
                         const matQ = query(
                             collection(db, 'colegios', colegioId, 'matriculas'),
                             where('estudianteId', '==', estudianteId)
@@ -2215,7 +2247,7 @@
                             matriculaEditActual = { id: matSnap.docs[0].id, valor, abonado, saldo };
                         } else {
                             matriculaEditActual = null;
-                            alert('Este estudiante no tiene matrícula registrada.');
+                            alert('Este estudiante no tiene matrícula registrada. Primero debes crearla al inscribirlo.');
                             return;
                         }
 
@@ -2308,6 +2340,9 @@
             }
         }
 
+        // =============================================
+        // REGISTRAR ESTUDIANTE
+        // =============================================
         document.getElementById('btnRegistrarEstudiante')?.addEventListener('click', async () => {
             const estSnap = await getDocs(collection(db, 'colegios', colegioId, 'estudiantes'));
             estudiantesActualesCount = estSnap.size;
@@ -2492,6 +2527,7 @@
             document.getElementById('modalEstudiante').classList.remove('show');
         });
 
+        // Guardar cambios del estudiante editado (solo datos personales)
         document.getElementById('formEditarEstudiante')?.addEventListener('submit', async (e) => {
             e.preventDefault();
             const estudianteId = document.getElementById('editEstudianteId').value;
@@ -2534,6 +2570,9 @@
             document.getElementById('modalEditarEstudiante').classList.remove('show');
         });
 
+        // =============================================
+        // ABONAR MATRÍCULA
+        // =============================================
         document.getElementById('abonarMonto')?.addEventListener('input', () => {
             if (!matriculaEditActual) return;
             const monto = parseFloat(document.getElementById('abonarMonto').value) || 0;
@@ -2623,6 +2662,9 @@
             document.getElementById('modalVerPagos').classList.remove('show');
         });
 
+        // =============================================
+        // PERSONAL
+        // =============================================
         async function cargarPersonal() {
             const tbody = document.getElementById('tablaPersonal');
             const filtroRol = document.getElementById('filtroRolPersonal').value;
@@ -2793,6 +2835,9 @@
             document.getElementById('modalEditarPersonal').classList.remove('show');
         });
 
+        // =============================================
+        // GRADOS
+        // =============================================
         async function cargarGrados() {
             const tbody = document.getElementById('tablaGrados');
             try {
@@ -2853,6 +2898,9 @@
             cargarDashboard();
         });
 
+        // =============================================
+        // CURSOS
+        // =============================================
         async function cargarCursos() {
             const tbody = document.getElementById('tablaCursos');
             try {
@@ -2926,6 +2974,9 @@
             cargarDashboard();
         });
 
+        // =============================================
+        // ASIGNATURAS
+        // =============================================
         async function cargarAsignaturas() {
             const tbody = document.getElementById('tablaAsignaturas');
             try {
@@ -2986,6 +3037,9 @@
             cargarDashboard();
         });
 
+        // =============================================
+        // HORARIOS
+        // =============================================
         async function cargarHorarios() {
             const gradoSelect = document.getElementById('horarioGrado');
             const snap = await getDocs(collection(db, 'colegios', colegioId, 'grados'));
@@ -3100,6 +3154,9 @@
             document.getElementById('btnCargarHorario').click();
         });
 
+        // =============================================
+        // FILTROS NOTAS / BOLETINES
+        // =============================================
         async function cargarFiltrosNotas() {
             await cargarFiltros('filtroGradoNotas', 'filtroCursoNotas', 'filtroEstudianteNotas');
         }
@@ -3258,6 +3315,9 @@
             } catch (e) { alert('Error al generar boletín'); }
         });
 
+        // =============================================
+        // PENSIONES
+        // =============================================
         async function cargarPensiones() {
             const tbody = document.getElementById('tablaPensiones');
             try {
@@ -3322,22 +3382,18 @@
                         pensionEditActual = {
                             id,
                             estudianteId: p.estudianteId,
-                            mes: p.mes,
-                            anio: p.anio,
-                            valorOriginal: Number(p.valorPension) || 0,
-                            abonadoOriginal: Number(p.totalAbonado) || 0,
-                            estudianteNombre: `${est.nombres || ''} ${est.apellidos || ''}`
+                            valor: Number(p.valorPension) || 0,
+                            abonado: Number(p.totalAbonado) || 0
                         };
 
                         document.getElementById('editPensionId').value = id;
                         document.getElementById('editPensionEstudianteId').value = p.estudianteId;
                         document.getElementById('editPensionEstudianteNombre').textContent =
-                            pensionEditActual.estudianteNombre;
+                            `${est.nombres || ''} ${est.apellidos || ''}`;
                         document.getElementById('editPensionMesAnio').textContent =
                             `${MESES[(p.mes || 1) - 1]} ${p.anio || ''}`;
                         document.getElementById('editPensionValor').value = p.valorPension || 0;
                         document.getElementById('editPensionAbonado').value = p.totalAbonado || 0;
-                        document.getElementById('editPensionAviso').style.display = 'none';
                         actualizarSaldoEditarPension();
 
                         document.getElementById('modalEditarPension').classList.add('show');
@@ -3398,33 +3454,10 @@
             const saldo = Math.max(0, valor - abonado);
             document.getElementById('editPensionSaldo').textContent = formatearPrecio(saldo);
             document.getElementById('editPensionSaldo').style.color = saldo === 0 ? 'var(--success)' : 'var(--danger)';
-
-            // Aviso si aumentó el abonado (se registrará el pago)
-            if (pensionEditActual) {
-                const diferencia = abonado - pensionEditActual.abonadoOriginal;
-                const aviso = document.getElementById('editPensionAviso');
-                const avisoTexto = document.getElementById('editPensionAvisoTexto');
-                if (diferencia > 0) {
-                    aviso.style.display = 'block';
-                    aviso.style.background = '#dcfce7';
-                    aviso.style.color = '#166534';
-                    avisoTexto.textContent = `Se registrará un nuevo pago de ${formatearPrecio(diferencia)} en contabilidad.`;
-                } else if (diferencia < 0) {
-                    aviso.style.display = 'block';
-                    aviso.style.background = '#fef3c7';
-                    aviso.style.color = '#92400e';
-                    avisoTexto.textContent = `Estás reduciendo el abonado en ${formatearPrecio(Math.abs(diferencia))}. No generará movimiento.`;
-                } else {
-                    aviso.style.display = 'none';
-                }
-            }
         }
         document.getElementById('editPensionValor')?.addEventListener('input', actualizarSaldoEditarPension);
         document.getElementById('editPensionAbonado')?.addEventListener('input', actualizarSaldoEditarPension);
 
-        // =============================================
-        // EDITAR PENSIÓN - CON REGISTRO DE PAGO SI AUMENTA EL ABONADO
-        // =============================================
         document.getElementById('formEditarPension')?.addEventListener('submit', async (e) => {
             e.preventDefault();
             const id = document.getElementById('editPensionId').value;
@@ -3437,63 +3470,15 @@
                 return;
             }
 
-            // Confirmar si reduce el abonado
-            if (pensionEditActual && abonado < pensionEditActual.abonadoOriginal) {
-                const dif = pensionEditActual.abonadoOriginal - abonado;
-                if (!confirm(`⚠️ Estás reduciendo el abonado en ${formatearPrecio(dif)}. Esto NO genera un movimiento de ajuste. ¿Continuar?`)) {
-                    return;
-                }
-            }
-
             try {
-                // 1. Calcular diferencia
-                const abonadoAnterior = pensionEditActual?.abonadoOriginal || 0;
-                const diferencia = abonado - abonadoAnterior;
-
-                // 2. Actualizar pensión
                 await updateDoc(doc(db, 'colegios', colegioId, 'pensiones', id), {
                     valorPension: valor,
                     totalAbonado: abonado,
                     fechaActualizacion: serverTimestamp()
                 });
-
-                // 3. Si aumentó el abonado, registrar como pago + movimiento
-                if (diferencia > 0) {
-                    const estudianteId = pensionEditActual.estudianteId;
-                    const estudianteNombre = pensionEditActual.estudianteNombre;
-                    const hoy = new Date().toISOString().split('T')[0];
-
-                    await addDoc(collection(db, 'colegios', colegioId, 'pagos_pensiones'), {
-                        estudianteId,
-                        mes: pensionEditActual.mes,
-                        anio: pensionEditActual.anio,
-                        monto: diferencia,
-                        metodo: 'Ajuste',
-                        referencia: 'Ajuste por edición manual',
-                        fecha: hoy,
-                        creadoPor: auth.currentUser?.uid || '',
-                        fechaCreacion: serverTimestamp()
-                    });
-
-                    await addDoc(collection(db, 'colegios', colegioId, 'movimientos'), {
-                        tipo: 'ingreso',
-                        categoria: 'Pensión',
-                        descripcion: `Ajuste pensión ${MESES[(pensionEditActual.mes || 1) - 1]} - ${estudianteNombre}`,
-                        monto: diferencia,
-                        metodo: 'Ajuste',
-                        referencia: 'Ajuste por edición manual',
-                        fecha: hoy,
-                        estudianteId,
-                        estudianteNombre,
-                        creadoPor: auth.currentUser?.uid || '',
-                        fechaCreacion: serverTimestamp()
-                    });
-                }
-
-                alert('✅ Pensión actualizada' + (diferencia > 0 ? ` y pago de ${formatearPrecio(diferencia)} registrado` : ''));
+                alert('✅ Pensión actualizada');
                 document.getElementById('modalEditarPension').classList.remove('show');
                 cargarPensiones();
-                cargarContabilidad();
             } catch (err) {
                 alert('❌ ' + err.message);
             }
@@ -3506,6 +3491,7 @@
             document.getElementById('modalEditarPension').classList.remove('show');
         });
 
+        // Abonar pensión
         document.getElementById('abonarPensionMonto')?.addEventListener('input', () => {
             const valor = parseFloat(document.getElementById('abonarPensionValorTotal').textContent.replace(/[^0-9]/g, '')) || 0;
             const abonado = parseFloat(document.getElementById('abonarPensionYaAbonado').textContent.replace(/[^0-9]/g, '')) || 0;
@@ -3593,6 +3579,9 @@
             }
         });
 
+        // =============================================
+        // NUEVA PENSIÓN / PAGO COMPLETO
+        // =============================================
         document.getElementById('btnRegistrarPagoPension')?.addEventListener('click', async () => {
             document.getElementById('modalPagoPension').classList.add('show');
             document.getElementById('formPagoPension').reset();
@@ -3754,6 +3743,8 @@
             }
         });
 
+        // =============================================        // CONTABILIDAD
+        // =============================================
         async function cargarContabilidad() {
             try {
                 const snap = await getDocs(collection(db, 'colegios', colegioId, 'movimientos'));
@@ -3771,6 +3762,7 @@
             const catFiltro = document.getElementById('filtroMovCategoria').value;
             const mesFiltro = document.getElementById('filtroMovMes').value;
 
+            // Actualizar contadores de tabs
             const counts = {
                 todos: movimientosCache.length,
                 ingreso: movimientosCache.filter(m => m.tipo === 'ingreso').length,
@@ -3784,6 +3776,7 @@
             document.getElementById('countMatriculas').textContent = counts.Matrícula;
             document.getElementById('countPensiones').textContent = counts.Pensión;
 
+            // Filtrar
             const movsFiltrados = movimientosCache.filter(m => {
                 if (contTabActual === 'ingreso' && m.tipo !== 'ingreso') return false;
                 if (contTabActual === 'egreso' && m.tipo !== 'egreso') return false;
@@ -3798,6 +3791,7 @@
                 return true;
             });
 
+            // Stats
             const hoy = new Date();
             let ingresosMes = 0, egresosMes = 0, balanceTotal = 0;
             movimientosCache.forEach(m => {
@@ -3827,6 +3821,7 @@
                 return;
             }
 
+            // Ordenar por fecha más reciente
             movsFiltrados.sort((a, b) => {
                 const fechaA = a.fechaCreacion?.toDate ? a.fechaCreacion.toDate() : new Date(a.fecha || 0);
                 const fechaB = b.fechaCreacion?.toDate ? b.fechaCreacion.toDate() : new Date(b.fecha || 0);
@@ -3891,6 +3886,7 @@
             } catch (e) { console.warn(e); }
         }
 
+        // Tabs contabilidad
         document.querySelectorAll('.cont-tab').forEach(tab => {
             tab.addEventListener('click', () => {
                 document.querySelectorAll('.cont-tab').forEach(t => t.classList.remove('active'));
@@ -3903,6 +3899,7 @@
         document.getElementById('filtroMovCategoria')?.addEventListener('change', renderContabilidad);
         document.getElementById('filtroMovMes')?.addEventListener('change', renderContabilidad);
 
+        // Agregar movimiento
         document.getElementById('btnAgregarMovimiento')?.addEventListener('click', () => {
             document.getElementById('modalAgregarMovimiento').classList.add('show');
             document.getElementById('formAgregarMovimiento').reset();
@@ -3944,6 +3941,9 @@
             }
         });
 
+        // =============================================
+        // AUTH
+        // =============================================
         onAuthStateChanged(auth, async (user) => {
             if (authCheckInProgress) return;
             authCheckInProgress = true;

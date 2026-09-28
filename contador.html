@@ -14,22 +14,18 @@
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
-            /* Estas variables se sobrescriben dinámicamente con el colorPrimario del colegio */
             --primary: #4f46e5;
             --primary-dark: #4338ca;
             --primary-light: #818cf8;
             --primary-bg: #eef2ff;
-
             --success: #22c55e;
             --warning: #f59e0b;
             --danger: #ef4444;
             --info: #3b82f6;
-
             --sidebar-bg: #1E293B;
             --sidebar-text: #CBD5E1;
             --sidebar-active: #4f46e5;
             --sidebar-hover: #334155;
-
             --gray-50: #f8fafc;
             --gray-100: #f1f5f9;
             --gray-200: #e2e8f0;
@@ -40,7 +36,6 @@
             --gray-700: #334155;
             --gray-800: #1e293b;
             --gray-900: #0f172a;
-
             --sidebar-width: 280px;
             --sidebar-collapsed: 80px;
             --header-height: 70px;
@@ -71,7 +66,6 @@
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: var(--gray-100); }
         ::-webkit-scrollbar-thumb { background: var(--gray-300); border-radius: 8px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--gray-400); }
 
         .text-center { text-align: center; }
         .text-muted { color: var(--gray-500); }
@@ -79,7 +73,7 @@
         .text-danger { color: var(--danger); }
         .text-warning { color: var(--warning); }
 
-        /* ================ BOTONES ================ */
+        /* ================= BOTONES ================= */
         .btn-primary {
             display: inline-flex; align-items: center; gap: 8px;
             padding: 10px 20px; background: var(--primary); color: #fff;
@@ -133,7 +127,7 @@
 
         .btn-sm { padding: 6px 12px; font-size: 0.75rem; border-radius: 6px; }
 
-        /* ================ BADGES ================ */
+        /* ================= BADGES ================= */
         .badge {
             display: inline-block; padding: 4px 12px; border-radius: 50px;
             font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
@@ -145,7 +139,7 @@
         .badge-info { background: #dbeafe; color: #1e40af; }
         .badge-gray { background: var(--gray-200); color: var(--gray-600); }
 
-        /* ================ CARDS ================ */
+        /* ================= CARDS ================= */
         .card {
             background: #fff; border-radius: var(--radius);
             box-shadow: var(--shadow); overflow: hidden; margin-bottom: 24px;
@@ -158,7 +152,7 @@
         .card-header h2 { font-size: 1.05rem; font-weight: 600; color: var(--gray-800); }
         .card-body { padding: 22px; }
 
-        /* ================ TABLAS ================ */
+        /* ================= TABLAS ================= */
         .table-responsive { overflow-x: auto; }
         .table-modern { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
         .table-modern thead th {
@@ -175,7 +169,7 @@
         .table-modern tbody tr:hover { background: var(--gray-50); }
         .table-modern tbody tr:last-child td { border-bottom: none; }
 
-        /* ================ FORM ================ */
+        /* ================= FORM ================= */
         .form-group { margin-bottom: 18px; }
         .form-group label {
             display: block; font-weight: 500; font-size: 0.85rem;
@@ -200,7 +194,7 @@
         }
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 
-        /* ================ MODAL ================ */
+        /* ================= MODAL ================= */
         .modal { display: none; position: fixed; inset: 0; z-index: 9999; align-items: center; justify-content: center; }
         .modal.show { display: flex; }
         .modal-overlay { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); }
@@ -209,6 +203,7 @@
             max-width: 720px; width: 94%; max-height: 90vh; overflow-y: auto;
             box-shadow: var(--shadow-lg); animation: modalFade 0.25s ease;
         }
+        .modal-content.modal-lg { max-width: 900px; }
         @keyframes modalFade {
             from { opacity: 0; transform: scale(0.95) translateY(20px); }
             to { opacity: 1; transform: scale(1) translateY(0); }
@@ -240,7 +235,7 @@
         .alert-success { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
         .alert-info { background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; }
 
-        /* ================ SIDEBAR ================ */
+        /* ================= SIDEBAR ================= */
         .sidebar {
             width: var(--sidebar-width); height: 100vh;
             background: var(--sidebar-bg);
@@ -274,8 +269,7 @@
         .sidebar-header .logo i {
             color: #FFFFFF; font-size: 1.3rem;
             background: rgba(255,255,255,0.12);
-            width: 34px; height: 34px;
-            border-radius: 8px;
+            width: 34px; height: 34px; border-radius: 8px;
             display: flex; align-items: center; justify-content: center;
         }
 
@@ -366,7 +360,7 @@
         }
         .sidebar-overlay.active { display: block; }
 
-        /* ================ MAIN ================ */
+        /* ================= MAIN ================= */
         .main-content {
             flex: 1; min-height: 100vh; display: flex; flex-direction: column;
             margin-left: var(--sidebar-width);
@@ -396,6 +390,192 @@
         .user-role { display: block; font-size: 0.7rem; color: var(--gray-500); text-transform: capitalize; }
         .user-avatar { font-size: 2rem; color: var(--gray-400); }
 
+        /* ================= BUSCADOR GLOBAL ================= */
+        .header-search {
+            position: relative;
+            margin-right: 8px;
+        }
+        .header-search input {
+            width: 280px;
+            padding: 8px 14px 8px 36px;
+            border: 1.5px solid var(--gray-200);
+            border-radius: 10px;
+            font-family: var(--font);
+            font-size: 0.85rem;
+            background: var(--gray-50);
+            transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+        }
+        .header-search input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+        .header-search .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-400);
+            font-size: 0.9rem;
+            pointer-events: none;
+        }
+        .header-search-results {
+            position: absolute;
+            top: calc(100% + 6px);
+            right: 0;
+            width: 420px;
+            max-height: 420px;
+            overflow-y: auto;
+            background: #fff;
+            border: 1px solid var(--gray-200);
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            z-index: 100;
+            display: none;
+        }
+        .header-search-results.show { display: block; }
+        .header-search-results .result-item {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--gray-100);
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+        .header-search-results .result-item:last-child { border-bottom: none; }
+        .header-search-results .result-item:hover { background: var(--primary-bg); }
+        .header-search-results .result-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--gray-800);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+        }
+        .header-search-results .result-info {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+            margin-top: 2px;
+        }
+        .header-search-results .result-badge {
+            font-size: 0.65rem;
+            padding: 2px 8px;
+            border-radius: 100px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .header-search-results .result-badge.pagado { background: #dcfce7; color: #166534; }
+        .header-search-results .result-badge.abonado { background: #fef3c7; color: #92400e; }
+        .header-search-results .result-badge.pendiente { background: #fecaca; color: #991b1b; }
+        .header-search-results .result-badge.sin-cobro { background: var(--gray-200); color: var(--gray-600); }
+        .header-search-results .empty-result {
+            padding: 24px;
+            text-align: center;
+            color: var(--gray-500);
+            font-size: 0.85rem;
+        }
+        .header-search-results .result-actions {
+            margin-top: 8px;
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .header-search-results .result-actions button {
+            font-size: 0.72rem;
+            padding: 4px 10px;
+        }
+
+        /* ================= COMBOBOX DE BÚSQUEDA ================= */
+        .search-combobox { position: relative; }
+        .search-combobox input {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1.5px solid var(--gray-200);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-family: var(--font);
+        }
+        .search-combobox input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+        }
+        .combobox-results {
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 0;
+            right: 0;
+            max-height: 260px;
+            overflow-y: auto;
+            background: #fff;
+            border: 1px solid var(--gray-200);
+            border-radius: 10px;
+            box-shadow: var(--shadow-lg);
+            z-index: 200;
+            display: none;
+        }
+        .combobox-results.show { display: block; }
+        .combobox-results .combo-item {
+            padding: 10px 14px;
+            cursor: pointer;
+            border-bottom: 1px solid var(--gray-100);
+            font-size: 0.85rem;
+            transition: background 0.15s;
+        }
+        .combobox-results .combo-item:last-child { border-bottom: none; }
+        .combobox-results .combo-item:hover { background: var(--primary-bg); }
+        .combobox-results .combo-item strong { color: var(--gray-800); }
+        .combobox-results .combo-item .combo-sub {
+            font-size: 0.72rem;
+            color: var(--gray-500);
+            margin-top: 2px;
+        }
+
+        .selected-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: var(--primary-bg);
+            color: var(--primary);
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 6px;
+        }
+
+        /* ================= BUSCADOR EN PÁGINA ================= */
+        .search-page-input-wrap {
+            position: relative;
+            flex: 1;
+            min-width: 240px;
+            max-width: 400px;
+        }
+        .search-page-input-wrap input {
+            width: 100%;
+            padding: 10px 14px 10px 38px;
+            border: 1.5px solid var(--gray-200);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-family: var(--font);
+            background: #fff;
+        }
+        .search-page-input-wrap input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+        }
+        .search-page-input-wrap .search-page-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-400);
+            font-size: 0.9rem;
+            pointer-events: none;
+        }
+
+        /* ================= PAGE ================= */
         .content-area { flex: 1; padding: 24px 28px; }
         .page-content { display: none; animation: fadeIn 0.3s ease; }
         .page-content.active { display: block; }
@@ -410,7 +590,7 @@
         }
         .page-header h2 { font-size: 1.1rem; font-weight: 600; color: var(--gray-800); }
 
-        /* ================ STATS ================ */
+        /* ================= STATS ================= */
         .stats-grid {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 18px; margin-bottom: 22px;
@@ -437,30 +617,7 @@
             color: var(--gray-900); line-height: 1.2;
         }
 
-        /* ================ INFO COLEGIO ================ */
-        .info-colegio-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 16px; margin-bottom: 24px;
-        }
-        .info-colegio-card {
-            background: #fff; border-radius: var(--radius);
-            padding: 14px 18px; box-shadow: var(--shadow);
-            display: flex; align-items: center; gap: 14px;
-        }
-        .info-colegio-card .icon {
-            width: 40px; height: 40px; border-radius: 10px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.1rem; flex-shrink: 0;
-        }
-        .info-colegio-card .label {
-            font-size: 0.65rem; color: var(--gray-500); font-weight: 500;
-            text-transform: uppercase; letter-spacing: 0.3px;
-        }
-        .info-colegio-card .value {
-            font-size: 0.95rem; font-weight: 600; color: var(--gray-900);
-        }
-
-        /* ================ WELCOME BANNER ================ */
+        /* ================= WELCOME ================= */
         .welcome-banner {
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             border-radius: var(--radius); padding: 24px 28px; color: #fff;
@@ -483,7 +640,7 @@
         .estado-activo { color: #4ade80; }
         .estado-inactivo { color: #fca5a5; }
 
-        /* ================ LOADING ================ */
+        /* ================= LOADING ================= */
         .loading-overlay {
             display: flex; flex-direction: column; align-items: center;
             justify-content: center; min-height: 400px; gap: 16px;
@@ -495,16 +652,58 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* ================ FILTROS ================ */
+        /* ================= FILTROS ================= */
         .eco-filtros {
             display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px;
+            align-items: center;
         }
-        .eco-filtros select, .eco-filtros input { max-width: 220px; }
+        .eco-filtros select, .eco-filtros input[type="month"] { max-width: 220px; }
 
         .mov-row-ingreso { color: var(--success); font-weight: 600; }
         .mov-row-egreso { color: var(--danger); font-weight: 600; }
 
-        /* ================ RESPONSIVE ================ */
+        /* ================= INFO COLEGIO ================= */
+        .info-colegio-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px; margin-bottom: 24px;
+        }
+        .info-colegio-card {
+            background: #fff; border-radius: var(--radius);
+            padding: 14px 18px; box-shadow: var(--shadow);
+            display: flex; align-items: center; gap: 14px;
+        }
+        .info-colegio-card .icon {
+            width: 40px; height: 40px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem; flex-shrink: 0;
+        }
+        .info-colegio-card .label {
+            font-size: 0.65rem; color: var(--gray-500); font-weight: 500;
+            text-transform: uppercase; letter-spacing: 0.3px;
+        }
+        .info-colegio-card .value {
+            font-size: 0.95rem; font-weight: 600; color: var(--gray-900);
+        }
+
+        /* ================= HISTORIAL ABONOS ================= */
+        .abonos-lista { max-height: 400px; overflow-y: auto; }
+        .abono-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 12px 16px; border-bottom: 1px solid var(--gray-100);
+            font-size: 0.85rem; background: #fff;
+        }
+        .abono-item:last-child { border-bottom: none; }
+        .abono-item .abono-info strong {
+            color: var(--gray-800); font-size: 0.9rem;
+        }
+        .abono-item .abono-fecha {
+            font-size: 0.75rem; color: var(--gray-500); margin-top: 2px;
+        }
+        .abono-monto {
+            font-weight: 700; color: var(--success); font-size: 1rem;
+        }
+
+        /* ================= RESPONSIVE ================= */
         @media (max-width: 992px) {
             .sidebar { transform: translateX(-100%); width: var(--sidebar-width); }
             .sidebar.open { transform: translateX(0); }
@@ -520,6 +719,8 @@
             .sidebar-overlay.active { display: block; }
             .main-content { margin-left: 0 !important; }
             .header-left .hamburger-btn { display: block; }
+            .header-search input { width: 200px; }
+            .header-search-results { width: 320px; }
         }
         @media (max-width: 768px) {
             .stats-grid { grid-template-columns: 1fr 1fr; }
@@ -529,6 +730,8 @@
             .content-area { padding: 16px; }
             .modal-content { width: 96%; margin: 10px; }
             .user-info { display: none; }
+            .header-search input { width: 160px; }
+            .header-search-results { width: 280px; right: -60px; }
         }
         @media (max-width: 480px) {
             .stats-grid { grid-template-columns: 1fr; }
@@ -540,6 +743,7 @@
             .modal-footer .btn-primary, .modal-footer .btn-secondary {
                 width: 100%; justify-content: center;
             }
+            .header-search { display: none; }
         }
     </style>
 </head>
@@ -577,7 +781,7 @@
             <ul>
                 <li><a href="#" data-page="movimientos"><i class="fas fa-exchange-alt"></i><span>Movimientos</span></a></li>
                 <li><a href="#" data-page="pensiones"><i class="fas fa-money-check-alt"></i><span>Pensiones</span></a></li>
-                <li><a href="#" data-page="matriculas"><i class="fas fa-file-signature"></i><span>Matrículas</span></a></li>
+                <li><a href="#" data-page="estudiantes"><i class="fas fa-user-graduate"></i><span>Estudiantes</span></a></li>
             </ul>
             <div class="nav-section">REPORTES</div>
             <ul>
@@ -604,6 +808,11 @@
                 <h1 id="pageTitle">Inicio</h1>
             </div>
             <div class="header-right">
+                <div class="header-search">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="busquedaGlobal" placeholder="Buscar estudiante (nombre, doc, curso)..." autocomplete="off" />
+                    <div class="header-search-results" id="busquedaGlobalResultados"></div>
+                </div>
                 <div class="user-info">
                     <span class="user-name" id="userName">Cargando...</span>
                     <span class="user-role" id="userRole">Contador</span>
@@ -724,10 +933,10 @@
                         <div class="table-responsive">
                             <table class="table-modern">
                                 <thead>
-                                    <tr><th>#</th><th>Fecha</th><th>Tipo</th><th>Categoría</th><th>Descripción</th><th>Método</th><th>Monto</th></tr>
+                                    <tr><th>#</th><th>Fecha</th><th>Tipo</th><th>Categoría</th><th>Descripción</th><th>Método</th><th>Monto</th><th>Acciones</th></tr>
                                 </thead>
                                 <tbody id="tablaMovimientos">
-                                    <tr><td colspan="7" class="text-center text-muted"><i class="fas fa-spinner fa-spin"></i> Cargando...</td></tr>
+                                    <tr><td colspan="8" class="text-center text-muted"><i class="fas fa-spinner fa-spin"></i> Cargando...</td></tr>
                                 </tbody>
                             </table>
                         </div>
@@ -739,16 +948,31 @@
             <div id="page-pensiones" class="page-content">
                 <div class="page-header">
                     <h2><i class="fas fa-money-check-alt" style="color: var(--primary);"></i> Pensiones</h2>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <button class="btn-info" id="btnConfigurarPension"><i class="fas fa-cog"></i> Configurar pensión</button>
+                        <button class="btn-primary" id="btnRegistrarPagoPension"><i class="fas fa-plus"></i> Registrar pago</button>
+                    </div>
                 </div>
+
                 <div class="card">
                     <div class="card-body">
+                        <div class="eco-filtros">
+                            <input type="month" id="filtroPensionMes" class="form-control" />
+                            <select id="filtroPensionEstado" class="form-control">
+                                <option value="">Todos los estados</option>
+                                <option value="pagado">Pagados</option>
+                                <option value="abonado">Abonados</option>
+                                <option value="pendiente">Pendientes</option>
+                            </select>
+                        </div>
+
                         <div class="table-responsive">
                             <table class="table-modern">
                                 <thead>
-                                    <tr><th>#</th><th>Estudiante</th><th>Mes</th><th>Año</th><th>Valor</th><th>Abonado</th><th>Saldo</th><th>Estado</th></tr>
+                                    <tr><th>#</th><th>Estudiante</th><th>Curso</th><th>Mes</th><th>Año</th><th>Valor</th><th>Abonado</th><th>Saldo</th><th>Estado</th><th>Acciones</th></tr>
                                 </thead>
                                 <tbody id="tablaPensiones">
-                                    <tr><td colspan="8" class="text-center text-muted"><i class="fas fa-spinner fa-spin"></i> Cargando...</td></tr>
+                                    <tr><td colspan="10" class="text-center text-muted"><i class="fas fa-spinner fa-spin"></i> Cargando...</td></tr>
                                 </tbody>
                             </table>
                         </div>
@@ -756,20 +980,41 @@
                 </div>
             </div>
 
-            <!-- ============ MATRÍCULAS ============ -->
-            <div id="page-matriculas" class="page-content">
+            <!-- ============ ESTUDIANTES ============ -->
+            <div id="page-estudiantes" class="page-content">
                 <div class="page-header">
-                    <h2><i class="fas fa-file-signature" style="color: var(--primary);"></i> Matrículas</h2>
+                    <h2><i class="fas fa-user-graduate" style="color: var(--primary);"></i> Estudiantes y Matrículas</h2>
                 </div>
+
                 <div class="card">
                     <div class="card-body">
+                        <div class="eco-filtros">
+                            <div class="search-page-input-wrap">
+                                <i class="fas fa-search search-page-icon"></i>
+                                <input type="text" id="filtroEstBuscar" placeholder="Buscar por nombre, apellido, documento o curso..." autocomplete="off" />
+                            </div>
+                            <select id="filtroEstCurso" class="form-control">
+                                <option value="">Todos los cursos</option>
+                            </select>
+                            <select id="filtroEstEstadoPago" class="form-control">
+                                <option value="">Todos los estados de pago</option>
+                                <option value="pagado">Pagado</option>
+                                <option value="abonado">Abonado</option>
+                                <option value="pendiente">Pendiente</option>
+                                <option value="sin-cobro">Sin cobro</option>
+                            </select>
+                            <button class="btn-secondary btn-sm" id="btnLimpiarFiltrosEst" title="Limpiar filtros">
+                                <i class="fas fa-times"></i> Limpiar
+                            </button>
+                        </div>
+
                         <div class="table-responsive">
                             <table class="table-modern">
                                 <thead>
-                                    <tr><th>#</th><th>Estudiante</th><th>Curso</th><th>Valor</th><th>Abonado</th><th>Saldo</th><th>Estado</th></tr>
+                                    <tr><th>#</th><th>Estudiante</th><th>Documento</th><th>Curso</th><th>Valor</th><th>Abonado</th><th>Saldo</th><th>Estado</th><th>Acciones</th></tr>
                                 </thead>
-                                <tbody id="tablaMatriculas">
-                                    <tr><td colspan="7" class="text-center text-muted"><i class="fas fa-spinner fa-spin"></i> Cargando...</td></tr>
+                                <tbody id="tablaEstudiantesContador">
+                                    <tr><td colspan="9" class="text-center text-muted"><i class="fas fa-spinner fa-spin"></i> Cargando...</td></tr>
                                 </tbody>
                             </table>
                         </div>
@@ -799,10 +1044,10 @@
                         <div class="table-responsive">
                             <table class="table-modern">
                                 <thead>
-                                    <tr><th>#</th><th>Estudiante</th><th>Concepto</th><th>Saldo</th></tr>
+                                    <tr><th>#</th><th>Estudiante</th><th>Curso</th><th>Concepto</th><th>Saldo</th><th>Acciones</th></tr>
                                 </thead>
                                 <tbody id="tablaCartera">
-                                    <tr><td colspan="4" class="text-center text-muted"><i class="fas fa-spinner fa-spin"></i> Cargando...</td></tr>
+                                    <tr><td colspan="6" class="text-center text-muted"><i class="fas fa-spinner fa-spin"></i> Cargando...</td></tr>
                                 </tbody>
                             </table>
                         </div>
@@ -865,7 +1110,6 @@
             </div>
             <form id="formNuevoMovimiento">
                 <div class="modal-body">
-                    <div id="movimientoAlert" class="alert" style="display: none;"><i class="fas fa-info-circle"></i><span id="movimientoAlertText"></span></div>
                     <div class="form-grid">
                         <div class="form-group">
                             <label>Tipo *</label>
@@ -908,6 +1152,205 @@
     </div>
 
     <!-- =========================================== -->
+    <!-- MODAL: Registrar Pago de Pensión (con abonos)-->
+    <!-- =========================================== -->
+    <div class="modal" id="modalPagoPension">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-money-bill" style="color: var(--success);"></i> Registrar Pago de Pensión</h2>
+                <button class="modal-close" id="closePagoPensionModal">&times;</button>
+            </div>
+            <form id="formPagoPension">
+                <div class="modal-body">
+                    <div id="pagoPensionAlert" class="alert" style="display: none;"><i class="fas fa-info-circle"></i><span id="pagoPensionAlertText"></span></div>
+
+                    <div class="form-group">
+                        <label>Estudiante *</label>
+                        <div class="search-combobox">
+                            <input type="text" id="pagoEstudianteBuscar" placeholder="Buscar por nombre, apellido, documento o curso..." autocomplete="off" />
+                            <div class="combobox-results" id="pagoEstudianteResultados"></div>
+                            <div id="pagoEstudianteSeleccionadoWrap"></div>
+                        </div>
+                        <input type="hidden" id="pagoEstudiante" />
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Mes *</label>
+                            <select id="pagoMes" class="form-control" required>
+                                <option value="">Seleccionar</option>
+                                <option value="1">Enero</option><option value="2">Febrero</option>
+                                <option value="3">Marzo</option><option value="4">Abril</option>
+                                <option value="5">Mayo</option><option value="6">Junio</option>
+                                <option value="7">Julio</option><option value="8">Agosto</option>
+                                <option value="9">Septiembre</option><option value="10">Octubre</option>
+                                <option value="11">Noviembre</option><option value="12">Diciembre</option>
+                            </select>
+                        </div>
+                        <div class="form-group"><label>Año *</label><input type="number" id="pagoAnio" class="form-control" required /></div>
+                        <div class="form-group" style="grid-column: span 2;">
+                            <label>Valor pensión (si es nueva)</label>
+                            <input type="number" id="pagoValorPension" class="form-control" min="0" placeholder="Ej: 300000" />
+                        </div>
+                    </div>
+
+                    <div id="pagoResumen" style="background: var(--primary-bg); padding: 16px; border-radius: 10px; margin-bottom: 16px; display: none;">
+                        <div style="display: flex; justify-content: space-between; padding: 4px 0;">
+                            <span>Valor pensión:</span><strong id="pagoResumenValor">$0</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 4px 0;">
+                            <span>Ya abonado:</span><strong id="pagoResumenAbonado" style="color: var(--success);">$0</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 4px 0; border-top: 1px dashed var(--gray-300); margin-top: 6px; padding-top: 10px;">
+                            <span><strong>Saldo pendiente:</strong></span><strong id="pagoResumenSaldo" style="color: var(--danger); font-size: 1.1rem;">$0</strong>
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Monto a abonar *</label>
+                            <input type="number" id="pagoMonto" class="form-control" required min="1" step="any" placeholder="Puede ser abono parcial" />
+                        </div>
+                        <div class="form-group">
+                            <label>Método</label>
+                            <select id="pagoMetodo" class="form-control">
+                                <option>Efectivo</option><option>Transferencia</option>
+                                <option>Nequi</option><option>Daviplata</option><option>Otro</option>
+                            </select>
+                        </div>
+                        <div class="form-group"><label>Referencia</label><input type="text" id="pagoReferencia" class="form-control" /></div>
+                        <div class="form-group"><label>Fecha *</label><input type="date" id="pagoFecha" class="form-control" required /></div>
+                    </div>
+
+                    <div style="background: var(--gray-50); padding: 12px; border-radius: 8px; display: flex; justify-content: space-between;">
+                        <span style="font-weight: 500;">Nuevo saldo:</span>
+                        <strong id="pagoNuevoSaldo" style="color: var(--primary); font-size: 1.1rem;">$0</strong>
+                    </div>
+
+                    <div style="margin-top: 12px;">
+                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: 400; font-size: 0.9rem;">
+                            <input type="checkbox" id="pagoImprimirRecibo" checked />
+                            Imprimir recibo al guardar
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" id="cancelPagoPensionModal">Cancelar</button>
+                    <button type="submit" class="btn-primary"><i class="fas fa-save"></i> Registrar pago</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- =========================================== -->
+    <!-- MODAL: Historial de Abonos                  -->
+    <!-- =========================================== -->
+    <div class="modal" id="modalHistorialAbonos">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="historialTitulo"><i class="fas fa-history" style="color: var(--info);"></i> Historial de Abonos</h2>
+                <button class="modal-close" id="closeHistorialModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="historialInfo" style="background: var(--primary-bg); padding: 16px; border-radius: 10px; margin-bottom: 16px;"></div>
+                <div id="historialLista" class="abonos-lista"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" id="closeHistorialBtn">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- =========================================== -->
+    <!-- MODAL: Configurar Pensión                   -->
+    <!-- =========================================== -->
+    <div class="modal" id="modalConfigurarPension">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-cog" style="color: var(--info);"></i> Configurar Pensión</h2>
+                <button class="modal-close" id="closeConfigurarPensionModal">&times;</button>
+            </div>
+            <form id="formConfigurarPension">
+                <div class="modal-body">
+                    <div id="configPensionAlert" class="alert" style="display: none;"><i class="fas fa-info-circle"></i><span id="configPensionAlertText"></span></div>
+
+                    <div class="form-group">
+                        <label>Aplicar a *</label>
+                        <select id="configAplicarA" class="form-control" required>
+                            <option value="curso">Todo un curso</option>
+                            <option value="estudiante">Un estudiante específico</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="configCursoWrap">
+                        <label>Curso *</label>
+                        <select id="configCurso" class="form-control">
+                            <option value="">Seleccionar curso</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="configEstudianteWrap" style="display: none;">
+                        <label>Estudiante *</label>
+                        <div class="search-combobox">
+                            <input type="text" id="configEstudianteBuscar" placeholder="Buscar por nombre, apellido, documento o curso..." autocomplete="off" />
+                            <div class="combobox-results" id="configEstudianteResultados"></div>
+                            <div id="configEstudianteSeleccionadoWrap"></div>
+                        </div>
+                        <input type="hidden" id="configEstudiante" />
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group"><label>Mes *</label>
+                            <select id="configMes" class="form-control" required>
+                                <option value="">Seleccionar</option>
+                                <option value="1">Enero</option><option value="2">Febrero</option>
+                                <option value="3">Marzo</option><option value="4">Abril</option>
+                                <option value="5">Mayo</option><option value="6">Junio</option>
+                                <option value="7">Julio</option><option value="8">Agosto</option>
+                                <option value="9">Septiembre</option><option value="10">Octubre</option>
+                                <option value="11">Noviembre</option><option value="12">Diciembre</option>
+                            </select>
+                        </div>
+                        <div class="form-group"><label>Año *</label><input type="number" id="configAnio" class="form-control" required /></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Valor de la pensión *</label>
+                        <input type="number" id="configValor" class="form-control" required min="0" step="any" placeholder="Ej: 300000" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" id="cancelConfigurarPensionModal">Cancelar</button>
+                    <button type="submit" class="btn-primary"><i class="fas fa-save"></i> Configurar pensión</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- =========================================== -->
+    <!-- MODAL: Ver Recibo (impresión)               -->
+    <!-- =========================================== -->
+    <div class="modal" id="modalRecibo">
+        <div class="modal-overlay"></div>
+        <div class="modal-content modal-lg">
+            <div class="modal-header">
+                <h2><i class="fas fa-receipt" style="color: var(--primary);"></i> Recibo de Pago</h2>
+                <button class="modal-close" id="closeReciboModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="reciboPreview"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" id="cancelReciboModal">Cerrar</button>
+                <button type="button" class="btn-primary" id="btnImprimirRecibo"><i class="fas fa-print"></i> Imprimir</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- =========================================== -->
     <!-- SCRIPTS                                     -->
     <!-- =========================================== -->
     <script type="importmap">
@@ -924,8 +1367,8 @@
         import { initializeApp } from "firebase/app";
         import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
         import {
-            getFirestore, doc, getDoc, collection, getDocs, addDoc,
-            query, where, serverTimestamp
+            getFirestore, doc, getDoc, collection, getDocs, addDoc, updateDoc,
+            deleteDoc, query, where, serverTimestamp
         } from "firebase/firestore";
 
         const firebaseConfig = {
@@ -949,6 +1392,11 @@
         let usuarioActual = null;
         let isLoggingOut = false;
         let movimientosCache = [];
+        let pensionesCache = [];
+        let cursosCache = [];
+        let estudiantesCache = [];
+        let matriculasCache = [];
+        let abonosCache = {};
 
         const MESES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 
@@ -961,9 +1409,25 @@
         function esc(str) {
             return (str ?? '').toString();
         }
+        function formatearFecha(fecha) {
+            if (!fecha) return '-';
+            try {
+                const d = fecha.toDate ? fecha.toDate() : new Date(fecha);
+                return d.toLocaleDateString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric' });
+            } catch (e) { return '-'; }
+        }
+
+        function normalizarTexto(str) {
+            return (str || '')
+                .toString()
+                .toLowerCase()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .trim();
+        }
 
         // =============================================
-        // HELPERS DE COLOR Y LOGO
+        // COLORES Y LOGO
         // =============================================
         function hexToRgb(hex) {
             hex = hex.replace('#', '');
@@ -1068,7 +1532,7 @@
 
         const pageNames = {
             inicio: 'Inicio', movimientos: 'Movimientos', pensiones: 'Pensiones',
-            matriculas: 'Matrículas', cartera: 'Cartera', balance: 'Balance'
+            estudiantes: 'Estudiantes', cartera: 'Cartera', balance: 'Balance'
         };
 
         navLinks.forEach(link => {
@@ -1085,10 +1549,170 @@
 
                 if (page === 'movimientos') cargarMovimientos();
                 if (page === 'pensiones') cargarPensiones();
-                if (page === 'matriculas') cargarMatriculas();
+                if (page === 'estudiantes') cargarEstudiantesContador();
                 if (page === 'cartera') cargarCartera();
                 if (page === 'balance') cargarBalance();
             });
+        });
+
+        // =============================================
+        // BÚSQUEDA DE ESTUDIANTES
+        // =============================================
+        function buscarEstudiantes(query, filtros = {}) {
+            const q = normalizarTexto(query);
+            const filtroCurso = filtros.cursoId || '';
+            const filtroEstado = filtros.estadoPago || '';
+
+            const cursosMap = {};
+            cursosCache.forEach(c => cursosMap[c.id] = c.nombre || 'Sin curso');
+
+            const matPorEst = {};
+            matriculasCache.forEach(m => {
+                if (!m.estudianteId) return;
+                if (!matPorEst[m.estudianteId] ||
+                    (m.fechaRegistro?.seconds || 0) > (matPorEst[m.estudianteId].fechaRegistro?.seconds || 0)) {
+                    matPorEst[m.estudianteId] = m;
+                }
+            });
+
+            let resultados = estudiantesCache.map(est => {
+                const mat = matPorEst[est.id] || null;
+                const valor = Number(mat?.valorMatricula) || 0;
+                const abonado = Number(mat?.totalAbonado) || 0;
+                const saldo = Math.max(0, valor - abonado);
+                let estado = mat?.estadoPago || (valor === 0 ? 'sin-cobro' : 'pendiente');
+
+                const nombreCompleto = `${est.nombres || ''} ${est.apellidos || ''}`.trim();
+                const nombreNorm = normalizarTexto(nombreCompleto);
+                const documentoNorm = normalizarTexto(est.documento || '');
+                const cursoNombre = mat?.cursoId ? (cursosMap[mat.cursoId] || '') : (est.cursoId ? (cursosMap[est.cursoId] || '') : '');
+                const cursoNorm = normalizarTexto(cursoNombre);
+
+                return {
+                    est, mat, valor, abonado, saldo, estado,
+                    nombreCompleto, nombreNorm, documentoNorm, cursoNombre, cursoNorm
+                };
+            });
+
+            if (q) {
+                resultados = resultados.filter(r =>
+                    r.nombreNorm.includes(q) ||
+                    r.documentoNorm.includes(q) ||
+                    r.cursoNorm.includes(q)
+                );
+            }
+
+            if (filtroCurso) {
+                resultados = resultados.filter(r => (r.mat?.cursoId || r.est.cursoId) === filtroCurso);
+            }
+
+            if (filtroEstado) {
+                resultados = resultados.filter(r => r.estado === filtroEstado);
+            }
+
+            return resultados;
+        }
+
+        async function asegurarDatosCargados() {
+            if (estudiantesCache.length === 0) {
+                const estSnap = await getDocs(collection(db, 'colegios', colegioId, 'estudiantes'));
+                estudiantesCache = estSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+            }
+            if (cursosCache.length === 0) {
+                const cSnap = await getDocs(collection(db, 'colegios', colegioId, 'cursos'));
+                cursosCache = cSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+            }
+            if (matriculasCache.length === 0) {
+                const mSnap = await getDocs(collection(db, 'colegios', colegioId, 'matriculas'));
+                matriculasCache = mSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+            }
+        }
+
+        // =============================================
+        // BUSCADOR GLOBAL
+        // =============================================
+        const busquedaGlobalInput = document.getElementById('busquedaGlobal');
+        const busquedaGlobalResultados = document.getElementById('busquedaGlobalResultados');
+
+        busquedaGlobalInput?.addEventListener('input', async (e) => {
+            const q = e.target.value.trim();
+            if (q.length < 2) {
+                busquedaGlobalResultados.classList.remove('show');
+                return;
+            }
+
+            await asegurarDatosCargados();
+            const resultados = buscarEstudiantes(q).slice(0, 8);
+
+            if (resultados.length === 0) {
+                busquedaGlobalResultados.innerHTML = `<div class="empty-result"><i class="fas fa-search"></i> No se encontraron estudiantes</div>`;
+            } else {
+                busquedaGlobalResultados.innerHTML = resultados.map(r => {
+                    const badgeClass = r.estado === 'pagado' ? 'pagado' : r.estado === 'abonado' ? 'abonado' : r.estado === 'sin-cobro' ? 'sin-cobro' : 'pendiente';
+                    return `
+                        <div class="result-item">
+                            <div class="result-name">
+                                <span>${esc(r.nombreCompleto) || 'Sin nombre'}</span>
+                                <span class="result-badge ${badgeClass}">${r.estado}</span>
+                            </div>
+                            <div class="result-info">
+                                <i class="fas fa-id-card"></i> ${esc(r.est.documento || 'Sin documento')}
+                                · <i class="fas fa-school"></i> ${esc(r.cursoNombre || 'Sin curso')}
+                                ${r.saldo > 0 ? ` · <span style="color: var(--danger); font-weight: 600;">Saldo: ${formatearPrecio(r.saldo)}</span>` : ''}
+                            </div>
+                            <div class="result-actions">
+                                <button class="btn-warning btn-sm" onclick="window.abonarPensionDesdeContadorPorEstudiante('${r.est.id}')">
+                                    <i class="fas fa-money-check-alt"></i> Cobrar pensión
+                                </button>
+                                ${r.saldo > 0 ? `
+                                    <button class="btn-success btn-sm" onclick="window.abonarMatriculaDesdeContador('${r.est.id}')">
+                                        <i class="fas fa-file-signature"></i> Abonar matrícula
+                                    </button>
+                                ` : `
+                                    <button class="btn-info btn-sm" onclick="window.verReciboMatricula('${r.est.id}')">
+                                        <i class="fas fa-receipt"></i> Ver recibo
+                                    </button>
+                                `}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            busquedaGlobalResultados.classList.add('show');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.header-search')) {
+                busquedaGlobalResultados?.classList.remove('show');
+            }
+        });
+
+        // =============================================
+        // BUSCADOR EN PÁGINA ESTUDIANTES
+        // =============================================
+        const filtroEstBuscar = document.getElementById('filtroEstBuscar');
+        const filtroEstCursoEl = document.getElementById('filtroEstCurso');
+        const filtroEstEstadoPagoEl = document.getElementById('filtroEstEstadoPago');
+
+        function aplicarFiltrosEstudiantes() {
+            const q = filtroEstBuscar?.value || '';
+            const cursoId = filtroEstCursoEl?.value || '';
+            const estado = filtroEstEstadoPagoEl?.value || '';
+
+            const resultados = buscarEstudiantes(q, { cursoId, estadoPago: estado });
+            renderEstudiantesContadorFiltrado(resultados);
+        }
+
+        filtroEstBuscar?.addEventListener('input', aplicarFiltrosEstudiantes);
+        filtroEstCursoEl?.addEventListener('change', aplicarFiltrosEstudiantes);
+        filtroEstEstadoPagoEl?.addEventListener('change', aplicarFiltrosEstudiantes);
+
+        document.getElementById('btnLimpiarFiltrosEst')?.addEventListener('click', () => {
+            if (filtroEstBuscar) filtroEstBuscar.value = '';
+            if (filtroEstCursoEl) filtroEstCursoEl.value = '';
+            if (filtroEstEstadoPagoEl) filtroEstEstadoPagoEl.value = '';
+            aplicarFiltrosEstudiantes();
         });
 
         // =============================================
@@ -1100,7 +1724,6 @@
                 if (!colegioDoc.exists()) throw new Error('Colegio no encontrado');
                 colegioData = colegioDoc.data();
 
-                // Aplicar color + logo del colegio
                 aplicarColoresColegio(colegioData.colorPrimario);
                 aplicarLogo(colegioData.logoUrl);
 
@@ -1131,7 +1754,6 @@
         }
 
         async function cargarMetricasDashboard() {
-            // Ingresos / egresos / balance total
             const movSnap = await getDocs(collection(db, 'colegios', colegioId, 'movimientos'));
             let ingresosTotales = 0, egresosTotales = 0;
             const hoy = new Date();
@@ -1158,10 +1780,8 @@
             document.getElementById('contBalance').textContent = formatearPrecio(balance);
             document.getElementById('contBalance').style.color = balance >= 0 ? 'var(--success)' : 'var(--danger)';
 
-            // Cartera
             await cargarCarteraTotal();
 
-            // Últimos 5 movimientos
             const lista = [];
             movSnap.forEach(d => lista.push({ id: d.id, ...d.data() }));
             lista.sort((a, b) => (b.fecha || '').localeCompare(a.fecha || ''));
@@ -1188,23 +1808,11 @@
         async function cargarCarteraTotal() {
             try {
                 let cartera = 0;
-
                 const penSnap = await getDocs(collection(db, 'colegios', colegioId, 'pensiones'));
                 penSnap.forEach(d => {
                     const p = d.data();
-                    const valor = Number(p.valorPension) || 0;
-                    const abonado = Number(p.totalAbonado) || 0;
-                    cartera += Math.max(0, valor - abonado);
+                    cartera += Math.max(0, (Number(p.valorPension) || 0) - (Number(p.totalAbonado) || 0));
                 });
-
-                const matSnap = await getDocs(collection(db, 'colegios', colegioId, 'matriculas'));
-                matSnap.forEach(d => {
-                    const m = d.data();
-                    const valor = Number(m.valorMatricula) || 0;
-                    const abonado = Number(m.totalAbonado) || 0;
-                    cartera += Math.max(0, valor - abonado);
-                });
-
                 document.getElementById('contCartera').textContent = formatearPrecio(cartera);
             } catch (e) { console.warn('Cartera:', e); }
         }
@@ -1221,7 +1829,7 @@
                 renderMovimientos();
             } catch (e) {
                 console.error(e);
-                tbody.innerHTML = `<tr><td colspan="7" class="text-center text-danger">Error</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="8" class="text-center text-danger">Error</td></tr>`;
             }
         }
 
@@ -1245,7 +1853,7 @@
             lista.sort((a, b) => (b.fecha || '').localeCompare(a.fecha || ''));
 
             if (lista.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="7" class="text-center text-muted">No hay movimientos con esos filtros</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="8" class="text-center text-muted">No hay movimientos con esos filtros</td></tr>`;
                 return;
             }
 
@@ -1260,6 +1868,9 @@
                     <td class="${m.tipo === 'ingreso' ? 'mov-row-ingreso' : 'mov-row-egreso'}">
                         ${m.tipo === 'ingreso' ? '+' : '-'} ${formatearPrecio(m.monto)}
                     </td>
+                    <td>
+                        <button class="btn-danger btn-sm" onclick="window.eliminarMovimiento('${m.id}')" title="Eliminar"><i class="fas fa-trash"></i></button>
+                    </td>
                 </tr>
             `).join('');
         }
@@ -1272,15 +1883,11 @@
             document.getElementById('modalNuevoMovimiento').classList.add('show');
             document.getElementById('formNuevoMovimiento').reset();
             document.getElementById('movFecha').value = new Date().toISOString().split('T')[0];
-            document.getElementById('movimientoAlert').className = 'alert';
         });
         document.getElementById('closeMovimientoModal')?.addEventListener('click', () => {
             document.getElementById('modalNuevoMovimiento').classList.remove('show');
         });
         document.getElementById('cancelMovimientoModal')?.addEventListener('click', () => {
-            document.getElementById('modalNuevoMovimiento').classList.remove('show');
-        });
-        document.querySelector('#modalNuevoMovimiento .modal-overlay')?.addEventListener('click', () => {
             document.getElementById('modalNuevoMovimiento').classList.remove('show');
         });
 
@@ -1295,17 +1902,17 @@
             const descripcion = document.getElementById('movDescripcion').value.trim();
 
             if (!tipo || !categoria || !monto || !fecha || !descripcion) {
-                const a = document.getElementById('movimientoAlert');
-                a.className = 'alert alert-error show';
-                document.getElementById('movimientoAlertText').textContent = 'Completa los campos obligatorios';
+                alert('Completa los campos obligatorios');
                 return;
             }
 
             try {
                 await addDoc(collection(db, 'colegios', colegioId, 'movimientos'), {
-                    tipo, categoria, monto, metodo, referencia: referencia || '',
+                    tipo, categoria, monto, metodo,
+                    referencia: referencia || '',
                     fecha, descripcion,
                     creadoPor: auth.currentUser?.uid || '',
+                    rolCreador: 'contador',
                     fechaCreacion: serverTimestamp()
                 });
                 alert('✅ Movimiento registrado');
@@ -1317,95 +1924,812 @@
             }
         });
 
+        window.eliminarMovimiento = async (id) => {
+            if (!confirm('¿Eliminar este movimiento?')) return;
+            try {
+                await deleteDoc(doc(db, 'colegios', colegioId, 'movimientos', id));
+                cargarMovimientos();
+                cargarMetricasDashboard();
+            } catch (e) { alert('❌ ' + e.message); }
+        };
+
+        // =============================================
+        // ESTUDIANTES
+        // =============================================
+        async function cargarEstudiantesContador() {
+            const tbody = document.getElementById('tablaEstudiantesContador');
+            try {
+                // Forzar recarga
+                estudiantesCache = [];
+                cursosCache = [];
+                matriculasCache = [];
+
+                const cursosSnap = await getDocs(collection(db, 'colegios', colegioId, 'cursos'));
+                cursosCache = cursosSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+                const estSnap = await getDocs(collection(db, 'colegios', colegioId, 'estudiantes'));
+                estudiantesCache = estSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+                const matSnap = await getDocs(collection(db, 'colegios', colegioId, 'matriculas'));
+                matriculasCache = matSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+                const filtroCurso = document.getElementById('filtroEstCurso');
+                if (filtroCurso && filtroCurso.options.length <= 1) {
+                    cursosCache.forEach(c => {
+                        filtroCurso.innerHTML += `<option value="${c.id}">${esc(c.nombre)}</option>`;
+                    });
+                }
+
+                aplicarFiltrosEstudiantes();
+            } catch (e) {
+                console.error(e);
+                tbody.innerHTML = `<tr><td colspan="9" class="text-center text-danger">Error: ${e.message}</td></tr>`;
+            }
+        }
+
+        function renderEstudiantesContadorFiltrado(resultados) {
+            const tbody = document.getElementById('tablaEstudiantesContador');
+
+            if (!resultados || resultados.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="9" class="text-center text-muted"><i class="fas fa-search"></i> No hay estudiantes que coincidan con la búsqueda</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = resultados.map((r, i) => {
+                const badgeClass = r.estado === 'pagado' ? 'badge-success'
+                    : r.estado === 'abonado' ? 'badge-warning'
+                    : r.estado === 'sin-cobro' ? 'badge-gray' : 'badge-danger';
+
+                return `
+                    <tr>
+                        <td>${i + 1}</td>
+                        <td><strong>${esc(r.nombreCompleto) || 'Sin nombre'}</strong></td>
+                        <td>${esc(r.est.documento || '-')}</td>
+                        <td>${esc(r.cursoNombre || '-')}</td>
+                        <td>${formatearPrecio(r.valor)}</td>
+                        <td style="color: var(--success); font-weight: 600;">${formatearPrecio(r.abonado)}</td>
+                        <td style="color: ${r.saldo > 0 ? 'var(--danger)' : 'var(--success)'}; font-weight: 600;">${formatearPrecio(r.saldo)}</td>
+                        <td><span class="badge ${badgeClass}">${r.estado}</span></td>
+                        <td>
+                            <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                                ${r.saldo > 0 ? `
+                                    <button class="btn-success btn-sm" onclick="window.abonarMatriculaDesdeContador('${r.est.id}')" title="Abonar matrícula">
+                                        <i class="fas fa-money-bill"></i>
+                                    </button>
+                                ` : `
+                                    <button class="btn-info btn-sm" onclick="window.verReciboMatricula('${r.est.id}')" title="Ver recibo">
+                                        <i class="fas fa-receipt"></i>
+                                    </button>
+                                `}
+                                <button class="btn-warning btn-sm" onclick="window.abonarPensionDesdeContadorPorEstudiante('${r.est.id}')" title="Cobrar pensión">
+                                    <i class="fas fa-money-check-alt"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
         // =============================================
         // PENSIONES
         // =============================================
         async function cargarPensiones() {
             const tbody = document.getElementById('tablaPensiones');
             try {
-                const snap = await getDocs(collection(db, 'colegios', colegioId, 'pensiones'));
-                if (snap.empty) {
-                    tbody.innerHTML = `<tr><td colspan="8" class="text-center text-muted">No hay pensiones registradas</td></tr>`;
-                    return;
+                if (estudiantesCache.length === 0) {
+                    const estSnap = await getDocs(collection(db, 'colegios', colegioId, 'estudiantes'));
+                    estudiantesCache = estSnap.docs.map(d => ({ id: d.id, ...d.data() }));
                 }
-                let html = '';
-                let i = 1;
-                for (const docSnap of snap.docs) {
-                    const p = docSnap.data();
-                    const estDoc = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', p.estudianteId));
-                    const est = estDoc.exists() ? estDoc.data() : {};
-                    const valor = Number(p.valorPension) || 0;
-                    const abonado = Number(p.totalAbonado) || 0;
-                    const saldo = Math.max(0, valor - abonado);
-                    const estado = saldo === 0 && valor > 0 ? 'pagado' : (abonado > 0 ? 'abonado' : 'pendiente');
-                    const clase = estado === 'pagado' ? 'badge-success' : estado === 'abonado' ? 'badge-warning' : 'badge-danger';
+                if (cursosCache.length === 0) {
+                    const cSnap = await getDocs(collection(db, 'colegios', colegioId, 'cursos'));
+                    cursosCache = cSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+                }
 
-                    html += `
-                        <tr>
-                            <td>${i++}</td>
-                            <td>${esc(est.nombres || '')} ${esc(est.apellidos || '')}</td>
-                            <td>${MESES[(p.mes || 1) - 1] || '-'}</td>
-                            <td>${p.anio || '-'}</td>
-                            <td>${formatearPrecio(valor)}</td>
-                            <td style="color: var(--success); font-weight: 600;">${formatearPrecio(abonado)}</td>
-                            <td style="color: var(--danger); font-weight: 600;">${formatearPrecio(saldo)}</td>
-                            <td><span class="badge ${clase}">${estado}</span></td>
-                        </tr>
-                    `;
-                }
-                tbody.innerHTML = html;
+                const snap = await getDocs(collection(db, 'colegios', colegioId, 'pensiones'));
+                pensionesCache = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+                abonosCache = {};
+                const pagosSnap = await getDocs(collection(db, 'colegios', colegioId, 'pagos_pensiones'));
+                pagosSnap.forEach(d => {
+                    const p = d.data();
+                    const key = p.pensionId;
+                    if (!key) return;
+                    if (!abonosCache[key]) abonosCache[key] = [];
+                    abonosCache[key].push({ id: d.id, ...p });
+                });
+
+                renderPensiones();
             } catch (e) {
                 console.error(e);
-                tbody.innerHTML = `<tr><td colspan="8" class="text-center text-danger">Error</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="10" class="text-center text-danger">Error: ${e.message}</td></tr>`;
             }
         }
 
+        function renderPensiones() {
+            const tbody = document.getElementById('tablaPensiones');
+            const filtroMes = document.getElementById('filtroPensionMes').value;
+            const filtroEstado = document.getElementById('filtroPensionEstado').value;
+
+            const estMap = {};
+            estudiantesCache.forEach(e => estMap[e.id] = e);
+            const cursoMap = {};
+            cursosCache.forEach(c => cursoMap[c.id] = c.nombre || 'Sin curso');
+
+            let lista = pensionesCache.map(p => {
+                const est = estMap[p.estudianteId] || {};
+                const valor = Number(p.valorPension) || 0;
+                const abonado = Number(p.totalAbonado) || 0;
+                const saldo = Math.max(0, valor - abonado);
+                let estado = p.estado;
+                if (!estado) {
+                    estado = saldo === 0 && valor > 0 ? 'pagado' : (abonado > 0 ? 'abonado' : 'pendiente');
+                }
+                return { p, est, valor, abonado, saldo, estado };
+            });
+
+            if (filtroMes) {
+                const [anio, mes] = filtroMes.split('-');
+                lista = lista.filter(x => Number(x.p.anio) === Number(anio) && Number(x.p.mes) === Number(mes));
+            }
+            if (filtroEstado) {
+                lista = lista.filter(x => x.estado === filtroEstado);
+            }
+
+            if (lista.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="10" class="text-center text-muted">No hay pensiones registradas</td></tr>`;
+                return;
+            }
+
+            lista.sort((a, b) => (Number(b.p.anio) || 0) - (Number(a.p.anio) || 0) || (Number(b.p.mes) || 0) - (Number(a.p.mes) || 0));
+
+            tbody.innerHTML = lista.map((x, i) => {
+                const nombre = `${esc(x.est.nombres || '')} ${esc(x.est.apellidos || '')}`.trim() || 'Sin nombre';
+                const cursoNombre = x.p.cursoId ? (cursoMap[x.p.cursoId] || '-') : (x.est.cursoId ? (cursoMap[x.est.cursoId] || '-') : '-');
+                const badgeClass = x.estado === 'pagado' ? 'badge-success' : x.estado === 'abonado' ? 'badge-warning' : 'badge-danger';
+                const numAbonos = (abonosCache[x.p.id] || []).length;
+
+                return `
+                    <tr>
+                        <td>${i + 1}</td>
+                        <td><strong>${nombre}</strong></td>
+                        <td>${cursoNombre}</td>
+                        <td>${MESES[(x.p.mes || 1) - 1] || '-'}</td>
+                        <td>${x.p.anio || '-'}</td>
+                        <td>${formatearPrecio(x.valor)}</td>
+                        <td style="color: var(--success); font-weight: 600;">${formatearPrecio(x.abonado)}</td>
+                        <td style="color: ${x.saldo > 0 ? 'var(--danger)' : 'var(--success)'}; font-weight: 600;">${formatearPrecio(x.saldo)}</td>
+                        <td><span class="badge ${badgeClass}">${x.estado}</span></td>
+                        <td>
+                            <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                                ${x.saldo > 0 ? `
+                                    <button class="btn-success btn-sm" onclick="window.abonarPensionDesdeContador('${x.p.id}')" title="Registrar abono">
+                                        <i class="fas fa-money-bill"></i>
+                                    </button>
+                                ` : ''}
+                                ${numAbonos > 0 ? `
+                                    <button class="btn-info btn-sm" onclick="window.verHistorialAbonos('${x.p.id}')" title="Historial">
+                                        <i class="fas fa-history"></i> ${numAbonos}
+                                    </button>
+                                ` : ''}
+                                <button class="btn-warning btn-sm" onclick="window.verReciboPension('${x.p.id}')" title="Ver recibo">
+                                    <i class="fas fa-receipt"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        document.getElementById('filtroPensionMes')?.addEventListener('change', renderPensiones);
+        document.getElementById('filtroPensionEstado')?.addEventListener('change', renderPensiones);
+
         // =============================================
-        // MATRÍCULAS
+        // HISTORIAL DE ABONOS
         // =============================================
-        async function cargarMatriculas() {
-            const tbody = document.getElementById('tablaMatriculas');
+        window.verHistorialAbonos = async (pensionId) => {
             try {
-                const snap = await getDocs(collection(db, 'colegios', colegioId, 'matriculas'));
-                if (snap.empty) {
-                    tbody.innerHTML = `<tr><td colspan="7" class="text-center text-muted">No hay matrículas registradas</td></tr>`;
+                const pDoc = await getDoc(doc(db, 'colegios', colegioId, 'pensiones', pensionId));
+                if (!pDoc.exists()) { alert('Pensión no encontrada'); return; }
+                const p = pDoc.data();
+
+                const estDoc = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', p.estudianteId));
+                const est = estDoc.exists() ? estDoc.data() : {};
+
+                const valor = Number(p.valorPension) || 0;
+                const abonado = Number(p.totalAbonado) || 0;
+                const saldo = Math.max(0, valor - abonado);
+
+                document.getElementById('historialTitulo').innerHTML = `<i class="fas fa-history" style="color: var(--info);"></i> Abonos - ${est.nombres || ''} ${est.apellidos || ''}`;
+
+                document.getElementById('historialInfo').innerHTML = `
+                    <div style="display: flex; justify-content: space-between; padding: 4px 0;">
+                        <span>Concepto:</span><strong>Pensión ${MESES[(p.mes || 1) - 1]} ${p.anio}</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 4px 0;">
+                        <span>Valor pensión:</span><strong>${formatearPrecio(valor)}</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 4px 0;">
+                        <span>Total abonado:</span><strong style="color: var(--success);">${formatearPrecio(abonado)}</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 4px 0; border-top: 1px dashed var(--gray-300); padding-top: 8px; margin-top: 4px;">
+                        <span><strong>Saldo:</strong></span><strong style="color: ${saldo > 0 ? 'var(--danger)' : 'var(--success)'}; font-size: 1.1rem;">${formatearPrecio(saldo)}</strong>
+                    </div>
+                `;
+
+                const abonos = abonosCache[pensionId] || [];
+                const lista = document.getElementById('historialLista');
+
+                if (abonos.length === 0) {
+                    lista.innerHTML = `<div class="text-center text-muted" style="padding: 20px;">No hay abonos registrados todavía</div>`;
+                } else {
+                    abonos.sort((a, b) => (b.fecha || '').localeCompare(a.fecha || ''));
+                    lista.innerHTML = abonos.map(a => `
+                        <div class="abono-item">
+                            <div class="abono-info">
+                                <strong>${formatearPrecio(a.monto)}</strong>
+                                <div class="abono-fecha">
+                                    ${a.fecha} · ${esc(a.metodo || 'N/A')} 
+                                    ${a.referencia ? `· Ref: ${esc(a.referencia)}` : ''}
+                                </div>
+                            </div>
+                            <div class="abono-monto">+${formatearPrecio(a.monto)}</div>
+                        </div>
+                    `).join('');
+                }
+
+                document.getElementById('modalHistorialAbonos').classList.add('show');
+            } catch (e) {
+                alert('Error: ' + e.message);
+            }
+        };
+
+        document.getElementById('closeHistorialModal')?.addEventListener('click', () => {
+            document.getElementById('modalHistorialAbonos').classList.remove('show');
+        });
+        document.getElementById('closeHistorialBtn')?.addEventListener('click', () => {
+            document.getElementById('modalHistorialAbonos').classList.remove('show');
+        });
+
+        // =============================================
+        // COMBOBOX DE ESTUDIANTES (pago pensión)
+        // =============================================
+        async function inicializarComboboxPagoEstudiante() {
+            await asegurarDatosCargados();
+
+            const input = document.getElementById('pagoEstudianteBuscar');
+            const resultadosEl = document.getElementById('pagoEstudianteResultados');
+            const hidden = document.getElementById('pagoEstudiante');
+            const wrapSeleccionado = document.getElementById('pagoEstudianteSeleccionadoWrap');
+
+            input.value = '';
+            hidden.value = '';
+            wrapSeleccionado.innerHTML = '';
+            resultadosEl.classList.remove('show');
+
+            input.oninput = () => {
+                const q = input.value.trim();
+                if (q.length < 2) {
+                    resultadosEl.classList.remove('show');
                     return;
                 }
-                let html = '';
-                let i = 1;
-                for (const docSnap of snap.docs) {
-                    const m = docSnap.data();
-                    const estDoc = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', m.estudianteId));
-                    const est = estDoc.exists() ? estDoc.data() : {};
 
-                    let cursoNombre = '-';
-                    if (m.cursoId) {
-                        const c = await getDoc(doc(db, 'colegios', colegioId, 'cursos', m.cursoId));
-                        cursoNombre = c.exists() ? c.data().nombre : '-';
-                    }
+                const resultados = buscarEstudiantes(q).slice(0, 10);
 
-                    const valor = Number(m.valorMatricula) || 0;
-                    const abonado = Number(m.totalAbonado) || 0;
-                    const saldo = Math.max(0, valor - abonado);
-                    const estado = m.estadoPago || 'pendiente';
-                    const clase = estado === 'pagado' ? 'badge-success' : estado === 'abonado' ? 'badge-warning' : estado === 'sin-cobro' ? 'badge-gray' : 'badge-danger';
+                if (resultados.length === 0) {
+                    resultadosEl.innerHTML = `<div class="combo-item" style="color: var(--gray-500); cursor: default;">No se encontraron estudiantes</div>`;
+                } else {
+                    resultadosEl.innerHTML = resultados.map(r => `
+                        <div class="combo-item" data-id="${r.est.id}">
+                            <strong>${esc(r.nombreCompleto) || 'Sin nombre'}</strong>
+                            <div class="combo-sub">
+                                ${esc(r.est.documento || 'Sin doc')} · ${esc(r.cursoNombre || 'Sin curso')}
+                                ${r.saldo > 0 ? ` · Saldo matrícula: ${formatearPrecio(r.saldo)}` : ''}
+                            </div>
+                        </div>
+                    `).join('');
 
-                    html += `
-                        <tr>
-                            <td>${i++}</td>
-                            <td>${esc(est.nombres || '')} ${esc(est.apellidos || '')}</td>
-                            <td>${esc(cursoNombre)}</td>
-                            <td>${formatearPrecio(valor)}</td>
-                            <td style="color: var(--success); font-weight: 600;">${formatearPrecio(abonado)}</td>
-                            <td style="color: var(--danger); font-weight: 600;">${formatearPrecio(saldo)}</td>
-                            <td><span class="badge ${clase}">${estado}</span></td>
-                        </tr>
-                    `;
+                    resultadosEl.querySelectorAll('.combo-item').forEach(item => {
+                        item.addEventListener('click', () => {
+                            const id = item.dataset.id;
+                            const est = estudiantesCache.find(e => e.id === id);
+                            if (!est) return;
+
+                            hidden.value = id;
+                            input.value = '';
+                            resultadosEl.classList.remove('show');
+
+                            wrapSeleccionado.innerHTML = `
+                                <span class="selected-chip">
+                                    <i class="fas fa-user-check"></i>
+                                    ${esc(est.nombres || '')} ${esc(est.apellidos || '')} 
+                                    · ${esc(est.documento || 'Sin doc')}
+                                    <button type="button" style="background:none; border:none; color: var(--primary); cursor:pointer; margin-left: 4px;" onclick="window.limpiarSeleccionPagoEstudiante()">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </span>
+                            `;
+
+                            actualizarResumenPagoPension();
+                        });
+                    });
                 }
-                tbody.innerHTML = html;
-            } catch (e) {
-                console.error(e);
-                tbody.innerHTML = `<tr><td colspan="7" class="text-center text-danger">Error</td></tr>`;
+                resultadosEl.classList.add('show');
+            };
+        }
+
+        window.limpiarSeleccionPagoEstudiante = () => {
+            document.getElementById('pagoEstudiante').value = '';
+            document.getElementById('pagoEstudianteBuscar').value = '';
+            document.getElementById('pagoEstudianteSeleccionadoWrap').innerHTML = '';
+            document.getElementById('pagoResumen').style.display = 'none';
+        };
+
+        // =============================================
+        // MODAL REGISTRAR PAGO PENSION
+        // =============================================
+        document.getElementById('btnRegistrarPagoPension')?.addEventListener('click', async () => {
+            await inicializarComboboxPagoEstudiante();
+            document.getElementById('modalPagoPension').classList.add('show');
+            document.getElementById('formPagoPension').reset();
+            document.getElementById('pagoAnio').value = new Date().getFullYear();
+            document.getElementById('pagoFecha').value = new Date().toISOString().split('T')[0];
+            document.getElementById('pagoResumen').style.display = 'none';
+            document.getElementById('pagoPensionAlert').className = 'alert';
+            document.getElementById('pagoImprimirRecibo').checked = true;
+            // El input de búsqueda se limpia al reset, re-mostrar el dropdown
+            document.getElementById('pagoEstudianteSeleccionadoWrap').innerHTML = '';
+        });
+        document.getElementById('closePagoPensionModal')?.addEventListener('click', () => {
+            document.getElementById('modalPagoPension').classList.remove('show');
+        });
+        document.getElementById('cancelPagoPensionModal')?.addEventListener('click', () => {
+            document.getElementById('modalPagoPension').classList.remove('show');
+        });
+
+        async function actualizarResumenPagoPension() {
+            const estudianteId = document.getElementById('pagoEstudiante').value;
+            const mes = parseInt(document.getElementById('pagoMes').value);
+            const anio = parseInt(document.getElementById('pagoAnio').value);
+            const valorInput = parseFloat(document.getElementById('pagoValorPension').value) || 0;
+
+            if (!estudianteId || !mes || !anio) {
+                document.getElementById('pagoResumen').style.display = 'none';
+                return;
+            }
+
+            let valor = valorInput;
+            let abonado = 0;
+
+            try {
+                const q = query(
+                    collection(db, 'colegios', colegioId, 'pensiones'),
+                    where('estudianteId', '==', estudianteId),
+                    where('mes', '==', mes),
+                    where('anio', '==', anio)
+                );
+                const snap = await getDocs(q);
+                if (!snap.empty) {
+                    const p = snap.docs[0].data();
+                    if (!valor) valor = Number(p.valorPension) || 0;
+                    abonado = Number(p.totalAbonado) || 0;
+                }
+            } catch (e) { console.warn(e); }
+
+            const saldo = Math.max(0, valor - abonado);
+            document.getElementById('pagoResumenValor').textContent = formatearPrecio(valor);
+            document.getElementById('pagoResumenAbonado').textContent = formatearPrecio(abonado);
+            document.getElementById('pagoResumenSaldo').textContent = formatearPrecio(saldo);
+            document.getElementById('pagoResumen').style.display = 'block';
+            document.getElementById('pagoNuevoSaldo').textContent = formatearPrecio(saldo);
+        }
+
+        document.getElementById('pagoMes')?.addEventListener('change', actualizarResumenPagoPension);
+        document.getElementById('pagoAnio')?.addEventListener('change', actualizarResumenPagoPension);
+        document.getElementById('pagoValorPension')?.addEventListener('input', actualizarResumenPagoPension);
+
+        document.getElementById('pagoMonto')?.addEventListener('input', () => {
+            const valorTexto = document.getElementById('pagoResumenValor').textContent;
+            const abonadoTexto = document.getElementById('pagoResumenAbonado').textContent;
+            const valor = parseFloat(valorTexto.replace(/[^0-9]/g, '')) || 0;
+            const abonado = parseFloat(abonadoTexto.replace(/[^0-9]/g, '')) || 0;
+            const monto = parseFloat(document.getElementById('pagoMonto').value) || 0;
+            const saldo = Math.max(0, valor - abonado);
+            const nuevo = Math.max(0, saldo - monto);
+            document.getElementById('pagoNuevoSaldo').textContent = formatearPrecio(nuevo);
+            document.getElementById('pagoNuevoSaldo').style.color = nuevo === 0 ? 'var(--success)' : 'var(--primary)';
+        });
+
+        document.getElementById('formPagoPension')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const estudianteId = document.getElementById('pagoEstudiante').value;
+            const mes = parseInt(document.getElementById('pagoMes').value);
+            const anio = parseInt(document.getElementById('pagoAnio').value);
+            const valorPension = parseFloat(document.getElementById('pagoValorPension').value) || 0;
+            const monto = parseFloat(document.getElementById('pagoMonto').value);
+            const metodo = document.getElementById('pagoMetodo').value;
+            const referencia = document.getElementById('pagoReferencia').value.trim();
+            const fecha = document.getElementById('pagoFecha').value;
+            const imprimir = document.getElementById('pagoImprimirRecibo').checked;
+
+            if (!estudianteId || !mes || !anio || !monto || monto <= 0 || !fecha) {
+                const a = document.getElementById('pagoPensionAlert');
+                a.className = 'alert alert-error show';
+                document.getElementById('pagoPensionAlertText').textContent = 'Completa todos los campos obligatorios';
+                return;
+            }
+
+            try {
+                const q = query(
+                    collection(db, 'colegios', colegioId, 'pensiones'),
+                    where('estudianteId', '==', estudianteId),
+                    where('mes', '==', mes),
+                    where('anio', '==', anio)
+                );
+                const snap = await getDocs(q);
+
+                let pensionId = null;
+                let valorFinal = valorPension;
+                let abonadoActual = 0;
+
+                if (!snap.empty) {
+                    const docPension = snap.docs[0];
+                    pensionId = docPension.id;
+                    const p = docPension.data();
+                    valorFinal = valorPension || Number(p.valorPension) || 0;
+                    abonadoActual = Number(p.totalAbonado) || 0;
+                } else {
+                    valorFinal = valorPension || monto;
+                }
+
+                const nuevoAbonado = abonadoActual + monto;
+                const saldo = Math.max(0, valorFinal - nuevoAbonado);
+                const estado = saldo === 0 ? 'pagado' : (nuevoAbonado > 0 ? 'abonado' : 'pendiente');
+
+                const estDoc = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', estudianteId));
+                const est = estDoc.exists() ? estDoc.data() : {};
+
+                let cursoNombre = '-';
+                if (est.cursoId) {
+                    const c = await getDoc(doc(db, 'colegios', colegioId, 'cursos', est.cursoId));
+                    cursoNombre = c.exists() ? c.data().nombre : '-';
+                }
+
+                if (pensionId) {
+                    await updateDoc(doc(db, 'colegios', colegioId, 'pensiones', pensionId), {
+                        totalAbonado: nuevoAbonado,
+                        saldo,
+                        estado,
+                        fechaActualizacion: serverTimestamp()
+                    });
+                } else {
+                    const nueva = await addDoc(collection(db, 'colegios', colegioId, 'pensiones'), {
+                        estudianteId,
+                        cursoId: est.cursoId || '',
+                        anio,
+                        mes,
+                        valorPension: valorFinal,
+                        totalAbonado: monto,
+                        saldo: Math.max(0, valorFinal - monto),
+                        estado: (valorFinal - monto) <= 0 ? 'pagado' : 'abonado',
+                        fechaRegistro: serverTimestamp()
+                    });
+                    pensionId = nueva.id;
+                }
+
+                await addDoc(collection(db, 'colegios', colegioId, 'pagos_pensiones'), {
+                    estudianteId,
+                    pensionId,
+                    mes,
+                    anio,
+                    monto,
+                    metodo,
+                    referencia: referencia || '',
+                    fecha,
+                    creadoPor: auth.currentUser?.uid || '',
+                    rolCreador: 'contador',
+                    fechaCreacion: serverTimestamp()
+                });
+
+                await addDoc(collection(db, 'colegios', colegioId, 'movimientos'), {
+                    tipo: 'ingreso',
+                    categoria: 'Pensión',
+                    descripcion: `Pago pensión ${MESES[mes - 1]} ${anio} - ${est.nombres || ''} ${est.apellidos || ''}`,
+                    monto,
+                    metodo,
+                    referencia: referencia || '',
+                    fecha,
+                    estudianteId,
+                    estudianteNombre: `${est.nombres || ''} ${est.apellidos || ''}`,
+                    creadoPor: auth.currentUser?.uid || '',
+                    rolCreador: 'contador',
+                    fechaCreacion: serverTimestamp()
+                });
+
+                if (saldo === 0) {
+                    const notiQ = query(
+                        collection(db, 'colegios', colegioId, 'notificaciones'),
+                        where('estudianteId', '==', estudianteId),
+                        where('refId', '==', pensionId),
+                        where('estado', '==', 'pendiente')
+                    );
+                    const notiSnap = await getDocs(notiQ);
+                    for (const n of notiSnap.docs) {
+                        await updateDoc(n.ref, {
+                            estado: 'pagado',
+                            fechaPago: serverTimestamp(),
+                            leida: true
+                        });
+                    }
+                }
+
+                alert(`✅ ${nuevoAbonado < valorFinal ? 'Abono' : 'Pago'} registrado correctamente`);
+                document.getElementById('modalPagoPension').classList.remove('show');
+                cargarPensiones();
+                cargarMetricasDashboard();
+
+                if (imprimir) {
+                    imprimirRecibo({
+                        tipo: 'pension',
+                        estudiante: {
+                            nombre: `${est.nombres || ''} ${est.apellidos || ''}`.trim(),
+                            documento: est.documento || '-',
+                            curso: cursoNombre,
+                            acudiente: est.acudiente || '-'
+                        },
+                        concepto: `Pensión ${MESES[mes - 1]} ${anio}`,
+                        monto,
+                        metodo,
+                        referencia,
+                        fecha,
+                        valorTotal: valorFinal,
+                        totalAbonado: nuevoAbonado,
+                        saldoDespues: saldo
+                    });
+                }
+            } catch (error) {
+                console.error(error);
+                const a = document.getElementById('pagoPensionAlert');
+                a.className = 'alert alert-error show';
+                document.getElementById('pagoPensionAlertText').textContent = '❌ ' + error.message;
+            }
+        });
+
+        // =============================================
+        // CONFIGURAR PENSIÓN
+        // =============================================
+        async function inicializarComboboxConfigEstudiante() {
+            await asegurarDatosCargados();
+
+            const cSelect = document.getElementById('configCurso');
+            if (cSelect.options.length <= 1) {
+                cSelect.innerHTML = '<option value="">Seleccionar curso</option>';
+                cursosCache.forEach(c => {
+                    cSelect.innerHTML += `<option value="${c.id}">${esc(c.nombre)}</option>`;
+                });
+            }
+
+            const input = document.getElementById('configEstudianteBuscar');
+            const resultadosEl = document.getElementById('configEstudianteResultados');
+            const hidden = document.getElementById('configEstudiante');
+            const wrapSeleccionado = document.getElementById('configEstudianteSeleccionadoWrap');
+
+            input.value = '';
+            hidden.value = '';
+            wrapSeleccionado.innerHTML = '';
+            resultadosEl.classList.remove('show');
+
+            input.oninput = () => {
+                const q = input.value.trim();
+                if (q.length < 2) {
+                    resultadosEl.classList.remove('show');
+                    return;
+                }
+
+                const resultados = buscarEstudiantes(q).slice(0, 10);
+
+                if (resultados.length === 0) {
+                    resultadosEl.innerHTML = `<div class="combo-item" style="color: var(--gray-500); cursor: default;">No se encontraron estudiantes</div>`;
+                } else {
+                    resultadosEl.innerHTML = resultados.map(r => `
+                        <div class="combo-item" data-id="${r.est.id}">
+                            <strong>${esc(r.nombreCompleto) || 'Sin nombre'}</strong>
+                            <div class="combo-sub">
+                                ${esc(r.est.documento || 'Sin doc')} · ${esc(r.cursoNombre || 'Sin curso')}
+                            </div>
+                        </div>
+                    `).join('');
+
+                    resultadosEl.querySelectorAll('.combo-item').forEach(item => {
+                        item.addEventListener('click', () => {
+                            const id = item.dataset.id;
+                            const est = estudiantesCache.find(e => e.id === id);
+                            if (!est) return;
+
+                            hidden.value = id;
+                            input.value = '';
+                            resultadosEl.classList.remove('show');
+
+                            wrapSeleccionado.innerHTML = `
+                                <span class="selected-chip">
+                                    <i class="fas fa-user-check"></i>
+                                    ${esc(est.nombres || '')} ${esc(est.apellidos || '')} 
+                                    · ${esc(est.documento || 'Sin doc')}
+                                    <button type="button" style="background:none; border:none; color: var(--primary); cursor:pointer; margin-left: 4px;" onclick="window.limpiarSeleccionConfigEstudiante()">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </span>
+                            `;
+                        });
+                    });
+                }
+                resultadosEl.classList.add('show');
+            };
+        }
+
+        window.limpiarSeleccionConfigEstudiante = () => {
+            document.getElementById('configEstudiante').value = '';
+            document.getElementById('configEstudianteBuscar').value = '';
+            document.getElementById('configEstudianteSeleccionadoWrap').innerHTML = '';
+        };
+
+        document.getElementById('btnConfigurarPension')?.addEventListener('click', async () => {
+            await inicializarComboboxConfigEstudiante();
+            document.getElementById('modalConfigurarPension').classList.add('show');
+            document.getElementById('formConfigurarPension').reset();
+            document.getElementById('configAnio').value = new Date().getFullYear();
+            document.getElementById('configAplicarA').value = 'curso';
+            document.getElementById('configCursoWrap').style.display = 'block';
+            document.getElementById('configEstudianteWrap').style.display = 'none';
+            document.getElementById('configEstudianteSeleccionadoWrap').innerHTML = '';
+        });
+        document.getElementById('closeConfigurarPensionModal')?.addEventListener('click', () => {
+            document.getElementById('modalConfigurarPension').classList.remove('show');
+        });
+        document.getElementById('cancelConfigurarPensionModal')?.addEventListener('click', () => {
+            document.getElementById('modalConfigurarPension').classList.remove('show');
+        });
+
+        document.getElementById('configAplicarA')?.addEventListener('change', (e) => {
+            const esCurso = e.target.value === 'curso';
+            document.getElementById('configCursoWrap').style.display = esCurso ? 'block' : 'none';
+            document.getElementById('configEstudianteWrap').style.display = esCurso ? 'none' : 'block';
+        });
+
+        document.getElementById('formConfigurarPension')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const aplicarA = document.getElementById('configAplicarA').value;
+            const cursoId = document.getElementById('configCurso').value;
+            const estudianteId = document.getElementById('configEstudiante').value;
+            const mes = parseInt(document.getElementById('configMes').value);
+            const anio = parseInt(document.getElementById('configAnio').value);
+            const valor = parseFloat(document.getElementById('configValor').value);
+
+            if (!mes || !anio || !valor) {
+                alert('Completa los campos obligatorios');
+                return;
+            }
+
+            try {
+                let estudiantes = [];
+                if (aplicarA === 'curso') {
+                    if (!cursoId) { alert('Selecciona un curso'); return; }
+                    const matSnap = await getDocs(query(
+                        collection(db, 'colegios', colegioId, 'matriculas'),
+                        where('cursoId', '==', cursoId),
+                        where('estado', '==', 'activo')
+                    ));
+                    const ids = matSnap.docs.map(d => d.data().estudianteId);
+                    estudiantes = estudiantesCache.filter(e => ids.includes(e.id));
+
+                    if (estudiantes.length === 0) {
+                        estudiantes = estudiantesCache.filter(e => e.cursoId === cursoId);
+                    }
+                } else {
+                    if (!estudianteId) { alert('Selecciona un estudiante'); return; }
+                    estudiantes = estudiantesCache.filter(e => e.id === estudianteId);
+                }
+
+                if (estudiantes.length === 0) {
+                    alert('No se encontraron estudiantes en ese curso');
+                    return;
+                }
+
+                let creadas = 0;
+                for (const est of estudiantes) {
+                    const q = query(
+                        collection(db, 'colegios', colegioId, 'pensiones'),
+                        where('estudianteId', '==', est.id),
+                        where('mes', '==', mes),
+                        where('anio', '==', anio)
+                    );
+                    const snap = await getDocs(q);
+                    if (snap.empty) {
+                        await addDoc(collection(db, 'colegios', colegioId, 'pensiones'), {
+                            estudianteId: est.id,
+                            cursoId: est.cursoId || cursoId || '',
+                            anio, mes,
+                            valorPension: valor,
+                            totalAbonado: 0,
+                            saldo: valor,
+                            estado: 'pendiente',
+                            fechaRegistro: serverTimestamp()
+                        });
+                        creadas++;
+                    } else {
+                        await updateDoc(snap.docs[0].ref, {
+                            valorPension: valor,
+                            fechaActualizacion: serverTimestamp()
+                        });
+                    }
+                }
+
+                alert(`✅ Pensión configurada para ${creadas} estudiante(s)`);
+                document.getElementById('modalConfigurarPension').classList.remove('show');
+                cargarPensiones();
+            } catch (error) {
+                alert('❌ ' + error.message);
+            }
+        });
+
+        // =============================================
+        // CREAR NOTIFICACIÓN DE COBRO
+        // =============================================
+        async function crearNotificacionCobro({ estudianteId, tipo, concepto, monto, saldo, refId, mes, anio }) {
+            try {
+                const q = query(
+                    collection(db, 'colegios', colegioId, 'notificaciones'),
+                    where('estudianteId', '==', estudianteId),
+                    where('refId', '==', refId),
+                    where('estado', '==', 'pendiente')
+                );
+                const existente = await getDocs(q);
+                if (!existente.empty) return false;
+
+                const estDoc = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', estudianteId));
+                const est = estDoc.exists() ? estDoc.data() : {};
+
+                let acudienteId = null;
+                if (est.acudienteEmail) {
+                    const acuQ = query(
+                        collection(db, 'usuarios'),
+                        where('email', '==', est.acudienteEmail),
+                        where('colegioId', '==', colegioId)
+                    );
+                    const acuSnap = await getDocs(acuQ);
+                    if (!acuSnap.empty) acudienteId = acuSnap.docs[0].id;
+                }
+
+                await addDoc(collection(db, 'colegios', colegioId, 'notificaciones'), {
+                    estudianteId,
+                    acudienteId: acudienteId || '',
+                    estudianteNombre: `${est.nombres || ''} ${est.apellidos || ''}`.trim(),
+                    tipo: tipo === 'pension' ? 'cobro-pension' : 'cobro-matricula',
+                    concepto,
+                    monto: Number(monto) || 0,
+                    saldo: Number(saldo) || 0,
+                    refId,
+                    mes: mes || null,
+                    anio: anio || null,
+                    titulo: tipo === 'pension'
+                        ? `📢 Cobro de pensión - ${concepto}`
+                        : `📢 Cobro de matrícula`,
+                    mensaje: tipo === 'pension'
+                        ? `Tienes pendiente el pago de la pensión de ${concepto}. Saldo: ${formatearPrecio(saldo)}`
+                        : `Tienes pendiente el pago de matrícula. Saldo: ${formatearPrecio(saldo)}`,
+                    estado: 'pendiente',
+                    leida: false,
+                    creadaPor: auth.currentUser?.uid || '',
+                    rolCreador: 'contador',
+                    fecha: serverTimestamp(),
+                    fechaCreacion: serverTimestamp()
+                });
+
+                return true;
+            } catch (error) {
+                console.error('Error al crear notificación:', error);
+                return false;
             }
         }
 
@@ -1418,24 +2742,6 @@
                 const items = [];
                 let total = 0;
 
-                const matSnap = await getDocs(collection(db, 'colegios', colegioId, 'matriculas'));
-                for (const docSnap of matSnap.docs) {
-                    const m = docSnap.data();
-                    const valor = Number(m.valorMatricula) || 0;
-                    const abonado = Number(m.totalAbonado) || 0;
-                    const saldo = Math.max(0, valor - abonado);
-                    if (saldo > 0) {
-                        const estDoc = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', m.estudianteId));
-                        const est = estDoc.exists() ? estDoc.data() : {};
-                        items.push({
-                            nombre: `${est.nombres || ''} ${est.apellidos || ''}`,
-                            concepto: 'Matrícula',
-                            saldo
-                        });
-                        total += saldo;
-                    }
-                }
-
                 const penSnap = await getDocs(collection(db, 'colegios', colegioId, 'pensiones'));
                 for (const docSnap of penSnap.docs) {
                     const p = docSnap.data();
@@ -1445,10 +2751,48 @@
                     if (saldo > 0) {
                         const estDoc = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', p.estudianteId));
                         const est = estDoc.exists() ? estDoc.data() : {};
+                        let cursoNombre = '-';
+                        if (est.cursoId) {
+                            const c = await getDoc(doc(db, 'colegios', colegioId, 'cursos', est.cursoId));
+                            cursoNombre = c.exists() ? c.data().nombre : '-';
+                        }
                         items.push({
-                            nombre: `${est.nombres || ''} ${est.apellidos || ''}`,
+                            nombre: `${est.nombres || ''} ${est.apellidos || ''}`.trim() || 'Sin nombre',
+                            curso: cursoNombre,
                             concepto: `Pensión ${MESES[(p.mes || 1) - 1]} ${p.anio || ''}`,
-                            saldo
+                            saldo,
+                            tipo: 'pension',
+                            refId: docSnap.id,
+                            estudianteId: p.estudianteId,
+                            valorTotal: valor
+                        });
+                        total += saldo;
+                    }
+                }
+
+                const matSnap = await getDocs(collection(db, 'colegios', colegioId, 'matriculas'));
+                for (const docSnap of matSnap.docs) {
+                    const m = docSnap.data();
+                    const valor = Number(m.valorMatricula) || 0;
+                    const abonado = Number(m.totalAbonado) || 0;
+                    const saldo = Math.max(0, valor - abonado);
+                    if (saldo > 0) {
+                        const estDoc = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', m.estudianteId));
+                        const est = estDoc.exists() ? estDoc.data() : {};
+                        let cursoNombre = '-';
+                        if (m.cursoId) {
+                            const c = await getDoc(doc(db, 'colegios', colegioId, 'cursos', m.cursoId));
+                            cursoNombre = c.exists() ? c.data().nombre : '-';
+                        }
+                        items.push({
+                            nombre: `${est.nombres || ''} ${est.apellidos || ''}`.trim() || 'Sin nombre',
+                            curso: cursoNombre,
+                            concepto: 'Matrícula',
+                            saldo,
+                            tipo: 'matricula',
+                            refId: docSnap.id,
+                            estudianteId: m.estudianteId,
+                            valorTotal: valor
                         });
                         total += saldo;
                     }
@@ -1458,7 +2802,7 @@
                 document.getElementById('carteraEstudiantes').textContent = new Set(items.map(i => i.nombre)).size;
 
                 if (items.length === 0) {
-                    tbody.innerHTML = `<tr><td colspan="4" class="text-center text-muted">No hay cartera pendiente</td></tr>`;
+                    tbody.innerHTML = `<tr><td colspan="6" class="text-center text-muted">No hay cartera pendiente</td></tr>`;
                     return;
                 }
 
@@ -1466,15 +2810,54 @@
                     <tr>
                         <td>${i + 1}</td>
                         <td>${esc(it.nombre)}</td>
+                        <td>${esc(it.curso)}</td>
                         <td>${esc(it.concepto)}</td>
                         <td style="color: var(--danger); font-weight: 600;">${formatearPrecio(it.saldo)}</td>
+                        <td>
+                            <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                                <button class="btn-success btn-sm" onclick="window.irAPagar('${it.tipo}', '${it.refId}', '${it.estudianteId}', '${it.concepto.replace(/'/g, "\\'")}', ${it.saldo}, ${it.valorTotal})">
+                                    <i class="fas fa-money-bill"></i> Cobrar
+                                </button>
+                            </div>
+                        </td>
                     </tr>
                 `).join('');
             } catch (e) {
                 console.error(e);
-                tbody.innerHTML = `<tr><td colspan="4" class="text-center text-danger">Error</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="6" class="text-center text-danger">Error</td></tr>`;
             }
         }
+
+        window.irAPagar = async (tipo, refId, estudianteId, concepto, saldo, valorTotal) => {
+            const mensaje = `📢 ¿Enviar notificación de cobro?\n\nEstudiante: ${estudianteId}\nConcepto: ${concepto}\nSaldo: ${formatearPrecio(saldo)}\n\nEl estudiante y su acudiente verán esta notificación en su panel hasta que paguen.`;
+
+            if (!confirm(mensaje)) return;
+
+            const creada = await crearNotificacionCobro({
+                estudianteId,
+                tipo,
+                concepto,
+                monto: valorTotal,
+                saldo,
+                refId,
+                mes: null,
+                anio: null
+            });
+
+            if (creada) {
+                alert('✅ Notificación enviada al estudiante y acudiente.');
+            } else {
+                alert('ℹ️ Ya existía una notificación pendiente para este cobro.');
+            }
+
+            if (tipo === 'pension') {
+                document.querySelector('.sidebar-nav a[data-page="pensiones"]').click();
+                setTimeout(() => window.abonarPensionDesdeContador(refId), 500);
+            } else {
+                document.querySelector('.sidebar-nav a[data-page="estudiantes"]').click();
+                setTimeout(() => window.abonarMatriculaDesdeContador(estudianteId), 500);
+            }
+        };
 
         // =============================================
         // BALANCE
@@ -1522,6 +2905,404 @@
                 tbody.innerHTML = `<tr><td colspan="4" class="text-center text-danger">Error</td></tr>`;
             }
         }
+
+        // =============================================
+        // RECIBO
+        // =============================================
+        function construirReciboHTML({ tipo, estudiante, concepto, monto, metodo, referencia, fecha, valorTotal, totalAbonado, saldoDespues }) {
+            const colegio = colegioData || {};
+            const colorPrincipal = colegio.colorPrimario || '#4f46e5';
+            const logoHtml = colegio.logoUrl
+                ? `<img src="${colegio.logoUrl}" style="width:80px;height:80px;object-fit:contain;border-radius:8px;background:#fff;padding:4px;" />`
+                : `<div style="width:80px;height:80px;border-radius:8px;background:#e2e8f0;display:flex;align-items:center;justify-content:center;font-size:2rem;color:#64748b;">🏫</div>`;
+
+            return `
+                <div style="font-family: 'Inter', Arial, sans-serif; max-width: 700px; margin: 0 auto; padding: 20px; border: 2px solid ${colorPrincipal}; border-radius: 12px;">
+                    <div style="display: flex; align-items: center; gap: 20px; padding-bottom: 20px; border-bottom: 2px solid #e2e8f0; margin-bottom: 24px;">
+                        ${logoHtml}
+                        <div>
+                            <h1 style="font-size: 1.4rem; color: ${colorPrincipal}; margin-bottom: 4px;">${colegio.nombre || 'Colegio'}</h1>
+                            <p style="font-size: 0.85rem; color: #64748b; margin: 2px 0;">NIT: ${colegio.nit || '-'} · ${colegio.ciudad || ''} ${colegio.departamento ? '- ' + colegio.departamento : ''}</p>
+                            <p style="font-size: 0.85rem; color: #64748b; margin: 2px 0;">${colegio.direccion || ''} ${colegio.telefono ? '· Tel: ' + colegio.telefono : ''}</p>
+                        </div>
+                    </div>
+
+                    <div style="text-align: center; font-size: 1.2rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: ${colorPrincipal}; padding: 10px; background: #f8fafc; border-radius: 8px; margin-bottom: 24px;">
+                        Recibo de Pago - ${tipo === 'matricula' ? 'Matrícula' : 'Pensión'}
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px 24px; margin-bottom: 24px;">
+                        <div style="padding: 8px 0; border-bottom: 1px dashed #e2e8f0;">
+                            <div style="font-size: 0.7rem; color: #64748b; text-transform: uppercase; font-weight: 600;">Estudiante</div>
+                            <div style="font-size: 0.95rem; font-weight: 600; color: #0f172a;">${estudiante.nombre || '-'}</div>
+                        </div>
+                        <div style="padding: 8px 0; border-bottom: 1px dashed #e2e8f0;">
+                            <div style="font-size: 0.7rem; color: #64748b; text-transform: uppercase; font-weight: 600;">Documento</div>
+                            <div style="font-size: 0.95rem; font-weight: 600; color: #0f172a;">${estudiante.documento || '-'}</div>
+                        </div>
+                        <div style="padding: 8px 0; border-bottom: 1px dashed #e2e8f0;">
+                            <div style="font-size: 0.7rem; color: #64748b; text-transform: uppercase; font-weight: 600;">Curso</div>
+                            <div style="font-size: 0.95rem; font-weight: 600; color: #0f172a;">${estudiante.curso || '-'}</div>
+                        </div>
+                        <div style="padding: 8px 0; border-bottom: 1px dashed #e2e8f0;">
+                            <div style="font-size: 0.7rem; color: #64748b; text-transform: uppercase; font-weight: 600;">Acudiente</div>
+                            <div style="font-size: 0.95rem; font-weight: 600; color: #0f172a;">${estudiante.acudiente || '-'}</div>
+                        </div>
+                        <div style="padding: 8px 0; border-bottom: 1px dashed #e2e8f0;">
+                            <div style="font-size: 0.7rem; color: #64748b; text-transform: uppercase; font-weight: 600;">Concepto</div>
+                            <div style="font-size: 0.95rem; font-weight: 600; color: #0f172a;">${concepto}</div>
+                        </div>
+                        <div style="padding: 8px 0; border-bottom: 1px dashed #e2e8f0;">
+                            <div style="font-size: 0.7rem; color: #64748b; text-transform: uppercase; font-weight: 600;">Fecha del pago</div>
+                            <div style="font-size: 0.95rem; font-weight: 600; color: #0f172a;">${fecha}</div>
+                        </div>
+                        <div style="padding: 8px 0; border-bottom: 1px dashed #e2e8f0;">
+                            <div style="font-size: 0.7rem; color: #64748b; text-transform: uppercase; font-weight: 600;">Método de pago</div>
+                            <div style="font-size: 0.95rem; font-weight: 600; color: #0f172a;">${metodo}</div>
+                        </div>
+                        <div style="padding: 8px 0; border-bottom: 1px dashed #e2e8f0;">
+                            <div style="font-size: 0.7rem; color: #64748b; text-transform: uppercase; font-weight: 600;">Referencia</div>
+                            <div style="font-size: 0.95rem; font-weight: 600; color: #0f172a;">${referencia || 'N/A'}</div>
+                        </div>
+                    </div>
+
+                    <div style="background: ${colorPrincipal}; color: #fff; padding: 20px; border-radius: 10px; text-align: center; margin: 20px 0;">
+                        <div style="font-size: 0.8rem; opacity: 0.85; text-transform: uppercase; letter-spacing: 1px;">Monto pagado</div>
+                        <div style="font-size: 2.2rem; font-weight: 800; letter-spacing: -1px; margin-top: 4px;">${formatearPrecio(monto)}</div>
+                    </div>
+
+                    <div style="background: #f8fafc; padding: 16px; border-radius: 8px; margin-top: 16px;">
+                        <div style="display: flex; justify-content: space-between; padding: 6px 0; font-size: 0.9rem;">
+                            <span>Valor total:</span>
+                            <strong>${formatearPrecio(valorTotal)}</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 6px 0; font-size: 0.9rem;">
+                            <span>Total abonado:</span>
+                            <strong style="color: #16a34a;">${formatearPrecio(totalAbonado)}</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 6px 0; font-size: 1rem; border-top: 1px solid #e2e8f0; padding-top: 10px; margin-top: 6px;">
+                            <span>Saldo pendiente:</span>
+                            <strong style="color: ${saldoDespues > 0 ? '#dc2626' : '#16a34a'};">${formatearPrecio(saldoDespues)}</strong>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 60px; text-align: center;">
+                        <div style="border-top: 1px solid #475569; padding-top: 8px; font-size: 0.8rem; color: #64748b;">Firma del Contador / Rector</div>
+                        <div style="border-top: 1px solid #475569; padding-top: 8px; font-size: 0.8rem; color: #64748b;">Firma del Acudiente</div>
+                    </div>
+
+                    <div style="margin-top: 30px; text-align: center; font-size: 0.75rem; color: #94a3b8; border-top: 1px solid #e2e8f0; padding-top: 16px;">
+                        <p>Recibo generado el ${new Date().toLocaleString('es-CO')}</p>
+                        <p>EduOne - Sistema de Gestión Escolar</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function imprimirRecibo(datos) {
+            const htmlRecibo = construirReciboHTML(datos);
+            document.getElementById('reciboPreview').innerHTML = htmlRecibo;
+            document.getElementById('modalRecibo').classList.add('show');
+        }
+
+        document.getElementById('btnImprimirRecibo')?.addEventListener('click', () => {
+            const contenido = document.getElementById('reciboPreview').innerHTML;
+            const ventana = window.open('', '_blank', 'width=900,height=700');
+            ventana.document.write(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta charset="UTF-8" />
+                    <title>Recibo</title>
+                    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+                    <style>
+                        body { font-family: 'Inter', Arial, sans-serif; padding: 20px; }
+                        @media print { body { padding: 0; } }
+                    </style>
+                </head>
+                <body>${contenido}</body>
+                </html>
+            `);
+            ventana.document.close();
+            setTimeout(() => ventana.print(), 500);
+        });
+
+        document.getElementById('closeReciboModal')?.addEventListener('click', () => {
+            document.getElementById('modalRecibo').classList.remove('show');
+        });
+        document.getElementById('cancelReciboModal')?.addEventListener('click', () => {
+            document.getElementById('modalRecibo').classList.remove('show');
+        });
+
+        // =============================================
+        // ABONAR PENSION (desde pensión)
+        // =============================================
+        window.abonarPensionDesdeContador = async (pensionId) => {
+            try {
+                const pDoc = await getDoc(doc(db, 'colegios', colegioId, 'pensiones', pensionId));
+                if (!pDoc.exists()) { alert('Pensión no encontrada'); return; }
+                const p = pDoc.data();
+
+                await inicializarComboboxPagoEstudiante();
+
+                document.getElementById('pagoEstudiante').value = p.estudianteId;
+
+                // Mostrar chip de selección
+                const est = estudiantesCache.find(e => e.id === p.estudianteId);
+                if (est) {
+                    document.getElementById('pagoEstudianteSeleccionadoWrap').innerHTML = `
+                        <span class="selected-chip">
+                            <i class="fas fa-user-check"></i>
+                            ${esc(est.nombres || '')} ${esc(est.apellidos || '')} 
+                            · ${esc(est.documento || 'Sin doc')}
+                            <button type="button" style="background:none; border:none; color: var(--primary); cursor:pointer; margin-left: 4px;" onclick="window.limpiarSeleccionPagoEstudiante()">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </span>
+                    `;
+                }
+
+                document.getElementById('pagoMes').value = p.mes;
+                document.getElementById('pagoAnio').value = p.anio;
+                document.getElementById('pagoValorPension').value = p.valorPension;
+                document.getElementById('pagoFecha').value = new Date().toISOString().split('T')[0];
+                document.getElementById('modalPagoPension').classList.add('show');
+                await actualizarResumenPagoPension();
+
+                setTimeout(() => {
+                    const saldoTexto = document.getElementById('pagoResumenSaldo').textContent;
+                    const saldo = parseFloat(saldoTexto.replace(/[^0-9]/g, '')) || 0;
+                    document.getElementById('pagoMonto').value = saldo;
+                    document.getElementById('pagoMonto').dispatchEvent(new Event('input'));
+                }, 200);
+            } catch (e) { alert('Error: ' + e.message); }
+        };
+
+        // =============================================
+        // ABONAR PENSION POR ESTUDIANTE (busca todas las pendientes)
+        // =============================================
+        window.abonarPensionDesdeContadorPorEstudiante = async (estudianteId) => {
+            try {
+                const q = query(
+                    collection(db, 'colegios', colegioId, 'pensiones'),
+                    where('estudianteId', '==', estudianteId)
+                );
+                const snap = await getDocs(q);
+
+                const pendientes = [];
+                snap.forEach(d => {
+                    const p = d.data();
+                    const saldo = Math.max(0, (Number(p.valorPension) || 0) - (Number(p.totalAbonado) || 0));
+                    if (saldo > 0) pendientes.push({ id: d.id, ...p, saldo });
+                });
+
+                if (pendientes.length === 0) {
+                    // No hay pensiones pendientes, pero puede que no exista la pensión para este mes
+                    alert('Este estudiante no tiene pensiones pendientes. Usa "Registrar pago" para crear una nueva.');
+                    return;
+                }
+
+                if (pendientes.length === 1) {
+                    await abonarPensionDesdeContador(pendientes[0].id);
+                    return;
+                }
+
+                // Ordenar por fecha descendente
+                pendientes.sort((a, b) => (Number(b.anio) || 0) - (Number(a.anio) || 0) || (Number(b.mes) || 0) - (Number(a.mes) || 0));
+
+                const opciones = pendientes.map((p, i) =>
+                    `${i + 1}. Pensión ${MESES[(p.mes || 1) - 1]} ${p.anio} - Saldo: ${formatearPrecio(p.saldo)}`
+                ).join('\n');
+
+                const elegido = prompt(`Este estudiante tiene varias pensiones pendientes:\n\n${opciones}\n\nEscribe el número de la pensión a cobrar:`, '1');
+                const idx = parseInt(elegido) - 1;
+                if (isNaN(idx) || idx < 0 || idx >= pendientes.length) return;
+
+                await abonarPensionDesdeContador(pendientes[idx].id);
+            } catch (e) {
+                alert('Error: ' + e.message);
+            }
+        };
+
+        // =============================================
+        // ABONAR MATRICULA
+        // =============================================
+        window.abonarMatriculaDesdeContador = async (estudianteId) => {
+            const q = query(
+                collection(db, 'colegios', colegioId, 'matriculas'),
+                where('estudianteId', '==', estudianteId),
+                where('estado', '==', 'activo')
+            );
+            const snap = await getDocs(q);
+            if (snap.empty) { alert('No se encontró matrícula activa'); return; }
+            const mat = { id: snap.docs[0].id, ...snap.docs[0].data() };
+
+            const valor = Number(mat.valorMatricula) || 0;
+            const abonado = Number(mat.totalAbonado) || 0;
+            const saldo = Math.max(0, valor - abonado);
+
+            if (saldo === 0) { alert('Esta matrícula ya está pagada'); return; }
+
+            const monto = parseFloat(prompt(`Saldo pendiente: ${formatearPrecio(saldo)}\n\n¿Cuánto desea abonar?`, saldo));
+            if (isNaN(monto) || monto <= 0) return;
+            if (monto > saldo) { alert(`El monto supera el saldo (${formatearPrecio(saldo)})`); return; }
+
+            const metodo = prompt('Método de pago (Efectivo, Transferencia, Nequi, Daviplata):', 'Efectivo') || 'Efectivo';
+            const referencia = prompt('Referencia (opcional):', '') || '';
+            const fecha = new Date().toISOString().split('T')[0];
+
+            const nuevoAbonado = abonado + monto;
+            const nuevoSaldo = Math.max(0, valor - nuevoAbonado);
+            const nuevoEstado = nuevoSaldo === 0 ? 'pagado' : 'abonado';
+
+            try {
+                await updateDoc(doc(db, 'colegios', colegioId, 'matriculas', mat.id), {
+                    totalAbonado: nuevoAbonado,
+                    saldo: nuevoSaldo,
+                    estadoPago: nuevoEstado,
+                    fechaActualizacion: serverTimestamp()
+                });
+
+                const estDoc = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', estudianteId));
+                const est = estDoc.exists() ? estDoc.data() : {};
+                let cursoNombre = '-';
+                if (mat.cursoId) {
+                    const c = await getDoc(doc(db, 'colegios', colegioId, 'cursos', mat.cursoId));
+                    cursoNombre = c.exists() ? c.data().nombre : '-';
+                }
+
+                await addDoc(collection(db, 'colegios', colegioId, 'pagos_matriculas'), {
+                    estudianteId,
+                    matriculaId: mat.id,
+                    monto, metodo,
+                    referencia: referencia || '',
+                    fecha,
+                    creadoPor: auth.currentUser?.uid || '',
+                    rolCreador: 'contador',
+                    fechaCreacion: serverTimestamp()
+                });
+
+                await addDoc(collection(db, 'colegios', colegioId, 'movimientos'), {
+                    tipo: 'ingreso',
+                    categoria: 'Matrícula',
+                    descripcion: `Abono matrícula - ${est.nombres || ''} ${est.apellidos || ''}`,
+                    monto, metodo,
+                    referencia: referencia || '',
+                    fecha,
+                    estudianteId,
+                    estudianteNombre: `${est.nombres || ''} ${est.apellidos || ''}`,
+                    creadoPor: auth.currentUser?.uid || '',
+                    rolCreador: 'contador',
+                    fechaCreacion: serverTimestamp()
+                });
+
+                if (nuevoSaldo === 0) {
+                    const notiQ = query(
+                        collection(db, 'colegios', colegioId, 'notificaciones'),
+                        where('estudianteId', '==', estudianteId),
+                        where('refId', '==', mat.id),
+                        where('estado', '==', 'pendiente')
+                    );
+                    const notiSnap = await getDocs(notiQ);
+                    for (const n of notiSnap.docs) {
+                        await updateDoc(n.ref, {
+                            estado: 'pagado',
+                            fechaPago: serverTimestamp(),
+                            leida: true
+                        });
+                    }
+                }
+
+                alert(`✅ ${nuevoAbonado < valor ? 'Abono' : 'Pago'} registrado`);
+                cargarEstudiantesContador();
+                cargarMetricasDashboard();
+
+                if (confirm('¿Deseas imprimir el recibo?')) {
+                    imprimirRecibo({
+                        tipo: 'matricula',
+                        estudiante: {
+                            nombre: `${est.nombres || ''} ${est.apellidos || ''}`.trim(),
+                            documento: est.documento || '-',
+                            curso: cursoNombre,
+                            acudiente: est.acudiente || '-'
+                        },
+                        concepto: 'Pago de matrícula',
+                        monto, metodo, referencia, fecha,
+                        valorTotal: valor,
+                        totalAbonado: nuevoAbonado,
+                        saldoDespues: nuevoSaldo
+                    });
+                }
+            } catch (e) { alert('❌ ' + e.message); }
+        };
+
+        // =============================================
+        // VER RECIBOS
+        // =============================================
+        window.verReciboMatricula = async (estudianteId) => {
+            const q = query(collection(db, 'colegios', colegioId, 'matriculas'), where('estudianteId', '==', estudianteId), where('estado', '==', 'activo'));
+            const snap = await getDocs(q);
+            if (snap.empty) { alert('No se encontró matrícula'); return; }
+            const mat = snap.docs[0].data();
+
+            const estDoc = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', estudianteId));
+            const est = estDoc.exists() ? estDoc.data() : {};
+            let cursoNombre = '-';
+            if (mat.cursoId) {
+                const c = await getDoc(doc(db, 'colegios', colegioId, 'cursos', mat.cursoId));
+                cursoNombre = c.exists() ? c.data().nombre : '-';
+            }
+
+            imprimirRecibo({
+                tipo: 'matricula',
+                estudiante: {
+                    nombre: `${est.nombres || ''} ${est.apellidos || ''}`.trim(),
+                    documento: est.documento || '-',
+                    curso: cursoNombre,
+                    acudiente: est.acudiente || '-'
+                },
+                concepto: 'Matrícula (pago total)',
+                monto: Number(mat.totalAbonado) || 0,
+                metodo: 'N/A',
+                referencia: '',
+                fecha: new Date().toISOString().split('T')[0],
+                valorTotal: Number(mat.valorMatricula) || 0,
+                totalAbonado: Number(mat.totalAbonado) || 0,
+                saldoDespues: Math.max(0, (Number(mat.valorMatricula) || 0) - (Number(mat.totalAbonado) || 0))
+            });
+        };
+
+        window.verReciboPension = async (pensionId) => {
+            const pDoc = await getDoc(doc(db, 'colegios', colegioId, 'pensiones', pensionId));
+            if (!pDoc.exists()) { alert('No encontrada'); return; }
+            const p = pDoc.data();
+
+            const estDoc = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', p.estudianteId));
+            const est = estDoc.exists() ? estDoc.data() : {};
+            let cursoNombre = '-';
+            if (p.cursoId) {
+                const c = await getDoc(doc(db, 'colegios', colegioId, 'cursos', p.cursoId));
+                cursoNombre = c.exists() ? c.data().nombre : '-';
+            }
+
+            imprimirRecibo({
+                tipo: 'pension',
+                estudiante: {
+                    nombre: `${est.nombres || ''} ${est.apellidos || ''}`.trim(),
+                    documento: est.documento || '-',
+                    curso: cursoNombre,
+                    acudiente: est.acudiente || '-'
+                },
+                concepto: `Pensión ${MESES[(p.mes || 1) - 1]} ${p.anio}`,
+                monto: Number(p.totalAbonado) || 0,
+                metodo: 'N/A',
+                referencia: '',
+                fecha: new Date().toISOString().split('T')[0],
+                valorTotal: Number(p.valorPension) || 0,
+                totalAbonado: Number(p.totalAbonado) || 0,
+                saldoDespues: Math.max(0, (Number(p.valorPension) || 0) - (Number(p.totalAbonado) || 0))
+            });
+        };
 
         // =============================================
         // AUTH
@@ -1579,7 +3360,6 @@
         });
 
         console.log('✅ EduOne - Panel del Contador cargado correctamente');
-        console.log('📁 Ruta: contador.html');
     </script>
 
 </body>
