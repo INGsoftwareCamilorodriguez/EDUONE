@@ -3185,20 +3185,83 @@
             };
             cursoSelect.onchange = async () => {
                 estudianteSelect.innerHTML = '<option value="">Seleccionar</option>';
-                if (cursoSelect.value) {
+                if (!cursoSelect.value) return;
+                try {
                     const q = query(collection(db, 'colegios', colegioId, 'matriculas'),
                         where('cursoId', '==', cursoSelect.value), where('estado', '==', 'activo'));
                     const snap = await getDocs(q);
-                    for (const doc of snap.docs) {
-                        const m = doc.data();
-                        const estDoc = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', m.estudianteId));
-                        if (estDoc.exists()) {
-                            const e = estDoc.data();
-                            estudianteSelect.innerHTML += `<option value="${m.estudianteId}">${e.nombres || ''} ${e.apellidos || ''}</option>`;
-                        }
+                    // OJO: no usar "doc" como nombre de variable aquí, porque tapa la función doc() de Firestore
+                    const estudiantes = (await Promise.all(snap.docs.map(async (matDoc) => {
+                        const estudianteId = matDoc.data().estudianteId;
+                        if (!estudianteId) return null;
+                        const estSnap = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', estudianteId));
+                        return estSnap.exists() ? { id: estudianteId, ...estSnap.data() } : null;
+                    }))).filter(Boolean);
+                    estudiantes.sort((a, b) => `${a.apellidos || ''} ${a.nombres || ''}`.localeCompare(`${b.apellidos || ''} ${b.nombres || ''}`));
+                    if (estudiantes.length === 0) {
+                        estudianteSelect.innerHTML = '<option value="">Sin estudiantes matriculados</option>';
+                        return;
                     }
+                    estudiantes.forEach(e => {
+                        estudianteSelect.innerHTML += `<option value="${e.id}">${e.nombres || ''} ${e.apellidos || ''}</option>`;
+                    });
+                } catch (err) {
+                    console.error('Error cargando estudiantes del curso:', err);
+                    estudianteSelect.innerHTML = '<option value="">Error al cargar estudiantes</option>';
                 }
             };
+        }
+
+        // =============================================
+        // RESUMEN DE NOTAS DE UN ESTUDIANTE (compartido: Notas y Boletines)
+        // Las notas se guardan con actividadId; la asignatura, el periodo y la sección
+        // se obtienen de la actividad. Promedio ponderado por % de sección (igual que acudiente).
+        // =============================================
+        async function obtenerResumenNotasEstudiante(estudianteId, periodo) {
+            const notasSnap = await getDocs(query(collection(db, 'colegios', colegioId, 'notas'), where('estudianteId', '==', estudianteId)));
+            const notas = [];
+            notasSnap.forEach(d => {
+                const n = d.data();
+                const v = parseFloat(n.valor);
+                if (n.actividadId && !isNaN(v) && v > 0) notas.push({ actividadId: n.actividadId, valor: v });
+            });
+
+            const actIds = [...new Set(notas.map(n => n.actividadId))];
+            const actSnaps = await Promise.all(actIds.map(id => getDoc(doc(db, 'colegios', colegioId, 'actividades', id))));
+            const actMap = {};
+            actSnaps.forEach(a => { if (a.exists()) actMap[a.id] = a.data(); });
+
+            const seccionIds = [...new Set(Object.values(actMap).map(a => a.seccionId).filter(Boolean))];
+            const secSnaps = await Promise.all(seccionIds.map(id => getDoc(doc(db, 'colegios', colegioId, 'secciones', id))));
+            const secMap = {};
+            secSnaps.forEach(sn => { if (sn.exists()) secMap[sn.id] = sn.data(); });
+
+            const porAsig = {};
+            for (const n of notas) {
+                const act = actMap[n.actividadId];
+                if (!act) continue;
+                if (periodo && parseInt(act.periodo || 1) !== parseInt(periodo)) continue;
+                const key = act.asignaturaId || act.asignaturaNombre || 'sin-asignatura';
+                if (!porAsig[key]) porAsig[key] = { nombre: act.asignaturaNombre || 'Asignatura', notas: [], secciones: {} };
+                porAsig[key].notas.push(n.valor);
+                const sk = act.seccionId || 'sin-seccion';
+                if (!porAsig[key].secciones[sk]) porAsig[key].secciones[sk] = [];
+                porAsig[key].secciones[sk].push(n.valor);
+            }
+
+            const resultado = Object.values(porAsig).map(a => {
+                let suma = 0, pesoTotal = 0;
+                for (const [sk, valores] of Object.entries(a.secciones)) {
+                    const prom = valores.reduce((x, y) => x + y, 0) / valores.length;
+                    const peso = (secMap[sk]?.porcentaje || 0) / 100;
+                    if (peso > 0) { suma += prom * peso; pesoTotal += peso; }
+                }
+                const promedio = pesoTotal > 0 ? (suma / pesoTotal) : (a.notas.reduce((x, y) => x + y, 0) / a.notas.length);
+                const estado = promedio >= 3.0 ? 'Aprobado' : (promedio > 0 ? 'Reprobado' : 'Sin nota');
+                return { nombre: a.nombre, notas: a.notas, promedio, estado };
+            });
+            resultado.sort((a, b) => a.nombre.localeCompare(b.nombre));
+            return resultado;
         }
 
         document.getElementById('btnConsultarNotas')?.addEventListener('click', async () => {
@@ -3207,36 +3270,28 @@
             const tbody = document.getElementById('tablaNotas');
             if (!estudianteId) { alert('Selecciona un estudiante'); return; }
             try {
-                const q = query(collection(db, 'colegios', colegioId, 'notas'), where('estudianteId', '==', estudianteId));
-                const snap = await getDocs(q);
-                const notasPorAsig = {};
-                snap.forEach(doc => {
-                    const n = doc.data();
-                    if (periodo && n.periodo && n.periodo !== parseInt(periodo)) return;
-                    if (!notasPorAsig[n.asignaturaId]) notasPorAsig[n.asignaturaId] = { notas: [], nombre: n.asignaturaNombre || 'Asignatura' };
-                    notasPorAsig[n.asignaturaId].notas.push(parseFloat(n.valor) || 0);
-                });
-                if (Object.keys(notasPorAsig).length === 0) {
+                const resumen = await obtenerResumenNotasEstudiante(estudianteId, periodo);
+                if (resumen.length === 0) {
                     tbody.innerHTML = `<tr><td colspan="7" class="text-center text-muted">No hay notas</td></tr>`;
                     return;
                 }
                 let html = '';
-                for (const [aid, data] of Object.entries(notasPorAsig)) {
-                    const n = data.notas;
-                    const prom = n.length > 0 ? (n.reduce((a, b) => a + b, 0) / n.length) : 0;
-                    const estado = prom >= 3.0 ? 'Aprobado' : (prom > 0 ? 'Reprobado' : 'Sin nota');
+                for (const r of resumen) {
+                    const n = r.notas;
+                    const prom = r.promedio;
                     const color = prom >= 3.0 ? 'var(--success)' : (prom > 0 ? 'var(--danger)' : 'var(--gray-400)');
                     html += `<tr>
-                        <td><strong>${data.nombre}</strong></td>
-                        <td>${n[0] || '-'}</td><td>${n[1] || '-'}</td>
-                        <td>${n[2] || '-'}</td><td>${n[3] || '-'}</td>
+                        <td><strong>${r.nombre}</strong></td>
+                        <td>${n[0] ?? '-'}</td><td>${n[1] ?? '-'}</td>
+                        <td>${n[2] ?? '-'}</td><td>${n[3] ?? '-'}</td>
                         <td><strong>${prom.toFixed(1)}</strong></td>
-                        <td><span style="color: ${color}; font-weight: 600;">${estado}</span></td>
+                        <td><span style="color: ${color}; font-weight: 600;">${r.estado}</span></td>
                     </tr>`;
                 }
                 tbody.innerHTML = html;
             } catch (e) {
-                tbody.innerHTML = `<tr><td colspan="7" class="text-center text-danger">Error</td></tr>`;
+                console.error('Error consultando notas:', e);
+                tbody.innerHTML = `<tr><td colspan="7" class="text-center text-danger">Error: ${e.message}</td></tr>`;
             }
         });
 
@@ -3249,15 +3304,7 @@
                 const estudiante = estDoc.data();
                 const colegioDoc = await getDoc(doc(db, 'colegios', colegioId));
                 const colegio = colegioDoc.data();
-                const q = query(collection(db, 'colegios', colegioId, 'notas'), where('estudianteId', '==', estudianteId));
-                const snap = await getDocs(q);
-                const notasPorAsig = {};
-                snap.forEach(doc => {
-                    const n = doc.data();
-                    if (periodo && n.periodo && n.periodo !== parseInt(periodo)) return;
-                    if (!notasPorAsig[n.asignaturaId]) notasPorAsig[n.asignaturaId] = { notas: [], nombre: n.asignaturaNombre || 'Asignatura' };
-                    notasPorAsig[n.asignaturaId].notas.push(parseFloat(n.valor) || 0);
-                });
+                const resumen = await obtenerResumenNotasEstudiante(estudianteId, periodo);
 
                 let html = `
                     <div style="padding: 20px;">
@@ -3285,22 +3332,21 @@
                             </tr></thead>
                             <tbody>
                 `;
-                if (Object.keys(notasPorAsig).length === 0) {
+                if (resumen.length === 0) {
                     html += `<tr><td colspan="7" style="padding: 20px; text-align: center; color: var(--gray-500);">No hay notas</td></tr>`;
                 } else {
-                    for (const [aid, data] of Object.entries(notasPorAsig)) {
-                        const n = data.notas;
-                        const prom = n.length > 0 ? (n.reduce((a, b) => a + b, 0) / n.length) : 0;
-                        const estado = prom >= 3.0 ? 'Aprobado' : (prom > 0 ? 'Reprobado' : 'Sin nota');
+                    for (const r of resumen) {
+                        const n = r.notas;
+                        const prom = r.promedio;
                         const color = prom >= 3.0 ? '#22c55e' : (prom > 0 ? '#ef4444' : '#94a3b8');
                         html += `<tr>
-                            <td style="padding: 8px;"><strong>${data.nombre}</strong></td>
-                            <td style="padding: 8px; text-align: center;">${n[0] || '-'}</td>
-                            <td style="padding: 8px; text-align: center;">${n[1] || '-'}</td>
-                            <td style="padding: 8px; text-align: center;">${n[2] || '-'}</td>
-                            <td style="padding: 8px; text-align: center;">${n[3] || '-'}</td>
+                            <td style="padding: 8px;"><strong>${r.nombre}</strong></td>
+                            <td style="padding: 8px; text-align: center;">${n[0] ?? '-'}</td>
+                            <td style="padding: 8px; text-align: center;">${n[1] ?? '-'}</td>
+                            <td style="padding: 8px; text-align: center;">${n[2] ?? '-'}</td>
+                            <td style="padding: 8px; text-align: center;">${n[3] ?? '-'}</td>
                             <td style="padding: 8px; text-align: center; font-weight: 600;">${prom.toFixed(1)}</td>
-                            <td style="padding: 8px; text-align: center; color: ${color}; font-weight: 600;">${estado}</td>
+                            <td style="padding: 8px; text-align: center; color: ${color}; font-weight: 600;">${r.estado}</td>
                         </tr>`;
                     }
                 }
@@ -3312,7 +3358,7 @@
                 </div>`;
                 document.getElementById('boletinPreview').innerHTML = html;
                 document.getElementById('boletinContent').style.display = 'block';
-            } catch (e) { alert('Error al generar boletín'); }
+            } catch (e) { console.error('Error al generar boletín:', e); alert('Error al generar boletín: ' + e.message); }
         });
 
         // =============================================
