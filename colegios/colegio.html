@@ -197,6 +197,9 @@
             outline: none; border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
         }
+        .form-control:disabled {
+            background: var(--gray-100); cursor: not-allowed; color: var(--gray-600);
+        }
         .form-control::placeholder { color: var(--gray-400); }
         select.form-control {
             appearance: none;
@@ -251,7 +254,6 @@
         .alert-success { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
         .alert-info { background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; }
 
-        /* SIDEBAR */
         .sidebar {
             width: var(--sidebar-width); height: 100vh;
             background: var(--sidebar-bg);
@@ -402,14 +404,8 @@
 
         .header-right { display: flex; align-items: center; gap: 14px; }
         .user-info { text-align: right; }
-        .user-name {
-            display: block; font-weight: 600; font-size: 0.85rem;
-            color: var(--text-primary);
-        }
-        .user-role {
-            display: block; font-size: 0.7rem;
-            color: var(--text-secondary); text-transform: capitalize;
-        }
+        .user-name { display: block; font-weight: 600; font-size: 0.85rem; color: var(--text-primary); }
+        .user-role { display: block; font-size: 0.7rem; color: var(--text-secondary); text-transform: capitalize; }
         .user-avatar { font-size: 2rem; color: var(--gray-400); }
 
         .content-area { flex: 1; padding: 24px 28px; }
@@ -506,9 +502,7 @@
             display: flex; justify-content: space-between; align-items: center;
             margin-bottom: 20px; flex-wrap: wrap; gap: 12px;
         }
-        .page-header h2 {
-            font-size: 1.1rem; font-weight: 600; color: var(--gray-800);
-        }
+        .page-header h2 { font-size: 1.1rem; font-weight: 600; color: var(--gray-800); }
 
         .plan-card {
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
@@ -563,6 +557,65 @@
         }
         .eco-filtros select, .eco-filtros input { max-width: 220px; }
 
+        .cont-tabs {
+            display: flex; gap: 4px; flex-wrap: wrap;
+            border-bottom: 2px solid var(--gray-200);
+            margin-bottom: 16px;
+        }
+        .cont-tab {
+            padding: 10px 16px;
+            background: transparent;
+            border: none;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+            font-family: var(--font);
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--gray-500);
+            cursor: pointer;
+            transition: color 0.2s, border-color 0.2s;
+        }
+        .cont-tab:hover { color: var(--primary); }
+        .cont-tab.active {
+            color: var(--primary);
+            font-weight: 600;
+            border-bottom-color: var(--primary);
+        }
+        .cont-tab .count {
+            background: var(--gray-200);
+            color: var(--gray-600);
+            font-size: 0.65rem;
+            padding: 2px 8px;
+            border-radius: 50px;
+            margin-left: 6px;
+            font-weight: 700;
+        }
+        .cont-tab.active .count {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .pago-resumen {
+            background: var(--primary-bg);
+            padding: 16px 20px;
+            border-radius: 10px;
+            margin-bottom: 18px;
+        }
+        .pago-resumen .fila {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 0;
+            font-size: 0.9rem;
+        }
+        .pago-resumen .fila strong { font-size: 1rem; }
+        .pago-resumen .fila.total {
+            border-top: 1px dashed var(--gray-300);
+            margin-top: 6px;
+            padding-top: 10px;
+        }
+        .pago-resumen .fila.total strong { font-size: 1.15rem; color: var(--danger); }
+
         @media (max-width: 992px) {
             .sidebar { transform: translateX(-100%); width: var(--sidebar-width); }
             .sidebar.open { transform: translateX(0); }
@@ -614,18 +667,12 @@
                 <i class="fas fa-graduation-cap"></i>
                 <span>EduOne</span>
             </div>
-            <button class="sidebar-close-mobile" id="sidebarCloseMobile">
-                <i class="fas fa-times"></i>
-            </button>
-            <button class="sidebar-toggle" id="sidebarToggle">
-                <i class="fas fa-bars"></i>
-            </button>
+            <button class="sidebar-close-mobile" id="sidebarCloseMobile"><i class="fas fa-times"></i></button>
+            <button class="sidebar-toggle" id="sidebarToggle"><i class="fas fa-bars"></i></button>
         </div>
 
         <div class="sidebar-colegio">
-            <div class="colegio-logo-placeholder" id="colegioLogoPlaceholder">
-                <i class="fas fa-school"></i>
-            </div>
+            <div class="colegio-logo-placeholder" id="colegioLogoPlaceholder"><i class="fas fa-school"></i></div>
             <img class="colegio-logo" id="colegioLogoImg" style="display: none;" alt="Logo" />
             <div class="colegio-info-text">
                 <div class="colegio-nombre" id="colegioNombreSidebar">Cargando...</div>
@@ -637,27 +684,23 @@
             <ul>
                 <li class="active"><a href="#" data-page="inicio"><i class="fas fa-home"></i><span>Inicio</span></a></li>
             </ul>
-
             <div class="nav-section">GESTIÓN</div>
             <ul>
                 <li><a href="#" data-page="estudiantes"><i class="fas fa-user-graduate"></i><span>Estudiantes y Matrículas</span></a></li>
                 <li><a href="#" data-page="personal"><i class="fas fa-users-cog"></i><span>Personal</span></a></li>
             </ul>
-
             <div class="nav-section">ESTRUCTURA</div>
             <ul>
                 <li><a href="#" data-page="grados"><i class="fas fa-layer-group"></i><span>Grados</span></a></li>
                 <li><a href="#" data-page="cursos"><i class="fas fa-users"></i><span>Cursos</span></a></li>
                 <li><a href="#" data-page="asignaturas"><i class="fas fa-book"></i><span>Asignaturas</span></a></li>
             </ul>
-
             <div class="nav-section">ACADÉMICO</div>
             <ul>
                 <li><a href="#" data-page="horarios"><i class="fas fa-calendar-alt"></i><span>Horarios</span></a></li>
                 <li><a href="#" data-page="notas"><i class="fas fa-star"></i><span>Notas</span></a></li>
                 <li><a href="#" data-page="boletines"><i class="fas fa-file-pdf"></i><span>Boletines</span></a></li>
             </ul>
-
             <div class="nav-section">FINANZAS</div>
             <ul>
                 <li><a href="#" data-page="pensiones"><i class="fas fa-money-check-alt"></i><span>Pensiones</span></a></li>
@@ -676,9 +719,7 @@
     <main class="main-content" id="mainContent">
         <header class="top-header">
             <div class="header-left">
-                <button class="hamburger-btn" id="hamburgerBtn">
-                    <i class="fas fa-bars"></i>
-                </button>
+                <button class="hamburger-btn" id="hamburgerBtn"><i class="fas fa-bars"></i></button>
                 <h1 id="pageTitle">Inicio</h1>
             </div>
             <div class="header-right">
@@ -686,9 +727,7 @@
                     <span class="user-name" id="userName">Cargando...</span>
                     <span class="user-role" id="userRole">rector</span>
                 </div>
-                <div class="user-avatar">
-                    <i class="fas fa-user-circle"></i>
-                </div>
+                <div class="user-avatar"><i class="fas fa-user-circle"></i></div>
             </div>
         </header>
 
@@ -721,31 +760,19 @@
                 <div class="info-colegio-grid">
                     <div class="info-colegio-card">
                         <div class="icon" style="background: var(--primary-bg); color: var(--primary);"><i class="fas fa-school"></i></div>
-                        <div>
-                            <div class="label">Colegio</div>
-                            <div class="value" id="infoNombre">-</div>
-                        </div>
+                        <div><div class="label">Colegio</div><div class="value" id="infoNombre">-</div></div>
                     </div>
                     <div class="info-colegio-card">
                         <div class="icon" style="background: #dcfce7; color: #16a34a;"><i class="fas fa-map-marker-alt"></i></div>
-                        <div>
-                            <div class="label">Ciudad</div>
-                            <div class="value" id="infoCiudad">-</div>
-                        </div>
+                        <div><div class="label">Ciudad</div><div class="value" id="infoCiudad">-</div></div>
                     </div>
                     <div class="info-colegio-card">
                         <div class="icon" style="background: #fef3c7; color: #d97706;"><i class="fas fa-calendar-alt"></i></div>
-                        <div>
-                            <div class="label">Año escolar</div>
-                            <div class="value" id="infoAnio">-</div>
-                        </div>
+                        <div><div class="label">Año escolar</div><div class="value" id="infoAnio">-</div></div>
                     </div>
                     <div class="info-colegio-card">
                         <div class="icon" style="background: #fecaca; color: #dc2626;"><i class="fas fa-id-card"></i></div>
-                        <div>
-                            <div class="label">NIT</div>
-                            <div class="value" id="infoNit">-</div>
-                        </div>
+                        <div><div class="label">NIT</div><div class="value" id="infoNit">-</div></div>
                     </div>
                 </div>
 
@@ -803,12 +830,12 @@
                 </div>
             </div>
 
-            <!-- ESTUDIANTES Y MATRÍCULAS -->
+            <!-- ESTUDIANTES -->
             <div id="page-estudiantes" class="page-content">
                 <div class="page-header">
                     <h2><i class="fas fa-user-graduate" style="color: var(--primary);"></i> Estudiantes y Matrículas</h2>
                     <button class="btn-primary" id="btnRegistrarEstudiante">
-                        <i class="fas fa-plus"></i> Inscribir / Matricular estudiante
+                        <i class="fas fa-plus"></i> Inscribir / Matricular
                     </button>
                 </div>
 
@@ -835,7 +862,7 @@
                                 <thead>
                                     <tr>
                                         <th>#</th><th>Estudiante</th><th>Documento</th><th>Grado</th><th>Curso</th>
-                                        <th>Acudiente</th><th>Pago matrícula</th><th>Saldo</th><th>Estado</th><th>Acciones</th>
+                                        <th>Pago matrícula</th><th>Abonado</th><th>Saldo</th><th>Estado</th><th>Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tablaEstudiantes">
@@ -851,11 +878,8 @@
             <div id="page-personal" class="page-content">
                 <div class="page-header">
                     <h2><i class="fas fa-users-cog" style="color: var(--primary);"></i> Personal del Colegio</h2>
-                    <button class="btn-primary" id="btnRegistrarPersonal">
-                        <i class="fas fa-plus"></i> Registrar personal
-                    </button>
+                    <button class="btn-primary" id="btnRegistrarPersonal"><i class="fas fa-plus"></i> Registrar personal</button>
                 </div>
-
                 <div class="card">
                     <div class="card-body">
                         <div class="form-group" style="max-width: 300px;">
@@ -873,10 +897,7 @@
                         <div class="table-responsive">
                             <table class="table-modern">
                                 <thead>
-                                    <tr>
-                                        <th>#</th><th>Nombre</th><th>Documento</th><th>Correo</th>
-                                        <th>Teléfono</th><th>Rol</th><th>Estado</th><th>Acciones</th>
-                                    </tr>
+                                    <tr><th>#</th><th>Nombre</th><th>Documento</th><th>Correo</th><th>Teléfono</th><th>Rol</th><th>Estado</th><th>Acciones</th></tr>
                                 </thead>
                                 <tbody id="tablaPersonal">
                                     <tr><td colspan="8" class="text-center text-muted"><i class="fas fa-spinner fa-spin"></i> Cargando...</td></tr>
@@ -893,18 +914,14 @@
                     <h2><i class="fas fa-layer-group" style="color: var(--primary);"></i> Grados</h2>
                     <button class="btn-primary" id="btnRegistrarGrado"><i class="fas fa-plus"></i> Registrar grado</button>
                 </div>
-                <div class="card">
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table-modern">
-                                <thead><tr><th>#</th><th>Nombre</th><th>Orden</th><th>Estado</th><th>Acciones</th></tr></thead>
-                                <tbody id="tablaGrados">
-                                    <tr><td colspan="5" class="text-center text-muted"><i class="fas fa-spinner fa-spin"></i> Cargando...</td></tr>
-                                </tbody>
-                            </table>
-                        </div>
+                <div class="card"><div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table-modern">
+                            <thead><tr><th>#</th><th>Nombre</th><th>Orden</th><th>Estado</th><th>Acciones</th></tr></thead>
+                            <tbody id="tablaGrados"><tr><td colspan="5" class="text-center text-muted"><i class="fas fa-spinner fa-spin"></i> Cargando...</td></tr></tbody>
+                        </table>
                     </div>
-                </div>
+                </div></div>
             </div>
 
             <!-- CURSOS -->
@@ -913,18 +930,14 @@
                     <h2><i class="fas fa-users" style="color: var(--primary);"></i> Cursos</h2>
                     <button class="btn-primary" id="btnRegistrarCurso"><i class="fas fa-plus"></i> Registrar curso</button>
                 </div>
-                <div class="card">
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table-modern">
-                                <thead><tr><th>#</th><th>Nombre</th><th>Grado</th><th>Año</th><th>Estado</th><th>Acciones</th></tr></thead>
-                                <tbody id="tablaCursos">
-                                    <tr><td colspan="6" class="text-center text-muted"><i class="fas fa-spinner fa-spin"></i> Cargando...</td></tr>
-                                </tbody>
-                            </table>
-                        </div>
+                <div class="card"><div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table-modern">
+                            <thead><tr><th>#</th><th>Nombre</th><th>Grado</th><th>Año</th><th>Estado</th><th>Acciones</th></tr></thead>
+                            <tbody id="tablaCursos"><tr><td colspan="6" class="text-center text-muted"><i class="fas fa-spinner fa-spin"></i> Cargando...</td></tr></tbody>
+                        </table>
                     </div>
-                </div>
+                </div></div>
             </div>
 
             <!-- ASIGNATURAS -->
@@ -933,41 +946,27 @@
                     <h2><i class="fas fa-book" style="color: var(--primary);"></i> Asignaturas</h2>
                     <button class="btn-primary" id="btnRegistrarAsignatura"><i class="fas fa-plus"></i> Registrar asignatura</button>
                 </div>
-                <div class="card">
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table-modern">
-                                <thead><tr><th>#</th><th>Nombre</th><th>Código</th><th>Estado</th><th>Acciones</th></tr></thead>
-                                <tbody id="tablaAsignaturas">
-                                    <tr><td colspan="5" class="text-center text-muted"><i class="fas fa-spinner fa-spin"></i> Cargando...</td></tr>
-                                </tbody>
-                            </table>
-                        </div>
+                <div class="card"><div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table-modern">
+                            <thead><tr><th>#</th><th>Nombre</th><th>Código</th><th>Estado</th><th>Acciones</th></tr></thead>
+                            <tbody id="tablaAsignaturas"><tr><td colspan="5" class="text-center text-muted"><i class="fas fa-spinner fa-spin"></i> Cargando...</td></tr></tbody>
+                        </table>
                     </div>
-                </div>
+                </div></div>
             </div>
 
             <!-- HORARIOS -->
             <div id="page-horarios" class="page-content">
-                <div class="page-header">
-                    <h2><i class="fas fa-calendar-alt" style="color: var(--primary);"></i> Horarios</h2>
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                        <div class="form-grid" style="margin-bottom: 16px;">
-                            <div class="form-group">
-                                <label>Grado</label>
-                                <select id="horarioGrado" class="form-control"><option value="">Seleccionar grado</option></select>
-                            </div>
-                            <div class="form-group">
-                                <label>Curso</label>
-                                <select id="horarioCurso" class="form-control"><option value="">Seleccionar curso</option></select>
-                            </div>
-                        </div>
-                        <button class="btn-primary" id="btnCargarHorario"><i class="fas fa-search"></i> Cargar horario</button>
-                        <button class="btn-success" id="btnAgregarHorario" style="margin-left: 10px;"><i class="fas fa-plus"></i> Agregar clase</button>
+                <div class="page-header"><h2><i class="fas fa-calendar-alt" style="color: var(--primary);"></i> Horarios</h2></div>
+                <div class="card"><div class="card-body">
+                    <div class="form-grid" style="margin-bottom: 16px;">
+                        <div class="form-group"><label>Grado</label><select id="horarioGrado" class="form-control"><option value="">Seleccionar</option></select></div>
+                        <div class="form-group"><label>Curso</label><select id="horarioCurso" class="form-control"><option value="">Seleccionar</option></select></div>
                     </div>
-                </div>
+                    <button class="btn-primary" id="btnCargarHorario"><i class="fas fa-search"></i> Cargar horario</button>
+                    <button class="btn-success" id="btnAgregarHorario" style="margin-left: 10px;"><i class="fas fa-plus"></i> Agregar clase</button>
+                </div></div>
                 <div id="horarioVista" style="display: none;">
                     <div class="card">
                         <div class="card-header"><h2 id="horarioTitulo">Horario</h2></div>
@@ -979,80 +978,72 @@
             <!-- NOTAS -->
             <div id="page-notas" class="page-content">
                 <div class="page-header"><h2><i class="fas fa-star" style="color: var(--primary);"></i> Consulta de Notas</h2></div>
-                <div class="card">
-                    <div class="card-body">
-                        <div class="form-grid" style="margin-bottom: 20px;">
-                            <div class="form-group"><label>Grado</label><select id="filtroGradoNotas" class="form-control"><option value="">Seleccionar grado</option></select></div>
-                            <div class="form-group"><label>Curso</label><select id="filtroCursoNotas" class="form-control"><option value="">Seleccionar curso</option></select></div>
-                            <div class="form-group"><label>Estudiante</label><select id="filtroEstudianteNotas" class="form-control"><option value="">Seleccionar estudiante</option></select></div>
-                            <div class="form-group">
-                                <label>Periodo</label>
-                                <select id="filtroPeriodoNotas" class="form-control">
-                                    <option value="">Todos</option>
-                                    <option value="1">Periodo 1</option><option value="2">Periodo 2</option>
-                                    <option value="3">Periodo 3</option><option value="4">Periodo 4</option>
-                                </select>
-                            </div>
-                        </div>
-                        <button class="btn-primary" id="btnConsultarNotas"><i class="fas fa-search"></i> Consultar notas</button>
-                        <div class="table-responsive" style="margin-top: 16px;">
-                            <table class="table-modern">
-                                <thead><tr><th>Asignatura</th><th>Nota 1</th><th>Nota 2</th><th>Nota 3</th><th>Nota 4</th><th>Promedio</th><th>Estado</th></tr></thead>
-                                <tbody id="tablaNotas"><tr><td colspan="7" class="text-center text-muted">Selecciona un estudiante</td></tr></tbody>
-                            </table>
+                <div class="card"><div class="card-body">
+                    <div class="form-grid" style="margin-bottom: 20px;">
+                        <div class="form-group"><label>Grado</label><select id="filtroGradoNotas" class="form-control"><option value="">Seleccionar</option></select></div>
+                        <div class="form-group"><label>Curso</label><select id="filtroCursoNotas" class="form-control"><option value="">Seleccionar</option></select></div>
+                        <div class="form-group"><label>Estudiante</label><select id="filtroEstudianteNotas" class="form-control"><option value="">Seleccionar</option></select></div>
+                        <div class="form-group"><label>Periodo</label>
+                            <select id="filtroPeriodoNotas" class="form-control">
+                                <option value="">Todos</option>
+                                <option value="1">Periodo 1</option><option value="2">Periodo 2</option>
+                                <option value="3">Periodo 3</option><option value="4">Periodo 4</option>
+                            </select>
                         </div>
                     </div>
-                </div>
+                    <button class="btn-primary" id="btnConsultarNotas"><i class="fas fa-search"></i> Consultar notas</button>
+                    <div class="table-responsive" style="margin-top: 16px;">
+                        <table class="table-modern">
+                            <thead><tr><th>Asignatura</th><th>Nota 1</th><th>Nota 2</th><th>Nota 3</th><th>Nota 4</th><th>Promedio</th><th>Estado</th></tr></thead>
+                            <tbody id="tablaNotas"><tr><td colspan="7" class="text-center text-muted">Selecciona un estudiante</td></tr></tbody>
+                        </table>
+                    </div>
+                </div></div>
             </div>
 
             <!-- BOLETINES -->
             <div id="page-boletines" class="page-content">
                 <div class="page-header"><h2><i class="fas fa-file-pdf" style="color: var(--primary);"></i> Boletines</h2></div>
-                <div class="card">
-                    <div class="card-body">
-                        <div class="form-grid" style="margin-bottom: 20px;">
-                            <div class="form-group"><label>Grado</label><select id="filtroGradoBoletin" class="form-control"><option value="">Seleccionar grado</option></select></div>
-                            <div class="form-group"><label>Curso</label><select id="filtroCursoBoletin" class="form-control"><option value="">Seleccionar curso</option></select></div>
-                            <div class="form-group"><label>Estudiante</label><select id="filtroEstudianteBoletin" class="form-control"><option value="">Seleccionar estudiante</option></select></div>
-                            <div class="form-group">
-                                <label>Periodo</label>
-                                <select id="filtroPeriodoBoletin" class="form-control">
-                                    <option value="">Todos</option>
-                                    <option value="1">Periodo 1</option><option value="2">Periodo 2</option>
-                                    <option value="3">Periodo 3</option><option value="4">Periodo 4</option>
-                                </select>
-                            </div>
-                        </div>
-                        <button class="btn-primary" id="btnGenerarBoletin"><i class="fas fa-file-pdf"></i> Generar boletín</button>
-                        <div id="boletinContent" style="margin-top: 24px; display: none;">
-                            <div class="card" style="border: 2px solid var(--gray-200);">
-                                <div class="card-body" id="boletinPreview"></div>
-                            </div>
+                <div class="card"><div class="card-body">
+                    <div class="form-grid" style="margin-bottom: 20px;">
+                        <div class="form-group"><label>Grado</label><select id="filtroGradoBoletin" class="form-control"><option value="">Seleccionar</option></select></div>
+                        <div class="form-group"><label>Curso</label><select id="filtroCursoBoletin" class="form-control"><option value="">Seleccionar</option></select></div>
+                        <div class="form-group"><label>Estudiante</label><select id="filtroEstudianteBoletin" class="form-control"><option value="">Seleccionar</option></select></div>
+                        <div class="form-group"><label>Periodo</label>
+                            <select id="filtroPeriodoBoletin" class="form-control">
+                                <option value="">Todos</option>
+                                <option value="1">Periodo 1</option><option value="2">Periodo 2</option>
+                                <option value="3">Periodo 3</option><option value="4">Periodo 4</option>
+                            </select>
                         </div>
                     </div>
-                </div>
+                    <button class="btn-primary" id="btnGenerarBoletin"><i class="fas fa-file-pdf"></i> Generar boletín</button>
+                    <div id="boletinContent" style="margin-top: 24px; display: none;">
+                        <div class="card" style="border: 2px solid var(--gray-200);">
+                            <div class="card-body" id="boletinPreview"></div>
+                        </div>
+                    </div>
+                </div></div>
             </div>
 
             <!-- PENSIONES -->
             <div id="page-pensiones" class="page-content">
                 <div class="page-header">
                     <h2><i class="fas fa-money-check-alt" style="color: var(--primary);"></i> Pensiones</h2>
-                    <button class="btn-primary" id="btnRegistrarPagoPension"><i class="fas fa-money-bill"></i> Registrar pago</button>
+                    <button class="btn-primary" id="btnRegistrarPagoPension"><i class="fas fa-plus"></i> Nueva pensión / Pago</button>
                 </div>
-                <div class="card">
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table-modern">
-                                <thead>
-                                    <tr><th>#</th><th>Estudiante</th><th>Mes</th><th>Año</th><th>Valor</th><th>Abonado</th><th>Saldo</th><th>Estado</th></tr>
-                                </thead>
-                                <tbody id="tablaPensiones">
-                                    <tr><td colspan="8" class="text-center text-muted"><i class="fas fa-spinner fa-spin"></i> Cargando...</td></tr>
-                                </tbody>
-                            </table>
-                        </div>
+                <div class="card"><div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table-modern">
+                            <thead>
+                                <tr><th>#</th><th>Estudiante</th><th>Mes</th><th>Año</th><th>Valor pensión</th><th>Abonado</th><th>Saldo</th><th>Estado</th><th>Acciones</th></tr>
+                            </thead>
+                            <tbody id="tablaPensiones">
+                                <tr><td colspan="9" class="text-center text-muted"><i class="fas fa-spinner fa-spin"></i> Cargando...</td></tr>
+                            </tbody>
+                        </table>
                     </div>
-                </div>
+                </div></div>
             </div>
 
             <!-- CONTABILIDAD -->
@@ -1060,7 +1051,6 @@
                 <div class="page-header">
                     <h2><i class="fas fa-calculator" style="color: var(--primary);"></i> Contabilidad</h2>
                     <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                        <button class="btn-primary" id="btnVerTodosMovimientos"><i class="fas fa-list"></i> Ver todos los movimientos</button>
                         <button class="btn-success" id="btnAgregarMovimiento"><i class="fas fa-plus"></i> Agregar movimiento</button>
                     </div>
                 </div>
@@ -1086,15 +1076,19 @@
 
                 <div class="card">
                     <div class="card-header">
-                        <h2>Movimientos del colegio</h2>
+                        <h2>Historial de movimientos</h2>
                     </div>
                     <div class="card-body">
+                        <div class="cont-tabs" id="contTabs">
+                            <button class="cont-tab active" data-tab="todos">Todos <span class="count" id="countTodos">0</span></button>
+                            <button class="cont-tab" data-tab="ingreso">Ingresos <span class="count" id="countIngresos">0</span></button>
+                            <button class="cont-tab" data-tab="egreso">Egresos <span class="count" id="countEgresos">0</span></button>
+                            <button class="cont-tab" data-tab="Matrícula">Matrículas <span class="count" id="countMatriculas">0</span></button>
+                            <button class="cont-tab" data-tab="Pensión">Pensiones <span class="count" id="countPensiones">0</span></button>
+                        </div>
+
                         <div class="eco-filtros">
-                            <select id="filtroMovTipo" class="form-control">
-                                <option value="">Todos los tipos</option>
-                                <option value="ingreso">Ingresos</option>
-                                <option value="egreso">Egresos</option>
-                            </select>
+                            <input type="month" id="filtroMovMes" class="form-control" />
                             <select id="filtroMovCategoria" class="form-control">
                                 <option value="">Todas las categorías</option>
                                 <option value="Matrícula">Matrícula</option>
@@ -1107,15 +1101,15 @@
                                 <option value="Papelería">Papelería</option>
                                 <option value="Otro">Otro</option>
                             </select>
-                            <input type="month" id="filtroMovMes" class="form-control" />
                         </div>
+
                         <div class="table-responsive">
                             <table class="table-modern">
                                 <thead>
-                                    <tr><th>Fecha</th><th>Tipo</th><th>Categoría</th><th>Descripción</th><th>Método</th><th>Monto</th></tr>
+                                    <tr><th>Fecha y hora</th><th>Tipo</th><th>Categoría</th><th>Descripción</th><th>Método</th><th>Monto</th><th>Acciones</th></tr>
                                 </thead>
                                 <tbody id="tablaContabilidad">
-                                    <tr><td colspan="6" class="text-center text-muted"><i class="fas fa-spinner fa-spin"></i> Cargando...</td></tr>
+                                    <tr><td colspan="7" class="text-center text-muted"><i class="fas fa-spinner fa-spin"></i> Cargando...</td></tr>
                                 </tbody>
                             </table>
                         </div>
@@ -1130,12 +1124,12 @@
     <!-- MODALES                                      -->
     <!-- =========================================== -->
 
-    <!-- Modal Estudiante (con pago de matrícula) -->
+    <!-- Modal Estudiante -->
     <div class="modal" id="modalEstudiante">
         <div class="modal-overlay"></div>
         <div class="modal-content">
             <div class="modal-header">
-                <h2><i class="fas fa-user-graduate" style="color: var(--primary);"></i> Inscribir / Matricular Estudiante</h2>
+                <h2><i class="fas fa-user-graduate" style="color: var(--primary);"></i> Inscribir / Matricular</h2>
                 <button class="modal-close" id="closeEstudianteModal">&times;</button>
             </div>
             <form id="formEstudiante">
@@ -1175,47 +1169,121 @@
                         </div>
                     </div>
 
-                    <h3 class="section-form-title"><i class="fas fa-money-bill-wave"></i> Pago de matrícula</h3>
+                    <h3 class="section-form-title"><i class="fas fa-money-bill-wave"></i> Pago inicial de matrícula</h3>
                     <div class="form-grid">
-                        <div class="form-group">
-                            <label>Valor de la matrícula</label>
-                            <input type="number" id="estValorMatricula" class="form-control" min="0" value="0" />
-                        </div>
-                        <div class="form-group">
-                            <label>¿Pagó?</label>
-                            <select id="estPagoEstado" class="form-control">
-                                <option value="pendiente">No pagó</option>
-                                <option value="pagado">Sí, pagó completo</option>
-                                <option value="abonado">Abonó una parte</option>
-                            </select>
-                        </div>
-                        <div class="form-group" id="grupoAbono" style="display: none;">
-                            <label>Monto abonado</label>
-                            <input type="number" id="estMontoAbono" class="form-control" min="0" value="0" />
-                        </div>
+                        <div class="form-group"><label>Valor total de la matrícula</label><input type="number" id="estValorMatricula" class="form-control" min="0" value="0" /></div>
+                        <div class="form-group"><label>Primer abono (opcional)</label><input type="number" id="estMontoAbono" class="form-control" min="0" value="0" /></div>
                         <div class="form-group">
                             <label>Método de pago</label>
                             <select id="estMetodoPago" class="form-control">
-                                <option>Efectivo</option>
-                                <option>Transferencia</option>
-                                <option>Nequi</option>
-                                <option>Daviplata</option>
-                                <option>Otro</option>
+                                <option>Efectivo</option><option>Transferencia</option>
+                                <option>Nequi</option><option>Daviplata</option><option>Otro</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label>Referencia</label>
-                            <input type="text" id="estReferenciaPago" class="form-control" />
-                        </div>
-                        <div class="form-group">
-                            <label>Fecha de pago</label>
-                            <input type="date" id="estFechaPago" class="form-control" />
-                        </div>
+                        <div class="form-group"><label>Referencia</label><input type="text" id="estReferenciaPago" class="form-control" /></div>
+                        <div class="form-group"><label>Fecha del pago</label><input type="date" id="estFechaPago" class="form-control" /></div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn-secondary" id="cancelEstudianteModal">Cancelar</button>
                     <button type="submit" class="btn-primary" id="btnGuardarEstudiante"><i class="fas fa-save"></i> Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Editar Estudiante -->
+    <div class="modal" id="modalEditarEstudiante">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-user-edit" style="color: var(--primary);"></i> Editar Estudiante</h2>
+                <button class="modal-close" id="closeEditarEstudianteModal">&times;</button>
+            </div>
+            <form id="formEditarEstudiante">
+                <div class="modal-body">
+                    <input type="hidden" id="editEstudianteId" />
+
+                    <h3 style="font-size: 0.9rem; color: var(--gray-600); margin-bottom: 12px;"><i class="fas fa-user"></i> Datos personales</h3>
+                    <div class="form-grid">
+                        <div class="form-group"><label>Nombres *</label><input type="text" id="editEstNombres" class="form-control" required /></div>
+                        <div class="form-group"><label>Apellidos *</label><input type="text" id="editEstApellidos" class="form-control" required /></div>
+                        <div class="form-group"><label>Documento *</label><input type="text" id="editEstDocumento" class="form-control" required /></div>
+                        <div class="form-group"><label>Correo</label><input type="email" id="editEstCorreo" class="form-control" /></div>
+                        <div class="form-group"><label>Fecha de nacimiento</label><input type="date" id="editEstFechaNacimiento" class="form-control" /></div>
+                        <div class="form-group"><label>Dirección</label><input type="text" id="editEstDireccion" class="form-control" /></div>
+                        <div class="form-group"><label>Teléfono</label><input type="text" id="editEstTelefono" class="form-control" /></div>
+                        <div class="form-group"><label>Acudiente</label><input type="text" id="editEstAcudiente" class="form-control" /></div>
+                        <div class="form-group"><label>Teléfono acudiente</label><input type="text" id="editEstAcudienteTelefono" class="form-control" /></div>
+                        <div class="form-group"><label>Correo acudiente</label><input type="email" id="editEstAcudienteEmail" class="form-control" /></div>
+                        <div class="form-group">
+                            <label>Estado</label>
+                            <select id="editEstEstado" class="form-control">
+                                <option value="activo">Activo</option>
+                                <option value="inactivo">Inactivo</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <h3 class="section-form-title"><i class="fas fa-money-bill-wave"></i> Estado de matrícula</h3>
+                    <div id="editMatriculaResumen" class="pago-resumen">
+                        <div class="text-center text-muted" style="padding: 10px;">Cargando...</div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" id="cancelEditarEstudianteModal">Cancelar</button>
+                    <button type="submit" class="btn-primary"><i class="fas fa-save"></i> Guardar datos</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Abonar Matrícula -->
+    <div class="modal" id="modalAbonarMatricula">
+        <div class="modal-overlay"></div>
+        <div class="modal-content" style="max-width: 600px;">
+            <div class="modal-header">
+                <h2><i class="fas fa-money-bill" style="color: var(--success);"></i> Abonar a Matrícula</h2>
+                <button class="modal-close" id="closeAbonarModal">&times;</button>
+            </div>
+            <form id="formAbonarMatricula">
+                <div class="modal-body">
+                    <div id="abonarAlert" class="alert" style="display: none;"><i class="fas fa-info-circle"></i><span id="abonarAlertText"></span></div>
+                    <input type="hidden" id="abonarEstudianteId" />
+                    <p style="font-size: 0.9rem; margin-bottom: 12px;">
+                        Estudiante: <strong id="abonarEstudianteNombre">-</strong>
+                    </p>
+
+                    <div class="pago-resumen" id="abonarResumen">
+                        <div class="fila"><span>Valor total matrícula:</span><strong id="abonarValorTotal">$0</strong></div>
+                        <div class="fila"><span>Total abonado:</span><strong id="abonarYaAbonado" style="color: var(--success);">$0</strong></div>
+                        <div class="fila total"><span>Saldo pendiente:</span><strong id="abonarSaldo" style="color: var(--danger);">$0</strong></div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Monto del abono *</label>
+                            <input type="number" id="abonarMonto" class="form-control" min="1" step="any" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Método de pago</label>
+                            <select id="abonarMetodo" class="form-control">
+                                <option>Efectivo</option><option>Transferencia</option>
+                                <option>Nequi</option><option>Daviplata</option><option>Otro</option>
+                            </select>
+                        </div>
+                        <div class="form-group"><label>Referencia</label><input type="text" id="abonarReferencia" class="form-control" /></div>
+                        <div class="form-group"><label>Fecha del abono *</label><input type="date" id="abonarFecha" class="form-control" required /></div>
+                    </div>
+
+                    <div style="background: var(--gray-50); padding: 12px; border-radius: 8px; margin-top: 12px; display: flex; justify-content: space-between;">
+                        <span style="font-weight: 500;">Nuevo saldo después del abono:</span>
+                        <strong id="abonarNuevoSaldo" style="color: var(--primary); font-size: 1.1rem;">$0</strong>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" id="cancelAbonarModal">Cancelar</button>
+                    <button type="submit" class="btn-success" id="btnGuardarAbono"><i class="fas fa-save"></i> Registrar abono</button>
                 </div>
             </form>
         </div>
@@ -1256,6 +1324,50 @@
                 <div class="modal-footer">
                     <button type="button" class="btn-secondary" id="cancelPersonalModal">Cancelar</button>
                     <button type="submit" class="btn-primary" id="btnGuardarPersonal"><i class="fas fa-save"></i> Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Editar Personal -->
+    <div class="modal" id="modalEditarPersonal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-user-edit" style="color: var(--primary);"></i> Editar Personal</h2>
+                <button class="modal-close" id="closeEditarPersonalModal">&times;</button>
+            </div>
+            <form id="formEditarPersonal">
+                <div class="modal-body">
+                    <input type="hidden" id="editPersonalId" />
+                    <div class="form-group">
+                        <label>Rol</label>
+                        <select id="editPersonalRol" class="form-control" required>
+                            <option value="profesor">Profesor</option>
+                            <option value="coord_academico">Coordinador Académico</option>
+                            <option value="coord_convivencia">Coordinador de Convivencia</option>
+                            <option value="secretaria">Secretaría</option>
+                            <option value="orientador">Orientador Escolar</option>
+                            <option value="contador">Contador</option>
+                        </select>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group"><label>Nombre completo *</label><input type="text" id="editPersonalNombre" class="form-control" required /></div>
+                        <div class="form-group"><label>Documento</label><input type="text" id="editPersonalDocumento" class="form-control" /></div>
+                        <div class="form-group"><label>Correo</label><input type="email" id="editPersonalCorreo" class="form-control" disabled /></div>
+                        <div class="form-group"><label>Teléfono</label><input type="text" id="editPersonalTelefono" class="form-control" /></div>
+                        <div class="form-group">
+                            <label>Estado</label>
+                            <select id="editPersonalActivo" class="form-control">
+                                <option value="true">Activo</option>
+                                <option value="false">Inactivo</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" id="cancelEditarPersonalModal">Cancelar</button>
+                    <button type="submit" class="btn-primary"><i class="fas fa-save"></i> Guardar cambios</button>
                 </div>
             </form>
         </div>
@@ -1373,21 +1485,42 @@
         </div>
     </div>
 
-    <!-- Modal Pago Pensión -->
+    <!-- Modal Nueva Pensión / Pago de Pensión -->
     <div class="modal" id="modalPagoPension">
         <div class="modal-overlay"></div>
         <div class="modal-content">
-            <div class="modal-header"><h2><i class="fas fa-money-bill"></i> Registrar Pago de Pensión</h2><button class="modal-close" id="closePagoPensionModal">&times;</button></div>
+            <div class="modal-header"><h2><i class="fas fa-money-check-alt" style="color: var(--primary);"></i> Registrar Pensión o Pago</h2><button class="modal-close" id="closePagoPensionModal">&times;</button></div>
             <form id="formPagoPension">
                 <div class="modal-body">
+                    <div id="pensionAlert" class="alert" style="display: none;"><i class="fas fa-info-circle"></i><span id="pensionAlertText"></span></div>
+
                     <div class="form-group">
                         <label>Estudiante *</label>
                         <select id="pagoEstudiante" class="form-control" required><option value="">Seleccionar</option></select>
                     </div>
+
                     <div class="form-grid">
                         <div class="form-group"><label>Mes *</label><select id="pagoMes" class="form-control" required><option value="">Seleccionar</option></select></div>
                         <div class="form-group"><label>Año *</label><input type="number" id="pagoAnio" class="form-control" required /></div>
-                        <div class="form-group"><label>Monto *</label><input type="number" id="pagoMonto" class="form-control" required min="0" /></div>
+                    </div>
+
+                    <div class="pago-resumen" id="pensionResumen">
+                        <div class="fila"><span>Valor pensión configurada:</span><strong id="pensionValorTotal">$0</strong></div>
+                        <div class="fila"><span>Ya abonado:</span><strong id="pensionYaAbonado" style="color: var(--success);">$0</strong></div>
+                        <div class="fila total"><span>Saldo pendiente:</span><strong id="pensionSaldoPendiente" style="color: var(--danger);">$0</strong></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Valor de la pensión este mes (si es nueva)</label>
+                        <input type="number" id="pensionValorInput" class="form-control" min="0" value="0" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Monto a pagar *</label>
+                        <input type="number" id="pagoMonto" class="form-control" required min="1" step="any" />
+                    </div>
+
+                    <div class="form-grid">
                         <div class="form-group">
                             <label>Método</label>
                             <select id="pagoMetodo" class="form-control">
@@ -1396,7 +1529,12 @@
                             </select>
                         </div>
                         <div class="form-group"><label>Referencia</label><input type="text" id="pagoReferencia" class="form-control" /></div>
-                        <div class="form-group"><label>Fecha</label><input type="date" id="pagoFecha" class="form-control" required /></div>
+                        <div class="form-group"><label>Fecha *</label><input type="date" id="pagoFecha" class="form-control" required /></div>
+                    </div>
+
+                    <div style="background: var(--gray-50); padding: 12px; border-radius: 8px; display: flex; justify-content: space-between;">
+                        <span style="font-weight: 500;">Nuevo saldo después del pago:</span>
+                        <strong id="pensionNuevoSaldo" style="color: var(--primary); font-size: 1.1rem;">$0</strong>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -1407,31 +1545,115 @@
         </div>
     </div>
 
-    <!-- Modal Ver Todos los Movimientos -->
-    <div class="modal" id="modalVerMovimientos">
+    <!-- Modal Editar Pensión -->
+    <div class="modal" id="modalEditarPension">
         <div class="modal-overlay"></div>
-        <div class="modal-content" style="max-width: 900px;">
+        <div class="modal-content" style="max-width: 600px;">
             <div class="modal-header">
-                <h2><i class="fas fa-list"></i> Todos los Movimientos</h2>
-                <button class="modal-close" id="closeVerMovimientosModal">&times;</button>
+                <h2><i class="fas fa-edit" style="color: var(--primary);"></i> Editar Pensión</h2>
+                <button class="modal-close" id="closeEditarPensionModal">&times;</button>
             </div>
-            <div class="modal-body">
-                <div class="table-responsive" style="max-height: 60vh; overflow-y: auto;">
-                    <table class="table-modern">
-                        <thead>
-                            <tr><th>Fecha</th><th>Tipo</th><th>Categoría</th><th>Descripción</th><th>Método</th><th>Monto</th></tr>
-                        </thead>
-                        <tbody id="tablaTodosMovimientos"></tbody>
-                    </table>
+            <form id="formEditarPension">
+                <div class="modal-body">
+                    <input type="hidden" id="editPensionId" />
+                    <input type="hidden" id="editPensionEstudianteId" />
+
+                    <p style="font-size: 0.9rem; margin-bottom: 12px;">
+                        Estudiante: <strong id="editPensionEstudianteNombre">-</strong>
+                    </p>
+
+                    <div class="pago-resumen">
+                        <div class="fila"><span>Mes / Año:</span><strong id="editPensionMesAnio">-</strong></div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Valor pensión *</label>
+                            <input type="number" id="editPensionValor" class="form-control" min="0" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Total abonado *</label>
+                            <input type="number" id="editPensionAbonado" class="form-control" min="0" required />
+                            <small style="color: var(--gray-500); font-size: 0.7rem;">
+                                <i class="fas fa-info-circle"></i> Si aumentas este valor, se registrará como nuevo pago.
+                            </small>
+                        </div>
+                    </div>
+
+                    <div style="background: var(--gray-50); padding: 12px; border-radius: 8px; display: flex; justify-content: space-between;">
+                        <span style="font-weight: 500;">Saldo resultante:</span>
+                        <strong id="editPensionSaldo" style="color: var(--danger); font-size: 1.1rem;">$0</strong>
+                    </div>
+
+                    <div id="editPensionAviso" style="margin-top: 12px; padding: 10px 14px; background: #fef3c7; border-radius: 8px; font-size: 0.8rem; color: #92400e; display: none;">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span id="editPensionAvisoTexto"></span>
+                    </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn-secondary" id="closeVerMovimientosBtn">Cerrar</button>
-            </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" id="cancelEditarPensionModal">Cancelar</button>
+                    <button type="submit" class="btn-primary"><i class="fas fa-save"></i> Guardar cambios</button>
+                </div>
+            </form>
         </div>
     </div>
 
-    <!-- Modal Agregar Movimiento (rector) -->
+    <!-- Modal Abonar Pensión -->
+    <div class="modal" id="modalAbonarPension">
+        <div class="modal-overlay"></div>
+        <div class="modal-content" style="max-width: 600px;">
+            <div class="modal-header">
+                <h2><i class="fas fa-money-bill" style="color: var(--success);"></i> Abonar a Pensión</h2>
+                <button class="modal-close" id="closeAbonarPensionModal">&times;</button>
+            </div>
+            <form id="formAbonarPension">
+                <div class="modal-body">
+                    <div id="abonarPensionAlert" class="alert" style="display: none;"><i class="fas fa-info-circle"></i><span id="abonarPensionAlertText"></span></div>
+
+                    <input type="hidden" id="abonarPensionId" />
+                    <input type="hidden" id="abonarPensionEstudianteId" />
+
+                    <p style="font-size: 0.9rem; margin-bottom: 12px;">
+                        Estudiante: <strong id="abonarPensionEstudianteNombre">-</strong>
+                    </p>
+
+                    <div class="pago-resumen" id="abonarPensionResumen">
+                        <div class="fila"><span>Mes / Año:</span><strong id="abonarPensionMesAnio">-</strong></div>
+                        <div class="fila"><span>Valor pensión:</span><strong id="abonarPensionValorTotal">$0</strong></div>
+                        <div class="fila"><span>Ya abonado:</span><strong id="abonarPensionYaAbonado" style="color: var(--success);">$0</strong></div>
+                        <div class="fila total"><span>Saldo pendiente:</span><strong id="abonarPensionSaldo" style="color: var(--danger);">$0</strong></div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Monto del abono *</label>
+                            <input type="number" id="abonarPensionMonto" class="form-control" min="1" step="any" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Método</label>
+                            <select id="abonarPensionMetodo" class="form-control">
+                                <option>Efectivo</option><option>Transferencia</option>
+                                <option>Nequi</option><option>Daviplata</option><option>Otro</option>
+                            </select>
+                        </div>
+                        <div class="form-group"><label>Referencia</label><input type="text" id="abonarPensionReferencia" class="form-control" /></div>
+                        <div class="form-group"><label>Fecha *</label><input type="date" id="abonarPensionFecha" class="form-control" required /></div>
+                    </div>
+
+                    <div style="background: var(--gray-50); padding: 12px; border-radius: 8px; margin-top: 12px; display: flex; justify-content: space-between;">
+                        <span style="font-weight: 500;">Nuevo saldo:</span>
+                        <strong id="abonarPensionNuevoSaldo" style="color: var(--primary); font-size: 1.1rem;">$0</strong>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" id="cancelAbonarPensionModal">Cancelar</button>
+                    <button type="submit" class="btn-success"><i class="fas fa-save"></i> Registrar abono</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Agregar Movimiento -->
     <div class="modal" id="modalAgregarMovimiento">
         <div class="modal-overlay"></div>
         <div class="modal-content">
@@ -1441,13 +1663,12 @@
             </div>
             <form id="formAgregarMovimiento">
                 <div class="modal-body">
-                    <div id="movAlert" class="alert" style="display: none;"><i class="fas fa-info-circle"></i><span id="movAlertText"></span></div>
                     <div class="form-grid">
                         <div class="form-group">
                             <label>Tipo *</label>
                             <select id="movTipo" class="form-control" required>
-                                <option value="ingreso">Ingreso (entrada de dinero)</option>
-                                <option value="egreso">Egreso (salida de dinero)</option>
+                                <option value="ingreso">Ingreso (entrada)</option>
+                                <option value="egreso">Egreso (salida)</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -1464,7 +1685,7 @@
                                 <option value="Otro">Otro</option>
                             </select>
                         </div>
-                        <div class="form-group"><label>Monto *</label><input type="number" id="movMonto" class="form-control" required min="0" /></div>
+                        <div class="form-group"><label>Monto *</label><input type="number" id="movMonto" class="form-control" required min="0" step="any" /></div>
                         <div class="form-group">
                             <label>Método</label>
                             <select id="movMetodo" class="form-control">
@@ -1516,8 +1737,11 @@
     </script>
 
     <script type="module">
-        import { initializeApp } from "firebase/app";
-        import { getAuth, onAuthStateChanged, signOut, createUserWithEmailAndPassword } from "firebase/auth";
+        import { initializeApp, getApps } from "firebase/app";
+        import {
+            getAuth, onAuthStateChanged, signOut,
+            createUserWithEmailAndPassword
+        } from "firebase/auth";
         import {
             getFirestore, doc, getDoc, collection, getDocs, addDoc, updateDoc, deleteDoc,
             query, where, serverTimestamp, setDoc
@@ -1541,11 +1765,13 @@
         let isLoggingOut = false;
         let cursoActual = null;
         let authCheckInProgress = false;
-        let isCreatingAccount = false;
         let maxEstudiantesPlan = 999999;
         let planNombreActual = 'Sin plan';
         let estudiantesActualesCount = 0;
         let movimientosCache = [];
+        let contTabActual = 'todos';
+        let pensionEditActual = null;
+        let matriculaEditActual = null;
 
         const MESES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
         const ROL_LABELS = {
@@ -1557,9 +1783,26 @@
             contador: 'Contador'
         };
 
-        // =============================================
-        // COLORES
-        // =============================================
+        function formatearPrecio(v) {
+            return '$' + Number(v || 0).toLocaleString('es-CO');
+        }
+
+        function formatearFechaHora(fechaStr, timestamp) {
+            try {
+                let fecha;
+                if (timestamp && timestamp.toDate) fecha = timestamp.toDate();
+                else if (timestamp) fecha = new Date(timestamp);
+                else if (fechaStr) fecha = new Date(fechaStr + 'T12:00:00');
+                else return 'Sin fecha';
+                const dia = String(fecha.getDate()).padStart(2, '0');
+                const mes = String(fecha.getMonth() + 1).padStart(2, '0');
+                const anio = fecha.getFullYear();
+                const hh = String(fecha.getHours()).padStart(2, '0');
+                const mm = String(fecha.getMinutes()).padStart(2, '0');
+                return `${dia}/${mes}/${anio} ${hh}:${mm}`;
+            } catch (e) { return 'Fecha inválida'; }
+        }
+
         function hexToRgb(hex) {
             hex = hex.replace('#', '');
             if (hex.length === 3) hex = hex.split('').map(c => c + c).join('');
@@ -1591,7 +1834,6 @@
             document.documentElement.style.setProperty('--sidebar-bg', oscurecer(colorPrimario, 0.75));
             document.documentElement.style.setProperty('--sidebar-hover', oscurecer(colorPrimario, 0.65));
             document.documentElement.style.setProperty('--sidebar-active', colorPrimario);
-
             const banner = document.getElementById('welcomeBanner');
             if (banner) banner.style.background = `linear-gradient(135deg, ${colorPrimario} 0%, ${primarioOscuro} 100%)`;
         }
@@ -1611,18 +1853,24 @@
             }
         }
 
-        // =============================================
-        // CREAR CUENTA SIN REDIRECCIÓN
-        // =============================================
+        let secondaryApp = null;
+        function getSecondaryApp() {
+            if (!secondaryApp) {
+                const existing = getApps().find(a => a.name === 'secondary');
+                secondaryApp = existing || initializeApp(firebaseConfig, 'secondary');
+            }
+            return secondaryApp;
+        }
+
         async function crearCuentaUsuario(email, password, nombre, rol, colegioId) {
-            isCreatingAccount = true;
+            const secondaryAuth = getAuth(getSecondaryApp());
             try {
-                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const userCredential = await createUserWithEmailAndPassword(secondaryAuth, email, password);
                 const user = userCredential.user;
                 await setDoc(doc(db, 'usuarios', user.uid), {
                     nombre, email, rol, colegioId, activo: true, fechaCreacion: serverTimestamp()
                 });
-                await signOut(auth);
+                await signOut(secondaryAuth);
                 return user.uid;
             } catch (error) {
                 if (error.code === 'auth/email-already-in-use') {
@@ -1631,18 +1879,13 @@
                     if (!snap.empty) {
                         const u = snap.docs[0].data();
                         if (u.rol === rol && u.colegioId === colegioId) return snap.docs[0].id;
-                        throw new Error(`El correo ${email} ya está registrado con otro rol.`);
+                        throw new Error(`El correo ${email} ya está registrado con otro rol (${u.rol}).`);
                     }
                 }
                 throw error;
-            } finally {
-                isCreatingAccount = false;
             }
         }
 
-        // =============================================
-        // SIDEBAR
-        // =============================================
         const sidebar = document.getElementById('sidebar');
         const sidebarOverlay = document.getElementById('sidebarOverlay');
         const hamburgerBtn = document.getElementById('hamburgerBtn');
@@ -1687,9 +1930,6 @@
             }
         });
 
-        // =============================================
-        // NAVEGACIÓN
-        // =============================================
         const navLinks = document.querySelectorAll('.sidebar-nav a');
         const pages = document.querySelectorAll('.page-content');
         const pageTitle = document.getElementById('pageTitle');
@@ -1725,9 +1965,6 @@
             });
         });
 
-        // =============================================
-        // DASHBOARD
-        // =============================================
         async function cargarDashboard() {
             try {
                 const colegioDoc = await getDoc(doc(db, 'colegios', colegioId));
@@ -1815,9 +2052,6 @@
             }
         }
 
-        // =============================================
-        // ESTUDIANTES Y MATRÍCULAS
-        // =============================================
         async function cargarEstudiantes() {
             const tbody = document.getElementById('tablaEstudiantes');
             try {
@@ -1880,13 +2114,19 @@
                             <td>${d.documento || '-'}</td>
                             <td>${grado}</td>
                             <td>${curso}</td>
-                            <td>${d.acudiente || '-'}</td>
                             <td><span class="badge ${badgeClass}">${badgeText}</span></td>
+                            <td>${formatearPrecio(abonadoMat)}</td>
                             <td style="font-weight: 600; color: ${saldoMat > 0 ? 'var(--danger)' : 'var(--success)'};">
-                                $${saldoMat.toLocaleString('es-CO')}
+                                ${formatearPrecio(saldoMat)}
                             </td>
                             <td><span class="badge ${d.estado === 'activo' ? 'badge-success' : 'badge-danger'}">${d.estado || 'inactivo'}</span></td>
                             <td>
+                                <button class="btn-success btn-sm" onclick="window.abonarMatricula('${docSnap.id}')" title="Abonar">
+                                    <i class="fas fa-money-bill"></i>
+                                </button>
+                                <button class="btn-warning btn-sm" onclick="window.editarEstudiante('${docSnap.id}')" title="Editar">
+                                    <i class="fas fa-edit"></i>
+                                </button>
                                 <button class="btn-info btn-sm" onclick="window.verPagos('${docSnap.id}', '${(d.nombres||'').replace(/'/g,"\\'")} ${(d.apellidos||'').replace(/'/g,"\\'")}')" title="Ver pagos">
                                     <i class="fas fa-receipt"></i>
                                 </button>
@@ -1907,11 +2147,107 @@
                     }
                 };
 
+                window.editarEstudiante = async (estudianteId) => {
+                    try {
+                        const estDoc = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', estudianteId));
+                        if (!estDoc.exists()) { alert('Estudiante no encontrado'); return; }
+                        const d = estDoc.data();
+
+                        document.getElementById('editEstudianteId').value = estudianteId;
+                        document.getElementById('editEstNombres').value = d.nombres || '';
+                        document.getElementById('editEstApellidos').value = d.apellidos || '';
+                        document.getElementById('editEstDocumento').value = d.documento || '';
+                        document.getElementById('editEstCorreo').value = d.correo || '';
+                        document.getElementById('editEstFechaNacimiento').value = d.fechaNacimiento || '';
+                        document.getElementById('editEstDireccion').value = d.direccion || '';
+                        document.getElementById('editEstTelefono').value = d.telefono || '';
+                        document.getElementById('editEstAcudiente').value = d.acudiente || '';
+                        document.getElementById('editEstAcudienteTelefono').value = d.acudienteTelefono || '';
+                        document.getElementById('editEstAcudienteEmail').value = d.acudienteEmail || '';
+                        document.getElementById('editEstEstado').value = d.estado || 'activo';
+
+                        const matQ = query(
+                            collection(db, 'colegios', colegioId, 'matriculas'),
+                            where('estudianteId', '==', estudianteId)
+                        );
+                        const matSnap = await getDocs(matQ);
+                        const resumen = document.getElementById('editMatriculaResumen');
+                        if (!matSnap.empty) {
+                            const m = matSnap.docs[0].data();
+                            const valor = Number(m.valorMatricula) || 0;
+                            const abonado = Number(m.totalAbonado) || 0;
+                            const saldo = Math.max(0, valor - abonado);
+                            matriculaEditActual = { id: matSnap.docs[0].id, valor, abonado, saldo };
+                            resumen.innerHTML = `
+                                <div class="fila"><span>Valor total:</span><strong>${formatearPrecio(valor)}</strong></div>
+                                <div class="fila"><span>Total abonado:</span><strong style="color: var(--success);">${formatearPrecio(abonado)}</strong></div>
+                                <div class="fila total"><span>Saldo pendiente:</span><strong>${formatearPrecio(saldo)}</strong></div>
+                            `;
+                        } else {
+                            matriculaEditActual = null;
+                            resumen.innerHTML = `<div class="fila"><span>Estado:</span><strong style="color: var(--gray-500);">Sin matrícula registrada</strong></div>`;
+                        }
+
+                        document.getElementById('modalEditarEstudiante').classList.add('show');
+                    } catch (e) {
+                        alert('Error al cargar: ' + e.message);
+                    }
+                };
+
+                window.abonarMatricula = async (estudianteId) => {
+                    try {
+                        const estDoc = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', estudianteId));
+                        if (!estDoc.exists()) { alert('Estudiante no encontrado'); return; }
+                        const est = estDoc.data();
+
+                        const matQ = query(
+                            collection(db, 'colegios', colegioId, 'matriculas'),
+                            where('estudianteId', '==', estudianteId)
+                        );
+                        const matSnap = await getDocs(matQ);
+
+                        let valor = 0, abonado = 0, saldo = 0;
+                        if (!matSnap.empty) {
+                            const m = matSnap.docs[0].data();
+                            valor = Number(m.valorMatricula) || 0;
+                            abonado = Number(m.totalAbonado) || 0;
+                            saldo = Math.max(0, valor - abonado);
+                            matriculaEditActual = { id: matSnap.docs[0].id, valor, abonado, saldo };
+                        } else {
+                            matriculaEditActual = null;
+                            alert('Este estudiante no tiene matrícula registrada.');
+                            return;
+                        }
+
+                        if (saldo === 0) {
+                            alert('✅ Este estudiante ya pagó el total de la matrícula.');
+                            return;
+                        }
+
+                        document.getElementById('abonarEstudianteId').value = estudianteId;
+                        document.getElementById('abonarEstudianteNombre').textContent =
+                            `${est.nombres || ''} ${est.apellidos || ''}`;
+                        document.getElementById('abonarValorTotal').textContent = formatearPrecio(valor);
+                        document.getElementById('abonarYaAbonado').textContent = formatearPrecio(abonado);
+                        document.getElementById('abonarSaldo').textContent = formatearPrecio(saldo);
+                        document.getElementById('abonarMonto').value = '';
+                        document.getElementById('abonarMonto').max = saldo;
+                        document.getElementById('abonarMetodo').value = 'Efectivo';
+                        document.getElementById('abonarReferencia').value = '';
+                        document.getElementById('abonarFecha').value = new Date().toISOString().split('T')[0];
+                        document.getElementById('abonarNuevoSaldo').textContent = formatearPrecio(saldo);
+                        document.getElementById('abonarAlert').className = 'alert';
+
+                        document.getElementById('modalAbonarMatricula').classList.add('show');
+                    } catch (e) {
+                        alert('Error: ' + e.message);
+                    }
+                };
+
                 window.verPagos = async (estudianteId, nombre) => {
                     document.getElementById('verPagosTitulo').innerHTML =
                         `<i class="fas fa-receipt"></i> Pagos de ${nombre}`;
 
-                    // Pagos de matrícula
                     const pagosMatQ = query(
                         collection(db, 'colegios', colegioId, 'pagos_matriculas'),
                         where('estudianteId', '==', estudianteId)
@@ -1927,7 +2263,7 @@
                             htmlMat += `
                                 <div style="display: flex; justify-content: space-between; padding: 8px 12px; background: var(--gray-50); border-radius: 6px; margin-bottom: 4px; font-size: 0.85rem;">
                                     <div>
-                                        <strong>$${(Number(p.monto) || 0).toLocaleString('es-CO')}</strong>
+                                        <strong>${formatearPrecio(p.monto)}</strong>
                                         <span style="color: var(--gray-500); margin-left: 8px;">${p.metodo || ''}</span>
                                     </div>
                                     <div style="color: var(--gray-500);">${p.fecha || ''} ${p.referencia ? '· ' + p.referencia : ''}</div>
@@ -1937,7 +2273,6 @@
                         listaMat.innerHTML = htmlMat;
                     }
 
-                    // Pagos de pensión
                     const pagosPenQ = query(
                         collection(db, 'colegios', colegioId, 'pagos_pensiones'),
                         where('estudianteId', '==', estudianteId)
@@ -1954,7 +2289,7 @@
                             htmlPen += `
                                 <div style="display: flex; justify-content: space-between; padding: 8px 12px; background: var(--gray-50); border-radius: 6px; margin-bottom: 4px; font-size: 0.85rem;">
                                     <div>
-                                        <strong>$${(Number(p.monto) || 0).toLocaleString('es-CO')}</strong>
+                                        <strong>${formatearPrecio(p.monto)}</strong>
                                         <span style="color: var(--gray-500); margin-left: 8px;">${mesNombre} ${p.anio || ''} · ${p.metodo || ''}</span>
                                     </div>
                                     <div style="color: var(--gray-500);">${p.fecha || ''}</div>
@@ -1973,9 +2308,6 @@
             }
         }
 
-        // =============================================
-        // REGISTRAR ESTUDIANTE
-        // =============================================
         document.getElementById('btnRegistrarEstudiante')?.addEventListener('click', async () => {
             const estSnap = await getDocs(collection(db, 'colegios', colegioId, 'estudiantes'));
             estudiantesActualesCount = estSnap.size;
@@ -1987,18 +2319,13 @@
             }
 
             if (estudiantesActualesCount >= maxEstudiantesPlan) {
-                alert(
-                    `⚠️ Has alcanzado el límite de tu plan "${planNombreActual}" (${maxEstudiantesPlan} estudiantes).\n\n` +
-                    `Estudiantes actuales: ${estudiantesActualesCount}\n` +
-                    `Contacta al administrador para cambiar de plan.`
-                );
+                alert(`⚠️ Has alcanzado el límite de tu plan "${planNombreActual}" (${maxEstudiantesPlan} estudiantes).`);
                 return;
             }
 
             document.getElementById('modalEstudiante').classList.add('show');
             document.getElementById('formEstudiante').reset();
             document.getElementById('estFechaPago').value = new Date().toISOString().split('T')[0];
-            document.getElementById('grupoAbono').style.display = 'none';
 
             const select = document.getElementById('estGrado');
             const snap = await getDocs(collection(db, 'colegios', colegioId, 'grados'));
@@ -2019,20 +2346,8 @@
             };
         });
 
-        // Mostrar/ocultar monto abonado según estado
-        document.getElementById('estPagoEstado')?.addEventListener('change', (e) => {
-            const grupo = document.getElementById('grupoAbono');
-            if (e.target.value === 'abonado') {
-                grupo.style.display = 'block';
-            } else {
-                grupo.style.display = 'none';
-                document.getElementById('estMontoAbono').value = 0;
-            }
-        });
-
         document.getElementById('formEstudiante')?.addEventListener('submit', async (e) => {
             e.preventDefault();
-
             const estSnapCheck = await getDocs(collection(db, 'colegios', colegioId, 'estudiantes'));
             if (estSnapCheck.size >= maxEstudiantesPlan) {
                 showEstudianteAlert('⚠️ Límite de plan alcanzado', 'error');
@@ -2056,8 +2371,7 @@
             const estado = document.getElementById('estEstado').value;
 
             const valorMatricula = parseFloat(document.getElementById('estValorMatricula').value) || 0;
-            const pagoEstado = document.getElementById('estPagoEstado').value;
-            let montoAbono = parseFloat(document.getElementById('estMontoAbono').value) || 0;
+            const montoAbono = parseFloat(document.getElementById('estMontoAbono').value) || 0;
             const metodoPago = document.getElementById('estMetodoPago').value;
             const referenciaPago = document.getElementById('estReferenciaPago').value.trim();
             const fechaPago = document.getElementById('estFechaPago').value;
@@ -2071,12 +2385,6 @@
                 return;
             }
 
-            // Calcular el monto real a registrar
-            let montoPagado = 0;
-            if (pagoEstado === 'pagado') montoPagado = valorMatricula;
-            else if (pagoEstado === 'abonado') montoPagado = montoAbono;
-            // Si es "pendiente", montoPagado = 0
-
             const btn = document.getElementById('btnGuardarEstudiante');
             btn.disabled = true;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
@@ -2084,7 +2392,6 @@
             try {
                 const emailEstudiante = correo || `${documento}@eduone.com`;
 
-                // 1. Crear estudiante
                 const estRef = await addDoc(collection(db, 'colegios', colegioId, 'estudiantes'), {
                     nombres, apellidos, documento,
                     correo: emailEstudiante,
@@ -2097,10 +2404,9 @@
                     fechaRegistro: serverTimestamp()
                 });
 
-                // 2. Crear matrícula
                 const estadoPagoFinal = valorMatricula === 0 ? 'sin-cobro'
-                    : (montoPagado >= valorMatricula ? 'pagado'
-                        : montoPagado > 0 ? 'abonado' : 'pendiente');
+                    : (montoAbono >= valorMatricula ? 'pagado'
+                        : montoAbono > 0 ? 'abonado' : 'pendiente');
 
                 await addDoc(collection(db, 'colegios', colegioId, 'matriculas'), {
                     estudianteId: estRef.id,
@@ -2108,18 +2414,17 @@
                     anio: new Date().getFullYear(),
                     estado: 'activo',
                     valorMatricula,
-                    totalAbonado: montoPagado,
-                    saldo: Math.max(0, valorMatricula - montoPagado),
+                    totalAbonado: montoAbono,
+                    saldo: Math.max(0, valorMatricula - montoAbono),
                     estadoPago: estadoPagoFinal,
                     fechaRegistro: serverTimestamp()
                 });
 
-                // 3. Si hay pago, registrar en pagos_matriculas y movimientos
-                if (montoPagado > 0 && fechaPago) {
+                if (montoAbono > 0 && fechaPago) {
                     await addDoc(collection(db, 'colegios', colegioId, 'pagos_matriculas'), {
                         estudianteId: estRef.id,
                         estudianteNombre: `${nombres} ${apellidos}`,
-                        monto: montoPagado,
+                        monto: montoAbono,
                         metodo: metodoPago,
                         referencia: referenciaPago || '',
                         fecha: fechaPago,
@@ -2132,7 +2437,7 @@
                         tipo: 'ingreso',
                         categoria: 'Matrícula',
                         descripcion: `Pago matrícula - ${nombres} ${apellidos}`,
-                        monto: montoPagado,
+                        monto: montoAbono,
                         metodo: metodoPago,
                         referencia: referenciaPago || '',
                         fecha: fechaPago,
@@ -2143,7 +2448,6 @@
                     });
                 }
 
-                // 4. Crear cuentas
                 try {
                     await crearCuentaUsuario(acudienteEmail, acudientePassword, acudiente, 'acudiente', colegioId);
                 } catch (err) {
@@ -2188,6 +2492,130 @@
             document.getElementById('modalEstudiante').classList.remove('show');
         });
 
+        document.getElementById('formEditarEstudiante')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const estudianteId = document.getElementById('editEstudianteId').value;
+
+            const data = {
+                nombres: document.getElementById('editEstNombres').value.trim(),
+                apellidos: document.getElementById('editEstApellidos').value.trim(),
+                documento: document.getElementById('editEstDocumento').value.trim(),
+                correo: document.getElementById('editEstCorreo').value.trim(),
+                fechaNacimiento: document.getElementById('editEstFechaNacimiento').value,
+                direccion: document.getElementById('editEstDireccion').value.trim(),
+                telefono: document.getElementById('editEstTelefono').value.trim(),
+                acudiente: document.getElementById('editEstAcudiente').value.trim(),
+                acudienteTelefono: document.getElementById('editEstAcudienteTelefono').value.trim(),
+                acudienteEmail: document.getElementById('editEstAcudienteEmail').value.trim(),
+                estado: document.getElementById('editEstEstado').value,
+                fechaActualizacion: serverTimestamp()
+            };
+
+            if (!data.nombres || !data.apellidos || !data.documento) {
+                alert('Completa los campos obligatorios');
+                return;
+            }
+
+            try {
+                await updateDoc(doc(db, 'colegios', colegioId, 'estudiantes', estudianteId), data);
+                alert('✅ Estudiante actualizado');
+                document.getElementById('modalEditarEstudiante').classList.remove('show');
+                cargarEstudiantes();
+                cargarDashboard();
+            } catch (error) {
+                alert('❌ Error: ' + error.message);
+            }
+        });
+
+        document.getElementById('closeEditarEstudianteModal')?.addEventListener('click', () => {
+            document.getElementById('modalEditarEstudiante').classList.remove('show');
+        });
+        document.getElementById('cancelEditarEstudianteModal')?.addEventListener('click', () => {
+            document.getElementById('modalEditarEstudiante').classList.remove('show');
+        });
+
+        document.getElementById('abonarMonto')?.addEventListener('input', () => {
+            if (!matriculaEditActual) return;
+            const monto = parseFloat(document.getElementById('abonarMonto').value) || 0;
+            const nuevoSaldo = Math.max(0, matriculaEditActual.saldo - monto);
+            document.getElementById('abonarNuevoSaldo').textContent = formatearPrecio(nuevoSaldo);
+            document.getElementById('abonarNuevoSaldo').style.color = nuevoSaldo === 0 ? 'var(--success)' : 'var(--primary)';
+        });
+
+        document.getElementById('closeAbonarModal')?.addEventListener('click', () => {
+            document.getElementById('modalAbonarMatricula').classList.remove('show');
+        });
+        document.getElementById('cancelAbonarModal')?.addEventListener('click', () => {
+            document.getElementById('modalAbonarMatricula').classList.remove('show');
+        });
+
+        document.getElementById('formAbonarMatricula')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!matriculaEditActual) { alert('Error: no hay matrícula'); return; }
+
+            const monto = parseFloat(document.getElementById('abonarMonto').value);
+            const metodo = document.getElementById('abonarMetodo').value;
+            const referencia = document.getElementById('abonarReferencia').value.trim();
+            const fecha = document.getElementById('abonarFecha').value;
+
+            if (!monto || monto <= 0) { alert('Ingresa un monto válido'); return; }
+            if (monto > matriculaEditActual.saldo) {
+                alert(`⚠️ El monto (${formatearPrecio(monto)}) supera el saldo pendiente (${formatearPrecio(matriculaEditActual.saldo)}).`);
+                return;
+            }
+
+            const estudianteId = document.getElementById('abonarEstudianteId').value;
+            const estDoc = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', estudianteId));
+            const est = estDoc.data() || {};
+
+            try {
+                const nuevoAbonado = matriculaEditActual.abonado + monto;
+                const nuevoSaldo = Math.max(0, matriculaEditActual.valor - nuevoAbonado);
+                const nuevoEstado = nuevoSaldo === 0 ? 'pagado'
+                    : nuevoAbonado > 0 ? 'abonado' : 'pendiente';
+
+                await updateDoc(doc(db, 'colegios', colegioId, 'matriculas', matriculaEditActual.id), {
+                    totalAbonado: nuevoAbonado,
+                    saldo: nuevoSaldo,
+                    estadoPago: nuevoEstado,
+                    fechaActualizacion: serverTimestamp()
+                });
+
+                await addDoc(collection(db, 'colegios', colegioId, 'pagos_matriculas'), {
+                    estudianteId,
+                    estudianteNombre: `${est.nombres || ''} ${est.apellidos || ''}`,
+                    monto,
+                    metodo,
+                    referencia: referencia || '',
+                    fecha,
+                    tipo: 'matricula',
+                    creadoPor: auth.currentUser?.uid || '',
+                    fechaCreacion: serverTimestamp()
+                });
+
+                await addDoc(collection(db, 'colegios', colegioId, 'movimientos'), {
+                    tipo: 'ingreso',
+                    categoria: 'Matrícula',
+                    descripcion: `Abono matrícula - ${est.nombres || ''} ${est.apellidos || ''}`,
+                    monto,
+                    metodo,
+                    referencia: referencia || '',
+                    fecha,
+                    estudianteId,
+                    estudianteNombre: `${est.nombres || ''} ${est.apellidos || ''}`,
+                    creadoPor: auth.currentUser?.uid || '',
+                    fechaCreacion: serverTimestamp()
+                });
+
+                alert(`✅ Abono de ${formatearPrecio(monto)} registrado`);
+                document.getElementById('modalAbonarMatricula').classList.remove('show');
+                cargarEstudiantes();
+                cargarDashboard();
+            } catch (error) {
+                alert('❌ Error: ' + error.message);
+            }
+        });
+
         document.getElementById('closeVerPagosModal')?.addEventListener('click', () => {
             document.getElementById('modalVerPagos').classList.remove('show');
         });
@@ -2195,9 +2623,6 @@
             document.getElementById('modalVerPagos').classList.remove('show');
         });
 
-        // =============================================
-        // PERSONAL
-        // =============================================
         async function cargarPersonal() {
             const tbody = document.getElementById('tablaPersonal');
             const filtroRol = document.getElementById('filtroRolPersonal').value;
@@ -2232,7 +2657,10 @@
                             <td><span class="badge-rol ${p.rol}">${rolLabel}</span></td>
                             <td><span class="badge ${p.activo ? 'badge-success' : 'badge-danger'}">${p.activo ? 'Activo' : 'Inactivo'}</span></td>
                             <td>
-                                <button class="btn-danger btn-sm" onclick="window.eliminarPersonal('${p.id}')">
+                                <button class="btn-warning btn-sm" onclick="window.editarPersonal('${p.id}')" title="Editar">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-danger btn-sm" onclick="window.eliminarPersonal('${p.id}')" title="Eliminar">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </td>
@@ -2246,6 +2674,26 @@
                         await deleteDoc(doc(db, 'usuarios', id));
                         cargarPersonal();
                         cargarDashboard();
+                    }
+                };
+
+                window.editarPersonal = async (id) => {
+                    try {
+                        const docSnap = await getDoc(doc(db, 'usuarios', id));
+                        if (!docSnap.exists()) { alert('No encontrado'); return; }
+                        const d = docSnap.data();
+
+                        document.getElementById('editPersonalId').value = id;
+                        document.getElementById('editPersonalNombre').value = d.nombre || '';
+                        document.getElementById('editPersonalDocumento').value = d.documento || '';
+                        document.getElementById('editPersonalCorreo').value = d.email || '';
+                        document.getElementById('editPersonalTelefono').value = d.telefono || '';
+                        document.getElementById('editPersonalRol').value = d.rol || 'profesor';
+                        document.getElementById('editPersonalActivo').value = d.activo ? 'true' : 'false';
+
+                        document.getElementById('modalEditarPersonal').classList.add('show');
+                    } catch (e) {
+                        alert('Error: ' + e.message);
                     }
                 };
             } catch (e) {
@@ -2313,9 +2761,38 @@
             document.getElementById('personalAlertText').textContent = message;
         }
 
-        // =============================================
-        // GRADOS
-        // =============================================
+        document.getElementById('formEditarPersonal')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const id = document.getElementById('editPersonalId').value;
+            const nombre = document.getElementById('editPersonalNombre').value.trim();
+            const documento = document.getElementById('editPersonalDocumento').value.trim();
+            const telefono = document.getElementById('editPersonalTelefono').value.trim();
+            const rol = document.getElementById('editPersonalRol').value;
+            const activo = document.getElementById('editPersonalActivo').value === 'true';
+
+            if (!nombre) { alert('Completa el nombre'); return; }
+
+            try {
+                await updateDoc(doc(db, 'usuarios', id), {
+                    nombre, documento, telefono, rol, activo,
+                    fechaActualizacion: serverTimestamp()
+                });
+                alert('✅ Personal actualizado');
+                document.getElementById('modalEditarPersonal').classList.remove('show');
+                cargarPersonal();
+                cargarDashboard();
+            } catch (error) {
+                alert('❌ ' + error.message);
+            }
+        });
+
+        document.getElementById('closeEditarPersonalModal')?.addEventListener('click', () => {
+            document.getElementById('modalEditarPersonal').classList.remove('show');
+        });
+        document.getElementById('cancelEditarPersonalModal')?.addEventListener('click', () => {
+            document.getElementById('modalEditarPersonal').classList.remove('show');
+        });
+
         async function cargarGrados() {
             const tbody = document.getElementById('tablaGrados');
             try {
@@ -2376,9 +2853,6 @@
             cargarDashboard();
         });
 
-        // =============================================
-        // CURSOS
-        // =============================================
         async function cargarCursos() {
             const tbody = document.getElementById('tablaCursos');
             try {
@@ -2452,9 +2926,6 @@
             cargarDashboard();
         });
 
-        // =============================================
-        // ASIGNATURAS
-        // =============================================
         async function cargarAsignaturas() {
             const tbody = document.getElementById('tablaAsignaturas');
             try {
@@ -2515,9 +2986,6 @@
             cargarDashboard();
         });
 
-        // =============================================
-        // HORARIOS
-        // =============================================
         async function cargarHorarios() {
             const gradoSelect = document.getElementById('horarioGrado');
             const snap = await getDocs(collection(db, 'colegios', colegioId, 'grados'));
@@ -2632,9 +3100,6 @@
             document.getElementById('btnCargarHorario').click();
         });
 
-        // =============================================
-        // FILTROS NOTAS / BOLETINES
-        // =============================================
         async function cargarFiltrosNotas() {
             await cargarFiltros('filtroGradoNotas', 'filtroCursoNotas', 'filtroEstudianteNotas');
         }
@@ -2793,15 +3258,12 @@
             } catch (e) { alert('Error al generar boletín'); }
         });
 
-        // =============================================
-        // PENSIONES
-        // =============================================
         async function cargarPensiones() {
             const tbody = document.getElementById('tablaPensiones');
             try {
                 const snap = await getDocs(collection(db, 'colegios', colegioId, 'pensiones'));
                 if (snap.empty) {
-                    tbody.innerHTML = `<tr><td colspan="8" class="text-center text-muted">No hay pensiones</td></tr>`;
+                    tbody.innerHTML = `<tr><td colspan="9" class="text-center text-muted">No hay pensiones registradas</td></tr>`;
                     return;
                 }
                 let html = '';
@@ -2812,8 +3274,8 @@
                     const est = estDoc.data() || {};
                     const valor = Number(p.valorPension) || 0;
                     const abonado = Number(p.totalAbonado) || 0;
-                    const saldo = valor - abonado;
-                    const estado = abonado >= valor ? 'pagado' : (abonado > 0 ? 'abonado' : 'pendiente');
+                    const saldo = Math.max(0, valor - abonado);
+                    const estado = saldo === 0 && valor > 0 ? 'pagado' : (abonado > 0 ? 'abonado' : 'pendiente');
                     const clase = estado === 'pagado' ? 'badge-success' : estado === 'abonado' ? 'badge-warning' : 'badge-danger';
 
                     html += `
@@ -2822,22 +3284,321 @@
                             <td>${est.nombres || ''} ${est.apellidos || ''}</td>
                             <td>${MESES[(p.mes || 1) - 1] || '-'}</td>
                             <td>${p.anio || '-'}</td>
-                            <td>$${valor.toLocaleString('es-CO')}</td>
-                            <td>$${abonado.toLocaleString('es-CO')}</td>
-                            <td>$${saldo.toLocaleString('es-CO')}</td>
+                            <td>${formatearPrecio(valor)}</td>
+                            <td style="color: var(--success); font-weight: 600;">${formatearPrecio(abonado)}</td>
+                            <td style="color: var(--danger); font-weight: 600;">${formatearPrecio(saldo)}</td>
                             <td><span class="badge ${clase}">${estado}</span></td>
+                            <td>
+                                <button class="btn-success btn-sm" onclick="window.abonarPension('${docSnap.id}')" title="Abonar">
+                                    <i class="fas fa-money-bill"></i>
+                                </button>
+                                <button class="btn-warning btn-sm" onclick="window.editarPension('${docSnap.id}')" title="Editar">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-danger btn-sm" onclick="window.eliminarPension('${docSnap.id}')" title="Eliminar">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
                         </tr>
                     `;
                 }
                 tbody.innerHTML = html;
-            } catch (e) { tbody.innerHTML = `<tr><td colspan="8" class="text-center text-danger">Error</td></tr>`; }
+
+                window.eliminarPension = async (id) => {
+                    if (confirm('¿Eliminar esta pensión?')) {
+                        await deleteDoc(doc(db, 'colegios', colegioId, 'pensiones', id));
+                        cargarPensiones();
+                    }
+                };
+
+                window.editarPension = async (id) => {
+                    try {
+                        const pensionDoc = await getDoc(doc(db, 'colegios', colegioId, 'pensiones', id));
+                        if (!pensionDoc.exists()) { alert('No encontrada'); return; }
+                        const p = pensionDoc.data();
+                        const estDoc = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', p.estudianteId));
+                        const est = estDoc.data() || {};
+
+                        pensionEditActual = {
+                            id,
+                            estudianteId: p.estudianteId,
+                            mes: p.mes,
+                            anio: p.anio,
+                            valorOriginal: Number(p.valorPension) || 0,
+                            abonadoOriginal: Number(p.totalAbonado) || 0,
+                            estudianteNombre: `${est.nombres || ''} ${est.apellidos || ''}`
+                        };
+
+                        document.getElementById('editPensionId').value = id;
+                        document.getElementById('editPensionEstudianteId').value = p.estudianteId;
+                        document.getElementById('editPensionEstudianteNombre').textContent =
+                            pensionEditActual.estudianteNombre;
+                        document.getElementById('editPensionMesAnio').textContent =
+                            `${MESES[(p.mes || 1) - 1]} ${p.anio || ''}`;
+                        document.getElementById('editPensionValor').value = p.valorPension || 0;
+                        document.getElementById('editPensionAbonado').value = p.totalAbonado || 0;
+                        document.getElementById('editPensionAviso').style.display = 'none';
+                        actualizarSaldoEditarPension();
+
+                        document.getElementById('modalEditarPension').classList.add('show');
+                    } catch (e) {
+                        alert('Error: ' + e.message);
+                    }
+                };
+
+                window.abonarPension = async (id) => {
+                    try {
+                        const pensionDoc = await getDoc(doc(db, 'colegios', colegioId, 'pensiones', id));
+                        if (!pensionDoc.exists()) { alert('No encontrada'); return; }
+                        const p = pensionDoc.data();
+                        const estDoc = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', p.estudianteId));
+                        const est = estDoc.data() || {};
+
+                        const valor = Number(p.valorPension) || 0;
+                        const abonado = Number(p.totalAbonado) || 0;
+                        const saldo = Math.max(0, valor - abonado);
+
+                        if (saldo === 0) {
+                            alert('✅ Esta pensión ya está pagada completamente.');
+                            return;
+                        }
+
+                        document.getElementById('abonarPensionId').value = id;
+                        document.getElementById('abonarPensionEstudianteId').value = p.estudianteId;
+                        document.getElementById('abonarPensionEstudianteNombre').textContent =
+                            `${est.nombres || ''} ${est.apellidos || ''}`;
+                        document.getElementById('abonarPensionMesAnio').textContent =
+                            `${MESES[(p.mes || 1) - 1]} ${p.anio || ''}`;
+                        document.getElementById('abonarPensionValorTotal').textContent = formatearPrecio(valor);
+                        document.getElementById('abonarPensionYaAbonado').textContent = formatearPrecio(abonado);
+                        document.getElementById('abonarPensionSaldo').textContent = formatearPrecio(saldo);
+                        document.getElementById('abonarPensionMonto').value = '';
+                        document.getElementById('abonarPensionMonto').max = saldo;
+                        document.getElementById('abonarPensionMetodo').value = 'Efectivo';
+                        document.getElementById('abonarPensionReferencia').value = '';
+                        document.getElementById('abonarPensionFecha').value = new Date().toISOString().split('T')[0];
+                        document.getElementById('abonarPensionNuevoSaldo').textContent = formatearPrecio(saldo);
+                        document.getElementById('abonarPensionAlert').className = 'alert';
+
+                        document.getElementById('modalAbonarPension').classList.add('show');
+                    } catch (e) {
+                        alert('Error: ' + e.message);
+                    }
+                };
+
+            } catch (e) {
+                console.error(e);
+                tbody.innerHTML = `<tr><td colspan="9" class="text-center text-danger">Error</td></tr>`;
+            }
         }
+
+        function actualizarSaldoEditarPension() {
+            const valor = parseFloat(document.getElementById('editPensionValor').value) || 0;
+            const abonado = parseFloat(document.getElementById('editPensionAbonado').value) || 0;
+            const saldo = Math.max(0, valor - abonado);
+            document.getElementById('editPensionSaldo').textContent = formatearPrecio(saldo);
+            document.getElementById('editPensionSaldo').style.color = saldo === 0 ? 'var(--success)' : 'var(--danger)';
+
+            // Aviso si aumentó el abonado (se registrará el pago)
+            if (pensionEditActual) {
+                const diferencia = abonado - pensionEditActual.abonadoOriginal;
+                const aviso = document.getElementById('editPensionAviso');
+                const avisoTexto = document.getElementById('editPensionAvisoTexto');
+                if (diferencia > 0) {
+                    aviso.style.display = 'block';
+                    aviso.style.background = '#dcfce7';
+                    aviso.style.color = '#166534';
+                    avisoTexto.textContent = `Se registrará un nuevo pago de ${formatearPrecio(diferencia)} en contabilidad.`;
+                } else if (diferencia < 0) {
+                    aviso.style.display = 'block';
+                    aviso.style.background = '#fef3c7';
+                    aviso.style.color = '#92400e';
+                    avisoTexto.textContent = `Estás reduciendo el abonado en ${formatearPrecio(Math.abs(diferencia))}. No generará movimiento.`;
+                } else {
+                    aviso.style.display = 'none';
+                }
+            }
+        }
+        document.getElementById('editPensionValor')?.addEventListener('input', actualizarSaldoEditarPension);
+        document.getElementById('editPensionAbonado')?.addEventListener('input', actualizarSaldoEditarPension);
+
+        // =============================================
+        // EDITAR PENSIÓN - CON REGISTRO DE PAGO SI AUMENTA EL ABONADO
+        // =============================================
+        document.getElementById('formEditarPension')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const id = document.getElementById('editPensionId').value;
+            const valor = parseFloat(document.getElementById('editPensionValor').value) || 0;
+            const abonado = parseFloat(document.getElementById('editPensionAbonado').value) || 0;
+
+            if (!id) return;
+            if (abonado > valor) {
+                alert('⚠️ El abonado no puede superar el valor de la pensión.');
+                return;
+            }
+
+            // Confirmar si reduce el abonado
+            if (pensionEditActual && abonado < pensionEditActual.abonadoOriginal) {
+                const dif = pensionEditActual.abonadoOriginal - abonado;
+                if (!confirm(`⚠️ Estás reduciendo el abonado en ${formatearPrecio(dif)}. Esto NO genera un movimiento de ajuste. ¿Continuar?`)) {
+                    return;
+                }
+            }
+
+            try {
+                // 1. Calcular diferencia
+                const abonadoAnterior = pensionEditActual?.abonadoOriginal || 0;
+                const diferencia = abonado - abonadoAnterior;
+
+                // 2. Actualizar pensión
+                await updateDoc(doc(db, 'colegios', colegioId, 'pensiones', id), {
+                    valorPension: valor,
+                    totalAbonado: abonado,
+                    fechaActualizacion: serverTimestamp()
+                });
+
+                // 3. Si aumentó el abonado, registrar como pago + movimiento
+                if (diferencia > 0) {
+                    const estudianteId = pensionEditActual.estudianteId;
+                    const estudianteNombre = pensionEditActual.estudianteNombre;
+                    const hoy = new Date().toISOString().split('T')[0];
+
+                    await addDoc(collection(db, 'colegios', colegioId, 'pagos_pensiones'), {
+                        estudianteId,
+                        mes: pensionEditActual.mes,
+                        anio: pensionEditActual.anio,
+                        monto: diferencia,
+                        metodo: 'Ajuste',
+                        referencia: 'Ajuste por edición manual',
+                        fecha: hoy,
+                        creadoPor: auth.currentUser?.uid || '',
+                        fechaCreacion: serverTimestamp()
+                    });
+
+                    await addDoc(collection(db, 'colegios', colegioId, 'movimientos'), {
+                        tipo: 'ingreso',
+                        categoria: 'Pensión',
+                        descripcion: `Ajuste pensión ${MESES[(pensionEditActual.mes || 1) - 1]} - ${estudianteNombre}`,
+                        monto: diferencia,
+                        metodo: 'Ajuste',
+                        referencia: 'Ajuste por edición manual',
+                        fecha: hoy,
+                        estudianteId,
+                        estudianteNombre,
+                        creadoPor: auth.currentUser?.uid || '',
+                        fechaCreacion: serverTimestamp()
+                    });
+                }
+
+                alert('✅ Pensión actualizada' + (diferencia > 0 ? ` y pago de ${formatearPrecio(diferencia)} registrado` : ''));
+                document.getElementById('modalEditarPension').classList.remove('show');
+                cargarPensiones();
+                cargarContabilidad();
+            } catch (err) {
+                alert('❌ ' + err.message);
+            }
+        });
+
+        document.getElementById('closeEditarPensionModal')?.addEventListener('click', () => {
+            document.getElementById('modalEditarPension').classList.remove('show');
+        });
+        document.getElementById('cancelEditarPensionModal')?.addEventListener('click', () => {
+            document.getElementById('modalEditarPension').classList.remove('show');
+        });
+
+        document.getElementById('abonarPensionMonto')?.addEventListener('input', () => {
+            const valor = parseFloat(document.getElementById('abonarPensionValorTotal').textContent.replace(/[^0-9]/g, '')) || 0;
+            const abonado = parseFloat(document.getElementById('abonarPensionYaAbonado').textContent.replace(/[^0-9]/g, '')) || 0;
+            const monto = parseFloat(document.getElementById('abonarPensionMonto').value) || 0;
+            const nuevoSaldo = Math.max(0, valor - abonado - monto);
+            document.getElementById('abonarPensionNuevoSaldo').textContent = formatearPrecio(nuevoSaldo);
+            document.getElementById('abonarPensionNuevoSaldo').style.color = nuevoSaldo === 0 ? 'var(--success)' : 'var(--primary)';
+        });
+
+        document.getElementById('closeAbonarPensionModal')?.addEventListener('click', () => {
+            document.getElementById('modalAbonarPension').classList.remove('show');
+        });
+        document.getElementById('cancelAbonarPensionModal')?.addEventListener('click', () => {
+            document.getElementById('modalAbonarPension').classList.remove('show');
+        });
+
+        document.getElementById('formAbonarPension')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const pensionId = document.getElementById('abonarPensionId').value;
+            const estudianteId = document.getElementById('abonarPensionEstudianteId').value;
+            const monto = parseFloat(document.getElementById('abonarPensionMonto').value);
+            const metodo = document.getElementById('abonarPensionMetodo').value;
+            const referencia = document.getElementById('abonarPensionReferencia').value.trim();
+            const fecha = document.getElementById('abonarPensionFecha').value;
+
+            if (!pensionId || !estudianteId || !monto || monto <= 0) {
+                alert('Ingresa un monto válido');
+                return;
+            }
+
+            try {
+                const pensionDoc = await getDoc(doc(db, 'colegios', colegioId, 'pensiones', pensionId));
+                if (!pensionDoc.exists()) { alert('No encontrada'); return; }
+                const p = pensionDoc.data();
+                const valor = Number(p.valorPension) || 0;
+                const abonadoActual = Number(p.totalAbonado) || 0;
+                const saldoActual = Math.max(0, valor - abonadoActual);
+
+                if (monto > saldoActual) {
+                    alert(`⚠️ El monto (${formatearPrecio(monto)}) supera el saldo pendiente (${formatearPrecio(saldoActual)}).`);
+                    return;
+                }
+
+                const nuevoAbonado = abonadoActual + monto;
+                await updateDoc(doc(db, 'colegios', colegioId, 'pensiones', pensionId), {
+                    totalAbonado: nuevoAbonado,
+                    fechaActualizacion: serverTimestamp()
+                });
+
+                const estDoc = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', estudianteId));
+                const est = estDoc.data() || {};
+
+                await addDoc(collection(db, 'colegios', colegioId, 'pagos_pensiones'), {
+                    estudianteId,
+                    mes: p.mes,
+                    anio: p.anio,
+                    monto,
+                    metodo,
+                    referencia: referencia || '',
+                    fecha,
+                    creadoPor: auth.currentUser?.uid || '',
+                    fechaCreacion: serverTimestamp()
+                });
+
+                await addDoc(collection(db, 'colegios', colegioId, 'movimientos'), {
+                    tipo: 'ingreso',
+                    categoria: 'Pensión',
+                    descripcion: `Abono pensión ${MESES[(p.mes || 1) - 1]} - ${est.nombres || ''} ${est.apellidos || ''}`,
+                    monto,
+                    metodo,
+                    referencia: referencia || '',
+                    fecha,
+                    estudianteId,
+                    estudianteNombre: `${est.nombres || ''} ${est.apellidos || ''}`,
+                    creadoPor: auth.currentUser?.uid || '',
+                    fechaCreacion: serverTimestamp()
+                });
+
+                alert(`✅ Abono de ${formatearPrecio(monto)} registrado`);
+                document.getElementById('modalAbonarPension').classList.remove('show');
+                cargarPensiones();
+                cargarContabilidad();
+            } catch (error) {
+                alert('❌ ' + error.message);
+            }
+        });
 
         document.getElementById('btnRegistrarPagoPension')?.addEventListener('click', async () => {
             document.getElementById('modalPagoPension').classList.add('show');
             document.getElementById('formPagoPension').reset();
             document.getElementById('pagoAnio').value = new Date().getFullYear();
             document.getElementById('pagoFecha').value = new Date().toISOString().split('T')[0];
+            document.getElementById('pensionAlert').className = 'alert';
 
             const mesSelect = document.getElementById('pagoMes');
             mesSelect.innerHTML = '<option value="">Seleccionar</option>';
@@ -2853,11 +3614,56 @@
                 estSelect.innerHTML += `<option value="${doc.id}">${d.nombres || ''} ${d.apellidos || ''}</option>`;
             });
         });
+
         document.getElementById('closePagoPensionModal')?.addEventListener('click', () => {
             document.getElementById('modalPagoPension').classList.remove('show');
         });
         document.getElementById('cancelPagoPensionModal')?.addEventListener('click', () => {
             document.getElementById('modalPagoPension').classList.remove('show');
+        });
+
+        async function actualizarInfoPension() {
+            const estudianteId = document.getElementById('pagoEstudiante').value;
+            const mes = parseInt(document.getElementById('pagoMes').value);
+            const anio = parseInt(document.getElementById('pagoAnio').value);
+            let valor = parseFloat(document.getElementById('pensionValorInput').value) || 0;
+            let abonado = 0;
+
+            if (estudianteId && mes && anio) {
+                const q = query(collection(db, 'colegios', colegioId, 'pensiones'),
+                    where('estudianteId', '==', estudianteId),
+                    where('mes', '==', mes),
+                    where('anio', '==', anio));
+                const snap = await getDocs(q);
+                if (!snap.empty) {
+                    const p = snap.docs[0].data();
+                    abonado = Number(p.totalAbonado) || 0;
+                    if (!valor) {
+                        valor = Number(p.valorPension) || 0;
+                        document.getElementById('pensionValorInput').value = valor;
+                    }
+                }
+            }
+
+            const saldo = Math.max(0, valor - abonado);
+            document.getElementById('pensionValorTotal').textContent = formatearPrecio(valor);
+            document.getElementById('pensionYaAbonado').textContent = formatearPrecio(abonado);
+            document.getElementById('pensionSaldoPendiente').textContent = formatearPrecio(saldo);
+            document.getElementById('pensionNuevoSaldo').textContent = formatearPrecio(saldo);
+        }
+
+        document.getElementById('pagoEstudiante')?.addEventListener('change', actualizarInfoPension);
+        document.getElementById('pagoMes')?.addEventListener('change', actualizarInfoPension);
+        document.getElementById('pagoAnio')?.addEventListener('change', actualizarInfoPension);
+        document.getElementById('pensionValorInput')?.addEventListener('input', actualizarInfoPension);
+
+        document.getElementById('pagoMonto')?.addEventListener('input', () => {
+            const saldoTexto = document.getElementById('pensionSaldoPendiente').textContent;
+            const saldo = parseFloat(saldoTexto.replace(/[^0-9]/g, '')) || 0;
+            const monto = parseFloat(document.getElementById('pagoMonto').value) || 0;
+            const nuevo = Math.max(0, saldo - monto);
+            document.getElementById('pensionNuevoSaldo').textContent = formatearPrecio(nuevo);
+            document.getElementById('pensionNuevoSaldo').style.color = nuevo === 0 ? 'var(--success)' : 'var(--primary)';
         });
 
         document.getElementById('formPagoPension')?.addEventListener('submit', async (e) => {
@@ -2869,62 +3675,85 @@
             const metodo = document.getElementById('pagoMetodo').value;
             const referencia = document.getElementById('pagoReferencia').value.trim();
             const fecha = document.getElementById('pagoFecha').value;
+            const valorPension = parseFloat(document.getElementById('pensionValorInput').value) || 0;
 
-            if (!estudianteId || !mes || !anio || !monto || !fecha) { alert('Completa campos'); return; }
+            if (!estudianteId || !mes || !anio || !monto || !fecha) {
+                const a = document.getElementById('pensionAlert');
+                a.className = 'alert alert-error show';
+                document.getElementById('pensionAlertText').textContent = 'Completa todos los campos';
+                return;
+            }
 
             const estDoc = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', estudianteId));
             const est = estDoc.data() || {};
 
-            await addDoc(collection(db, 'colegios', colegioId, 'pagos_pensiones'), {
-                estudianteId, mes, anio, monto, metodo, referencia, fecha,
-                creadoPor: auth.currentUser?.uid || '',
-                fechaCreacion: serverTimestamp()
-            });
-
-            // Movimiento
-            await addDoc(collection(db, 'colegios', colegioId, 'movimientos'), {
-                tipo: 'ingreso',
-                categoria: 'Pensión',
-                descripcion: `Pago pensión ${MESES[mes - 1]} - ${est.nombres || ''} ${est.apellidos || ''}`,
-                monto,
-                metodo,
-                referencia: referencia || '',
-                fecha,
-                estudianteId,
-                estudianteNombre: `${est.nombres || ''} ${est.apellidos || ''}`,
-                creadoPor: auth.currentUser?.uid || '',
-                fechaCreacion: serverTimestamp()
-            });
-
-            // Actualizar pensión del mes
             const q = query(collection(db, 'colegios', colegioId, 'pensiones'),
-                where('estudianteId', '==', estudianteId), where('mes', '==', mes), where('anio', '==', anio));
+                where('estudianteId', '==', estudianteId),
+                where('mes', '==', mes),
+                where('anio', '==', anio));
             const snap = await getDocs(q);
+
+            let valorFinal = valorPension;
+            let abonadoActual = 0;
+
             if (!snap.empty) {
-                const pensionDoc = snap.docs[0];
-                const p = pensionDoc.data();
-                await updateDoc(pensionDoc.ref, {
-                    totalAbonado: (Number(p.totalAbonado) || 0) + monto,
-                    fechaActualizacion: serverTimestamp()
-                });
+                const p = snap.docs[0].data();
+                valorFinal = valorPension || Number(p.valorPension) || monto;
+                abonadoActual = Number(p.totalAbonado) || 0;
             } else {
-                await addDoc(collection(db, 'colegios', colegioId, 'pensiones'), {
-                    estudianteId, mes, anio,
-                    valorPension: monto,
-                    totalAbonado: monto,
-                    fechaRegistro: serverTimestamp()
-                });
+                valorFinal = valorPension || monto;
             }
 
-            alert('✅ Pago registrado');
-            document.getElementById('modalPagoPension').classList.remove('show');
-            cargarPensiones();
-            cargarContabilidad();
+            const saldoActual = Math.max(0, valorFinal - abonadoActual);
+            if (monto > saldoActual && saldoActual > 0) {
+                alert(`⚠️ El monto (${formatearPrecio(monto)}) supera el saldo pendiente (${formatearPrecio(saldoActual)}).`);
+                return;
+            }
+
+            try {
+                await addDoc(collection(db, 'colegios', colegioId, 'pagos_pensiones'), {
+                    estudianteId, mes, anio, monto, metodo, referencia, fecha,
+                    creadoPor: auth.currentUser?.uid || '',
+                    fechaCreacion: serverTimestamp()
+                });
+
+                await addDoc(collection(db, 'colegios', colegioId, 'movimientos'), {
+                    tipo: 'ingreso',
+                    categoria: 'Pensión',
+                    descripcion: `Pago pensión ${MESES[mes - 1]} - ${est.nombres || ''} ${est.apellidos || ''}`,
+                    monto, metodo, referencia: referencia || '', fecha,
+                    estudianteId,
+                    estudianteNombre: `${est.nombres || ''} ${est.apellidos || ''}`,
+                    creadoPor: auth.currentUser?.uid || '',
+                    fechaCreacion: serverTimestamp()
+                });
+
+                if (!snap.empty) {
+                    const pensionDoc = snap.docs[0];
+                    const nuevoAbonado = abonadoActual + monto;
+                    await updateDoc(pensionDoc.ref, {
+                        valorPension: valorFinal,
+                        totalAbonado: nuevoAbonado,
+                        fechaActualizacion: serverTimestamp()
+                    });
+                } else {
+                    await addDoc(collection(db, 'colegios', colegioId, 'pensiones'), {
+                        estudianteId, mes, anio,
+                        valorPension: valorFinal,
+                        totalAbonado: monto,
+                        fechaRegistro: serverTimestamp()
+                    });
+                }
+
+                alert('✅ Pago registrado');
+                document.getElementById('modalPagoPension').classList.remove('show');
+                cargarPensiones();
+                cargarContabilidad();
+            } catch (error) {
+                alert('❌ ' + error.message);
+            }
         });
 
-        // =============================================
-        // CONTABILIDAD
-        // =============================================
         async function cargarContabilidad() {
             try {
                 const snap = await getDocs(collection(db, 'colegios', colegioId, 'movimientos'));
@@ -2934,27 +3763,41 @@
             } catch (e) {
                 console.error(e);
                 document.getElementById('tablaContabilidad').innerHTML =
-                    `<tr><td colspan="6" class="text-center text-danger">Error</td></tr>`;
+                    `<tr><td colspan="7" class="text-center text-danger">Error</td></tr>`;
             }
         }
 
         function renderContabilidad() {
-            const tipoFiltro = document.getElementById('filtroMovTipo').value;
             const catFiltro = document.getElementById('filtroMovCategoria').value;
-            const mesFiltro = document.getElementById('filtroMovMes').value; // formato YYYY-MM
+            const mesFiltro = document.getElementById('filtroMovMes').value;
+
+            const counts = {
+                todos: movimientosCache.length,
+                ingreso: movimientosCache.filter(m => m.tipo === 'ingreso').length,
+                egreso: movimientosCache.filter(m => m.tipo === 'egreso').length,
+                Matrícula: movimientosCache.filter(m => m.categoria === 'Matrícula').length,
+                Pensión: movimientosCache.filter(m => m.categoria === 'Pensión').length
+            };
+            document.getElementById('countTodos').textContent = counts.todos;
+            document.getElementById('countIngresos').textContent = counts.ingreso;
+            document.getElementById('countEgresos').textContent = counts.egreso;
+            document.getElementById('countMatriculas').textContent = counts.Matrícula;
+            document.getElementById('countPensiones').textContent = counts.Pensión;
 
             const movsFiltrados = movimientosCache.filter(m => {
-                if (tipoFiltro && m.tipo !== tipoFiltro) return false;
+                if (contTabActual === 'ingreso' && m.tipo !== 'ingreso') return false;
+                if (contTabActual === 'egreso' && m.tipo !== 'egreso') return false;
+                if (contTabActual === 'Matrícula' && m.categoria !== 'Matrícula') return false;
+                if (contTabActual === 'Pensión' && m.categoria !== 'Pensión') return false;
                 if (catFiltro && m.categoria !== catFiltro) return false;
                 if (mesFiltro && m.fecha) {
-                    const d = new Date(m.fecha);
+                    const d = new Date(m.fecha + 'T12:00:00');
                     const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
                     if (key !== mesFiltro) return false;
                 }
                 return true;
             });
 
-            // Stats
             const hoy = new Date();
             let ingresosMes = 0, egresosMes = 0, balanceTotal = 0;
             movimientosCache.forEach(m => {
@@ -2963,7 +3806,7 @@
                 else if (m.tipo === 'egreso') balanceTotal -= monto;
 
                 if (m.fecha) {
-                    const d = new Date(m.fecha);
+                    const d = new Date(m.fecha + 'T12:00:00');
                     if (d.getMonth() === hoy.getMonth() && d.getFullYear() === hoy.getFullYear()) {
                         if (m.tipo === 'ingreso') ingresosMes += monto;
                         else if (m.tipo === 'egreso') egresosMes += monto;
@@ -2971,43 +3814,64 @@
                 }
             });
 
-            document.getElementById('contIngresosMes').textContent = '$' + ingresosMes.toLocaleString('es-CO');
-            document.getElementById('contEgresosMes').textContent = '$' + egresosMes.toLocaleString('es-CO');
-            document.getElementById('contBalance').textContent = '$' + balanceTotal.toLocaleString('es-CO');
+            document.getElementById('contIngresosMes').textContent = formatearPrecio(ingresosMes);
+            document.getElementById('contEgresosMes').textContent = formatearPrecio(egresosMes);
+            document.getElementById('contBalance').textContent = formatearPrecio(balanceTotal);
             document.getElementById('contBalance').style.color = balanceTotal >= 0 ? 'var(--success)' : 'var(--danger)';
 
-            // Cartera
             cargarCarteraPendiente();
 
             const tbody = document.getElementById('tablaContabilidad');
             if (movsFiltrados.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="text-center text-muted">No hay movimientos con esos filtros</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="7" class="text-center text-muted">No hay movimientos con esos filtros</td></tr>`;
                 return;
             }
 
-            movsFiltrados.sort((a, b) => new Date(b.fecha || 0) - new Date(a.fecha || 0));
+            movsFiltrados.sort((a, b) => {
+                const fechaA = a.fechaCreacion?.toDate ? a.fechaCreacion.toDate() : new Date(a.fecha || 0);
+                const fechaB = b.fechaCreacion?.toDate ? b.fechaCreacion.toDate() : new Date(b.fecha || 0);
+                return fechaB - fechaA;
+            });
+
             let html = '';
-            movsFiltrados.slice(0, 50).forEach(m => {
+            movsFiltrados.slice(0, 100).forEach(m => {
+                const fechaHora = formatearFechaHora(m.fecha, m.fechaCreacion);
                 html += `
                     <tr>
-                        <td>${m.fecha || '-'}</td>
+                        <td style="font-size: 0.8rem;">${fechaHora}</td>
                         <td><span class="badge ${m.tipo === 'ingreso' ? 'badge-success' : 'badge-danger'}">${m.tipo === 'ingreso' ? 'Ingreso' : 'Egreso'}</span></td>
                         <td>${m.categoria || '-'}</td>
-                        <td>${m.descripcion || '-'}</td>
+                        <td>${m.descripcion || '-'}${m.referencia ? `<div style="font-size: 0.7rem; color: var(--gray-500);">Ref: ${m.referencia}</div>` : ''}</td>
                         <td>${m.metodo || '-'}</td>
                         <td class="${m.tipo === 'ingreso' ? 'mov-row-ingreso' : 'mov-row-egreso'}">
-                            ${m.tipo === 'ingreso' ? '+' : '-'} $${(Number(m.monto) || 0).toLocaleString('es-CO')}
+                            ${m.tipo === 'ingreso' ? '+' : '-'} ${formatearPrecio(m.monto)}
+                        </td>
+                        <td>
+                            <button class="btn-danger btn-sm" onclick="window.eliminarMovimiento('${m.id}')" title="Eliminar">
+                                <i class="fas fa-trash"></i>
+                            </button>
                         </td>
                     </tr>
                 `;
             });
             tbody.innerHTML = html;
+
+            window.eliminarMovimiento = async (id) => {
+                if (!confirm('¿Eliminar este movimiento? Esta acción no se puede deshacer.')) return;
+                try {
+                    await deleteDoc(doc(db, 'colegios', colegioId, 'movimientos', id));
+                    cargarContabilidad();
+                } catch (e) {
+                    alert('❌ ' + e.message);
+                }
+            };
         }
 
         async function cargarCarteraPendiente() {
             try {
-                const penSnap = await getDocs(collection(db, 'colegios', colegioId, 'pensiones'));
                 let cartera = 0;
+
+                const penSnap = await getDocs(collection(db, 'colegios', colegioId, 'pensiones'));
                 penSnap.forEach(doc => {
                     const p = doc.data();
                     const valor = Number(p.valorPension) || 0;
@@ -3023,48 +3887,22 @@
                     cartera += Math.max(0, valor - abonado);
                 });
 
-                document.getElementById('contCartera').textContent = '$' + cartera.toLocaleString('es-CO');
+                document.getElementById('contCartera').textContent = formatearPrecio(cartera);
             } catch (e) { console.warn(e); }
         }
 
-        document.getElementById('filtroMovTipo')?.addEventListener('change', renderContabilidad);
+        document.querySelectorAll('.cont-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.cont-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                contTabActual = tab.dataset.tab;
+                renderContabilidad();
+            });
+        });
+
         document.getElementById('filtroMovCategoria')?.addEventListener('change', renderContabilidad);
         document.getElementById('filtroMovMes')?.addEventListener('change', renderContabilidad);
 
-        // Ver todos los movimientos
-        document.getElementById('btnVerTodosMovimientos')?.addEventListener('click', () => {
-            const tbody = document.getElementById('tablaTodosMovimientos');
-            if (movimientosCache.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="text-center text-muted">No hay movimientos</td></tr>`;
-            } else {
-                const sorted = [...movimientosCache].sort((a, b) => new Date(b.fecha || 0) - new Date(a.fecha || 0));
-                let html = '';
-                sorted.slice(0, 200).forEach(m => {
-                    html += `
-                        <tr>
-                            <td>${m.fecha || '-'}</td>
-                            <td><span class="badge ${m.tipo === 'ingreso' ? 'badge-success' : 'badge-danger'}">${m.tipo === 'ingreso' ? 'Ingreso' : 'Egreso'}</span></td>
-                            <td>${m.categoria || '-'}</td>
-                            <td>${m.descripcion || '-'}</td>
-                            <td>${m.metodo || '-'}</td>
-                            <td class="${m.tipo === 'ingreso' ? 'mov-row-ingreso' : 'mov-row-egreso'}">
-                                ${m.tipo === 'ingreso' ? '+' : '-'} $${(Number(m.monto) || 0).toLocaleString('es-CO')}
-                            </td>
-                        </tr>
-                    `;
-                });
-                tbody.innerHTML = html;
-            }
-            document.getElementById('modalVerMovimientos').classList.add('show');
-        });
-        document.getElementById('closeVerMovimientosModal')?.addEventListener('click', () => {
-            document.getElementById('modalVerMovimientos').classList.remove('show');
-        });
-        document.getElementById('closeVerMovimientosBtn')?.addEventListener('click', () => {
-            document.getElementById('modalVerMovimientos').classList.remove('show');
-        });
-
-        // Agregar movimiento
         document.getElementById('btnAgregarMovimiento')?.addEventListener('click', () => {
             document.getElementById('modalAgregarMovimiento').classList.add('show');
             document.getElementById('formAgregarMovimiento').reset();
@@ -3088,9 +3926,7 @@
             const descripcion = document.getElementById('movDescripcion').value.trim();
 
             if (!tipo || !categoria || !monto || !fecha || !descripcion) {
-                const alertEl = document.getElementById('movAlert');
-                alertEl.className = 'alert alert-error show';
-                document.getElementById('movAlertText').textContent = 'Completa los campos obligatorios';
+                alert('Completa los campos obligatorios');
                 return;
             }
 
@@ -3108,11 +3944,7 @@
             }
         });
 
-        // =============================================
-        // AUTH
-        // =============================================
         onAuthStateChanged(auth, async (user) => {
-            if (isCreatingAccount) return;
             if (authCheckInProgress) return;
             authCheckInProgress = true;
             if (isLoggingOut) { authCheckInProgress = false; return; }

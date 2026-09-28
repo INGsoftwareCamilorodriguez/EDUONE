@@ -1,0 +1,1586 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>EduOne - Panel del Contador</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            /* Estas variables se sobrescriben dinámicamente con el colorPrimario del colegio */
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --primary-light: #818cf8;
+            --primary-bg: #eef2ff;
+
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+
+            --sidebar-bg: #1E293B;
+            --sidebar-text: #CBD5E1;
+            --sidebar-active: #4f46e5;
+            --sidebar-hover: #334155;
+
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e1;
+            --gray-400: #94a3b8;
+            --gray-500: #64748b;
+            --gray-600: #475569;
+            --gray-700: #334155;
+            --gray-800: #1e293b;
+            --gray-900: #0f172a;
+
+            --sidebar-width: 280px;
+            --sidebar-collapsed: 80px;
+            --header-height: 70px;
+            --radius: 12px;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 4px 24px rgba(0, 0, 0, 0.10);
+            --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        html { font-size: 16px; }
+
+        body {
+            font-family: var(--font);
+            background-color: var(--gray-100);
+            color: var(--gray-800);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
+            overflow-wrap: break-word;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; padding: 0; }
+
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: var(--gray-100); }
+        ::-webkit-scrollbar-thumb { background: var(--gray-300); border-radius: 8px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--gray-400); }
+
+        .text-center { text-align: center; }
+        .text-muted { color: var(--gray-500); }
+        .text-success { color: var(--success); }
+        .text-danger { color: var(--danger); }
+        .text-warning { color: var(--warning); }
+
+        /* ================ BOTONES ================ */
+        .btn-primary {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 10px 20px; background: var(--primary); color: #fff;
+            border: none; border-radius: 8px; font-size: 0.9rem; font-weight: 600;
+            font-family: var(--font); cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+        }
+        .btn-primary:hover { background: var(--primary-dark); }
+        .btn-primary:active { transform: scale(0.97); }
+        .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        .btn-secondary {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 10px 20px; background: var(--gray-200); color: var(--gray-700);
+            border: none; border-radius: 8px; font-size: 0.9rem; font-weight: 600;
+            font-family: var(--font); cursor: pointer;
+        }
+        .btn-secondary:hover { background: var(--gray-300); }
+
+        .btn-success {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 8px 14px; background: var(--success); color: #fff;
+            border: none; border-radius: 6px; font-size: 0.8rem; font-weight: 500;
+            font-family: var(--font); cursor: pointer;
+        }
+        .btn-success:hover { background: #16a34a; }
+
+        .btn-danger {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 8px 14px; background: var(--danger); color: #fff;
+            border: none; border-radius: 6px; font-size: 0.8rem; font-weight: 500;
+            font-family: var(--font); cursor: pointer;
+        }
+        .btn-danger:hover { background: #dc2626; }
+
+        .btn-info {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 8px 14px; background: var(--info); color: #fff;
+            border: none; border-radius: 6px; font-size: 0.8rem; font-weight: 500;
+            font-family: var(--font); cursor: pointer;
+        }
+        .btn-info:hover { background: #0369A1; }
+
+        .btn-warning {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 8px 14px; background: var(--warning); color: #fff;
+            border: none; border-radius: 6px; font-size: 0.8rem; font-weight: 500;
+            font-family: var(--font); cursor: pointer;
+        }
+        .btn-warning:hover { background: #d97706; }
+
+        .btn-sm { padding: 6px 12px; font-size: 0.75rem; border-radius: 6px; }
+
+        /* ================ BADGES ================ */
+        .badge {
+            display: inline-block; padding: 4px 12px; border-radius: 50px;
+            font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .badge-success { background: #dcfce7; color: #166534; }
+        .badge-danger { background: #fecaca; color: #991b1b; }
+        .badge-warning { background: #fef3c7; color: #92400e; }
+        .badge-info { background: #dbeafe; color: #1e40af; }
+        .badge-gray { background: var(--gray-200); color: var(--gray-600); }
+
+        /* ================ CARDS ================ */
+        .card {
+            background: #fff; border-radius: var(--radius);
+            box-shadow: var(--shadow); overflow: hidden; margin-bottom: 24px;
+        }
+        .card-header {
+            padding: 18px 22px; border-bottom: 1px solid var(--gray-200);
+            display: flex; justify-content: space-between; align-items: center;
+            flex-wrap: wrap; gap: 8px;
+        }
+        .card-header h2 { font-size: 1.05rem; font-weight: 600; color: var(--gray-800); }
+        .card-body { padding: 22px; }
+
+        /* ================ TABLAS ================ */
+        .table-responsive { overflow-x: auto; }
+        .table-modern { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+        .table-modern thead th {
+            background: var(--primary-bg); color: var(--gray-600);
+            font-weight: 600; font-size: 0.72rem; text-transform: uppercase;
+            letter-spacing: 0.5px; padding: 12px 16px; text-align: left;
+            border-bottom: 2px solid var(--gray-200);
+        }
+        .table-modern tbody td {
+            padding: 12px 16px; border-bottom: 1px solid var(--gray-200);
+            vertical-align: middle;
+        }
+        .table-modern tbody tr:nth-child(even) { background: #FAFAFA; }
+        .table-modern tbody tr:hover { background: var(--gray-50); }
+        .table-modern tbody tr:last-child td { border-bottom: none; }
+
+        /* ================ FORM ================ */
+        .form-group { margin-bottom: 18px; }
+        .form-group label {
+            display: block; font-weight: 500; font-size: 0.85rem;
+            color: var(--gray-700); margin-bottom: 4px;
+        }
+        .form-control {
+            width: 100%; padding: 10px 14px;
+            border: 1.5px solid var(--gray-200); border-radius: 8px;
+            font-size: 0.9rem; font-family: var(--font);
+            transition: border-color 0.2s, box-shadow 0.2s;
+            background: #fff; color: var(--gray-800);
+        }
+        .form-control:focus {
+            outline: none; border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+        }
+        select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23475569' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-position: right 14px center;
+            padding-right: 36px;
+        }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+        /* ================ MODAL ================ */
+        .modal { display: none; position: fixed; inset: 0; z-index: 9999; align-items: center; justify-content: center; }
+        .modal.show { display: flex; }
+        .modal-overlay { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); }
+        .modal-content {
+            position: relative; background: #fff; border-radius: var(--radius);
+            max-width: 720px; width: 94%; max-height: 90vh; overflow-y: auto;
+            box-shadow: var(--shadow-lg); animation: modalFade 0.25s ease;
+        }
+        @keyframes modalFade {
+            from { opacity: 0; transform: scale(0.95) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .modal-header {
+            padding: 20px 24px; border-bottom: 1px solid var(--gray-200);
+            display: flex; justify-content: space-between; align-items: center;
+            position: sticky; top: 0; background: #fff; z-index: 1;
+        }
+        .modal-header h2 { font-size: 1.1rem; font-weight: 600; }
+        .modal-close {
+            background: none; border: none; font-size: 1.8rem;
+            color: var(--gray-400); cursor: pointer; padding: 0 6px;
+            line-height: 1; transition: color 0.2s;
+        }
+        .modal-close:hover { color: var(--gray-700); }
+        .modal-body { padding: 22px; }
+        .modal-footer {
+            padding: 16px 22px; border-top: 1px solid var(--gray-200);
+            display: flex; justify-content: flex-end; gap: 12px; flex-wrap: wrap;
+        }
+
+        .alert {
+            padding: 12px 16px; border-radius: 10px; font-size: 0.9rem;
+            margin-bottom: 16px; display: none;
+        }
+        .alert.show { display: block; }
+        .alert-error { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+        .alert-success { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
+        .alert-info { background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; }
+
+        /* ================ SIDEBAR ================ */
+        .sidebar {
+            width: var(--sidebar-width); height: 100vh;
+            background: var(--sidebar-bg);
+            display: flex; flex-direction: column;
+            position: fixed; top: 0; left: 0; flex-shrink: 0;
+            transition: transform var(--transition), width var(--transition), background var(--transition);
+            z-index: 1000; overflow: hidden;
+        }
+        .sidebar.closed { transform: translateX(-100%); }
+        .sidebar.collapsed { width: var(--sidebar-collapsed); }
+        .sidebar.collapsed .logo span,
+        .sidebar.collapsed .sidebar-nav ul li a span,
+        .sidebar.collapsed .sidebar-nav .nav-section,
+        .sidebar.collapsed .colegio-info-text,
+        .sidebar.collapsed .btn-logout span { display: none; }
+        .sidebar.collapsed .sidebar-nav ul li a { justify-content: center; padding: 12px; }
+        .sidebar.collapsed .sidebar-nav ul li a i { margin: 0; font-size: 1.3rem; }
+        .sidebar.collapsed .btn-logout { justify-content: center; padding: 12px; }
+        .sidebar.collapsed .sidebar-colegio { padding: 12px 8px; justify-content: center; }
+
+        .sidebar-header {
+            padding: 16px 18px; border-bottom: 1px solid rgba(255,255,255,0.08);
+            display: flex; align-items: center; justify-content: space-between;
+            min-height: var(--header-height); flex-shrink: 0;
+        }
+        .sidebar-header .logo {
+            display: flex; align-items: center; gap: 10px;
+            font-weight: 700; font-size: 1.15rem; color: #FFFFFF;
+            white-space: nowrap;
+        }
+        .sidebar-header .logo i {
+            color: #FFFFFF; font-size: 1.3rem;
+            background: rgba(255,255,255,0.12);
+            width: 34px; height: 34px;
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        .sidebar-toggle {
+            background: none; border: none; font-size: 1.1rem;
+            color: rgba(255,255,255,0.7); cursor: pointer;
+            padding: 4px 8px; border-radius: 6px;
+            transition: background 0.2s;
+        }
+        .sidebar-toggle:hover { background: rgba(255,255,255,0.1); }
+
+        .sidebar-close-mobile {
+            display: none; background: none; border: none; font-size: 1.4rem;
+            color: rgba(255,255,255,0.7); cursor: pointer; padding: 4px 8px;
+        }
+
+        .sidebar-colegio {
+            padding: 12px 18px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            flex-shrink: 0;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .sidebar-colegio .colegio-logo {
+            width: 34px; height: 34px; border-radius: 8px;
+            object-fit: cover; background: #fff; padding: 2px;
+            flex-shrink: 0;
+        }
+        .sidebar-colegio .colegio-logo-placeholder {
+            width: 34px; height: 34px; border-radius: 8px;
+            background: rgba(255,255,255,0.15); color: #fff;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1rem; flex-shrink: 0;
+        }
+        .sidebar-colegio .colegio-info-text { flex: 1; min-width: 0; }
+        .sidebar-colegio .colegio-nombre {
+            font-weight: 600; font-size: 0.85rem; color: #FFFFFF;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .sidebar-colegio .colegio-rol {
+            font-size: 0.68rem; color: rgba(255,255,255,0.65);
+            text-transform: uppercase; letter-spacing: 0.5px;
+        }
+
+        .sidebar-nav { flex: 1; padding: 10px 10px; overflow-y: auto; }
+        .sidebar-nav::-webkit-scrollbar { width: 4px; }
+        .sidebar-nav::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 4px; }
+        .sidebar-nav .nav-section {
+            font-size: 0.62rem; text-transform: uppercase;
+            letter-spacing: 0.8px; color: rgba(255,255,255,0.4);
+            font-weight: 600; padding: 12px 12px 5px;
+        }
+        .sidebar-nav ul li { margin-bottom: 2px; }
+        .sidebar-nav ul li a {
+            display: flex; align-items: center; gap: 12px;
+            padding: 9px 12px; border-radius: 8px;
+            color: rgba(255,255,255,0.85); font-weight: 500; font-size: 0.85rem;
+            transition: background 0.15s, color 0.15s;
+            cursor: pointer; white-space: nowrap;
+        }
+        .sidebar-nav ul li a i {
+            width: 20px; font-size: 0.95rem; text-align: center; flex-shrink: 0;
+        }
+        .sidebar-nav ul li a span { flex: 1; }
+        .sidebar-nav ul li a:hover { background: var(--sidebar-hover); color: #FFFFFF; }
+        .sidebar-nav ul li.active a {
+            background: var(--sidebar-active); color: #FFFFFF; font-weight: 600;
+        }
+
+        .sidebar-footer {
+            padding: 12px 14px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            flex-shrink: 0;
+        }
+        .btn-logout {
+            display: flex; align-items: center; gap: 12px; width: 100%;
+            padding: 9px 12px; border: none; border-radius: 8px;
+            background: transparent; color: rgba(255,255,255,0.85);
+            font-weight: 500; font-size: 0.85rem; font-family: var(--font);
+            cursor: pointer; transition: background 0.15s, color 0.15s;
+        }
+        .btn-logout:hover { background: rgba(220,38,38,0.2); color: #FCA5A5; }
+        .btn-logout i { width: 20px; font-size: 0.95rem; text-align: center; }
+
+        .sidebar-overlay {
+            display: none; position: fixed; inset: 0;
+            background: rgba(0, 0, 0, 0.5); z-index: 999;
+            backdrop-filter: blur(2px);
+        }
+        .sidebar-overlay.active { display: block; }
+
+        /* ================ MAIN ================ */
+        .main-content {
+            flex: 1; min-height: 100vh; display: flex; flex-direction: column;
+            margin-left: var(--sidebar-width);
+            transition: margin-left var(--transition); width: 100%;
+        }
+        .main-content.expanded { margin-left: var(--sidebar-collapsed); }
+
+        .top-header {
+            height: var(--header-height); background: #FFFFFF;
+            border-bottom: 1px solid var(--gray-200); padding: 0 24px;
+            display: flex; align-items: center; justify-content: space-between;
+            position: sticky; top: 0; z-index: 50;
+            flex-shrink: 0; box-shadow: var(--shadow);
+        }
+        .header-left { display: flex; align-items: center; gap: 16px; }
+        .header-left .hamburger-btn {
+            display: none; background: none; border: none; font-size: 1.4rem;
+            color: var(--gray-600); cursor: pointer; padding: 4px 8px;
+            border-radius: 6px;
+        }
+        .header-left .hamburger-btn:hover { background: var(--gray-100); }
+        .header-left h1 { font-size: 1.1rem; font-weight: 600; color: var(--gray-800); }
+
+        .header-right { display: flex; align-items: center; gap: 14px; }
+        .user-info { text-align: right; }
+        .user-name { display: block; font-weight: 600; font-size: 0.85rem; color: var(--gray-800); }
+        .user-role { display: block; font-size: 0.7rem; color: var(--gray-500); text-transform: capitalize; }
+        .user-avatar { font-size: 2rem; color: var(--gray-400); }
+
+        .content-area { flex: 1; padding: 24px 28px; }
+        .page-content { display: none; animation: fadeIn 0.3s ease; }
+        .page-content.active { display: block; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .page-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 20px; flex-wrap: wrap; gap: 12px;
+        }
+        .page-header h2 { font-size: 1.1rem; font-weight: 600; color: var(--gray-800); }
+
+        /* ================ STATS ================ */
+        .stats-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 18px; margin-bottom: 22px;
+        }
+        .stat-card {
+            background: #fff; border-radius: var(--radius);
+            padding: 18px 22px; box-shadow: var(--shadow);
+            display: flex; align-items: center; gap: 16px;
+            transition: box-shadow 0.2s;
+        }
+        .stat-card:hover { box-shadow: var(--shadow-lg); }
+        .stat-icon {
+            width: 48px; height: 48px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.3rem; flex-shrink: 0;
+        }
+        .stat-info { flex: 1; }
+        .stat-label {
+            display: block; font-size: 0.7rem; color: var(--gray-500);
+            font-weight: 500; text-transform: uppercase; letter-spacing: 0.3px;
+        }
+        .stat-value {
+            display: block; font-size: 1.5rem; font-weight: 700;
+            color: var(--gray-900); line-height: 1.2;
+        }
+
+        /* ================ INFO COLEGIO ================ */
+        .info-colegio-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px; margin-bottom: 24px;
+        }
+        .info-colegio-card {
+            background: #fff; border-radius: var(--radius);
+            padding: 14px 18px; box-shadow: var(--shadow);
+            display: flex; align-items: center; gap: 14px;
+        }
+        .info-colegio-card .icon {
+            width: 40px; height: 40px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem; flex-shrink: 0;
+        }
+        .info-colegio-card .label {
+            font-size: 0.65rem; color: var(--gray-500); font-weight: 500;
+            text-transform: uppercase; letter-spacing: 0.3px;
+        }
+        .info-colegio-card .value {
+            font-size: 0.95rem; font-weight: 600; color: var(--gray-900);
+        }
+
+        /* ================ WELCOME BANNER ================ */
+        .welcome-banner {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: var(--radius); padding: 24px 28px; color: #fff;
+            margin-bottom: 24px; display: flex; justify-content: space-between;
+            align-items: center; flex-wrap: wrap; gap: 16px;
+            transition: background 0.3s;
+        }
+        .welcome-banner .welcome-text { flex: 1; min-width: 200px; }
+        .welcome-banner h2 { font-size: 1.25rem; font-weight: 600; }
+        .welcome-banner p { opacity: 0.9; margin-top: 2px; font-size: 0.9rem; }
+        .welcome-banner .badge-colegio {
+            background: rgba(255, 255, 255, 0.2); padding: 6px 18px;
+            border-radius: 50px; font-size: 0.8rem; font-weight: 500;
+        }
+        .welcome-banner .logo-colegio {
+            width: 56px; height: 56px; border-radius: 12px;
+            object-fit: cover; background: #fff; padding: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+        .estado-activo { color: #4ade80; }
+        .estado-inactivo { color: #fca5a5; }
+
+        /* ================ LOADING ================ */
+        .loading-overlay {
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: center; min-height: 400px; gap: 16px;
+        }
+        .loading-overlay .spinner {
+            width: 48px; height: 48px; border: 4px solid var(--gray-200);
+            border-top-color: var(--primary); border-radius: 50%;
+            animation: spin 0.8s ease-in-out infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ================ FILTROS ================ */
+        .eco-filtros {
+            display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px;
+        }
+        .eco-filtros select, .eco-filtros input { max-width: 220px; }
+
+        .mov-row-ingreso { color: var(--success); font-weight: 600; }
+        .mov-row-egreso { color: var(--danger); font-weight: 600; }
+
+        /* ================ RESPONSIVE ================ */
+        @media (max-width: 992px) {
+            .sidebar { transform: translateX(-100%); width: var(--sidebar-width); }
+            .sidebar.open { transform: translateX(0); }
+            .sidebar .logo span { display: inline !important; color: #FFFFFF; }
+            .sidebar .sidebar-nav ul li a span { display: inline !important; }
+            .sidebar .sidebar-nav .nav-section { display: block !important; }
+            .sidebar .colegio-info-text { display: block !important; }
+            .sidebar .btn-logout span { display: inline !important; }
+            .sidebar .btn-logout { justify-content: flex-start; padding: 9px 12px; }
+            .sidebar .sidebar-nav ul li a { justify-content: flex-start; padding: 9px 12px; }
+            .sidebar .sidebar-toggle { display: none; }
+            .sidebar .sidebar-close-mobile { display: block; }
+            .sidebar-overlay.active { display: block; }
+            .main-content { margin-left: 0 !important; }
+            .header-left .hamburger-btn { display: block; }
+        }
+        @media (max-width: 768px) {
+            .stats-grid { grid-template-columns: 1fr 1fr; }
+            .info-colegio-grid { grid-template-columns: 1fr 1fr; }
+            .form-grid { grid-template-columns: 1fr; }
+            .top-header { padding: 0 16px; }
+            .content-area { padding: 16px; }
+            .modal-content { width: 96%; margin: 10px; }
+            .user-info { display: none; }
+        }
+        @media (max-width: 480px) {
+            .stats-grid { grid-template-columns: 1fr; }
+            .info-colegio-grid { grid-template-columns: 1fr; }
+            .top-header { padding: 0 12px; height: 60px; }
+            .content-area { padding: 12px; }
+            .welcome-banner { flex-direction: column; text-align: center; }
+            .modal-footer { flex-direction: column; }
+            .modal-footer .btn-primary, .modal-footer .btn-secondary {
+                width: 100%; justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- =========================================== -->
+    <!-- SIDEBAR                                     -->
+    <!-- =========================================== -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>EduOne</span>
+            </div>
+            <button class="sidebar-close-mobile" id="sidebarCloseMobile"><i class="fas fa-times"></i></button>
+            <button class="sidebar-toggle" id="sidebarToggle"><i class="fas fa-bars"></i></button>
+        </div>
+
+        <div class="sidebar-colegio">
+            <div class="colegio-logo-placeholder" id="colegioLogoPlaceholder"><i class="fas fa-school"></i></div>
+            <img class="colegio-logo" id="colegioLogoImg" style="display: none;" alt="Logo" />
+            <div class="colegio-info-text">
+                <div class="colegio-nombre" id="colegioNombreSidebar">Cargando...</div>
+                <div class="colegio-rol">Contador</div>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <ul>
+                <li class="active"><a href="#" data-page="inicio"><i class="fas fa-home"></i><span>Inicio</span></a></li>
+            </ul>
+            <div class="nav-section">FINANZAS</div>
+            <ul>
+                <li><a href="#" data-page="movimientos"><i class="fas fa-exchange-alt"></i><span>Movimientos</span></a></li>
+                <li><a href="#" data-page="pensiones"><i class="fas fa-money-check-alt"></i><span>Pensiones</span></a></li>
+                <li><a href="#" data-page="matriculas"><i class="fas fa-file-signature"></i><span>Matrículas</span></a></li>
+            </ul>
+            <div class="nav-section">REPORTES</div>
+            <ul>
+                <li><a href="#" data-page="cartera"><i class="fas fa-file-invoice-dollar"></i><span>Cartera</span></a></li>
+                <li><a href="#" data-page="balance"><i class="fas fa-chart-pie"></i><span>Balance</span></a></li>
+            </ul>
+        </nav>
+
+        <div class="sidebar-footer">
+            <button id="logoutBtn" class="btn-logout">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Cerrar sesión</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- =========================================== -->
+    <!-- MAIN CONTENT                                -->
+    <!-- =========================================== -->
+    <main class="main-content" id="mainContent">
+        <header class="top-header">
+            <div class="header-left">
+                <button class="hamburger-btn" id="hamburgerBtn"><i class="fas fa-bars"></i></button>
+                <h1 id="pageTitle">Inicio</h1>
+            </div>
+            <div class="header-right">
+                <div class="user-info">
+                    <span class="user-name" id="userName">Cargando...</span>
+                    <span class="user-role" id="userRole">Contador</span>
+                </div>
+                <div class="user-avatar"><i class="fas fa-user-circle"></i></div>
+            </div>
+        </header>
+
+        <section class="content-area" id="contentArea">
+
+            <div id="loadingState" class="loading-overlay">
+                <div class="spinner"></div>
+                <p>Cargando información del colegio...</p>
+            </div>
+
+            <!-- ============ INICIO ============ -->
+            <div id="page-inicio" class="page-content active">
+                <div class="welcome-banner" id="welcomeBanner">
+                    <div style="display: flex; align-items: center; gap: 16px; flex: 1; min-width: 200px;">
+                        <div id="bannerLogoContainer">
+                            <i class="fas fa-calculator" style="font-size: 2.5rem;" id="bannerLogoIcon"></i>
+                        </div>
+                        <div class="welcome-text">
+                            <h2 id="bienvenidaNombre">Bienvenido, Contador</h2>
+                            <p id="bienvenidaColegio">Colegio: Cargando...</p>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="badge-colegio" id="bannerEstado">
+                            <i class="fas fa-circle estado-activo"></i> Activo
+                        </span>
+                    </div>
+                </div>
+
+                <div class="info-colegio-grid">
+                    <div class="info-colegio-card">
+                        <div class="icon" style="background: var(--primary-bg); color: var(--primary);"><i class="fas fa-school"></i></div>
+                        <div><div class="label">Colegio</div><div class="value" id="infoNombre">-</div></div>
+                    </div>
+                    <div class="info-colegio-card">
+                        <div class="icon" style="background: #dcfce7; color: #16a34a;"><i class="fas fa-map-marker-alt"></i></div>
+                        <div><div class="label">Ciudad</div><div class="value" id="infoCiudad">-</div></div>
+                    </div>
+                    <div class="info-colegio-card">
+                        <div class="icon" style="background: #fef3c7; color: #d97706;"><i class="fas fa-calendar-alt"></i></div>
+                        <div><div class="label">Año escolar</div><div class="value" id="infoAnio">-</div></div>
+                    </div>
+                    <div class="info-colegio-card">
+                        <div class="icon" style="background: #fecaca; color: #dc2626;"><i class="fas fa-id-card"></i></div>
+                        <div><div class="label">NIT</div><div class="value" id="infoNit">-</div></div>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: #dcfce7; color: #16a34a;"><i class="fas fa-arrow-down"></i></div>
+                        <div class="stat-info"><span class="stat-label">Ingresos del mes</span><span class="stat-value" id="contIngresosMes">$0</span></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: #fecaca; color: #dc2626;"><i class="fas fa-arrow-up"></i></div>
+                        <div class="stat-info"><span class="stat-label">Egresos del mes</span><span class="stat-value" id="contEgresosMes">$0</span></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: #dbeafe; color: #2563eb;"><i class="fas fa-wallet"></i></div>
+                        <div class="stat-info"><span class="stat-label">Balance total</span><span class="stat-value" id="contBalance">$0</span></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: #fef3c7; color: #d97706;"><i class="fas fa-exclamation-circle"></i></div>
+                        <div class="stat-info"><span class="stat-label">Cartera pendiente</span><span class="stat-value" id="contCartera">$0</span></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header"><h2>Últimos movimientos</h2></div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table-modern">
+                                <thead>
+                                    <tr><th>Fecha</th><th>Tipo</th><th>Categoría</th><th>Descripción</th><th>Monto</th></tr>
+                                </thead>
+                                <tbody id="tablaUltimosMovimientos">
+                                    <tr><td colspan="5" class="text-center text-muted"><i class="fas fa-spinner fa-spin"></i> Cargando...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============ MOVIMIENTOS ============ -->
+            <div id="page-movimientos" class="page-content">
+                <div class="page-header">
+                    <h2><i class="fas fa-exchange-alt" style="color: var(--primary);"></i> Movimientos</h2>
+                    <button class="btn-primary" id="btnNuevoMovimiento"><i class="fas fa-plus"></i> Registrar movimiento</button>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="eco-filtros">
+                            <input type="month" id="filtroMovMes" class="form-control" />
+                            <select id="filtroMovTipo" class="form-control">
+                                <option value="">Todos los tipos</option>
+                                <option value="ingreso">Solo ingresos</option>
+                                <option value="egreso">Solo egresos</option>
+                            </select>
+                            <select id="filtroMovCategoria" class="form-control">
+                                <option value="">Todas las categorías</option>
+                                <option value="Matrícula">Matrícula</option>
+                                <option value="Pensión">Pensión</option>
+                                <option value="Salarios">Salarios</option>
+                                <option value="Servicios">Servicios</option>
+                                <option value="Mantenimiento">Mantenimiento</option>
+                                <option value="Papelería">Papelería</option>
+                                <option value="Otro">Otro</option>
+                            </select>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table-modern">
+                                <thead>
+                                    <tr><th>#</th><th>Fecha</th><th>Tipo</th><th>Categoría</th><th>Descripción</th><th>Método</th><th>Monto</th></tr>
+                                </thead>
+                                <tbody id="tablaMovimientos">
+                                    <tr><td colspan="7" class="text-center text-muted"><i class="fas fa-spinner fa-spin"></i> Cargando...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============ PENSIONES ============ -->
+            <div id="page-pensiones" class="page-content">
+                <div class="page-header">
+                    <h2><i class="fas fa-money-check-alt" style="color: var(--primary);"></i> Pensiones</h2>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table-modern">
+                                <thead>
+                                    <tr><th>#</th><th>Estudiante</th><th>Mes</th><th>Año</th><th>Valor</th><th>Abonado</th><th>Saldo</th><th>Estado</th></tr>
+                                </thead>
+                                <tbody id="tablaPensiones">
+                                    <tr><td colspan="8" class="text-center text-muted"><i class="fas fa-spinner fa-spin"></i> Cargando...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============ MATRÍCULAS ============ -->
+            <div id="page-matriculas" class="page-content">
+                <div class="page-header">
+                    <h2><i class="fas fa-file-signature" style="color: var(--primary);"></i> Matrículas</h2>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table-modern">
+                                <thead>
+                                    <tr><th>#</th><th>Estudiante</th><th>Curso</th><th>Valor</th><th>Abonado</th><th>Saldo</th><th>Estado</th></tr>
+                                </thead>
+                                <tbody id="tablaMatriculas">
+                                    <tr><td colspan="7" class="text-center text-muted"><i class="fas fa-spinner fa-spin"></i> Cargando...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============ CARTERA ============ -->
+            <div id="page-cartera" class="page-content">
+                <div class="page-header">
+                    <h2><i class="fas fa-file-invoice-dollar" style="color: var(--primary);"></i> Cartera Pendiente</h2>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: #fef3c7; color: #d97706;"><i class="fas fa-file-invoice-dollar"></i></div>
+                        <div class="stat-info"><span class="stat-label">Total cartera</span><span class="stat-value" id="carteraTotal">$0</span></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: #fecaca; color: #dc2626;"><i class="fas fa-user-graduate"></i></div>
+                        <div class="stat-info"><span class="stat-label">Estudiantes con saldo</span><span class="stat-value" id="carteraEstudiantes">0</span></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table-modern">
+                                <thead>
+                                    <tr><th>#</th><th>Estudiante</th><th>Concepto</th><th>Saldo</th></tr>
+                                </thead>
+                                <tbody id="tablaCartera">
+                                    <tr><td colspan="4" class="text-center text-muted"><i class="fas fa-spinner fa-spin"></i> Cargando...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============ BALANCE ============ -->
+            <div id="page-balance" class="page-content">
+                <div class="page-header">
+                    <h2><i class="fas fa-chart-pie" style="color: var(--primary);"></i> Balance General</h2>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: #dcfce7; color: #16a34a;"><i class="fas fa-arrow-down"></i></div>
+                        <div class="stat-info"><span class="stat-label">Ingresos históricos</span><span class="stat-value" id="balIngresos">$0</span></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: #fecaca; color: #dc2626;"><i class="fas fa-arrow-up"></i></div>
+                        <div class="stat-info"><span class="stat-label">Egresos históricos</span><span class="stat-value" id="balEgresos">$0</span></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: #dbeafe; color: #2563eb;"><i class="fas fa-wallet"></i></div>
+                        <div class="stat-info"><span class="stat-label">Balance</span><span class="stat-value" id="balBalance">$0</span></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: #e0e7ff; color: #4f46e5;"><i class="fas fa-list"></i></div>
+                        <div class="stat-info"><span class="stat-label">Total movimientos</span><span class="stat-value" id="balTotal">0</span></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header"><h2>Resumen por categoría</h2></div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table-modern">
+                                <thead><tr><th>Categoría</th><th>Ingresos</th><th>Egresos</th><th>Neto</th></tr></thead>
+                                <tbody id="tablaBalanceCategorias">
+                                    <tr><td colspan="4" class="text-center text-muted">Cargando...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- =========================================== -->
+    <!-- MODAL: Nuevo Movimiento                     -->
+    <!-- =========================================== -->
+    <div class="modal" id="modalNuevoMovimiento">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-plus-circle" style="color: var(--primary);"></i> Registrar Movimiento</h2>
+                <button class="modal-close" id="closeMovimientoModal">&times;</button>
+            </div>
+            <form id="formNuevoMovimiento">
+                <div class="modal-body">
+                    <div id="movimientoAlert" class="alert" style="display: none;"><i class="fas fa-info-circle"></i><span id="movimientoAlertText"></span></div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Tipo *</label>
+                            <select id="movTipo" class="form-control" required>
+                                <option value="ingreso">Ingreso (entrada)</option>
+                                <option value="egreso">Egreso (salida)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Categoría *</label>
+                            <select id="movCategoria" class="form-control" required>
+                                <option value="Matrícula">Matrícula</option>
+                                <option value="Pensión">Pensión</option>
+                                <option value="Salarios">Salarios</option>
+                                <option value="Servicios">Servicios</option>
+                                <option value="Mantenimiento">Mantenimiento</option>
+                                <option value="Papelería">Papelería</option>
+                                <option value="Otro">Otro</option>
+                            </select>
+                        </div>
+                        <div class="form-group"><label>Monto *</label><input type="number" id="movMonto" class="form-control" required min="0" step="any" /></div>
+                        <div class="form-group">
+                            <label>Método</label>
+                            <select id="movMetodo" class="form-control">
+                                <option>Efectivo</option><option>Transferencia</option>
+                                <option>Nequi</option><option>Daviplata</option><option>Otro</option>
+                            </select>
+                        </div>
+                        <div class="form-group"><label>Referencia</label><input type="text" id="movReferencia" class="form-control" /></div>
+                        <div class="form-group"><label>Fecha *</label><input type="date" id="movFecha" class="form-control" required /></div>
+                        <div class="form-group" style="grid-column: span 2;"><label>Descripción *</label><input type="text" id="movDescripcion" class="form-control" required /></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" id="cancelMovimientoModal">Cancelar</button>
+                    <button type="submit" class="btn-primary"><i class="fas fa-save"></i> Guardar movimiento</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- =========================================== -->
+    <!-- SCRIPTS                                     -->
+    <!-- =========================================== -->
+    <script type="importmap">
+        {
+            "imports": {
+                "firebase/app": "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js",
+                "firebase/auth": "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js",
+                "firebase/firestore": "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js"
+            }
+        }
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "firebase/app";
+        import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+        import {
+            getFirestore, doc, getDoc, collection, getDocs, addDoc,
+            query, where, serverTimestamp
+        } from "firebase/firestore";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyA3U98y5BJWQwpypFCAyNioqSRfXkr9UA0",
+            authDomain: "eduone-5f7cf.firebaseapp.com",
+            projectId: "eduone-5f7cf",
+            storageBucket: "eduone-5f7cf.firebasestorage.app",
+            messagingSenderId: "541282614006",
+            appId: "1:541282614006:web:f8cf617c99f08403df0ad7"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // =============================================
+        // ESTADO GLOBAL
+        // =============================================
+        let colegioId = null;
+        let colegioData = {};
+        let usuarioActual = null;
+        let isLoggingOut = false;
+        let movimientosCache = [];
+
+        const MESES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+
+        // =============================================
+        // UTILIDADES
+        // =============================================
+        function formatearPrecio(v) {
+            return '$' + Number(v || 0).toLocaleString('es-CO');
+        }
+        function esc(str) {
+            return (str ?? '').toString();
+        }
+
+        // =============================================
+        // HELPERS DE COLOR Y LOGO
+        // =============================================
+        function hexToRgb(hex) {
+            hex = hex.replace('#', '');
+            if (hex.length === 3) hex = hex.split('').map(c => c + c).join('');
+            const num = parseInt(hex, 16);
+            return { r: (num >> 16) & 255, g: (num >> 8) & 255, b: num & 255 };
+        }
+        function rgbToHex(r, g, b) {
+            return '#' + [r, g, b].map(x => {
+                const h = Math.max(0, Math.min(255, Math.round(x))).toString(16);
+                return h.length === 1 ? '0' + h : h;
+            }).join('');
+        }
+        function oscurecer(hex, factor = 0.2) {
+            const { r, g, b } = hexToRgb(hex);
+            return rgbToHex(r * (1 - factor), g * (1 - factor), b * (1 - factor));
+        }
+        function aclarar(hex, factor = 0.9) {
+            const { r, g, b } = hexToRgb(hex);
+            return rgbToHex(r + (255 - r) * factor, g + (255 - g) * factor, b + (255 - b) * factor);
+        }
+
+        function aplicarColoresColegio(colorPrimario) {
+            if (!colorPrimario) colorPrimario = '#4f46e5';
+            const primarioOscuro = oscurecer(colorPrimario, 0.2);
+            document.documentElement.style.setProperty('--primary', colorPrimario);
+            document.documentElement.style.setProperty('--primary-dark', primarioOscuro);
+            document.documentElement.style.setProperty('--primary-bg', aclarar(colorPrimario, 0.9));
+            document.documentElement.style.setProperty('--primary-light', aclarar(colorPrimario, 0.7));
+            document.documentElement.style.setProperty('--sidebar-bg', oscurecer(colorPrimario, 0.75));
+            document.documentElement.style.setProperty('--sidebar-hover', oscurecer(colorPrimario, 0.65));
+            document.documentElement.style.setProperty('--sidebar-active', colorPrimario);
+
+            const banner = document.getElementById('welcomeBanner');
+            if (banner) banner.style.background = `linear-gradient(135deg, ${colorPrimario} 0%, ${primarioOscuro} 100%)`;
+        }
+
+        function aplicarLogo(logoUrl) {
+            const placeholder = document.getElementById('colegioLogoPlaceholder');
+            const img = document.getElementById('colegioLogoImg');
+            if (logoUrl) {
+                placeholder.style.display = 'none';
+                img.src = logoUrl;
+                img.style.display = 'block';
+                const bannerContainer = document.getElementById('bannerLogoContainer');
+                if (bannerContainer) {
+                    bannerContainer.innerHTML = `<img src="${logoUrl}" class="logo-colegio" alt="Logo" />`;
+                }
+            } else {
+                placeholder.style.display = 'flex';
+                img.style.display = 'none';
+            }
+        }
+
+        // =============================================
+        // SIDEBAR
+        // =============================================
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const sidebarCloseMobile = document.getElementById('sidebarCloseMobile');
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const mainContent = document.getElementById('mainContent');
+
+        function openSidebarMobile() {
+            sidebar.classList.remove('collapsed');
+            sidebar.classList.add('open');
+            sidebarOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeSidebarMobile() {
+            sidebar.classList.remove('open');
+            sidebarOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        function toggleSidebarDesktop() {
+            if (window.innerWidth > 992) {
+                sidebar.classList.toggle('collapsed');
+                mainContent.classList.toggle('expanded');
+            }
+        }
+        hamburgerBtn?.addEventListener('click', openSidebarMobile);
+        sidebarCloseMobile?.addEventListener('click', closeSidebarMobile);
+        sidebarOverlay?.addEventListener('click', closeSidebarMobile);
+        sidebarToggle?.addEventListener('click', toggleSidebarDesktop);
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 992) {
+                closeSidebarMobile();
+                sidebar.classList.remove('open');
+                sidebarOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // =============================================
+        // NAVEGACIÓN
+        // =============================================
+        const navLinks = document.querySelectorAll('.sidebar-nav a');
+        const pages = document.querySelectorAll('.page-content');
+        const pageTitle = document.getElementById('pageTitle');
+
+        const pageNames = {
+            inicio: 'Inicio', movimientos: 'Movimientos', pensiones: 'Pensiones',
+            matriculas: 'Matrículas', cartera: 'Cartera', balance: 'Balance'
+        };
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const page = link.dataset.page;
+                navLinks.forEach(l => l.closest('li').classList.remove('active'));
+                link.closest('li').classList.add('active');
+                pages.forEach(p => p.classList.remove('active'));
+                const targetPage = document.getElementById('page-' + page);
+                if (targetPage) targetPage.classList.add('active');
+                if (pageNames[page]) pageTitle.textContent = pageNames[page];
+                if (window.innerWidth <= 992) closeSidebarMobile();
+
+                if (page === 'movimientos') cargarMovimientos();
+                if (page === 'pensiones') cargarPensiones();
+                if (page === 'matriculas') cargarMatriculas();
+                if (page === 'cartera') cargarCartera();
+                if (page === 'balance') cargarBalance();
+            });
+        });
+
+        // =============================================
+        // CARGA INICIAL
+        // =============================================
+        async function cargarDashboard() {
+            try {
+                const colegioDoc = await getDoc(doc(db, 'colegios', colegioId));
+                if (!colegioDoc.exists()) throw new Error('Colegio no encontrado');
+                colegioData = colegioDoc.data();
+
+                // Aplicar color + logo del colegio
+                aplicarColoresColegio(colegioData.colorPrimario);
+                aplicarLogo(colegioData.logoUrl);
+
+                document.getElementById('colegioNombreSidebar').textContent = colegioData.nombre || 'Colegio';
+                document.getElementById('infoNombre').textContent = colegioData.nombre || '-';
+                document.getElementById('infoCiudad').textContent = colegioData.ciudad || '-';
+                document.getElementById('infoAnio').textContent = colegioData.anioEscolar || '-';
+                document.getElementById('infoNit').textContent = colegioData.nit || '-';
+                document.getElementById('bienvenidaNombre').textContent = `Bienvenido, ${usuarioActual?.nombre || 'Contador'}`;
+                document.getElementById('bienvenidaColegio').textContent = `Colegio: ${colegioData.nombre || ''}`;
+
+                const estado = colegioData.estado || 'inactivo';
+                document.getElementById('bannerEstado').innerHTML = estado === 'activo'
+                    ? `<i class="fas fa-circle estado-activo"></i> Activo`
+                    : `<i class="fas fa-circle estado-inactivo"></i> Inactivo`;
+
+                await cargarMetricasDashboard();
+                document.getElementById('loadingState').style.display = 'none';
+            } catch (error) {
+                console.error('Error dashboard:', error);
+                document.getElementById('loadingState').innerHTML = `
+                    <div style="color: var(--danger); font-size: 2rem;"><i class="fas fa-exclamation-circle"></i></div>
+                    <h3>Error al cargar el colegio</h3>
+                    <p>${esc(error.message)}</p>
+                    <button class="btn-primary" onclick="location.reload()">Reintentar</button>
+                `;
+            }
+        }
+
+        async function cargarMetricasDashboard() {
+            // Ingresos / egresos / balance total
+            const movSnap = await getDocs(collection(db, 'colegios', colegioId, 'movimientos'));
+            let ingresosTotales = 0, egresosTotales = 0;
+            const hoy = new Date();
+            let ingresosMes = 0, egresosMes = 0;
+
+            movSnap.forEach(d => {
+                const m = d.data();
+                const monto = Number(m.monto) || 0;
+                if (m.tipo === 'ingreso') ingresosTotales += monto;
+                else if (m.tipo === 'egreso') egresosTotales += monto;
+
+                if (m.fecha) {
+                    const f = new Date(m.fecha + 'T12:00:00');
+                    if (f.getMonth() === hoy.getMonth() && f.getFullYear() === hoy.getFullYear()) {
+                        if (m.tipo === 'ingreso') ingresosMes += monto;
+                        else if (m.tipo === 'egreso') egresosMes += monto;
+                    }
+                }
+            });
+
+            const balance = ingresosTotales - egresosTotales;
+            document.getElementById('contIngresosMes').textContent = formatearPrecio(ingresosMes);
+            document.getElementById('contEgresosMes').textContent = formatearPrecio(egresosMes);
+            document.getElementById('contBalance').textContent = formatearPrecio(balance);
+            document.getElementById('contBalance').style.color = balance >= 0 ? 'var(--success)' : 'var(--danger)';
+
+            // Cartera
+            await cargarCarteraTotal();
+
+            // Últimos 5 movimientos
+            const lista = [];
+            movSnap.forEach(d => lista.push({ id: d.id, ...d.data() }));
+            lista.sort((a, b) => (b.fecha || '').localeCompare(a.fecha || ''));
+            const ultimos = lista.slice(0, 5);
+
+            const tbody = document.getElementById('tablaUltimosMovimientos');
+            if (ultimos.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="text-center text-muted">No hay movimientos</td></tr>`;
+            } else {
+                tbody.innerHTML = ultimos.map(m => `
+                    <tr>
+                        <td>${esc(m.fecha || '-')}</td>
+                        <td><span class="badge ${m.tipo === 'ingreso' ? 'badge-success' : 'badge-danger'}">${m.tipo === 'ingreso' ? 'Ingreso' : 'Egreso'}</span></td>
+                        <td>${esc(m.categoria || '-')}</td>
+                        <td>${esc(m.descripcion || '-')}</td>
+                        <td class="${m.tipo === 'ingreso' ? 'mov-row-ingreso' : 'mov-row-egreso'}">
+                            ${m.tipo === 'ingreso' ? '+' : '-'} ${formatearPrecio(m.monto)}
+                        </td>
+                    </tr>
+                `).join('');
+            }
+        }
+
+        async function cargarCarteraTotal() {
+            try {
+                let cartera = 0;
+
+                const penSnap = await getDocs(collection(db, 'colegios', colegioId, 'pensiones'));
+                penSnap.forEach(d => {
+                    const p = d.data();
+                    const valor = Number(p.valorPension) || 0;
+                    const abonado = Number(p.totalAbonado) || 0;
+                    cartera += Math.max(0, valor - abonado);
+                });
+
+                const matSnap = await getDocs(collection(db, 'colegios', colegioId, 'matriculas'));
+                matSnap.forEach(d => {
+                    const m = d.data();
+                    const valor = Number(m.valorMatricula) || 0;
+                    const abonado = Number(m.totalAbonado) || 0;
+                    cartera += Math.max(0, valor - abonado);
+                });
+
+                document.getElementById('contCartera').textContent = formatearPrecio(cartera);
+            } catch (e) { console.warn('Cartera:', e); }
+        }
+
+        // =============================================
+        // MOVIMIENTOS
+        // =============================================
+        async function cargarMovimientos() {
+            const tbody = document.getElementById('tablaMovimientos');
+            try {
+                const snap = await getDocs(collection(db, 'colegios', colegioId, 'movimientos'));
+                movimientosCache = [];
+                snap.forEach(d => movimientosCache.push({ id: d.id, ...d.data() }));
+                renderMovimientos();
+            } catch (e) {
+                console.error(e);
+                tbody.innerHTML = `<tr><td colspan="7" class="text-center text-danger">Error</td></tr>`;
+            }
+        }
+
+        function renderMovimientos() {
+            const tbody = document.getElementById('tablaMovimientos');
+            const filtroTipo = document.getElementById('filtroMovTipo').value;
+            const filtroCat = document.getElementById('filtroMovCategoria').value;
+            const filtroMes = document.getElementById('filtroMovMes').value;
+
+            let lista = movimientosCache.filter(m => {
+                if (filtroTipo && m.tipo !== filtroTipo) return false;
+                if (filtroCat && m.categoria !== filtroCat) return false;
+                if (filtroMes && m.fecha) {
+                    const d = new Date(m.fecha + 'T12:00:00');
+                    const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+                    if (key !== filtroMes) return false;
+                }
+                return true;
+            });
+
+            lista.sort((a, b) => (b.fecha || '').localeCompare(a.fecha || ''));
+
+            if (lista.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" class="text-center text-muted">No hay movimientos con esos filtros</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = lista.map((m, i) => `
+                <tr>
+                    <td>${i + 1}</td>
+                    <td>${esc(m.fecha || '-')}</td>
+                    <td><span class="badge ${m.tipo === 'ingreso' ? 'badge-success' : 'badge-danger'}">${m.tipo === 'ingreso' ? 'Ingreso' : 'Egreso'}</span></td>
+                    <td>${esc(m.categoria || '-')}</td>
+                    <td>${esc(m.descripcion || '-')}</td>
+                    <td>${esc(m.metodo || '-')}</td>
+                    <td class="${m.tipo === 'ingreso' ? 'mov-row-ingreso' : 'mov-row-egreso'}">
+                        ${m.tipo === 'ingreso' ? '+' : '-'} ${formatearPrecio(m.monto)}
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        document.getElementById('filtroMovTipo')?.addEventListener('change', renderMovimientos);
+        document.getElementById('filtroMovCategoria')?.addEventListener('change', renderMovimientos);
+        document.getElementById('filtroMovMes')?.addEventListener('change', renderMovimientos);
+
+        document.getElementById('btnNuevoMovimiento')?.addEventListener('click', () => {
+            document.getElementById('modalNuevoMovimiento').classList.add('show');
+            document.getElementById('formNuevoMovimiento').reset();
+            document.getElementById('movFecha').value = new Date().toISOString().split('T')[0];
+            document.getElementById('movimientoAlert').className = 'alert';
+        });
+        document.getElementById('closeMovimientoModal')?.addEventListener('click', () => {
+            document.getElementById('modalNuevoMovimiento').classList.remove('show');
+        });
+        document.getElementById('cancelMovimientoModal')?.addEventListener('click', () => {
+            document.getElementById('modalNuevoMovimiento').classList.remove('show');
+        });
+        document.querySelector('#modalNuevoMovimiento .modal-overlay')?.addEventListener('click', () => {
+            document.getElementById('modalNuevoMovimiento').classList.remove('show');
+        });
+
+        document.getElementById('formNuevoMovimiento')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const tipo = document.getElementById('movTipo').value;
+            const categoria = document.getElementById('movCategoria').value;
+            const monto = parseFloat(document.getElementById('movMonto').value);
+            const metodo = document.getElementById('movMetodo').value;
+            const referencia = document.getElementById('movReferencia').value.trim();
+            const fecha = document.getElementById('movFecha').value;
+            const descripcion = document.getElementById('movDescripcion').value.trim();
+
+            if (!tipo || !categoria || !monto || !fecha || !descripcion) {
+                const a = document.getElementById('movimientoAlert');
+                a.className = 'alert alert-error show';
+                document.getElementById('movimientoAlertText').textContent = 'Completa los campos obligatorios';
+                return;
+            }
+
+            try {
+                await addDoc(collection(db, 'colegios', colegioId, 'movimientos'), {
+                    tipo, categoria, monto, metodo, referencia: referencia || '',
+                    fecha, descripcion,
+                    creadoPor: auth.currentUser?.uid || '',
+                    fechaCreacion: serverTimestamp()
+                });
+                alert('✅ Movimiento registrado');
+                document.getElementById('modalNuevoMovimiento').classList.remove('show');
+                cargarMovimientos();
+                cargarMetricasDashboard();
+            } catch (error) {
+                alert('❌ ' + error.message);
+            }
+        });
+
+        // =============================================
+        // PENSIONES
+        // =============================================
+        async function cargarPensiones() {
+            const tbody = document.getElementById('tablaPensiones');
+            try {
+                const snap = await getDocs(collection(db, 'colegios', colegioId, 'pensiones'));
+                if (snap.empty) {
+                    tbody.innerHTML = `<tr><td colspan="8" class="text-center text-muted">No hay pensiones registradas</td></tr>`;
+                    return;
+                }
+                let html = '';
+                let i = 1;
+                for (const docSnap of snap.docs) {
+                    const p = docSnap.data();
+                    const estDoc = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', p.estudianteId));
+                    const est = estDoc.exists() ? estDoc.data() : {};
+                    const valor = Number(p.valorPension) || 0;
+                    const abonado = Number(p.totalAbonado) || 0;
+                    const saldo = Math.max(0, valor - abonado);
+                    const estado = saldo === 0 && valor > 0 ? 'pagado' : (abonado > 0 ? 'abonado' : 'pendiente');
+                    const clase = estado === 'pagado' ? 'badge-success' : estado === 'abonado' ? 'badge-warning' : 'badge-danger';
+
+                    html += `
+                        <tr>
+                            <td>${i++}</td>
+                            <td>${esc(est.nombres || '')} ${esc(est.apellidos || '')}</td>
+                            <td>${MESES[(p.mes || 1) - 1] || '-'}</td>
+                            <td>${p.anio || '-'}</td>
+                            <td>${formatearPrecio(valor)}</td>
+                            <td style="color: var(--success); font-weight: 600;">${formatearPrecio(abonado)}</td>
+                            <td style="color: var(--danger); font-weight: 600;">${formatearPrecio(saldo)}</td>
+                            <td><span class="badge ${clase}">${estado}</span></td>
+                        </tr>
+                    `;
+                }
+                tbody.innerHTML = html;
+            } catch (e) {
+                console.error(e);
+                tbody.innerHTML = `<tr><td colspan="8" class="text-center text-danger">Error</td></tr>`;
+            }
+        }
+
+        // =============================================
+        // MATRÍCULAS
+        // =============================================
+        async function cargarMatriculas() {
+            const tbody = document.getElementById('tablaMatriculas');
+            try {
+                const snap = await getDocs(collection(db, 'colegios', colegioId, 'matriculas'));
+                if (snap.empty) {
+                    tbody.innerHTML = `<tr><td colspan="7" class="text-center text-muted">No hay matrículas registradas</td></tr>`;
+                    return;
+                }
+                let html = '';
+                let i = 1;
+                for (const docSnap of snap.docs) {
+                    const m = docSnap.data();
+                    const estDoc = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', m.estudianteId));
+                    const est = estDoc.exists() ? estDoc.data() : {};
+
+                    let cursoNombre = '-';
+                    if (m.cursoId) {
+                        const c = await getDoc(doc(db, 'colegios', colegioId, 'cursos', m.cursoId));
+                        cursoNombre = c.exists() ? c.data().nombre : '-';
+                    }
+
+                    const valor = Number(m.valorMatricula) || 0;
+                    const abonado = Number(m.totalAbonado) || 0;
+                    const saldo = Math.max(0, valor - abonado);
+                    const estado = m.estadoPago || 'pendiente';
+                    const clase = estado === 'pagado' ? 'badge-success' : estado === 'abonado' ? 'badge-warning' : estado === 'sin-cobro' ? 'badge-gray' : 'badge-danger';
+
+                    html += `
+                        <tr>
+                            <td>${i++}</td>
+                            <td>${esc(est.nombres || '')} ${esc(est.apellidos || '')}</td>
+                            <td>${esc(cursoNombre)}</td>
+                            <td>${formatearPrecio(valor)}</td>
+                            <td style="color: var(--success); font-weight: 600;">${formatearPrecio(abonado)}</td>
+                            <td style="color: var(--danger); font-weight: 600;">${formatearPrecio(saldo)}</td>
+                            <td><span class="badge ${clase}">${estado}</span></td>
+                        </tr>
+                    `;
+                }
+                tbody.innerHTML = html;
+            } catch (e) {
+                console.error(e);
+                tbody.innerHTML = `<tr><td colspan="7" class="text-center text-danger">Error</td></tr>`;
+            }
+        }
+
+        // =============================================
+        // CARTERA
+        // =============================================
+        async function cargarCartera() {
+            const tbody = document.getElementById('tablaCartera');
+            try {
+                const items = [];
+                let total = 0;
+
+                const matSnap = await getDocs(collection(db, 'colegios', colegioId, 'matriculas'));
+                for (const docSnap of matSnap.docs) {
+                    const m = docSnap.data();
+                    const valor = Number(m.valorMatricula) || 0;
+                    const abonado = Number(m.totalAbonado) || 0;
+                    const saldo = Math.max(0, valor - abonado);
+                    if (saldo > 0) {
+                        const estDoc = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', m.estudianteId));
+                        const est = estDoc.exists() ? estDoc.data() : {};
+                        items.push({
+                            nombre: `${est.nombres || ''} ${est.apellidos || ''}`,
+                            concepto: 'Matrícula',
+                            saldo
+                        });
+                        total += saldo;
+                    }
+                }
+
+                const penSnap = await getDocs(collection(db, 'colegios', colegioId, 'pensiones'));
+                for (const docSnap of penSnap.docs) {
+                    const p = docSnap.data();
+                    const valor = Number(p.valorPension) || 0;
+                    const abonado = Number(p.totalAbonado) || 0;
+                    const saldo = Math.max(0, valor - abonado);
+                    if (saldo > 0) {
+                        const estDoc = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', p.estudianteId));
+                        const est = estDoc.exists() ? estDoc.data() : {};
+                        items.push({
+                            nombre: `${est.nombres || ''} ${est.apellidos || ''}`,
+                            concepto: `Pensión ${MESES[(p.mes || 1) - 1]} ${p.anio || ''}`,
+                            saldo
+                        });
+                        total += saldo;
+                    }
+                }
+
+                document.getElementById('carteraTotal').textContent = formatearPrecio(total);
+                document.getElementById('carteraEstudiantes').textContent = new Set(items.map(i => i.nombre)).size;
+
+                if (items.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="4" class="text-center text-muted">No hay cartera pendiente</td></tr>`;
+                    return;
+                }
+
+                tbody.innerHTML = items.map((it, i) => `
+                    <tr>
+                        <td>${i + 1}</td>
+                        <td>${esc(it.nombre)}</td>
+                        <td>${esc(it.concepto)}</td>
+                        <td style="color: var(--danger); font-weight: 600;">${formatearPrecio(it.saldo)}</td>
+                    </tr>
+                `).join('');
+            } catch (e) {
+                console.error(e);
+                tbody.innerHTML = `<tr><td colspan="4" class="text-center text-danger">Error</td></tr>`;
+            }
+        }
+
+        // =============================================
+        // BALANCE
+        // =============================================
+        async function cargarBalance() {
+            const tbody = document.getElementById('tablaBalanceCategorias');
+            try {
+                const snap = await getDocs(collection(db, 'colegios', colegioId, 'movimientos'));
+                let ingresos = 0, egresos = 0;
+                const porCategoria = {};
+
+                snap.forEach(d => {
+                    const m = d.data();
+                    const monto = Number(m.monto) || 0;
+                    const cat = m.categoria || 'Otro';
+                    if (!porCategoria[cat]) porCategoria[cat] = { ingresos: 0, egresos: 0 };
+                    if (m.tipo === 'ingreso') { ingresos += monto; porCategoria[cat].ingresos += monto; }
+                    else if (m.tipo === 'egreso') { egresos += monto; porCategoria[cat].egresos += monto; }
+                });
+
+                document.getElementById('balIngresos').textContent = formatearPrecio(ingresos);
+                document.getElementById('balEgresos').textContent = formatearPrecio(egresos);
+                const balance = ingresos - egresos;
+                document.getElementById('balBalance').textContent = formatearPrecio(balance);
+                document.getElementById('balBalance').style.color = balance >= 0 ? 'var(--success)' : 'var(--danger)';
+                document.getElementById('balTotal').textContent = snap.size;
+
+                const filas = Object.entries(porCategoria).map(([cat, v]) => {
+                    const neto = v.ingresos - v.egresos;
+                    return `
+                        <tr>
+                            <td><strong>${esc(cat)}</strong></td>
+                            <td style="color: var(--success);">${formatearPrecio(v.ingresos)}</td>
+                            <td style="color: var(--danger);">${formatearPrecio(v.egresos)}</td>
+                            <td style="font-weight: 600; color: ${neto >= 0 ? 'var(--success)' : 'var(--danger)'};">${formatearPrecio(neto)}</td>
+                        </tr>
+                    `;
+                });
+
+                tbody.innerHTML = filas.length > 0
+                    ? filas.join('')
+                    : `<tr><td colspan="4" class="text-center text-muted">No hay movimientos</td></tr>`;
+            } catch (e) {
+                console.error(e);
+                tbody.innerHTML = `<tr><td colspan="4" class="text-center text-danger">Error</td></tr>`;
+            }
+        }
+
+        // =============================================
+        // AUTH
+        // =============================================
+        onAuthStateChanged(auth, async (user) => {
+            if (isLoggingOut) return;
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            try {
+                const userDoc = await getDoc(doc(db, 'usuarios', user.uid));
+                if (!userDoc.exists()) {
+                    await signOut(auth);
+                    window.location.href = 'login.html';
+                    return;
+                }
+
+                const data = userDoc.data();
+                if (data.rol !== 'contador' || data.activo !== true || !data.colegioId) {
+                    alert('⛔ Acceso denegado. Esta cuenta no tiene un rol de contador activo.');
+                    await signOut(auth);
+                    window.location.href = 'login.html';
+                    return;
+                }
+
+                colegioId = data.colegioId;
+                usuarioActual = data;
+                document.getElementById('userName').textContent = data.nombre || user.email;
+                document.getElementById('userRole').textContent = 'Contador';
+
+                await cargarDashboard();
+            } catch (error) {
+                console.error('Error auth:', error);
+                await signOut(auth);
+                window.location.href = 'login.html';
+            }
+        });
+
+        // =============================================
+        // LOGOUT
+        // =============================================
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            if (confirm('¿Seguro que deseas cerrar sesión?')) {
+                try {
+                    isLoggingOut = true;
+                    await signOut(auth);
+                    window.location.href = 'login.html';
+                } catch (error) {
+                    alert('❌ Error al cerrar sesión');
+                    isLoggingOut = false;
+                }
+            }
+        });
+
+        console.log('✅ EduOne - Panel del Contador cargado correctamente');
+        console.log('📁 Ruta: contador.html');
+    </script>
+
+</body>
+</html>
