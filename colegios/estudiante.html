@@ -1366,6 +1366,45 @@
                 display: block !important;
             }
         }
+
+        /* ============================================= */
+        /* LOGO Y COLORES DINÁMICOS                      */
+        /* ============================================= */
+        .sidebar-colegio {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .sidebar-colegio .colegio-logo {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            object-fit: cover;
+            background: #fff;
+            padding: 2px;
+            flex-shrink: 0;
+        }
+        .sidebar-colegio .colegio-logo-placeholder {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.15);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+        .sidebar-colegio .colegio-info-text {
+            flex: 1;
+            min-width: 0;
+        }
+
+        /* Transición suave del sidebar al cambiar color */
+        .sidebar {
+            transition: background 0.3s ease, width var(--transition), transform var(--transition);
+        }
     </style>
 </head>
 <body>
@@ -1393,8 +1432,14 @@
         </div>
 
         <div class="sidebar-colegio">
-            <div class="colegio-nombre" id="colegioNombreSidebar">Cargando...</div>
-            <div class="colegio-rol">Estudiante</div>
+            <div class="colegio-logo-placeholder" id="colegioLogoPlaceholder">
+                <i class="fas fa-school"></i>
+            </div>
+            <img class="colegio-logo" id="colegioLogoImg" style="display: none;" alt="Logo" />
+            <div class="colegio-info-text">
+                <div class="colegio-nombre" id="colegioNombreSidebar">Cargando...</div>
+                <div class="colegio-rol">Estudiante</div>
+            </div>
         </div>
 
         <nav class="sidebar-nav">
@@ -2084,6 +2129,56 @@
         let estudianteDataGlobal = null;
 
         // =============================================
+        // FUNCIONES DE COLOR Y LOGO DINÁMICOS
+        // =============================================
+        function hexToRgb(hex) {
+            hex = hex.replace('#', '');
+            if (hex.length === 3) hex = hex.split('').map(c => c + c).join('');
+            const num = parseInt(hex, 16);
+            return { r: (num >> 16) & 255, g: (num >> 8) & 255, b: num & 255 };
+        }
+        function rgbToHex(r, g, b) {
+            return '#' + [r, g, b].map(x => {
+                const h = Math.max(0, Math.min(255, Math.round(x))).toString(16);
+                return h.length === 1 ? '0' + h : h;
+            }).join('');
+        }
+        function oscurecer(hex, factor = 0.2) {
+            const { r, g, b } = hexToRgb(hex);
+            return rgbToHex(r * (1 - factor), g * (1 - factor), b * (1 - factor));
+        }
+        function aclarar(hex, factor = 0.9) {
+            const { r, g, b } = hexToRgb(hex);
+            return rgbToHex(r + (255 - r) * factor, g + (255 - g) * factor, b + (255 - b) * factor);
+        }
+
+        function aplicarColoresColegio(colorPrimario) {
+            if (!colorPrimario) colorPrimario = '#4f46e5'; // color por defecto del estudiante
+            const primarioOscuro = oscurecer(colorPrimario, 0.2);
+            document.documentElement.style.setProperty('--primary', colorPrimario);
+            document.documentElement.style.setProperty('--primary-dark', primarioOscuro);
+            document.documentElement.style.setProperty('--primary-bg', aclarar(colorPrimario, 0.9));
+            document.documentElement.style.setProperty('--primary-light', aclarar(colorPrimario, 0.7));
+            document.documentElement.style.setProperty('--sidebar-active', colorPrimario);
+            document.documentElement.style.setProperty('--sidebar-bg', oscurecer(colorPrimario, 0.75));
+            document.documentElement.style.setProperty('--sidebar-hover', oscurecer(colorPrimario, 0.65));
+        }
+
+        function aplicarLogo(logoUrl) {
+            const placeholder = document.getElementById('colegioLogoPlaceholder');
+            const img = document.getElementById('colegioLogoImg');
+            if (!placeholder || !img) return;
+            if (logoUrl) {
+                placeholder.style.display = 'none';
+                img.src = logoUrl;
+                img.style.display = 'block';
+            } else {
+                placeholder.style.display = 'flex';
+                img.style.display = 'none';
+            }
+        }
+
+        // =============================================
         // REFERENCIAS DOM
         // =============================================
         const loadingState = document.getElementById('loadingState');
@@ -2325,6 +2420,11 @@
                 const colegioDoc = await getDoc(doc(db, 'colegios', colegioId));
                 if (colegioDoc.exists()) {
                     const data = colegioDoc.data();
+                    
+                    // ✅ APLICAR COLORES Y LOGO DEL COLEGIO
+                    aplicarColoresColegio(data.colorPrimario);
+                    aplicarLogo(data.logoUrl);
+                    
                     colegioNombreSidebar.textContent = data.nombre || 'Colegio';
                 }
 

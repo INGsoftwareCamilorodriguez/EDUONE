@@ -200,6 +200,180 @@
         .eco-filtros { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
         .eco-filtros select { max-width: 220px; }
 
+        /* ============================================= */
+        /* MEJORAS DE DISEÑO - TABLA COLEGIOS            */
+        /* ============================================= */
+        .row-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            border-radius: 8px;
+            background: var(--gray-100);
+            color: var(--gray-600);
+            font-weight: 600;
+            font-size: 0.75rem;
+        }
+
+        .colegio-cell {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 200px;
+        }
+        .colegio-avatar-img,
+        .colegio-avatar-fallback {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            object-fit: cover;
+            flex-shrink: 0;
+            border: 2px solid #fff;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+        .colegio-avatar-fallback {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        .colegio-cell-info {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+        .colegio-cell-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--gray-800);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .colegio-cell-sub {
+            font-size: 0.72rem;
+            color: var(--gray-500);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .plan-pill {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 50px;
+            background: linear-gradient(135deg, #eef2ff, #e0e7ff);
+            color: var(--primary);
+            font-size: 0.72rem;
+            font-weight: 600;
+            white-space: nowrap;
+            border: 1px solid #c7d2fe;
+        }
+
+        .cupos-cell {
+            min-width: 120px;
+        }
+        .cupos-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+        .cupos-num {
+            font-size: 0.78rem;
+            color: var(--gray-700);
+        }
+        .cupos-num strong {
+            color: var(--gray-900);
+            font-size: 0.9rem;
+        }
+        .cupos-pct {
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+        .cupos-bar {
+            height: 5px;
+            background: var(--gray-200);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .cupos-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.4s ease;
+        }
+
+        .fecha-venc {
+            font-size: 0.68rem;
+            color: var(--gray-500);
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .badge .dot {
+            display: inline-block;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            margin-right: 6px;
+            vertical-align: middle;
+        }
+        .dot-on {
+            background: #16a34a;
+            box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.2);
+            animation: pulseDot 2s infinite;
+        }
+        .dot-off {
+            background: #94a3b8;
+        }
+        @keyframes pulseDot {
+            0%, 100% { box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.2); }
+            50% { box-shadow: 0 0 0 5px rgba(22, 163, 74, 0.1); }
+        }
+
+        .rector-cell {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.82rem;
+            color: var(--gray-600);
+        }
+        .rector-cell i {
+            color: var(--gray-400);
+            font-size: 0.75rem;
+        }
+
+        .actions-cell {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+        .actions-cell .btn-sm {
+            width: 30px;
+            height: 30px;
+            padding: 0;
+            justify-content: center;
+            border-radius: 8px;
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .actions-cell .btn-sm:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        /* Hover de fila más elegante */
+        .table-modern tbody tr {
+            transition: background 0.15s;
+        }
+        .table-modern tbody tr:hover {
+            background: linear-gradient(90deg, var(--primary-bg), transparent 60%);
+        }
+
         @media (max-width: 992px) {
             .sidebar { width: 72px; }
             .sidebar-header .logo span { display: none; }
@@ -949,6 +1123,33 @@
         }
 
         // =============================================
+        // CONTAR ESTUDIANTES ÚNICOS (evita duplicados)
+        // =============================================
+        async function contarEstudiantesUnicos(colegioId) {
+            try {
+                // Fuente principal: colección 'estudiantes'
+                const estSnap = await getDocs(collection(db, 'colegios', colegioId, 'estudiantes'));
+                
+                const unicos = new Set();
+                estSnap.forEach(d => {
+                    const e = d.data();
+                    // Clave única: documento > correo > email > uid > id del doc
+                    const clave = (e.documento && String(e.documento).trim())
+                        || (e.correo && String(e.correo).toLowerCase().trim())
+                        || (e.email && String(e.email).toLowerCase().trim())
+                        || e.uid
+                        || d.id;
+                    unicos.add(clave);
+                });
+                
+                return unicos.size;
+            } catch (e) {
+                console.warn('Error contando estudiantes:', e);
+                return 0;
+            }
+        }
+
+        // =============================================
         // SELECTOR DE PLANES
         // =============================================
         function renderPlanSelector(container, selectedId, onSelect) {
@@ -1204,18 +1405,8 @@
                         try { await updateDoc(doc(db, 'colegios', docSnapshot.id), { estadoPago: 'vencido', estado: 'inactivo' }); } catch (e) {}
                     }
 
-                    // Conteo de estudiantes: intenta matrículas, si falla usa estudiantes
-                    let estudiantesActuales = 0;
-                    try {
-                        const matSnap = await getDocs(query(collection(db, 'colegios', docSnapshot.id, 'matriculas'), where('estado', '==', 'activo')));
-                        estudiantesActuales = matSnap.size;
-                    } catch (e) {}
-                    if (estudiantesActuales === 0) {
-                        try {
-                            const estSnap = await getDocs(collection(db, 'colegios', docSnapshot.id, 'estudiantes'));
-                            estudiantesActuales = estSnap.size;
-                        } catch (e) {}
-                    }
+                    // ✅ CONTEO DE ESTUDIANTES ÚNICOS (evita duplicados del auto-registro y múltiples matrículas)
+                    const estudiantesActuales = await contarEstudiantesUnicos(docSnapshot.id);
 
                     let rectorNombreVal = 'Sin asignar';
                     try {
@@ -1253,6 +1444,7 @@
                         </tr>
                     `).join('');
 
+                // ✅ DISEÑO MEJORADO DE LA TABLA DE COLEGIOS
                 tablaColegios.innerHTML = colegiosList.length === 0
                     ? `<tr><td colspan="8" class="text-center text-muted">No hay colegios</td></tr>`
                     : colegiosList.map((c, i) => {
@@ -1260,36 +1452,62 @@
                         const actual = c.estudiantesActuales || 0;
                         const porcentaje = max > 0 ? Math.min(100, Math.round((actual / max) * 100)) : 0;
                         const colorBarra = porcentaje >= 90 ? 'var(--danger)' : porcentaje >= 70 ? 'var(--warning)' : 'var(--success)';
+                        const inicial = (c.nombre || 'C').charAt(0).toUpperCase();
+                        const colorAvatar = c.colorPrimario || '#4f46e5';
+
                         return `
                         <tr>
-                            <td>${i + 1}</td>
+                            <td><span class="row-num">${i + 1}</span></td>
                             <td>
-                                <div style="display: flex; align-items: center; gap: 8px;">
-                                    ${c.logoUrl ? `<img src="${c.logoUrl}" style="width:32px;height:32px;border-radius:6px;object-fit:cover;" />` : `<div style="width:32px;height:32px;border-radius:6px;background:var(--gray-200);display:flex;align-items:center;justify-content:center;"><i class="fas fa-school" style="color:var(--gray-500);font-size:0.8rem;"></i></div>`}
-                                    <strong>${c.nombre || 'Sin nombre'}</strong>
+                                <div class="colegio-cell">
+                                    ${c.logoUrl
+                                        ? `<img src="${c.logoUrl}" class="colegio-avatar-img" alt="${c.nombre}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" /><div class="colegio-avatar-fallback" style="display:none; background:${colorAvatar};">${inicial}</div>`
+                                        : `<div class="colegio-avatar-fallback" style="background:${colorAvatar};">${inicial}</div>`
+                                    }
+                                    <div class="colegio-cell-info">
+                                        <span class="colegio-cell-name">${c.nombre || 'Sin nombre'}</span>
+                                        <span class="colegio-cell-sub">${c.ciudad || 'Sin ciudad'}${c.nit ? ' · NIT ' + c.nit : ''}</span>
+                                    </div>
                                 </div>
                             </td>
-                            <td>${c.planNombre || 'Sin plan'}</td>
                             <td>
-                                <div style="min-width: 100px;">
-                                    <div style="font-size: 0.75rem; font-weight: 600;">${actual} / ${max}</div>
-                                    <div style="height: 4px; background: var(--gray-200); border-radius: 4px; margin-top: 3px; overflow: hidden;">
-                                        <div style="height: 100%; width: ${porcentaje}%; background: ${colorBarra};"></div>
+                                <span class="plan-pill">${c.planNombre || 'Sin plan'}</span>
+                            </td>
+                            <td>
+                                <div class="cupos-cell">
+                                    <div class="cupos-header">
+                                        <span class="cupos-num"><strong>${actual}</strong> / ${max === 999999 ? '∞' : max}</span>
+                                        <span class="cupos-pct" style="color:${colorBarra};">${porcentaje}%</span>
+                                    </div>
+                                    <div class="cupos-bar">
+                                        <div class="cupos-fill" style="width:${porcentaje}%; background:${colorBarra};"></div>
                                     </div>
                                 </div>
                             </td>
                             <td>
                                 <span class="badge ${c.estadoPago === 'al-dia' ? 'badge-success' : 'badge-danger'}">
+                                    <i class="fas ${c.estadoPago === 'al-dia' ? 'fa-check-circle' : 'fa-exclamation-circle'}" style="margin-right:4px;"></i>
                                     ${c.estadoPago === 'al-dia' ? 'Al día' : 'Vencido'}
                                 </span>
-                                <div style="font-size: 0.7rem; color: var(--gray-500); margin-top: 2px;">
+                                <div class="fecha-venc">
+                                    <i class="fas fa-calendar-alt"></i>
                                     ${c.fechaVencimiento ? formatearFecha(c.fechaVencimiento) : 'Sin fecha'}
                                 </div>
                             </td>
-                            <td><span class="badge ${c.estado === 'activo' ? 'badge-success' : 'badge-danger'}">${c.estado}</span></td>
-                            <td>${c.rector}</td>
                             <td>
-                                <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                                <span class="badge ${c.estado === 'activo' ? 'badge-success' : 'badge-gray'}">
+                                    <span class="dot ${c.estado === 'activo' ? 'dot-on' : 'dot-off'}"></span>
+                                    ${c.estado}
+                                </span>
+                            </td>
+                            <td>
+                                <div class="rector-cell">
+                                    <i class="fas fa-user-tie"></i>
+                                    <span>${c.rector}</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="actions-cell">
                                     <button class="btn-info btn-sm" onclick="window.verDetalle('${c.id}')" title="Ver detalle"><i class="fas fa-eye"></i></button>
                                     <button class="btn-warning btn-sm" onclick="window.editarColegio('${c.id}')" title="Editar"><i class="fas fa-edit"></i></button>
                                     <button class="btn-primary btn-sm" onclick="window.cambiarPlan('${c.id}')" title="Cambiar plan"><i class="fas fa-exchange-alt"></i></button>
@@ -1299,7 +1517,7 @@
                                 </div>
                             </td>
                         </tr>
-                    `;
+                        `;
                     }).join('');
             } catch (error) {
                 console.error(error);
@@ -1321,9 +1539,8 @@
                 if (!coleDoc.exists()) { body.innerHTML = `<div class="text-center text-danger">No encontrado</div>`; return; }
                 const c = coleDoc.data();
 
-                let numEst = 0;
-                try { const s = await getDocs(query(collection(db, 'colegios', id, 'matriculas'), where('estado', '==', 'activo'))); numEst = s.size; } catch (e) {}
-                if (numEst === 0) { try { const s = await getDocs(collection(db, 'colegios', id, 'estudiantes')); numEst = s.size; } catch (e) {} }
+                // ✅ Usa el nuevo contador de estudiantes únicos
+                const numEst = await contarEstudiantesUnicos(id);
 
                 let numProf = 0;
                 try { const s = await getDocs(query(collection(db, 'usuarios'), where('colegioId', '==', id), where('rol', '==', 'profesor'))); numProf = s.size; } catch (e) {}
@@ -1424,7 +1641,6 @@
                 actualizarPreviewColorEditar();
                 limpiarErroresEditarColegio();
                 document.getElementById('modalEditarColegio').classList.add('show');
-                // Asegura que el modal siempre abra mostrando el inicio del formulario
                 document.getElementById('editarColegioBody').scrollTop = 0;
             } catch (e) {
                 alert('Error: ' + e.message);
@@ -1436,9 +1652,6 @@
             ['editarNombre', 'editarCiudad'].forEach(id => document.getElementById(id).classList.remove('input-error'));
         }
 
-        // Valida manualmente (en vez de depender de la validación nativa del navegador,
-        // que puede fallar silenciosamente dentro de modales con scroll propio) y,
-        // si falta un campo obligatorio, hace scroll y foco automático hacia él.
         function validarFormEditarColegio() {
             limpiarErroresEditarColegio();
             const campos = [
@@ -1715,7 +1928,6 @@
                 return;
             }
 
-            // Ordenar por fecha desc
             lista.sort((a, b) => new Date(b.fecha || 0) - new Date(a.fecha || 0));
 
             tablaEconomia.innerHTML = lista.map((m, i) => `
