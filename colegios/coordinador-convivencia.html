@@ -1,0 +1,2018 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>EduOne - Coordinación de Convivencia</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #2563EB;
+            --primary-dark: #1E40AF;
+            --primary-light: #EFF6FF;
+            --primary-bg: #EFF6FF;
+            --sidebar-bg: #1E293B;
+            --sidebar-text: #FFFFFF;
+            --sidebar-active: #2563EB;
+            --sidebar-hover: #334155;
+            --topbar-bg: #FFFFFF;
+            --bg: #F1F5F9;
+            --card-bg: #FFFFFF;
+            --border: #E2E8F0;
+            --text-primary: #0F172A;
+            --text-secondary: #64748B;
+            --success: #16A34A;
+            --danger: #DC2626;
+            --warning: #D97706;
+            --info: #0284C7;
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #E2E8F0;
+            --gray-300: #cbd5e1;
+            --gray-400: #94A3B8;
+            --gray-500: #64748B;
+            --gray-600: #475569;
+            --gray-700: #334155;
+            --gray-800: #1e293b;
+            --gray-900: #0F172A;
+            --sidebar-width: 250px;
+            --sidebar-collapsed: 64px;
+            --header-height: 56px;
+            --radius: 10px;
+            --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+            --shadow-lg: 0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.05);
+            --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        html { font-size: 16px; }
+
+        body {
+            font-family: var(--font);
+            background-color: var(--bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; padding: 0; }
+
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: var(--gray-100); }
+        ::-webkit-scrollbar-thumb { background: var(--gray-300); border-radius: 8px; }
+
+        .text-center { text-align: center; }
+        .text-muted { color: var(--gray-500); }
+        .text-success { color: var(--success); }
+        .text-danger { color: var(--danger); }
+        .text-warning { color: var(--warning); }
+
+        .btn-primary {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 10px 20px; background: var(--primary); color: #fff;
+            border: none; border-radius: 8px; font-size: 0.9rem; font-weight: 600;
+            font-family: var(--font); cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+        }
+        .btn-primary:hover { background: var(--primary-dark); }
+        .btn-primary:active { transform: scale(0.97); }
+        .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        .btn-secondary {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 10px 20px; background: var(--gray-200); color: var(--gray-700);
+            border: none; border-radius: 8px; font-size: 0.9rem; font-weight: 600;
+            font-family: var(--font); cursor: pointer;
+        }
+        .btn-secondary:hover { background: var(--gray-300); }
+        .tab-btn.active { background: var(--primary); color: #fff; }
+        .timeline-item { border-left: 3px solid var(--primary); padding: 4px 0 16px 16px; margin-left: 6px; position: relative; }
+        .timeline-item::before { content: ''; position: absolute; left: -7px; top: 6px; width: 11px; height: 11px; border-radius: 50%; background: var(--primary); }
+        .timeline-item .timeline-meta { font-size: 0.75rem; color: var(--gray-500); margin-bottom: 2px; }
+        .timeline-item .timeline-title { font-weight: 600; font-size: 0.9rem; color: var(--gray-800); }
+        .timeline-item .timeline-desc { font-size: 0.85rem; color: var(--gray-600); margin-top: 2px; }
+        .bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+        .bar-row .bar-label { width: 130px; font-size: 0.82rem; color: var(--gray-700); flex-shrink: 0; }
+        .bar-row .bar-track { flex: 1; background: var(--gray-100); border-radius: 6px; height: 18px; overflow: hidden; }
+        .bar-row .bar-fill { height: 100%; border-radius: 6px; background: var(--primary); }
+        .bar-row .bar-count { width: 30px; text-align: right; font-size: 0.82rem; font-weight: 600; color: var(--gray-700); }
+
+        .btn-success {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 8px 14px; background: var(--success); color: #fff;
+            border: none; border-radius: 6px; font-size: 0.8rem; font-weight: 500;
+            font-family: var(--font); cursor: pointer;
+        }
+        .btn-success:hover { background: #16a34a; }
+
+        .btn-danger {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 8px 14px; background: var(--danger); color: #fff;
+            border: none; border-radius: 6px; font-size: 0.8rem; font-weight: 500;
+            font-family: var(--font); cursor: pointer;
+        }
+        .btn-danger:hover { background: #dc2626; }
+
+        .btn-info {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 8px 14px; background: var(--info); color: #fff;
+            border: none; border-radius: 6px; font-size: 0.8rem; font-weight: 500;
+            font-family: var(--font); cursor: pointer;
+        }
+        .btn-info:hover { background: #0369A1; }
+
+        .btn-warning {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 8px 14px; background: var(--warning); color: #fff;
+            border: none; border-radius: 6px; font-size: 0.8rem; font-weight: 500;
+            font-family: var(--font); cursor: pointer;
+        }
+        .btn-warning:hover { background: #d97706; }
+
+        .btn-sm { padding: 6px 12px; font-size: 0.75rem; border-radius: 6px; }
+
+        .badge {
+            display: inline-block; padding: 4px 12px; border-radius: 50px;
+            font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .badge-success { background: #dcfce7; color: #166534; }
+        .badge-danger { background: #fecaca; color: #991b1b; }
+        .badge-warning { background: #fef3c7; color: #92400e; }
+        .badge-info { background: #dbeafe; color: #1e40af; }
+        .badge-gray { background: var(--gray-200); color: var(--gray-600); }
+
+        .badge-rol {
+            display: inline-block; padding: 3px 10px; border-radius: 50px;
+            font-size: 0.68rem; font-weight: 600;
+        }
+        .badge-rol.profesor { background: #dbeafe; color: #1e40af; }
+        .badge-rol.coord_academico { background: #ede9fe; color: #6d28d9; }
+        .badge-rol.coord_convivencia { background: #ffedd5; color: #c2410c; }
+        .badge-rol.secretaria { background: #fce7f3; color: #be185d; }
+        .badge-rol.orientador { background: #ccfbf1; color: #0f766e; }
+        .badge-rol.contador { background: #dcfce7; color: #166534; }
+
+        .card {
+            background: #fff; border-radius: var(--radius);
+            box-shadow: var(--shadow); overflow: hidden; margin-bottom: 24px;
+        }
+        .card-header {
+            padding: 18px 22px; border-bottom: 1px solid var(--gray-200);
+            display: flex; justify-content: space-between; align-items: center;
+            flex-wrap: wrap; gap: 8px;
+        }
+        .card-header h2 { font-size: 1.05rem; font-weight: 600; color: var(--gray-800); }
+        .card-body { padding: 22px; }
+
+        .table-responsive { overflow-x: auto; }
+        .table-modern { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+        .table-modern thead th {
+            background: var(--primary-bg); color: var(--text-secondary);
+            font-weight: 600; font-size: 0.72rem; text-transform: uppercase;
+            letter-spacing: 0.5px; padding: 12px 16px; text-align: left;
+            border-bottom: 2px solid var(--border);
+        }
+        .table-modern tbody td {
+            padding: 12px 16px; border-bottom: 1px solid var(--border);
+            vertical-align: middle;
+        }
+        .table-modern tbody tr:nth-child(even) { background: #FAFAFA; }
+        .table-modern tbody tr:hover { background: var(--gray-50); }
+        .table-modern tbody tr:last-child td { border-bottom: none; }
+
+        .form-group { margin-bottom: 18px; }
+        .form-group label {
+            display: block; font-weight: 500; font-size: 0.85rem;
+            color: var(--gray-700); margin-bottom: 4px;
+        }
+        .form-control {
+            width: 100%; padding: 10px 14px;
+            border: 1.5px solid var(--gray-200); border-radius: 8px;
+            font-size: 0.9rem; font-family: var(--font);
+            transition: border-color 0.2s, box-shadow 0.2s;
+            background: #fff; color: var(--gray-800);
+        }
+        .form-control:focus {
+            outline: none; border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        }
+        .form-control::placeholder { color: var(--gray-400); }
+        select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23475569' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-position: right 14px center;
+            padding-right: 36px;
+        }
+
+        .modal {
+            display: none; position: fixed; inset: 0; z-index: 9999;
+            align-items: center; justify-content: center;
+        }
+        .modal.show { display: flex; }
+        .modal-overlay {
+            position: absolute; inset: 0; background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+        }
+        .modal-content {
+            position: relative; background: #fff; border-radius: var(--radius);
+            max-width: 780px; width: 94%; max-height: 90vh; overflow-y: auto;
+            box-shadow: var(--shadow-lg); animation: modalFade 0.25s ease;
+        }
+        @keyframes modalFade {
+            from { opacity: 0; transform: scale(0.95) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .modal-header {
+            padding: 20px 24px; border-bottom: 1px solid var(--gray-200);
+            display: flex; justify-content: space-between; align-items: center;
+            position: sticky; top: 0; background: #fff; z-index: 1;
+        }
+        .modal-header h2 { font-size: 1.1rem; font-weight: 600; }
+        .modal-close {
+            background: none; border: none; font-size: 1.8rem;
+            color: var(--gray-400); cursor: pointer; padding: 0 6px;
+            line-height: 1; transition: color 0.2s;
+        }
+        .modal-close:hover { color: var(--gray-700); }
+        .modal-body { padding: 22px; }
+        .modal-footer {
+            padding: 16px 22px; border-top: 1px solid var(--gray-200);
+            display: flex; justify-content: flex-end; gap: 12px; flex-wrap: wrap;
+        }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+        .alert {
+            padding: 12px 16px; border-radius: 10px; font-size: 0.9rem;
+            margin-bottom: 16px; display: none;
+        }
+        .alert.show { display: block; }
+        .alert-error { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+        .alert-success { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
+        .alert-info { background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: var(--sidebar-width); height: 100vh;
+            background: var(--sidebar-bg);
+            display: flex; flex-direction: column;
+            position: fixed; top: 0; left: 0; flex-shrink: 0;
+            transition: transform var(--transition), width var(--transition), background var(--transition);
+            z-index: 1000; overflow: hidden;
+        }
+        .sidebar.closed { transform: translateX(-100%); }
+        .sidebar.collapsed { width: var(--sidebar-collapsed); }
+        .sidebar.collapsed .logo span,
+        .sidebar.collapsed .sidebar-nav ul li a span,
+        .sidebar.collapsed .sidebar-nav .nav-section,
+        .sidebar.collapsed .colegio-info-text,
+        .sidebar.collapsed .btn-logout span { display: none; }
+        .sidebar.collapsed .sidebar-nav ul li a { justify-content: center; padding: 12px; }
+        .sidebar.collapsed .sidebar-nav ul li a i { margin: 0; font-size: 1.3rem; }
+        .sidebar.collapsed .btn-logout { justify-content: center; padding: 12px; }
+        .sidebar.collapsed .sidebar-colegio { padding: 12px 8px; justify-content: center; }
+
+        .sidebar-header {
+            padding: 16px 18px; border-bottom: 1px solid rgba(255,255,255,0.08);
+            display: flex; align-items: center; justify-content: space-between;
+            min-height: var(--header-height); flex-shrink: 0;
+        }
+        .sidebar-header .logo {
+            display: flex; align-items: center; gap: 10px;
+            font-weight: 700; font-size: 1.15rem; color: #FFFFFF;
+            white-space: nowrap;
+        }
+        .sidebar-header .logo i {
+            color: #FFFFFF; font-size: 1.3rem;
+            background: rgba(255,255,255,0.12);
+            width: 34px; height: 34px;
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        .sidebar-toggle {
+            background: none; border: none; font-size: 1.1rem;
+            color: rgba(255,255,255,0.7); cursor: pointer;
+            padding: 4px 8px; border-radius: 6px;
+            transition: background 0.2s;
+        }
+        .sidebar-toggle:hover { background: rgba(255,255,255,0.1); }
+
+        .sidebar-close-mobile {
+            display: none; background: none; border: none; font-size: 1.4rem;
+            color: rgba(255,255,255,0.7); cursor: pointer; padding: 4px 8px;
+        }
+
+        .sidebar-colegio {
+            padding: 12px 18px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            flex-shrink: 0;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .sidebar-colegio .colegio-logo {
+            width: 34px; height: 34px; border-radius: 8px;
+            object-fit: cover; background: #fff; padding: 2px;
+            flex-shrink: 0;
+        }
+        .sidebar-colegio .colegio-logo-placeholder {
+            width: 34px; height: 34px; border-radius: 8px;
+            background: rgba(255,255,255,0.15); color: #fff;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1rem; flex-shrink: 0;
+        }
+        .sidebar-colegio .colegio-info-text { flex: 1; min-width: 0; }
+        .sidebar-colegio .colegio-nombre {
+            font-weight: 600; font-size: 0.85rem; color: #FFFFFF;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .sidebar-colegio .colegio-rol {
+            font-size: 0.68rem; color: rgba(255,255,255,0.65);
+            text-transform: uppercase; letter-spacing: 0.5px;
+        }
+
+        .sidebar-nav { flex: 1; padding: 10px 10px; overflow-y: auto; }
+        .sidebar-nav::-webkit-scrollbar { width: 4px; }
+        .sidebar-nav::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 4px; }
+        .sidebar-nav .nav-section {
+            font-size: 0.62rem; text-transform: uppercase;
+            letter-spacing: 0.8px; color: rgba(255,255,255,0.4);
+            font-weight: 600; padding: 12px 12px 5px;
+        }
+        .sidebar-nav ul li { margin-bottom: 2px; }
+        .sidebar-nav ul li a {
+            display: flex; align-items: center; gap: 12px;
+            padding: 9px 12px; border-radius: 8px;
+            color: rgba(255,255,255,0.85); font-weight: 500; font-size: 0.85rem;
+            transition: background 0.15s, color 0.15s;
+            cursor: pointer; white-space: nowrap;
+        }
+        .sidebar-nav ul li a i {
+            width: 20px; font-size: 0.95rem; text-align: center; flex-shrink: 0;
+        }
+        .sidebar-nav ul li a span { flex: 1; }
+        .sidebar-nav ul li a:hover { background: var(--sidebar-hover); color: #FFFFFF; }
+        .sidebar-nav ul li.active a {
+            background: var(--sidebar-active); color: #FFFFFF; font-weight: 600;
+        }
+
+        .sidebar-footer {
+            padding: 12px 14px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            flex-shrink: 0;
+        }
+        .btn-logout {
+            display: flex; align-items: center; gap: 12px; width: 100%;
+            padding: 9px 12px; border: none; border-radius: 8px;
+            background: transparent; color: rgba(255,255,255,0.85);
+            font-weight: 500; font-size: 0.85rem; font-family: var(--font);
+            cursor: pointer; transition: background 0.15s, color 0.15s;
+        }
+        .btn-logout:hover { background: rgba(220,38,38,0.2); color: #FCA5A5; }
+        .btn-logout i { width: 20px; font-size: 0.95rem; text-align: center; }
+
+        .sidebar-overlay {
+            display: none; position: fixed; inset: 0;
+            background: rgba(0, 0, 0, 0.5); z-index: 999;
+            backdrop-filter: blur(2px);
+        }
+        .sidebar-overlay.active { display: block; }
+
+        .main-content {
+            flex: 1; min-height: 100vh; display: flex; flex-direction: column;
+            margin-left: var(--sidebar-width);
+            transition: margin-left var(--transition); width: 100%;
+        }
+        .main-content.expanded { margin-left: var(--sidebar-collapsed); }
+
+        .top-header {
+            height: var(--header-height); background: var(--topbar-bg);
+            border-bottom: 1px solid var(--border); padding: 0 24px;
+            display: flex; align-items: center; justify-content: space-between;
+            position: sticky; top: 0; z-index: 50;
+            flex-shrink: 0; box-shadow: var(--shadow);
+        }
+        .header-left { display: flex; align-items: center; gap: 16px; }
+        .header-left .hamburger-btn {
+            display: none; background: none; border: none; font-size: 1.4rem;
+            color: var(--text-secondary); cursor: pointer; padding: 4px 8px;
+            border-radius: 6px;
+        }
+        .header-left .hamburger-btn:hover { background: var(--gray-100); }
+        .header-left h1 { font-size: 1.1rem; font-weight: 600; color: var(--text-primary); }
+
+        .header-right { display: flex; align-items: center; gap: 14px; }
+        .user-info { text-align: right; }
+        .user-name {
+            display: block; font-weight: 600; font-size: 0.85rem;
+            color: var(--text-primary);
+        }
+        .user-role {
+            display: block; font-size: 0.7rem;
+            color: var(--text-secondary); text-transform: capitalize;
+        }
+        .user-avatar { font-size: 2rem; color: var(--gray-400); }
+
+        .content-area { flex: 1; padding: 24px 28px; }
+
+        .page-content { display: none; animation: fadeIn 0.3s ease; }
+        .page-content.active { display: block; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .stats-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 18px; margin-bottom: 22px;
+        }
+        .stat-card {
+            background: #fff; border-radius: var(--radius);
+            padding: 18px 22px; box-shadow: var(--shadow);
+            display: flex; align-items: center; gap: 16px;
+            transition: box-shadow 0.2s;
+        }
+        .stat-card:hover { box-shadow: var(--shadow-lg); }
+        .stat-icon {
+            width: 48px; height: 48px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.3rem; flex-shrink: 0;
+        }
+        .stat-info { flex: 1; }
+        .stat-label {
+            display: block; font-size: 0.7rem; color: var(--gray-500);
+            font-weight: 500; text-transform: uppercase; letter-spacing: 0.3px;
+        }
+        .stat-value {
+            display: block; font-size: 1.5rem; font-weight: 700;
+            color: var(--gray-900); line-height: 1.2;
+        }
+
+        .info-colegio-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px; margin-bottom: 24px;
+        }
+        .info-colegio-card {
+            background: #fff; border-radius: var(--radius);
+            padding: 14px 18px; box-shadow: var(--shadow);
+            display: flex; align-items: center; gap: 14px;
+        }
+        .info-colegio-card .icon {
+            width: 40px; height: 40px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem; flex-shrink: 0;
+        }
+        .info-colegio-card .label {
+            font-size: 0.65rem; color: var(--gray-500); font-weight: 500;
+            text-transform: uppercase; letter-spacing: 0.3px;
+        }
+        .info-colegio-card .value {
+            font-size: 0.95rem; font-weight: 600; color: var(--gray-900);
+        }
+
+        .welcome-banner {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: var(--radius); padding: 24px 28px; color: #fff;
+            margin-bottom: 24px; display: flex; justify-content: space-between;
+            align-items: center; flex-wrap: wrap; gap: 16px;
+            transition: background 0.3s;
+        }
+        .welcome-banner .welcome-text { flex: 1; min-width: 200px; }
+        .welcome-banner h2 { font-size: 1.25rem; font-weight: 600; }
+        .welcome-banner p { opacity: 0.9; margin-top: 2px; font-size: 0.9rem; }
+        .welcome-banner .badge-colegio {
+            background: rgba(255, 255, 255, 0.2); padding: 6px 18px;
+            border-radius: 50px; font-size: 0.8rem; font-weight: 500;
+        }
+        .welcome-banner .logo-colegio {
+            width: 56px; height: 56px; border-radius: 12px;
+            object-fit: cover; background: #fff; padding: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+        .estado-activo { color: #4ade80; }
+        .estado-inactivo { color: #fca5a5; }
+
+        .loading-overlay {
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: center; min-height: 400px; gap: 16px;
+        }
+        .loading-overlay .spinner {
+            width: 48px; height: 48px; border: 4px solid var(--gray-200);
+            border-top-color: var(--primary); border-radius: 50%;
+            animation: spin 0.8s ease-in-out infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .page-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 20px; flex-wrap: wrap; gap: 12px;
+        }
+        .page-header h2 {
+            font-size: 1.1rem; font-weight: 600; color: var(--gray-800);
+        }
+
+        .plan-card {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: var(--radius); padding: 22px;
+            color: #fff; margin-bottom: 22px;
+            box-shadow: var(--shadow-lg);
+        }
+        .plan-card .plan-header {
+            display: flex; justify-content: space-between; align-items: flex-start;
+            flex-wrap: wrap; gap: 12px; margin-bottom: 14px;
+        }
+        .plan-card .plan-info h3 { font-size: 1.3rem; font-weight: 700; margin-bottom: 2px; }
+        .plan-card .plan-info p { opacity: 0.9; font-size: 0.85rem; }
+        .plan-card .plan-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 6px 14px; border-radius: 50px;
+            font-size: 0.72rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        .plan-card .plan-progress-header {
+            display: flex; justify-content: space-between;
+            align-items: center; margin-bottom: 8px; font-size: 0.85rem;
+        }
+        .plan-card .plan-progress-header strong { font-size: 1rem; }
+        .plan-card .plan-progress-bar {
+            width: 100%; height: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 100px; overflow: hidden;
+        }
+        .plan-card .plan-progress-fill {
+            height: 100%; border-radius: 100px;
+            transition: width 0.4s ease;
+            background: #4ade80;
+        }
+        .plan-card .plan-progress-fill.warning { background: #fbbf24; }
+        .plan-card .plan-progress-fill.danger { background: #f87171; }
+
+        .section-form-title {
+            font-size: 0.9rem;
+            color: var(--gray-600);
+            margin: 20px 0 12px;
+            padding-top: 16px;
+            border-top: 2px dashed var(--gray-200);
+            font-weight: 600;
+        }
+
+        .mov-row-ingreso { color: var(--success); font-weight: 600; }
+        .mov-row-egreso { color: var(--danger); font-weight: 600; }
+
+        .eco-filtros {
+            display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px;
+        }
+        .eco-filtros select, .eco-filtros input { max-width: 220px; }
+
+        @media (max-width: 992px) {
+            .sidebar { transform: translateX(-100%); width: var(--sidebar-width); }
+            .sidebar.open { transform: translateX(0); }
+            .sidebar .logo span { display: inline !important; color: #FFFFFF; }
+            .sidebar .sidebar-nav ul li a span { display: inline !important; }
+            .sidebar .sidebar-nav .nav-section { display: block !important; }
+            .sidebar .colegio-info-text { display: block !important; }
+            .sidebar .btn-logout span { display: inline !important; }
+            .sidebar .btn-logout { justify-content: flex-start; padding: 9px 12px; }
+            .sidebar .sidebar-nav ul li a { justify-content: flex-start; padding: 9px 12px; }
+            .sidebar .sidebar-nav ul li a i { font-size: 0.95rem; }
+            .sidebar .sidebar-toggle { display: none; }
+            .sidebar .sidebar-close-mobile { display: block; }
+            .sidebar-overlay.active { display: block; }
+            .main-content { margin-left: 0 !important; }
+            .header-left .hamburger-btn { display: block; }
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid { grid-template-columns: 1fr 1fr; }
+            .info-colegio-grid { grid-template-columns: 1fr 1fr; }
+            .form-grid { grid-template-columns: 1fr; }
+            .top-header { padding: 0 16px; }
+            .content-area { padding: 16px; }
+            .modal-content { width: 96%; margin: 10px; }
+            .user-info { display: none; }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid { grid-template-columns: 1fr; }
+            .info-colegio-grid { grid-template-columns: 1fr; }
+            .top-header { padding: 0 12px; height: 60px; }
+            .content-area { padding: 12px; }
+            .welcome-banner { flex-direction: column; text-align: center; }
+            .modal-footer { flex-direction: column; }
+            .modal-footer .btn-primary, .modal-footer .btn-secondary {
+                width: 100%; justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>EduOne</span>
+            </div>
+            <button class="sidebar-close-mobile" id="sidebarCloseMobile">
+                <i class="fas fa-times"></i>
+            </button>
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <div class="sidebar-colegio">
+            <div class="colegio-logo-placeholder" id="colegioLogoPlaceholder">
+                <i class="fas fa-school"></i>
+            </div>
+            <img class="colegio-logo" id="colegioLogoImg" style="display: none;" alt="Logo" />
+            <div class="colegio-info-text">
+                <div class="colegio-nombre" id="colegioNombreSidebar">Cargando...</div>
+                <div class="colegio-rol">Coordinación de Convivencia</div>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <ul>
+                <li class="active"><a href="#" data-page="inicio"><i class="fas fa-home"></i><span>Inicio</span></a></li>
+            </ul>
+
+            <div class="nav-section">CONSULTA</div>
+            <ul>
+                <li><a href="#" data-page="estudiantes"><i class="fas fa-user-graduate"></i><span>Estudiantes</span></a></li>
+                <li><a href="#" data-page="cursos"><i class="fas fa-users"></i><span>Cursos y Grupos</span></a></li>
+            </ul>
+
+            <div class="nav-section">CONVIVENCIA</div>
+            <ul>
+                <li><a href="#" data-page="reportes"><i class="fas fa-chart-pie"></i><span>Reportes de convivencia</span></a></li>
+                <li><a href="#" data-page="casos"><i class="fas fa-clipboard-list"></i><span>Casos (quejas/incidentes)</span></a></li>
+                <li><a href="#" data-page="seguimiento"><i class="fas fa-tasks"></i><span>Seguimiento y compromisos</span></a></li>
+                <li><a href="#" data-page="citaciones"><i class="fas fa-calendar-check"></i><span>Citaciones y comunicación</span></a></li>
+                <li><a href="#" data-page="historial"><i class="fas fa-history"></i><span>Historial por estudiante</span></a></li>
+            </ul>
+        </nav>
+
+        <div class="sidebar-footer">
+            <button id="logoutBtn" class="btn-logout">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Cerrar sesión</span>
+            </button>
+        </div>
+    </aside>
+
+    <main class="main-content" id="mainContent">
+        <header class="top-header">
+            <div class="header-left">
+                <button class="hamburger-btn" id="hamburgerBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1 id="pageTitle">Inicio</h1>
+            </div>
+            <div class="header-right">
+                <div class="user-info">
+                    <span class="user-name" id="userName">Cargando...</span>
+                    <span class="user-role" id="userRole">coordinador de convivencia</span>
+                </div>
+                <div class="user-avatar">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+            </div>
+        </header>
+
+        <section class="content-area" id="contentArea">
+
+            <div id="loadingState" class="loading-overlay">
+                <div class="spinner"></div>
+                <p>Cargando información del colegio...</p>
+            </div>
+
+            <!-- INICIO -->
+            <div id="page-inicio" class="page-content active">
+                <div class="welcome-banner" id="welcomeBanner">
+                    <div style="display: flex; align-items: center; gap: 16px; flex: 1; min-width: 200px;">
+                        <div id="bannerLogoContainer">
+                            <i class="fas fa-graduation-cap" style="font-size: 2.5rem;" id="bannerLogoIcon"></i>
+                        </div>
+                        <div class="welcome-text">
+                            <h2 id="bienvenidaNombre">Bienvenido, Coordinador de Convivencia</h2>
+                            <p id="bienvenidaColegio">Colegio: Cargando...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header"><h2>Resumen de convivencia</h2></div>
+                    <div class="card-body">
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-icon" style="background: #dcfce7; color: #16a34a;"><i class="fas fa-user-graduate"></i></div>
+                                <div class="stat-info"><span class="stat-label">Estudiantes</span><span class="stat-value" id="statsEstudiantes">0</span></div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon" style="background: #ffedd5; color: #c2410c;"><i class="fas fa-clipboard-list"></i></div>
+                                <div class="stat-info"><span class="stat-label">Casos abiertos</span><span class="stat-value" id="statsCasosAbiertos">0</span></div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon" style="background: #fef3c7; color: #d97706;"><i class="fas fa-clock"></i></div>
+                                <div class="stat-info"><span class="stat-label">Casos en seguimiento</span><span class="stat-value" id="statsCasosSeguimiento">0</span></div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon" style="background: #dbeafe; color: #2563eb;"><i class="fas fa-calendar-check"></i></div>
+                                <div class="stat-info"><span class="stat-label">Citaciones pendientes</span><span class="stat-value" id="statsCitacionesPendientes">0</span></div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon" style="background: #ede9fe; color: #6d28d9;"><i class="fas fa-tasks"></i></div>
+                                <div class="stat-info"><span class="stat-label">Compromisos pendientes</span><span class="stat-value" id="statsCompromisosPendientes">0</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ESTUDIANTES -->
+            <div id="page-estudiantes" class="page-content">
+                <div class="page-header"><h2><i class="fas fa-user-graduate" style="color: var(--primary);"></i> Consulta de Estudiantes</h2></div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-grid" style="margin-bottom: 16px;">
+                            <div class="form-group"><label>Grado</label><select id="estGrado" class="form-control"><option value="">Todos</option></select></div>
+                            <div class="form-group"><label>Curso</label><select id="estCurso" class="form-control"><option value="">Todos</option></select></div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table-modern">
+                                <thead><tr><th>#</th><th>Nombre</th><th>Documento</th><th>Curso</th><th>Acudiente</th><th>Teléfono acudiente</th></tr></thead>
+                                <tbody id="tablaEstudiantes"><tr><td colspan="6" class="text-center text-muted"><i class="fas fa-spinner fa-spin"></i> Cargando...</td></tr></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CURSOS Y GRUPOS -->
+            <div id="page-cursos" class="page-content">
+                <div class="page-header"><h2><i class="fas fa-users" style="color: var(--primary);"></i> Cursos y Grupos</h2></div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table-modern">
+                                <thead><tr><th>Grado</th><th>Curso</th><th>Año</th><th>Estudiantes matriculados</th><th>Estado</th></tr></thead>
+                                <tbody id="tablaCursosGrupos"><tr><td colspan="5" class="text-center text-muted"><i class="fas fa-spinner fa-spin"></i> Cargando...</td></tr></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- REPORTES DE CONVIVENCIA -->
+            <div id="page-reportes" class="page-content">
+                <div class="page-header"><h2><i class="fas fa-chart-pie" style="color: var(--primary);"></i> Reportes de Convivencia</h2></div>
+                <div class="stats-grid" style="margin-bottom: 20px;">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: #ffedd5; color: #c2410c;"><i class="fas fa-flag"></i></div>
+                        <div class="stat-info"><span class="stat-label">Quejas</span><span class="stat-value" id="repQuejas">0</span></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: #fee2e2; color: #dc2626;"><i class="fas fa-triangle-exclamation"></i></div>
+                        <div class="stat-info"><span class="stat-label">Incidentes</span><span class="stat-value" id="repIncidentes">0</span></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: #fef3c7; color: #d97706;"><i class="fas fa-user-clock"></i></div>
+                        <div class="stat-info"><span class="stat-label">Comportamiento</span><span class="stat-value" id="repComportamiento">0</span></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: #dcfce7; color: #16a34a;"><i class="fas fa-check-circle"></i></div>
+                        <div class="stat-info"><span class="stat-label">Casos cerrados</span><span class="stat-value" id="repCerrados">0</span></div>
+                    </div>
+                </div>
+                <div class="card" style="margin-bottom: 20px;">
+                    <div class="card-header"><h2>Casos por gravedad</h2></div>
+                    <div class="card-body" id="repGravedadBarras"><p class="text-muted text-center"><i class="fas fa-spinner fa-spin"></i> Cargando...</p></div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h2>Estudiantes con más casos registrados</h2></div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table-modern">
+                                <thead><tr><th>#</th><th>Estudiante</th><th>Curso</th><th>Casos registrados</th></tr></thead>
+                                <tbody id="tablaRepEstudiantes"><tr><td colspan="4" class="text-center text-muted"><i class="fas fa-spinner fa-spin"></i> Cargando...</td></tr></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CASOS DE CONVIVENCIA (Quejas / Incidentes / Comportamiento) -->
+            <div id="page-casos" class="page-content">
+                <div class="page-header">
+                    <h2><i class="fas fa-clipboard-list" style="color: var(--primary);"></i> Casos de Convivencia</h2>
+                    <button class="btn-primary" id="btnRegistrarCaso"><i class="fas fa-plus"></i> Registrar caso</button>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-grid" style="margin-bottom: 4px;">
+                            <div class="form-group">
+                                <label>Categoría</label>
+                                <select id="filtroCategoriaCaso" class="form-control">
+                                    <option value="">Todas (quejas, incidentes y comportamiento)</option>
+                                    <option value="queja">Quejas</option>
+                                    <option value="incidente">Incidentes</option>
+                                    <option value="comportamiento">Comportamiento del estudiante</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Estado</label>
+                                <select id="filtroEstadoCaso" class="form-control">
+                                    <option value="">Todos</option>
+                                    <option value="abierto">Abierto</option>
+                                    <option value="en_seguimiento">En seguimiento</option>
+                                    <option value="cerrado">Cerrado</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table-modern">
+                                <thead><tr><th>Estudiante</th><th>Curso</th><th>Categoría</th><th>Tipo</th><th>Gravedad</th><th>Estado</th><th>Acciones</th></tr></thead>
+                                <tbody id="tablaCasos"><tr><td colspan="7" class="text-center text-muted"><i class="fas fa-spinner fa-spin"></i> Cargando...</td></tr></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEGUIMIENTO Y COMPROMISOS -->
+            <div id="page-seguimiento" class="page-content">
+                <div class="page-header"><h2><i class="fas fa-tasks" style="color: var(--primary);"></i> Seguimiento Disciplinario y Compromisos</h2></div>
+                <div class="card" style="margin-bottom: 16px;">
+                    <div class="card-body" style="display: flex; gap: 8px; flex-wrap: wrap; padding-bottom: 0;">
+                        <button class="btn-secondary tab-btn active" id="tabSeguimientos" data-tab="seguimientos">Seguimiento disciplinario</button>
+                        <button class="btn-secondary tab-btn" id="tabCompromisos" data-tab="compromisos">Compromisos del estudiante</button>
+                    </div>
+                </div>
+                <div class="card" id="bloqueSeguimientos">
+                    <div class="card-header"><h2>Bitácora de seguimiento disciplinario</h2></div>
+                    <div class="card-body">
+                        <p class="text-muted" style="margin-bottom: 12px; font-size: 0.85rem;">Cada entrada se registra desde el detalle de un caso ("Gestionar" en Casos de Convivencia).</p>
+                        <div class="table-responsive">
+                            <table class="table-modern">
+                                <thead><tr><th>Fecha</th><th>Estudiante</th><th>Nota de seguimiento</th><th>Registrado por</th></tr></thead>
+                                <tbody id="tablaSeguimientos"><tr><td colspan="4" class="text-center text-muted"><i class="fas fa-spinner fa-spin"></i> Cargando...</td></tr></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="card" id="bloqueCompromisos" style="display: none;">
+                    <div class="card-header"><h2>Compromisos del estudiante</h2></div>
+                    <div class="card-body">
+                        <div class="form-group" style="max-width: 300px;">
+                            <label>Filtrar por estado</label>
+                            <select id="filtroEstadoCompromiso" class="form-control">
+                                <option value="">Todos</option>
+                                <option value="pendiente">Pendiente</option>
+                                <option value="cumplido">Cumplido</option>
+                                <option value="incumplido">Incumplido</option>
+                            </select>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table-modern">
+                                <thead><tr><th>Estudiante</th><th>Compromiso</th><th>Fecha límite</th><th>Estado</th></tr></thead>
+                                <tbody id="tablaCompromisos"><tr><td colspan="4" class="text-center text-muted"><i class="fas fa-spinner fa-spin"></i> Cargando...</td></tr></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CITACIONES Y COMUNICACIÓN CON ACUDIENTES -->
+            <div id="page-citaciones" class="page-content">
+                <div class="page-header">
+                    <h2><i class="fas fa-calendar-check" style="color: var(--primary);"></i> Citaciones y Comunicación con Acudientes</h2>
+                    <button class="btn-primary" id="btnRegistrarCitacion"><i class="fas fa-plus"></i> Registrar contacto</button>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-grid" style="margin-bottom: 4px;">
+                            <div class="form-group">
+                                <label>Tipo de contacto</label>
+                                <select id="filtroTipoCitacion" class="form-control">
+                                    <option value="">Todos</option>
+                                    <option value="citacion">Citación presencial</option>
+                                    <option value="llamada">Llamada telefónica</option>
+                                    <option value="mensaje">Mensaje / WhatsApp</option>
+                                    <option value="correo">Correo electrónico</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Estado</label>
+                                <select id="filtroEstadoCitacion" class="form-control">
+                                    <option value="">Todos</option>
+                                    <option value="pendiente">Pendiente</option>
+                                    <option value="atendida">Atendida / realizada</option>
+                                    <option value="inasistencia">Inasistencia / sin respuesta</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table-modern">
+                                <thead><tr><th>Estudiante</th><th>Curso</th><th>Tipo</th><th>Motivo</th><th>Fecha</th><th>Estado</th><th>Acciones</th></tr></thead>
+                                <tbody id="tablaCitaciones"><tr><td colspan="7" class="text-center text-muted"><i class="fas fa-spinner fa-spin"></i> Cargando...</td></tr></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- HISTORIAL POR ESTUDIANTE -->
+            <div id="page-historial" class="page-content">
+                <div class="page-header"><h2><i class="fas fa-history" style="color: var(--primary);"></i> Historial de Situaciones de Convivencia</h2></div>
+                <div class="card" style="margin-bottom: 16px;">
+                    <div class="card-body">
+                        <div class="form-grid">
+                            <div class="form-group"><label>Grado</label><select id="histGrado" class="form-control"><option value="">Seleccionar</option></select></div>
+                            <div class="form-group"><label>Curso</label><select id="histCurso" class="form-control"><option value="">Seleccionar</option></select></div>
+                            <div class="form-group"><label>Estudiante</label><select id="histEstudiante" class="form-control"><option value="">Seleccionar</option></select></div>
+                        </div>
+                        <button class="btn-primary" id="btnVerHistorial"><i class="fas fa-search"></i> Ver historial completo</button>
+                    </div>
+                </div>
+                <div class="card" id="cardHistorialResultado" style="display: none;">
+                    <div class="card-header"><h2 id="histTituloEstudiante">Historial</h2></div>
+                    <div class="card-body">
+                        <div id="historialTimeline"></div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- MODAL: Registrar Caso de Convivencia -->
+    <div class="modal" id="modalCaso">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-clipboard-list" style="color: var(--primary);"></i> Registrar Caso de Convivencia</h2>
+                <button class="modal-close" id="closeCasoModal">&times;</button>
+            </div>
+            <form id="formCaso">
+                <div class="modal-body">
+                    <div id="casoAlert" class="alert" style="display: none;"><i class="fas fa-info-circle"></i><span id="casoAlertText"></span></div>
+                    <div class="form-grid">
+                        <div class="form-group"><label>Grado *</label><select id="casoGrado" class="form-control" required><option value="">Seleccionar</option></select></div>
+                        <div class="form-group"><label>Curso *</label><select id="casoCurso" class="form-control" required><option value="">Seleccionar</option></select></div>
+                        <div class="form-group"><label>Estudiante *</label><select id="casoEstudiante" class="form-control" required><option value="">Seleccionar</option></select></div>
+                        <div class="form-group">
+                            <label>Categoría *</label>
+                            <select id="casoCategoria" class="form-control" required>
+                                <option value="">Seleccionar</option>
+                                <option value="queja">Queja</option>
+                                <option value="incidente">Incidente</option>
+                                <option value="comportamiento">Comportamiento del estudiante</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Tipo *</label>
+                            <select id="casoTipo" class="form-control" required>
+                                <option value="">Seleccionar</option>
+                                <option value="conflicto_companeros">Conflicto entre compañeros</option>
+                                <option value="incumplimiento_normas">Incumplimiento del manual de convivencia</option>
+                                <option value="agresion">Agresión física o verbal</option>
+                                <option value="acoso_escolar">Acoso escolar</option>
+                                <option value="ausentismo">Ausentismo</option>
+                                <option value="otro">Otro</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Gravedad *</label>
+                            <select id="casoGravedad" class="form-control" required>
+                                <option value="">Seleccionar</option>
+                                <option value="leve">Leve</option>
+                                <option value="grave">Grave</option>
+                                <option value="gravisima">Gravísima</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group"><label>Descripción *</label><textarea id="casoDescripcion" class="form-control" rows="3" required placeholder="Describe lo ocurrido"></textarea></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" id="cancelCasoModal">Cancelar</button>
+                    <button type="submit" class="btn-primary" id="btnGuardarCaso"><i class="fas fa-save"></i> Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: Registrar Citación -->
+    <div class="modal" id="modalCitacion">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-calendar-check" style="color: var(--primary);"></i> Registrar Citación / Comunicación</h2>
+                <button class="modal-close" id="closeCitacionModal">&times;</button>
+            </div>
+            <form id="formCitacion">
+                <div class="modal-body">
+                    <div id="citacionAlert" class="alert" style="display: none;"><i class="fas fa-info-circle"></i><span id="citacionAlertText"></span></div>
+                    <div class="form-grid">
+                        <div class="form-group"><label>Grado *</label><select id="citGrado" class="form-control" required><option value="">Seleccionar</option></select></div>
+                        <div class="form-group"><label>Curso *</label><select id="citCurso" class="form-control" required><option value="">Seleccionar</option></select></div>
+                        <div class="form-group"><label>Estudiante *</label><select id="citEstudiante" class="form-control" required><option value="">Seleccionar</option></select></div>
+                        <div class="form-group">
+                            <label>Tipo de contacto *</label>
+                            <select id="citTipo" class="form-control" required>
+                                <option value="citacion">Citación presencial</option>
+                                <option value="llamada">Llamada telefónica</option>
+                                <option value="mensaje">Mensaje / WhatsApp</option>
+                                <option value="correo">Correo electrónico</option>
+                            </select>
+                        </div>
+                        <div class="form-group"><label>Fecha *</label><input type="date" id="citFecha" class="form-control" required /></div>
+                    </div>
+                    <div class="form-group"><label>Motivo *</label><input type="text" id="citMotivo" class="form-control" required placeholder="Motivo del contacto" /></div>
+                    <div class="form-group"><label>Notas adicionales</label><textarea id="citNotas" class="form-control" rows="2" placeholder="Detalles de la comunicación (opcional)"></textarea></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" id="cancelCitacionModal">Cancelar</button>
+                    <button type="submit" class="btn-primary" id="btnGuardarCitacion"><i class="fas fa-save"></i> Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: Gestionar Caso (Seguimiento + Compromisos) -->
+    <div class="modal" id="modalGestionCaso">
+        <div class="modal-overlay"></div>
+        <div class="modal-content" style="max-width: 780px;">
+            <div class="modal-header">
+                <h2><i class="fas fa-clipboard-list" style="color: var(--primary);"></i> Gestionar caso — <span id="gestionCasoEstudiante">-</span></h2>
+                <button class="modal-close" id="closeGestionCasoModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p style="font-size: 0.85rem; color: var(--gray-600); margin-bottom: 16px;" id="gestionCasoResumen"></p>
+
+                <div style="display: flex; gap: 8px; margin-bottom: 16px;">
+                    <button type="button" class="btn-secondary tab-btn active" id="gestionTabSeguimiento" data-gtab="seguimiento">Seguimiento disciplinario</button>
+                    <button type="button" class="btn-secondary tab-btn" id="gestionTabCompromiso" data-gtab="compromiso">Compromisos</button>
+                </div>
+
+                <!-- Tab: Seguimiento -->
+                <div id="gestionBloqueSeguimiento">
+                    <form id="formNuevoSeguimiento" style="display: flex; gap: 8px; margin-bottom: 16px; align-items: flex-start;">
+                        <div class="form-group" style="flex: 1; margin-bottom: 0;">
+                            <textarea id="nuevoSeguimientoNota" class="form-control" rows="2" placeholder="Registrar nueva nota de seguimiento (acciones tomadas, observaciones, etc.)" required></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary" style="height: fit-content;"><i class="fas fa-plus"></i> Agregar</button>
+                    </form>
+                    <div id="listaSeguimientosCaso"><p class="text-muted text-center">Cargando...</p></div>
+                </div>
+
+                <!-- Tab: Compromisos -->
+                <div id="gestionBloqueCompromiso" style="display: none;">
+                    <form id="formNuevoCompromiso" class="form-grid" style="align-items: flex-end; margin-bottom: 16px;">
+                        <div class="form-group" style="margin-bottom: 0;"><label>Descripción del compromiso *</label><input type="text" id="nuevoCompromisoDescripcion" class="form-control" required placeholder="Ej: Presentar disculpas, cumplir horario, etc." /></div>
+                        <div class="form-group" style="margin-bottom: 0;"><label>Fecha límite</label><input type="date" id="nuevoCompromisoFecha" class="form-control" /></div>
+                        <div style="grid-column: 1 / -1;"><button type="submit" class="btn-primary"><i class="fas fa-plus"></i> Agregar compromiso</button></div>
+                    </form>
+                    <div id="listaCompromisosCaso"><p class="text-muted text-center">Cargando...</p></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" id="closeGestionCasoBtn">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "firebase/app": "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js",
+                "firebase/auth": "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js",
+                "firebase/firestore": "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js"
+            }
+        }
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "firebase/app";
+        import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+        import {
+            getFirestore, doc, getDoc, collection, getDocs, addDoc, updateDoc, deleteDoc,
+            query, where, serverTimestamp
+        } from "firebase/firestore";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyA3U98y5BJWQwpypFCAyNioqSRfXkr9UA0",
+            authDomain: "eduone-5f7cf.firebaseapp.com",
+            projectId: "eduone-5f7cf",
+            storageBucket: "eduone-5f7cf.firebasestorage.app",
+            messagingSenderId: "541282614006",
+            appId: "1:541282614006:web:f8cf617c99f08403df0ad7"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let colegioId = null;
+        let usuarioActual = null;
+        let isLoggingOut = false;
+        let authCheckInProgress = false;
+
+        // =============================================
+        // COLORES / LOGO (idéntico al panel del rector)
+        // =============================================
+        function hexToRgb(hex) {
+            hex = hex.replace('#', '');
+            if (hex.length === 3) hex = hex.split('').map(c => c + c).join('');
+            const num = parseInt(hex, 16);
+            return { r: (num >> 16) & 255, g: (num >> 8) & 255, b: num & 255 };
+        }
+        function rgbToHex(r, g, b) {
+            return '#' + [r, g, b].map(x => {
+                const h = Math.max(0, Math.min(255, Math.round(x))).toString(16);
+                return h.length === 1 ? '0' + h : h;
+            }).join('');
+        }
+        function oscurecer(hex, factor = 0.2) {
+            const { r, g, b } = hexToRgb(hex);
+            return rgbToHex(r * (1 - factor), g * (1 - factor), b * (1 - factor));
+        }
+        function aclarar(hex, factor = 0.9) {
+            const { r, g, b } = hexToRgb(hex);
+            return rgbToHex(r + (255 - r) * factor, g + (255 - g) * factor, b + (255 - b) * factor);
+        }
+        function aplicarColoresColegio(colorPrimario) {
+            if (!colorPrimario) colorPrimario = '#2563EB';
+            const primarioOscuro = oscurecer(colorPrimario, 0.2);
+            document.documentElement.style.setProperty('--primary', colorPrimario);
+            document.documentElement.style.setProperty('--primary-dark', primarioOscuro);
+            document.documentElement.style.setProperty('--primary-bg', aclarar(colorPrimario, 0.9));
+            document.documentElement.style.setProperty('--primary-light', aclarar(colorPrimario, 0.7));
+            document.documentElement.style.setProperty('--sidebar-bg', oscurecer(colorPrimario, 0.75));
+            document.documentElement.style.setProperty('--sidebar-hover', oscurecer(colorPrimario, 0.65));
+            document.documentElement.style.setProperty('--sidebar-active', colorPrimario);
+            const banner = document.getElementById('welcomeBanner');
+            if (banner) banner.style.background = `linear-gradient(135deg, ${colorPrimario} 0%, ${primarioOscuro} 100%)`;
+        }
+        function aplicarLogo(logoUrl) {
+            const placeholder = document.getElementById('colegioLogoPlaceholder');
+            const img = document.getElementById('colegioLogoImg');
+            if (logoUrl) {
+                placeholder.style.display = 'none';
+                img.src = logoUrl;
+                img.style.display = 'block';
+                const bannerIcon = document.getElementById('bannerLogoIcon');
+                if (bannerIcon) {
+                    document.getElementById('bannerLogoContainer').innerHTML = `<img src="${logoUrl}" class="logo-colegio" alt="Logo" />`;
+                }
+            }
+        }
+
+        // =============================================
+        // SIDEBAR
+        // =============================================
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const sidebarCloseMobile = document.getElementById('sidebarCloseMobile');
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const mainContent = document.getElementById('mainContent');
+
+        function openSidebarMobile() {
+            sidebar.classList.remove('collapsed');
+            sidebar.classList.add('open');
+            sidebarOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeSidebarMobile() {
+            sidebar.classList.remove('open');
+            sidebarOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        function toggleSidebarDesktop() {
+            if (window.innerWidth > 992) {
+                sidebar.classList.toggle('collapsed');
+                mainContent.classList.toggle('expanded');
+            }
+        }
+        if (hamburgerBtn) hamburgerBtn.addEventListener('click', openSidebarMobile);
+        if (sidebarCloseMobile) sidebarCloseMobile.addEventListener('click', closeSidebarMobile);
+        if (sidebarOverlay) sidebarOverlay.addEventListener('click', closeSidebarMobile);
+        if (sidebarToggle) sidebarToggle.addEventListener('click', toggleSidebarDesktop);
+        document.querySelectorAll('.sidebar-nav a').forEach(link => {
+            link.addEventListener('click', () => { if (window.innerWidth <= 992) closeSidebarMobile(); });
+        });
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 992) {
+                closeSidebarMobile();
+                sidebar.classList.remove('open');
+                sidebarOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // =============================================
+        // NAVEGACIÓN
+        // =============================================
+        const navLinks = document.querySelectorAll('.sidebar-nav a');
+        const pages = document.querySelectorAll('.page-content');
+        const pageTitle = document.getElementById('pageTitle');
+        const pageNames = {
+            inicio: 'Inicio', estudiantes: 'Estudiantes', cursos: 'Cursos y Grupos',
+            reportes: 'Reportes de convivencia', casos: 'Casos de convivencia',
+            seguimiento: 'Seguimiento y compromisos', citaciones: 'Citaciones y comunicación con acudientes',
+            historial: 'Historial por estudiante'
+        };
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const page = link.dataset.page;
+                navLinks.forEach(l => l.closest('li').classList.remove('active'));
+                link.closest('li').classList.add('active');
+                pages.forEach(p => p.classList.remove('active'));
+                const targetPage = document.getElementById('page-' + page);
+                if (targetPage) targetPage.classList.add('active');
+                if (pageNames[page]) pageTitle.textContent = pageNames[page];
+
+                if (page === 'estudiantes') cargarEstudiantes();
+                if (page === 'cursos') cargarCursosGrupos();
+                if (page === 'reportes') cargarReportesConvivencia();
+                if (page === 'casos') cargarCasos();
+                if (page === 'seguimiento') cargarSeguimientoYCompromisos();
+                if (page === 'citaciones') cargarCitaciones();
+                if (page === 'historial') prepararHistorial();
+            });
+        });
+
+        // =============================================
+        // DASHBOARD / INICIO
+        // =============================================
+        async function cargarDashboard() {
+            try {
+                const colegioDoc = await getDoc(doc(db, 'colegios', colegioId));
+                if (!colegioDoc.exists()) throw new Error('Colegio no existe');
+                const data = colegioDoc.data();
+
+                aplicarColoresColegio(data.colorPrimario);
+                aplicarLogo(data.logoUrl);
+
+                document.getElementById('colegioNombreSidebar').textContent = data.nombre || 'Colegio';
+                document.getElementById('bienvenidaNombre').textContent = `Bienvenido, ${usuarioActual?.nombre || 'Coordinador de Convivencia'}`;
+                document.getElementById('bienvenidaColegio').textContent = `Colegio: ${data.nombre || 'Sin nombre'}`;
+
+                document.getElementById('statsEstudiantes').textContent = (await getDocs(collection(db, 'colegios', colegioId, 'estudiantes'))).size;
+
+                const casosSnap = await getDocs(collection(db, 'colegios', colegioId, 'convivencia_casos'));
+                let abiertos = 0, seguimiento = 0;
+                casosSnap.forEach(d => {
+                    const e = d.data().estado;
+                    if (e === 'abierto') abiertos++;
+                    if (e === 'en_seguimiento') seguimiento++;
+                });
+                document.getElementById('statsCasosAbiertos').textContent = abiertos;
+                document.getElementById('statsCasosSeguimiento').textContent = seguimiento;
+
+                const citQ = query(collection(db, 'colegios', colegioId, 'citaciones'), where('estado', '==', 'pendiente'));
+                document.getElementById('statsCitacionesPendientes').textContent = (await getDocs(citQ)).size;
+
+                const compQ = query(collection(db, 'colegios', colegioId, 'convivencia_compromisos'), where('estado', '==', 'pendiente'));
+                document.getElementById('statsCompromisosPendientes').textContent = (await getDocs(compQ)).size;
+
+                document.getElementById('loadingState').style.display = 'none';
+            } catch (error) {
+                console.error(error);
+                document.getElementById('loadingState').innerHTML = `
+                    <div style="color: var(--danger); font-size: 2rem;"><i class="fas fa-exclamation-circle"></i></div>
+                    <h3>Error al cargar el colegio</h3>
+                    <p>${error.message}</p>
+                    <button class="btn-primary" onclick="location.reload()">Reintentar</button>
+                `;
+            }
+        }
+
+        // =============================================
+        // FILTROS EN CASCADA (Grado -> Curso -> Estudiante)
+        // =============================================
+        async function cargarFiltros(gId, cId, eId) {
+            const gradoSelect = document.getElementById(gId);
+            const cursoSelect = document.getElementById(cId);
+            const estudianteSelect = eId ? document.getElementById(eId) : null;
+            const gradosSnap = await getDocs(collection(db, 'colegios', colegioId, 'grados'));
+            gradoSelect.innerHTML = '<option value="">Seleccionar</option>';
+            gradosSnap.forEach(d => { gradoSelect.innerHTML += `<option value="${d.id}">${d.data().nombre || 'Grado'}</option>`; });
+            gradoSelect.onchange = async () => {
+                cursoSelect.innerHTML = '<option value="">Seleccionar</option>';
+                if (estudianteSelect) estudianteSelect.innerHTML = '<option value="">Seleccionar</option>';
+                if (gradoSelect.value) {
+                    const q = query(collection(db, 'colegios', colegioId, 'cursos'), where('gradoId', '==', gradoSelect.value));
+                    const snap = await getDocs(q);
+                    snap.forEach(d => { cursoSelect.innerHTML += `<option value="${d.id}">${d.data().nombre || 'Curso'}</option>`; });
+                }
+            };
+            if (estudianteSelect) {
+                cursoSelect.onchange = async () => {
+                    estudianteSelect.innerHTML = '<option value="">Seleccionar</option>';
+                    if (cursoSelect.value) {
+                        const q = query(collection(db, 'colegios', colegioId, 'matriculas'), where('cursoId', '==', cursoSelect.value), where('estado', '==', 'activo'));
+                        const snap = await getDocs(q);
+                        for (const mDoc of snap.docs) {
+                            const m = mDoc.data();
+                            const estDoc = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', m.estudianteId));
+                            if (estDoc.exists()) {
+                                const e = estDoc.data();
+                                estudianteSelect.innerHTML += `<option value="${m.estudianteId}">${e.nombres || ''} ${e.apellidos || ''}</option>`;
+                            }
+                        }
+                    }
+                };
+            }
+        }
+
+        // =============================================
+        // ESTUDIANTES (consulta)
+        // =============================================
+        async function cargarEstudiantes() {
+            await cargarFiltros('estGrado', 'estCurso', null);
+            document.getElementById('estCurso').addEventListener('change', pintarEstudiantesPorFiltro);
+            await pintarEstudiantes();
+        }
+        async function pintarEstudiantesPorFiltro() {
+            await pintarEstudiantes(document.getElementById('estCurso').value);
+        }
+        async function pintarEstudiantes(cursoIdFiltro) {
+            const tbody = document.getElementById('tablaEstudiantes');
+            tbody.innerHTML = `<tr><td colspan="6" class="text-center text-muted"><i class="fas fa-spinner fa-spin"></i> Cargando...</td></tr>`;
+            try {
+                const cursosSnap = await getDocs(collection(db, 'colegios', colegioId, 'cursos'));
+                const cursos = {};
+                cursosSnap.forEach(d => cursos[d.id] = d.data().nombre || 'Curso');
+
+                let matSnap;
+                if (cursoIdFiltro) {
+                    matSnap = await getDocs(query(collection(db, 'colegios', colegioId, 'matriculas'), where('cursoId', '==', cursoIdFiltro), where('estado', '==', 'activo')));
+                } else {
+                    matSnap = await getDocs(query(collection(db, 'colegios', colegioId, 'matriculas'), where('estado', '==', 'activo')));
+                }
+                if (matSnap.empty) {
+                    tbody.innerHTML = `<tr><td colspan="6" class="text-center text-muted">No hay estudiantes matriculados</td></tr>`;
+                    return;
+                }
+                let html = '';
+                let i = 1;
+                for (const mDoc of matSnap.docs) {
+                    const m = mDoc.data();
+                    const estDoc = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', m.estudianteId));
+                    if (!estDoc.exists()) continue;
+                    const e = estDoc.data();
+                    html += `<tr>
+                        <td>${i++}</td>
+                        <td>${e.nombres || ''} ${e.apellidos || ''}</td>
+                        <td>${e.documento || '-'}</td>
+                        <td>${cursos[m.cursoId] || '-'}</td>
+                        <td>${e.acudienteNombre || '-'}</td>
+                        <td>${e.acudienteTelefono || '-'}</td>
+                    </tr>`;
+                }
+                tbody.innerHTML = html || `<tr><td colspan="6" class="text-center text-muted">No hay estudiantes</td></tr>`;
+            } catch (e) {
+                tbody.innerHTML = `<tr><td colspan="6" class="text-center text-danger">Error: ${e.message}</td></tr>`;
+            }
+        }
+
+        // =============================================
+        // CURSOS Y GRUPOS (consulta)
+        // =============================================
+        async function cargarCursosGrupos() {
+            const tbody = document.getElementById('tablaCursosGrupos');
+            try {
+                const gradosSnap = await getDocs(collection(db, 'colegios', colegioId, 'grados'));
+                const grados = {};
+                gradosSnap.forEach(d => grados[d.id] = d.data().nombre || 'Grado');
+
+                const cursosSnap = await getDocs(collection(db, 'colegios', colegioId, 'cursos'));
+                if (cursosSnap.empty) {
+                    tbody.innerHTML = `<tr><td colspan="5" class="text-center text-muted">No hay cursos</td></tr>`;
+                    return;
+                }
+                let html = '';
+                for (const cursoDoc of cursosSnap.docs) {
+                    const c = cursoDoc.data();
+                    const matQ = query(collection(db, 'colegios', colegioId, 'matriculas'), where('cursoId', '==', cursoDoc.id), where('estado', '==', 'activo'));
+                    const matSnap = await getDocs(matQ);
+                    html += `
+                        <tr>
+                            <td>${grados[c.gradoId] || '-'}</td>
+                            <td>${c.nombre || '-'}</td>
+                            <td>${c.anio || '-'}</td>
+                            <td>${matSnap.size}</td>
+                            <td><span class="badge ${c.estado === 'activo' ? 'badge-success' : 'badge-danger'}">${c.estado || '-'}</span></td>
+                        </tr>`;
+                }
+                tbody.innerHTML = html;
+            } catch (e) {
+                tbody.innerHTML = `<tr><td colspan="5" class="text-center text-danger">Error: ${e.message}</td></tr>`;
+            }
+        }
+
+        // =============================================
+        // CASOS DE CONVIVENCIA
+        // =============================================
+        const tipoCasoLabels = {
+            conflicto_companeros: 'Conflicto entre compañeros', incumplimiento_normas: 'Incumplimiento del manual',
+            agresion: 'Agresión física o verbal', acoso_escolar: 'Acoso escolar', ausentismo: 'Ausentismo', otro: 'Otro'
+        };
+        const gravedadLabels = { leve: 'Leve', grave: 'Grave', gravisima: 'Gravísima' };
+        const categoriaLabels = { queja: 'Queja', incidente: 'Incidente', comportamiento: 'Comportamiento' };
+        const categoriaColor = { queja: '#c2410c', incidente: '#dc2626', comportamiento: '#d97706' };
+        let casosCache = [];
+        async function cargarCasos() {
+            const tbody = document.getElementById('tablaCasos');
+            const filtroEstado = document.getElementById('filtroEstadoCaso').value;
+            const filtroCategoria = document.getElementById('filtroCategoriaCaso').value;
+            try {
+                const snap = await getDocs(collection(db, 'colegios', colegioId, 'convivencia_casos'));
+                const items = [];
+                snap.forEach(d => {
+                    const c = d.data();
+                    if (filtroEstado && c.estado !== filtroEstado) return;
+                    if (filtroCategoria && c.categoria !== filtroCategoria) return;
+                    items.push({ id: d.id, ...c });
+                });
+                casosCache = items;
+                if (items.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="7" class="text-center text-muted">No hay casos registrados</td></tr>`;
+                    return;
+                }
+                const estadoColor = { abierto: 'var(--danger)', en_seguimiento: 'var(--warning)', cerrado: 'var(--success)' };
+                const estadoLabels = { abierto: 'Abierto', en_seguimiento: 'En seguimiento', cerrado: 'Cerrado' };
+                let html = '';
+                items.forEach(c => {
+                    const catColor = categoriaColor[c.categoria] || 'var(--gray-500)';
+                    html += `<tr>
+                        <td>${c.estudianteNombre || '-'}</td>
+                        <td>${c.cursoNombre || '-'}</td>
+                        <td><span style="background:${catColor}22; color:${catColor}; padding:2px 8px; border-radius:6px; font-size:0.75rem; font-weight:600;">${categoriaLabels[c.categoria] || 'Sin categoría'}</span></td>
+                        <td>${tipoCasoLabels[c.tipo] || c.tipo || '-'}</td>
+                        <td>${gravedadLabels[c.gravedad] || c.gravedad || '-'}</td>
+                        <td>
+                            <select class="form-control" style="padding: 4px 8px; font-size: 0.75rem;" onchange="window.actualizarCaso('${c.id}', this.value)">
+                                <option value="abierto" ${c.estado === 'abierto' ? 'selected' : ''}>Abierto</option>
+                                <option value="en_seguimiento" ${c.estado === 'en_seguimiento' ? 'selected' : ''}>En seguimiento</option>
+                                <option value="cerrado" ${c.estado === 'cerrado' ? 'selected' : ''}>Cerrado</option>
+                            </select>
+                        </td>
+                        <td><button type="button" class="btn-secondary btn-sm" onclick="window.abrirGestionCaso('${c.id}')"><i class="fas fa-folder-open"></i> Gestionar</button></td>
+                    </tr>`;
+                });
+                tbody.innerHTML = html;
+                window.actualizarCaso = async (id, estado) => {
+                    await updateDoc(doc(db, 'colegios', colegioId, 'convivencia_casos', id), { estado });
+                    cargarDashboard();
+                };
+            } catch (e) {
+                tbody.innerHTML = `<tr><td colspan="7" class="text-center text-danger">Error: ${e.message}</td></tr>`;
+            }
+        }
+        document.getElementById('filtroEstadoCaso')?.addEventListener('change', cargarCasos);
+        document.getElementById('filtroCategoriaCaso')?.addEventListener('change', cargarCasos);
+        document.getElementById('btnRegistrarCaso')?.addEventListener('click', async () => {
+            document.getElementById('formCaso').reset();
+            document.getElementById('casoAlert').style.display = 'none';
+            await cargarFiltros('casoGrado', 'casoCurso', 'casoEstudiante');
+            document.getElementById('modalCaso').classList.add('show');
+        });
+        document.getElementById('closeCasoModal')?.addEventListener('click', () => document.getElementById('modalCaso').classList.remove('show'));
+        document.getElementById('cancelCasoModal')?.addEventListener('click', () => document.getElementById('modalCaso').classList.remove('show'));
+        document.getElementById('formCaso')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const cursoId = document.getElementById('casoCurso').value;
+            const estudianteId = document.getElementById('casoEstudiante').value;
+            const categoria = document.getElementById('casoCategoria').value;
+            const tipo = document.getElementById('casoTipo').value;
+            const gravedad = document.getElementById('casoGravedad').value;
+            const descripcion = document.getElementById('casoDescripcion').value.trim();
+            const alertBox = document.getElementById('casoAlert');
+            const alertText = document.getElementById('casoAlertText');
+            if (!cursoId || !estudianteId || !categoria || !tipo || !gravedad || !descripcion) {
+                alertBox.className = 'alert alert-error show';
+                alertText.textContent = 'Completa todos los campos obligatorios';
+                alertBox.style.display = 'flex';
+                return;
+            }
+            const btn = document.getElementById('btnGuardarCaso');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
+            try {
+                const estDoc = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', estudianteId));
+                const cursoDoc = await getDoc(doc(db, 'colegios', colegioId, 'cursos', cursoId));
+                await addDoc(collection(db, 'colegios', colegioId, 'convivencia_casos'), {
+                    estudianteId,
+                    estudianteNombre: estDoc.exists() ? `${estDoc.data().nombres || ''} ${estDoc.data().apellidos || ''}` : '-',
+                    cursoId, cursoNombre: cursoDoc.data()?.nombre || '-',
+                    categoria, tipo, gravedad, descripcion, estado: 'abierto',
+                    registradoPor: usuarioActual?.nombre || '',
+                    fechaRegistro: serverTimestamp()
+                });
+                alertBox.className = 'alert alert-success show';
+                alertText.textContent = '✅ Caso registrado';
+                alertBox.style.display = 'flex';
+                setTimeout(() => {
+                    document.getElementById('modalCaso').classList.remove('show');
+                    cargarCasos();
+                    cargarDashboard();
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-save"></i> Guardar';
+                }, 1200);
+            } catch (err) {
+                alertBox.className = 'alert alert-error show';
+                alertText.textContent = '❌ ' + err.message;
+                alertBox.style.display = 'flex';
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-save"></i> Guardar';
+            }
+        });
+
+        // =============================================
+        // GESTIONAR CASO: Seguimiento disciplinario + Compromisos
+        // =============================================
+        let casoGestionActual = null;
+
+        window.abrirGestionCaso = async (casoId) => {
+            const caso = casosCache.find(c => c.id === casoId) || (await getDoc(doc(db, 'colegios', colegioId, 'convivencia_casos', casoId))).data();
+            if (!caso) return alert('Caso no encontrado');
+            casoGestionActual = { id: casoId, ...caso };
+            document.getElementById('gestionCasoEstudiante').textContent = caso.estudianteNombre || '-';
+            document.getElementById('gestionCasoResumen').textContent =
+                `${categoriaLabels[caso.categoria] || 'Caso'} · ${tipoCasoLabels[caso.tipo] || caso.tipo || ''} · Gravedad: ${gravedadLabels[caso.gravedad] || caso.gravedad || '-'} · Curso: ${caso.cursoNombre || '-'}`;
+            document.getElementById('formNuevoSeguimiento').reset();
+            document.getElementById('formNuevoCompromiso').reset();
+            cambiarTabGestion('seguimiento');
+            document.getElementById('modalGestionCaso').classList.add('show');
+            await Promise.all([cargarSeguimientosDeCaso(casoId), cargarCompromisosDeCaso(casoId)]);
+        };
+        document.getElementById('closeGestionCasoModal')?.addEventListener('click', () => document.getElementById('modalGestionCaso').classList.remove('show'));
+        document.getElementById('closeGestionCasoBtn')?.addEventListener('click', () => document.getElementById('modalGestionCaso').classList.remove('show'));
+
+        function cambiarTabGestion(tab) {
+            document.getElementById('gestionTabSeguimiento').classList.toggle('active', tab === 'seguimiento');
+            document.getElementById('gestionTabCompromiso').classList.toggle('active', tab === 'compromiso');
+            document.getElementById('gestionBloqueSeguimiento').style.display = tab === 'seguimiento' ? 'block' : 'none';
+            document.getElementById('gestionBloqueCompromiso').style.display = tab === 'compromiso' ? 'block' : 'none';
+        }
+        document.getElementById('gestionTabSeguimiento')?.addEventListener('click', () => cambiarTabGestion('seguimiento'));
+        document.getElementById('gestionTabCompromiso')?.addEventListener('click', () => cambiarTabGestion('compromiso'));
+
+        async function cargarSeguimientosDeCaso(casoId) {
+            const cont = document.getElementById('listaSeguimientosCaso');
+            cont.innerHTML = '<p class="text-muted text-center">Cargando...</p>';
+            try {
+                const q = query(collection(db, 'colegios', colegioId, 'convivencia_seguimientos'), where('casoId', '==', casoId));
+                const snap = await getDocs(q);
+                if (snap.empty) { cont.innerHTML = '<p class="text-muted text-center">Sin seguimientos registrados aún</p>'; return; }
+                const items = [];
+                snap.forEach(d => items.push({ id: d.id, ...d.data() }));
+                items.sort((a, b) => (b.fechaRegistro?.seconds || 0) - (a.fechaRegistro?.seconds || 0));
+                cont.innerHTML = items.map(s => `
+                    <div class="timeline-item">
+                        <div class="timeline-meta">${s.fechaRegistro?.toDate ? s.fechaRegistro.toDate().toLocaleString('es-CO') : 'Justo ahora'} · ${s.registradoPor || ''}</div>
+                        <div class="timeline-desc">${s.nota || ''}</div>
+                    </div>`).join('');
+            } catch (e) {
+                cont.innerHTML = `<p class="text-danger">Error: ${e.message}</p>`;
+            }
+        }
+
+        document.getElementById('formNuevoSeguimiento')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!casoGestionActual) return;
+            const nota = document.getElementById('nuevoSeguimientoNota').value.trim();
+            if (!nota) return;
+            try {
+                await addDoc(collection(db, 'colegios', colegioId, 'convivencia_seguimientos'), {
+                    casoId: casoGestionActual.id,
+                    estudianteId: casoGestionActual.estudianteId,
+                    estudianteNombre: casoGestionActual.estudianteNombre,
+                    nota, registradoPor: usuarioActual?.nombre || '',
+                    fechaRegistro: serverTimestamp()
+                });
+                document.getElementById('formNuevoSeguimiento').reset();
+                await cargarSeguimientosDeCaso(casoGestionActual.id);
+            } catch (err) {
+                alert('❌ ' + err.message);
+            }
+        });
+
+        async function cargarCompromisosDeCaso(casoId) {
+            const cont = document.getElementById('listaCompromisosCaso');
+            cont.innerHTML = '<p class="text-muted text-center">Cargando...</p>';
+            try {
+                const q = query(collection(db, 'colegios', colegioId, 'convivencia_compromisos'), where('casoId', '==', casoId));
+                const snap = await getDocs(q);
+                if (snap.empty) { cont.innerHTML = '<p class="text-muted text-center">Sin compromisos registrados aún</p>'; return; }
+                const items = [];
+                snap.forEach(d => items.push({ id: d.id, ...d.data() }));
+                const estadoLabels = { pendiente: 'Pendiente', cumplido: 'Cumplido', incumplido: 'Incumplido' };
+                cont.innerHTML = items.map(c => `
+                    <div class="timeline-item">
+                        <div class="timeline-title">${c.descripcion || ''}</div>
+                        <div class="timeline-meta">Fecha límite: ${c.fechaLimite || 'Sin definir'}</div>
+                        <select class="form-control" style="max-width: 180px; padding: 4px 8px; font-size: 0.75rem; margin-top: 4px;" onchange="window.actualizarCompromiso('${c.id}', this.value)">
+                            <option value="pendiente" ${c.estado === 'pendiente' ? 'selected' : ''}>Pendiente</option>
+                            <option value="cumplido" ${c.estado === 'cumplido' ? 'selected' : ''}>Cumplido</option>
+                            <option value="incumplido" ${c.estado === 'incumplido' ? 'selected' : ''}>Incumplido</option>
+                        </select>
+                    </div>`).join('');
+            } catch (e) {
+                cont.innerHTML = `<p class="text-danger">Error: ${e.message}</p>`;
+            }
+        }
+
+        window.actualizarCompromiso = async (id, estado) => {
+            await updateDoc(doc(db, 'colegios', colegioId, 'convivencia_compromisos', id), { estado });
+            if (casoGestionActual) await cargarCompromisosDeCaso(casoGestionActual.id);
+            cargarDashboard();
+        };
+
+        document.getElementById('formNuevoCompromiso')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!casoGestionActual) return;
+            const descripcion = document.getElementById('nuevoCompromisoDescripcion').value.trim();
+            const fechaLimite = document.getElementById('nuevoCompromisoFecha').value;
+            if (!descripcion) return;
+            try {
+                await addDoc(collection(db, 'colegios', colegioId, 'convivencia_compromisos'), {
+                    casoId: casoGestionActual.id,
+                    estudianteId: casoGestionActual.estudianteId,
+                    estudianteNombre: casoGestionActual.estudianteNombre,
+                    descripcion, fechaLimite: fechaLimite || null, estado: 'pendiente',
+                    registradoPor: usuarioActual?.nombre || '',
+                    fechaRegistro: serverTimestamp()
+                });
+                document.getElementById('formNuevoCompromiso').reset();
+                await cargarCompromisosDeCaso(casoGestionActual.id);
+                cargarDashboard();
+            } catch (err) {
+                alert('❌ ' + err.message);
+            }
+        });
+
+        // =============================================
+        // SEGUIMIENTO Y COMPROMISOS (vista global)
+        // =============================================
+        document.getElementById('tabSeguimientos')?.addEventListener('click', () => cambiarTabGlobal('seguimientos'));
+        document.getElementById('tabCompromisos')?.addEventListener('click', () => cambiarTabGlobal('compromisos'));
+        function cambiarTabGlobal(tab) {
+            document.getElementById('tabSeguimientos').classList.toggle('active', tab === 'seguimientos');
+            document.getElementById('tabCompromisos').classList.toggle('active', tab === 'compromisos');
+            document.getElementById('bloqueSeguimientos').style.display = tab === 'seguimientos' ? 'block' : 'none';
+            document.getElementById('bloqueCompromisos').style.display = tab === 'compromisos' ? 'block' : 'none';
+        }
+        async function cargarSeguimientoYCompromisos() {
+            const tbodySeg = document.getElementById('tablaSeguimientos');
+            tbodySeg.innerHTML = `<tr><td colspan="4" class="text-center text-muted"><i class="fas fa-spinner fa-spin"></i> Cargando...</td></tr>`;
+            try {
+                const snap = await getDocs(collection(db, 'colegios', colegioId, 'convivencia_seguimientos'));
+                const items = [];
+                snap.forEach(d => items.push({ id: d.id, ...d.data() }));
+                items.sort((a, b) => (b.fechaRegistro?.seconds || 0) - (a.fechaRegistro?.seconds || 0));
+                tbodySeg.innerHTML = items.length ? items.map(s => `
+                    <tr>
+                        <td>${s.fechaRegistro?.toDate ? s.fechaRegistro.toDate().toLocaleDateString('es-CO') : '-'}</td>
+                        <td>${s.estudianteNombre || '-'}</td>
+                        <td>${s.nota || '-'}</td>
+                        <td>${s.registradoPor || '-'}</td>
+                    </tr>`).join('') : `<tr><td colspan="4" class="text-center text-muted">No hay seguimientos registrados</td></tr>`;
+            } catch (e) {
+                tbodySeg.innerHTML = `<tr><td colspan="4" class="text-center text-danger">Error: ${e.message}</td></tr>`;
+            }
+            await cargarCompromisosGlobal();
+        }
+        async function cargarCompromisosGlobal() {
+            const tbody = document.getElementById('tablaCompromisos');
+            const filtroEstado = document.getElementById('filtroEstadoCompromiso').value;
+            tbody.innerHTML = `<tr><td colspan="4" class="text-center text-muted"><i class="fas fa-spinner fa-spin"></i> Cargando...</td></tr>`;
+            try {
+                const snap = await getDocs(collection(db, 'colegios', colegioId, 'convivencia_compromisos'));
+                const items = [];
+                snap.forEach(d => {
+                    const c = d.data();
+                    if (filtroEstado && c.estado !== filtroEstado) return;
+                    items.push({ id: d.id, ...c });
+                });
+                const estadoLabels = { pendiente: 'Pendiente', cumplido: 'Cumplido', incumplido: 'Incumplido' };
+                const estadoColor = { pendiente: 'var(--warning)', cumplido: 'var(--success)', incumplido: 'var(--danger)' };
+                tbody.innerHTML = items.length ? items.map(c => `
+                    <tr>
+                        <td>${c.estudianteNombre || '-'}</td>
+                        <td>${c.descripcion || '-'}</td>
+                        <td>${c.fechaLimite || 'Sin definir'}</td>
+                        <td>
+                            <select class="form-control" style="padding: 4px 8px; font-size: 0.75rem;" onchange="window.actualizarCompromiso('${c.id}', this.value)">
+                                <option value="pendiente" ${c.estado === 'pendiente' ? 'selected' : ''}>Pendiente</option>
+                                <option value="cumplido" ${c.estado === 'cumplido' ? 'selected' : ''}>Cumplido</option>
+                                <option value="incumplido" ${c.estado === 'incumplido' ? 'selected' : ''}>Incumplido</option>
+                            </select>
+                        </td>
+                    </tr>`).join('') : `<tr><td colspan="4" class="text-center text-muted">No hay compromisos registrados</td></tr>`;
+            } catch (e) {
+                tbody.innerHTML = `<tr><td colspan="4" class="text-center text-danger">Error: ${e.message}</td></tr>`;
+            }
+        }
+        document.getElementById('filtroEstadoCompromiso')?.addEventListener('change', cargarCompromisosGlobal);
+
+        // =============================================
+        // CITACIONES A ACUDIENTES
+        // =============================================
+        const tipoContactoLabels = { citacion: 'Citación presencial', llamada: 'Llamada telefónica', mensaje: 'Mensaje / WhatsApp', correo: 'Correo electrónico' };
+        async function cargarCitaciones() {
+            const tbody = document.getElementById('tablaCitaciones');
+            const filtroEstado = document.getElementById('filtroEstadoCitacion').value;
+            const filtroTipo = document.getElementById('filtroTipoCitacion').value;
+            try {
+                const snap = await getDocs(collection(db, 'colegios', colegioId, 'citaciones'));
+                const items = [];
+                snap.forEach(d => {
+                    const c = d.data();
+                    if (filtroEstado && c.estado !== filtroEstado) return;
+                    if (filtroTipo && (c.tipo || 'citacion') !== filtroTipo) return;
+                    items.push({ id: d.id, ...c });
+                });
+                if (items.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="7" class="text-center text-muted">No hay citaciones ni comunicaciones registradas</td></tr>`;
+                    return;
+                }
+                const estadoColor = { pendiente: 'var(--warning)', atendida: 'var(--success)', inasistencia: 'var(--danger)' };
+                const estadoLabels = { pendiente: 'Pendiente', atendida: 'Atendida / realizada', inasistencia: 'Inasistencia / sin respuesta' };
+                let html = '';
+                items.forEach(c => {
+                    html += `<tr>
+                        <td>${c.estudianteNombre || '-'}</td>
+                        <td>${c.cursoNombre || '-'}</td>
+                        <td>${tipoContactoLabels[c.tipo] || 'Citación presencial'}</td>
+                        <td>${c.motivo || '-'}</td>
+                        <td>${c.fecha || '-'}</td>
+                        <td><span style="color: ${estadoColor[c.estado] || 'var(--gray-500)'}; font-weight: 600;">${estadoLabels[c.estado] || c.estado}</span></td>
+                        <td>
+                            <select class="form-control" style="padding: 4px 8px; font-size: 0.75rem;" onchange="window.actualizarCitacion('${c.id}', this.value)">
+                                <option value="pendiente" ${c.estado === 'pendiente' ? 'selected' : ''}>Pendiente</option>
+                                <option value="atendida" ${c.estado === 'atendida' ? 'selected' : ''}>Atendida</option>
+                                <option value="inasistencia" ${c.estado === 'inasistencia' ? 'selected' : ''}>Sin respuesta</option>
+                            </select>
+                        </td>
+                    </tr>`;
+                });
+                tbody.innerHTML = html;
+                window.actualizarCitacion = async (id, estado) => {
+                    await updateDoc(doc(db, 'colegios', colegioId, 'citaciones', id), { estado });
+                    cargarDashboard();
+                };
+            } catch (e) {
+                tbody.innerHTML = `<tr><td colspan="7" class="text-center text-danger">Error: ${e.message}</td></tr>`;
+            }
+        }
+        document.getElementById('filtroEstadoCitacion')?.addEventListener('change', cargarCitaciones);
+        document.getElementById('filtroTipoCitacion')?.addEventListener('change', cargarCitaciones);
+        document.getElementById('btnRegistrarCitacion')?.addEventListener('click', async () => {
+            document.getElementById('formCitacion').reset();
+            document.getElementById('citacionAlert').style.display = 'none';
+            await cargarFiltros('citGrado', 'citCurso', 'citEstudiante');
+            document.getElementById('modalCitacion').classList.add('show');
+        });
+        document.getElementById('closeCitacionModal')?.addEventListener('click', () => document.getElementById('modalCitacion').classList.remove('show'));
+        document.getElementById('cancelCitacionModal')?.addEventListener('click', () => document.getElementById('modalCitacion').classList.remove('show'));
+        document.getElementById('formCitacion')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const cursoId = document.getElementById('citCurso').value;
+            const estudianteId = document.getElementById('citEstudiante').value;
+            const tipo = document.getElementById('citTipo').value;
+            const fecha = document.getElementById('citFecha').value;
+            const motivo = document.getElementById('citMotivo').value.trim();
+            const notas = document.getElementById('citNotas').value.trim();
+            const alertBox = document.getElementById('citacionAlert');
+            const alertText = document.getElementById('citacionAlertText');
+            if (!cursoId || !estudianteId || !tipo || !fecha || !motivo) {
+                alertBox.className = 'alert alert-error show';
+                alertText.textContent = 'Completa todos los campos obligatorios';
+                alertBox.style.display = 'flex';
+                return;
+            }
+            const btn = document.getElementById('btnGuardarCitacion');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
+            try {
+                const estDoc = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', estudianteId));
+                const cursoDoc = await getDoc(doc(db, 'colegios', colegioId, 'cursos', cursoId));
+                await addDoc(collection(db, 'colegios', colegioId, 'citaciones'), {
+                    estudianteId,
+                    estudianteNombre: estDoc.exists() ? `${estDoc.data().nombres || ''} ${estDoc.data().apellidos || ''}` : '-',
+                    cursoId, cursoNombre: cursoDoc.data()?.nombre || '-',
+                    tipo, fecha, motivo, notas, estado: 'pendiente',
+                    registradoPor: usuarioActual?.nombre || '',
+                    fechaRegistro: serverTimestamp()
+                });
+                alertBox.className = 'alert alert-success show';
+                alertText.textContent = '✅ Citación registrada';
+                alertBox.style.display = 'flex';
+                setTimeout(() => {
+                    document.getElementById('modalCitacion').classList.remove('show');
+                    cargarCitaciones();
+                    cargarDashboard();
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-save"></i> Guardar';
+                }, 1200);
+            } catch (err) {
+                alertBox.className = 'alert alert-error show';
+                alertText.textContent = '❌ ' + err.message;
+                alertBox.style.display = 'flex';
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-save"></i> Guardar';
+            }
+        });
+
+        // =============================================
+        // REPORTES DE CONVIVENCIA
+        // =============================================
+        async function cargarReportesConvivencia() {
+            try {
+                const snap = await getDocs(collection(db, 'colegios', colegioId, 'convivencia_casos'));
+                const casos = [];
+                snap.forEach(d => casos.push({ id: d.id, ...d.data() }));
+
+                const porCategoria = { queja: 0, incidente: 0, comportamiento: 0 };
+                const porGravedad = { leve: 0, grave: 0, gravisima: 0 };
+                let cerrados = 0;
+                const porEstudiante = {};
+                casos.forEach(c => {
+                    if (porCategoria[c.categoria] !== undefined) porCategoria[c.categoria]++;
+                    if (porGravedad[c.gravedad] !== undefined) porGravedad[c.gravedad]++;
+                    if (c.estado === 'cerrado') cerrados++;
+                    const key = c.estudianteId || c.estudianteNombre;
+                    if (!key) return;
+                    if (!porEstudiante[key]) porEstudiante[key] = { nombre: c.estudianteNombre, curso: c.cursoNombre, count: 0 };
+                    porEstudiante[key].count++;
+                });
+
+                document.getElementById('repQuejas').textContent = porCategoria.queja;
+                document.getElementById('repIncidentes').textContent = porCategoria.incidente;
+                document.getElementById('repComportamiento').textContent = porCategoria.comportamiento;
+                document.getElementById('repCerrados').textContent = cerrados;
+
+                const totalGravedad = Math.max(1, casos.length);
+                const gravedadLabelsRep = { leve: 'Leve', grave: 'Grave', gravisima: 'Gravísima' };
+                const gravedadColorRep = { leve: '#16a34a', grave: '#d97706', gravisima: '#dc2626' };
+                document.getElementById('repGravedadBarras').innerHTML = Object.keys(porGravedad).map(g => `
+                    <div class="bar-row">
+                        <div class="bar-label">${gravedadLabelsRep[g]}</div>
+                        <div class="bar-track"><div class="bar-fill" style="width:${(porGravedad[g] / totalGravedad) * 100}%; background:${gravedadColorRep[g]};"></div></div>
+                        <div class="bar-count">${porGravedad[g]}</div>
+                    </div>`).join('') || '<p class="text-muted text-center">Sin datos aún</p>';
+
+                const topEstudiantes = Object.values(porEstudiante).sort((a, b) => b.count - a.count).slice(0, 10);
+                const tbody = document.getElementById('tablaRepEstudiantes');
+                tbody.innerHTML = topEstudiantes.length ? topEstudiantes.map((e, i) => `
+                    <tr><td>${i + 1}</td><td>${e.nombre || '-'}</td><td>${e.curso || '-'}</td><td>${e.count}</td></tr>
+                `).join('') : `<tr><td colspan="4" class="text-center text-muted">No hay casos registrados aún</td></tr>`;
+            } catch (e) {
+                document.getElementById('repGravedadBarras').innerHTML = `<p class="text-danger">Error: ${e.message}</p>`;
+            }
+        }
+
+        // =============================================
+        // HISTORIAL DE SITUACIONES DE CONVIVENCIA (por estudiante)
+        // =============================================
+        async function prepararHistorial() {
+            await cargarFiltros('histGrado', 'histCurso', 'histEstudiante');
+            document.getElementById('cardHistorialResultado').style.display = 'none';
+        }
+        document.getElementById('btnVerHistorial')?.addEventListener('click', async () => {
+            const estudianteId = document.getElementById('histEstudiante').value;
+            if (!estudianteId) return alert('Selecciona un estudiante');
+            const btn = document.getElementById('btnVerHistorial');
+            const original = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Cargando...';
+            try {
+                const estDoc = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', estudianteId));
+                const nombre = estDoc.exists() ? `${estDoc.data().nombres || ''} ${estDoc.data().apellidos || ''}` : 'Estudiante';
+                document.getElementById('histTituloEstudiante').textContent = `Historial de convivencia — ${nombre}`;
+
+                const eventos = [];
+
+                const casosSnap = await getDocs(query(collection(db, 'colegios', colegioId, 'convivencia_casos'), where('estudianteId', '==', estudianteId)));
+                casosSnap.forEach(d => {
+                    const c = d.data();
+                    eventos.push({
+                        fecha: c.fechaRegistro, tipo: 'caso',
+                        titulo: `${categoriaLabels[c.categoria] || 'Caso'}: ${tipoCasoLabels[c.tipo] || c.tipo || ''}`,
+                        desc: `${c.descripcion || ''} · Gravedad: ${gravedadLabels[c.gravedad] || c.gravedad || '-'} · Estado: ${c.estado || '-'}`
+                    });
+                });
+
+                const segSnap = await getDocs(query(collection(db, 'colegios', colegioId, 'convivencia_seguimientos'), where('estudianteId', '==', estudianteId)));
+                segSnap.forEach(d => {
+                    const s = d.data();
+                    eventos.push({ fecha: s.fechaRegistro, tipo: 'seguimiento', titulo: 'Seguimiento disciplinario', desc: s.nota || '' });
+                });
+
+                const compSnap = await getDocs(query(collection(db, 'colegios', colegioId, 'convivencia_compromisos'), where('estudianteId', '==', estudianteId)));
+                compSnap.forEach(d => {
+                    const c = d.data();
+                    const estadoLabels = { pendiente: 'Pendiente', cumplido: 'Cumplido', incumplido: 'Incumplido' };
+                    eventos.push({ fecha: c.fechaRegistro, tipo: 'compromiso', titulo: `Compromiso (${estadoLabels[c.estado] || c.estado})`, desc: c.descripcion || '' });
+                });
+
+                const citSnap = await getDocs(query(collection(db, 'colegios', colegioId, 'citaciones'), where('estudianteId', '==', estudianteId)));
+                citSnap.forEach(d => {
+                    const c = d.data();
+                    eventos.push({ fecha: c.fechaRegistro, tipo: 'citacion', titulo: `${tipoContactoLabels[c.tipo] || 'Citación'} a acudiente`, desc: `${c.motivo || ''}${c.notas ? ' — ' + c.notas : ''}` });
+                });
+
+                eventos.sort((a, b) => (b.fecha?.seconds || 0) - (a.fecha?.seconds || 0));
+
+                const cont = document.getElementById('historialTimeline');
+                cont.innerHTML = eventos.length ? eventos.map(ev => `
+                    <div class="timeline-item">
+                        <div class="timeline-meta">${ev.fecha?.toDate ? ev.fecha.toDate().toLocaleString('es-CO') : 'Sin fecha'}</div>
+                        <div class="timeline-title">${ev.titulo}</div>
+                        <div class="timeline-desc">${ev.desc}</div>
+                    </div>`).join('') : '<p class="text-muted text-center">Este estudiante no tiene situaciones de convivencia registradas</p>';
+
+                document.getElementById('cardHistorialResultado').style.display = 'block';
+            } catch (e) {
+                alert('❌ Error al cargar historial: ' + e.message);
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = original;
+            }
+        });
+
+        // =============================================
+        // AUTH
+        // =============================================
+        onAuthStateChanged(auth, async (user) => {
+            if (authCheckInProgress) return;
+            authCheckInProgress = true;
+            if (isLoggingOut) { authCheckInProgress = false; return; }
+            if (!user) { window.location.href = '../login.html'; authCheckInProgress = false; return; }
+            try {
+                const userDoc = await getDoc(doc(db, 'usuarios', user.uid));
+                if (!userDoc.exists()) {
+                    await signOut(auth);
+                    window.location.href = '../login.html';
+                    authCheckInProgress = false;
+                    return;
+                }
+                const data = userDoc.data();
+                if (data.rol === 'coord_convivencia' && data.activo !== false && data.colegioId) {
+                    colegioId = data.colegioId;
+                    usuarioActual = data;
+                    document.getElementById('userName').textContent = data.nombre || user.email;
+                    document.getElementById('userRole').textContent = 'Coordinador de Convivencia';
+                    await cargarDashboard();
+                } else if (data.rol === 'coord_convivencia' && data.activo === false) {
+                    alert('⛔ Cuenta inactiva.');
+                    await signOut(auth);
+                    window.location.href = '../login.html';
+                } else {
+                    const rolesMap = {
+                        'superadmin': '../PanelAdmin/AdminPanel.html',
+                        'rector': 'colegio.html', 'admin_colegio': 'colegio.html',
+                        'profesor': 'profesor.html', 'estudiante': 'estudiante.html', 'acudiente': 'acudiente.html',
+                        'coord_academico': 'coordinador-academico.html'
+                    };
+                    window.location.href = rolesMap[data.rol] || '../login.html';
+                }
+            } catch (error) {
+                console.error(error);
+                window.location.href = '../login.html';
+            } finally {
+                authCheckInProgress = false;
+            }
+        });
+
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            if (confirm('¿Cerrar sesión?')) {
+                try {
+                    isLoggingOut = true;
+                    await signOut(auth);
+                    window.location.href = '../login.html';
+                } catch (e) { alert('Error'); isLoggingOut = false; }
+            }
+        });
+
+        console.log('✅ EduOne - Panel de Coordinación de Convivencia cargado');
+    </script>
+
+</body>
+</html>
