@@ -1122,10 +1122,7 @@
         </section>
     </main>
 
-    <!-- =========================================== -->
-    <!-- MODALES                                      -->
-    <!-- =========================================== -->
-
+    <!-- MODALES -->
     <!-- Modal Estudiante (inscribir) -->
     <div class="modal" id="modalEstudiante">
         <div class="modal-overlay"></div>
@@ -1347,6 +1344,7 @@
             <form id="formEditarPersonal">
                 <div class="modal-body">
                     <input type="hidden" id="editPersonalId" />
+                    <input type="hidden" id="editPersonalUid" />
                     <div class="form-group">
                         <label>Rol</label>
                         <select id="editPersonalRol" class="form-control" required>
@@ -1359,7 +1357,8 @@
                         </select>
                     </div>
                     <div class="form-grid">
-                        <div class="form-group"><label>Nombre completo *</label><input type="text" id="editPersonalNombre" class="form-control" required /></div>
+                        <div class="form-group"><label>Nombres *</label><input type="text" id="editPersonalNombres" class="form-control" required /></div>
+                        <div class="form-group"><label>Apellidos *</label><input type="text" id="editPersonalApellidos" class="form-control" required /></div>
                         <div class="form-group"><label>Documento</label><input type="text" id="editPersonalDocumento" class="form-control" /></div>
                         <div class="form-group"><label>Correo</label><input type="email" id="editPersonalCorreo" class="form-control" disabled /></div>
                         <div class="form-group"><label>Teléfono</label><input type="text" id="editPersonalTelefono" class="form-control" /></div>
@@ -1786,9 +1785,6 @@
             contador: 'Contador'
         };
 
-        // =============================================
-        // HELPERS
-        // =============================================
         function formatearPrecio(v) {
             return '$' + Number(v || 0).toLocaleString('es-CO');
         }
@@ -1796,29 +1792,20 @@
         function formatearFechaHora(fechaStr, timestamp) {
             try {
                 let fecha;
-                if (timestamp && timestamp.toDate) {
-                    fecha = timestamp.toDate();
-                } else if (timestamp) {
-                    fecha = new Date(timestamp);
-                } else if (fechaStr) {
-                    fecha = new Date(fechaStr + 'T12:00:00');
-                } else {
-                    return 'Sin fecha';
-                }
+                if (timestamp && timestamp.toDate) fecha = timestamp.toDate();
+                else if (timestamp) fecha = new Date(timestamp);
+                else if (fechaStr) fecha = new Date(fechaStr + 'T12:00:00');
+                else return 'Sin fecha';
                 const dia = String(fecha.getDate()).padStart(2, '0');
                 const mes = String(fecha.getMonth() + 1).padStart(2, '0');
                 const anio = fecha.getFullYear();
                 const hh = String(fecha.getHours()).padStart(2, '0');
                 const mm = String(fecha.getMinutes()).padStart(2, '0');
                 return `${dia}/${mes}/${anio} ${hh}:${mm}`;
-            } catch (e) {
-                return 'Fecha inválida';
-            }
+            } catch (e) { return 'Fecha inválida'; }
         }
 
-        // =============================================
         // COLORES
-        // =============================================
         function hexToRgb(hex) {
             hex = hex.replace('#', '');
             if (hex.length === 3) hex = hex.split('').map(c => c + c).join('');
@@ -1869,9 +1856,7 @@
             }
         }
 
-        // =============================================
         // CREAR CUENTA CON APP SECUNDARIA
-        // =============================================
         let secondaryApp = null;
         function getSecondaryApp() {
             if (!secondaryApp) {
@@ -1893,21 +1878,28 @@
                 return user.uid;
             } catch (error) {
                 if (error.code === 'auth/email-already-in-use') {
+                    // Buscar el usuario existente en Firestore
                     const q = query(collection(db, 'usuarios'), where('email', '==', email));
                     const snap = await getDocs(q);
                     if (!snap.empty) {
-                        const u = snap.docs[0].data();
-                        if (u.rol === rol && u.colegioId === colegioId) return snap.docs[0].id;
-                        throw new Error(`El correo ${email} ya está registrado con otro rol (${u.rol}).`);
+                        const userDoc = snap.docs[0];
+                        const u = userDoc.data();
+                        // Actualizar SIEMPRE con los datos correctos (esto es el fix principal)
+                        await updateDoc(doc(db, 'usuarios', userDoc.id), {
+                            nombre: nombre || u.nombre,
+                            rol: rol || u.rol,
+                            colegioId: colegioId || u.colegioId,
+                            activo: true,
+                            fechaActualizacion: serverTimestamp()
+                        });
+                        return userDoc.id;
                     }
                 }
                 throw error;
             }
         }
 
-        // =============================================
         // SIDEBAR
-        // =============================================
         const sidebar = document.getElementById('sidebar');
         const sidebarOverlay = document.getElementById('sidebarOverlay');
         const hamburgerBtn = document.getElementById('hamburgerBtn');
@@ -1952,9 +1944,7 @@
             }
         });
 
-        // =============================================
         // NAVEGACIÓN
-        // =============================================
         const navLinks = document.querySelectorAll('.sidebar-nav a');
         const pages = document.querySelectorAll('.page-content');
         const pageTitle = document.getElementById('pageTitle');
@@ -1990,9 +1980,7 @@
             });
         });
 
-        // =============================================
         // DASHBOARD
-        // =============================================
         async function cargarDashboard() {
             try {
                 const colegioDoc = await getDoc(doc(db, 'colegios', colegioId));
@@ -2028,14 +2016,9 @@
                 document.getElementById('statsEstudiantes').textContent = estudiantesActualesCount;
                 actualizarPlanUI(estudiantesActualesCount, maxEstudiantesPlan);
 
-                const personalQ = query(collection(db, 'usuarios'), where('colegioId', '==', colegioId));
-                const personalSnap = await getDocs(personalQ);
-                let personalCount = 0;
-                personalSnap.forEach(d => {
-                    const rol = d.data().rol;
-                    if (['profesor','coord_academico','coord_convivencia','secretaria','orientador','contador'].includes(rol)) personalCount++;
-                });
-                document.getElementById('statsProfesores').textContent = personalCount;
+                // ✅ Personal: leer desde subcolección 'profesores'
+                const personalSnap = await getDocs(collection(db, 'colegios', colegioId, 'profesores'));
+                document.getElementById('statsProfesores').textContent = personalSnap.size;
 
                 document.getElementById('statsGrados').textContent = (await getDocs(collection(db, 'colegios', colegioId, 'grados'))).size;
                 document.getElementById('statsCursos').textContent = (await getDocs(collection(db, 'colegios', colegioId, 'cursos'))).size;
@@ -2080,9 +2063,7 @@
             }
         }
 
-        // =============================================
         // ESTUDIANTES
-        // =============================================
         async function cargarEstudiantes() {
             const tbody = document.getElementById('tablaEstudiantes');
             try {
@@ -2197,7 +2178,6 @@
                         document.getElementById('editEstAcudienteEmail').value = d.acudienteEmail || '';
                         document.getElementById('editEstEstado').value = d.estado || 'activo';
 
-                        // Cargar resumen de matrícula
                         const matQ = query(
                             collection(db, 'colegios', colegioId, 'matriculas'),
                             where('estudianteId', '==', estudianteId)
@@ -2340,9 +2320,7 @@
             }
         }
 
-        // =============================================
         // REGISTRAR ESTUDIANTE
-        // =============================================
         document.getElementById('btnRegistrarEstudiante')?.addEventListener('click', async () => {
             const estSnap = await getDocs(collection(db, 'colegios', colegioId, 'estudiantes'));
             estudiantesActualesCount = estSnap.size;
@@ -2527,7 +2505,6 @@
             document.getElementById('modalEstudiante').classList.remove('show');
         });
 
-        // Guardar cambios del estudiante editado (solo datos personales)
         document.getElementById('formEditarEstudiante')?.addEventListener('submit', async (e) => {
             e.preventDefault();
             const estudianteId = document.getElementById('editEstudianteId').value;
@@ -2570,9 +2547,7 @@
             document.getElementById('modalEditarEstudiante').classList.remove('show');
         });
 
-        // =============================================
         // ABONAR MATRÍCULA
-        // =============================================
         document.getElementById('abonarMonto')?.addEventListener('input', () => {
             if (!matriculaEditActual) return;
             const monto = parseFloat(document.getElementById('abonarMonto').value) || 0;
@@ -2663,26 +2638,79 @@
         });
 
         // =============================================
-        // PERSONAL
+        // PERSONAL - CORREGIDO: lee desde subcolección 'profesores'
         // =============================================
         async function cargarPersonal() {
             const tbody = document.getElementById('tablaPersonal');
             const filtroRol = document.getElementById('filtroRolPersonal').value;
             try {
-                const q = query(collection(db, 'usuarios'), where('colegioId', '==', colegioId));
-                const snap = await getDocs(q);
-                const personal = [];
-                snap.forEach(d => {
-                    const data = d.data();
-                    const rolesValidos = ['profesor','coord_academico','coord_convivencia','secretaria','orientador','contador'];
-                    if (rolesValidos.includes(data.rol)) {
-                        if (filtroRol && data.rol !== filtroRol) return;
-                        personal.push({ id: d.id, ...data });
-                    }
+                // 1) Traer todos los profesores de la subcolección del colegio
+                const profSnap = await getDocs(collection(db, 'colegios', colegioId, 'profesores'));
+
+                // 2) Traer todos los usuarios vinculados al colegio (para enriquecer con email, uid, activo)
+                const usuariosSnap = await getDocs(query(collection(db, 'usuarios'), where('colegioId', '==', colegioId)));
+                const usuariosPorEmail = {};
+                const usuariosPorNombre = {};
+                usuariosSnap.forEach(u => {
+                    const ud = u.data();
+                    if (ud.email) usuariosPorEmail[ud.email.toLowerCase()] = { id: u.id, ...ud };
+                    if (ud.nombre) usuariosPorNombre[(ud.nombre || '').toLowerCase()] = { id: u.id, ...ud };
                 });
 
+                // 3) Combinar: la fuente principal es 'profesores', se enriquece con 'usuarios'
+                const personal = [];
+                profSnap.forEach(d => {
+                    const p = d.data();
+                    const email = (p.correo || p.email || '').toLowerCase();
+                    const usuario = usuariosPorEmail[email] || usuariosPorNombre[(p.nombres || '').toLowerCase()] || null;
+
+                    const rol = p.rol || usuario?.rol || 'profesor';
+                    if (filtroRol && rol !== filtroRol) return;
+
+                    personal.push({
+                        id: d.id,               // ID del doc en 'profesores'
+                        uid: usuario?.id || '', // UID en 'usuarios' (si existe)
+                        nombres: p.nombres || '',
+                        apellidos: p.apellidos || '',
+                        nombre: `${p.nombres || ''} ${p.apellidos || ''}`.trim(),
+                        documento: p.documento || '',
+                        email: p.correo || p.email || usuario?.email || '',
+                        telefono: p.telefono || '',
+                        rol: rol,
+                        activo: usuario ? (usuario.activo !== false) : (p.estado !== 'inactivo')
+                    });
+                });
+
+                // 4) También incluir usuarios que tengan rol de personal pero no estén en 'profesores'
+                usuariosSnap.forEach(u => {
+                    const ud = u.data();
+                    const rolesValidos = ['profesor','coord_academico','coord_convivencia','secretaria','orientador','contador'];
+                    if (!rolesValidos.includes(ud.rol)) return;
+
+                    const yaEsta = personal.some(p => (p.email || '').toLowerCase() === (ud.email || '').toLowerCase());
+                    if (yaEsta) return;
+
+                    if (filtroRol && ud.rol !== filtroRol) return;
+
+                    personal.push({
+                        id: u.id,
+                        uid: u.id,
+                        nombres: ud.nombre || '',
+                        apellidos: '',
+                        nombre: ud.nombre || '',
+                        documento: ud.documento || '',
+                        email: ud.email || '',
+                        telefono: ud.telefono || '',
+                        rol: ud.rol,
+                        activo: ud.activo !== false
+                    });
+                });
+
+                // Ordenar por nombre
+                personal.sort((a, b) => (a.nombre || '').localeCompare(b.nombre || ''));
+
                 if (personal.length === 0) {
-                    tbody.innerHTML = `<tr><td colspan="8" class="text-center text-muted">No hay personal</td></tr>`;
+                    tbody.innerHTML = `<tr><td colspan="8" class="text-center text-muted">No hay personal registrado</td></tr>`;
                     return;
                 }
 
@@ -2692,17 +2720,17 @@
                     html += `
                         <tr>
                             <td>${i + 1}</td>
-                            <td>${p.nombre || '-'}</td>
+                            <td><strong>${p.nombre || '-'}</strong></td>
                             <td>${p.documento || '-'}</td>
                             <td>${p.email || '-'}</td>
                             <td>${p.telefono || '-'}</td>
                             <td><span class="badge-rol ${p.rol}">${rolLabel}</span></td>
                             <td><span class="badge ${p.activo ? 'badge-success' : 'badge-danger'}">${p.activo ? 'Activo' : 'Inactivo'}</span></td>
                             <td>
-                                <button class="btn-warning btn-sm" onclick="window.editarPersonal('${p.id}')" title="Editar">
+                                <button class="btn-warning btn-sm" onclick="window.editarPersonal('${p.id}', '${p.uid || ''}')" title="Editar">
                                     <i class="fas fa-edit"></i>
                                 </button>
-                                <button class="btn-danger btn-sm" onclick="window.eliminarPersonal('${p.id}')" title="Eliminar">
+                                <button class="btn-danger btn-sm" onclick="window.eliminarPersonal('${p.id}', '${p.uid || ''}', '${(p.email || '').replace(/'/g,"\\'")}')" title="Eliminar">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </td>
@@ -2711,35 +2739,93 @@
                 });
                 tbody.innerHTML = html;
 
-                window.eliminarPersonal = async (id) => {
-                    if (confirm('¿Eliminar este miembro del personal?')) {
-                        await deleteDoc(doc(db, 'usuarios', id));
+                // Eliminar: borra tanto de 'profesores' como de 'usuarios'
+                window.eliminarPersonal = async (docId, uid, email) => {
+                    if (!confirm(`¿Eliminar a "${email || 'este usuario'}"?\n\nSe eliminará el registro en profesores y en usuarios.`)) return;
+                    try {
+                        // Eliminar de 'profesores'
+                        try {
+                            await deleteDoc(doc(db, 'colegios', colegioId, 'profesores', docId));
+                        } catch (e) { console.warn('No se pudo eliminar de profesores:', e); }
+
+                        // Eliminar de 'usuarios' (si tenemos uid o si el docId corresponde a un usuario)
+                        if (uid) {
+                            try {
+                                await deleteDoc(doc(db, 'usuarios', uid));
+                            } catch (e) { console.warn('No se pudo eliminar de usuarios (uid):', e); }
+                        } else {
+                            try {
+                                await deleteDoc(doc(db, 'usuarios', docId));
+                            } catch (e) { /* silencioso */ }
+                        }
+
+                        // Si tenemos el email, también buscamos por email para eliminar la cuenta de usuarios
+                        if (email) {
+                            const q = query(collection(db, 'usuarios'), where('email', '==', email));
+                            const snap = await getDocs(q);
+                            for (const u of snap.docs) {
+                                try { await deleteDoc(u.ref); } catch (e) {}
+                            }
+                        }
+
+                        alert('✅ Personal eliminado');
                         cargarPersonal();
                         cargarDashboard();
+                    } catch (e) {
+                        alert('❌ Error: ' + e.message);
                     }
                 };
 
-                window.editarPersonal = async (id) => {
+                // Editar: carga desde 'profesores' y completa con 'usuarios' si aplica
+                window.editarPersonal = async (docId, uid) => {
                     try {
-                        const docSnap = await getDoc(doc(db, 'usuarios', id));
-                        if (!docSnap.exists()) { alert('No encontrado'); return; }
-                        const d = docSnap.data();
+                        // Intentar leer primero desde 'profesores'
+                        let fuente = 'profesores';
+                        let d = null;
+                        try {
+                            const profDoc = await getDoc(doc(db, 'colegios', colegioId, 'profesores', docId));
+                            if (profDoc.exists()) {
+                                d = profDoc.data();
+                            }
+                        } catch (e) {}
 
-                        document.getElementById('editPersonalId').value = id;
-                        document.getElementById('editPersonalNombre').value = d.nombre || '';
+                        // Si no existe en profesores, es un doc de 'usuarios'
+                        if (!d && uid) {
+                            const userDoc = await getDoc(doc(db, 'usuarios', uid));
+                            if (userDoc.exists()) {
+                                d = userDoc.data();
+                                fuente = 'usuarios';
+                            }
+                        } else if (!d) {
+                            const userDoc = await getDoc(doc(db, 'usuarios', docId));
+                            if (userDoc.exists()) {
+                                d = userDoc.data();
+                                fuente = 'usuarios';
+                            }
+                        }
+
+                        if (!d) { alert('No encontrado'); return; }
+
+                        document.getElementById('editPersonalId').value = docId;
+                        document.getElementById('editPersonalUid').value = uid || (fuente === 'usuarios' ? docId : '');
+                        document.getElementById('editPersonalNombres').value = d.nombres || (d.nombre ? d.nombre.split(' ')[0] : '') || '';
+                        document.getElementById('editPersonalApellidos').value = d.apellidos || (d.nombre ? d.nombre.split(' ').slice(1).join(' ') : '') || '';
                         document.getElementById('editPersonalDocumento').value = d.documento || '';
-                        document.getElementById('editPersonalCorreo').value = d.email || '';
+                        document.getElementById('editPersonalCorreo').value = d.correo || d.email || '';
                         document.getElementById('editPersonalTelefono').value = d.telefono || '';
                         document.getElementById('editPersonalRol').value = d.rol || 'profesor';
-                        document.getElementById('editPersonalActivo').value = d.activo ? 'true' : 'false';
+                        const activo = d.activo !== undefined ? d.activo : (d.estado !== 'inactivo');
+                        document.getElementById('editPersonalActivo').value = activo ? 'true' : 'false';
 
                         document.getElementById('modalEditarPersonal').classList.add('show');
                     } catch (e) {
                         alert('Error: ' + e.message);
                     }
                 };
+
             } catch (e) {
-                tbody.innerHTML = `<tr><td colspan="8" class="text-center text-danger">Error</td></tr>`;
+                console.error('Error cargando personal:', e);
+                tbody.innerHTML = `<tr><td colspan="8" class="text-center text-danger">Error al cargar personal: ${e.message}</td></tr>`;
             }
         }
 
@@ -2748,6 +2834,7 @@
         document.getElementById('btnRegistrarPersonal')?.addEventListener('click', () => {
             document.getElementById('modalPersonal').classList.add('show');
             document.getElementById('formPersonal').reset();
+            document.getElementById('personalAlert').className = 'alert';
         });
         document.getElementById('closePersonalModal')?.addEventListener('click', () => {
             document.getElementById('modalPersonal').classList.remove('show');
@@ -2756,6 +2843,7 @@
             document.getElementById('modalPersonal').classList.remove('show');
         });
 
+        // REGISTRAR PERSONAL - AHORA GUARDA colegioId Y email EN 'profesores'
         document.getElementById('formPersonal')?.addEventListener('submit', async (e) => {
             e.preventDefault();
             const rol = document.getElementById('personalRol').value;
@@ -2770,19 +2858,42 @@
                 showPersonalAlert('Completa todos los campos', 'error');
                 return;
             }
+            if (password.length < 6) {
+                showPersonalAlert('La contraseña debe tener al menos 6 caracteres', 'error');
+                return;
+            }
 
             const btn = document.getElementById('btnGuardarPersonal');
             btn.disabled = true;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
 
             try {
+                // 1) Guardar SIEMPRE en la subcolección 'profesores' con colegioId y email
                 await addDoc(collection(db, 'colegios', colegioId, 'profesores'), {
-                    nombres, apellidos, documento, correo, telefono, rol,
+                    nombres,
+                    apellidos,
+                    documento,
+                    correo,
+                    email: correo,
+                    telefono: telefono || '',
+                    rol,
+                    colegioId,                    // ← importante
                     estado: 'activo',
                     fechaRegistro: serverTimestamp()
                 });
-                await crearCuentaUsuario(correo, password, `${nombres} ${apellidos}`, rol, colegioId);
-                showPersonalAlert('✅ Personal registrado', 'success');
+
+                // 2) Crear/actualizar la cuenta de usuario en 'usuarios'
+                try {
+                    await crearCuentaUsuario(correo, password, `${nombres} ${apellidos}`, rol, colegioId);
+                } catch (err) {
+                    console.warn('No se pudo crear la cuenta de usuario:', err.message);
+                    showPersonalAlert('⚠️ Se guardó en personal, pero no se pudo crear la cuenta: ' + err.message, 'error');
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-save"></i> Guardar';
+                    return;
+                }
+
+                showPersonalAlert('✅ Personal registrado correctamente', 'success');
                 setTimeout(() => {
                     document.getElementById('modalPersonal').classList.remove('show');
                     cargarPersonal();
@@ -2791,6 +2902,7 @@
                     btn.innerHTML = '<i class="fas fa-save"></i> Guardar';
                 }, 1500);
             } catch (error) {
+                console.error(error);
                 showPersonalAlert('❌ ' + error.message, 'error');
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-save"></i> Guardar';
@@ -2803,22 +2915,55 @@
             document.getElementById('personalAlertText').textContent = message;
         }
 
+        // EDITAR PERSONAL - ACTUALIZA AMBAS COLECCIONES
         document.getElementById('formEditarPersonal')?.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const id = document.getElementById('editPersonalId').value;
-            const nombre = document.getElementById('editPersonalNombre').value.trim();
+            const docId = document.getElementById('editPersonalId').value;
+            const uid = document.getElementById('editPersonalUid').value;
+            const nombres = document.getElementById('editPersonalNombres').value.trim();
+            const apellidos = document.getElementById('editPersonalApellidos').value.trim();
             const documento = document.getElementById('editPersonalDocumento').value.trim();
             const telefono = document.getElementById('editPersonalTelefono').value.trim();
             const rol = document.getElementById('editPersonalRol').value;
             const activo = document.getElementById('editPersonalActivo').value === 'true';
 
-            if (!nombre) { alert('Completa el nombre'); return; }
+            if (!nombres) { alert('Completa el nombre'); return; }
 
             try {
-                await updateDoc(doc(db, 'usuarios', id), {
-                    nombre, documento, telefono, rol, activo,
-                    fechaActualizacion: serverTimestamp()
-                });
+                const nombreCompleto = `${nombres} ${apellidos}`.trim();
+
+                // Actualizar en 'profesores'
+                try {
+                    await updateDoc(doc(db, 'colegios', colegioId, 'profesores', docId), {
+                        nombres,
+                        apellidos,
+                        documento,
+                        telefono,
+                        rol,
+                        estado: activo ? 'activo' : 'inactivo',
+                        fechaActualizacion: serverTimestamp()
+                    });
+                } catch (e) {
+                    // Si no existe en profesores, es un doc de usuarios
+                    console.warn('No se actualizó en profesores:', e.message);
+                }
+
+                // Actualizar en 'usuarios' si tenemos uid
+                if (uid) {
+                    try {
+                        await updateDoc(doc(db, 'usuarios', uid), {
+                            nombre: nombreCompleto,
+                            documento,
+                            telefono,
+                            rol,
+                            activo,
+                            fechaActualizacion: serverTimestamp()
+                        });
+                    } catch (e) {
+                        console.warn('No se actualizó en usuarios (uid):', e.message);
+                    }
+                }
+
                 alert('✅ Personal actualizado');
                 document.getElementById('modalEditarPersonal').classList.remove('show');
                 cargarPersonal();
@@ -2835,9 +2980,7 @@
             document.getElementById('modalEditarPersonal').classList.remove('show');
         });
 
-        // =============================================
         // GRADOS
-        // =============================================
         async function cargarGrados() {
             const tbody = document.getElementById('tablaGrados');
             try {
@@ -2898,9 +3041,7 @@
             cargarDashboard();
         });
 
-        // =============================================
         // CURSOS
-        // =============================================
         async function cargarCursos() {
             const tbody = document.getElementById('tablaCursos');
             try {
@@ -2974,9 +3115,7 @@
             cargarDashboard();
         });
 
-        // =============================================
         // ASIGNATURAS
-        // =============================================
         async function cargarAsignaturas() {
             const tbody = document.getElementById('tablaAsignaturas');
             try {
@@ -3037,9 +3176,7 @@
             cargarDashboard();
         });
 
-        // =============================================
         // HORARIOS
-        // =============================================
         async function cargarHorarios() {
             const gradoSelect = document.getElementById('horarioGrado');
             const snap = await getDocs(collection(db, 'colegios', colegioId, 'grados'));
@@ -3066,12 +3203,16 @@
                 asigSelect.innerHTML += `<option value="${doc.id}">${doc.data().nombre || 'Asignatura'}</option>`;
             });
 
+            // ✅ Profesores: leer de 'profesores' de la subcolección (por si no están en usuarios)
             const profSelect = document.getElementById('claseProfesor');
-            const profQ = query(collection(db, 'usuarios'), where('colegioId', '==', colegioId), where('rol', '==', 'profesor'));
-            const profSnap = await getDocs(profQ);
             profSelect.innerHTML = '<option value="">Seleccionar</option>';
+            const profSnap = await getDocs(collection(db, 'colegios', colegioId, 'profesores'));
             profSnap.forEach(doc => {
-                profSelect.innerHTML += `<option value="${doc.id}">${doc.data().nombre || ''}</option>`;
+                const p = doc.data();
+                if ((p.rol || 'profesor') === 'profesor') {
+                    const nombre = `${p.nombres || ''} ${p.apellidos || ''}`.trim();
+                    profSelect.innerHTML += `<option value="${doc.id}">${nombre || 'Profesor'}</option>`;
+                }
             });
         }
 
@@ -3140,13 +3281,22 @@
             if (!(await getDocs(q2)).empty) { alert('❌ Curso ya tiene clase'); return; }
 
             const asigDoc = await getDoc(doc(db, 'colegios', colegioId, 'asignaturas', asignaturaId));
-            const profDoc = await getDoc(doc(db, 'usuarios', profesorId));
+            // El profesor puede venir de 'profesores' o de 'usuarios'
+            let profNombre = 'Profesor';
+            const profDocSub = await getDoc(doc(db, 'colegios', colegioId, 'profesores', profesorId));
+            if (profDocSub.exists()) {
+                const p = profDocSub.data();
+                profNombre = `${p.nombres || ''} ${p.apellidos || ''}`.trim() || 'Profesor';
+            } else {
+                const profDoc = await getDoc(doc(db, 'usuarios', profesorId));
+                if (profDoc.exists()) profNombre = profDoc.data()?.nombre || 'Profesor';
+            }
 
             await addDoc(collection(db, 'colegios', colegioId, 'horarios'), {
                 cursoId: cursoActual, dia, hora, asignaturaId,
                 asignaturaNombre: asigDoc.data()?.nombre || 'Asignatura',
                 profesorId,
-                profesorNombre: profDoc.data()?.nombre || 'Profesor',
+                profesorNombre: profNombre,
                 fechaRegistro: serverTimestamp()
             });
             alert('✅ Clase agregada');
@@ -3154,9 +3304,7 @@
             document.getElementById('btnCargarHorario').click();
         });
 
-        // =============================================
         // FILTROS NOTAS / BOLETINES
-        // =============================================
         async function cargarFiltrosNotas() {
             await cargarFiltros('filtroGradoNotas', 'filtroCursoNotas', 'filtroEstudianteNotas');
         }
@@ -3190,7 +3338,6 @@
                     const q = query(collection(db, 'colegios', colegioId, 'matriculas'),
                         where('cursoId', '==', cursoSelect.value), where('estado', '==', 'activo'));
                     const snap = await getDocs(q);
-                    // OJO: no usar "doc" como nombre de variable aquí, porque tapa la función doc() de Firestore
                     const estudiantes = (await Promise.all(snap.docs.map(async (matDoc) => {
                         const estudianteId = matDoc.data().estudianteId;
                         if (!estudianteId) return null;
@@ -3212,11 +3359,6 @@
             };
         }
 
-        // =============================================
-        // RESUMEN DE NOTAS DE UN ESTUDIANTE (compartido: Notas y Boletines)
-        // Las notas se guardan con actividadId; la asignatura, el periodo y la sección
-        // se obtienen de la actividad. Promedio ponderado por % de sección (igual que acudiente).
-        // =============================================
         async function obtenerResumenNotasEstudiante(estudianteId, periodo) {
             const notasSnap = await getDocs(query(collection(db, 'colegios', colegioId, 'notas'), where('estudianteId', '==', estudianteId)));
             const notas = [];
@@ -3361,9 +3503,7 @@
             } catch (e) { console.error('Error al generar boletín:', e); alert('Error al generar boletín: ' + e.message); }
         });
 
-        // =============================================
         // PENSIONES
-        // =============================================
         async function cargarPensiones() {
             const tbody = document.getElementById('tablaPensiones');
             try {
@@ -3537,7 +3677,6 @@
             document.getElementById('modalEditarPension').classList.remove('show');
         });
 
-        // Abonar pensión
         document.getElementById('abonarPensionMonto')?.addEventListener('input', () => {
             const valor = parseFloat(document.getElementById('abonarPensionValorTotal').textContent.replace(/[^0-9]/g, '')) || 0;
             const abonado = parseFloat(document.getElementById('abonarPensionYaAbonado').textContent.replace(/[^0-9]/g, '')) || 0;
@@ -3625,9 +3764,7 @@
             }
         });
 
-        // =============================================
         // NUEVA PENSIÓN / PAGO COMPLETO
-        // =============================================
         document.getElementById('btnRegistrarPagoPension')?.addEventListener('click', async () => {
             document.getElementById('modalPagoPension').classList.add('show');
             document.getElementById('formPagoPension').reset();
@@ -3789,8 +3926,7 @@
             }
         });
 
-        // =============================================        // CONTABILIDAD
-        // =============================================
+        // CONTABILIDAD
         async function cargarContabilidad() {
             try {
                 const snap = await getDocs(collection(db, 'colegios', colegioId, 'movimientos'));
@@ -3808,7 +3944,6 @@
             const catFiltro = document.getElementById('filtroMovCategoria').value;
             const mesFiltro = document.getElementById('filtroMovMes').value;
 
-            // Actualizar contadores de tabs
             const counts = {
                 todos: movimientosCache.length,
                 ingreso: movimientosCache.filter(m => m.tipo === 'ingreso').length,
@@ -3822,7 +3957,6 @@
             document.getElementById('countMatriculas').textContent = counts.Matrícula;
             document.getElementById('countPensiones').textContent = counts.Pensión;
 
-            // Filtrar
             const movsFiltrados = movimientosCache.filter(m => {
                 if (contTabActual === 'ingreso' && m.tipo !== 'ingreso') return false;
                 if (contTabActual === 'egreso' && m.tipo !== 'egreso') return false;
@@ -3837,7 +3971,6 @@
                 return true;
             });
 
-            // Stats
             const hoy = new Date();
             let ingresosMes = 0, egresosMes = 0, balanceTotal = 0;
             movimientosCache.forEach(m => {
@@ -3867,7 +4000,6 @@
                 return;
             }
 
-            // Ordenar por fecha más reciente
             movsFiltrados.sort((a, b) => {
                 const fechaA = a.fechaCreacion?.toDate ? a.fechaCreacion.toDate() : new Date(a.fecha || 0);
                 const fechaB = b.fechaCreacion?.toDate ? b.fechaCreacion.toDate() : new Date(b.fecha || 0);
@@ -3932,7 +4064,6 @@
             } catch (e) { console.warn(e); }
         }
 
-        // Tabs contabilidad
         document.querySelectorAll('.cont-tab').forEach(tab => {
             tab.addEventListener('click', () => {
                 document.querySelectorAll('.cont-tab').forEach(t => t.classList.remove('active'));
@@ -3945,7 +4076,6 @@
         document.getElementById('filtroMovCategoria')?.addEventListener('change', renderContabilidad);
         document.getElementById('filtroMovMes')?.addEventListener('change', renderContabilidad);
 
-        // Agregar movimiento
         document.getElementById('btnAgregarMovimiento')?.addEventListener('click', () => {
             document.getElementById('modalAgregarMovimiento').classList.add('show');
             document.getElementById('formAgregarMovimiento').reset();
@@ -3987,9 +4117,7 @@
             }
         });
 
-        // =============================================
         // AUTH
-        // =============================================
         onAuthStateChanged(auth, async (user) => {
             if (authCheckInProgress) return;
             authCheckInProgress = true;

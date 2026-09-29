@@ -5,32 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>EduOne - Iniciar Sesión</title>
 
-    <!-- Font Awesome -->
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    />
-
-    <!-- Google Fonts (Inter) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap"
-        rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
 
     <style>
-        /* =============================================
-           LOGIN CSS - EduOne (Responsive)
-           ============================================= */
-
-        *,
-        *::before,
-        *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
             --primary: #4f46e5;
@@ -76,14 +57,8 @@
         }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .login-card {
@@ -93,399 +68,165 @@
             box-shadow: var(--shadow-lg);
         }
 
-        .login-header {
-            text-align: center;
-            margin-bottom: 28px;
-        }
+        .login-header { text-align: center; margin-bottom: 28px; }
 
         .login-logo {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            margin-bottom: 6px;
+            display: flex; align-items: center; justify-content: center;
+            gap: 12px; margin-bottom: 6px;
         }
 
-        .login-logo i {
-            font-size: 2.2rem;
-            color: var(--primary);
-        }
+        .login-logo i { font-size: 2.2rem; color: var(--primary); }
+        .login-logo h1 { font-size: 1.8rem; font-weight: 700; color: var(--gray-900); }
+        .login-subtitle { color: var(--gray-500); font-size: 0.9rem; }
 
-        .login-logo h1 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--gray-900);
-        }
-
-        .login-subtitle {
-            color: var(--gray-500);
-            font-size: 0.9rem;
-        }
-
-        .form-group {
-            margin-bottom: 18px;
-        }
-
+        .form-group { margin-bottom: 18px; }
         .form-group label {
-            display: block;
-            font-weight: 500;
-            font-size: 0.85rem;
-            color: var(--gray-700);
-            margin-bottom: 5px;
+            display: block; font-weight: 500; font-size: 0.85rem;
+            color: var(--gray-700); margin-bottom: 5px;
         }
-
-        .form-group label i {
-            margin-right: 8px;
-            color: var(--gray-400);
-            width: 18px;
-        }
+        .form-group label i { margin-right: 8px; color: var(--gray-400); width: 18px; }
 
         .form-control {
-            width: 100%;
-            padding: 12px 16px;
-            border: 2px solid var(--gray-200);
-            border-radius: 10px;
-            font-size: 0.95rem;
-            font-family: var(--font);
+            width: 100%; padding: 12px 16px;
+            border: 2px solid var(--gray-200); border-radius: 10px;
+            font-size: 0.95rem; font-family: var(--font);
             transition: border-color 0.2s, box-shadow 0.2s;
-            background: var(--gray-50);
-            color: var(--gray-800);
-            -webkit-appearance: none;
-            appearance: none;
+            background: var(--gray-50); color: var(--gray-800);
+            -webkit-appearance: none; appearance: none;
         }
-
         .form-control:focus {
-            outline: none;
-            border-color: var(--primary);
+            outline: none; border-color: var(--primary);
             box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
             background: #fff;
         }
-
-        .form-control::placeholder {
-            color: var(--gray-400);
-        }
+        .form-control::placeholder { color: var(--gray-400); }
 
         .form-options {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            font-size: 0.85rem;
-            flex-wrap: wrap;
-            gap: 8px;
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 20px; font-size: 0.85rem;
+            flex-wrap: wrap; gap: 8px;
         }
-
         .form-options label {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--gray-600);
-            cursor: pointer;
+            display: flex; align-items: center; gap: 8px;
+            color: var(--gray-600); cursor: pointer;
         }
-
         .form-options label input[type="checkbox"] {
-            width: 16px;
-            height: 16px;
-            accent-color: var(--primary);
-            cursor: pointer;
-            flex-shrink: 0;
+            width: 16px; height: 16px;
+            accent-color: var(--primary); cursor: pointer; flex-shrink: 0;
         }
-
         .form-options a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.85rem;
+            color: var(--primary); text-decoration: none;
+            font-weight: 500; font-size: 0.85rem;
         }
-
-        .form-options a:hover {
-            color: var(--primary-dark);
-            text-decoration: underline;
-        }
+        .form-options a:hover { color: var(--primary-dark); text-decoration: underline; }
 
         .btn-primary {
-            width: 100%;
-            padding: 14px;
-            background: var(--primary);
-            color: #fff;
-            border: none;
-            border-radius: 10px;
-            font-size: 1rem;
-            font-weight: 600;
-            font-family: var(--font);
+            width: 100%; padding: 14px;
+            background: var(--primary); color: #fff;
+            border: none; border-radius: 10px;
+            font-size: 1rem; font-weight: 600; font-family: var(--font);
             cursor: pointer;
             transition: background 0.2s, transform 0.1s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
         }
-
-        .btn-primary:hover {
-            background: var(--primary-dark);
-        }
-
-        .btn-primary:active {
-            transform: scale(0.98);
-        }
-
-        .btn-primary:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-        }
-
-        .btn-primary i {
-            font-size: 1.1rem;
-        }
+        .btn-primary:hover { background: var(--primary-dark); }
+        .btn-primary:active { transform: scale(0.98); }
+        .btn-primary:disabled { opacity: 0.7; cursor: not-allowed; }
+        .btn-primary i { font-size: 1.1rem; }
 
         .btn-back {
-            width: 100%;
-            padding: 14px;
-            background: transparent;
-            color: var(--gray-500);
-            border: 2px solid var(--gray-200);
-            border-radius: 10px;
-            font-size: 1rem;
-            font-weight: 500;
-            font-family: var(--font);
+            width: 100%; padding: 14px;
+            background: transparent; color: var(--gray-500);
+            border: 2px solid var(--gray-200); border-radius: 10px;
+            font-size: 1rem; font-weight: 500; font-family: var(--font);
             cursor: pointer;
             transition: background 0.2s, border-color 0.2s, color 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
             text-decoration: none;
         }
-
         .btn-back:hover {
             background: var(--gray-50);
             border-color: var(--gray-300);
             color: var(--gray-700);
         }
-
-        .btn-back:active {
-            transform: scale(0.98);
-        }
-
-        .btn-back i {
-            font-size: 1.1rem;
-            color: var(--gray-400);
-        }
-
-        .btn-back:hover i {
-            color: var(--gray-600);
-        }
+        .btn-back:active { transform: scale(0.98); }
+        .btn-back i { font-size: 1.1rem; color: var(--gray-400); }
+        .btn-back:hover i { color: var(--gray-600); }
 
         .divider {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            margin: 20px 0;
-            color: var(--gray-400);
-            font-size: 0.8rem;
+            display: flex; align-items: center; gap: 16px;
+            margin: 20px 0; color: var(--gray-400); font-size: 0.8rem;
         }
-
-        .divider::before,
-        .divider::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: var(--gray-200);
+        .divider::before, .divider::after {
+            content: ''; flex: 1; height: 1px; background: var(--gray-200);
         }
 
         .login-footer {
-            text-align: center;
-            margin-top: 20px;
-            color: var(--gray-500);
-            font-size: 0.8rem;
+            text-align: center; margin-top: 20px;
+            color: var(--gray-500); font-size: 0.8rem;
         }
 
         .alert {
-            padding: 12px 16px;
-            border-radius: 10px;
-            font-size: 0.9rem;
-            margin-bottom: 16px;
-            display: none;
+            padding: 12px 16px; border-radius: 10px;
+            font-size: 0.9rem; margin-bottom: 16px; display: none;
         }
+        .alert.show { display: block; }
+        .alert-error { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+        .alert-success { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
+        .alert-info { background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; }
+        .alert i { margin-right: 8px; }
 
-        .alert.show {
-            display: block;
-        }
-
-        .alert-error {
-            background: #fef2f2;
-            color: #991b1b;
-            border: 1px solid #fecaca;
-        }
-
-        .alert-success {
-            background: #f0fdf4;
-            color: #166534;
-            border: 1px solid #bbf7d0;
-        }
-
-        .alert-info {
-            background: #eff6ff;
-            color: #1e40af;
-            border: 1px solid #bfdbfe;
-        }
-
-        .alert i {
-            margin-right: 8px;
-        }
-
-        .password-toggle {
-            position: relative;
-        }
-
+        .password-toggle { position: relative; }
         .password-toggle .toggle-eye {
-            position: absolute;
-            right: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: var(--gray-400);
-            cursor: pointer;
-            font-size: 1.1rem;
-            padding: 4px;
+            position: absolute; right: 14px; top: 50%;
+            transform: translateY(-50%); background: none; border: none;
+            color: var(--gray-400); cursor: pointer;
+            font-size: 1.1rem; padding: 4px;
         }
-
-        .password-toggle .toggle-eye:hover {
-            color: var(--gray-600);
-        }
-
-        /* =============================================
-           RESPONSIVE - MÓVIL
-           ============================================= */
+        .password-toggle .toggle-eye:hover { color: var(--gray-600); }
 
         @media (max-width: 480px) {
-            body {
-                padding: 12px;
-                align-items: flex-start;
-                padding-top: 40px;
-            }
-
-            .login-container {
-                padding: 0;
-                max-width: 100%;
-            }
-
-            .login-card {
-                padding: 24px 18px;
-                border-radius: 14px;
-            }
-
-            .login-logo i {
-                font-size: 1.8rem;
-            }
-
-            .login-logo h1 {
-                font-size: 1.5rem;
-            }
-
-            .login-subtitle {
-                font-size: 0.8rem;
-            }
-
-            .form-control {
-                padding: 11px 14px;
-                font-size: 0.9rem;
-            }
-
-            .form-group {
-                margin-bottom: 14px;
-            }
-
-            .form-group label {
-                font-size: 0.8rem;
-            }
-
-            .form-options {
-                font-size: 0.8rem;
-                flex-direction: row;
-                flex-wrap: wrap;
-            }
-
-            .btn-primary,
-            .btn-back {
-                padding: 13px;
-                font-size: 0.95rem;
-            }
-
-            .divider {
-                margin: 16px 0;
-                font-size: 0.75rem;
-            }
-
-            .login-footer {
-                font-size: 0.7rem;
-                margin-top: 16px;
-            }
-
-            .alert {
-                padding: 10px 14px;
-                font-size: 0.8rem;
-            }
+            body { padding: 12px; align-items: flex-start; padding-top: 40px; }
+            .login-container { padding: 0; max-width: 100%; }
+            .login-card { padding: 24px 18px; border-radius: 14px; }
+            .login-logo i { font-size: 1.8rem; }
+            .login-logo h1 { font-size: 1.5rem; }
+            .login-subtitle { font-size: 0.8rem; }
+            .form-control { padding: 11px 14px; font-size: 0.9rem; }
+            .form-group { margin-bottom: 14px; }
+            .form-group label { font-size: 0.8rem; }
+            .form-options { font-size: 0.8rem; flex-direction: row; flex-wrap: wrap; }
+            .btn-primary, .btn-back { padding: 13px; font-size: 0.95rem; }
+            .divider { margin: 16px 0; font-size: 0.75rem; }
+            .login-footer { font-size: 0.7rem; margin-top: 16px; }
+            .alert { padding: 10px 14px; font-size: 0.8rem; }
         }
 
         @media (max-width: 360px) {
-            .login-card {
-                padding: 18px 14px;
-            }
-
-            .login-logo h1 {
-                font-size: 1.3rem;
-            }
-
-            .form-control {
-                padding: 10px 12px;
-                font-size: 0.85rem;
-            }
-
-            .btn-primary,
-            .btn-back {
-                padding: 11px;
-                font-size: 0.85rem;
-            }
-
-            .form-options {
-                font-size: 0.75rem;
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 6px;
-            }
+            .login-card { padding: 18px 14px; }
+            .login-logo h1 { font-size: 1.3rem; }
+            .form-control { padding: 10px 12px; font-size: 0.85rem; }
+            .btn-primary, .btn-back { padding: 11px; font-size: 0.85rem; }
+            .form-options { font-size: 0.75rem; flex-direction: column; align-items: flex-start; gap: 6px; }
         }
 
         @media (min-width: 481px) and (max-width: 768px) {
-            .login-card {
-                padding: 32px 28px;
-            }
+            .login-card { padding: 32px 28px; }
         }
 
-        /* Spinner personalizado */
         .spinner {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
+            display: inline-block; width: 20px; height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3); border-radius: 50%;
             border-top-color: #fff;
             animation: spin 0.8s ease-in-out infinite;
         }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
     <div class="login-container">
         <div class="login-card">
 
-            <!-- Header -->
             <div class="login-header">
                 <div class="login-logo">
                     <i class="fas fa-graduation-cap"></i>
@@ -494,26 +235,17 @@
                 <p class="login-subtitle">Plataforma de Gestión Escolar</p>
             </div>
 
-            <!-- Alertas -->
             <div id="alertMessage" class="alert">
                 <i class="fas fa-info-circle"></i>
                 <span id="alertText">Mensaje de error</span>
             </div>
 
-            <!-- Formulario de Login -->
             <form id="loginForm" autocomplete="off">
                 <div class="form-group">
                     <label for="email">
                         <i class="fas fa-envelope"></i> Correo electrónico
                     </label>
-                    <input
-                        type="email"
-                        id="email"
-                        class="form-control"
-                        placeholder="admin@eduone.com"
-                        required
-                        autofocus
-                    />
+                    <input type="email" id="email" class="form-control" placeholder="admin@eduone.com" required autofocus />
                 </div>
 
                 <div class="form-group">
@@ -521,19 +253,8 @@
                         <i class="fas fa-lock"></i> Contraseña
                     </label>
                     <div class="password-toggle">
-                        <input
-                            type="password"
-                            id="password"
-                            class="form-control"
-                            placeholder="••••••••"
-                            required
-                        />
-                        <button
-                            type="button"
-                            class="toggle-eye"
-                            id="togglePassword"
-                            aria-label="Mostrar contraseña"
-                        >
+                        <input type="password" id="password" class="form-control" placeholder="••••••••" required />
+                        <button type="button" class="toggle-eye" id="togglePassword" aria-label="Mostrar contraseña">
                             <i class="fas fa-eye"></i>
                         </button>
                     </div>
@@ -553,29 +274,19 @@
                 </button>
             </form>
 
-            <!-- Divisor -->
-            <div class="divider">
-                <span>o</span>
-            </div>
+            <div class="divider"><span>o</span></div>
 
-            <!-- Botón Volver al Inicio -->
             <a href="index.html" class="btn-back">
                 <i class="fas fa-arrow-left"></i>
                 Volver al inicio
             </a>
 
-            <!-- Footer -->
             <div class="login-footer">
                 &copy; 2027 EduOne - Todos los derechos reservados
             </div>
         </div>
     </div>
 
-    <!-- =========================================== -->
-    <!-- SCRIPTS                                     -->
-    <!-- =========================================== -->
-
-    <!-- Firebase Modular SDK -->
     <script type="importmap">
         {
             "imports": {
@@ -587,26 +298,13 @@
     </script>
 
     <script type="module">
-        // =============================================
-        // FIREBASE CONFIG
-        // =============================================
         import { initializeApp } from "firebase/app";
         import {
-            getAuth,
-            signInWithEmailAndPassword,
-            setPersistence,
-            browserLocalPersistence,
-            browserSessionPersistence,
-            onAuthStateChanged,
-            signOut
+            getAuth, signInWithEmailAndPassword,
+            setPersistence, browserLocalPersistence, browserSessionPersistence,
+            onAuthStateChanged, signOut
         } from "firebase/auth";
-        import {
-            getFirestore,
-            doc,
-            getDoc,
-            setDoc,
-            serverTimestamp
-        } from "firebase/firestore";
+        import { getFirestore, doc, getDoc } from "firebase/firestore";
 
         const firebaseConfig = {
             apiKey: "AIzaSyA3U98y5BJWQwpypFCAyNioqSRfXkr9UA0",
@@ -622,9 +320,6 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // =============================================
-        // REFERENCIAS DOM
-        // =============================================
         const form = document.getElementById('loginForm');
         const emailInput = document.getElementById('email');
         const passwordInput = document.getElementById('password');
@@ -635,23 +330,16 @@
         const togglePasswordBtn = document.getElementById('togglePassword');
 
         // =============================================
-        // MAPA DE RUTAS POR ROL (ACTUALIZADO)
+        // MAPA DE RUTAS POR ROL
         // =============================================
         const RUTAS = {
-            // ── GLOBAL ──
             superadmin: 'PanelAdmin/AdminPanel.html',
-
-            // ── INSTITUCIONAL (Rector y admin del colegio) ──
             rector: 'colegios/colegio.html',
             admin_colegio: 'colegios/colegio.html',
             admin_auxiliar: 'colegios/colegio.html',
-
-            // ── ACADÉMICO ──
             profesor: 'colegios/profesor.html',
             estudiante: 'colegios/estudiante.html',
             acudiente: 'colegios/acudiente.html',
-
-            // ── PERSONAL ADMINISTRATIVO ──
             contador: 'contador.html',
             coord_academico: 'colegios/coordinador-academico.html',
             coord_convivencia: 'colegios/coordinador-convivencia.html',
@@ -659,62 +347,54 @@
             orientador: 'colegios/orientador.html'
         };
 
-        // =============================================
-        // ROLES SIN PANEL TODAVÍA
-        // (si en el futuro agregas más roles y no tienen panel,
-        //  se pueden listar aquí para mostrar "en construcción")
-        // =============================================
-        const ROLES_PENDIENTES = {
-            // Ejemplo:
-            // bibliotecario: 'Bibliotecario',
+        // Alias de roles: variantes que deben ir al mismo panel
+        const ALIAS_ROLES = {
+            'secretario': 'secretaria',
+            'secretaría': 'secretaria',
+            'secretaria_academica': 'secretaria',
+            'administrador': 'rector',
+            'director': 'rector'
         };
+
+        // =============================================
+        // NORMALIZAR ROL
+        // =============================================
+        function normalizarRol(rol) {
+            if (!rol) return null;
+            const limpio = String(rol).toLowerCase().trim();
+            return ALIAS_ROLES[limpio] || limpio;
+        }
 
         // =============================================
         // REDIRECCIÓN POR ROL
         // =============================================
-        function redirigirSegunRol(rol) {
+        let isRedirecting = false;
+
+        function redirigirSegunRol(rolOriginal) {
+            const rol = normalizarRol(rolOriginal);
+
+            console.log(`🔀 Redirigiendo: rol="${rolOriginal}" (normalizado="${rol}")`);
+
             if (!rol) {
-                console.warn('⚠️ Rol vacío, redirigiendo a login');
-                window.location.href = 'login.html';
-                return;
+                showAlert('⛔ Tu usuario no tiene un rol asignado. Contacta al administrador.', 'error');
+                return false;
             }
 
-            // 1) Rol con panel disponible
             const ruta = RUTAS[rol];
             if (ruta) {
-                console.log(`🔀 Redirigiendo: rol="${rol}" → ${ruta}`);
+                isRedirecting = true;
+                console.log(`✅ Rol reconocido. Yendo a: ${ruta}`);
                 window.location.href = ruta;
-                return;
+                return true;
             }
 
-            // 2) Rol existe pero sin panel todavía
-            if (ROLES_PENDIENTES[rol]) {
-                console.warn(`🚧 Panel en construcción para rol: ${rol}`);
-                showAlert(
-                    `🚧 El panel de ${ROLES_PENDIENTES[rol]} está en construcción. Contacta al administrador.`,
-                    'info'
-                );
-                setTimeout(async () => {
-                    await signOut(auth);
-                    window.location.href = 'login.html';
-                }, 3500);
-                return;
-            }
-
-            // 3) Rol desconocido
             console.warn(`⚠️ Rol no reconocido: ${rol}`);
-            showAlert(
-                `⛔ Rol "${rol}" no tiene panel asignado. Contacta al administrador.`,
-                'error'
-            );
-            setTimeout(async () => {
-                await signOut(auth);
-                window.location.href = 'login.html';
-            }, 2500);
+            showAlert(`⛔ El rol "${rol}" no tiene un panel asignado. Contacta al administrador.`, 'error');
+            return false;
         }
 
         // =============================================
-        // MOSTRAR ALERTAS
+        // ALERTAS
         // =============================================
         function showAlert(message, type = 'error') {
             alertMessage.className = `alert alert-${type} show`;
@@ -737,43 +417,24 @@
         });
 
         // =============================================
-        // CREAR USUARIO EN FIRESTORE (superadmin nuevo)
+        // VERIFICAR SESIÓN ACTIVA (solo al cargar)
         // =============================================
-        async function crearUsuarioEnFirestore(uid, email, nombre, rol = 'superadmin') {
-            try {
-                await setDoc(doc(db, 'usuarios', uid), {
-                    nombre: nombre || 'Super Admin',
-                    email: email,
-                    rol: rol,
-                    activo: true,
-                    fechaCreacion: serverTimestamp()
-                });
-                console.log('✅ Usuario creado en Firestore:', uid);
-                return true;
-            } catch (error) {
-                console.error('❌ Error al crear usuario en Firestore:', error);
-                return false;
-            }
-        }
-
-        // =============================================
-        // VERIFICAR SESIÓN ACTIVA
-        // =============================================
-        let isRedirecting = false;
+        let sesionInicialVerificada = false;
 
         onAuthStateChanged(auth, async (user) => {
+            // Si ya estamos redirigiendo, no hacer nada
             if (isRedirecting) return;
+            // Si ya verificamos una vez, no repetir (evita doble redirección)
+            if (sesionInicialVerificada) return;
+            sesionInicialVerificada = true;
 
             if (user) {
-                console.log('👤 Usuario autenticado:', user.uid);
+                console.log('👤 Sesión activa detectada:', user.uid);
                 try {
                     const userDoc = await getDoc(doc(db, 'usuarios', user.uid));
                     if (userDoc.exists()) {
                         const data = userDoc.data();
-                        console.log('📋 Datos del usuario:', data);
-
                         if (data.activo === true) {
-                            isRedirecting = true;
                             redirigirSegunRol(data.rol);
                         } else {
                             console.warn('⚠️ Usuario inactivo');
@@ -786,7 +447,7 @@
                     console.error('❌ Error al verificar usuario:', error);
                 }
             } else {
-                console.log('👤 No hay usuario autenticado');
+                console.log('👤 No hay sesión activa');
             }
         });
 
@@ -820,36 +481,42 @@
 
                 const userDoc = await getDoc(doc(db, 'usuarios', user.uid));
 
-                if (userDoc.exists()) {
-                    const data = userDoc.data();
+                if (!userDoc.exists()) {
+                    // ⚠️ SEGURIDAD: NO crear usuario automáticamente.
+                    // Un usuario de Auth sin documento en Firestore no debe poder entrar.
+                    console.warn('⚠️ Usuario Auth sin doc en Firestore');
+                    showAlert('⛔ Tu cuenta no está registrada en el sistema. Contacta al administrador.', 'error');
+                    await signOut(auth);
+                    loginBtn.disabled = false;
+                    loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Iniciar sesión';
+                    return;
+                }
 
-                    if (data.activo === true) {
-                        showAlert('✅ Inicio de sesión exitoso. Redirigiendo...', 'success');
-                        setTimeout(() => {
-                            redirigirSegunRol(data.rol);
-                        }, 800);
-                    } else {
-                        showAlert('⛔ Tu cuenta está desactivada. Contacta al administrador.', 'error');
-                        await signOut(auth);
-                        loginBtn.disabled = false;
-                        loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Iniciar sesión';
-                    }
+                const data = userDoc.data();
+                console.log('📋 Datos del usuario:', { rol: data.rol, activo: data.activo, colegioId: data.colegioId });
+
+                if (data.activo !== true) {
+                    showAlert('⛔ Tu cuenta está desactivada. Contacta al administrador.', 'error');
+                    await signOut(auth);
+                    loginBtn.disabled = false;
+                    loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Iniciar sesión';
+                    return;
+                }
+
+                showAlert('✅ Inicio de sesión exitoso. Redirigiendo...', 'success');
+
+                // Guardar email si marcó "recordarme"
+                if (rememberMe.checked) {
+                    localStorage.setItem('eduone_email', email);
                 } else {
-                    // Usuario nuevo en Auth pero no en Firestore → superadmin por defecto
-                    console.log('🆕 Usuario nuevo, creando en Firestore como superadmin');
-                    const creado = await crearUsuarioEnFirestore(user.uid, email, 'Super Admin', 'superadmin');
+                    localStorage.removeItem('eduone_email');
+                }
 
-                    if (creado) {
-                        showAlert('✅ Usuario creado como SUPERADMIN. Redirigiendo...', 'success');
-                        setTimeout(() => {
-                            window.location.href = 'PanelAdmin/AdminPanel.html';
-                        }, 800);
-                    } else {
-                        showAlert('❌ Error al crear el usuario en el sistema.', 'error');
-                        await signOut(auth);
-                        loginBtn.disabled = false;
-                        loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Iniciar sesión';
-                    }
+                const ok = redirigirSegunRol(data.rol);
+                if (!ok) {
+                    // Si la redirección falló (rol desconocido), reactivar el botón
+                    loginBtn.disabled = false;
+                    loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Iniciar sesión';
                 }
 
             } catch (error) {
@@ -858,7 +525,7 @@
                 let mensaje = 'Error al iniciar sesión.';
                 switch (error.code) {
                     case 'auth/user-not-found':
-                        mensaje = '❌ Usuario no encontrado. Crea una cuenta primero.';
+                        mensaje = '❌ Usuario no encontrado.';
                         break;
                     case 'auth/wrong-password':
                         mensaje = '❌ Contraseña incorrecta. Intenta de nuevo.';
@@ -891,23 +558,10 @@
             rememberMe.checked = true;
         }
 
-        rememberMe.addEventListener('change', () => {
-            if (rememberMe.checked) {
-                localStorage.setItem('eduone_email', emailInput.value);
-            } else {
-                localStorage.removeItem('eduone_email');
-            }
-        });
-
-        emailInput.addEventListener('change', () => {
-            if (rememberMe.checked) {
-                localStorage.setItem('eduone_email', emailInput.value);
-            }
-        });
-
         console.log('✅ EduOne - Login cargado correctamente');
-        console.log('📁 Mapa de rutas:', RUTAS);
+        console.log('📁 Rutas disponibles:', Object.keys(RUTAS));
     </script>
 
 </body>
-</html>
+</html
+>
