@@ -2205,22 +2205,8 @@
                 const cursosSet = new Set(cursosList.map(c => c.id));
                 document.getElementById('statsCursos').textContent = cursosSet.size;
 
-                let totalEstudiantes = 0;
-                const estudiantesSet = new Set();
-                for (const cursoId of cursosSet) {
-                    try {
-                        const matQ = query(collection(db, 'colegios', colegioId, 'matriculas'), where('cursoId', '==', cursoId), where('estado', '==', 'activo'));
-                        const matSnap = await getDocs(matQ);
-                        for (const docSnap of matSnap.docs) {
-                            const mat = docSnap.data();
-                            if (!estudiantesSet.has(mat.estudianteId)) {
-                                estudiantesSet.add(mat.estudianteId);
-                                totalEstudiantes++;
-                            }
-                        }
-                    } catch (e) {}
-                }
-                document.getElementById('statsEstudiantes').textContent = totalEstudiantes;
+                const estudiantesSnap = await getDocs(collection(db, 'colegios', colegioId, 'estudiantes'));
+document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
 
                 const seccionesQ = query(collection(db, 'colegios', colegioId, 'secciones'), where('profesorId', '==', profesorId));
                 const seccionesSnap = await getDocs(seccionesQ);

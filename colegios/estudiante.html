@@ -1274,19 +1274,300 @@
             .evaluacion-pregunta .opcion { padding: 4px 8px; font-size: 0.8rem; }
         }
 
-        .boletin-print { max-width: 100%; color: #0f172a; }
-        .boletin-print .boletin-header { text-align: center; border-bottom: 2px solid #1e293b; padding-bottom: 14px; margin-bottom: 16px; }
-        .boletin-print .boletin-header h1 { font-size: 1.5rem; text-transform: uppercase; }
-        .boletin-print .boletin-header p { font-size: 0.8rem; margin-top: 3px; }
-        .boletin-print .boletin-title { text-align: center; margin: 14px 0; font-size: 1.1rem; }
-        .boletin-print .boletin-student { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 24px; border: 1px solid #cbd5e1; padding: 12px; margin-bottom: 16px; }
-        .boletin-print .boletin-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
-        .boletin-print .boletin-table th, .boletin-print .boletin-table td { border: 1px solid #94a3b8; padding: 7px; text-align: center; }
-        .boletin-print .boletin-table th:first-child, .boletin-print .boletin-table td:first-child { text-align: left; }
-        .boletin-print .boletin-scale, .boletin-print .boletin-observations { margin-top: 18px; }
-        .boletin-print .boletin-signatures { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 50px; text-align: center; }
-        .boletin-print .signature-line { border-top: 1px solid #475569; padding-top: 6px; font-size: 0.75rem; }
-        .boletin-print .boletin-footer { text-align: center; margin-top: 28px; font-size: 0.7rem; color: #64748b; }
+        /* ============================================= */
+/* BOLETÍN PROFESIONAL                           */
+/* ============================================= */
+.boletin-print {
+    max-width: 100%;
+    color: #0f172a;
+    background: #fff;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Encabezado con logo */
+.boletin-header-pro {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding-bottom: 16px;
+    border-bottom: 3px double #1e293b;
+    margin-bottom: 6px;
+}
+.boletin-logo-box {
+    width: 90px;
+    height: 90px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8fafc;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    overflow: hidden;
+}
+.boletin-logo-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 6px;
+}
+.boletin-logo-box i {
+    font-size: 2.5rem;
+    color: #94a3b8;
+}
+.boletin-header-info {
+    flex: 1;
+    text-align: center;
+}
+.boletin-header-info h1 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+}
+.boletin-header-info p {
+    font-size: 0.78rem;
+    color: #475569;
+    line-height: 1.5;
+}
+.boletin-header-info .nit-line {
+    font-size: 0.72rem;
+    color: #64748b;
+    margin-top: 2px;
+}
+
+/* Línea decorativa bajo el header */
+.boletin-divider {
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), #1e293b);
+    border-radius: 2px;
+    margin-bottom: 20px;
+}
+
+/* Título central del boletín */
+.boletin-title-pro {
+    text-align: center;
+    margin: 18px 0 22px;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+    border-radius: 10px;
+    border-left: 4px solid var(--primary);
+    border-right: 4px solid var(--primary);
+}
+.boletin-title-pro h2 {
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    color: #0f172a;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+}
+.boletin-title-pro p {
+    font-size: 0.75rem;
+    color: #64748b;
+    letter-spacing: 0.5px;
+}
+
+/* Datos del estudiante en tarjeta */
+.boletin-student-pro {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 24px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    position: relative;
+}
+.boletin-student-pro::before {
+    content: 'DATOS DEL ESTUDIANTE';
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    background: #fff;
+    padding: 0 10px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--primary);
+    letter-spacing: 1px;
+}
+.boletin-student-pro .field {
+    display: flex;
+    gap: 8px;
+    font-size: 0.82rem;
+    align-items: baseline;
+}
+.boletin-student-pro .field .lbl {
+    color: #64748b;
+    font-weight: 500;
+    min-width: 85px;
+    flex-shrink: 0;
+}
+.boletin-student-pro .field .val {
+    color: #0f172a;
+    font-weight: 600;
+    flex: 1;
+    border-bottom: 1px dotted #cbd5e1;
+    padding-bottom: 1px;
+}
+
+/* Tabla de calificaciones */
+.boletin-table-pro {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+    margin-top: 16px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+.boletin-table-pro thead th {
+    background: linear-gradient(135deg, #1e293b, #334155);
+    color: #fff;
+    padding: 12px 8px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.72rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    border: none;
+}
+.boletin-table-pro thead th:first-child {
+    text-align: left;
+    padding-left: 16px;
+}
+.boletin-table-pro thead th .peso {
+    display: block;
+    font-size: 0.62rem;
+    font-weight: 400;
+    opacity: 0.85;
+    margin-top: 2px;
+}
+.boletin-table-pro tbody td {
+    padding: 11px 8px;
+    text-align: center;
+    border-bottom: 1px solid #e2e8f0;
+    color: #0f172a;
+    font-weight: 500;
+}
+.boletin-table-pro tbody td:first-child {
+    text-align: left;
+    padding-left: 16px;
+    font-weight: 600;
+    background: #f8fafc;
+}
+.boletin-table-pro tbody tr:nth-child(even) td {
+    background: #fafbfc;
+}
+.boletin-table-pro tbody tr:nth-child(even) td:first-child {
+    background: #f1f5f9;
+}
+.boletin-table-pro tbody tr:last-child td {
+    border-bottom: none;
+}
+.boletin-table-pro .prom-cell {
+    font-weight: 800;
+    font-size: 0.9rem;
+    background: #f1f5f9 !important;
+    color: #0f172a;
+}
+.boletin-table-pro .estado-aprobado {
+    color: #16a34a;
+    font-weight: 700;
+}
+.boletin-table-pro .estado-reprobado {
+    color: #dc2626;
+    font-weight: 700;
+}
+.boletin-table-pro .estado-sin-nota {
+    color: #94a3b8;
+    font-weight: 600;
+}
+.boletin-table-pro .act-count {
+    display: block;
+    font-size: 0.6rem;
+    font-weight: 400;
+    color: #94a3b8;
+    margin-top: 2px;
+}
+
+/* Escala */
+.boletin-scale-pro {
+    margin-top: 20px;
+    padding: 12px 16px;
+    background: #f8fafc;
+    border-left: 4px solid var(--primary);
+    border-radius: 8px;
+    font-size: 0.78rem;
+    color: #334155;
+}
+.boletin-scale-pro strong {
+    color: #0f172a;
+    font-weight: 700;
+}
+
+/* Observaciones */
+.boletin-observations-pro {
+    margin-top: 14px;
+    padding: 12px 16px;
+    background: #f8fafc;
+    border-left: 4px solid #f59e0b;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    color: #334155;
+}
+.boletin-observations-pro strong {
+    display: block;
+    color: #0f172a;
+    margin-bottom: 6px;
+    font-weight: 700;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Firmas */
+.boletin-signatures-pro {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin-top: 40px;
+    text-align: center;
+}
+.boletin-signatures-pro .signature {
+    padding-top: 8px;
+}
+.boletin-signatures-pro .signature-line {
+    border-top: 1.5px solid #334155;
+    padding-top: 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #334155;
+}
+.boletin-signatures-pro .signature-sub {
+    font-size: 0.65rem;
+    color: #94a3b8;
+    margin-top: 2px;
+}
+
+/* Pie */
+.boletin-footer-pro {
+    text-align: center;
+    margin-top: 14px;
+    padding-top: 8px;
+    border-top: 1px dashed #cbd5e1;
+    font-size: 0.7rem;
+    color: #64748b;
+    line-height: 1.4;
+}
+.boletin-footer-pro strong {
+    color: var(--primary);
+    font-weight: 700;
+}
         .progreso-asignatura { border-left: 4px solid var(--primary); }
         .progreso-asignatura .progreso-bar { height: 8px; background: var(--gray-200); border-radius: 8px; overflow: hidden; margin-top: 8px; }
         .progreso-asignatura .progreso-fill { height: 100%; background: var(--success); transition: width 0.3s; }
@@ -1305,8 +1586,9 @@
         .eval-option-button input { accent-color: var(--primary); }
         .eval-character-count { display: block; text-align: right; color: var(--gray-400); font-size: 0.7rem; margin-top: 4px; }
         .eval-result-actions { margin-top: 16px; display: flex; justify-content: center; }
-                @media print {
-            @page { margin: 1cm; }
+               
+        @media print {
+            @page { margin: 1.5cm 1.2cm; size: A4 portrait; }
 
             html, body {
                 background: #fff !important;
@@ -1315,6 +1597,11 @@
                 overflow: visible !important;
                 margin: 0 !important;
                 padding: 0 !important;
+                .boletin-print {
+                     width: 100% !important;
+                     display: block !important;
+                    padding: 10mm 8mm !important;
+                    }
             }
 
             /* Ocultar todo excepto el contenido del boletín */
@@ -2318,6 +2605,21 @@
                 if (page === 'observador') cargarObservador();
             });
         });
+function formatearNota(v) {
+    const n = parseFloat(v);
+    if (isNaN(n) || n === 0) return '-';
+    // Trunca a 1 decimal SIN redondear (3.24 → 3.2, 3.29 → 3.2, 3.99 → 3.9)
+    const truncado = Math.trunc(n * 10) / 10;
+    // Si es entero (3.0), mostrar solo "3". Si tiene decimales, mostrar "3.2"
+    return truncado % 1 === 0 ? String(truncado) : truncado.toFixed(1);
+}
+
+function formatearPromedio(v) {
+    const n = parseFloat(v);
+    if (isNaN(n) || n === 0) return '-';
+    const s = n.toFixed(2);
+    return s.replace(/\.?0+$/, '') || '0';
+}
 
         // =============================================
         // FUNCIONES DE UTILIDAD
@@ -2529,27 +2831,25 @@
                 const notasSnap = await getDocs(notasQ);
 
                 const notasPorAsignatura = {};
-                for (const docSnap of notasSnap.docs) {
-                    const n = docSnap.data();
-                    if (n.valor && n.valor > 0) {
-                        const key = n.asignaturaId || 'general';
-                        if (!notasPorAsignatura[key]) {
-                            notasPorAsignatura[key] = [];
-                        }
-                        notasPorAsignatura[key].push(parseFloat(n.valor));
-                    }
-                }
+for (const docSnap of notasSnap.docs) {
+    const n = docSnap.data();
+    if (n.valor && n.valor > 0) {
+        const key = n.asignaturaId || 'general';
+        if (!notasPorAsignatura[key]) notasPorAsignatura[key] = [];
+        notasPorAsignatura[key].push(parseFloat(n.valor));
+    }
+}
 
-                let sumPromedios = 0;
-                let countAsignaturas = 0;
-                for (const [key, notas] of Object.entries(notasPorAsignatura)) {
-                    const prom = notas.reduce((a, b) => a + b, 0) / notas.length;
-                    sumPromedios += prom;
-                    countAsignaturas++;
-                }
-                const promedio = countAsignaturas > 0 ? (sumPromedios / countAsignaturas) : 0;
-                document.getElementById('statsPromedio').textContent = promedio > 0 ? promedio.toFixed(1) : '-';
-
+let sumPromedios = 0;
+let countAsignaturas = 0;
+for (const [key, notas] of Object.entries(notasPorAsignatura)) {
+    const prom = notas.reduce((a, b) => a + b, 0) / notas.length;
+    sumPromedios += prom;
+    countAsignaturas++;
+}
+const promedio = countAsignaturas > 0 ? (sumPromedios / countAsignaturas) : 0;
+// 🔥 SIN redondear, hasta 2 decimales
+document.getElementById('statsPromedio').textContent = promedio > 0 ? formatearNota(promedio) : '-';
                 const asisQ = query(
                     collection(db, 'colegios', colegioId, 'asistencias'),
                     where('estudianteId', '==', estudianteId)
@@ -3728,444 +4028,235 @@
         }
 
                 // =============================================
-                // MIS NOTAS
-                // =============================================
-                async function cargarNotasEstudiante() {
-                    const container = document.getElementById('notasContainer');
-                    const periodo = document.getElementById('notasFiltroPeriodo').value;
-
-                    try {
-                        let seccionesQ = query(
-                            collection(db, 'colegios', colegioId, 'secciones'),
-                            where('cursoId', '==', cursoActualId)
-                        );
-
-                        if (periodo) {
-                            seccionesQ = query(seccionesQ, where('periodo', '==', parseInt(periodo)));
-                        }
-
-                        const seccionesSnap = await getDocs(seccionesQ);
-
-                        if (seccionesSnap.empty) {
-                            container.innerHTML = `
-                                <div class="text-center text-muted" style="padding: 40px 0;">
-                                    No hay secciones de evaluación para este periodo.
-                                </div>
-                            `;
-                            return;
-                        }
-
-                        const notasQ = query(
-                            collection(db, 'colegios', colegioId, 'notas'),
-                            where('estudianteId', '==', estudianteId)
-                        );
-                        const notasSnap = await getDocs(notasQ);
-                        const notasMap = {};
-                        notasSnap.forEach(doc => {
-                            const n = doc.data();
-                            if (n.actividadId && n.valor !== undefined && n.valor !== null) {
-                                notasMap[n.actividadId] = parseFloat(n.valor);
-                            }
-                        });
-
-                        const evaluacionesQ = query(
-                            collection(db, 'colegios', colegioId, 'evaluaciones'),
-                            where('cursoId', '==', cursoActualId)
-                        );
-                        const evaluacionesSnap = await getDocs(evaluacionesQ);
-                        const evaluaciones = [];
-                        const evalNotasMap = {};
-                        for (const evalDoc of evaluacionesSnap.docs) {
-                            const evaluacion = { id: evalDoc.id, ...evalDoc.data() };
-                            if (periodo && Number(evaluacion.periodo) !== Number(periodo)) continue;
-                            const respQ = query(
-                                collection(db, 'colegios', colegioId, 'evaluaciones', evalDoc.id, 'respuestas'),
-                                where('estudianteId', '==', estudianteId)
-                            );
-                            const respSnap = await getDocs(respQ);
-                            if (!respSnap.empty) {
-                                const respuesta = respSnap.docs[0].data();
-                                if (respuesta.nota !== undefined && respuesta.nota !== null) {
-                                    evalNotasMap[evaluacion.id] = Number(respuesta.nota);
-                                }
-                            }
-                            evaluaciones.push(evaluacion);
-                        }
-
-                        let html = `
-                            <div class="table-responsive">
-                                <table class="table-modern planilla-table">
-                                    <thead>
-                                        <tr>
-                                            <th style="min-width: 150px;">Asignatura</th>
-                        `;
-
-                        const secciones = [];
-                        seccionesSnap.forEach(doc => {
-                            const s = doc.data();
-                            secciones.push({ id: doc.id, ...s });
-                            html += `<th style="text-align: center;">${s.icono || '📄'} ${s.nombre || 'Sección'}</th>`;
-                        });
-
-                        html += `
-                                            <th style="text-align: center;">Promedio</th>
-                                            <th style="text-align: center;">Estado</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                        `;
-
-                        const horariosQ = query(
-                            collection(db, 'colegios', colegioId, 'horarios'),
-                            where('cursoId', '==', cursoActualId)
-                        );
-                        const horariosSnap = await getDocs(horariosQ);
-                        const asignaturasSet = new Set();
-                        horariosSnap.forEach(doc => {
-                            const h = doc.data();
-                            if (h.asignaturaId) {
-                                asignaturasSet.add(h.asignaturaId);
-                            }
-                        });
-
-                        for (const asigId of asignaturasSet) {
-                            const asigDoc = await getDoc(doc(db, 'colegios', colegioId, 'asignaturas', asigId));
-                            const asigNombre = asigDoc.exists() ? asigDoc.data().nombre : 'Asignatura';
-
-                            let actQ = query(
-                                collection(db, 'colegios', colegioId, 'actividades'),
-                                where('asignaturaId', '==', asigId),
-                                where('cursoId', '==', cursoActualId)
-                            );
-                            if (periodo) {
-                                actQ = query(actQ, where('periodo', '==', parseInt(periodo)));
-                            }
-                            const actSnap = await getDocs(actQ);
-
-                            const evaluacionesAsignatura = evaluaciones.filter(e => e.asignaturaId === asigId);
-
-                            const notasPorSeccion = {};
-                            secciones.forEach(s => { notasPorSeccion[s.id] = []; });
-
-                            for (const actDoc of actSnap.docs) {
-                                const act = actDoc.data();
-                                if (act.seccionId && notasPorSeccion[act.seccionId] !== undefined) {
-                                    const nota = notasMap[actDoc.id] || 0;
-                                    if (nota > 0) {
-                                        notasPorSeccion[act.seccionId].push(nota);
-                                    }
-                                }
-                            }
-
-                            evaluaciones.filter(e => e.asignaturaId === asigId).forEach(evaluacion => {
-                                if (evaluacion.seccionId && notasPorSeccion[evaluacion.seccionId] !== undefined && Number(evaluacion.nota) > 0) {
-                                    notasPorSeccion[evaluacion.seccionId].push(Number(evaluacion.nota));
-                                }
-                            });
-
-                            for (const evaluacion of evaluacionesAsignatura) {
-                                if (evaluacion.seccionId && notasPorSeccion[evaluacion.seccionId] !== undefined) {
-                                    const nota = evalNotasMap[evaluacion.id] ?? notasMap[evaluacion.id] ?? 0;
-                                    if (nota > 0) notasPorSeccion[evaluacion.seccionId].push(nota);
-                                }
-                            }
-
-                            let sumaPonderada = 0;
-                            let pesoTotal = 0;
-
-                            html += `<tr><td><strong>${asigNombre}</strong></td>`;
-
-                            for (const s of secciones) {
-                                const notas = notasPorSeccion[s.id] || [];
-                                const promSeccion = notas.length > 0 ? notas.reduce((a, b) => a + b, 0) / notas.length : 0;
-                                const peso = s.porcentaje || 0;
-                                
-                                html += `<td style="text-align: center;">${promSeccion > 0 ? promSeccion.toFixed(1) : '-'}</td>`;
-                                
-                                if (promSeccion > 0 && peso > 0) {
-                                    sumaPonderada += promSeccion * (peso / 100);
-                                    pesoTotal += peso / 100;
-                                }
-                            }
-
-                            const promedio = pesoTotal > 0 ? (sumaPonderada / pesoTotal) : 0;
-                            const estado = promedio >= 3.0 ? 'Aprobado' : (promedio > 0 ? 'Reprobado' : 'Sin nota');
-                            const color = promedio >= 3.0 ? 'var(--success)' : (promedio > 0 ? 'var(--danger)' : 'var(--gray-400)');
-
-                            html += `
-                                <td style="text-align: center; font-weight: 700;">${promedio > 0 ? promedio.toFixed(1) : '-'}</td>
-                                <td style="text-align: center; font-weight: 600; color: ${color};">${estado}</td>
-                            </tr>
-                            `;
-                        }
-
-                        html += `
-                                    </tbody>
-                                </table>
-                            </div>
-                        `;
-
-                        container.innerHTML = html;
-
-                    } catch (error) {
-                        console.error('Error al cargar notas:', error);
-                        container.innerHTML = `
-                            <div class="text-center text-danger" style="padding: 20px;">
-                                Error al cargar notas: ${error.message}
-                            </div>
-                        `;
-                    }
-                }
-
-                document.getElementById('btnConsultarNotas')?.addEventListener('click', cargarNotasEstudiante);
-
-                // =============================================
-                // MI PROGRESO
-                // =============================================
-                async function cargarProgresoEstudiante() {
-                    const container = document.getElementById('progresoContainer');
-
-                    try {
-                        const horariosQ = query(
-                            collection(db, 'colegios', colegioId, 'horarios'),
-                            where('cursoId', '==', cursoActualId)
-                        );
-                        const horariosSnap = await getDocs(horariosQ);
-                        const asignaturasSet = new Set();
-                        horariosSnap.forEach(doc => {
-                            const h = doc.data();
-                            if (h.asignaturaId) {
-                                asignaturasSet.add(h.asignaturaId);
-                            }
-                        });
-
-                        if (asignaturasSet.size === 0) {
-                            container.innerHTML = `
-                                <div class="text-center text-muted" style="padding: 40px 0;">
-                                    No hay asignaturas registradas.
-                                </div>
-                            `;
-                            return;
-                        }
-
-                        const seccionesQ = query(
-                            collection(db, 'colegios', colegioId, 'secciones'),
-                            where('cursoId', '==', cursoActualId)
-                        );
-                        const seccionesSnap = await getDocs(seccionesQ);
-                        const secciones = [];
-                        seccionesSnap.forEach(doc => {
-                            secciones.push({ id: doc.id, ...doc.data() });
-                        });
-
-                        const notasQ = query(
-                            collection(db, 'colegios', colegioId, 'notas'),
-                            where('estudianteId', '==', estudianteId)
-                        );
-                        const notasSnap = await getDocs(notasQ);
-                        const notasMap = {};
-                        notasSnap.forEach(doc => {
-                            const n = doc.data();
-                            if (n.actividadId && n.valor !== undefined && n.valor !== null) {
-                                notasMap[n.actividadId] = parseFloat(n.valor);
-                            }
-                        });
-
-                        const evaluacionesQ = query(
-                            collection(db, 'colegios', colegioId, 'evaluaciones'),
-                            where('cursoId', '==', cursoActualId)
-                        );
-                        const evaluacionesSnap = await getDocs(evaluacionesQ);
-                        const evaluaciones = [];
-                        for (const evalDoc of evaluacionesSnap.docs) {
-                            const evaluacion = { id: evalDoc.id, ...evalDoc.data() };
-                            const respQ = query(
-                                collection(db, 'colegios', colegioId, 'evaluaciones', evalDoc.id, 'respuestas'),
-                                where('estudianteId', '==', estudianteId)
-                            );
-                            const respSnap = await getDocs(respQ);
-                            const respuesta = respSnap.empty ? null : respSnap.docs[0].data();
-                            evaluacion.nota = respuesta?.nota ?? notasMap[evaluacion.id] ?? 0;
-                            evaluaciones.push(evaluacion);
-                        }
-
-                        const observacionesQ = query(
-                            collection(db, 'colegios', colegioId, 'observaciones'),
-                            where('estudianteId', '==', estudianteId)
-                        );
-                        const observacionesSnap = await getDocs(observacionesQ);
-                        const observaciones = observacionesSnap.docs.map(docSnap => docSnap.data());
-
-                        const todasActividadesQ = query(
-                            collection(db, 'colegios', colegioId, 'actividades'),
-                            where('cursoId', '==', cursoActualId)
-                        );
-                        const todasActividadesSnap = await getDocs(todasActividadesQ);
-                        const actividadesMap = {};
-                        todasActividadesSnap.forEach(doc => {
-                            const act = doc.data();
-                            if (!actividadesMap[act.asignaturaId]) {
-                                actividadesMap[act.asignaturaId] = [];
-                            }
-                            actividadesMap[act.asignaturaId].push({
-                                id: doc.id,
-                                titulo: act.titulo || 'Sin título',
-                                periodo: act.periodo || 1,
-                                seccionId: act.seccionId,
-                                seccionNombre: act.seccionNombre || 'Sección',
-                                tipoEvaluacion: act.tipoEvaluacion || ''
-                            });
-                        });
-
-                            const evaluacionesMap = {};
-                            for (const evaluacion of evaluaciones) {
-                                const nota = evaluacion.nota || 0;
-                                if (!evaluacionesMap[evaluacion.asignaturaId]) evaluacionesMap[evaluacion.asignaturaId] = [];
-                                evaluacionesMap[evaluacion.asignaturaId].push({
-                                    ...evaluacion,
-                                    nota: Number(nota) || 0,
-                                    titulo: evaluacion.titulo || 'Evaluación',
-                                    periodo: evaluacion.periodo || 1
-                                });
-                            }
-
-                        let html = '';
-
-                        for (const asigId of asignaturasSet) {
-                            const asigDoc = await getDoc(doc(db, 'colegios', colegioId, 'asignaturas', asigId));
-                            const asigNombre = asigDoc.exists() ? asigDoc.data().nombre : 'Asignatura';
-
-                            const itemsAsignatura = [...(actividadesMap[asigId] || []), ...(evaluacionesMap[asigId] || [])];
-                            const itemsConNota = itemsAsignatura.filter(item => item.nota > 0 || notasMap[item.id] > 0).length;
-                            const progresoAsignatura = itemsAsignatura.length ? Math.round((itemsConNota / itemsAsignatura.length) * 100) : 0;
-
-                            html += `
-                                <div class="card progreso-asignatura" style="margin-bottom: 16px;">
-                                    <div class="card-header" style="background: var(--primary-light); cursor: pointer;" onclick="window.toggleMateriaProgreso(this)">
-                                        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-                                            <h3 style="font-size: 1rem; font-weight: 600;">${asigNombre}</h3>
-                                            <span><strong>${progresoAsignatura}%</strong> <span class="toggle-icon"><i class="fas fa-chevron-up"></i></span></span>
-                                        </div>
-                                        <div class="progreso-bar"><div class="progreso-fill" style="width: ${progresoAsignatura}%;"></div></div>
-                                    </div>
-                                    <div class="card-body progreso-body">
-                            `;
-
-                            for (let p = 1; p <= 4; p++) {
-                                const actividadesPeriodo = (actividadesMap[asigId] || []).filter(a => a.periodo === p);
-                                const evaluacionesPeriodo = (evaluacionesMap[asigId] || []).filter(e => e.periodo === p);
-                                
-                                if (actividadesPeriodo.length === 0 && evaluacionesPeriodo.length === 0) continue;
-
-                                const notasPorSeccion = {};
-                                secciones.filter(s => Number(s.periodo) === p).forEach(s => { notasPorSeccion[s.id] = []; });
-
-                                for (const act of actividadesPeriodo) {
-                                    const nota = notasMap[act.id] || 0;
-                                    if (act.seccionId && notasPorSeccion[act.seccionId]) {
-                                        notasPorSeccion[act.seccionId].push({ titulo: act.titulo, nota });
-                                    }
-                                }
-                                for (const evaluacion of evaluacionesPeriodo) {
-                                    if (evaluacion.seccionId && notasPorSeccion[evaluacion.seccionId]) {
-                                        notasPorSeccion[evaluacion.seccionId].push({ titulo: `📝 ${evaluacion.titulo}`, nota: evaluacion.nota });
-                                    }
-                                }
-
-                                let sumaPonderada = 0;
-                                let pesoTotal = 0;
-                                let filas = '';
-
-                                html += `
-                                    <div style="margin-bottom: 16px;">
-                                        <h4 style="font-size: 0.9rem; color: var(--gray-600); margin-bottom: 8px;">Periodo ${p}</h4>
-                                `;
-
-                                for (const s of secciones.filter(section => Number(section.periodo) === p)) {
-                                    const data = notasPorSeccion[s.id] || [];
-                                    const notasValidas = data.filter(item => item.nota > 0).map(item => item.nota);
-                                    const promSeccion = notasValidas.length ? notasValidas.reduce((a, b) => a + b, 0) / notasValidas.length : 0;
-                                    const peso = s.porcentaje || 0;
-                                    const estado = promSeccion >= 3 ? 'Aprobado' : (promSeccion > 0 ? 'Reprobado' : 'Sin nota');
-                                    const badgeClass = promSeccion >= 3 ? 'aprobado' : (promSeccion > 0 ? 'reprobado' : 'sin-nota');
-                                    filas += `<tr><td>${s.icono || '📄'} ${s.nombre || 'Sección'}</td><td>${peso}%</td><td><span class="nota-badge ${badgeClass}">${promSeccion ? promSeccion.toFixed(1) : '-'}</span></td><td>${estado}</td></tr>`;
-                                    if (notasValidas.length && peso > 0) {
-                                        sumaPonderada += promSeccion * (peso / 100);
-                                        pesoTotal += peso / 100;
-                                    }
-                                }
-
-                                const promedio = pesoTotal > 0 ? (sumaPonderada / pesoTotal) : 0;
-                                const estado = promedio >= 3.0 ? 'Aprobado' : (promedio > 0 ? 'Reprobado' : 'Sin notas');
-                                const color = promedio >= 3.0 ? 'var(--success)' : (promedio > 0 ? 'var(--danger)' : 'var(--gray-400)');
-
-                                html += `<div style="margin-bottom: 18px;"><div class="table-responsive"><table class="table-modern progreso-table"><thead><tr><th>Sección</th><th>Peso</th><th>Nota sección</th><th>Estado</th></tr></thead><tbody>${filas}<tr><td colspan="2"><strong>Promedio del periodo</strong></td><td><span class="nota-badge ${promedio >= 3 ? 'aprobado' : (promedio > 0 ? 'reprobado' : 'sin-nota')}">${promedio ? promedio.toFixed(1) : '-'}</span></td><td>${estado}</td></tr></tbody></table></div></div>`;
-                            }
-
-                            html += `
-                                    </div>
-                                </div>
-                            `;
-                        }
-
-                        container.innerHTML = html;
-
-                        window.toggleMateriaProgreso = (header) => {
-                            const body = header.nextElementSibling;
-                            const icon = header.querySelector('.toggle-icon i');
-                            if (body) {
-                                body.style.display = body.style.display === 'none' ? 'block' : 'none';
-                                if (icon) {
-                                    icon.classList.toggle('fa-chevron-up');
-                                    icon.classList.toggle('fa-chevron-down');
-                                }
-                            }
-                        };
-
-                    } catch (error) {
-                        console.error('Error al cargar progreso:', error);
-                        container.innerHTML = `
-                            <div class="text-center text-danger" style="padding: 20px;">
-                                Error al cargar progreso: ${error.message}
-                            </div>
-                        `;
-                    }
-                }
-
-                // =============================================
-                // BOLETINES
-                // =============================================
-                async function cargarBoletines() {}
-
-                document.getElementById('btnGenerarBoletin')?.addEventListener('click', async () => {
-    const periodo = document.getElementById('boletinFiltroPeriodo').value;
+// MIS NOTAS (SIN REDONDEAR + suma ponderada como el profesor)
+// =============================================
+// =============================================
+// MIS NOTAS — Versión unificada (lee de notas + evaluaciones + entregas)
+// Sin redondeo, sin duplicados, con suma ponderada correcta
+// =============================================
+async function cargarNotasEstudiante() {
+    const container = document.getElementById('notasContainer');
+    const periodo = document.getElementById('notasFiltroPeriodo').value;
 
     try {
-        const estDoc = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', estudianteId));
-        if (!estDoc.exists()) {
-            alert('Estudiante no encontrado');
-            return;
-        }
-        const estudiante = estDoc.data();
-
-        const colegioDoc = await getDoc(doc(db, 'colegios', colegioId));
-        const colegio = colegioDoc.exists() ? colegioDoc.data() : {};
-
         // ===== Secciones =====
         let seccionesQ = query(
             collection(db, 'colegios', colegioId, 'secciones'),
             where('cursoId', '==', cursoActualId)
         );
-        if (periodo) {
-            seccionesQ = query(seccionesQ, where('periodo', '==', parseInt(periodo)));
+        if (periodo) seccionesQ = query(seccionesQ, where('periodo', '==', parseInt(periodo)));
+        const seccionesSnap = await getDocs(seccionesQ);
+
+        if (seccionesSnap.empty) {
+            container.innerHTML = `<div class="text-center text-muted" style="padding: 40px 0;">No hay secciones de evaluación para este periodo.</div>`;
+            return;
         }
+
+        const secciones = [];
+        seccionesSnap.forEach(doc => secciones.push({ id: doc.id, ...doc.data() }));
+
+        // ===== Nota unificada: mapa actividadId → nota (de CUALQUIER fuente) =====
+        const notaUnificada = {};
+
+        // Fuente 1: colección 'notas'
+        const notasQ = query(
+            collection(db, 'colegios', colegioId, 'notas'),
+            where('estudianteId', '==', estudianteId)
+        );
+        const notasSnap = await getDocs(notasQ);
+        notasSnap.forEach(doc => {
+            const n = doc.data();
+            if (n.actividadId && n.valor !== undefined && n.valor !== null) {
+                notaUnificada[n.actividadId] = parseFloat(n.valor);
+            }
+        });
+
+        // Fuente 2: colección 'entregas' (nota guardada en la entrega)
+        const entregasQ = query(
+            collection(db, 'colegios', colegioId, 'entregas'),
+            where('estudianteId', '==', estudianteId)
+        );
+        const entregasSnap = await getDocs(entregasQ);
+        entregasSnap.forEach(doc => {
+            const e = doc.data();
+            if (e.actividadId && e.nota !== undefined && e.nota !== null && notaUnificada[e.actividadId] === undefined) {
+                notaUnificada[e.actividadId] = parseFloat(e.nota);
+            }
+        });
+
+        // Fuente 3: respuestas de evaluaciones virtuales
+        const evaluacionesQ = query(
+            collection(db, 'colegios', colegioId, 'evaluaciones'),
+            where('cursoId', '==', cursoActualId)
+        );
+        const evaluacionesSnap = await getDocs(evaluacionesQ);
+        const evaluaciones = [];
+        for (const evalDoc of evaluacionesSnap.docs) {
+            const evaluacion = { id: evalDoc.id, ...evalDoc.data() };
+            if (periodo && Number(evaluacion.periodo) !== Number(periodo)) continue;
+            const respQ = query(
+                collection(db, 'colegios', colegioId, 'evaluaciones', evalDoc.id, 'respuestas'),
+                where('estudianteId', '==', estudianteId)
+            );
+            const respSnap = await getDocs(respQ);
+            if (!respSnap.empty) {
+                const respuesta = respSnap.docs[0].data();
+                if (respuesta.nota !== undefined && respuesta.nota !== null) {
+                    notaUnificada[evaluacion.id] = Number(respuesta.nota);
+                }
+            }
+            evaluaciones.push(evaluacion);
+        }
+
+        // ===== HTML =====
+        let html = `
+            <div class="table-responsive">
+                <table class="table-modern planilla-table">
+                    <thead>
+                        <tr>
+                            <th style="min-width: 150px;">Asignatura</th>
+        `;
+        secciones.forEach(s => {
+            html += `<th style="text-align: center;">${s.icono || '📄'} ${s.nombre || 'Sección'}<br><small style="font-weight: 400; color: var(--gray-400);">${s.porcentaje || 0}%</small></th>`;
+        });
+        html += `<th style="text-align: center;">Promedio</th><th style="text-align: center;">Estado</th></tr></thead><tbody>`;
+
+        // ===== Asignaturas =====
+        const horariosQ = query(
+            collection(db, 'colegios', colegioId, 'horarios'),
+            where('cursoId', '==', cursoActualId)
+        );
+        const horariosSnap = await getDocs(horariosQ);
+        const asignaturasSet = new Set();
+        horariosSnap.forEach(doc => {
+            const h = doc.data();
+            if (h.asignaturaId) asignaturasSet.add(h.asignaturaId);
+        });
+
+        for (const asigId of asignaturasSet) {
+            const asigDoc = await getDoc(doc(db, 'colegios', colegioId, 'asignaturas', asigId));
+            const asigNombre = asigDoc.exists() ? asigDoc.data().nombre : 'Asignatura';
+
+            // Actividades de la asignatura
+            let actQ = query(
+                collection(db, 'colegios', colegioId, 'actividades'),
+                where('asignaturaId', '==', asigId),
+                where('cursoId', '==', cursoActualId)
+            );
+            if (periodo) actQ = query(actQ, where('periodo', '==', parseInt(periodo)));
+            const actSnap = await getDocs(actQ);
+
+            // Notas por sección (con Set para no duplicar)
+            const notasPorSeccion = {};
+            secciones.forEach(s => { notasPorSeccion[s.id] = []; });
+            const idsUsados = new Set();
+
+            // Procesar CADA actividad: usar la nota unificada (viene de donde venga)
+            for (const actDoc of actSnap.docs) {
+                const act = actDoc.data();
+                if (idsUsados.has(actDoc.id)) continue;
+                idsUsados.add(actDoc.id);
+
+                if (!act.seccionId || notasPorSeccion[act.seccionId] === undefined) continue;
+
+                const nota = notaUnificada[actDoc.id] ?? 0;
+                if (nota > 0) {
+                    notasPorSeccion[act.seccionId].push(Number(nota));
+                }
+            }
+
+            // Procesar evaluaciones (por si alguna no está en 'actividades')
+            for (const evaluacion of evaluaciones) {
+                if (evaluacion.asignaturaId !== asigId) continue;
+                if (idsUsados.has(evaluacion.id)) continue;
+                idsUsados.add(evaluacion.id);
+
+                if (!evaluacion.seccionId || notasPorSeccion[evaluacion.seccionId] === undefined) continue;
+
+                const nota = notaUnificada[evaluacion.id] ?? 0;
+                if (nota > 0) {
+                    notasPorSeccion[evaluacion.seccionId].push(Number(nota));
+                }
+            }
+
+            // Promedio ponderado
+            let sumaPonderada = 0;
+            let pesoTotal = 0;
+
+            html += `<tr><td><strong>${asigNombre}</strong></td>`;
+
+            for (const s of secciones) {
+                const notas = notasPorSeccion[s.id] || [];
+                const promSeccion = notas.length > 0
+                    ? notas.reduce((a, b) => a + b, 0) / notas.length
+                    : 0;
+                const peso = Number(s.porcentaje) || 0;
+
+                html += `<td style="text-align: center;">${promSeccion > 0 ? formatearNota(promSeccion) : '-'}</td>`;
+
+                if (promSeccion > 0 && peso > 0) {
+                    sumaPonderada += promSeccion * (peso / 100);
+                    pesoTotal += peso / 100;
+                }
+            }
+
+            const promedio = pesoTotal > 0 ? (sumaPonderada / pesoTotal) : 0;
+            const estado = promedio >= 3.0 ? 'Aprobado' : (promedio > 0 ? 'Reprobado' : 'Sin nota');
+            const color = promedio >= 3.0 ? 'var(--success)' : (promedio > 0 ? 'var(--danger)' : 'var(--gray-400)');
+
+            html += `
+                <td style="text-align: center; font-weight: 700;">${promedio > 0 ? formatearNota(promedio) : '-'}</td>
+                <td style="text-align: center; font-weight: 600; color: ${color};">${estado}</td>
+            </tr>`;
+        }
+
+        html += `</tbody></table></div>`;
+        container.innerHTML = html;
+
+    } catch (error) {
+        console.error('Error al cargar notas:', error);
+        container.innerHTML = `<div class="text-center text-danger" style="padding: 20px;">Error al cargar notas: ${error.message}</div>`;
+    }
+}
+
+                document.getElementById('btnConsultarNotas')?.addEventListener('click', cargarNotasEstudiante);
+
+               // =============================================
+// MI PROGRESO (SIN REDONDEAR + ponderado real)
+// =============================================
+async function cargarProgresoEstudiante() {
+    const container = document.getElementById('progresoContainer');
+
+    try {
+        // ===== Asignaturas =====
+        const horariosQ = query(
+            collection(db, 'colegios', colegioId, 'horarios'),
+            where('cursoId', '==', cursoActualId)
+        );
+        const horariosSnap = await getDocs(horariosQ);
+        const asignaturasSet = new Set();
+        horariosSnap.forEach(doc => {
+            const h = doc.data();
+            if (h.asignaturaId) asignaturasSet.add(h.asignaturaId);
+        });
+
+        if (asignaturasSet.size === 0) {
+            container.innerHTML = `<div class="text-center text-muted" style="padding: 40px 0;">No hay asignaturas registradas.</div>`;
+            return;
+        }
+
+        // ===== Secciones =====
+        const seccionesQ = query(
+            collection(db, 'colegios', colegioId, 'secciones'),
+            where('cursoId', '==', cursoActualId)
+        );
         const seccionesSnap = await getDocs(seccionesQ);
         const secciones = [];
         seccionesSnap.forEach(doc => {
             secciones.push({ id: doc.id, ...doc.data() });
         });
 
-        // ===== Notas (actividades + evaluaciones guardadas en 'notas') =====
+        // ===== Notas del estudiante =====
         const notasQ = query(
             collection(db, 'colegios', colegioId, 'notas'),
             where('estudianteId', '==', estudianteId)
@@ -4179,243 +4270,561 @@
             }
         });
 
-        // ===== Entregas (respaldo para evaluaciones presenciales) =====
-        const entregasQ = query(
-            collection(db, 'colegios', colegioId, 'entregas'),
-            where('estudianteId', '==', estudianteId)
-        );
-        const entregasSnap = await getDocs(entregasQ);
-        const entregasMap = {};
-        entregasSnap.forEach(doc => {
-            const e = doc.data();
-            if (e.actividadId && e.nota !== undefined && e.nota !== null) {
-                entregasMap[e.actividadId] = parseFloat(e.nota);
-            }
-        });
-
-        // ===== Evaluaciones virtuales (respuestas) =====
+        // ===== Evaluaciones + respuestas =====
         const evaluacionesQ = query(
             collection(db, 'colegios', colegioId, 'evaluaciones'),
             where('cursoId', '==', cursoActualId)
         );
         const evaluacionesSnap = await getDocs(evaluacionesQ);
         const evaluaciones = [];
-        const evalNotasMap = {};
         for (const evalDoc of evaluacionesSnap.docs) {
             const evaluacion = { id: evalDoc.id, ...evalDoc.data() };
-            if (periodo && Number(evaluacion.periodo) !== Number(periodo)) continue;
-
             const respQ = query(
                 collection(db, 'colegios', colegioId, 'evaluaciones', evalDoc.id, 'respuestas'),
                 where('estudianteId', '==', estudianteId)
             );
             const respSnap = await getDocs(respQ);
-            if (!respSnap.empty) {
-                const respuesta = respSnap.docs[0].data();
-                if (respuesta.nota !== undefined && respuesta.nota !== null) {
-                    evalNotasMap[evaluacion.id] = Number(respuesta.nota);
-                }
-            }
+            const respuesta = respSnap.empty ? null : respSnap.docs[0].data();
+            evaluacion.nota = respuesta?.nota ?? notasMap[evaluacion.id] ?? 0;
             evaluaciones.push(evaluacion);
         }
 
-        // ===== Horarios / asignaturas =====
-        const horariosQ = query(
-            collection(db, 'colegios', colegioId, 'horarios'),
+        // ===== Actividades del curso (agrupadas por asignatura) =====
+        const todasActividadesQ = query(
+            collection(db, 'colegios', colegioId, 'actividades'),
             where('cursoId', '==', cursoActualId)
         );
-        const horariosSnap = await getDocs(horariosQ);
-        const asignaturasSet = new Set();
-        horariosSnap.forEach(doc => {
-            const h = doc.data();
-            if (h.asignaturaId) {
-                asignaturasSet.add(h.asignaturaId);
-            }
+        const todasActividadesSnap = await getDocs(todasActividadesQ);
+        const actividadesMap = {};
+        todasActividadesSnap.forEach(doc => {
+            const act = doc.data();
+            if (!actividadesMap[act.asignaturaId]) actividadesMap[act.asignaturaId] = [];
+            actividadesMap[act.asignaturaId].push({
+                id: doc.id,
+                titulo: act.titulo || 'Sin título',
+                periodo: act.periodo || 1,
+                seccionId: act.seccionId,
+                seccionNombre: act.seccionNombre || 'Sección',
+                tipoEvaluacion: act.tipoEvaluacion || ''
+            });
         });
 
-        // ===== Curso / grado =====
-        let cursoNombre = 'Sin curso';
-        let gradoNombre = 'Sin grado';
-        if (cursoActualId) {
-            const cursoDoc = await getDoc(doc(db, 'colegios', colegioId, 'cursos', cursoActualId));
-            if (cursoDoc.exists()) {
-                const cursoData = cursoDoc.data();
-                cursoNombre = cursoData.nombre || 'Sin curso';
-                if (cursoData.gradoId) {
-                    const gradoDoc = await getDoc(doc(db, 'colegios', colegioId, 'grados', cursoData.gradoId));
-                    gradoNombre = gradoDoc.exists() ? gradoDoc.data().nombre : 'Sin grado';
-                }
-            }
+        // ===== Evaluaciones agrupadas por asignatura =====
+        const evaluacionesMap = {};
+        for (const evaluacion of evaluaciones) {
+            const nota = evaluacion.nota || 0;
+            if (!evaluacionesMap[evaluacion.asignaturaId]) evaluacionesMap[evaluacion.asignaturaId] = [];
+            evaluacionesMap[evaluacion.asignaturaId].push({
+                ...evaluacion,
+                nota: Number(nota) || 0,
+                titulo: evaluacion.titulo || 'Evaluación',
+                periodo: evaluacion.periodo || 1
+            });
         }
 
-        // ===== Observaciones =====
-        const observacionesQ = query(
-            collection(db, 'colegios', colegioId, 'observaciones'),
-            where('estudianteId', '==', estudianteId)
-        );
-        const observacionesSnap = await getDocs(observacionesQ);
-        const observaciones = observacionesSnap.docs
-            .map(docSnap => docSnap.data())
-            .filter(obs => !periodo || Number(obs.periodo) === Number(periodo));
+        let html = '';
 
-        // ===== Construir HTML del boletín =====
-        let html = `
-            <div class="boletin-print">
-                <div class="boletin-header">
-                    <h1>${colegio.nombre || 'Colegio'}</h1>
-                    <p>${colegio.ciudad || ''} - ${colegio.departamento || ''}</p>
-                    <p>NIT: ${colegio.nit || '-'} | Año escolar: ${colegio.anioEscolar || '-'}</p>
-                </div>
-                <h2 class="boletin-title">BOLETÍN DE CALIFICACIONES - ${periodo ? `PERIODO ${periodo}` : 'TODOS LOS PERIODOS'}</h2>
-                <div class="boletin-student">
-                    <h3>Datos del Estudiante</h3>
-                    <p><strong>Nombre:</strong> ${estudiante.nombres || ''} ${estudiante.apellidos || ''}</p>
-                    <p><strong>Documento:</strong> ${estudiante.documento || '-'}</p>
-                    <p><strong>Curso:</strong> ${gradoNombre} ${cursoNombre}</p>
-                    <p><strong>Acudiente:</strong> ${estudiante.acudiente || '-'}</p>
-                    <p><strong>Periodo:</strong> ${periodo ? `Periodo ${periodo}` : 'Todos los periodos'}</p>
-                </div>
-                <div style="overflow-x: auto;">
-                    <table class="boletin-table">
-                        <thead>
-                            <tr>
-                                <th style="text-align: left;">Asignatura</th>
-        `;
-
-        for (const s of secciones) {
-            html += `
-                <th style="text-align: center;">
-                    ${s.icono || '📄'} ${s.nombre || 'Sección'}
-                    <br><span style="font-size: 0.6rem; font-weight: 400;">${s.porcentaje || 0}%</span>
-                </th>
-            `;
-        }
-
-        html += `
-                                <th style="text-align: center;">Promedio</th>
-                                <th style="text-align: center;">Estado</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-        `;
-
+        // ===== Para cada asignatura =====
         for (const asigId of asignaturasSet) {
             const asigDoc = await getDoc(doc(db, 'colegios', colegioId, 'asignaturas', asigId));
             const asigNombre = asigDoc.exists() ? asigDoc.data().nombre : 'Asignatura';
 
-            // Actividades de la asignatura (con periodo si aplica)
-            let actQ = query(
-                collection(db, 'colegios', colegioId, 'actividades'),
-                where('asignaturaId', '==', asigId),
-                where('cursoId', '==', cursoActualId)
-            );
-            if (periodo) {
-                actQ = query(actQ, where('periodo', '==', parseInt(periodo)));
-            }
-            const actSnap = await getDocs(actQ);
-
-            // Notas por sección
-            const notasPorSeccion = {};
-            secciones.forEach(s => { notasPorSeccion[s.id] = []; });
-
-            // Actividades normales
-            for (const actDoc of actSnap.docs) {
-                const act = actDoc.data();
-                if (act.tipoEvaluacion === 'presencial' || act.tipoEvaluacion === 'virtual') continue;
-                if (act.seccionId && notasPorSeccion[act.seccionId] !== undefined) {
-                    const nota = notasMap[actDoc.id] || 0;
-                    if (nota > 0) {
-                        notasPorSeccion[act.seccionId].push(nota);
-                    }
-                }
-            }
-
-            // Evaluaciones (virtuales y presenciales) de esta asignatura
-            const evaluacionesAsignatura = evaluaciones.filter(e => e.asignaturaId === asigId);
-            for (const evaluacion of evaluacionesAsignatura) {
-                if (!evaluacion.seccionId || notasPorSeccion[evaluacion.seccionId] === undefined) continue;
-                const nota = evalNotasMap[evaluacion.id] ?? notasMap[evaluacion.id] ?? entregasMap[evaluacion.id] ?? 0;
-                if (nota > 0) {
-                    notasPorSeccion[evaluacion.seccionId].push(Number(nota));
-                }
-            }
-
-            // Actividades marcadas como evaluación (presencial/virtual) que el profesor creó en la sección
-            for (const actDoc of actSnap.docs) {
-                const act = actDoc.data();
-                if (act.tipoEvaluacion !== 'presencial' && act.tipoEvaluacion !== 'virtual') continue;
-                if (!act.seccionId || notasPorSeccion[act.seccionId] === undefined) continue;
-                const nota = notasMap[actDoc.id] ?? entregasMap[actDoc.id] ?? 0;
-                if (nota > 0) {
-                    notasPorSeccion[act.seccionId].push(Number(nota));
-                }
-            }
-
-            let sumaPonderada = 0;
-            let pesoTotal = 0;
-
-            html += `<tr><td style="text-align: left;"><strong>${asigNombre}</strong></td>`;
-
-            for (const s of secciones) {
-                const notas = notasPorSeccion[s.id] || [];
-                const promSeccion = notas.length > 0 ? (notas.reduce((a, b) => a + b, 0) / notas.length) : 0;
-                const peso = s.porcentaje || 0;
-
-                html += `
-                    <td style="text-align: center; font-weight: 600;">
-                        ${promSeccion > 0 ? promSeccion.toFixed(1) : '-'}
-                        <br><span style="font-size: 0.6rem; font-weight: 400; color: #94a3b8;">${notas.length} act.</span>
-                    </td>
-                `;
-
-                if (promSeccion > 0 && peso > 0) {
-                    sumaPonderada += promSeccion * (peso / 100);
-                    pesoTotal += peso / 100;
-                }
-            }
-
-            const promedio = pesoTotal > 0 ? (sumaPonderada / pesoTotal) : 0;
-            const estado = promedio >= 3.0 ? 'Aprobado' : (promedio > 0 ? 'Reprobado' : 'Sin nota');
-            const color = promedio >= 3.0 ? '#22c55e' : (promedio > 0 ? '#ef4444' : '#94a3b8');
+            const itemsAsignatura = [...(actividadesMap[asigId] || []), ...(evaluacionesMap[asigId] || [])];
+            const itemsConNota = itemsAsignatura.filter(item => item.nota > 0 || notasMap[item.id] > 0).length;
+            const progresoAsignatura = itemsAsignatura.length ? Math.round((itemsConNota / itemsAsignatura.length) * 100) : 0;
 
             html += `
-                <td style="text-align: center; font-weight: 700;">${promedio > 0 ? promedio.toFixed(1) : '-'}</td>
-                <td style="text-align: center; font-weight: 600; color: ${color};">${estado}</td>
-            </tr>
+                <div class="card progreso-asignatura" style="margin-bottom: 16px;">
+                    <div class="card-header" style="background: var(--primary-light); cursor: pointer;" onclick="window.toggleMateriaProgreso(this)">
+                        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                            <h3 style="font-size: 1rem; font-weight: 600;">${asigNombre}</h3>
+                            <span><strong>${progresoAsignatura}%</strong> <span class="toggle-icon"><i class="fas fa-chevron-up"></i></span></span>
+                        </div>
+                        <div class="progreso-bar"><div class="progreso-fill" style="width: ${progresoAsignatura}%;"></div></div>
+                    </div>
+                    <div class="card-body progreso-body">
+            `;
+
+            // ===== Por periodo =====
+            for (let p = 1; p <= 4; p++) {
+                const actividadesPeriodo = (actividadesMap[asigId] || []).filter(a => a.periodo === p);
+                const evaluacionesPeriodo = (evaluacionesMap[asigId] || []).filter(e => e.periodo === p);
+                if (actividadesPeriodo.length === 0 && evaluacionesPeriodo.length === 0) continue;
+
+                // Notas por sección de este periodo
+const notasPorSeccion = {};
+secciones.filter(s => Number(s.periodo) === p).forEach(s => { notasPorSeccion[s.id] = []; });
+
+// 🔥 Set para evitar duplicados
+const idsUsados = new Set();
+
+// Actividades NORMALES (excluyendo evaluaciones virtuales/presenciales)
+for (const act of actividadesPeriodo) {
+    if (act.tipoEvaluacion === 'virtual' || act.tipoEvaluacion === 'presencial') continue;
+    if (idsUsados.has(act.id)) continue;
+    idsUsados.add(act.id);
+
+    const nota = notasMap[act.id] || 0;
+    if (act.seccionId && notasPorSeccion[act.seccionId]) {
+        notasPorSeccion[act.seccionId].push({ titulo: act.titulo, nota });
+    }
+}
+
+// Evaluaciones (virtuales)
+for (const evaluacion of evaluacionesPeriodo) {
+    if (idsUsados.has(evaluacion.id)) continue;
+    idsUsados.add(evaluacion.id);
+
+    if (evaluacion.seccionId && notasPorSeccion[evaluacion.seccionId]) {
+        notasPorSeccion[evaluacion.seccionId].push({ titulo: `📝 ${evaluacion.titulo}`, nota: evaluacion.nota });
+    }
+}
+
+// Evaluaciones PRESENCIALES (creadas como actividad)
+for (const act of actividadesPeriodo) {
+    if (act.tipoEvaluacion !== 'presencial') continue;
+    if (idsUsados.has(act.id)) continue;
+    idsUsados.add(act.id);
+
+    const nota = notasMap[act.id] || 0;
+    if (act.seccionId && notasPorSeccion[act.seccionId]) {
+        notasPorSeccion[act.seccionId].push({ titulo: `📝 ${act.titulo}`, nota });
+    }
+}
+
+                let sumaPonderada = 0;
+                let pesoTotal = 0;
+                let filas = '';
+
+                html += `
+                    <div style="margin-bottom: 16px;">
+                        <h4 style="font-size: 0.9rem; color: var(--gray-600); margin-bottom: 8px;">Periodo ${p}</h4>
+                `;
+
+                // ===== Filas por sección =====
+                for (const s of secciones.filter(section => Number(section.periodo) === p)) {
+                    const data = notasPorSeccion[s.id] || [];
+                    const notasValidas = data.filter(item => item.nota > 0).map(item => item.nota);
+                    const promSeccion = notasValidas.length
+                        ? notasValidas.reduce((a, b) => a + b, 0) / notasValidas.length
+                        : 0;
+                    const peso = Number(s.porcentaje) || 0;
+                    const estado = promSeccion >= 3 ? 'Aprobado' : (promSeccion > 0 ? 'Reprobado' : 'Sin nota');
+                    const badgeClass = promSeccion >= 3 ? 'aprobado' : (promSeccion > 0 ? 'reprobado' : 'sin-nota');
+
+                    filas += `<tr>
+                        <td>${s.icono || '📄'} ${s.nombre || 'Sección'}</td>
+                        <td>${peso}%</td>
+                        <td><span class="nota-badge ${badgeClass}">${promSeccion > 0 ? formatearNota(promSeccion) : '-'}</span></td>
+                        <td>${estado}</td>
+                    </tr>`;
+
+                    if (notasValidas.length && peso > 0) {
+                        sumaPonderada += promSeccion * (peso / 100);
+                        pesoTotal += peso / 100;
+                    }
+                }
+
+                // 🔥 Promedio del periodo = suma ponderada / suma de pesos usados
+                const promedio = pesoTotal > 0 ? (sumaPonderada / pesoTotal) : 0;
+                const estado = promedio >= 3.0 ? 'Aprobado' : (promedio > 0 ? 'Reprobado' : 'Sin notas');
+
+                html += `
+                    <div style="margin-bottom: 18px;">
+                        <div class="table-responsive">
+                            <table class="table-modern progreso-table">
+                                <thead>
+                                    <tr>
+                                        <th>Sección</th>
+                                        <th>Peso</th>
+                                        <th>Nota sección</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${filas}
+                                    <tr>
+                                        <td colspan="2"><strong>Promedio del periodo</strong></td>
+                                        <td>
+                                            <span class="nota-badge ${promedio >= 3 ? 'aprobado' : (promedio > 0 ? 'reprobado' : 'sin-nota')}">
+                                                ${promedio > 0 ? formatearNota(promedio) : '-'}
+                                            </span>
+                                        </td>
+                                        <td>${estado}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                `;
+            }
+
+            html += `
+                    </div>
+                </div>
             `;
         }
 
-        html += `
-                        </tbody>
-                    </table>
-                </div>
-                <div class="boletin-scale">
-                    <strong>Escala de valoración:</strong> Superior 4.6-5.0 · Alto 4.0-4.5 · Básico 3.0-3.9 · Bajo 1.0-2.9
-                </div>
-                <div class="boletin-observations">
-                    <strong>Observaciones del periodo</strong>
-                    <p>${observaciones.length ? observaciones.map(obs => obs.texto || '').filter(Boolean).join(' | ') : 'Sin observaciones registradas.'}</p>
-                </div>
-                <div class="boletin-signatures">
-                    <div class="signature-line">Director de grupo</div>
-                    <div class="signature-line">Coordinador</div>
-                    <div class="signature-line">Acudiente</div>
-                </div>
-                <div class="boletin-footer">
-                    <p>Boletín generado el ${new Date().toLocaleDateString()}</p>
-                    <p>EduOne - Sistema de Gestión Escolar</p>
-                </div>
-            </div>
-        `;
+        container.innerHTML = html;
 
-        document.getElementById('boletinPreview').innerHTML = html;
-        document.getElementById('boletinContent').style.display = 'block';
+        window.toggleMateriaProgreso = (header) => {
+            const body = header.nextElementSibling;
+            const icon = header.querySelector('.toggle-icon i');
+            if (body) {
+                body.style.display = body.style.display === 'none' ? 'block' : 'none';
+                if (icon) {
+                    icon.classList.toggle('fa-chevron-up');
+                    icon.classList.toggle('fa-chevron-down');
+                }
+            }
+        };
 
     } catch (error) {
-        console.error('Error al generar boletín:', error);
-        alert('Error al generar el boletín: ' + error.message);
+        console.error('Error al cargar progreso:', error);
+        container.innerHTML = `
+            <div class="text-center text-danger" style="padding: 20px;">
+                Error al cargar progreso: ${error.message}
+            </div>
+        `;
     }
-});
+}
+
+                       // =============================================
+        // BOLETINES — Generar PDF / Imprimir
+        // =============================================
+        document.getElementById('btnGenerarBoletin')?.addEventListener('click', async () => {
+            const periodo = document.getElementById('boletinFiltroPeriodo').value;
+
+            try {
+                // ---------- 1) Datos del estudiante y colegio ----------
+                const estDoc = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', estudianteId));
+                if (!estDoc.exists()) { alert('Estudiante no encontrado'); return; }
+                const estudiante = estDoc.data();
+
+                const colegioDoc = await getDoc(doc(db, 'colegios', colegioId));
+                const colegio = colegioDoc.exists() ? colegioDoc.data() : {};
+
+                // ---------- 2) Secciones ----------
+                let seccionesQ = query(
+                    collection(db, 'colegios', colegioId, 'secciones'),
+                    where('cursoId', '==', cursoActualId)
+                );
+                if (periodo) seccionesQ = query(seccionesQ, where('periodo', '==', parseInt(periodo)));
+                const seccionesSnap = await getDocs(seccionesQ);
+                const secciones = [];
+                seccionesSnap.forEach(d => secciones.push({ id: d.id, ...d.data() }));
+
+                // ---------- 3) Notas ----------
+                const notasSnap = await getDocs(query(
+                    collection(db, 'colegios', colegioId, 'notas'),
+                    where('estudianteId', '==', estudianteId)
+                ));
+                const notasMap = {};
+                notasSnap.forEach(d => {
+                    const n = d.data();
+                    if (n.actividadId && n.valor !== undefined && n.valor !== null) {
+                        notasMap[n.actividadId] = parseFloat(n.valor);
+                    }
+                });
+
+                // ---------- 4) Entregas (fallback) ----------
+                const entregasSnap = await getDocs(query(
+                    collection(db, 'colegios', colegioId, 'entregas'),
+                    where('estudianteId', '==', estudianteId)
+                ));
+                const entregasMap = {};
+                entregasSnap.forEach(d => {
+                    const e = d.data();
+                    if (e.actividadId && e.nota !== undefined && e.nota !== null) {
+                        entregasMap[e.actividadId] = parseFloat(e.nota);
+                    }
+                });
+
+                // ---------- 5) Evaluaciones virtuales ----------
+                const evaluacionesSnap = await getDocs(query(
+                    collection(db, 'colegios', colegioId, 'evaluaciones'),
+                    where('cursoId', '==', cursoActualId)
+                ));
+                const evaluaciones = [];
+                const evalNotasMap = {};
+                for (const evalDoc of evaluacionesSnap.docs) {
+                    const ev = { id: evalDoc.id, ...evalDoc.data() };
+                    if (periodo && Number(ev.periodo) !== Number(periodo)) continue;
+
+                    const respQ = query(
+                        collection(db, 'colegios', colegioId, 'evaluaciones', evalDoc.id, 'respuestas'),
+                        where('estudianteId', '==', estudianteId)
+                    );
+                    const respSnap = await getDocs(respQ);
+                    if (!respSnap.empty) {
+                        const resp = respSnap.docs[0].data();
+                        if (resp.nota !== undefined && resp.nota !== null) {
+                            evalNotasMap[ev.id] = Number(resp.nota);
+                        }
+                    }
+                    evaluaciones.push(ev);
+                }
+
+                // ---------- 6) Asignaturas ----------
+                const horariosSnap = await getDocs(query(
+                    collection(db, 'colegios', colegioId, 'horarios'),
+                    where('cursoId', '==', cursoActualId)
+                ));
+                const asignaturasSet = new Set();
+                horariosSnap.forEach(d => {
+                    const h = d.data();
+                    if (h.asignaturaId) asignaturasSet.add(h.asignaturaId);
+                });
+
+                // ---------- 7) Curso / grado ----------
+                let cursoNombre = 'Sin curso';
+                let gradoNombre = 'Sin grado';
+                if (cursoActualId) {
+                    const cursoDoc = await getDoc(doc(db, 'colegios', colegioId, 'cursos', cursoActualId));
+                    if (cursoDoc.exists()) {
+                        const c = cursoDoc.data();
+                        cursoNombre = c.nombre || 'Sin curso';
+                        if (c.gradoId) {
+                            const g = await getDoc(doc(db, 'colegios', colegioId, 'grados', c.gradoId));
+                            gradoNombre = g.exists() ? g.data().nombre : 'Sin grado';
+                        }
+                    }
+                }
+
+                // ---------- 8) Observaciones ----------
+                const observacionesSnap = await getDocs(query(
+                    collection(db, 'colegios', colegioId, 'observaciones'),
+                    where('estudianteId', '==', estudianteId)
+                ));
+                const observaciones = observacionesSnap.docs
+                    .map(d => d.data())
+                    .filter(o => !periodo || Number(o.periodo) === Number(periodo));
+
+                // =============================================
+                // 9) CONSTRUIR HTML DEL BOLETÍN
+                // =============================================
+                let html = `
+                    <div class="boletin-print">
+
+                        <!-- ENCABEZADO CON LOGO -->
+                        <div class="boletin-header-pro">
+                            <div class="boletin-logo-box">
+                                ${colegio.logoUrl
+                                    ? `<img src="${colegio.logoUrl}" alt="Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" /><i class="fas fa-graduation-cap" style="display:none;"></i>`
+                                    : `<i class="fas fa-graduation-cap"></i>`
+                                }
+                            </div>
+                            <div class="boletin-header-info">
+                                <h1>${colegio.nombre || 'Colegio'}</h1>
+                                <p>${colegio.ciudad || ''}${colegio.departamento ? ' · ' + colegio.departamento : ''}</p>
+                                <p class="nit-line">NIT: ${colegio.nit || '-'} · Año escolar: ${colegio.anioEscolar || '-'}</p>
+                            </div>
+                            <div style="width: 90px; flex-shrink: 0;"></div>
+                        </div>
+
+                        <div class="boletin-divider"></div>
+
+                        <!-- TÍTULO -->
+                        <div class="boletin-title-pro">
+                            <h2>Boletín de Calificaciones</h2>
+                            <p>${periodo ? `Periodo Académico ${periodo}` : 'Todos los Periodos'}</p>
+                        </div>
+
+                        <!-- DATOS DEL ESTUDIANTE -->
+                        <div class="boletin-student-pro">
+                            <div class="field">
+                                <span class="lbl">Nombre:</span>
+                                <span class="val">${estudiante.nombres || ''} ${estudiante.apellidos || ''}</span>
+                            </div>
+                            <div class="field">
+                                <span class="lbl">Documento:</span>
+                                <span class="val">${estudiante.documento || '-'}</span>
+                            </div>
+                            <div class="field">
+                                <span class="lbl">Curso:</span>
+                                <span class="val">${gradoNombre} ${cursoNombre}</span>
+                            </div>
+                            <div class="field">
+                                <span class="lbl">Acudiente:</span>
+                                <span class="val">${estudiante.acudiente || '-'}</span>
+                            </div>
+                        </div>
+
+                        <!-- TABLA DE CALIFICACIONES -->
+                        <div style="overflow-x: auto;">
+                            <table class="boletin-table-pro">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: left;">Asignatura</th>
+                `;
+
+                // Columnas de las secciones
+                for (const s of secciones) {
+                    html += `
+                                        <th>
+                                            ${s.icono || '📄'} ${s.nombre || 'Sección'}
+                                            <span class="peso">${s.porcentaje || 0}%</span>
+                                        </th>
+                    `;
+                }
+
+                html += `
+                                        <th>Promedio</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                `;
+
+                // Filas por asignatura
+                for (const asigId of asignaturasSet) {
+                    const asigDoc = await getDoc(doc(db, 'colegios', colegioId, 'asignaturas', asigId));
+                    const asigNombre = asigDoc.exists() ? asigDoc.data().nombre : 'Asignatura';
+
+                    let actQ = query(
+                        collection(db, 'colegios', colegioId, 'actividades'),
+                        where('asignaturaId', '==', asigId),
+                        where('cursoId', '==', cursoActualId)
+                    );
+                    if (periodo) actQ = query(actQ, where('periodo', '==', parseInt(periodo)));
+                    const actSnap = await getDocs(actQ);
+
+                    const notasPorSeccion = {};
+                    secciones.forEach(s => { notasPorSeccion[s.id] = []; });
+                    const idsUsados = new Set();
+
+                    // Actividades normales
+                    for (const actDoc of actSnap.docs) {
+                        const act = actDoc.data();
+                        if (act.tipoEvaluacion === 'presencial' || act.tipoEvaluacion === 'virtual') continue;
+                        if (idsUsados.has(actDoc.id)) continue;
+                        idsUsados.add(actDoc.id);
+                        if (!act.seccionId || notasPorSeccion[act.seccionId] === undefined) continue;
+
+                        const nota = notasMap[actDoc.id] || 0;
+                        if (nota > 0) notasPorSeccion[act.seccionId].push(nota);
+                    }
+
+                    // Evaluaciones virtuales
+                    const evaluacionesAsignatura = evaluaciones.filter(e => e.asignaturaId === asigId);
+                    for (const ev of evaluacionesAsignatura) {
+                        if (!ev.seccionId || notasPorSeccion[ev.seccionId] === undefined) continue;
+                        if (idsUsados.has(ev.id)) continue;
+                        idsUsados.add(ev.id);
+
+                        const nota = evalNotasMap[ev.id] ?? notasMap[ev.id] ?? entregasMap[ev.id] ?? 0;
+                        if (nota > 0) notasPorSeccion[ev.seccionId].push(Number(nota));
+                    }
+
+                    // Evaluaciones presenciales
+                    for (const actDoc of actSnap.docs) {
+                        const act = actDoc.data();
+                        if (act.tipoEvaluacion !== 'presencial') continue;
+                        if (idsUsados.has(actDoc.id)) continue;
+                        idsUsados.add(actDoc.id);
+                        if (!act.seccionId || notasPorSeccion[act.seccionId] === undefined) continue;
+
+                        const nota = notasMap[actDoc.id] ?? entregasMap[actDoc.id] ?? 0;
+                        if (nota > 0) notasPorSeccion[act.seccionId].push(Number(nota));
+                    }
+
+                    let sumaPonderada = 0;
+                    let pesoTotal = 0;
+
+                    html += `<tr><td>${asigNombre}</td>`;
+
+                    for (const s of secciones) {
+                        const notas = notasPorSeccion[s.id] || [];
+                        const promSeccion = notas.length > 0
+                            ? notas.reduce((a, b) => a + b, 0) / notas.length
+                            : 0;
+                        const peso = Number(s.porcentaje) || 0;
+
+                        html += `
+                            <td>
+                                <span style="font-weight: 700;">${promSeccion > 0 ? formatearNota(promSeccion) : '-'}</span>
+                                <span class="act-count">${notas.length} act.</span>
+                            </td>
+                        `;
+
+                        if (promSeccion > 0 && peso > 0) {
+                            sumaPonderada += promSeccion * (peso / 100);
+                            pesoTotal += peso / 100;
+                        }
+                    }
+
+                    const promedio = pesoTotal > 0 ? (sumaPonderada / pesoTotal) : 0;
+                    const estado = promedio >= 3.0 ? 'Aprobado' : (promedio > 0 ? 'Reprobado' : 'Sin nota');
+                    const estadoClass = promedio >= 3.0 ? 'estado-aprobado' : (promedio > 0 ? 'estado-reprobado' : 'estado-sin-nota');
+
+                    html += `
+                        <td class="prom-cell">${promedio > 0 ? formatearNota(promedio) : '-'}</td>
+                        <td class="${estadoClass}">${estado}</td>
+                    </tr>
+                    `;
+                }
+
+                // Cierre del HTML
+                html += `
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- ESCALA -->
+                        <div class="boletin-scale-pro">
+                            <strong>Escala de valoración:</strong>
+                            Superior 4.6 - 5.0 &nbsp;·&nbsp;
+                            Alto 4.0 - 4.5 &nbsp;·&nbsp;
+                            Básico 3.0 - 3.9 &nbsp;·&nbsp;
+                            Bajo 1.0 - 2.9
+                        </div>
+
+                        <!-- OBSERVACIONES -->
+                        <div class="boletin-observations-pro">
+                            <strong>Observaciones del periodo</strong>
+                            ${observaciones.length
+                                ? observaciones.map(o => o.texto || '').filter(Boolean).join(' · ')
+                                : 'Sin observaciones registradas.'}
+                        </div>
+
+                        <!-- FIRMAS -->
+                        <div class="boletin-signatures-pro">
+                            <div class="signature">
+                                <div class="signature-line">Director de Grupo</div>
+                                <div class="signature-sub">Firma y sello</div>
+                            </div>
+                            <div class="signature">
+                                <div class="signature-line">Coordinador Académico</div>
+                                <div class="signature-sub">Firma y sello</div>
+                            </div>
+                            <div class="signature">
+                                <div class="signature-line">Acudiente</div>
+                                <div class="signature-sub">Firma y documento</div>
+                            </div>
+                        </div>
+
+                        <!-- PIE -->
+                        <div class="boletin-footer-pro">
+                            <p>Boletín generado el <strong>${new Date().toLocaleDateString('es-CO', { day: '2-digit', month: 'long', year: 'numeric' })}</strong></p>
+                            <p>EduOne · Sistema de Gestión Escolar</p>
+                        </div>
+
+                    </div>
+                `;
+
+                // =============================================
+                // 10) PINTAR EN EL DOM (una sola vez)
+                // =============================================
+                const previewEl = document.getElementById('boletinPreview');
+                previewEl.innerHTML = '';
+                previewEl.innerHTML = html;
+                document.getElementById('boletinContent').style.display = 'block';
+
+            } catch (error) {
+                console.error('Error al generar boletín:', error);
+                alert('Error al generar el boletín: ' + error.message);
+            }
+        });
 
                 // =============================================
                 // COMUNICADOS
