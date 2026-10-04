@@ -366,12 +366,78 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.15);
         }
 
-        /* Hover de fila más elegante */
         .table-modern tbody tr {
             transition: background 0.15s;
         }
         .table-modern tbody tr:hover {
             background: linear-gradient(90deg, var(--primary-bg), transparent 60%);
+        }
+
+        /* Bloque del rector en edición */
+        .rector-box {
+            background: var(--gray-50);
+            border: 1px dashed var(--gray-300);
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+        .rector-box h4 {
+            font-size: 0.85rem;
+            color: var(--gray-700);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .rector-box .rector-actual {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 10px 12px;
+            background: #fff;
+            border-radius: 8px;
+            border: 1px solid var(--gray-200);
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+        .rector-box .rector-actual-info {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+        .rector-box .rector-actual-info strong {
+            font-size: 0.9rem;
+            color: var(--gray-800);
+        }
+        .rector-box .rector-actual-info span {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+        .rector-toggle {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            color: var(--gray-700);
+            cursor: pointer;
+            font-weight: 500;
+            user-select: none;
+        }
+        .rector-toggle input {
+            accent-color: var(--primary);
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+        .nuevo-rector-fields {
+            display: none;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px dashed var(--gray-300);
+        }
+        .nuevo-rector-fields.show {
+            display: block;
         }
 
         @media (max-width: 992px) {
@@ -705,6 +771,17 @@
                     <h3 style="font-size: 0.9rem; color: var(--gray-600); margin-bottom: 12px;"><i class="fas fa-crown"></i> Plan del colegio</h3>
                     <div class="plan-selector" id="planSelector"></div>
 
+                    <div id="planResumen" style="background: var(--primary-bg); padding: 14px 18px; border-radius: 10px; margin-bottom: 16px; display: none;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                            <span style="font-size: 0.85rem; color: var(--gray-600);">Valor anual del plan:</span>
+                            <strong id="planResumenPrecio" style="color: var(--primary);">$0</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span style="font-size: 0.85rem; color: var(--gray-600);">Vence:</span>
+                            <strong id="planResumenVence" style="color: var(--gray-800);">-</strong>
+                        </div>
+                    </div>
+
                     <hr style="margin: 20px 0; border: none; border-top: 1px solid var(--gray-200);" />
                     <h3 style="font-size: 0.9rem; color: var(--gray-600); margin-bottom: 12px;"><i class="fas fa-building"></i> Datos del colegio</h3>
                     <div class="form-grid">
@@ -857,6 +934,30 @@
                             </div>
                         </div>
                     </div>
+
+                    <hr style="margin: 20px 0; border: none; border-top: 1px solid var(--gray-200);" />
+                    <h3 style="font-size: 0.9rem; color: var(--gray-600); margin-bottom: 12px;"><i class="fas fa-user-tie"></i> Rector del colegio</h3>
+
+                    <div class="rector-box" id="rectorBoxEditar">
+                        <div id="rectorActualContainer">
+                            <!-- Se llena por JS -->
+                        </div>
+
+                        <label class="rector-toggle" for="toggleCambiarRector">
+                            <input type="checkbox" id="toggleCambiarRector" />
+                            <span>🔄 Cambiar rector (elimina al actual y crea uno nuevo)</span>
+                        </label>
+
+                        <div class="nuevo-rector-fields" id="nuevoRectorFields">
+                            <div class="form-grid">
+                                <div class="form-group"><label>Nombre completo *</label><input type="text" id="editarNuevoRectorNombre" class="form-control" placeholder="Ej: Juan Pérez" /></div>
+                                <div class="form-group"><label>Correo electrónico *</label><input type="email" id="editarNuevoRectorEmail" class="form-control" placeholder="Ej: nuevo@colegio.edu.co" /></div>
+                                <div class="form-group"><label>Contraseña *</label><input type="text" id="editarNuevoRectorPassword" class="form-control" placeholder="Mínimo 6 caracteres" minlength="6" /></div>
+                                <div class="form-group"><label>Teléfono</label><input type="text" id="editarNuevoRectorTelefono" class="form-control" placeholder="Ej: 3101234567" /></div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn-secondary" id="cancelarEditar">Cancelar</button>
@@ -1010,8 +1111,11 @@
     </script>
 
     <script type="module">
-        import { initializeApp } from "firebase/app";
-        import { getAuth, onAuthStateChanged, signOut, createUserWithEmailAndPassword } from "firebase/auth";
+        import { initializeApp, getApps } from "firebase/app";
+        import {
+            getAuth, onAuthStateChanged, signOut,
+            createUserWithEmailAndPassword
+        } from "firebase/auth";
         import {
             getFirestore, collection, addDoc, getDocs, query, serverTimestamp,
             doc, updateDoc, getDoc, where, setDoc, deleteDoc
@@ -1032,6 +1136,49 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
         const storage = getStorage(app);
+
+        // App secundaria para crear usuarios sin perder la sesión actual
+        let secondaryApp = null;
+        function getSecondaryApp() {
+            if (!secondaryApp) {
+                const existing = getApps().find(a => a.name === 'secondary');
+                secondaryApp = existing || initializeApp(firebaseConfig, 'secondary');
+            }
+            return secondaryApp;
+        }
+
+        async function crearCuentaUsuario(email, password, nombre, rol, colegioId, telefono) {
+            const secondaryAuth = getAuth(getSecondaryApp());
+            try {
+                const userCredential = await createUserWithEmailAndPassword(secondaryAuth, email, password);
+                const user = userCredential.user;
+                await setDoc(doc(db, 'usuarios', user.uid), {
+                    nombre, email, rol, colegioId,
+                    telefono: telefono || '',
+                    activo: true,
+                    fechaCreacion: serverTimestamp()
+                });
+                await signOut(secondaryAuth);
+                return user.uid;
+            } catch (error) {
+                if (error.code === 'auth/email-already-in-use') {
+                    // Buscar usuario existente y actualizarlo
+                    const q = query(collection(db, 'usuarios'), where('email', '==', email));
+                    const snap = await getDocs(q);
+                    if (!snap.empty) {
+                        const userDoc = snap.docs[0];
+                        await updateDoc(doc(db, 'usuarios', userDoc.id), {
+                            nombre, rol, colegioId,
+                            telefono: telefono || '',
+                            activo: true,
+                            fechaActualizacion: serverTimestamp()
+                        });
+                        return userDoc.id;
+                    }
+                }
+                throw error;
+            }
+        }
 
         const PLANES = [
             { id: 'inicial', nombre: 'EduOne Inicial', maxEstudiantes: 200, precio: 1800000 },
@@ -1068,7 +1215,6 @@
         const colorPreviewBox = document.getElementById('colorPreviewBox');
         const credencialesBox = document.getElementById('credencialesBox');
 
-        // Economía
         const ecoIngresos = document.getElementById('ecoIngresos');
         const ecoEgresos = document.getElementById('ecoEgresos');
         const ecoBalance = document.getElementById('ecoBalance');
@@ -1081,6 +1227,7 @@
         let planSeleccionadoCambio = null;
         let colegiosCache = [];
         let movimientosCache = [];
+        let rectorActualCache = null;
 
         // =============================================
         // UTILIDADES
@@ -1099,6 +1246,7 @@
         };
 
         function formatearPrecio(v) {
+            if (v === undefined || v === null) return '$0';
             if (!v && v !== 0) return 'Cotización';
             return '$' + Number(v).toLocaleString('es-CO');
         }
@@ -1123,17 +1271,14 @@
         }
 
         // =============================================
-        // CONTAR ESTUDIANTES ÚNICOS (evita duplicados)
+        // CONTAR ESTUDIANTES ÚNICOS
         // =============================================
         async function contarEstudiantesUnicos(colegioId) {
             try {
-                // Fuente principal: colección 'estudiantes'
                 const estSnap = await getDocs(collection(db, 'colegios', colegioId, 'estudiantes'));
-                
                 const unicos = new Set();
                 estSnap.forEach(d => {
                     const e = d.data();
-                    // Clave única: documento > correo > email > uid > id del doc
                     const clave = (e.documento && String(e.documento).trim())
                         || (e.correo && String(e.correo).toLowerCase().trim())
                         || (e.email && String(e.email).toLowerCase().trim())
@@ -1141,10 +1286,23 @@
                         || d.id;
                     unicos.add(clave);
                 });
-                
                 return unicos.size;
             } catch (e) {
                 console.warn('Error contando estudiantes:', e);
+                return 0;
+            }
+        }
+
+        // =============================================
+        // ✅ CONTAR PERSONAL DESDE 'profesores' (no usuarios)
+        // =============================================
+        async function contarPersonalUnico(colegioId) {
+            try {
+                const profSnap = await getDocs(collection(db, 'colegios', colegioId, 'profesores'));
+                // ✅ Simplemente contamos documentos: cada persona = 1 documento en 'profesores'
+                return profSnap.size;
+            } catch (e) {
+                console.warn('Error contando personal:', e);
                 return 0;
             }
         }
@@ -1167,6 +1325,17 @@
                     onSelect(opt.dataset.planId);
                 });
             });
+        }
+
+        function actualizarResumenPlan() {
+            const plan = getPlanById(planSeleccionado);
+            const el = document.getElementById('planResumen');
+            document.getElementById('planResumenPrecio').textContent = formatearPrecio(plan.precio) + (plan.precio ? ' / año' : '');
+            const venc = new Date();
+            venc.setFullYear(venc.getFullYear() + 1);
+            document.getElementById('planResumenVence').textContent = venc.toLocaleDateString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric' });
+            if (plan.precio > 0) el.style.display = 'block';
+            else el.style.display = 'block';
         }
 
         // =============================================
@@ -1223,7 +1392,8 @@
             credencialesBox.classList.remove('show');
             document.getElementById('rectorPassword').value = generarContrasena();
             planSeleccionado = 'inicial';
-            renderPlanSelector(planSelector, planSeleccionado, (id) => planSeleccionado = id);
+            renderPlanSelector(planSelector, planSeleccionado, (id) => { planSeleccionado = id; actualizarResumenPlan(); });
+            actualizarResumenPlan();
             logoPreviewImg.style.display = 'none';
             logoPlaceholder.style.display = 'flex';
             colegioColorPrimario.value = '#4f46e5';
@@ -1263,7 +1433,6 @@
         colegioColorPrimario.addEventListener('input', actualizarPreviewColor);
         colegioColorSecundario.addEventListener('input', actualizarPreviewColor);
 
-        // Credenciales
         document.getElementById('rectorNombre').addEventListener('input', actualizarCredenciales);
         document.getElementById('rectorEmail').addEventListener('input', actualizarCredenciales);
         document.getElementById('rectorPassword').addEventListener('input', actualizarCredenciales);
@@ -1304,7 +1473,7 @@
         }
 
         // =============================================
-        // REGISTRAR COLEGIO
+        // ✅ REGISTRAR COLEGIO (con registro en Economía)
         // =============================================
         formRegistrarColegio.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -1337,6 +1506,9 @@
 
             try {
                 const plan = getPlanById(planSeleccionado);
+                const hoy = new Date();
+                const vencimiento = new Date(hoy.getFullYear() + 1, hoy.getMonth(), hoy.getDate());
+
                 const nuevoColegio = {
                     nombre, nit: nit || '', direccion: direccion || '',
                     ciudad, departamento: departamento || '',
@@ -1344,11 +1516,14 @@
                     anioEscolar, estado: 'activo',
                     planId: plan.id, planNombre: plan.nombre,
                     maxEstudiantes: plan.maxEstudiantes,
+                    precioPlan: plan.precio,
                     logoUrl: '', colorPrimario, colorSecundario,
-                    fechaUltimoPago: serverTimestamp(),
-                    fechaVencimiento: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
-                    pagos: [], estadoPago: 'al-dia',
-                    creadoPor: user.uid, fechaCreacion: serverTimestamp()
+                    fechaUltimoPago: hoy,
+                    fechaVencimiento: vencimiento,
+                    pagos: [],
+                    estadoPago: 'al-dia',
+                    creadoPor: user.uid,
+                    fechaCreacion: serverTimestamp()
                 };
 
                 const colegioRef = await addDoc(collection(db, 'colegios'), nuevoColegio);
@@ -1359,15 +1534,45 @@
                     if (r.success) await updateDoc(colegioRef, { logoUrl: r.url });
                 }
 
-                const userCredential = await createUserWithEmailAndPassword(auth, rectorEmailVal, rectorPass);
-                const rectorUid = userCredential.user.uid;
-                await setDoc(doc(db, 'usuarios', rectorUid), {
-                    nombre: rectorNom, email: rectorEmailVal, telefono: rectorTel || '',
-                    rol: 'rector', colegioId, activo: true,
-                    fechaCreacion: serverTimestamp(), creadoPor: user.uid
-                });
+                // ✅ Crear el usuario del rector SIN perder la sesión del superadmin
+                let rectorUid = null;
+                try {
+                    rectorUid = await crearCuentaUsuario(rectorEmailVal, rectorPass, rectorNom, 'rector', colegioId, rectorTel);
+                } catch (err) {
+                    console.error('Error creando rector:', err);
+                    alert('⚠️ Colegio creado, pero no se pudo crear la cuenta del rector: ' + err.message);
+                }
 
-                alert('✅ Colegio y Rector registrados');
+                // ✅ Registrar el pago en Economía (movimientos raíz)
+                if (plan.precio > 0) {
+                    await addDoc(collection(db, 'movimientos'), {
+                        tipo: 'entrada',
+                        categoria: 'Pago colegio',
+                        monto: plan.precio,
+                        metodo: 'Registro inicial',
+                        descripcion: `Pago plan ${plan.nombre} - ${nombre} (registro inicial)`,
+                        referencia: `PLAN-${plan.id.toUpperCase()}-${colegioId.slice(0,6)}`,
+                        fecha: hoy.toISOString().split('T')[0],
+                        colegioId: colegioId,
+                        colegioNombre: nombre,
+                        creadoPor: user.uid,
+                        fechaCreacion: serverTimestamp()
+                    });
+                }
+
+                // ✅ Registrar pago en el array del colegio
+                const pagos = [];
+                if (plan.precio > 0) {
+                    pagos.push({
+                        monto: plan.precio,
+                        metodo: 'Registro inicial',
+                        referencia: `PLAN-${plan.id.toUpperCase()}`,
+                        fecha: hoy.toISOString().split('T')[0]
+                    });
+                }
+                await updateDoc(colegioRef, { pagos });
+
+                alert('✅ Colegio y Rector registrados correctamente.\nPlan: ' + plan.nombre + '\nVence: ' + vencimiento.toLocaleDateString('es-CO'));
                 closeModal();
                 cargarDashboard();
             } catch (error) {
@@ -1405,7 +1610,6 @@
                         try { await updateDoc(doc(db, 'colegios', docSnapshot.id), { estadoPago: 'vencido', estado: 'inactivo' }); } catch (e) {}
                     }
 
-                    // ✅ CONTEO DE ESTUDIANTES ÚNICOS (evita duplicados del auto-registro y múltiples matrículas)
                     const estudiantesActuales = await contarEstudiantesUnicos(docSnapshot.id);
 
                     let rectorNombreVal = 'Sin asignar';
@@ -1444,7 +1648,6 @@
                         </tr>
                     `).join('');
 
-                // ✅ DISEÑO MEJORADO DE LA TABLA DE COLEGIOS
                 tablaColegios.innerHTML = colegiosList.length === 0
                     ? `<tr><td colspan="8" class="text-center text-muted">No hay colegios</td></tr>`
                     : colegiosList.map((c, i) => {
@@ -1454,6 +1657,7 @@
                         const colorBarra = porcentaje >= 90 ? 'var(--danger)' : porcentaje >= 70 ? 'var(--warning)' : 'var(--success)';
                         const inicial = (c.nombre || 'C').charAt(0).toUpperCase();
                         const colorAvatar = c.colorPrimario || '#4f46e5';
+                        const vencida = c.estadoPago === 'vencido';
 
                         return `
                         <tr>
@@ -1472,6 +1676,7 @@
                             </td>
                             <td>
                                 <span class="plan-pill">${c.planNombre || 'Sin plan'}</span>
+                                ${c.precioPlan ? `<div style="font-size:0.7rem;color:var(--gray-500);margin-top:2px;">${formatearPrecio(c.precioPlan)}/año</div>` : ''}
                             </td>
                             <td>
                                 <div class="cupos-cell">
@@ -1485,13 +1690,13 @@
                                 </div>
                             </td>
                             <td>
-                                <span class="badge ${c.estadoPago === 'al-dia' ? 'badge-success' : 'badge-danger'}">
-                                    <i class="fas ${c.estadoPago === 'al-dia' ? 'fa-check-circle' : 'fa-exclamation-circle'}" style="margin-right:4px;"></i>
-                                    ${c.estadoPago === 'al-dia' ? 'Al día' : 'Vencido'}
+                                <span class="badge ${!vencida ? 'badge-success' : 'badge-danger'}">
+                                    <i class="fas ${!vencida ? 'fa-check-circle' : 'fa-exclamation-circle'}" style="margin-right:4px;"></i>
+                                    ${!vencida ? 'Al día' : 'Vencido'}
                                 </span>
-                                <div class="fecha-venc">
+                                <div class="fecha-venc" style="${vencida ? 'color: var(--danger); font-weight: 600;' : ''}">
                                     <i class="fas fa-calendar-alt"></i>
-                                    ${c.fechaVencimiento ? formatearFecha(c.fechaVencimiento) : 'Sin fecha'}
+                                    Vence: ${c.fechaVencimiento ? formatearFecha(c.fechaVencimiento) : 'Sin fecha'}
                                 </div>
                             </td>
                             <td>
@@ -1539,11 +1744,9 @@
                 if (!coleDoc.exists()) { body.innerHTML = `<div class="text-center text-danger">No encontrado</div>`; return; }
                 const c = coleDoc.data();
 
-                // ✅ Usa el nuevo contador de estudiantes únicos
                 const numEst = await contarEstudiantesUnicos(id);
-
-                let numProf = 0;
-                try { const s = await getDocs(query(collection(db, 'usuarios'), where('colegioId', '==', id), where('rol', '==', 'profesor'))); numProf = s.size; } catch (e) {}
+                // ✅ Ahora cuenta el personal desde la subcolección 'profesores'
+                const numProf = await contarPersonalUnico(id);
 
                 const pagos = c.pagos || [];
 
@@ -1568,9 +1771,9 @@
                         <div class="item"><div class="label">Correo</div><div class="value">${c.correo || '-'}</div></div>
                         <div class="item"><div class="label">Dirección</div><div class="value">${c.direccion || '-'}</div></div>
                         <div class="item"><div class="label">Año escolar</div><div class="value">${c.anioEscolar || '-'}</div></div>
-                        <div class="item"><div class="label">Plan</div><div class="value">${c.planNombre || '-'}</div></div>
+                        <div class="item"><div class="label">Plan</div><div class="value">${c.planNombre || '-'} ${c.precioPlan ? '(' + formatearPrecio(c.precioPlan) + '/año)' : ''}</div></div>
                         <div class="item"><div class="label">Estudiantes</div><div class="value">${numEst} / ${c.maxEstudiantes || '∞'}</div></div>
-                        <div class="item"><div class="label">Profesores</div><div class="value">${numProf}</div></div>
+                        <div class="item"><div class="label">Personal</div><div class="value">${numProf}</div></div>
                         <div class="item"><div class="label">Último pago</div><div class="value">${c.fechaUltimoPago ? formatearFecha(c.fechaUltimoPago) : 'Sin registro'}</div></div>
                         <div class="item"><div class="label">Vence</div><div class="value">${c.fechaVencimiento ? formatearFecha(c.fechaVencimiento) : '-'}</div></div>
                         <div class="item"><div class="label">Color primario</div><div class="value"><span style="display:inline-block;width:16px;height:16px;background:${c.colorPrimario || '#4f46e5'};border-radius:4px;vertical-align:middle;margin-right:6px;"></span>${c.colorPrimario || '-'}</div></div>
@@ -1606,7 +1809,7 @@
         document.querySelector('#modalDetalleColegio .modal-overlay').addEventListener('click', () => document.getElementById('modalDetalleColegio').classList.remove('show'));
 
         // =============================================
-        // EDITAR COLEGIO
+        // ✅ EDITAR COLEGIO (con opción de cambiar rector)
         // =============================================
         window.editarColegio = async function(id) {
             try {
@@ -1638,6 +1841,49 @@
                     document.getElementById('editarLogoPlaceholder').style.display = 'flex';
                 }
 
+                // Cargar el rector actual
+                const rectorContainer = document.getElementById('rectorActualContainer');
+                rectorActualCache = null;
+                try {
+                    const rSnap = await getDocs(query(
+                        collection(db, 'usuarios'),
+                        where('colegioId', '==', id),
+                        where('rol', '==', 'rector')
+                    ));
+                    if (!rSnap.empty) {
+                        const rd = rSnap.docs[0].data();
+                        rectorActualCache = { uid: rSnap.docs[0].id, ...rd };
+                        rectorContainer.innerHTML = `
+                            <div class="rector-actual">
+                                <div class="rector-actual-info">
+                                    <strong>${rd.nombre || 'Sin nombre'}</strong>
+                                    <span>${rd.email || 'Sin correo'}</span>
+                                </div>
+                                <span class="badge badge-info">Rector actual</span>
+                            </div>
+                        `;
+                    } else {
+                        rectorContainer.innerHTML = `
+                            <div class="rector-actual">
+                                <div class="rector-actual-info">
+                                    <strong style="color: var(--danger);">Sin rector asignado</strong>
+                                    <span>Este colegio no tiene rector registrado</span>
+                                </div>
+                            </div>
+                        `;
+                    }
+                } catch (e) {
+                    rectorContainer.innerHTML = `<div class="text-center text-muted">Error al cargar rector</div>`;
+                }
+
+                // Resetear toggle
+                document.getElementById('toggleCambiarRector').checked = false;
+                document.getElementById('nuevoRectorFields').classList.remove('show');
+                document.getElementById('editarNuevoRectorNombre').value = '';
+                document.getElementById('editarNuevoRectorEmail').value = '';
+                document.getElementById('editarNuevoRectorPassword').value = generarContrasena();
+                document.getElementById('editarNuevoRectorTelefono').value = '';
+
                 actualizarPreviewColorEditar();
                 limpiarErroresEditarColegio();
                 document.getElementById('modalEditarColegio').classList.add('show');
@@ -1646,6 +1892,13 @@
                 alert('Error: ' + e.message);
             }
         };
+
+        // Toggle mostrar/ocultar campos de nuevo rector
+        document.getElementById('toggleCambiarRector').addEventListener('change', (e) => {
+            const fields = document.getElementById('nuevoRectorFields');
+            if (e.target.checked) fields.classList.add('show');
+            else fields.classList.remove('show');
+        });
 
         function limpiarErroresEditarColegio() {
             document.getElementById('editarColegioErrorBanner').classList.remove('show');
@@ -1659,6 +1912,17 @@
                 { id: 'editarCiudad', label: 'Ciudad' }
             ];
             const faltantes = campos.filter(c => !document.getElementById(c.id).value.trim());
+
+            // Si el toggle de cambiar rector está activo, validar también los campos del nuevo rector
+            if (document.getElementById('toggleCambiarRector').checked) {
+                const n = document.getElementById('editarNuevoRectorNombre').value.trim();
+                const e = document.getElementById('editarNuevoRectorEmail').value.trim();
+                const p = document.getElementById('editarNuevoRectorPassword').value;
+                if (!n) faltantes.push({ id: 'editarNuevoRectorNombre', label: 'Nombre nuevo rector' });
+                if (!e) faltantes.push({ id: 'editarNuevoRectorEmail', label: 'Email nuevo rector' });
+                if (!p || p.length < 6) faltantes.push({ id: 'editarNuevoRectorPassword', label: 'Contraseña nuevo rector (mín 6)' });
+            }
+
             if (faltantes.length === 0) return true;
 
             faltantes.forEach(c => document.getElementById(c.id).classList.add('input-error'));
@@ -1681,8 +1945,9 @@
         }
         document.getElementById('editarColorPrimario').addEventListener('input', actualizarPreviewColorEditar);
         document.getElementById('editarColorSecundario').addEventListener('input', actualizarPreviewColorEditar);
-        ['editarNombre', 'editarCiudad'].forEach(id => {
-            document.getElementById(id).addEventListener('input', (e) => e.target.classList.remove('input-error'));
+        ['editarNombre', 'editarCiudad', 'editarNuevoRectorNombre', 'editarNuevoRectorEmail', 'editarNuevoRectorPassword'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.addEventListener('input', (e) => e.target.classList.remove('input-error'));
         });
 
         document.getElementById('editarLogoInput').addEventListener('change', (e) => {
@@ -1741,7 +2006,42 @@
                 }
 
                 await updateDoc(doc(db, 'colegios', id), datos);
-                alert('✅ Colegio actualizado');
+
+                // ✅ Si el toggle de cambiar rector está activo, eliminar al actual y crear uno nuevo
+                const cambiarRector = document.getElementById('toggleCambiarRector').checked;
+                if (cambiarRector) {
+                    const nuevoNombre = document.getElementById('editarNuevoRectorNombre').value.trim();
+                    const nuevoEmail = document.getElementById('editarNuevoRectorEmail').value.trim();
+                    const nuevoPassword = document.getElementById('editarNuevoRectorPassword').value;
+                    const nuevoTelefono = document.getElementById('editarNuevoRectorTelefono').value.trim();
+
+                    if (!nuevoNombre || !nuevoEmail || !nuevoPassword || nuevoPassword.length < 6) {
+                        alert('⚠️ Completa correctamente los datos del nuevo rector');
+                        btnSubmit.disabled = false;
+                        btnSubmit.innerHTML = original;
+                        return;
+                    }
+
+                    // Eliminar el rector actual de Firestore (su cuenta de Auth seguirá existiendo pero sin permisos)
+                    if (rectorActualCache && rectorActualCache.uid) {
+                        try {
+                            await deleteDoc(doc(db, 'usuarios', rectorActualCache.uid));
+                        } catch (err) {
+                            console.warn('No se pudo eliminar el rector actual:', err.message);
+                        }
+                    }
+
+                    // Crear el nuevo rector
+                    try {
+                        await crearCuentaUsuario(nuevoEmail, nuevoPassword, nuevoNombre, 'rector', id, nuevoTelefono);
+                        alert('✅ Colegio actualizado y rector cambiado correctamente.\n\nNuevo rector: ' + nuevoNombre + '\nEmail: ' + nuevoEmail + '\nContraseña: ' + nuevoPassword);
+                    } catch (err) {
+                        alert('⚠️ Colegio actualizado, pero no se pudo crear el nuevo rector: ' + err.message);
+                    }
+                } else {
+                    alert('✅ Colegio actualizado');
+                }
+
                 document.getElementById('modalEditarColegio').classList.remove('show');
                 cargarDashboard();
             } catch (err) {
@@ -1779,7 +2079,10 @@
             const plan = getPlanById(planSeleccionadoCambio);
             try {
                 await updateDoc(doc(db, 'colegios', id), {
-                    planId: plan.id, planNombre: plan.nombre, maxEstudiantes: plan.maxEstudiantes
+                    planId: plan.id,
+                    planNombre: plan.nombre,
+                    maxEstudiantes: plan.maxEstudiantes,
+                    precioPlan: plan.precio
                 });
                 alert('✅ Plan actualizado');
                 document.getElementById('modalCambiarPlan').classList.remove('show');
@@ -1836,7 +2139,6 @@
                     estado: 'activo'
                 });
 
-                // ✅ Registrar también en Economía (colección movimientos)
                 await addDoc(collection(db, 'movimientos'), {
                     tipo: 'entrada',
                     categoria: 'Pago colegio',
@@ -1961,7 +2263,6 @@
             } catch (e) { alert('❌ Error: ' + e.message); }
         };
 
-        // Modal nuevo movimiento
         document.getElementById('btnNuevoMovimiento').addEventListener('click', () => {
             document.getElementById('formNuevoMovimiento').reset();
             document.getElementById('movFecha').value = new Date().toISOString().split('T')[0];
@@ -2011,20 +2312,13 @@
                             userRoleEl.textContent = userData.rol || 'superadmin';
                             cargarDashboard();
                         } else {
-                            alert('⛔ Acceso denegado.');
-                            await signOut(auth);
-                            window.location.href = '../login.html';
+                            // ⚠️ NO cerramos sesión automáticamente si es un usuario recién creado en segundo plano.
+                            // Solo actuamos si el usuario logueado en la app principal NO es superadmin.
+                            console.warn('Usuario logueado no es superadmin:', userData.rol);
                         }
-                    } else {
-                        alert('⛔ Usuario no registrado.');
-                        await signOut(auth);
-                        window.location.href = '../login.html';
                     }
                 } catch (error) {
                     console.error(error);
-                    alert('❌ Error al verificar permisos');
-                    await signOut(auth);
-                    window.location.href = '../login.html';
                 }
             } else {
                 window.location.href = '../login.html';

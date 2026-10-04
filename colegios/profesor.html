@@ -4,12 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>EduOne - Panel del Profesor</title>
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
-
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
@@ -50,6 +48,7 @@
 
         .btn-primary { display: inline-flex; align-items: center; gap: 8px; background: var(--primary); color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem; font-family: var(--font); transition: background 0.2s; }
         .btn-primary:hover { background: var(--primary-dark); }
+        .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
         .btn-secondary { display: inline-flex; align-items: center; gap: 8px; background: var(--border); color: var(--text-primary); border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 500; font-size: 0.9rem; font-family: var(--font); transition: background 0.2s; }
         .btn-secondary:hover { background: var(--gray-300); }
         .btn-success { display: inline-flex; align-items: center; gap: 6px; background: var(--success); color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: 500; font-size: 0.85rem; font-family: var(--font); transition: background 0.2s; }
@@ -69,6 +68,7 @@
         .badge-danger { background: #FEE2E2; color: #DC2626; }
         .badge-warning { background: #FEF3C7; color: #D97706; }
         .badge-info { background: #E0F2FE; color: #0369A1; }
+        .badge-gray { background: var(--gray-200); color: var(--gray-600); }
 
         .card { background: var(--card-bg); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; margin-bottom: 24px; border: 1px solid var(--border); }
         .card-header { padding: 16px 24px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; background: var(--card-bg); }
@@ -110,7 +110,7 @@
         .modal-close { background: none; border: none; font-size: 1.8rem; color: var(--gray-400); cursor: pointer; padding: 0 6px; line-height: 1; transition: color 0.2s; }
         .modal-close:hover { color: var(--text-primary); }
         .modal-body { padding: 24px; }
-        .modal-footer { padding: 16px 24px; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 12px; background: var(--gray-50); border-radius: 0 0 12px 12px; }
+        .modal-footer { padding: 16px 24px; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 12px; background: var(--gray-50); border-radius: 0 0 12px 12px; flex-wrap: wrap; }
 
         .sidebar { width: var(--sidebar-width); background: var(--sidebar-bg); height: 100vh; position: fixed; left: 0; top: 0; display: flex; flex-direction: column; z-index: 1000; transition: width var(--transition), transform var(--transition), background var(--transition); overflow: hidden; flex-shrink: 0; }
         .sidebar.closed { transform: translateX(-100%); }
@@ -200,7 +200,7 @@
         .stat-label { display: block; font-size: 0.7rem; color: var(--text-secondary); font-weight: 500; text-transform: uppercase; letter-spacing: 0.3px; }
         .stat-value { display: block; font-size: 1.6rem; font-weight: 700; color: var(--text-primary); line-height: 1.2; }
 
-        .horario-grid { display: grid; grid-template-columns: 80px repeat(5, 1fr); gap: 2px; background: var(--border); border-radius: 8px; overflow: hidden; }
+        .horario-grid { display: grid; grid-template-columns: 100px repeat(6, 1fr); gap: 2px; background: var(--border); border-radius: 8px; overflow: hidden; }
         .horario-grid .h-cell { background: #fff; padding: 10px 8px; text-align: center; font-size: 0.8rem; min-height: 60px; display: flex; align-items: center; justify-content: center; flex-direction: column; }
         .horario-grid .h-cell.header { background: var(--primary-light); font-weight: 700; font-size: 0.7rem; text-transform: uppercase; color: var(--primary); }
         .horario-grid .h-cell.hora { background: #F8FAFC; font-weight: 600; font-size: 0.72rem; color: var(--text-secondary); }
@@ -297,6 +297,43 @@
         .toast .close-toast:hover { color: white; }
         @keyframes slideInRight { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: translateX(0); } }
 
+        .filtros-secciones {
+            display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px;
+            background: var(--card-bg); padding: 16px; border-radius: var(--radius);
+            border: 1px solid var(--border);
+        }
+        .filtros-secciones .filtro-item { flex: 1; min-width: 180px; }
+
+        /* ✅ NUEVO: Tarjeta de notificación */
+        .noti-item {
+            display: flex;
+            gap: 12px;
+            padding: 14px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            margin-bottom: 10px;
+            background: #fff;
+            transition: background 0.2s;
+        }
+        .noti-item:hover { background: var(--gray-50); }
+        .noti-item.no-leida { background: var(--primary-bg); border-left: 4px solid var(--primary); }
+        .noti-item .noti-icon {
+            width: 42px; height: 42px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+            background: var(--primary-bg);
+            color: var(--primary);
+        }
+        .noti-item .noti-icon.entrega { background: #DCFCE7; color: #16A34A; }
+        .noti-item .noti-icon.evaluacion { background: #DBEAFE; color: #2563EB; }
+        .noti-item .noti-content { flex: 1; min-width: 0; }
+        .noti-item .noti-content .titulo { font-weight: 600; font-size: 0.9rem; margin-bottom: 2px; }
+        .noti-item .noti-content .mensaje { font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 4px; }
+        .noti-item .noti-content .meta { font-size: 0.7rem; color: var(--gray-400); display: flex; gap: 10px; flex-wrap: wrap; }
+        .noti-item .noti-content .meta strong { color: var(--primary); font-weight: 600; }
+
         @media (max-width: 992px) {
             .sidebar { transform: translateX(-100%); width: var(--sidebar-width); }
             .sidebar.open { transform: translateX(0); }
@@ -321,7 +358,7 @@
             .content-area { padding: 16px; }
             .user-info { display: none; }
             .header-left h1 { font-size: 1rem; }
-            .horario-grid { grid-template-columns: 60px repeat(5, 1fr); font-size: 0.7rem; }
+            .horario-grid { grid-template-columns: 60px repeat(6, 1fr); font-size: 0.7rem; }
             .horario-grid .h-cell { padding: 6px 4px; min-height: 40px; font-size: 0.65rem; }
             .stats-grid { grid-template-columns: 1fr 1fr; }
             .toast { min-width: 200px; max-width: 300px; font-size: 0.8rem; }
@@ -334,11 +371,8 @@
             .card-header { flex-direction: column; align-items: flex-start; }
             .page-header { flex-direction: column; align-items: flex-start; }
             .page-header .btn-primary { width: 100%; justify-content: center; }
-            .horario-grid { grid-template-columns: 45px repeat(5, 1fr); font-size: 0.6rem; }
+            .horario-grid { grid-template-columns: 45px repeat(6, 1fr); font-size: 0.6rem; }
             .horario-grid .h-cell { padding: 4px 2px; min-height: 30px; font-size: 0.55rem; }
-            .horario-grid .h-cell.materia { padding: 3px 2px; }
-            .horario-grid .h-cell.materia .asignatura { font-size: 0.6rem; }
-            .horario-grid .h-cell.materia .curso { font-size: 0.5rem; }
             .stats-grid { grid-template-columns: 1fr; }
             .asistencia-leyenda { gap: 10px; }
             .asistencia-leyenda span { font-size: 0.65rem; }
@@ -391,6 +425,7 @@
 
             <div class="nav-section">EVALUACIÓN</div>
             <ul>
+                <li><a href="#" data-page="actividades"><i class="fas fa-tasks"></i><span>Actividades</span></a></li>
                 <li><a href="#" data-page="secciones"><i class="fas fa-layer-group"></i><span>Secciones</span></a></li>
                 <li><a href="#" data-page="planilla"><i class="fas fa-table"></i><span>Planilla</span></a></li>
                 <li><a href="#" data-page="entregas"><i class="fas fa-file-upload"></i><span>Entregas</span></a></li>
@@ -575,6 +610,54 @@
                 </div>
             </div>
 
+            <!-- ACTIVIDADES -->
+            <div id="page-actividades" class="page-content">
+                <div class="page-header">
+                    <h2><i class="fas fa-tasks" style="color: var(--primary);"></i> Actividades</h2>
+                    <button class="btn-primary" id="btnCrearActividadDirecta">
+                        <i class="fas fa-plus"></i> Crear Actividad
+                    </button>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="filtros-secciones">
+                            <div class="filtro-item">
+                                <label style="display: block; font-size: 0.8rem; font-weight: 500; margin-bottom: 4px;">Curso</label>
+                                <select id="actividadFiltroCurso" class="form-control">
+                                    <option value="">Todos los cursos</option>
+                                </select>
+                            </div>
+                            <div class="filtro-item">
+                                <label style="display: block; font-size: 0.8rem; font-weight: 500; margin-bottom: 4px;">Asignatura</label>
+                                <select id="actividadFiltroAsignatura" class="form-control">
+                                    <option value="">Todas las asignaturas</option>
+                                </select>
+                            </div>
+                            <div class="filtro-item">
+                                <label style="display: block; font-size: 0.8rem; font-weight: 500; margin-bottom: 4px;">Tipo</label>
+                                <select id="actividadFiltroTipo" class="form-control">
+                                    <option value="">Todos los tipos</option>
+                                    <option value="presencial">📝 Presencial</option>
+                                    <option value="virtual">🖥️ Virtual</option>
+                                </select>
+                            </div>
+                            <div class="filtro-item">
+                                <label style="display: block; font-size: 0.8rem; font-weight: 500; margin-bottom: 4px;">Periodo</label>
+                                <select id="actividadFiltroPeriodo" class="form-control">
+                                    <option value="">Todos</option>
+                                    <option value="1">Periodo 1</option>
+                                    <option value="2">Periodo 2</option>
+                                    <option value="3">Periodo 3</option>
+                                    <option value="4">Periodo 4</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div id="actividadesContainer"></div>
+                    </div>
+                </div>
+            </div>
+
             <!-- SECCIONES -->
             <div id="page-secciones" class="page-content">
                 <div class="page-header">
@@ -586,17 +669,27 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <div class="form-grid" style="margin-bottom: 16px;">
-                            <div class="form-group">
-                                <label>Curso</label>
+                        <div class="filtros-secciones">
+                            <div class="filtro-item">
+                                <label style="display: block; font-size: 0.8rem; font-weight: 500; margin-bottom: 4px;">Curso</label>
                                 <select id="seccionFiltroCurso" class="form-control">
                                     <option value="">Todos los cursos</option>
                                 </select>
                             </div>
-                            <div class="form-group">
-                                <label>Asignatura</label>
+                            <div class="filtro-item">
+                                <label style="display: block; font-size: 0.8rem; font-weight: 500; margin-bottom: 4px;">Asignatura</label>
                                 <select id="seccionFiltroAsignatura" class="form-control">
                                     <option value="">Todas las asignaturas</option>
+                                </select>
+                            </div>
+                            <div class="filtro-item">
+                                <label style="display: block; font-size: 0.8rem; font-weight: 500; margin-bottom: 4px;">Periodo</label>
+                                <select id="seccionFiltroPeriodo" class="form-control">
+                                    <option value="">Todos los periodos</option>
+                                    <option value="1">Periodo 1</option>
+                                    <option value="2">Periodo 2</option>
+                                    <option value="3">Periodo 3</option>
+                                    <option value="4">Periodo 4</option>
                                 </select>
                             </div>
                         </div>
@@ -703,9 +796,13 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>Sección</label>
-                                <select id="entregaFiltroSeccion" class="form-control">
-                                    <option value="">Todas las secciones</option>
+                                <label>Periodo</label>
+                                <select id="entregaFiltroPeriodo" class="form-control">
+                                    <option value="">Todos los periodos</option>
+                                    <option value="1">Periodo 1</option>
+                                    <option value="2">Periodo 2</option>
+                                    <option value="3">Periodo 3</option>
+                                    <option value="4">Periodo 4</option>
                                 </select>
                             </div>
                             <div class="form-group" style="display: flex; align-items: flex-end;">
@@ -974,6 +1071,13 @@
 
                     <div class="form-grid">
                         <div class="form-group" style="grid-column: span 2;">
+                            <label>Sección *</label>
+                            <select id="actividadSeccionSelect" class="form-control" required>
+                                <option value="">Seleccionar sección</option>
+                            </select>
+                            <small style="color: var(--gray-500); font-size: 0.7rem;">La sección determina el porcentaje y la materia</small>
+                        </div>
+                        <div class="form-group" style="grid-column: span 2;">
                             <label>Título *</label>
                             <input type="text" id="actividadTitulo" class="form-control" required placeholder="Ej: Evaluación de sumas" />
                         </div>
@@ -982,8 +1086,14 @@
                             <textarea id="actividadDescripcion" class="form-control" rows="3" placeholder="Descripción de la actividad"></textarea>
                         </div>
                         <div class="form-group">
-                            <label>Fecha límite</label>
-                            <input type="date" id="actividadFecha" class="form-control" />
+                            <label>Fecha de activación</label>
+                            <input type="datetime-local" id="actividadFechaActivacion" class="form-control" />
+                            <small style="color: var(--gray-500); font-size: 0.7rem;">Desde cuándo estará disponible (opcional)</small>
+                        </div>
+                        <div class="form-group">
+                            <label>Fecha de cierre / límite</label>
+                            <input type="datetime-local" id="actividadFechaCierre" class="form-control" />
+                            <small style="color: var(--gray-500); font-size: 0.7rem;">Hasta cuándo se puede responder (opcional)</small>
                         </div>
                         <div class="form-group">
                             <label>Estado</label>
@@ -995,9 +1105,13 @@
                         <div class="form-group">
                             <label>Tipo de evaluación</label>
                             <select id="actividadTipoEvaluacion" class="form-control">
-                                <option value="presencial">Presencial (nota manual)</option>
-                                <option value="virtual">Virtual (autocalificable)</option>
+                                <option value="presencial">📝 Presencial (el profesor califica en clase o en la planilla)</option>
+                                <option value="virtual">🖥️ Virtual (el estudiante responde desde su panel)</option>
                             </select>
+                            <small id="actividadTipoAyuda" style="color: var(--gray-500); font-size: 0.7rem;">
+                                <strong>Presencial:</strong> el estudiante NO podrá responder, solo el profesor pone la nota.<br>
+                                <strong>Virtual:</strong> el estudiante responde desde su panel y se autocalifica.
+                            </small>
                         </div>
                     </div>
 
@@ -1149,12 +1263,12 @@
         </div>
     </div>
 
-    <!-- Modal: Crear Evaluación -->
+    <!-- Modal: Crear Evaluación Virtual -->
     <div class="modal" id="modalCrearEvaluacion">
         <div class="modal-overlay"></div>
         <div class="modal-content" style="max-width: 900px;">
             <div class="modal-header">
-                <h2><i class="fas fa-pencil-alt" style="color: var(--primary);"></i> Crear/Editar Evaluación</h2>
+                <h2><i class="fas fa-pencil-alt" style="color: var(--primary);"></i> Crear/Editar Evaluación Virtual</h2>
                 <button class="modal-close" id="closeEvalModal">&times;</button>
             </div>
             <form id="formCrearEvaluacion">
@@ -1191,10 +1305,11 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>Sección (opcional)</label>
-                            <select id="evalSeccion" class="form-control">
-                                <option value="">Sin sección</option>
+                            <label>Sección *</label>
+                            <select id="evalSeccion" class="form-control" required>
+                                <option value="">Seleccionar sección</option>
                             </select>
+                            <small style="color: var(--gray-500); font-size: 0.7rem;">Obligatorio para que cuente en la planilla</small>
                         </div>
                     </div>
 
@@ -1279,8 +1394,7 @@
     </div>
 
     <div class="toast-container" id="toastContainer"></div>
-
-    <script type="importmap">
+        <script type="importmap">
         {
             "imports": {
                 "firebase/app": "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js",
@@ -1319,17 +1433,20 @@
         let isLoggingOut = false;
         let archivosSubidos = [];
         let archivosExistentes = [];
+        let archivosAEliminar = [];
         let seccionActualId = null;
         let preguntasEvaluacion = [];
         let evalEditandoId = null;
+        let cursosProfesorCache = [];
+        let asignaturasCache = {};
 
         // =============================================
         // COLORES Y LOGO
         // =============================================
         function hexToRgb(hex) {
-            hex = hex.replace('#', '');
+            hex = String(hex || '').replace('#', '');
             if (hex.length === 3) hex = hex.split('').map(c => c + c).join('');
-            const num = parseInt(hex, 16);
+            const num = parseInt(hex || '2563EB', 16);
             return { r: (num >> 16) & 255, g: (num >> 8) & 255, b: num & 255 };
         }
         function rgbToHex(r, g, b) {
@@ -1413,6 +1530,27 @@
             } catch (e) { return 'Fecha inválida'; }
         }
 
+        function formatearFechaCorta(fecha) {
+            if (!fecha) return 'Sin fecha';
+            try {
+                const d = fecha.toDate ? fecha.toDate() : new Date(fecha);
+                return d.toLocaleDateString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric' });
+            } catch (e) { return 'Fecha inválida'; }
+        }
+
+        function formatearFechaInput(fecha) {
+            if (!fecha) return '';
+            try {
+                const d = fecha.toDate ? fecha.toDate() : new Date(fecha);
+                const yyyy = d.getFullYear();
+                const mm = String(d.getMonth() + 1).padStart(2, '0');
+                const dd = String(d.getDate()).padStart(2, '0');
+                const hh = String(d.getHours()).padStart(2, '0');
+                const mi = String(d.getMinutes()).padStart(2, '0');
+                return `${yyyy}-${mm}-${dd}T${hh}:${mi}`;
+            } catch (e) { return ''; }
+        }
+
         // =============================================
         // HELPERS FIREBASE
         // =============================================
@@ -1434,6 +1572,7 @@
                         cursosList.push({ id: h.cursoId, nombre: nombre });
                     }
                 }
+                cursosProfesorCache = cursosList;
             } catch (error) { console.error('Error obteniendo cursos:', error); }
             return { cursosMap, cursosList };
         }
@@ -1458,6 +1597,7 @@
                         asignaturas.push({ id: h.asignaturaId, nombre: nombre });
                     }
                 }
+                asignaturasCache[cursoId] = asignaturas;
             } catch (error) { console.error('Error obteniendo asignaturas:', error); }
             return asignaturas;
         }
@@ -1508,6 +1648,30 @@
             }
             return { success: false, error: ultimoError?.message || 'Error desconocido' };
         }
+
+        // =============================================
+        // ELIMINACIÓN DE ARCHIVOS
+        // =============================================
+        window.eliminarArchivoSubido = function(idArchivo) {
+            const idx = archivosSubidos.findIndex(a => String(a.id) === String(idArchivo));
+            if (idx === -1) return;
+            archivosSubidos.splice(idx, 1);
+            const el = document.getElementById('archivo-' + idArchivo);
+            if (el) el.remove();
+        };
+
+        window.eliminarArchivoExistente = function(idArchivo, pathStorage, nombre) {
+            if (!confirm(`¿Eliminar el archivo "${nombre}"?\n\nSe borrará definitivamente al guardar los cambios.`)) return;
+            const el = document.getElementById('archivo-' + idArchivo);
+            if (el) {
+                el.style.opacity = '0.4';
+                el.style.textDecoration = 'line-through';
+                const btn = el.querySelector('.btn-eliminar');
+                if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fas fa-check"></i>'; }
+            }
+            archivosAEliminar.push({ path: pathStorage, nombre: nombre });
+            archivosExistentes = archivosExistentes.filter(a => a.path !== pathStorage);
+        };
 
         // =============================================
         // PREGUNTAS DE EVALUACIÓN
@@ -1593,8 +1757,6 @@
             if (isNaN(numero) || numero <= 0) numero = 0.1;
             numero = Math.round(numero * 10) / 10;
             pregunta.valor = numero;
-            const input = document.querySelector(`.pregunta-card[data-id="${id}"] input[type="number"][placeholder="Valor"]`);
-            if (input) input.value = numero;
             actualizarInfoPuntaje();
         };
 
@@ -1668,7 +1830,7 @@
             const pregunta = preguntasEvaluacion.find(p => p.id === id);
             if (!pregunta) return;
             const btn = input.parentElement;
-            btn.innerHTML = '<span class="spinner-sm spinner-dark"></span> Subiendo imagen...';
+            btn.innerHTML = '<span class="spinner-sm spinner-dark"></span> Subiendo...';
             btn.style.pointerEvents = 'none';
 
             try {
@@ -1754,448 +1916,15 @@
         }
 
         // =============================================
-        // EVALUACIONES
-        // =============================================
-        async function cargarEvaluaciones() {
-            const container = document.getElementById('evaluacionesContainer');
-            const filtroCurso = document.getElementById('evalFiltroCurso');
-            const filtroAsig = document.getElementById('evalFiltroAsignatura');
-            const filtroEstado = document.getElementById('evalFiltroEstado');
-
-            try {
-                const { cursosList } = await obtenerCursosDelProfesor();
-                filtroCurso.innerHTML = '<option value="">Todos los cursos</option>';
-                cursosList.forEach(curso => {
-                    filtroCurso.innerHTML += `<option value="${curso.id}">${curso.nombre}</option>`;
-                });
-
-                filtroCurso.onchange = async () => {
-                    const cursoId = filtroCurso.value;
-                    filtroAsig.innerHTML = '<option value="">Todas las asignaturas</option>';
-                    if (cursoId) {
-                        const asignaturas = await obtenerAsignaturasPorCurso(cursoId);
-                        asignaturas.forEach(asig => {
-                            filtroAsig.innerHTML += `<option value="${asig.id}">${asig.nombre}</option>`;
-                        });
-                    }
-                };
-
-                let q = query(collection(db, 'colegios', colegioId, 'evaluaciones'), where('profesorId', '==', profesorId));
-                const cursoVal = filtroCurso.value;
-                if (cursoVal) q = query(q, where('cursoId', '==', cursoVal));
-                const asigVal = filtroAsig.value;
-                if (asigVal) q = query(q, where('asignaturaId', '==', asigVal));
-                const estadoVal = filtroEstado.value;
-                if (estadoVal) q = query(q, where('estado', '==', estadoVal));
-
-                const snap = await getDocs(q);
-
-                if (snap.empty) {
-                    container.innerHTML = `
-                        <div class="text-center text-muted" style="padding: 40px 0;">
-                            <i class="fas fa-pencil-alt" style="font-size: 2rem; display: block; margin-bottom: 12px;"></i>
-                            No hay evaluaciones creadas.
-                            <br>
-                            <button class="btn-primary btn-sm" onclick="document.getElementById('btnCrearEvaluacion').click()" style="margin-top: 12px;">
-                                <i class="fas fa-plus"></i> Crear primera evaluación
-                            </button>
-                        </div>
-                    `;
-                    return;
-                }
-
-                const evaluaciones = [];
-                for (const docSnap of snap.docs) {
-                    const data = docSnap.data();
-                    const pregQ = query(collection(db, 'colegios', colegioId, 'evaluaciones', docSnap.id, 'preguntas'));
-                    const pregSnap = await getDocs(pregQ);
-                    const preguntas = [];
-                    pregSnap.forEach(pDoc => preguntas.push({ id: pDoc.id, ...pDoc.data() }));
-
-                    const respQ = query(collection(db, 'colegios', colegioId, 'evaluaciones', docSnap.id, 'respuestas'));
-                    const respSnap = await getDocs(respQ);
-                    const estudiantesRespondieron = new Set();
-                    respSnap.forEach(rDoc => estudiantesRespondieron.add(rDoc.data().estudianteId));
-
-                    evaluaciones.push({ id: docSnap.id, ...data, preguntas, estudiantesRespondieron: estudiantesRespondieron.size });
-                }
-
-                let html = '';
-                for (const evalData of evaluaciones) {
-                    const estado = evalData.estado || 'inactiva';
-                    const estadoClass = estado === 'activa' ? 'activa' : estado === 'programada' ? 'programada' : estado === 'cerrada' ? 'cerrada' : 'inactiva';
-                    const fechaActivacion = evalData.fechaActivacion ? formatearFecha(evalData.fechaActivacion) : 'Sin fecha';
-                    const fechaCierre = evalData.fechaCierre ? formatearFecha(evalData.fechaCierre) : 'Sin fecha';
-                    const iconoEstado = estado === 'activa' ? '🟢' : estado === 'programada' ? '🟡' : estado === 'cerrada' ? '🔴' : '⚪';
-
-                    html += `
-                        <div class="evaluacion-preview">
-                            <div class="header">
-                                <div>
-                                    <h3 style="font-size: 1rem; font-weight: 600;">${evalData.titulo || 'Evaluación sin título'}</h3>
-                                    <span style="font-size: 0.8rem; color: var(--text-secondary);">
-                                        ${evalData.cursoNombre || 'Curso'} · ${evalData.asignaturaNombre || 'Asignatura'} · Periodo ${evalData.periodo || '-'}
-                                        ${evalData.seccionNombre ? ` · ${evalData.seccionNombre}` : ''}
-                                    </span>
-                                </div>
-                                <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-                                    <span class="estado ${estadoClass}">${iconoEstado} ${estado.charAt(0).toUpperCase() + estado.slice(1)}</span>
-                                    <span style="font-size: 0.8rem; color: var(--text-secondary);"><i class="fas fa-users"></i> ${evalData.estudiantesRespondieron || 0} estudiantes</span>
-                                    <span style="font-size: 0.8rem; color: var(--text-secondary);"><i class="fas fa-question-circle"></i> ${evalData.preguntas.length} preguntas</span>
-                                </div>
-                            </div>
-                            <div style="display: flex; gap: 16px; flex-wrap: wrap; font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 12px;">
-                                <span><i class="fas fa-clock"></i> Activa: ${fechaActivacion}</span>
-                                <span><i class="fas fa-clock"></i> Cierra: ${fechaCierre}</span>
-                                <span><i class="fas fa-hourglass-half"></i> ${evalData.tiempoLimite || 30} min</span>
-                                <span><i class="fas fa-star"></i> ${evalData.puntajeMaximo || 5} pts</span>
-                            </div>
-                            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                                <button class="btn-primary btn-sm" onclick="window.verResultadosEvaluacion('${evalData.id}')"><i class="fas fa-chart-bar"></i> Ver resultados</button>
-                                <button class="btn-info btn-sm" onclick="window.editarEvaluacion('${evalData.id}')"><i class="fas fa-edit"></i> Editar</button>
-                                ${estado !== 'activa' ? `
-                                    <button class="btn-success btn-sm" onclick="window.activarEvaluacion('${evalData.id}')"><i class="fas fa-play"></i> Activar</button>
-                                ` : `
-                                    <button class="btn-warning btn-sm" onclick="window.cerrarEvaluacion('${evalData.id}')"><i class="fas fa-stop"></i> Cerrar</button>
-                                `}
-                                <button class="btn-danger btn-sm" onclick="window.eliminarEvaluacion('${evalData.id}')"><i class="fas fa-trash"></i></button>
-                            </div>
-                        </div>
-                    `;
-                }
-                container.innerHTML = html;
-
-                window.verResultadosEvaluacion = async (evalId) => { await cargarResultadosEvaluacion(evalId); };
-                window.editarEvaluacion = async (evalId) => { await cargarEvaluacionParaEditar(evalId); };
-
-                window.activarEvaluacion = async (evalId) => {
-                    if (!confirm('¿Activar esta evaluación?')) return;
-                    try {
-                        await updateDoc(doc(db, 'colegios', colegioId, 'evaluaciones', evalId), { estado: 'activa' });
-                        showToast('✅ Evaluación activada', 'success');
-                        cargarEvaluaciones();
-                    } catch (e) { showToast('❌ ' + e.message, 'error'); }
-                };
-
-                window.cerrarEvaluacion = async (evalId) => {
-                    if (!confirm('¿Cerrar esta evaluación?')) return;
-                    try {
-                        await updateDoc(doc(db, 'colegios', colegioId, 'evaluaciones', evalId), { estado: 'cerrada' });
-                        showToast('✅ Evaluación cerrada', 'success');
-                        cargarEvaluaciones();
-                    } catch (e) { showToast('❌ ' + e.message, 'error'); }
-                };
-
-                window.eliminarEvaluacion = async (evalId) => {
-                    if (!confirm('⚠️ ¿Eliminar esta evaluación?')) return;
-                    try {
-                        const pregQ = query(collection(db, 'colegios', colegioId, 'evaluaciones', evalId, 'preguntas'));
-                        const pregSnap = await getDocs(pregQ);
-                        for (const docSnap of pregSnap.docs) await deleteDoc(docSnap.ref);
-
-                        const respQ = query(collection(db, 'colegios', colegioId, 'evaluaciones', evalId, 'respuestas'));
-                        const respSnap = await getDocs(respQ);
-                        for (const docSnap of respSnap.docs) await deleteDoc(docSnap.ref);
-
-                        await deleteDoc(doc(db, 'colegios', colegioId, 'evaluaciones', evalId));
-                        showToast('✅ Evaluación eliminada', 'success');
-                        cargarEvaluaciones();
-                    } catch (e) { showToast('❌ ' + e.message, 'error'); }
-                };
-            } catch (error) {
-                console.error(error);
-                container.innerHTML = `<div class="text-center text-danger" style="padding: 20px;">Error: ${error.message}</div>`;
-            }
-        }
-
-        async function cargarEvaluacionParaEditar(evalId) {
-            try {
-                const evalDoc = await getDoc(doc(db, 'colegios', colegioId, 'evaluaciones', evalId));
-                if (!evalDoc.exists()) { showToast('Evaluación no encontrada', 'error'); return; }
-                const data = evalDoc.data();
-                evalEditandoId = evalId;
-
-                const pregQ = query(collection(db, 'colegios', colegioId, 'evaluaciones', evalId, 'preguntas'));
-                const pregSnap = await getDocs(pregQ);
-                preguntasEvaluacion = [];
-                pregSnap.forEach(pDoc => preguntasEvaluacion.push({ id: pDoc.id, ...pDoc.data() }));
-
-                document.getElementById('evalTitulo').value = data.titulo || '';
-                document.getElementById('evalPeriodo').value = data.periodo || '';
-
-                if (data.fechaActivacion) {
-                    const d = data.fechaActivacion.toDate ? data.fechaActivacion.toDate() : new Date(data.fechaActivacion);
-                    document.getElementById('evalFechaActivacion').value = d.toISOString().slice(0, 16);
-                }
-                if (data.fechaCierre) {
-                    const d = data.fechaCierre.toDate ? data.fechaCierre.toDate() : new Date(data.fechaCierre);
-                    document.getElementById('evalFechaCierre').value = d.toISOString().slice(0, 16);
-                }
-                document.getElementById('evalTiempoLimite').value = data.tiempoLimite || 30;
-                document.getElementById('evalPuntajeMaximo').value = data.puntajeMaximo || 5;
-                document.getElementById('evalValorPregunta').value = data.valorPregunta || 0.5;
-
-                renderizarPreguntas();
-
-                document.getElementById('modalCrearEvaluacion').classList.add('show');
-                document.getElementById('evalAlert').className = 'alert';
-                document.getElementById('evalAlert').classList.remove('show');
-                document.querySelector('#modalCrearEvaluacion .modal-header h2').textContent = 'Editar Evaluación';
-
-                await llenarSelectoresEvaluacion();
-
-                setTimeout(() => {
-                    document.getElementById('evalCurso').value = data.cursoId || '';
-                    if (data.cursoId) {
-                        const asigSelect = document.getElementById('evalAsignatura');
-                        document.getElementById('evalCurso').dispatchEvent(new Event('change'));
-                        setTimeout(() => {
-                            asigSelect.value = data.asignaturaId || '';
-                            asigSelect.dispatchEvent(new Event('change'));
-                            setTimeout(() => {
-                                document.getElementById('evalSeccion').value = data.seccionId || '';
-                            }, 300);
-                        }, 300);
-                    }
-                }, 300);
-
-                showToast('📝 Evaluación cargada para editar', 'info');
-            } catch (error) {
-                console.error(error);
-                showToast('❌ Error: ' + error.message, 'error');
-            }
-        }
-
-        async function llenarSelectoresEvaluacion() {
-            const cursoSelect = document.getElementById('evalCurso');
-            const asigSelect = document.getElementById('evalAsignatura');
-            const seccionSelect = document.getElementById('evalSeccion');
-            const periodoSelect = document.getElementById('evalPeriodo');
-
-            const actualizarSecciones = async () => {
-                const cursoId = cursoSelect.value;
-                const asignaturaId = asigSelect.value;
-                const periodo = periodoSelect.value;
-                seccionSelect.innerHTML = '<option value="">Sin sección</option>';
-                if (!cursoId || !asignaturaId || !periodo) return;
-
-                const seccionesQ = query(
-                    collection(db, 'colegios', colegioId, 'secciones'),
-                    where('profesorId', '==', profesorId),
-                    where('cursoId', '==', cursoId),
-                    where('asignaturaId', '==', asignaturaId),
-                    where('periodo', '==', parseInt(periodo))
-                );
-                const seccionesSnap = await getDocs(seccionesQ);
-                seccionesSnap.forEach(seccionDoc => {
-                    const data = seccionDoc.data();
-                    seccionSelect.innerHTML += `<option value="${seccionDoc.id}">${data.icono || '📄'} ${data.nombre || 'Sección'} (${data.porcentaje || 0}%)</option>`;
-                });
-            };
-
-            const { cursosList } = await obtenerCursosDelProfesor();
-            cursoSelect.innerHTML = '<option value="">Seleccionar curso</option>';
-            cursosList.forEach(curso => {
-                cursoSelect.innerHTML += `<option value="${curso.id}">${curso.nombre}</option>`;
-            });
-
-            cursoSelect.onchange = async () => {
-                const cursoId = cursoSelect.value;
-                asigSelect.innerHTML = '<option value="">Seleccionar asignatura</option>';
-                if (cursoId) {
-                    const asignaturas = await obtenerAsignaturasPorCurso(cursoId);
-                    asignaturas.forEach(asig => {
-                        asigSelect.innerHTML += `<option value="${asig.id}">${asig.nombre}</option>`;
-                    });
-                }
-                await actualizarSecciones();
-            };
-            asigSelect.onchange = actualizarSecciones;
-            periodoSelect.onchange = actualizarSecciones;
-            await actualizarSecciones();
-        }
-
-        async function cargarResultadosEvaluacion(evalId) {
-            const modalBody = document.getElementById('modalResultadosBody');
-            try {
-                const evalDoc = await getDoc(doc(db, 'colegios', colegioId, 'evaluaciones', evalId));
-                if (!evalDoc.exists()) { showToast('No encontrada', 'error'); return; }
-                const evalData = evalDoc.data();
-
-                const pregQ = query(collection(db, 'colegios', colegioId, 'evaluaciones', evalId, 'preguntas'));
-                const pregSnap = await getDocs(pregQ);
-                const preguntas = [];
-                pregSnap.forEach(doc => preguntas.push({ id: doc.id, ...doc.data() }));
-
-                const respQ = query(collection(db, 'colegios', colegioId, 'evaluaciones', evalId, 'respuestas'));
-                const respSnap = await getDocs(respQ);
-                const respuestas = {};
-                respSnap.forEach(doc => {
-                    const data = doc.data();
-                    if (!data.estudianteId) return;
-                    respuestas[data.estudianteId] = {};
-                    if (data.respuestas && typeof data.respuestas === 'object') {
-                        Object.entries(data.respuestas).forEach(([preguntaId, respuesta]) => {
-                            respuestas[data.estudianteId][preguntaId] = respuesta;
-                        });
-                    } else if (data.preguntaId) {
-                        respuestas[data.estudianteId][data.preguntaId] = data;
-                    }
-                });
-
-                const estudiantesIds = Object.keys(respuestas);
-                const estudiantes = [];
-                for (const estId of estudiantesIds) {
-                    try {
-                        const estDoc = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', estId));
-                        if (estDoc.exists()) estudiantes.push({ id: estId, ...estDoc.data(), respuestas: respuestas[estId] });
-                    } catch (e) {}
-                }
-
-                const resultados = estudiantes.map(est => {
-                    let totalCorrectas = 0;
-                    let detalle = [];
-                    for (const pregunta of preguntas) {
-                        const respuesta = est.respuestas?.[pregunta.id];
-                        let esCorrecta = false;
-                        let valorObtenido = 0;
-                        let respuestaTexto = '';
-                        if (respuesta) {
-                            if (pregunta.tipo === 'multiple') {
-                                esCorrecta = respuesta.respuesta === pregunta.respuestaCorrecta;
-                                respuestaTexto = respuesta.respuesta !== undefined ? `Opción ${String.fromCharCode(65 + (respuesta.respuesta || 0))}` : 'Sin respuesta';
-                            } else {
-                                const respCorrecta = pregunta.respuestaCorrectaTexto || '';
-                                const respEst = (respuesta.respuestaTexto || '').trim().toLowerCase();
-                                const respCorrectaLower = respCorrecta.trim().toLowerCase();
-                                esCorrecta = respEst === respCorrectaLower || (respCorrectaLower && respEst.includes(respCorrectaLower));
-                                respuestaTexto = respuesta.respuestaTexto || 'Sin respuesta';
-                            }
-                            if (esCorrecta) {
-                                totalCorrectas++;
-                                valorObtenido = parseFloat(pregunta.valor) || 0;
-                            }
-                        } else {
-                            respuestaTexto = 'No respondió';
-                        }
-                        detalle.push({
-                            preguntaId: pregunta.id,
-                            enunciado: pregunta.enunciado || 'Pregunta',
-                            tipo: pregunta.tipo,
-                            respuesta: respuestaTexto,
-                            esCorrecta, valorObtenido,
-                            valorMaximo: parseFloat(pregunta.valor) || 0
-                        });
-                    }
-                    const nota = (totalCorrectas / preguntas.length) * (parseFloat(evalData.puntajeMaximo || 5));
-                    return { estudiante: est, totalCorrectas, totalPreguntas: preguntas.length, nota: Math.min(nota, evalData.puntajeMaximo || 5), detalle };
-                });
-
-                resultados.sort((a, b) => b.nota - a.nota);
-
-                let html = `
-                    <div style="margin-bottom: 16px;">
-                        <h3 style="font-size: 1.1rem;">${evalData.titulo || 'Evaluación'}</h3>
-                        <p style="color: var(--text-secondary); font-size: 0.9rem;">
-                            ${evalData.cursoNombre || 'Curso'} · ${evalData.asignaturaNombre || 'Asignatura'} · 
-                            ${resultados.length} estudiantes · ${preguntas.length} preguntas
-                        </p>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table-modern">
-                            <thead><tr><th>#</th><th>Estudiante</th><th>Correctas</th><th>Nota</th><th>Detalle</th></tr></thead>
-                            <tbody>
-                `;
-
-                let i = 1;
-                for (const r of resultados) {
-                    const nombre = `${r.estudiante.nombres || ''} ${r.estudiante.apellidos || ''}`.trim() || 'Sin nombre';
-                    const notaColor = r.nota >= 3 ? 'var(--success)' : 'var(--danger)';
-                    html += `
-                        <tr>
-                            <td>${i++}</td>
-                            <td><strong>${nombre}</strong></td>
-                            <td>${r.totalCorrectas}/${r.totalPreguntas}</td>
-                            <td style="font-weight: 700; color: ${notaColor};">${r.nota.toFixed(1)}</td>
-                            <td><button class="btn-outline btn-sm" onclick="window.verDetalleResultado(${JSON.stringify(r.detalle)}, ${JSON.stringify(nombre)})"><i class="fas fa-eye"></i> Ver</button></td>
-                        </tr>
-                    `;
-                }
-                html += `</tbody></table></div>`;
-
-                modalBody.innerHTML = html;
-                document.getElementById('modalResultadosTitulo').textContent = `Resultados - ${evalData.titulo || 'Evaluación'}`;
-                document.getElementById('modalVerResultadosEval').classList.add('show');
-
-                window.verDetalleResultado = (detalle, nombre) => {
-                    let dh = `<div style="margin-bottom: 12px;"><h4 style="font-size: 1rem;">${nombre}</h4></div><div style="max-height: 400px; overflow-y: auto;">`;
-                    for (const item of detalle) {
-                        const icono = item.esCorrecta ? '✅' : item.respuesta === 'No respondió' ? '⏳' : '❌';
-                        const color = item.esCorrecta ? 'var(--success)' : 'var(--danger)';
-                        dh += `
-                            <div class="respuesta-item" style="border-left-color: ${color};">
-                                <div style="font-weight: 600; font-size: 0.85rem;">${item.enunciado}</div>
-                                <div style="font-size: 0.8rem; color: var(--text-secondary);">${icono} Respuesta: ${item.respuesta}</div>
-                                <div class="puntaje" style="color: ${color};">${item.esCorrecta ? `+${item.valorObtenido.toFixed(1)} pts` : '0 pts'}</div>
-                            </div>
-                        `;
-                    }
-                    dh += '</div>';
-                    const modal = document.createElement('div');
-                    modal.style.cssText = 'position: fixed; inset: 0; z-index: 99999; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.5);';
-                    modal.innerHTML = `
-                        <div style="background: white; border-radius: var(--radius); max-width: 600px; width: 95%; max-height: 80vh; overflow: hidden;">
-                            <div style="padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between;">
-                                <h3 style="font-size: 1rem;">Detalle</h3>
-                                <button onclick="this.closest('div[style]').remove()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">&times;</button>
-                            </div>
-                            <div style="padding: 20px; max-height: 60vh; overflow-y: auto;">${dh}</div>
-                        </div>
-                    `;
-                    document.body.appendChild(modal);
-                    modal.addEventListener('click', (e) => { if (e.target === modal) modal.remove(); });
-                };
-            } catch (error) {
-                console.error(error);
-                modalBody.innerHTML = `<div class="text-center text-danger">Error: ${error.message}</div>`;
-                document.getElementById('modalVerResultadosEval').classList.add('show');
-            }
-        }
-
-        // =============================================
-        // ACTIVIDADES CON ARCHIVOS
-        // =============================================
-        async function subirArchivosActividad(actividadId, archivos) {
-            const resultados = [];
-            for (const archivo of archivos) {
-                const nombreLimpio = archivo.nombre.replace(/[^a-zA-Z0-9._-]/g, '_');
-                const ruta = `actividades/${colegioId}/${profesorId}/${actividadId}/${Date.now()}_${nombreLimpio}`;
-                const resultado = await subirArchivoStorageConProgreso(ruta, archivo.file, (progress) => {
-                    const statusEl = document.getElementById('actividadUploadStatus');
-                    if (statusEl) statusEl.textContent = `Subiendo ${archivo.nombre}: ${Math.round(progress)}%`;
-                });
-                if (resultado.success) {
-                    resultados.push({ nombre: archivo.nombre, url: resultado.url, path: resultado.path, size: archivo.size });
-                } else {
-                    showToast(`Error al subir ${archivo.nombre}: ${resultado.error}`, 'error');
-                }
-            }
-            return resultados;
-        }
-
-        // =============================================
-        // DASHBOARD (con colores y logo)
+        // DASHBOARD
         // =============================================
         async function cargarDashboard() {
             try {
                 const colegioDoc = await getDoc(doc(db, 'colegios', colegioId));
                 if (colegioDoc.exists()) {
                     const data = colegioDoc.data();
-
-                    // ✅ APLICAR COLORES Y LOGO DEL COLEGIO
                     aplicarColoresColegio(data.colorPrimario);
                     aplicarLogo(data.logoUrl);
-
                     document.getElementById('colegioNombreSidebar').textContent = data.nombre || 'Colegio';
                     document.getElementById('bienvenida').textContent = `Bienvenido, ${usuarioActual?.nombre || 'Profesor'}`;
                     document.getElementById('infoColegio').textContent = `Colegio: ${data.nombre || 'Sin nombre'} - ${data.ciudad || ''}`;
@@ -2206,7 +1935,7 @@
                 document.getElementById('statsCursos').textContent = cursosSet.size;
 
                 const estudiantesSnap = await getDocs(collection(db, 'colegios', colegioId, 'estudiantes'));
-document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
+                document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
 
                 const seccionesQ = query(collection(db, 'colegios', colegioId, 'secciones'), where('profesorId', '==', profesorId));
                 const seccionesSnap = await getDocs(seccionesQ);
@@ -2230,22 +1959,31 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
         }
 
         // =============================================
-        // NOTIFICACIONES
+        // NOTIFICACIONES (con soporte para notificaciones de entregas de estudiantes)
         // =============================================
         async function contarNotificaciones() {
             try {
-                const q = query(collection(db, 'colegios', colegioId, 'notificaciones'), where('profesorId', '==', profesorId), where('leida', '==', false));
+                const q = query(
+                    collection(db, 'colegios', colegioId, 'notificaciones'),
+                    where('profesorId', '==', profesorId),
+                    where('leida', '==', false)
+                );
                 const snap = await getDocs(q);
-                document.getElementById('notiCount').textContent = snap.size;
+                const el = document.getElementById('notiCount');
+                if (el) el.textContent = snap.size;
             } catch (error) {
-                document.getElementById('notiCount').textContent = '0';
+                const el = document.getElementById('notiCount');
+                if (el) el.textContent = '0';
             }
         }
 
         async function cargarNotificaciones() {
             const body = document.getElementById('notificacionesBody');
             try {
-                const q = query(collection(db, 'colegios', colegioId, 'notificaciones'), where('profesorId', '==', profesorId));
+                const q = query(
+                    collection(db, 'colegios', colegioId, 'notificaciones'),
+                    where('profesorId', '==', profesorId)
+                );
                 const snap = await getDocs(q);
                 const notificaciones = [];
                 snap.forEach(doc => notificaciones.push({ id: doc.id, ...doc.data() }));
@@ -2262,16 +2000,35 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
                 }
 
                 let html = '';
-                for (const n of notificaciones) {
-                    const fecha = n.fecha ? new Date(n.fecha.seconds * 1000).toLocaleString() : 'Sin fecha';
+                for (const n of notificaciones.slice(0, 50)) {
+                    const fecha = n.fecha ? new Date(n.fecha.seconds * 1000).toLocaleString('es-CO') : 'Sin fecha';
                     const leida = n.leida || false;
+                    const tipo = n.tipo || 'info';
+                    const esEntrega = tipo === 'entrega';
+
+                    // ✅ Icono según tipo
+                    let iconClass = 'fas fa-bell';
+                    let iconColor = '';
+                    if (tipo === 'entrega') { iconClass = 'fas fa-file-upload'; iconColor = 'entrega'; }
+                    else if (tipo === 'evaluacion') { iconClass = 'fas fa-pencil-alt'; iconColor = 'evaluacion'; }
+                    else if (tipo === 'actividad') { iconClass = 'fas fa-tasks'; iconColor = ''; }
+
                     html += `
-                        <div class="notificacion-item ${leida ? '' : 'no-leida'}" data-id="${n.id}">
-                            <div class="header"><h4>${n.titulo || 'Notificación'}</h4><span class="fecha">${fecha}</span></div>
-                            <div class="mensaje">${n.mensaje || ''}</div>
-                            <div class="acciones">
-                                <button class="btn-outline btn-sm" onclick="window.marcarLeida('${n.id}')"><i class="fas fa-check"></i> Marcar leída</button>
-                                <button class="btn-danger btn-sm" onclick="window.borrarNotificacion('${n.id}')"><i class="fas fa-trash"></i></button>
+                        <div class="noti-item ${leida ? '' : 'no-leida'}">
+                            <div class="noti-icon ${iconColor}"><i class="${iconClass}"></i></div>
+                            <div class="noti-content">
+                                <div class="titulo">${n.titulo || 'Notificación'}</div>
+                                <div class="mensaje">${n.mensaje || ''}</div>
+                                <div class="meta">
+                                    ${n.estudianteNombre ? `<span><i class="fas fa-user-graduate"></i> <strong>${n.estudianteNombre}</strong></span>` : ''}
+                                    ${n.actividadNombre ? `<span><i class="fas fa-tasks"></i> <strong>${n.actividadNombre}</strong></span>` : ''}
+                                    <span><i class="fas fa-clock"></i> ${fecha}</span>
+                                </div>
+                                <div style="display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap;">
+                                    ${esEntrega && n.actividadId ? `<button class="btn-primary btn-sm" onclick="window.irAEntregas('${n.actividadId}')"><i class="fas fa-eye"></i> Ver entrega</button>` : ''}
+                                    ${!leida ? `<button class="btn-outline btn-sm" onclick="window.marcarLeida('${n.id}')"><i class="fas fa-check"></i> Marcar leída</button>` : ''}
+                                    <button class="btn-danger btn-sm" onclick="window.borrarNotificacion('${n.id}')"><i class="fas fa-trash"></i></button>
+                                </div>
                             </div>
                         </div>
                     `;
@@ -2294,6 +2051,13 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
                             contarNotificaciones();
                         } catch (error) {}
                     }
+                };
+
+                window.irAEntregas = (actividadId) => {
+                    document.getElementById('modalNotificaciones').classList.remove('show');
+                    // Navegar a entregas
+                    const link = document.querySelector('.sidebar-nav a[data-page="entregas"]');
+                    if (link) link.click();
                 };
             } catch (error) {
                 body.innerHTML = `<div class="text-center text-danger">Error: ${error.message}</div>`;
@@ -2319,8 +2083,8 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
                 for (const docSnap of snap.docs) await deleteDoc(docSnap.ref);
                 document.getElementById('notiCount').textContent = '0';
                 cargarNotificaciones();
-                alert('✅ Todas las notificaciones fueron borradas');
-            } catch (error) { alert('Error al borrar'); }
+                showToast('✅ Todas las notificaciones fueron borradas', 'success');
+            } catch (error) { showToast('Error al borrar', 'error'); }
         });
 
         // =============================================
@@ -2342,9 +2106,17 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
                     return;
                 }
 
-                const horarios = [];
+                const clases = [];
                 for (const docSnap of snap.docs) {
                     const data = docSnap.data();
+                    let hi = data.horaInicio;
+                    let hf = data.horaFin;
+                    if ((!hi || !hf) && data.hora) {
+                        const partes = String(data.hora).split('-').map(x => x.trim());
+                        if (partes.length === 2) { hi = partes[0]; hf = partes[1]; }
+                    }
+                    if (!hi || !hf) continue;
+
                     let cursoNombre = data.cursoNombre || 'Curso';
                     let gradoNombre = data.gradoNombre || '';
                     if (!data.cursoNombre && data.cursoId) {
@@ -2360,33 +2132,51 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
                             }
                         } catch (e) {}
                     }
-                    horarios.push({
-                        id: docSnap.id, ...data,
-                        cursoNombre, gradoNombre,
-                        asignaturaNombre: data.asignaturaNombre || 'Clase'
-                    });
+
+                    const [hI, mI] = hi.split(':').map(Number);
+                    const [hF, mF] = hf.split(':').map(Number);
+                    const minI = hI * 60 + (mI || 0);
+                    const minF = hF * 60 + (mF || 0);
+
+                    let cursor = minI;
+                    while (cursor < minF) {
+                        const fin = Math.min(cursor + 60, minF);
+                        const bHi = `${String(Math.floor(cursor/60)).padStart(2,'0')}:${String(cursor%60).padStart(2,'0')}`;
+                        const bHf = `${String(Math.floor(fin/60)).padStart(2,'0')}:${String(fin%60).padStart(2,'0')}`;
+                        clases.push({
+                            dia: data.dia,
+                            hi: bHi,
+                            hf: bHf,
+                            asignaturaNombre: data.asignaturaNombre || 'Clase',
+                            cursoNombre,
+                            gradoNombre
+                        });
+                        cursor = fin;
+                    }
                 }
 
-                const horasOrden = ['7:00 - 7:45', '7:45 - 8:30', '8:30 - 9:15', '9:15 - 10:00',
-                    '10:30 - 11:15', '11:15 - 12:00', '12:00 - 12:45',
-                    '14:00 - 14:45', '14:45 - 15:30', '15:30 - 16:15'];
-                horarios.sort((a, b) => horasOrden.indexOf(a.hora) - horasOrden.indexOf(b.hora));
-
-                const dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'];
+                const dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+                const franjasSet = new Set();
+                clases.forEach(c => franjasSet.add(`${c.hi}|${c.hf}`));
+                const franjas = Array.from(franjasSet).sort((a, b) => {
+                    const [ai] = a.split('|'); const [bi] = b.split('|');
+                    return ai.localeCompare(bi);
+                });
 
                 let html = `<div class="horario-grid">`;
-                html += `<div class="h-cell header"></div>`;
+                html += `<div class="h-cell header">Hora</div>`;
                 dias.forEach(d => { html += `<div class="h-cell header">${d}</div>`; });
 
-                horasOrden.forEach(hora => {
-                    html += `<div class="h-cell hora">${hora}</div>`;
+                franjas.forEach(franja => {
+                    const [hi, hf] = franja.split('|');
+                    html += `<div class="h-cell hora">${hi} - ${hf}</div>`;
                     dias.forEach(dia => {
-                        const clase = horarios.find(h => h.dia === dia && h.hora === hora);
+                        const clase = clases.find(c => c.dia === dia && c.hi === hi && c.hf === hf);
                         if (clase) {
                             html += `
                                 <div class="h-cell materia">
-                                    <span class="asignatura">${clase.asignaturaNombre || 'Clase'}</span>
-                                    <span class="curso">${clase.cursoNombre || 'Curso'}</span>
+                                    <span class="asignatura">${clase.asignaturaNombre}</span>
+                                    <span class="curso">${clase.cursoNombre}</span>
                                     ${clase.gradoNombre ? `<span style="font-size: 0.5rem; color: var(--gray-400);">${clase.gradoNombre}</span>` : ''}
                                 </div>
                             `;
@@ -2435,12 +2225,6 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
                         } catch (e) {}
                     }
                     let gradoNombre = horario.gradoNombre || '';
-                    if (!horario.gradoNombre && horario.gradoId) {
-                        try {
-                            const gradoDoc = await getDoc(doc(db, 'colegios', colegioId, 'grados', horario.gradoId));
-                            gradoNombre = gradoDoc.exists() ? gradoDoc.data().nombre : '';
-                        } catch (e) {}
-                    }
 
                     const key = horario.asignaturaId || asignaturaNombre;
                     if (!asignaturasMap[key]) {
@@ -2450,12 +2234,8 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
                     if (!cursoExistente && horario.cursoId) {
                         asignaturasMap[key].cursos.push({ cursoId: horario.cursoId, cursoNombre, gradoNombre });
                     }
-                    asignaturasMap[key].horarios.push({ dia: horario.dia || '', hora: horario.hora || '', cursoNombre });
-                }
-
-                if (Object.keys(asignaturasMap).length === 0) {
-                    tbody.innerHTML = `<tr><td colspan="5" class="text-center text-muted">No tienes cursos.</td></tr>`;
-                    return;
+                    const horaMostrar = horario.hora || (horario.horaInicio ? `${horario.horaInicio} - ${horario.horaFin}` : '');
+                    asignaturasMap[key].horarios.push({ dia: horario.dia || '', hora: horaMostrar, cursoNombre });
                 }
 
                 let html = '';
@@ -2463,14 +2243,13 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
                 for (const [key, data] of Object.entries(asignaturasMap)) {
                     const cursosList = data.cursos.map(c => `${c.cursoNombre}${c.gradoNombre ? ` (${c.gradoNombre})` : ''}`).join(', ');
                     const horariosList = data.horarios.map(h => `${h.dia} ${h.hora} - ${h.cursoNombre}`).join(', ');
-                    const horariosDisplay = horariosList || 'Sin horario asignado';
 
                     html += `
                         <tr>
                             <td>${i++}</td>
                             <td><strong>${data.asignaturaNombre}</strong></td>
                             <td>${cursosList || 'Sin cursos'}</td>
-                            <td>${horariosDisplay}</td>
+                            <td>${horariosList || 'Sin horario asignado'}</td>
                             <td>
                                 <button class="btn-primary btn-sm" onclick="window.irASecciones('${data.asignaturaId || ''}')">
                                     <i class="fas fa-layer-group"></i> Secciones
@@ -2549,22 +2328,6 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
                     const nombreCompleto = `${est.nombres || ''} ${est.apellidos || ''}`.toLowerCase();
                     if (buscar && !nombreCompleto.includes(buscar)) continue;
 
-                    let notaEvaluacion = '-';
-                    let evaluacionId = '-';
-                    try {
-                        const evalResQ = query(collection(db, 'colegios', colegioId, 'evaluaciones'), where('cursoId', '==', data.cursoId), where('estado', '==', 'cerrada'));
-                        const evalResSnap = await getDocs(evalResQ);
-                        for (const evalDoc of evalResSnap.docs) {
-                            const respQ = query(collection(db, 'colegios', colegioId, 'evaluaciones', evalDoc.id, 'respuestas'), where('estudianteId', '==', estId));
-                            const respSnap = await getDocs(respQ);
-                            if (!respSnap.empty) {
-                                notaEvaluacion = respSnap.docs[0].data().nota || '-';
-                                evaluacionId = evalDoc.id;
-                                break;
-                            }
-                        }
-                    } catch (e) {}
-
                     html += `
                         <tr>
                             <td>${i++}</td>
@@ -2575,7 +2338,6 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
                             <td>${data.cursoNombre || 'Sin curso'}</td>
                             <td>
                                 <button class="btn-primary btn-sm" onclick="window.verEntregasEstudiante('${estId}')" title="Ver entregas"><i class="fas fa-file-upload"></i></button>
-                                ${notaEvaluacion !== '-' ? `<button class="btn-info btn-sm" onclick="window.verDetalleEvalEstudiante('${evaluacionId}', '${estId}')"><i class="fas fa-eye"></i> ${notaEvaluacion}</button>` : ''}
                             </td>
                         </tr>
                     `;
@@ -2597,100 +2359,10 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
                         }
                     }, 500);
                 };
-
-                window.verDetalleEvalEstudiante = async (evalId, estudianteId) => {
-                    await cargarDetalleEvalEstudiante(evalId, estudianteId);
-                };
             } catch (error) {
                 tbody.innerHTML = `<tr><td colspan="7" class="text-center text-danger">Error: ${error.message}</td></tr>`;
             }
         }
-
-        async function cargarDetalleEvalEstudiante(evalId, estudianteId) {
-            const modalBody = document.getElementById('modalDetalleEvalBody');
-            try {
-                const evalDoc = await getDoc(doc(db, 'colegios', colegioId, 'evaluaciones', evalId));
-                if (!evalDoc.exists()) { showToast('No encontrada', 'error'); return; }
-                const evalData = evalDoc.data();
-
-                const estDoc = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', estudianteId));
-                const estudianteNombre = estDoc.exists() ? `${estDoc.data().nombres || ''} ${estDoc.data().apellidos || ''}`.trim() : 'Sin nombre';
-
-                const pregQ = query(collection(db, 'colegios', colegioId, 'evaluaciones', evalId, 'preguntas'));
-                const pregSnap = await getDocs(pregQ);
-                const preguntas = [];
-                pregSnap.forEach(doc => preguntas.push({ id: doc.id, ...doc.data() }));
-
-                const respQ = query(collection(db, 'colegios', colegioId, 'evaluaciones', evalId, 'respuestas'), where('estudianteId', '==', estudianteId));
-                const respSnap = await getDocs(respQ);
-                const respuestas = {};
-                respSnap.forEach(doc => {
-                    const data = doc.data();
-                    if (data.respuestas && typeof data.respuestas === 'object') Object.assign(respuestas, data.respuestas);
-                    else if (data.preguntaId) respuestas[data.preguntaId] = data;
-                });
-
-                let totalCorrectas = 0;
-                let detalleHtml = '';
-                for (const pregunta of preguntas) {
-                    const respuesta = respuestas[pregunta.id];
-                    let esCorrecta = false;
-                    let respuestaTexto = 'No respondió';
-                    let valorObtenido = 0;
-                    if (respuesta) {
-                        if (pregunta.tipo === 'multiple') {
-                            esCorrecta = respuesta.respuesta === pregunta.respuestaCorrecta;
-                            respuestaTexto = `Opción ${String.fromCharCode(65 + (respuesta.respuesta || 0))}`;
-                            if (esCorrecta) { totalCorrectas++; valorObtenido = parseFloat(pregunta.valor) || 0; }
-                        } else {
-                            const respCorrecta = pregunta.respuestaCorrectaTexto || '';
-                            const respEst = (respuesta.respuestaTexto || '').trim().toLowerCase();
-                            const respCorrectaLower = respCorrecta.trim().toLowerCase();
-                            esCorrecta = respEst === respCorrectaLower || (respCorrectaLower && respEst.includes(respCorrectaLower));
-                            respuestaTexto = respuesta.respuestaTexto || 'Sin respuesta';
-                            if (esCorrecta) { totalCorrectas++; valorObtenido = parseFloat(pregunta.valor) || 0; }
-                        }
-                    }
-                    const icono = esCorrecta ? '✅' : respuesta ? '❌' : '⏳';
-                    const color = esCorrecta ? 'var(--success)' : (respuesta ? 'var(--danger)' : 'var(--gray-400)');
-                    detalleHtml += `
-                        <div class="respuesta-item" style="border-left-color: ${color};">
-                            <div style="font-weight: 600; font-size: 0.85rem;">${pregunta.enunciado || 'Pregunta'}</div>
-                            <div style="font-size: 0.8rem; color: var(--text-secondary);">${icono} Respuesta: ${respuestaTexto}</div>
-                            <div class="puntaje" style="color: ${color};">${esCorrecta ? `+${valorObtenido.toFixed(1)} pts` : '0 pts'}</div>
-                        </div>
-                    `;
-                }
-
-                const totalPreguntas = preguntas.length;
-                const nota = (totalCorrectas / totalPreguntas) * (parseFloat(evalData.puntajeMaximo || 5));
-
-                modalBody.innerHTML = `
-                    <div style="margin-bottom: 16px;">
-                        <h3 style="font-size: 1.1rem;">${evalData.titulo || 'Evaluación'}</h3>
-                        <p style="color: var(--text-secondary); font-size: 0.9rem;">Estudiante: <strong>${estudianteNombre}</strong></p>
-                        <p style="font-size: 0.9rem; margin-top: 4px;">
-                            <span style="font-weight: 700;">Nota:</span>
-                            <span style="font-weight: 700; color: ${nota >= 3 ? 'var(--success)' : 'var(--danger)'};">${nota.toFixed(1)} / ${evalData.puntajeMaximo || 5}</span>
-                            <span style="margin-left: 16px; font-size: 0.85rem; color: var(--text-secondary);">(${totalCorrectas}/${totalPreguntas} correctas)</span>
-                        </p>
-                    </div>
-                    <div style="max-height: 400px; overflow-y: auto;">${detalleHtml}</div>
-                `;
-                document.getElementById('modalDetalleEvalTitulo').textContent = `Detalle - ${estudianteNombre}`;
-                document.getElementById('modalVerDetalleEvalEstudiante').classList.add('show');
-            } catch (error) {
-                modalBody.innerHTML = `<div class="text-center text-danger">Error: ${error.message}</div>`;
-                document.getElementById('modalVerDetalleEvalEstudiante').classList.add('show');
-            }
-        }
-
-        document.getElementById('closeDetalleEvalModal')?.addEventListener('click', () => {
-            document.getElementById('modalVerDetalleEvalEstudiante').classList.remove('show');
-        });
-        document.getElementById('closeDetalleEvalBtn')?.addEventListener('click', () => {
-            document.getElementById('modalVerDetalleEvalEstudiante').classList.remove('show');
-        });
 
         document.getElementById('estudianteFiltroCurso')?.addEventListener('change', cargarEstudiantesProfesor);
         document.getElementById('estudianteBuscar')?.addEventListener('input', cargarEstudiantesProfesor);
@@ -2739,6 +2411,7 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
             const container = document.getElementById('seccionesContainer');
             const filtroCurso = document.getElementById('seccionFiltroCurso');
             const filtroAsig = document.getElementById('seccionFiltroAsignatura');
+            const filtroPeriodo = document.getElementById('seccionFiltroPeriodo');
 
             try {
                 const { cursosList } = await obtenerCursosDelProfesor();
@@ -2759,6 +2432,8 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
                 if (cursoVal) q = query(q, where('cursoId', '==', cursoVal));
                 const asigVal = filtroAsig.value;
                 if (asigVal) q = query(q, where('asignaturaId', '==', asigVal));
+                const periodoVal = filtroPeriodo.value;
+                if (periodoVal) q = query(q, where('periodo', '==', parseInt(periodoVal)));
 
                 const snap = await getDocs(q);
 
@@ -2766,7 +2441,7 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
                     container.innerHTML = `
                         <div class="text-center text-muted" style="padding: 40px 0;">
                             <i class="fas fa-layer-group" style="font-size: 2rem; display: block; margin-bottom: 12px;"></i>
-                            No hay secciones creadas.
+                            No hay secciones creadas con esos filtros.
                             <br>
                             <button class="btn-primary btn-sm" onclick="document.getElementById('btnCrearSeccion').click()" style="margin-top: 12px;">
                                 <i class="fas fa-plus"></i> Crear primera sección
@@ -2776,9 +2451,18 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
                     return;
                 }
 
-                const secciones = [];
+                const grupos = {};
                 for (const docSnap of snap.docs) {
-                    const seccion = docSnap.data();
+                    const s = docSnap.data();
+                    const key = `${s.cursoId || '_'}|${s.asignaturaId || '_'}|${s.periodo || 1}`;
+                    if (!grupos[key]) {
+                        grupos[key] = {
+                            cursoNombre: s.cursoNombre || 'Curso',
+                            asignaturaNombre: s.asignaturaNombre || 'Asignatura',
+                            periodo: s.periodo || 1,
+                            secciones: []
+                        };
+                    }
                     const actQ = query(collection(db, 'colegios', colegioId, 'actividades'), where('seccionId', '==', docSnap.id));
                     const actSnap = await getDocs(actQ);
                     const actividades = [];
@@ -2789,78 +2473,91 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
                     const evaluaciones = [];
                     evalSnap.forEach(evalDoc => evaluaciones.push({ id: evalDoc.id, ...evalDoc.data() }));
 
-                    secciones.push({ id: docSnap.id, ...seccion, actividades, evaluaciones });
+                    grupos[key].secciones.push({ id: docSnap.id, ...s, actividades, evaluaciones });
                 }
 
                 let html = '';
-                for (const seccion of secciones) {
-                    const icono = seccion.icono || '📄';
-                    const nombre = seccion.nombre || 'Sección';
-                    const porcentaje = seccion.porcentaje || 0;
-                    const totalActividades = seccion.actividades.length;
-                    const totalEvaluaciones = seccion.evaluaciones.length;
-
+                for (const [key, grupo] of Object.entries(grupos)) {
                     html += `
-                        <div class="seccion-card">
-                            <div class="seccion-header" onclick="toggleSeccion(this)">
-                                <div>
-                                    <h3>${icono} ${nombre}</h3>
-                                    <span style="font-size: 0.8rem; color: var(--text-secondary);">
-                                        ${seccion.cursoNombre || 'Curso'} · ${seccion.asignaturaNombre || 'Asignatura'} · Periodo ${seccion.periodo || '-'}
-                                    </span>
+                        <div style="margin-bottom: 24px;">
+                            <h3 style="font-size: 1rem; font-weight: 700; color: var(--primary); margin-bottom: 12px;">
+                                📚 ${grupo.cursoNombre} · ${grupo.asignaturaNombre} · Periodo ${grupo.periodo}
+                            </h3>
+                    `;
+
+                    for (const seccion of grupo.secciones) {
+                        const icono = seccion.icono || '📄';
+                        const nombre = seccion.nombre || 'Sección';
+                        const porcentaje = seccion.porcentaje || 0;
+                        const totalActividades = seccion.actividades.length;
+                        const totalEvaluaciones = seccion.evaluaciones.length;
+
+                        html += `
+                            <div class="seccion-card">
+                                <div class="seccion-header" onclick="window.toggleSeccion(this)">
+                                    <div>
+                                        <h3>${icono} ${nombre}</h3>
+                                        <span style="font-size: 0.8rem; color: var(--text-secondary);">
+                                            ${porcentaje}% del periodo
+                                        </span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 12px;">
+                                        <span class="porcentaje">${totalActividades} act. · ${totalEvaluaciones} eval.</span>
+                                        <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+                                    </div>
                                 </div>
-                                <div style="display: flex; align-items: center; gap: 12px;">
-                                    <span class="porcentaje">${porcentaje}% · ${totalActividades} actividades · ${totalEvaluaciones} evaluaciones</span>
-                                    <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
-                                </div>
-                            </div>
-                            <div class="seccion-body open">
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
-                                    <span style="font-size: 0.85rem; color: var(--text-secondary);"><i class="fas fa-tasks"></i> Actividades</span>
-                                    <button class="btn-primary btn-sm" onclick="window.crearActividad('${seccion.id}')"><i class="fas fa-plus"></i> Agregar actividad</button>
-                                    <button class="btn-danger btn-sm" onclick="event.stopPropagation(); window.eliminarSeccion('${seccion.id}')"><i class="fas fa-trash"></i> Eliminar sección</button>
-                                </div>
-                                ${seccion.actividades.length === 0 ? `
-                                    <div class="text-center text-muted" style="padding: 20px 0;">No hay actividades</div>
-                                ` : `
-                                    ${seccion.actividades.map(act => `
-                                        <div class="actividad-item">
-                                            <div class="info">
-                                                <h4>${act.titulo || 'Sin título'}</h4>
-                                                <p>
-                                                    ${act.fecha ? new Date(act.fecha).toLocaleDateString() : 'Sin fecha'} · 
-                                                    Estado: ${act.estado || 'inactivo'}
-                                                    ${act.descripcion ? ` · ${act.descripcion}` : ''}
-                                                    ${act.tipoEvaluacion ? ` · ${act.tipoEvaluacion === 'virtual' ? '🖥️ Virtual' : '📝 Presencial'}` : ''}
-                                                </p>
-                                            </div>
-                                            <div class="acciones">
-                                                <button class="btn-info btn-sm" onclick="window.editarActividad('${act.id}')"><i class="fas fa-edit"></i></button>
-                                                <button class="btn-danger btn-sm" onclick="window.eliminarActividad('${act.id}')"><i class="fas fa-trash"></i></button>
-                                            </div>
+                                <div class="seccion-body">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+                                        <span style="font-size: 0.85rem; color: var(--text-secondary);"><i class="fas fa-tasks"></i> Actividades de esta sección</span>
+                                        <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                                            <button class="btn-primary btn-sm" onclick="event.stopPropagation(); window.crearActividad('${seccion.id}')"><i class="fas fa-plus"></i> Agregar actividad</button>
+                                            <button class="btn-danger btn-sm" onclick="event.stopPropagation(); window.eliminarSeccion('${seccion.id}')"><i class="fas fa-trash"></i> Eliminar sección</button>
                                         </div>
-                                    `).join('')}
-                                `}
-                                ${seccion.evaluaciones.length > 0 ? `
-                                    <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border);">
-                                        <strong style="font-size: 0.85rem;">Evaluaciones</strong>
-                                        ${seccion.evaluaciones.map(evaluacion => `
+                                    </div>
+                                    ${seccion.actividades.length === 0 ? `
+                                        <div class="text-center text-muted" style="padding: 20px 0;">No hay actividades en esta sección</div>
+                                    ` : `
+                                        ${seccion.actividades.map(act => `
                                             <div class="actividad-item">
                                                 <div class="info">
-                                                    <h4>${evaluacion.titulo || 'Evaluación'}</h4>
-                                                    <p>${evaluacion.estado || 'inactiva'} · ${evaluacion.puntajeMaximo || 5} puntos</p>
+                                                    <h4>${act.titulo || 'Sin título'}</h4>
+                                                    <p>
+                                                        ${act.fechaCierre ? `📅 Cierre: ${formatearFechaCorta(act.fechaCierre)}` : 'Sin fecha'} ·
+                                                        ${act.estado || 'inactivo'}
+                                                        ${act.tipoEvaluacion === 'virtual' ? ' · 🖥️ Virtual' : ' · 📝 Presencial'}
+                                                    </p>
                                                 </div>
                                                 <div class="acciones">
-                                                    <button class="btn-primary btn-sm" onclick="window.verResultadosEvaluacion('${evaluacion.id}')"><i class="fas fa-eye"></i></button>
-                                                    <button class="btn-danger btn-sm" onclick="window.eliminarEvaluacion('${evaluacion.id}')"><i class="fas fa-trash"></i></button>
+                                                    <button class="btn-info btn-sm" onclick="window.editarActividad('${act.id}')" title="Editar"><i class="fas fa-edit"></i></button>
+                                                    <button class="btn-danger btn-sm" onclick="window.eliminarActividad('${act.id}')" title="Eliminar"><i class="fas fa-trash"></i></button>
                                                 </div>
                                             </div>
                                         `).join('')}
-                                    </div>
-                                ` : ''}
+                                    `}
+                                    ${seccion.evaluaciones.length > 0 ? `
+                                        <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border);">
+                                            <strong style="font-size: 0.85rem; display: block; margin-bottom: 8px;">Evaluaciones Virtuales</strong>
+                                            ${seccion.evaluaciones.map(ev => `
+                                                <div class="actividad-item">
+                                                    <div class="info">
+                                                        <h4>${ev.titulo || 'Evaluación'}</h4>
+                                                        <p>${ev.estado || 'inactiva'} · ${ev.puntajeMaximo || 5} pts</p>
+                                                    </div>
+                                                    <div class="acciones">
+                                                        <button class="btn-primary btn-sm" onclick="window.verResultadosEvaluacion('${ev.id}')" title="Ver resultados"><i class="fas fa-eye"></i></button>
+                                                        <button class="btn-info btn-sm" onclick="window.editarEvaluacion('${ev.id}')" title="Editar"><i class="fas fa-edit"></i></button>
+                                                        <button class="btn-danger btn-sm" onclick="window.eliminarEvaluacion('${ev.id}')" title="Eliminar"><i class="fas fa-trash"></i></button>
+                                                    </div>
+                                                </div>
+                                            `).join('')}
+                                        </div>
+                                    ` : ''}
+                                </div>
                             </div>
-                        </div>
-                    `;
+                        `;
+                    }
+
+                    html += `</div>`;
                 }
                 container.innerHTML = html;
 
@@ -2873,76 +2570,6 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
                             icon.classList.toggle('fa-chevron-down');
                             icon.classList.toggle('fa-chevron-up');
                         }
-                    }
-                };
-
-                window.crearActividad = (seccionId) => {
-                    seccionActualId = seccionId;
-                    document.getElementById('actividadSeccionId').value = seccionId;
-                    document.getElementById('actividadEditandoId').value = '';
-                    document.getElementById('modalActividadTitulo').textContent = 'Crear Actividad';
-                    document.getElementById('actividadTitulo').value = '';
-                    document.getElementById('actividadDescripcion').value = '';
-                    document.getElementById('actividadFecha').value = '';
-                    document.getElementById('actividadEstado').value = 'activo';
-                    document.getElementById('actividadTipoEvaluacion').value = 'presencial';
-                    archivosSubidos = [];
-                    archivosExistentes = [];
-                    document.getElementById('actividadArchivosLista').innerHTML = '';
-                    document.getElementById('actividadUploadStatus').textContent = '';
-                    document.getElementById('actividadAlert').className = 'alert';
-                    document.getElementById('actividadAlert').classList.remove('show');
-                    document.getElementById('modalCrearActividad').classList.add('show');
-                };
-
-                window.editarActividad = async (actividadId) => {
-                    try {
-                        const actDoc = await getDoc(doc(db, 'colegios', colegioId, 'actividades', actividadId));
-                        if (!actDoc.exists()) { showToast('No encontrada', 'error'); return; }
-                        const data = actDoc.data();
-
-                        document.getElementById('actividadEditandoId').value = actividadId;
-                        document.getElementById('actividadSeccionId').value = data.seccionId || '';
-                        document.getElementById('modalActividadTitulo').textContent = 'Editar Actividad';
-                        document.getElementById('actividadTitulo').value = data.titulo || '';
-                        document.getElementById('actividadDescripcion').value = data.descripcion || '';
-                        document.getElementById('actividadFecha').value = data.fecha || '';
-                        document.getElementById('actividadEstado').value = data.estado || 'activo';
-                        document.getElementById('actividadTipoEvaluacion').value = data.tipoEvaluacion || 'presencial';
-
-                        archivosExistentes = data.archivos || [];
-                        archivosSubidos = [];
-                        document.getElementById('actividadUploadStatus').textContent = '';
-
-                        const lista = document.getElementById('actividadArchivosLista');
-                        lista.innerHTML = '';
-                        if (archivosExistentes.length > 0) {
-                            for (const archivo of archivosExistentes) {
-                                const div = document.createElement('div');
-                                div.className = 'file-preview';
-                                div.innerHTML = `
-                                    <i class="fas fa-file file-icon"></i>
-                                    <span style="flex: 1;">${archivo.nombre || 'Archivo'}</span>
-                                    <a href="${archivo.url}" target="_blank" class="btn-outline btn-sm" style="padding: 2px 8px; font-size: 0.7rem;"><i class="fas fa-eye"></i> Ver</a>
-                                    <button type="button" onclick="this.parentElement.remove()" style="background: none; border: none; color: var(--danger); cursor: pointer;"><i class="fas fa-times"></i></button>
-                                `;
-                                lista.appendChild(div);
-                            }
-                        }
-
-                        document.getElementById('actividadAlert').className = 'alert';
-                        document.getElementById('actividadAlert').classList.remove('show');
-                        document.getElementById('modalCrearActividad').classList.add('show');
-                    } catch (error) { showToast('❌ ' + error.message, 'error'); }
-                };
-
-                window.eliminarActividad = async (id) => {
-                    if (confirm('¿Eliminar esta actividad?')) {
-                        try {
-                            await deleteDoc(doc(db, 'colegios', colegioId, 'actividades', id));
-                            cargarSecciones();
-                            cargarDashboard();
-                        } catch (error) { alert('Error'); }
                     }
                 };
 
@@ -2965,6 +2592,10 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
                 container.innerHTML = `<div class="text-center text-danger">Error: ${error.message}</div>`;
             }
         }
+
+        document.getElementById('seccionFiltroCurso')?.addEventListener('change', cargarSecciones);
+        document.getElementById('seccionFiltroAsignatura')?.addEventListener('change', cargarSecciones);
+        document.getElementById('seccionFiltroPeriodo')?.addEventListener('change', cargarSecciones);
 
         // =============================================
         // CREAR SECCIÓN
@@ -3071,8 +2702,173 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
         });
 
         // =============================================
-        // CREAR/EDITAR ACTIVIDAD
+        // MENÚ ACTIVIDADES
         // =============================================
+        async function cargarMenuActividades() {
+            const container = document.getElementById('actividadesContainer');
+            const filtroCurso = document.getElementById('actividadFiltroCurso');
+            const filtroAsig = document.getElementById('actividadFiltroAsignatura');
+            const filtroTipo = document.getElementById('actividadFiltroTipo');
+            const filtroPeriodo = document.getElementById('actividadFiltroPeriodo');
+
+            try {
+                const { cursosList } = await obtenerCursosDelProfesor();
+                filtroCurso.innerHTML = '<option value="">Todos los cursos</option>';
+                cursosList.forEach(curso => filtroCurso.innerHTML += `<option value="${curso.id}">${curso.nombre}</option>`);
+
+                filtroCurso.onchange = async () => {
+                    const cursoId = filtroCurso.value;
+                    filtroAsig.innerHTML = '<option value="">Todas las asignaturas</option>';
+                    if (cursoId) {
+                        const asignaturas = await obtenerAsignaturasPorCurso(cursoId);
+                        asignaturas.forEach(asig => filtroAsig.innerHTML += `<option value="${asig.id}">${asig.nombre}</option>`);
+                    }
+                };
+
+                let q = query(collection(db, 'colegios', colegioId, 'actividades'), where('profesorId', '==', profesorId));
+                const cursoVal = filtroCurso.value;
+                if (cursoVal) q = query(q, where('cursoId', '==', cursoVal));
+                const asigVal = filtroAsig.value;
+                if (asigVal) q = query(q, where('asignaturaId', '==', asigVal));
+                const tipoVal = filtroTipo.value;
+                if (tipoVal) q = query(q, where('tipoEvaluacion', '==', tipoVal));
+                const periodoVal = filtroPeriodo.value;
+                if (periodoVal) q = query(q, where('periodo', '==', parseInt(periodoVal)));
+
+                const snap = await getDocs(q);
+                const actividades = [];
+                snap.forEach(d => actividades.push({ id: d.id, ...d.data() }));
+                actividades.sort((a, b) => (b.fechaCreacion?.seconds || 0) - (a.fechaCreacion?.seconds || 0));
+
+                if (actividades.length === 0) {
+                    container.innerHTML = `
+                        <div class="text-center text-muted" style="padding: 40px 0;">
+                            <i class="fas fa-tasks" style="font-size: 2rem; display: block; margin-bottom: 12px;"></i>
+                            No hay actividades creadas con esos filtros.
+                            <br>
+                            <button class="btn-primary btn-sm" onclick="document.getElementById('btnCrearActividadDirecta').click()" style="margin-top: 12px;">
+                                <i class="fas fa-plus"></i> Crear primera actividad
+                            </button>
+                        </div>
+                    `;
+                    return;
+                }
+
+                let html = '';
+                for (const act of actividades) {
+                    const tipoIcono = act.tipoEvaluacion === 'virtual' ? '🖥️' : '📝';
+                    const tipoTexto = act.tipoEvaluacion === 'virtual' ? 'Virtual' : 'Presencial';
+                    const fechaActivacionTxt = act.fechaActivacion ? formatearFechaCorta(act.fechaActivacion) : '';
+                    const fechaCierreTxt = act.fechaCierre ? formatearFechaCorta(act.fechaCierre) : '';
+
+                    html += `
+                        <div class="actividad-item" style="padding: 14px; background: var(--gray-50); border-radius: 8px; margin-bottom: 8px;">
+                            <div class="info">
+                                <h4>${tipoIcono} ${act.titulo || 'Sin título'}</h4>
+                                <p>
+                                    ${act.cursoNombre || 'Curso'} · ${act.asignaturaNombre || 'Asignatura'} ·
+                                    Periodo ${act.periodo || 1} ·
+                                    ${fechaActivacionTxt ? `📅 Activa: ${fechaActivacionTxt}` : ''}
+                                    ${fechaCierreTxt ? ` · 📅 Cierra: ${fechaCierreTxt}` : ''} ·
+                                    <strong>${tipoTexto}</strong>
+                                </p>
+                                ${act.descripcion ? `<p style="margin-top: 4px;">${act.descripcion}</p>` : ''}
+                            </div>
+                            <div class="acciones">
+                                ${act.archivos && act.archivos.length > 0 ? `<span class="badge badge-info"><i class="fas fa-paperclip"></i> ${act.archivos.length}</span>` : ''}
+                                <button class="btn-info btn-sm" onclick="window.editarActividad('${act.id}')" title="Editar"><i class="fas fa-edit"></i></button>
+                                <button class="btn-danger btn-sm" onclick="window.eliminarActividad('${act.id}')" title="Eliminar"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                    `;
+                }
+                container.innerHTML = html;
+            } catch (error) {
+                console.error(error);
+                container.innerHTML = `<div class="text-center text-danger">Error: ${error.message}</div>`;
+            }
+        }
+
+        document.getElementById('actividadFiltroCurso')?.addEventListener('change', cargarMenuActividades);
+        document.getElementById('actividadFiltroAsignatura')?.addEventListener('change', cargarMenuActividades);
+        document.getElementById('actividadFiltroTipo')?.addEventListener('change', cargarMenuActividades);
+        document.getElementById('actividadFiltroPeriodo')?.addEventListener('change', cargarMenuActividades);
+
+        // =============================================
+        // CREAR/EDITAR ACTIVIDAD (CON FECHAS DE ACTIVACIÓN Y CIERRE)
+        // =============================================
+        document.getElementById('btnCrearActividadDirecta')?.addEventListener('click', async () => {
+            document.getElementById('actividadSeccionId').value = '';
+            document.getElementById('actividadEditandoId').value = '';
+            document.getElementById('modalActividadTitulo').textContent = 'Crear Actividad';
+            document.getElementById('actividadTitulo').value = '';
+            document.getElementById('actividadDescripcion').value = '';
+            document.getElementById('actividadFechaActivacion').value = '';
+            document.getElementById('actividadFechaCierre').value = '';
+            document.getElementById('actividadEstado').value = 'activo';
+            document.getElementById('actividadTipoEvaluacion').value = 'presencial';
+            archivosSubidos = [];
+            archivosExistentes = [];
+            archivosAEliminar = [];
+            document.getElementById('actividadArchivosLista').innerHTML = '';
+            document.getElementById('actividadUploadStatus').textContent = '';
+            document.getElementById('actividadAlert').className = 'alert';
+
+            await cargarSelectoresActividad();
+            document.getElementById('modalCrearActividad').classList.add('show');
+        });
+
+        window.crearActividad = async (seccionId) => {
+            seccionActualId = seccionId;
+            document.getElementById('actividadSeccionId').value = seccionId;
+            document.getElementById('actividadEditandoId').value = '';
+            document.getElementById('modalActividadTitulo').textContent = 'Crear Actividad';
+            document.getElementById('actividadTitulo').value = '';
+            document.getElementById('actividadDescripcion').value = '';
+            document.getElementById('actividadFechaActivacion').value = '';
+            document.getElementById('actividadFechaCierre').value = '';
+            document.getElementById('actividadEstado').value = 'activo';
+            document.getElementById('actividadTipoEvaluacion').value = 'presencial';
+            archivosSubidos = [];
+            archivosExistentes = [];
+            archivosAEliminar = [];
+            document.getElementById('actividadArchivosLista').innerHTML = '';
+            document.getElementById('actividadUploadStatus').textContent = '';
+            document.getElementById('actividadAlert').className = 'alert';
+
+            await cargarSelectoresActividad(seccionId);
+            document.getElementById('modalCrearActividad').classList.add('show');
+        };
+
+        async function cargarSelectoresActividad(seccionIdPreseleccionada = null) {
+            const selectSeccion = document.getElementById('actividadSeccionSelect');
+            selectSeccion.innerHTML = '<option value="">Seleccionar sección</option>';
+
+            const q = query(collection(db, 'colegios', colegioId, 'secciones'), where('profesorId', '==', profesorId));
+            const snap = await getDocs(q);
+
+            const seccionesPorGrupo = {};
+            for (const docSnap of snap.docs) {
+                const s = docSnap.data();
+                const key = `${s.cursoNombre || 'Curso'} · ${s.asignaturaNombre || 'Asignatura'} · P${s.periodo || 1}`;
+                if (!seccionesPorGrupo[key]) seccionesPorGrupo[key] = [];
+                seccionesPorGrupo[key].push({ id: docSnap.id, ...s });
+            }
+
+            for (const [grupo, secciones] of Object.entries(seccionesPorGrupo)) {
+                const optgroup = document.createElement('optgroup');
+                optgroup.label = grupo;
+                secciones.forEach(s => {
+                    const opt = document.createElement('option');
+                    opt.value = s.id;
+                    opt.textContent = `${s.icono || '📄'} ${s.nombre} (${s.porcentaje || 0}%)`;
+                    if (seccionIdPreseleccionada && s.id === seccionIdPreseleccionada) opt.selected = true;
+                    optgroup.appendChild(opt);
+                });
+                selectSeccion.appendChild(optgroup);
+            }
+        }
+
         document.getElementById('closeActividadModal')?.addEventListener('click', () => {
             document.getElementById('modalCrearActividad').classList.remove('show');
         });
@@ -3090,15 +2886,17 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
                 for (const file of e.target.files) {
                     const sizeKB = (file.size / 1024).toFixed(1);
                     const size = sizeKB > 1024 ? `${(sizeKB / 1024).toFixed(1)} MB` : `${sizeKB} KB`;
+                    const idArchivo = 'nuevo-' + Date.now() + '-' + Math.random().toString(36).substr(2, 5);
 
-                    archivosSubidos.push({ nombre: file.name, size, file, id: Date.now() + Math.random() });
+                    archivosSubidos.push({ nombre: file.name, size, file, id: idArchivo });
 
                     const div = document.createElement('div');
                     div.className = 'file-preview';
+                    div.id = 'archivo-' + idArchivo;
                     div.innerHTML = `
                         <i class="fas fa-file file-icon"></i>
                         <span style="flex: 1;">${file.name} (${size})</span>
-                        <button type="button" onclick="this.parentElement.remove()" style="background: none; border: none; color: var(--danger); cursor: pointer;"><i class="fas fa-times"></i></button>
+                        <button type="button" onclick="window.eliminarArchivoSubido('${idArchivo}')" style="background: none; border: none; color: var(--danger); cursor: pointer; font-size: 1.1rem;" title="Eliminar archivo"><i class="fas fa-times"></i></button>
                     `;
                     lista.appendChild(div);
                 }
@@ -3113,14 +2911,82 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
             textEl.textContent = message;
         }
 
+        window.editarActividad = async (actividadId) => {
+            try {
+                const actDoc = await getDoc(doc(db, 'colegios', colegioId, 'actividades', actividadId));
+                if (!actDoc.exists()) { showToast('No encontrada', 'error'); return; }
+                const data = actDoc.data();
+
+                document.getElementById('actividadEditandoId').value = actividadId;
+                document.getElementById('actividadSeccionId').value = data.seccionId || '';
+                document.getElementById('modalActividadTitulo').textContent = 'Editar Actividad';
+                document.getElementById('actividadTitulo').value = data.titulo || '';
+                document.getElementById('actividadDescripcion').value = data.descripcion || '';
+                document.getElementById('actividadFechaActivacion').value = formatearFechaInput(data.fechaActivacion);
+                document.getElementById('actividadFechaCierre').value = formatearFechaInput(data.fechaCierre);
+                document.getElementById('actividadEstado').value = data.estado || 'activo';
+                document.getElementById('actividadTipoEvaluacion').value = data.tipoEvaluacion || 'presencial';
+
+                archivosExistentes = data.archivos || [];
+                archivosSubidos = [];
+                archivosAEliminar = [];
+                document.getElementById('actividadUploadStatus').textContent = '';
+
+                const lista = document.getElementById('actividadArchivosLista');
+                lista.innerHTML = '';
+                if (archivosExistentes.length > 0) {
+                    for (const archivo of archivosExistentes) {
+                        const idArchivo = 'exist-' + Date.now() + '-' + Math.random().toString(36).substr(2, 5);
+                        const div = document.createElement('div');
+                        div.className = 'file-preview';
+                        div.id = 'archivo-' + idArchivo;
+                        div.innerHTML = `
+                            <i class="fas fa-file file-icon"></i>
+                            <span style="flex: 1;">${archivo.nombre || 'Archivo'}</span>
+                            <a href="${archivo.url}" target="_blank" class="btn-outline btn-sm" style="padding: 2px 8px; font-size: 0.7rem;"><i class="fas fa-eye"></i> Ver</a>
+                            <button type="button" class="btn-eliminar" onclick="window.eliminarArchivoExistente('${idArchivo}', '${(archivo.path || '').replace(/'/g, "\\'")}', '${(archivo.nombre || '').replace(/'/g, "\\'")}')" style="background: none; border: none; color: var(--danger); cursor: pointer; font-size: 1.1rem;" title="Eliminar archivo"><i class="fas fa-times"></i></button>
+                        `;
+                        lista.appendChild(div);
+                    }
+                }
+
+                await cargarSelectoresActividad(data.seccionId);
+                document.getElementById('actividadAlert').className = 'alert';
+                document.getElementById('modalCrearActividad').classList.add('show');
+            } catch (error) { showToast('❌ ' + error.message, 'error'); }
+        };
+
+        window.eliminarActividad = async (id) => {
+            if (!confirm('¿Eliminar esta actividad? También se eliminarán sus archivos adjuntos.')) return;
+            try {
+                const actDoc = await getDoc(doc(db, 'colegios', colegioId, 'actividades', id));
+                if (actDoc.exists()) {
+                    const data = actDoc.data();
+                    if (data.archivos && data.archivos.length > 0) {
+                        for (const archivo of data.archivos) {
+                            if (archivo.path) {
+                                try { await deleteObject(ref(storage, archivo.path)); } catch (e) {}
+                            }
+                        }
+                    }
+                }
+                await deleteDoc(doc(db, 'colegios', colegioId, 'actividades', id));
+                showToast('✅ Actividad eliminada', 'success');
+                cargarSecciones();
+                cargarMenuActividades();
+                cargarDashboard();
+            } catch (error) { showToast('❌ ' + error.message, 'error'); }
+        };
+
         document.getElementById('formCrearActividad')?.addEventListener('submit', async (e) => {
             e.preventDefault();
             const titulo = document.getElementById('actividadTitulo').value.trim();
             const descripcion = document.getElementById('actividadDescripcion').value.trim();
-            const fecha = document.getElementById('actividadFecha').value;
+            const fechaActivacion = document.getElementById('actividadFechaActivacion').value;
+            const fechaCierre = document.getElementById('actividadFechaCierre').value;
             const estado = document.getElementById('actividadEstado').value;
             const tipoEvaluacion = document.getElementById('actividadTipoEvaluacion').value;
-            const seccionId = document.getElementById('actividadSeccionId').value;
+            const seccionId = document.getElementById('actividadSeccionSelect').value || document.getElementById('actividadSeccionId').value;
             const editandoId = document.getElementById('actividadEditandoId').value;
 
             if (!titulo || !seccionId) { showActividadAlert('Completa los campos obligatorios (*)', 'error'); return; }
@@ -3137,8 +3003,22 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
                 let actividadRef;
                 let archivosFinales = [];
 
+                const fechaActivacionDate = fechaActivacion ? new Date(fechaActivacion) : null;
+                const fechaCierreDate = fechaCierre ? new Date(fechaCierre) : null;
+
                 if (editandoId) {
                     actividadRef = doc(db, 'colegios', colegioId, 'actividades', editandoId);
+
+                    for (const archivoElim of archivosAEliminar) {
+                        if (archivoElim.path) {
+                            try {
+                                await deleteObject(ref(storage, archivoElim.path));
+                            } catch (errElim) {
+                                console.warn('No se pudo eliminar:', archivoElim.path, errElim.message);
+                            }
+                        }
+                    }
+
                     if (archivosSubidos.length > 0) {
                         const resultados = await subirArchivosActividad(editandoId, archivosSubidos);
                         archivosFinales = [...archivosExistentes, ...resultados];
@@ -3146,14 +3026,24 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
                         archivosFinales = archivosExistentes;
                     }
                     await updateDoc(actividadRef, {
-                        titulo, descripcion: descripcion || '', fecha: fecha || '',
+                        titulo, descripcion: descripcion || '',
+                        fechaActivacion: fechaActivacionDate,
+                        fechaCierre: fechaCierreDate,
                         estado, tipoEvaluacion, archivos: archivosFinales,
+                        seccionId,
+                        cursoId: seccionData.cursoId || '',
+                        cursoNombre: seccionData.cursoNombre || '',
+                        asignaturaId: seccionData.asignaturaId || '',
+                        asignaturaNombre: seccionData.asignaturaNombre || '',
+                        periodo: seccionData.periodo || 1,
                         fechaActualizacion: serverTimestamp()
                     });
                     showToast('✅ Actividad actualizada', 'success');
                 } else {
                     const nuevaActividad = await addDoc(collection(db, 'colegios', colegioId, 'actividades'), {
-                        titulo, descripcion: descripcion || '', fecha: fecha || '',
+                        titulo, descripcion: descripcion || '',
+                        fechaActivacion: fechaActivacionDate,
+                        fechaCierre: fechaCierreDate,
                         estado, tipoEvaluacion, seccionId,
                         cursoId: seccionData.cursoId || '',
                         cursoNombre: seccionData.cursoNombre || '',
@@ -3170,23 +3060,24 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
                         await updateDoc(nuevaActividad, { archivos: resultados });
                     }
 
-                    const estudiantesMatriculados = await getDocs(query(
-                        collection(db, 'colegios', colegioId, 'matriculas'),
-                        where('cursoId', '==', seccionData.cursoId),
-                        where('estado', '==', 'activo')
-                    ));
-
-                    for (const docSnap of estudiantesMatriculados.docs) {
-                        const mat = docSnap.data();
-                        await addDoc(collection(db, 'colegios', colegioId, 'notificaciones'), {
-                            estudianteId: mat.estudianteId,
-                            profesorId,
-                            titulo: '📚 Nueva actividad disponible',
-                            mensaje: `Nueva actividad: "${titulo}"`,
-                            tipo: 'actividad',
-                            leida: false,
-                            fecha: serverTimestamp()
-                        });
+                    if (tipoEvaluacion === 'virtual') {
+                        const estudiantesMatriculados = await getDocs(query(
+                            collection(db, 'colegios', colegioId, 'matriculas'),
+                            where('cursoId', '==', seccionData.cursoId),
+                            where('estado', '==', 'activo')
+                        ));
+                        for (const docSnap of estudiantesMatriculados.docs) {
+                            const mat = docSnap.data();
+                            await addDoc(collection(db, 'colegios', colegioId, 'notificaciones'), {
+                                estudianteId: mat.estudianteId,
+                                profesorId,
+                                titulo: '💻 Nueva actividad virtual',
+                                mensaje: `Tienes una nueva actividad virtual: "${titulo}". Debes responderla.`,
+                                tipo: 'actividad',
+                                leida: false,
+                                fecha: serverTimestamp()
+                            });
+                        }
                     }
                     showToast('✅ Actividad creada', 'success');
                 }
@@ -3194,6 +3085,7 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
                 setTimeout(() => {
                     document.getElementById('modalCrearActividad').classList.remove('show');
                     cargarSecciones();
+                    cargarMenuActividades();
                     cargarDashboard();
                     btnGuardar.disabled = false;
                     btnGuardar.innerHTML = textoOriginal;
@@ -3204,6 +3096,22 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
                 btnGuardar.innerHTML = textoOriginal;
             }
         });
+
+        async function subirArchivosActividad(actividadId, archivos) {
+            const resultados = [];
+            for (const archivo of archivos) {
+                const nombreLimpio = archivo.nombre.replace(/[^a-zA-Z0-9._-]/g, '_');
+                const ruta = `actividades/${colegioId}/${profesorId}/${actividadId}/${Date.now()}_${nombreLimpio}`;
+                const resultado = await subirArchivoStorageConProgreso(ruta, archivo.file, (progress) => {
+                    const statusEl = document.getElementById('actividadUploadStatus');
+                    if (statusEl) statusEl.textContent = `Subiendo ${archivo.nombre}: ${Math.round(progress)}%`;
+                });
+                if (resultado.success) {
+                    resultados.push({ nombre: archivo.nombre, url: resultado.url, path: resultado.path, size: archivo.size });
+                }
+            }
+            return resultados;
+        }
 
         // =============================================
         // PLANILLA
@@ -3318,22 +3226,10 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
                         const nota = notaDoc.data();
                         if (nota.actividadId) notasMap[estudianteId][nota.actividadId] = parseFloat(nota.valor) || 0;
                     });
-                    for (const evaluacionId of evaluacionIds) {
-                        const n = notasMap[estudianteId][evaluacionId];
-                        if (n !== undefined && n !== null) {
-                            if (!evalNotas[estudianteId]) evalNotas[estudianteId] = {};
-                            if (evalNotas[estudianteId][evaluacionId] === undefined) {
-                                evalNotas[estudianteId][evaluacionId] = Number(n);
-                            }
-                        }
-                    }
                 }
 
                 let headerHtml = `<tr><th style="min-width: 40px;">#</th><th style="min-width: 150px;">Estudiante</th>`;
-
                 for (const seccion of secciones) {
-                    const icono = seccion.icono || '📄';
-                    const nombre = seccion.nombre || 'Sección';
                     const actividadesVisibles = seccion.actividades.filter(act => act.tipoEvaluacion !== 'presencial' && act.tipoEvaluacion !== 'virtual');
                     const evalsSeccion = [
                         ...(evaluacionesPorSeccion[seccion.id] || []),
@@ -3343,7 +3239,7 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
                     const peso = seccion.porcentaje || 0;
                     headerHtml += `
                         <th style="min-width: 80px; text-align: center;" colspan="${totalColumnas > 0 ? totalColumnas : 1}">
-                            ${icono} ${nombre}<br>
+                            ${seccion.icono || '📄'} ${seccion.nombre}<br>
                             <span style="font-size: 0.6rem; font-weight: 400;">${peso}% · ${totalColumnas} act.</span>
                         </th>
                     `;
@@ -3357,7 +3253,6 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
                         ...(evaluacionesPorSeccion[seccion.id] || []),
                         ...seccion.actividades.filter(act => act.tipoEvaluacion === 'presencial' || act.tipoEvaluacion === 'virtual')
                     ].filter((item, index, arr) => arr.findIndex(x => x.id === item.id) === index);
-
                     if (actividadesVisibles.length === 0 && evalsSeccion.length === 0) {
                         subHeaderHtml += `<th style="text-align: center; font-weight: 400; font-size: 0.65rem;">-</th>`;
                     } else {
@@ -3365,16 +3260,15 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
                             subHeaderHtml += `<th style="text-align: center; font-weight: 400; font-size: 0.65rem; min-width: 60px;">${act.titulo || 'Actividad'}</th>`;
                         }
                         for (const ev of evalsSeccion) {
-                            subHeaderHtml += `<th style="text-align: center; font-weight: 400; font-size: 0.65rem; min-width: 70px;">📝 ${ev.titulo || 'Evaluación'}</th>`;
+                            subHeaderHtml += `<th style="text-align: center; font-weight: 400; font-size: 0.65rem; min-width: 70px;">💻 ${ev.titulo || 'Eval'}</th>`;
                         }
                     }
                 }
                 subHeaderHtml += `<th></th><th></th></tr>`;
-
                 thead.innerHTML = headerHtml + subHeaderHtml;
 
                 if (totalPorcentaje > 100) {
-                    document.getElementById('porcentajeBadge').textContent = `⚠️ El porcentaje total (${totalPorcentaje}%) supera el 100%`;
+                    document.getElementById('porcentajeBadge').textContent = `⚠️ Total (${totalPorcentaje}%) supera el 100%`;
                     document.getElementById('porcentajeBadge').style.background = '#fef3c7';
                     document.getElementById('porcentajeBadge').style.color = '#92400e';
                 } else {
@@ -3385,7 +3279,6 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
 
                 let html = '';
                 let rowNum = 1;
-
                 for (const docSnap of matSnap.docs) {
                     const mat = docSnap.data();
                     const estDoc = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', mat.estudianteId));
@@ -3488,12 +3381,11 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
         });
 
         // =============================================
-        // ENTREGAS
+        // ENTREGAS (con soporte para virtuales y filtro por periodo)
         // =============================================
         async function cargarFiltrosEntregas() {
             const filtroCurso = document.getElementById('entregaFiltroCurso');
             const filtroAsig = document.getElementById('entregaFiltroAsignatura');
-            const filtroSeccion = document.getElementById('entregaFiltroSeccion');
             try {
                 const { cursosList } = await obtenerCursosDelProfesor();
                 filtroCurso.innerHTML = '<option value="">Seleccionar curso</option>';
@@ -3502,16 +3394,9 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
                 filtroCurso.onchange = async () => {
                     const cursoId = filtroCurso.value;
                     filtroAsig.innerHTML = '<option value="">Seleccionar asignatura</option>';
-                    filtroSeccion.innerHTML = '<option value="">Todas las secciones</option>';
                     if (cursoId) {
                         const asignaturas = await obtenerAsignaturasPorCurso(cursoId);
                         asignaturas.forEach(asig => filtroAsig.innerHTML += `<option value="${asig.id}">${asig.nombre}</option>`);
-                        const seccionesQ = query(collection(db, 'colegios', colegioId, 'secciones'), where('profesorId', '==', profesorId), where('cursoId', '==', cursoId));
-                        const seccionesSnap = await getDocs(seccionesQ);
-                        seccionesSnap.forEach(doc => {
-                            const data = doc.data();
-                            filtroSeccion.innerHTML += `<option value="${doc.id}">${data.icono || '📄'} ${data.nombre || 'Sección'}</option>`;
-                        });
                     }
                 };
             } catch (error) { console.error(error); }
@@ -3520,14 +3405,54 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
         document.getElementById('btnFiltrarEntregas')?.addEventListener('click', async () => {
             const container = document.getElementById('entregasContainer');
             const cursoId = document.getElementById('entregaFiltroCurso').value;
-            const seccionId = document.getElementById('entregaFiltroSeccion').value;
+            const asignaturaId = document.getElementById('entregaFiltroAsignatura').value;
+            const periodoFiltro = document.getElementById('entregaFiltroPeriodo').value;
 
-            if (!cursoId) {
-                container.innerHTML = `<div class="text-center text-warning" style="padding: 40px 0;"><i class="fas fa-exclamation-triangle" style="font-size: 2rem; display: block; margin-bottom: 12px;"></i>Selecciona un curso.</div>`;
+            if (!cursoId || !asignaturaId) {
+                container.innerHTML = `<div class="text-center text-warning" style="padding: 40px 0;">
+                    <i class="fas fa-exclamation-triangle" style="font-size: 2rem; display: block; margin-bottom: 12px;"></i>
+                    Debes seleccionar <strong>curso y asignatura</strong> para ver las entregas.
+                </div>`;
                 return;
             }
 
             try {
+                // ✅ Cargar TODAS las actividades (presenciales y virtuales)
+                const actividadesQuery = query(
+                    collection(db, 'colegios', colegioId, 'actividades'),
+                    where('profesorId', '==', profesorId),
+                    where('cursoId', '==', cursoId),
+                    where('asignaturaId', '==', asignaturaId),
+                    where('estado', '==', 'activo')
+                );
+                const actividadesSnap = await getDocs(actividadesQuery);
+                let actividades = [];
+                actividadesSnap.forEach(doc => actividades.push({ id: doc.id, ...doc.data() }));
+
+                // ✅ Filtrar por periodo si se seleccionó
+                if (periodoFiltro) {
+                    actividades = actividades.filter(a => Number(a.periodo) === parseInt(periodoFiltro));
+                }
+
+                // ✅ También cargar evaluaciones virtuales que tengan respuestas
+                let evalQuery = query(
+                    collection(db, 'colegios', colegioId, 'evaluaciones'),
+                    where('profesorId', '==', profesorId),
+                    where('cursoId', '==', cursoId),
+                    where('asignaturaId', '==', asignaturaId)
+                );
+                const evalSnap = await getDocs(evalQuery);
+                const evaluaciones = [];
+                evalSnap.forEach(d => evaluaciones.push({ id: d.id, ...d.data() }));
+
+                if (actividades.length === 0 && evaluaciones.length === 0) {
+                    container.innerHTML = `<div class="text-center text-muted" style="padding: 40px 0;">
+                        <i class="fas fa-file-upload" style="font-size: 2rem; display: block; margin-bottom: 12px;"></i>
+                        No hay actividades ni evaluaciones en este curso/asignatura${periodoFiltro ? ' para el periodo ' + periodoFiltro : ''}.
+                    </div>`;
+                    return;
+                }
+
                 const matQ = query(collection(db, 'colegios', colegioId, 'matriculas'), where('cursoId', '==', cursoId), where('estado', '==', 'activo'));
                 const matSnap = await getDocs(matQ);
                 if (matSnap.empty) {
@@ -3535,44 +3460,51 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
                     return;
                 }
 
-                let actividadesQuery;
-                if (seccionId) {
-                    actividadesQuery = query(collection(db, 'colegios', colegioId, 'actividades'), where('seccionId', '==', seccionId), where('estado', '==', 'activo'));
-                } else {
-                    actividadesQuery = query(collection(db, 'colegios', colegioId, 'actividades'), where('cursoId', '==', cursoId), where('estado', '==', 'activo'));
-                }
-                const actividadesSnap = await getDocs(actividadesQuery);
-                const actividades = [];
-                actividadesSnap.forEach(doc => actividades.push({ id: doc.id, ...doc.data() }));
-
-                if (actividades.length === 0) {
-                    container.innerHTML = `<div class="text-center text-muted" style="padding: 40px 0;">No hay actividades.</div>`;
-                    return;
-                }
-
                 let html = '';
+
+                // ✅ Sección de ACTIVIDADES (incluye virtuales con entregas)
                 for (const actividad of actividades) {
-                    const titulo = actividad.titulo || 'Actividad';
                     const seccionData = await getDoc(doc(db, 'colegios', colegioId, 'secciones', actividad.seccionId));
                     const seccionNombre = seccionData.exists() ? seccionData.data().nombre : 'Sección';
                     const seccionIcono = seccionData.exists() ? seccionData.data().icono || '📄' : '📄';
 
+                    const tipoIcono = actividad.tipoEvaluacion === 'virtual' ? '🖥️' : '📝';
+                    const tipoTexto = actividad.tipoEvaluacion === 'virtual' ? 'Virtual' : 'Presencial';
+
+                    // ✅ Cargar TODAS las entregas de esta actividad (virtuales también)
+                    const entregasQ = query(
+                        collection(db, 'colegios', colegioId, 'entregas'),
+                        where('actividadId', '==', actividad.id)
+                    );
+                    const entregasSnap = await getDocs(entregasQ);
+                    const entregasMap = {};
+                    entregasSnap.forEach(d => {
+                        const data = d.data();
+                        if (data.estudianteId) {
+                            entregasMap[data.estudianteId] = { id: d.id, ...data };
+                        }
+                    });
+
+                    // ✅ Verificar si tiene entregas
+                    const tieneEntregas = Object.keys(entregasMap).length > 0;
+
                     html += `
                         <div class="seccion-card" style="margin-bottom: 16px;">
-                            <div class="seccion-header" onclick="toggleSeccion(this)" style="background: var(--primary-light);">
+                            <div class="seccion-header" onclick="window.toggleSeccion(this)">
                                 <div>
-                                    <h3>${seccionIcono} ${seccionNombre} - ${titulo}</h3>
+                                    <h3>${seccionIcono} ${seccionNombre} - ${tipoIcono} ${actividad.titulo || 'Actividad'}</h3>
                                     <span style="font-size: 0.8rem; color: var(--text-secondary);">
-                                        ${actividad.fecha ? `Fecha límite: ${new Date(actividad.fecha).toLocaleDateString()}` : 'Sin fecha límite'}
-                                        ${actividad.tipoEvaluacion ? ` · ${actividad.tipoEvaluacion === 'virtual' ? '🖥️ Virtual' : '📝 Presencial'}` : ''}
+                                        ${actividad.fechaCierre ? `📅 Cierre: ${formatearFechaCorta(actividad.fechaCierre)}` : 'Sin fecha límite'} ·
+                                        ${tipoTexto} · Periodo ${actividad.periodo || 1} ·
+                                        ${tieneEntregas ? `<strong style="color: var(--success);">${Object.keys(entregasMap).length} entrega(s)</strong>` : '<span style="color: var(--warning);">Sin entregas</span>'}
                                     </span>
                                 </div>
                                 <div><span class="toggle-icon"><i class="fas fa-chevron-down"></i></span></div>
                             </div>
-                            <div class="seccion-body open">
+                            <div class="seccion-body">
                                 <div class="table-responsive">
                                     <table class="table-modern">
-                                        <thead><tr><th>#</th><th>Estudiante</th><th>Estado</th><th>Entrega</th><th>Nota</th><th>Acciones</th></tr></thead>
+                                        <thead><tr><th>#</th><th>Estudiante</th><th>Estado entrega</th><th>Fecha entrega</th><th>Nota</th><th>Acciones</th></tr></thead>
                                         <tbody>
                     `;
 
@@ -3582,142 +3514,192 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
                         const estDoc = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', mat.estudianteId));
                         if (!estDoc.exists()) continue;
                         const estudiante = estDoc.data();
+                        const entrega = entregasMap[mat.estudianteId];
 
-                        const entregaQ = query(collection(db, 'colegios', colegioId, 'entregas'), where('actividadId', '==', actividad.id), where('estudianteId', '==', mat.estudianteId));
-                        const entregaSnap = await getDocs(entregaQ);
-                        let entrega = null;
-                        if (!entregaSnap.empty) entrega = { id: entregaSnap.docs[0].id, ...entregaSnap.docs[0].data() };
+                        // Estado de entrega
+                        let estadoEntrega = 'Sin entregar';
+                        let estadoClass = 'pendiente';
+                        let fechaEntrega = '-';
+                        if (entrega) {
+                            if (entrega.estado === 'calificado') { estadoEntrega = 'Calificado'; estadoClass = 'calificado'; }
+                            else if (entrega.estado === 'entregado') { estadoEntrega = 'Entregado'; estadoClass = 'entregado'; }
+                            if (entrega.fechaEntrega) {
+                                fechaEntrega = entrega.fechaEntrega.toDate ? formatearFechaCorta(entrega.fechaEntrega) : formatearFechaCorta(entrega.fechaEntrega);
+                            }
+                        }
 
-                        const estado = entrega?.estado || 'pendiente';
-                        const nota = entrega?.nota || '';
+                        // Nota
+                        // Nota
+                        const esPresencial = actividad.tipoEvaluacion === 'presencial' || !actividad.tipoEvaluacion;
+                        const notaExistente = entrega?.nota || '';
 
-                        let estadoText = 'Pendiente', estadoClass = 'pendiente';
-                        if (estado === 'entregado') { estadoText = 'Entregado'; estadoClass = 'entregado'; }
-                        else if (estado === 'calificado') { estadoText = 'Calificado'; estadoClass = 'calificado'; }
+                        // Si es presencial, siempre se puede calificar (aunque no haya entrega)
+                        // Si es virtual, solo se puede calificar si hay entrega
+                        const puedeCalificar = esPresencial || !!entrega;
+
+                        // Estado visual para presenciales sin entrega
+                        let estadoMostrar = estadoEntrega;
+                        if (esPresencial && !entrega) {
+                            estadoMostrar = 'Sin entrega (presencial)';
+                            estadoClass = 'pendiente';
+                        }
 
                         html += `
                             <tr>
                                 <td>${i++}</td>
                                 <td><strong>${estudiante.nombres || ''} ${estudiante.apellidos || ''}</strong></td>
-                                <td><span class="estado ${estadoClass}">${estadoText}</span></td>
-                                <td>${entrega ? `<button class="btn-outline btn-sm" onclick="window.verDetalleEntrega('${entrega.id}')"><i class="fas fa-eye"></i> Ver</button>` : '-'}</td>
-                                <td><input type="number" id="nota-${mat.estudianteId}-${actividad.id}" class="form-control" style="width: 60px; padding: 4px 6px;" value="${nota}" min="0" max="5" step="0.1" placeholder="0-5" /></td>
-                                <td><button class="btn-success btn-sm" onclick="window.guardarNotaEntrega('${mat.estudianteId}', '${actividad.id}', '${entrega?.id || ''}')"><i class="fas fa-save"></i> Guardar</button></td>
+                                <td><span class="entrega-item-estado estado ${estadoClass}">${estadoMostrar}</span></td>
+                                <td>${fechaEntrega}</td>
+                                <td><input type="number" id="nota-${mat.estudianteId}-${actividad.id}" class="form-control" style="width: 70px; padding: 4px 6px;" value="${notaExistente}" min="0" max="5" step="0.1" placeholder="0-5" ${!puedeCalificar ? 'disabled' : ''} /></td>
+                                <td>
+                                    ${puedeCalificar ? `<button class="btn-success btn-sm" onclick="window.guardarNotaPresencial('${mat.estudianteId}', '${actividad.id}')"><i class="fas fa-save"></i> Guardar nota</button>` : '<span style="font-size:0.75rem;color:var(--gray-400);">Esperando entrega</span>'}
+                                    ${entrega ? `<button class="btn-info btn-sm" onclick="window.verDetalleEntrega('${entrega.id}')"><i class="fas fa-eye"></i> Ver</button>` : ''}
+                                </td>
                             </tr>
                         `;
                     }
                     html += `</tbody></table></div></div></div>`;
                 }
+
+                // ✅ Sección de EVALUACIONES VIRTUALES (con respuestas)
+                for (const ev of evaluaciones) {
+                    if (periodoFiltro && Number(ev.periodo) !== parseInt(periodoFiltro)) continue;
+
+                    const seccionData = ev.seccionId ? await getDoc(doc(db, 'colegios', colegioId, 'secciones', ev.seccionId)) : null;
+                    const seccionNombre = seccionData?.exists() ? seccionData.data().nombre : 'Sin sección';
+
+                    const respQ = query(collection(db, 'colegios', colegioId, 'evaluaciones', ev.id, 'respuestas'));
+                    const respSnap = await getDocs(respQ);
+
+                    if (respSnap.empty) continue;
+
+                    html += `
+                        <div class="seccion-card" style="margin-bottom: 16px;">
+                            <div class="seccion-header" onclick="window.toggleSeccion(this)">
+                                <div>
+                                    <h3>📝 ${seccionNombre} - 💻 ${ev.titulo || 'Evaluación Virtual'}</h3>
+                                    <span style="font-size: 0.8rem; color: var(--text-secondary);">
+                                        Periodo ${ev.periodo || 1} · ${respSnap.size} respuesta(s)
+                                    </span>
+                                </div>
+                                <div><span class="toggle-icon"><i class="fas fa-chevron-down"></i></span></div>
+                            </div>
+                            <div class="seccion-body">
+                                <div class="table-responsive">
+                                    <table class="table-modern">
+                                        <thead><tr><th>#</th><th>Estudiante</th><th>Correctas</th><th>Nota</th></tr></thead>
+                                        <tbody>
+                    `;
+
+                    let i = 1;
+                    for (const r of respSnap.docs) {
+                        const resp = r.data();
+                        const estDoc = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', resp.estudianteId));
+                        const nombre = estDoc.exists() ? `${estDoc.data().nombres || ''} ${estDoc.data().apellidos || ''}` : 'Sin nombre';
+                        const color = (resp.nota || 0) >= 3 ? 'var(--success)' : 'var(--danger)';
+                        html += `
+                            <tr>
+                                <td>${i++}</td>
+                                <td>${nombre}</td>
+                                <td>${resp.totalCorrectas || 0}/${resp.totalPreguntas || 0}</td>
+                                <td style="font-weight: 700; color: ${color};">${(resp.nota || 0).toFixed(1)}</td>
+                            </tr>
+                        `;
+                    }
+                    html += `</tbody></table></div></div></div>`;
+                }
+
                 container.innerHTML = html;
+
+                window.toggleSeccion = (header) => {
+                    const body = header.nextElementSibling;
+                    const icon = header.querySelector('.toggle-icon i');
+                    if (body) {
+                        body.classList.toggle('open');
+                        if (icon) {
+                            icon.classList.toggle('fa-chevron-down');
+                            icon.classList.toggle('fa-chevron-up');
+                        }
+                    }
+                };
+
+window.guardarNotaPresencial = async (estudianteId, actividadId) => {
+    const input = document.getElementById(`nota-${estudianteId}-${actividadId}`);
+    if (!input) return;
+    const nota = parseFloat(input.value);
+    if (isNaN(nota) || nota < 0 || nota > 5) { showToast('Nota entre 0 y 5', 'warning'); return; }
+
+    try {
+        // Guardar/actualizar la nota
+        const notasQ = query(collection(db, 'colegios', colegioId, 'notas'), where('estudianteId', '==', estudianteId), where('actividadId', '==', actividadId));
+        const notasSnap = await getDocs(notasQ);
+        if (!notasSnap.empty) {
+            await updateDoc(notasSnap.docs[0].ref, { valor: nota, fechaActualizacion: serverTimestamp() });
+        } else {
+            await addDoc(collection(db, 'colegios', colegioId, 'notas'), {
+                estudianteId, actividadId, valor: nota, profesorId, fechaRegistro: serverTimestamp()
+            });
+        }
+
+        // Actualizar la entrega si existe (actividades virtuales)
+        const entregasQ = query(collection(db, 'colegios', colegioId, 'entregas'), where('estudianteId', '==', estudianteId), where('actividadId', '==', actividadId));
+        const entregasSnap = await getDocs(entregasQ);
+        if (!entregasSnap.empty) {
+            await updateDoc(entregasSnap.docs[0].ref, {
+                nota: nota,
+                estado: 'calificado',
+                fechaCalificacion: serverTimestamp()
+            });
+        }
+        // Si NO existe entrega y es presencial, no pasa nada — la nota ya quedó guardada en /notas
+
+        showToast('✅ Nota guardada', 'success');
+    } catch (error) { showToast('❌ ' + error.message, 'error'); }
+};
 
                 window.verDetalleEntrega = async (entregaId) => {
                     try {
                         const entregaDoc = await getDoc(doc(db, 'colegios', colegioId, 'entregas', entregaId));
-                        if (!entregaDoc.exists()) { showToast('No encontrada', 'error'); return; }
-                        const entrega = entregaDoc.data();
+                        if (!entregaDoc.exists()) { showToast('Entrega no encontrada', 'error'); return; }
+                        const e = entregaDoc.data();
 
-                        let estudianteNombre = 'Sin nombre';
-                        try {
-                            const e = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', entrega.estudianteId));
-                            if (e.exists()) estudianteNombre = `${e.data().nombres || ''} ${e.data().apellidos || ''}`;
-                        } catch (e) {}
+                        const estDoc = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', e.estudianteId));
+                        const nombre = estDoc.exists() ? `${estDoc.data().nombres || ''} ${estDoc.data().apellidos || ''}` : 'Sin nombre';
 
-                        let actividadNombre = 'Sin actividad', seccionNombre = 'Sección';
-                        try {
-                            const a = await getDoc(doc(db, 'colegios', colegioId, 'actividades', entrega.actividadId));
-                            if (a.exists()) {
-                                actividadNombre = a.data().titulo || 'Sin actividad';
-                                if (a.data().seccionId) {
-                                    const s = await getDoc(doc(db, 'colegios', colegioId, 'secciones', a.data().seccionId));
-                                    if (s.exists()) seccionNombre = s.data().nombre || 'Sección';
-                                }
-                            }
-                        } catch (e) {}
+                        let html = `
+                            <p><strong>Estudiante:</strong> ${nombre}</p>
+                            <p><strong>Estado:</strong> ${e.estado || 'pendiente'}</p>
+                            <p><strong>Nota:</strong> ${e.nota || '-'}</p>
+                            <p><strong>Fecha entrega:</strong> ${e.fechaEntrega ? formatearFecha(e.fechaEntrega) : 'Sin fecha'}</p>
+                        `;
 
-                        document.getElementById('detalleEstudiante').textContent = estudianteNombre;
-                        document.getElementById('detalleActividad').textContent = actividadNombre;
-                        document.getElementById('detalleSeccion').textContent = seccionNombre;
-                        document.getElementById('detalleFecha').textContent = entrega.fechaEntrega ? formatearFecha(entrega.fechaEntrega) : 'Sin fecha';
-                        document.getElementById('detalleEstadoEntrega').textContent = entrega.estado === 'calificado' ? 'Calificado' : entrega.estado === 'entregado' ? 'Entregado' : 'Pendiente';
-                        document.getElementById('detalleNotaEntrega').textContent = entrega.nota || '-';
-
-                        const textoDiv = document.getElementById('detalleTextoEntrega');
-                        if (entrega.texto) {
-                            document.getElementById('detalleTexto').textContent = entrega.texto;
-                            textoDiv.style.display = 'block';
-                        } else textoDiv.style.display = 'none';
-
-                        const archivoDiv = document.getElementById('detalleArchivoEntrega');
-                        const archivosLista = document.getElementById('detalleArchivosLista');
-                        if (entrega.archivos && entrega.archivos.length > 0) {
-                            let ah = '';
-                            for (const archivo of entrega.archivos) {
-                                const esImg = archivo.url && archivo.url.match(/\.(jpg|jpeg|png|gif|webp|bmp)$/i);
-                                ah += `
-                                    <div class="file-preview" style="margin-bottom: 4px;">
-                                        ${esImg ? `<img src="${archivo.url}" />` : `<i class="fas fa-file file-icon"></i>`}
-                                        <span style="flex: 1; font-size: 0.8rem;">${archivo.nombre || 'Archivo'}</span>
-                                        <a href="${archivo.url}" target="_blank" class="btn-outline btn-sm" style="padding: 2px 8px; font-size: 0.7rem;"><i class="fas fa-download"></i> Ver</a>
+                        if (e.texto) {
+                            html += `
+                                <div style="margin-top: 12px;">
+                                    <p><strong>Texto entregado:</strong></p>
+                                    <div style="background: var(--gray-50); padding: 12px; border-radius: 8px; border-left: 3px solid var(--primary);">
+                                        ${e.texto}
                                     </div>
-                                `;
+                                </div>
+                            `;
+                        }
+
+                        if (e.archivos && e.archivos.length > 0) {
+                            html += `<div style="margin-top: 12px;"><p><strong>Archivos:</strong></p>`;
+                            for (const a of e.archivos) {
+                                html += `<div class="file-preview"><i class="fas fa-file file-icon"></i><span style="flex:1;">${a.nombre || 'Archivo'}</span><a href="${a.url}" target="_blank" class="btn-outline btn-sm"><i class="fas fa-eye"></i> Ver</a></div>`;
                             }
-                            archivosLista.innerHTML = ah;
-                            archivoDiv.style.display = 'block';
-                        } else archivoDiv.style.display = 'none';
+                            html += `</div>`;
+                        }
 
-                        document.getElementById('modalEntregaTitulo').textContent = `Detalle - ${estudianteNombre}`;
+                        document.getElementById('modalEntregaTitulo').textContent = 'Detalle de Entrega';
+                        document.getElementById('modalEntregaBody').innerHTML = html;
                         document.getElementById('modalVerEntrega').classList.add('show');
-                    } catch (error) { showToast('Error', 'error'); }
+                    } catch (err) { showToast('Error: ' + err.message, 'error'); }
                 };
 
-                window.guardarNotaEntrega = async (estudianteId, actividadId, entregaId) => {
-                    const input = document.getElementById(`nota-${estudianteId}-${actividadId}`);
-                    if (!input) return;
-                    const nota = parseFloat(input.value);
-                    if (isNaN(nota) || nota < 0 || nota > 5) { showToast('Nota entre 0 y 5', 'warning'); return; }
-
-                    try {
-                        if (entregaId) {
-                            await updateDoc(doc(db, 'colegios', colegioId, 'entregas', entregaId), { nota, estado: 'calificado' });
-                            await addDoc(collection(db, 'colegios', colegioId, 'notificaciones'), {
-                                estudianteId, profesorId,
-                                titulo: '📝 Nota publicada',
-                                mensaje: `Tu entrega fue calificada con ${nota}`,
-                                tipo: 'calificacion', leida: false, fecha: serverTimestamp()
-                            });
-                        } else {
-                            const a = await getDoc(doc(db, 'colegios', colegioId, 'actividades', actividadId));
-                            const actData = a.exists() ? a.data() : {};
-                            await addDoc(collection(db, 'colegios', colegioId, 'entregas'), {
-                                actividadId, estudianteId, profesorId,
-                                cursoId: actData.cursoId || '',
-                                nota, estado: 'calificado',
-                                fechaCalificacion: serverTimestamp()
-                            });
-                            await addDoc(collection(db, 'colegios', colegioId, 'notificaciones'), {
-                                estudianteId, profesorId,
-                                titulo: '📝 Nota publicada',
-                                mensaje: `Tu entrega fue calificada con ${nota}`,
-                                tipo: 'calificacion', leida: false, fecha: serverTimestamp()
-                            });
-                        }
-
-                        const notasQ = query(collection(db, 'colegios', colegioId, 'notas'), where('estudianteId', '==', estudianteId), where('actividadId', '==', actividadId));
-                        const notasSnap = await getDocs(notasQ);
-                        if (!notasSnap.empty) {
-                            await updateDoc(notasSnap.docs[0].ref, { valor: nota, fechaActualizacion: serverTimestamp() });
-                        } else {
-                            await addDoc(collection(db, 'colegios', colegioId, 'notas'), {
-                                estudianteId, actividadId, valor: nota, profesorId, fechaRegistro: serverTimestamp()
-                            });
-                        }
-                        showToast('✅ Nota guardada', 'success');
-                        document.getElementById('btnFiltrarEntregas').click();
-                    } catch (error) { showToast('❌ ' + error.message, 'error'); }
-                };
-
-                await contarNotificaciones();
             } catch (error) {
+                console.error(error);
                 container.innerHTML = `<div class="text-center text-danger">Error: ${error.message}</div>`;
             }
         });
@@ -3728,8 +3710,7 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
         document.getElementById('closeEntregaBtn')?.addEventListener('click', () => {
             document.getElementById('modalVerEntrega').classList.remove('show');
         });
-
-        // =============================================
+                // =============================================
         // ASISTENCIA
         // =============================================
         async function cargarAsistencia() {
@@ -3940,7 +3921,6 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
         document.getElementById('btnCrearObservacion')?.addEventListener('click', async () => {
             document.getElementById('modalCrearObservacion').classList.add('show');
             document.getElementById('observacionAlert').className = 'alert';
-            document.getElementById('observacionAlert').classList.remove('show');
 
             const cursoSelect = document.getElementById('observacionCurso');
             const estudianteSelect = document.getElementById('observacionEstudiante');
@@ -4012,16 +3992,288 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
         });
 
         // =============================================
-        // EVENTOS EVALUACIONES
+        // EVALUACIONES VIRTUALES
         // =============================================
+        async function cargarEvaluaciones() {
+            const container = document.getElementById('evaluacionesContainer');
+            const filtroCurso = document.getElementById('evalFiltroCurso');
+            const filtroAsig = document.getElementById('evalFiltroAsignatura');
+            const filtroEstado = document.getElementById('evalFiltroEstado');
+
+            try {
+                const { cursosList } = await obtenerCursosDelProfesor();
+                filtroCurso.innerHTML = '<option value="">Todos los cursos</option>';
+                cursosList.forEach(curso => filtroCurso.innerHTML += `<option value="${curso.id}">${curso.nombre}</option>`);
+
+                filtroCurso.onchange = async () => {
+                    const cursoId = filtroCurso.value;
+                    filtroAsig.innerHTML = '<option value="">Todas las asignaturas</option>';
+                    if (cursoId) {
+                        const asignaturas = await obtenerAsignaturasPorCurso(cursoId);
+                        asignaturas.forEach(asig => filtroAsig.innerHTML += `<option value="${asig.id}">${asig.nombre}</option>`);
+                    }
+                };
+
+                let q = query(collection(db, 'colegios', colegioId, 'evaluaciones'), where('profesorId', '==', profesorId));
+                const cursoVal = filtroCurso.value;
+                if (cursoVal) q = query(q, where('cursoId', '==', cursoVal));
+                const asigVal = filtroAsig.value;
+                if (asigVal) q = query(q, where('asignaturaId', '==', asigVal));
+                const estadoVal = filtroEstado.value;
+                if (estadoVal) q = query(q, where('estado', '==', estadoVal));
+
+                const snap = await getDocs(q);
+
+                if (snap.empty) {
+                    container.innerHTML = `
+                        <div class="text-center text-muted" style="padding: 40px 0;">
+                            <i class="fas fa-pencil-alt" style="font-size: 2rem; display: block; margin-bottom: 12px;"></i>
+                            No hay evaluaciones virtuales creadas.
+                            <br>
+                            <button class="btn-primary btn-sm" onclick="document.getElementById('btnCrearEvaluacion').click()" style="margin-top: 12px;">
+                                <i class="fas fa-plus"></i> Crear primera evaluación
+                            </button>
+                        </div>
+                    `;
+                    return;
+                }
+
+                const evaluaciones = [];
+                for (const docSnap of snap.docs) {
+                    const data = docSnap.data();
+                    const pregQ = query(collection(db, 'colegios', colegioId, 'evaluaciones', docSnap.id, 'preguntas'));
+                    const pregSnap = await getDocs(pregQ);
+                    const respQ = query(collection(db, 'colegios', colegioId, 'evaluaciones', docSnap.id, 'respuestas'));
+                    const respSnap = await getDocs(respQ);
+
+                    evaluaciones.push({ id: docSnap.id, ...data, totalPreguntas: pregSnap.size, totalRespuestas: respSnap.size });
+                }
+
+                let html = '';
+                for (const ev of evaluaciones) {
+                    const estado = ev.estado || 'inactiva';
+                    const estadoClass = estado === 'activa' ? 'activa' : estado === 'programada' ? 'programada' : estado === 'cerrada' ? 'cerrada' : 'inactiva';
+                    const iconoEstado = estado === 'activa' ? '🟢' : estado === 'programada' ? '🟡' : estado === 'cerrada' ? '🔴' : '⚪';
+
+                    html += `
+                        <div class="evaluacion-preview">
+                            <div class="header">
+                                <div>
+                                    <h3 style="font-size: 1rem; font-weight: 600;">${ev.titulo || 'Evaluación'}</h3>
+                                    <span style="font-size: 0.8rem; color: var(--text-secondary);">
+                                        ${ev.cursoNombre || 'Curso'} · ${ev.asignaturaNombre || 'Asignatura'} · P${ev.periodo || 1}
+                                        ${ev.seccionNombre ? ` · ${ev.seccionNombre}` : ''}
+                                    </span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                                    <span class="estado ${estadoClass}">${iconoEstado} ${estado}</span>
+                                    <span style="font-size: 0.8rem;"><i class="fas fa-users"></i> ${ev.totalRespuestas}</span>
+                                    <span style="font-size: 0.8rem;"><i class="fas fa-question-circle"></i> ${ev.totalPreguntas}</span>
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 16px; flex-wrap: wrap; font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 12px;">
+                                <span>⏱️ ${ev.tiempoLimite || 30} min</span>
+                                <span>⭐ ${ev.puntajeMaximo || 5} pts</span>
+                                <span>${ev.fechaCierre ? 'Cierra: ' + formatearFecha(ev.fechaCierre) : ''}</span>
+                            </div>
+                            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                                <button class="btn-primary btn-sm" onclick="window.verResultadosEvaluacion('${ev.id}')"><i class="fas fa-chart-bar"></i> Resultados</button>
+                                <button class="btn-info btn-sm" onclick="window.editarEvaluacion('${ev.id}')"><i class="fas fa-edit"></i></button>
+                                ${estado !== 'activa' ?
+                                    `<button class="btn-success btn-sm" onclick="window.activarEvaluacion('${ev.id}')"><i class="fas fa-play"></i> Activar</button>` :
+                                    `<button class="btn-warning btn-sm" onclick="window.cerrarEvaluacion('${ev.id}')"><i class="fas fa-stop"></i> Cerrar</button>`
+                                }
+                                <button class="btn-danger btn-sm" onclick="window.eliminarEvaluacion('${ev.id}')"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                    `;
+                }
+                container.innerHTML = html;
+
+                window.activarEvaluacion = async (id) => {
+                    if (!confirm('¿Activar esta evaluación?')) return;
+                    await updateDoc(doc(db, 'colegios', colegioId, 'evaluaciones', id), { estado: 'activa' });
+                    showToast('✅ Evaluación activada', 'success');
+                    cargarEvaluaciones();
+                };
+                window.cerrarEvaluacion = async (id) => {
+                    if (!confirm('¿Cerrar esta evaluación?')) return;
+                    await updateDoc(doc(db, 'colegios', colegioId, 'evaluaciones', id), { estado: 'cerrada' });
+                    showToast('✅ Evaluación cerrada', 'success');
+                    cargarEvaluaciones();
+                };
+                window.eliminarEvaluacion = async (id) => {
+                    if (!confirm('⚠️ ¿Eliminar esta evaluación?')) return;
+                    const pregQ = query(collection(db, 'colegios', colegioId, 'evaluaciones', id, 'preguntas'));
+                    const pregSnap = await getDocs(pregQ);
+                    for (const d of pregSnap.docs) await deleteDoc(d.ref);
+                    const respQ = query(collection(db, 'colegios', colegioId, 'evaluaciones', id, 'respuestas'));
+                    const respSnap = await getDocs(respQ);
+                    for (const d of respSnap.docs) await deleteDoc(d.ref);
+                    await deleteDoc(doc(db, 'colegios', colegioId, 'evaluaciones', id));
+                    showToast('✅ Evaluación eliminada', 'success');
+                    cargarEvaluaciones();
+                };
+                window.verResultadosEvaluacion = async (id) => { await cargarResultadosEvaluacion(id); };
+                window.editarEvaluacion = async (id) => { await cargarEvaluacionParaEditar(id); };
+            } catch (error) {
+                console.error(error);
+                container.innerHTML = `<div class="text-center text-danger">Error: ${error.message}</div>`;
+            }
+        }
+
+        async function cargarResultadosEvaluacion(evalId) {
+            const modalBody = document.getElementById('modalResultadosBody');
+            try {
+                const evalDoc = await getDoc(doc(db, 'colegios', colegioId, 'evaluaciones', evalId));
+                const evalData = evalDoc.data();
+                const respQ = query(collection(db, 'colegios', colegioId, 'evaluaciones', evalId, 'respuestas'));
+                const respSnap = await getDocs(respQ);
+
+                const estudiantes = [];
+                for (const r of respSnap.docs) {
+                    const data = r.data();
+                    const estDoc = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', data.estudianteId));
+                    if (estDoc.exists()) {
+                        estudiantes.push({
+                            nombre: `${estDoc.data().nombres || ''} ${estDoc.data().apellidos || ''}`,
+                            nota: data.nota || 0,
+                            totalCorrectas: data.totalCorrectas || 0,
+                            totalPreguntas: data.totalPreguntas || 0
+                        });
+                    }
+                }
+                estudiantes.sort((a, b) => b.nota - a.nota);
+
+                let html = `
+                    <div style="margin-bottom: 16px;">
+                        <h3 style="font-size: 1.1rem;">${evalData.titulo || 'Evaluación'}</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem;">${estudiantes.length} estudiantes respondieron</p>
+                    </div>
+                    <table class="table-modern">
+                        <thead><tr><th>#</th><th>Estudiante</th><th>Correctas</th><th>Nota</th></tr></thead>
+                        <tbody>
+                `;
+                let i = 1;
+                for (const e of estudiantes) {
+                    const color = e.nota >= 3 ? 'var(--success)' : 'var(--danger)';
+                    html += `<tr>
+                        <td>${i++}</td>
+                        <td>${e.nombre}</td>
+                        <td>${e.totalCorrectas}/${e.totalPreguntas}</td>
+                        <td style="font-weight: 700; color: ${color};">${e.nota.toFixed(1)}</td>
+                    </tr>`;
+                }
+                html += `</tbody></table>`;
+                modalBody.innerHTML = html;
+                document.getElementById('modalResultadosTitulo').textContent = `Resultados - ${evalData.titulo || 'Evaluación'}`;
+                document.getElementById('modalVerResultadosEval').classList.add('show');
+            } catch (error) {
+                modalBody.innerHTML = `<div class="text-center text-danger">Error: ${error.message}</div>`;
+                document.getElementById('modalVerResultadosEval').classList.add('show');
+            }
+        }
+
+        async function cargarEvaluacionParaEditar(evalId) {
+            try {
+                const evalDoc = await getDoc(doc(db, 'colegios', colegioId, 'evaluaciones', evalId));
+                const data = evalDoc.data();
+                evalEditandoId = evalId;
+
+                const pregQ = query(collection(db, 'colegios', colegioId, 'evaluaciones', evalId, 'preguntas'));
+                const pregSnap = await getDocs(pregQ);
+                preguntasEvaluacion = [];
+                pregSnap.forEach(d => preguntasEvaluacion.push({ id: d.id, ...d.data() }));
+
+                document.getElementById('evalTitulo').value = data.titulo || '';
+                document.getElementById('evalPeriodo').value = data.periodo || '';
+                if (data.fechaActivacion) {
+                    const d = data.fechaActivacion.toDate ? data.fechaActivacion.toDate() : new Date(data.fechaActivacion);
+                    document.getElementById('evalFechaActivacion').value = d.toISOString().slice(0, 16);
+                }
+                if (data.fechaCierre) {
+                    const d = data.fechaCierre.toDate ? data.fechaCierre.toDate() : new Date(data.fechaCierre);
+                    document.getElementById('evalFechaCierre').value = d.toISOString().slice(0, 16);
+                }
+                document.getElementById('evalTiempoLimite').value = data.tiempoLimite || 30;
+                document.getElementById('evalPuntajeMaximo').value = data.puntajeMaximo || 5;
+                document.getElementById('evalValorPregunta').value = data.valorPregunta || 0.5;
+
+                renderizarPreguntas();
+                await llenarSelectoresEvaluacion();
+
+                document.getElementById('modalCrearEvaluacion').classList.add('show');
+                document.querySelector('#modalCrearEvaluacion .modal-header h2').textContent = 'Editar Evaluación Virtual';
+
+                setTimeout(() => {
+                    document.getElementById('evalCurso').value = data.cursoId || '';
+                    if (data.cursoId) {
+                        document.getElementById('evalCurso').dispatchEvent(new Event('change'));
+                        setTimeout(() => {
+                            document.getElementById('evalAsignatura').value = data.asignaturaId || '';
+                            document.getElementById('evalAsignatura').dispatchEvent(new Event('change'));
+                            setTimeout(() => {
+                                document.getElementById('evalSeccion').value = data.seccionId || '';
+                            }, 300);
+                        }, 300);
+                    }
+                }, 300);
+
+                showToast('📝 Evaluación cargada', 'info');
+            } catch (error) { showToast('❌ ' + error.message, 'error'); }
+        }
+
+        async function llenarSelectoresEvaluacion() {
+            const cursoSelect = document.getElementById('evalCurso');
+            const asigSelect = document.getElementById('evalAsignatura');
+            const seccionSelect = document.getElementById('evalSeccion');
+            const periodoSelect = document.getElementById('evalPeriodo');
+
+            const actualizarSecciones = async () => {
+                const cursoId = cursoSelect.value;
+                const asignaturaId = asigSelect.value;
+                const periodo = periodoSelect.value;
+                seccionSelect.innerHTML = '<option value="">Seleccionar sección</option>';
+                if (!cursoId || !asignaturaId || !periodo) return;
+
+                const seccionesQ = query(
+                    collection(db, 'colegios', colegioId, 'secciones'),
+                    where('profesorId', '==', profesorId),
+                    where('cursoId', '==', cursoId),
+                    where('asignaturaId', '==', asignaturaId),
+                    where('periodo', '==', parseInt(periodo))
+                );
+                const seccionesSnap = await getDocs(seccionesQ);
+                seccionesSnap.forEach(secDoc => {
+                    const data = secDoc.data();
+                    seccionSelect.innerHTML += `<option value="${secDoc.id}">${data.icono || '📄'} ${data.nombre || 'Sección'} (${data.porcentaje || 0}%)</option>`;
+                });
+            };
+
+            const { cursosList } = await obtenerCursosDelProfesor();
+            cursoSelect.innerHTML = '<option value="">Seleccionar curso</option>';
+            cursosList.forEach(curso => cursoSelect.innerHTML += `<option value="${curso.id}">${curso.nombre}</option>`);
+
+            cursoSelect.onchange = async () => {
+                const cursoId = cursoSelect.value;
+                asigSelect.innerHTML = '<option value="">Seleccionar asignatura</option>';
+                if (cursoId) {
+                    const asignaturas = await obtenerAsignaturasPorCurso(cursoId);
+                    asignaturas.forEach(asig => asigSelect.innerHTML += `<option value="${asig.id}">${asig.nombre}</option>`);
+                }
+                await actualizarSecciones();
+            };
+            asigSelect.onchange = actualizarSecciones;
+            periodoSelect.onchange = actualizarSecciones;
+            await actualizarSecciones();
+        }
+
         document.getElementById('btnCrearEvaluacion')?.addEventListener('click', async () => {
             evalEditandoId = null;
             preguntasEvaluacion = [];
             renderizarPreguntas();
             document.getElementById('modalCrearEvaluacion').classList.add('show');
-            document.getElementById('evalAlert').className = 'alert';
-            document.getElementById('evalAlert').classList.remove('show');
-            document.querySelector('#modalCrearEvaluacion .modal-header h2').textContent = 'Crear Evaluación';
+            document.querySelector('#modalCrearEvaluacion .modal-header h2').textContent = 'Crear Evaluación Virtual';
             await llenarSelectoresEvaluacion();
 
             const ahora = new Date();
@@ -4051,7 +4303,7 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
                     nuevaCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     nuevaCard.classList.add('pregunta-nueva');
                     setTimeout(() => nuevaCard.classList.remove('pregunta-nueva'), 1600);
-                    const input = nuevaCard.querySelector('input[type="text"], textarea');
+                    const input = nuevaCard.querySelector('input[type="text"]');
                     if (input) input.focus();
                 }
             });
@@ -4077,11 +4329,7 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
                 alertText.textContent = message;
                 alertEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
-            function hideEvalAlert() {
-                alertEl.className = 'alert';
-                alertEl.classList.remove('show');
-            }
-            hideEvalAlert();
+            alertEl.className = 'alert';
 
             const titulo = document.getElementById('evalTitulo').value.trim();
             const cursoId = document.getElementById('evalCurso').value;
@@ -4094,40 +4342,22 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
             const puntajeMaximo = parseFloat(document.getElementById('evalPuntajeMaximo').value) || 5;
             const valorPregunta = parseFloat(document.getElementById('evalValorPregunta').value) || 0.5;
 
-            if (!titulo || !cursoId || !asignaturaId || !periodo || !fechaActivacion || !fechaCierre) {
-                showEvalAlert('Completa todos los campos obligatorios (*)', 'error');
-                return;
+            if (!titulo || !cursoId || !asignaturaId || !periodo || !seccionId || !fechaActivacion || !fechaCierre) {
+                showEvalAlert('Completa todos los campos obligatorios (*)', 'error'); return;
             }
-            if (preguntasEvaluacion.length === 0) {
-                showEvalAlert('Agrega al menos una pregunta', 'error');
-                return;
-            }
+            if (preguntasEvaluacion.length === 0) { showEvalAlert('Agrega al menos una pregunta', 'error'); return; }
             for (const p of preguntasEvaluacion) {
-                if (!p.enunciado.trim()) {
-                    showEvalAlert('Todas las preguntas deben tener enunciado', 'error');
-                    return;
-                }
-                if (isNaN(parseFloat(p.valor)) || parseFloat(p.valor) <= 0) {
-                    showEvalAlert('El valor de cada pregunta debe ser mayor a 0', 'error');
-                    return;
-                }
+                if (!p.enunciado.trim()) { showEvalAlert('Todas las preguntas deben tener enunciado', 'error'); return; }
+                if (isNaN(parseFloat(p.valor)) || parseFloat(p.valor) <= 0) { showEvalAlert('El valor de cada pregunta debe ser > 0', 'error'); return; }
                 if (p.tipo === 'multiple') {
-                    const opcionesValidas = p.opciones.filter(o => o.trim());
-                    if (opcionesValidas.length < 2) {
-                        showEvalAlert('Las preguntas de opción múltiple necesitan al menos 2 opciones', 'error');
-                        return;
-                    }
-                    if (p.respuestaCorrecta === null || p.respuestaCorrecta === undefined) {
-                        showEvalAlert('Selecciona la respuesta correcta en todas las preguntas de opción múltiple', 'error');
-                        return;
-                    }
+                    if (p.opciones.filter(o => o.trim()).length < 2) { showEvalAlert('Las preguntas necesitan al menos 2 opciones', 'error'); return; }
+                    if (p.respuestaCorrecta === null || p.respuestaCorrecta === undefined) { showEvalAlert('Selecciona la respuesta correcta', 'error'); return; }
                 }
             }
 
             const totalPuntos = preguntasEvaluacion.reduce((sum, p) => sum + (parseFloat(p.valor) || 0), 0);
             if (totalPuntos > puntajeMaximo) {
-                showEvalAlert(`❌ El total de puntos (${totalPuntos.toFixed(1)}) supera el puntaje máximo (${puntajeMaximo})`, 'error');
-                showToast('❌ Ajusta los valores o el puntaje máximo', 'error', 6000);
+                showEvalAlert(`❌ El total (${totalPuntos.toFixed(1)}) supera el puntaje máximo (${puntajeMaximo})`, 'error');
                 return;
             }
 
@@ -4142,17 +4372,14 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
                     cursoNombre = c.exists() ? c.data().nombre : 'Curso';
                     const a = await getDoc(doc(db, 'colegios', colegioId, 'asignaturas', asignaturaId));
                     asignaturaNombre = a.exists() ? a.data().nombre : 'Asignatura';
-                    if (seccionId) {
-                        const s = await getDoc(doc(db, 'colegios', colegioId, 'secciones', seccionId));
-                        seccionNombre = s.exists() ? s.data().nombre : '';
-                    }
+                    const s = await getDoc(doc(db, 'colegios', colegioId, 'secciones', seccionId));
+                    seccionNombre = s.exists() ? s.data().nombre : '';
                 } catch (e) {}
 
                 const estado = esBorrador ? 'inactiva' : 'programada';
-
                 const evalData = {
                     titulo, cursoId, cursoNombre, asignaturaId, asignaturaNombre,
-                    periodo: parseInt(periodo), seccionId: seccionId || null, seccionNombre: seccionNombre || null,
+                    periodo: parseInt(periodo), seccionId, seccionNombre,
                     fechaActivacion: new Date(fechaActivacion), fechaCierre: new Date(fechaCierre),
                     tiempoLimite, puntajeMaximo, valorPregunta, estado, profesorId,
                     totalPreguntas: preguntasEvaluacion.length, totalPuntos,
@@ -4164,8 +4391,8 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
                     await updateDoc(doc(db, 'colegios', colegioId, 'evaluaciones', evalEditandoId), evalData);
                     evalRef = doc(db, 'colegios', colegioId, 'evaluaciones', evalEditandoId);
                     const oldPregQ = query(collection(db, 'colegios', colegioId, 'evaluaciones', evalEditandoId, 'preguntas'));
-                    const oldPregSnap = await getDocs(oldPregQ);
-                    for (const docSnap of oldPregSnap.docs) await deleteDoc(docSnap.ref);
+                    const oldSnap = await getDocs(oldPregQ);
+                    for (const d of oldSnap.docs) await deleteDoc(d.ref);
                 } else {
                     const docRef = await addDoc(collection(db, 'colegios', colegioId, 'evaluaciones'), evalData);
                     evalRef = docRef;
@@ -4188,15 +4415,15 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
                     for (const est of estudiantes) {
                         await addDoc(collection(db, 'colegios', colegioId, 'notificaciones'), {
                             estudianteId: est.id, profesorId,
-                            titulo: `📝 Nueva evaluación: ${titulo}`,
-                            mensaje: `Nueva evaluación disponible en ${asignaturaNombre}`,
+                            titulo: `💻 Nueva evaluación virtual: ${titulo}`,
+                            mensaje: `Nueva evaluación disponible en ${asignaturaNombre}. Debes responderla.`,
                             tipo: 'evaluacion', leida: false, evaluacionId: evalRef.id,
                             fecha: serverTimestamp()
                         });
                     }
                 }
 
-                showToast(esBorrador ? '✅ Borrador guardado' : '✅ Evaluación creada', 'success');
+                showToast(esBorrador ? '✅ Borrador guardado' : '✅ Evaluación virtual creada', 'success');
                 setTimeout(() => {
                     document.getElementById('modalCrearEvaluacion').classList.remove('show');
                     cargarEvaluaciones();
@@ -4208,18 +4435,10 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
             }
         }
 
-        document.getElementById('closeEvalModal')?.addEventListener('click', () => {
-            document.getElementById('modalCrearEvaluacion').classList.remove('show');
-        });
-        document.getElementById('cancelEvalModal')?.addEventListener('click', () => {
-            document.getElementById('modalCrearEvaluacion').classList.remove('show');
-        });
-        document.getElementById('closeResultadosModal')?.addEventListener('click', () => {
-            document.getElementById('modalVerResultadosEval').classList.remove('show');
-        });
-        document.getElementById('closeResultadosBtn')?.addEventListener('click', () => {
-            document.getElementById('modalVerResultadosEval').classList.remove('show');
-        });
+        document.getElementById('closeEvalModal')?.addEventListener('click', () => document.getElementById('modalCrearEvaluacion').classList.remove('show'));
+        document.getElementById('cancelEvalModal')?.addEventListener('click', () => document.getElementById('modalCrearEvaluacion').classList.remove('show'));
+        document.getElementById('closeResultadosModal')?.addEventListener('click', () => document.getElementById('modalVerResultadosEval').classList.remove('show'));
+        document.getElementById('closeResultadosBtn')?.addEventListener('click', () => document.getElementById('modalVerResultadosEval').classList.remove('show'));
         document.getElementById('btnFiltrarEvaluaciones')?.addEventListener('click', cargarEvaluaciones);
 
         // =============================================
@@ -4231,8 +4450,8 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
 
         const pageNames = {
             inicio: 'Inicio', horario: 'Mi Horario', cursos: 'Mis Cursos', estudiantes: 'Estudiantes',
-            secciones: 'Secciones', planilla: 'Planilla', entregas: 'Entregas', asistencia: 'Asistencia',
-            observaciones: 'Observaciones', evaluaciones: 'Evaluaciones'
+            actividades: 'Actividades', secciones: 'Secciones', planilla: 'Planilla', entregas: 'Entregas',
+            asistencia: 'Asistencia', observaciones: 'Observaciones', evaluaciones: 'Evaluaciones'
         };
 
         navLinks.forEach(link => {
@@ -4249,6 +4468,7 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
                 if (page === 'horario') cargarHorario();
                 if (page === 'cursos') cargarCursosProfesor();
                 if (page === 'estudiantes') cargarEstudiantesProfesor();
+                if (page === 'actividades') cargarMenuActividades();
                 if (page === 'secciones') cargarSecciones();
                 if (page === 'planilla') cargarSelectoresPlanilla();
                 if (page === 'entregas') cargarFiltrosEntregas();
@@ -4310,10 +4530,7 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
         // =============================================
         onAuthStateChanged(auth, async (user) => {
             if (isLoggingOut) return;
-            if (!user) {
-                window.location.href = '../login.html';
-                return;
-            }
+            if (!user) { window.location.href = '../login.html'; return; }
 
             try {
                 const userDoc = await getDoc(doc(db, 'usuarios', user.uid));
@@ -4347,16 +4564,10 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
 
                 if (!colegioIdFinal) {
                     try {
-                        const q = query(collection(db, 'colegios'), where('nombre', '==', 'Piaget'));
-                        const snap = await getDocs(q);
+                        const snap = await getDocs(collection(db, 'colegios'));
                         if (!snap.empty) colegioIdFinal = snap.docs[0].id;
-                        else {
-                            const snap2 = await getDocs(collection(db, 'colegios'));
-                            if (!snap2.empty) colegioIdFinal = snap2.docs[0].id;
-                        }
-                        if (colegioIdFinal) {
-                            await updateDoc(doc(db, 'usuarios', user.uid), { colegioId: colegioIdFinal });
-                        } else colegioIdFinal = 'DEFAULT_COLEGIO';
+                        if (colegioIdFinal) await updateDoc(doc(db, 'usuarios', user.uid), { colegioId: colegioIdFinal });
+                        else colegioIdFinal = 'DEFAULT_COLEGIO';
                     } catch (error) { colegioIdFinal = 'DEFAULT_COLEGIO'; }
                 }
 
@@ -4371,8 +4582,7 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
                     try {
                         const c = await getDoc(doc(db, 'colegios', colegioId));
                         if (c.exists()) colegioNombreSidebar.textContent = c.data().nombre || 'Colegio';
-                        else colegioNombreSidebar.textContent = 'Colegio';
-                    } catch (e) { colegioNombreSidebar.textContent = 'Colegio'; }
+                    } catch (e) {}
                 }
 
                 try {
@@ -4391,9 +4601,8 @@ document.getElementById('statsEstudiantes').textContent = estudiantesSnap.size;
                     loadingEl.innerHTML = `
                         <div style="color: var(--danger); font-size: 2rem;"><i class="fas fa-exclamation-circle"></i></div>
                         <h3>Error al verificar usuario</h3>
-                        <p style="color: var(--text-secondary);">${error.message}</p>
+                        <p>${error.message}</p>
                         <button class="btn-primary" onclick="location.reload()">Reintentar</button>
-                        <button class="btn-secondary" onclick="window.location.href='../login.html'">Volver al login</button>
                     `;
                 }
             }

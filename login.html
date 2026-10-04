@@ -114,11 +114,15 @@
             width: 16px; height: 16px;
             accent-color: var(--primary); cursor: pointer; flex-shrink: 0;
         }
-        .form-options a {
+        .form-options a, .form-options button.link-btn {
             color: var(--primary); text-decoration: none;
             font-weight: 500; font-size: 0.85rem;
+            background: none; border: none; cursor: pointer;
+            font-family: var(--font); padding: 0;
         }
-        .form-options a:hover { color: var(--primary-dark); text-decoration: underline; }
+        .form-options a:hover, .form-options button.link-btn:hover {
+            color: var(--primary-dark); text-decoration: underline;
+        }
 
         .btn-primary {
             width: 100%; padding: 14px;
@@ -174,6 +178,7 @@
         .alert-error { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
         .alert-success { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
         .alert-info { background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; }
+        .alert-warning { background: #fffbeb; color: #92400e; border: 1px solid #fde68a; }
         .alert i { margin-right: 8px; }
 
         .password-toggle { position: relative; }
@@ -184,6 +189,73 @@
             font-size: 1.1rem; padding: 4px;
         }
         .password-toggle .toggle-eye:hover { color: var(--gray-600); }
+
+        /* ============================================= */
+        /* MODAL: RECUPERAR CONTRASEÑA                  */
+        /* ============================================= */
+        .modal-recover {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            background: rgba(15, 23, 42, 0.5);
+            backdrop-filter: blur(4px);
+            padding: 16px;
+        }
+        .modal-recover.show { display: flex; }
+        .modal-recover-content {
+            background: #fff;
+            border-radius: var(--radius);
+            max-width: 420px;
+            width: 100%;
+            padding: 28px 24px;
+            box-shadow: var(--shadow-lg);
+            animation: fadeIn 0.25s ease;
+        }
+        .modal-recover-content h2 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 6px;
+        }
+        .modal-recover-content p {
+            font-size: 0.85rem;
+            color: var(--gray-500);
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        .modal-recover-content .actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .modal-recover-content .actions button {
+            flex: 1;
+            padding: 12px;
+            border-radius: 10px;
+            border: none;
+            font-family: var(--font);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .modal-recover-content .actions .btn-cancel {
+            background: var(--gray-100);
+            color: var(--gray-700);
+        }
+        .modal-recover-content .actions .btn-cancel:hover { background: var(--gray-200); }
+        .modal-recover-content .actions .btn-send {
+            background: var(--primary);
+            color: #fff;
+        }
+        .modal-recover-content .actions .btn-send:hover { background: var(--primary-dark); }
+        .modal-recover-content .actions .btn-send:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
 
         @media (max-width: 480px) {
             body { padding: 12px; align-items: flex-start; padding-top: 40px; }
@@ -265,7 +337,7 @@
                         <input type="checkbox" id="rememberMe" />
                         Recordarme
                     </label>
-                    <a href="#">¿Olvidaste tu contraseña?</a>
+                    <button type="button" class="link-btn" id="btnForgotPassword">¿Olvidaste tu contraseña?</button>
                 </div>
 
                 <button type="submit" class="btn-primary" id="loginBtn">
@@ -287,6 +359,31 @@
         </div>
     </div>
 
+    <!-- ✅ MODAL: Recuperar contraseña -->
+    <div class="modal-recover" id="modalRecover">
+        <div class="modal-recover-content">
+            <h2><i class="fas fa-key" style="color: var(--primary);"></i> Recuperar contraseña</h2>
+            <p>Escribe tu correo electrónico y te enviaremos un enlace para restablecer tu contraseña.</p>
+
+            <div id="recoverAlert" class="alert" style="display: none;">
+                <i class="fas fa-info-circle"></i>
+                <span id="recoverAlertText"></span>
+            </div>
+
+            <div class="form-group">
+                <label><i class="fas fa-envelope"></i> Correo electrónico</label>
+                <input type="email" id="recoverEmail" class="form-control" placeholder="tu@correo.com" required />
+            </div>
+
+            <div class="actions">
+                <button type="button" class="btn-cancel" id="btnCancelRecover">Cancelar</button>
+                <button type="button" class="btn-send" id="btnSendRecover">
+                    <i class="fas fa-paper-plane"></i> Enviar enlace
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script type="importmap">
         {
             "imports": {
@@ -302,9 +399,11 @@
         import {
             getAuth, signInWithEmailAndPassword,
             setPersistence, browserLocalPersistence, browserSessionPersistence,
-            onAuthStateChanged, signOut
+            onAuthStateChanged, signOut, sendPasswordResetEmail
         } from "firebase/auth";
-        import { getFirestore, doc, getDoc } from "firebase/firestore";
+        import {
+            getFirestore, doc, getDoc
+        } from "firebase/firestore";
 
         const firebaseConfig = {
             apiKey: "AIzaSyA3U98y5BJWQwpypFCAyNioqSRfXkr9UA0",
@@ -347,7 +446,6 @@
             orientador: 'colegios/orientador.html'
         };
 
-        // Alias de roles: variantes que deben ir al mismo panel
         const ALIAS_ROLES = {
             'secretario': 'secretaria',
             'secretaría': 'secretaria',
@@ -356,30 +454,22 @@
             'director': 'rector'
         };
 
-        // =============================================
-        // NORMALIZAR ROL
-        // =============================================
         function normalizarRol(rol) {
             if (!rol) return null;
             const limpio = String(rol).toLowerCase().trim();
             return ALIAS_ROLES[limpio] || limpio;
         }
 
-        // =============================================
-        // REDIRECCIÓN POR ROL
-        // =============================================
         let isRedirecting = false;
 
         function redirigirSegunRol(rolOriginal) {
             const rol = normalizarRol(rolOriginal);
-
             console.log(`🔀 Redirigiendo: rol="${rolOriginal}" (normalizado="${rol}")`);
 
             if (!rol) {
                 showAlert('⛔ Tu usuario no tiene un rol asignado. Contacta al administrador.', 'error');
                 return false;
             }
-
             const ruta = RUTAS[rol];
             if (ruta) {
                 isRedirecting = true;
@@ -387,28 +477,20 @@
                 window.location.href = ruta;
                 return true;
             }
-
             console.warn(`⚠️ Rol no reconocido: ${rol}`);
             showAlert(`⛔ El rol "${rol}" no tiene un panel asignado. Contacta al administrador.`, 'error');
             return false;
         }
 
-        // =============================================
-        // ALERTAS
-        // =============================================
         function showAlert(message, type = 'error') {
             alertMessage.className = `alert alert-${type} show`;
             alertText.textContent = message;
         }
-
         function hideAlert() {
             alertMessage.className = 'alert';
             alertMessage.classList.remove('show');
         }
 
-        // =============================================
-        // TOGGLE PASSWORD
-        // =============================================
         togglePasswordBtn.addEventListener('click', () => {
             const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
             passwordInput.setAttribute('type', type);
@@ -416,15 +498,10 @@
             icon.className = type === 'password' ? 'fas fa-eye' : 'fas fa-eye-slash';
         });
 
-        // =============================================
-        // VERIFICAR SESIÓN ACTIVA (solo al cargar)
-        // =============================================
         let sesionInicialVerificada = false;
 
         onAuthStateChanged(auth, async (user) => {
-            // Si ya estamos redirigiendo, no hacer nada
             if (isRedirecting) return;
-            // Si ya verificamos una vez, no repetir (evita doble redirección)
             if (sesionInicialVerificada) return;
             sesionInicialVerificada = true;
 
@@ -482,8 +559,6 @@
                 const userDoc = await getDoc(doc(db, 'usuarios', user.uid));
 
                 if (!userDoc.exists()) {
-                    // ⚠️ SEGURIDAD: NO crear usuario automáticamente.
-                    // Un usuario de Auth sin documento en Firestore no debe poder entrar.
                     console.warn('⚠️ Usuario Auth sin doc en Firestore');
                     showAlert('⛔ Tu cuenta no está registrada en el sistema. Contacta al administrador.', 'error');
                     await signOut(auth);
@@ -505,7 +580,6 @@
 
                 showAlert('✅ Inicio de sesión exitoso. Redirigiendo...', 'success');
 
-                // Guardar email si marcó "recordarme"
                 if (rememberMe.checked) {
                     localStorage.setItem('eduone_email', email);
                 } else {
@@ -514,43 +588,29 @@
 
                 const ok = redirigirSegunRol(data.rol);
                 if (!ok) {
-                    // Si la redirección falló (rol desconocido), reactivar el botón
                     loginBtn.disabled = false;
                     loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Iniciar sesión';
                 }
 
             } catch (error) {
                 console.error('❌ Error al iniciar sesión:', error);
-
                 let mensaje = 'Error al iniciar sesión.';
                 switch (error.code) {
-                    case 'auth/user-not-found':
-                        mensaje = '❌ Usuario no encontrado.';
-                        break;
-                    case 'auth/wrong-password':
-                        mensaje = '❌ Contraseña incorrecta. Intenta de nuevo.';
-                        break;
-                    case 'auth/invalid-credential':
-                        mensaje = 'El usuario o contraseña son inválidos.';
-                        break;
-                    case 'auth/invalid-email':
-                        mensaje = '❌ Correo electrónico inválido.';
-                        break;
-                    case 'auth/too-many-requests':
-                        mensaje = '⚠️ Demasiados intentos fallidos. Espera un momento.';
-                        break;
-                    default:
-                        mensaje = `❌ Error: ${error.message}`;
+                    case 'auth/user-not-found': mensaje = '❌ Usuario no encontrado.'; break;
+                    case 'auth/wrong-password': mensaje = '❌ Contraseña incorrecta. Intenta de nuevo.'; break;
+                    case 'auth/invalid-credential': mensaje = 'El usuario o contraseña son inválidos.'; break;
+                    case 'auth/invalid-email': mensaje = '❌ Correo electrónico inválido.'; break;
+                    case 'auth/too-many-requests': mensaje = '⚠️ Demasiados intentos fallidos. Espera un momento.'; break;
+                    default: mensaje = `❌ Error: ${error.message}`;
                 }
                 showAlert(mensaje, 'error');
-
                 loginBtn.disabled = false;
                 loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Iniciar sesión';
             }
         });
 
         // =============================================
-        // GUARDAR EMAIL EN LOCALSTORAGE
+        // GUARDAR EMAIL
         // =============================================
         const savedEmail = localStorage.getItem('eduone_email');
         if (savedEmail) {
@@ -558,10 +618,97 @@
             rememberMe.checked = true;
         }
 
+        // =============================================
+        // ✅ RECUPERAR CONTRASEÑA
+        // =============================================
+        const btnForgotPassword = document.getElementById('btnForgotPassword');
+        const modalRecover = document.getElementById('modalRecover');
+        const btnCancelRecover = document.getElementById('btnCancelRecover');
+        const btnSendRecover = document.getElementById('btnSendRecover');
+        const recoverEmail = document.getElementById('recoverEmail');
+        const recoverAlert = document.getElementById('recoverAlert');
+        const recoverAlertText = document.getElementById('recoverAlertText');
+
+        function showRecoverAlert(msg, type = 'error') {
+            recoverAlert.className = `alert alert-${type} show`;
+            recoverAlertText.textContent = msg;
+            recoverAlert.style.display = 'block';
+        }
+        function hideRecoverAlert() {
+            recoverAlert.style.display = 'none';
+            recoverAlert.className = 'alert';
+        }
+
+        // Abrir modal
+        btnForgotPassword.addEventListener('click', () => {
+            hideRecoverAlert();
+            // Pre-llenar con el email que el usuario ya escribió
+            const emailActual = emailInput.value.trim();
+            recoverEmail.value = emailActual || '';
+            modalRecover.classList.add('show');
+        });
+
+        // Cerrar modal
+        btnCancelRecover.addEventListener('click', () => {
+            modalRecover.classList.remove('show');
+        });
+        modalRecover.addEventListener('click', (e) => {
+            if (e.target === modalRecover) modalRecover.classList.remove('show');
+        });
+
+        // Enviar correo de recuperación
+        btnSendRecover.addEventListener('click', async () => {
+            hideRecoverAlert();
+
+            const email = recoverEmail.value.trim();
+
+            if (!email) {
+                showRecoverAlert('Escribe tu correo electrónico.', 'error');
+                return;
+            }
+
+            btnSendRecover.disabled = true;
+            btnSendRecover.innerHTML = '<span class="spinner"></span> Enviando...';
+
+            try {
+                await sendPasswordResetEmail(auth, email, {
+                    url: 'https://eduone.com.co/login.html',
+                    handleCodeInApp: false
+                });
+
+                showRecoverAlert('✅ Correo enviado. Revisa tu bandeja de entrada (y spam) para restablecer tu contraseña.', 'success');
+
+                setTimeout(() => {
+                    modalRecover.classList.remove('show');
+                    // Limpiar el alert
+                    hideRecoverAlert();
+                    showAlert('📧 Revisa tu correo para restablecer la contraseña.', 'info');
+                }, 2500);
+            } catch (error) {
+                console.error('❌ Error al enviar correo:', error);
+                let msg = 'Error al enviar el correo.';
+                switch (error.code) {
+                    case 'auth/user-not-found':
+                        msg = '⚠️ No existe ninguna cuenta con ese correo.';
+                        break;
+                    case 'auth/invalid-email':
+                        msg = '⚠️ Correo electrónico inválido.';
+                        break;
+                    case 'auth/too-many-requests':
+                        msg = '⚠️ Demasiados intentos. Espera unos minutos antes de volver a intentar.';
+                        break;
+                    default:
+                        msg = `❌ Error: ${error.message}`;
+                }
+                showRecoverAlert(msg, 'error');
+                btnSendRecover.disabled = false;
+                btnSendRecover.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar enlace';
+            }
+        });
+
         console.log('✅ EduOne - Login cargado correctamente');
         console.log('📁 Rutas disponibles:', Object.keys(RUTAS));
     </script>
 
 </body>
-</html
->
+</html>
