@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>EduOne - Panel del Estudiante</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -431,6 +431,8 @@
             .boletin-print { width: 100% !important; }
         }
     </style>
+    <link rel="stylesheet" href="../assets/responsive.css" />
+    <script src="../assets/responsive.js" defer></script>
 </head>
 <body>
 
@@ -1505,8 +1507,8 @@
                     if (!tieneContenido) continue;
 
                     html += `
-                        <div class="asignatura-bloque">
-                            <div class="asignatura-bloque-header">
+                        <div class="asignatura-bloque ${Object.keys(asignaturasMap).length === 1 ? 'abierto' : ''}">
+                            <div class="asignatura-bloque-header acordeon" role="button" tabindex="0" aria-label="Mostrar u ocultar ${data.nombre}">
                                 <div class="titulo">
                                     <div class="icono">${data.nombre.charAt(0).toUpperCase()}</div>
                                     <div>
@@ -1514,7 +1516,9 @@
                                         <p><i class="fas fa-chalkboard-teacher"></i> ${data.profesor}</p>
                                     </div>
                                 </div>
+                                <i class="fas fa-chevron-down chevron"></i>
                             </div>
+                            <div class="asignatura-body">
                     `;
 
                     for (let p = 1; p <= 4; p++) {
@@ -1587,7 +1591,7 @@
                         `;
                     }
 
-                    html += `</div>`;
+                    html += `</div></div>`;
                 }
 
                 hideLoading('loadingAsignaturas');

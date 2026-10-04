@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>EduOne - Panel del Rector</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -218,6 +218,8 @@
             .user-info { display: none; }
         }
     </style>
+    <link rel="stylesheet" href="../assets/responsive.css" />
+    <script src="../assets/responsive.js" defer></script>
 </head>
 <body>
 
@@ -2902,8 +2904,8 @@
                 const seccionesColumnas = Array.from(seccionesSet.entries());
 
                 let html = `
-                    <div style="padding: 30px; font-family: 'Inter', sans-serif; background: #fff;">
-                        <div style="display: flex; align-items: center; gap: 20px; border-bottom: 4px double var(--primary); padding-bottom: 16px; margin-bottom: 20px;">
+                    <div class="bol-wrap" style="padding: 30px; font-family: 'Inter', sans-serif; background: #fff;">
+                        <div class="bol-header" style="display: flex; align-items: center; gap: 20px; border-bottom: 4px double var(--primary); padding-bottom: 16px; margin-bottom: 20px;">
                             ${colegio.logoUrl ? `<img src="${colegio.logoUrl}" style="width: 80px; height: 80px; border-radius: 12px; object-fit: cover;" />` : ''}
                             <div style="flex: 1; text-align: center;">
                                 <h1 style="color: var(--primary); font-size: 1.6rem; margin: 0;">${colegio.nombre || 'Colegio'}</h1>
@@ -2912,7 +2914,7 @@
                             </div>
                         </div>
                         <h2 style="text-align: center; color: var(--primary); font-size: 1.2rem; margin-bottom: 20px;">BOLETÍN DE CALIFICACIONES - PERIODO ${periodo || 'ANUAL'}</h2>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px 24px; margin-bottom: 20px; padding: 16px; background: var(--gray-50); border-radius: 10px;">
+                        <div class="bol-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px 24px; margin-bottom: 20px; padding: 16px; background: var(--gray-50); border-radius: 10px;">
                             <div><strong style="font-size: 0.75rem; color: var(--gray-500); text-transform: uppercase;">Estudiante</strong><div style="font-weight: 600;">${estudiante.nombres || ''} ${estudiante.apellidos || ''}</div></div>
                             <div><strong style="font-size: 0.75rem; color: var(--gray-500); text-transform: uppercase;">Documento</strong><div style="font-weight: 600;">${estudiante.documento || '-'}</div></div>
                             <div><strong style="font-size: 0.75rem; color: var(--gray-500); text-transform: uppercase;">Grado</strong><div style="font-weight: 600;">${gradoNombre}</div></div>
@@ -2921,7 +2923,7 @@
                             <div><strong style="font-size: 0.75rem; color: var(--gray-500); text-transform: uppercase;">Fecha de emisión</strong><div style="font-weight: 600;">${new Date().toLocaleDateString('es-CO')}</div></div>
                         </div>
 
-                        <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-bottom: 24px;">
+                        <div class="bol-scroll"><table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-bottom: 0;">
                             <thead><tr style="background: var(--primary); color: #fff;">
                                 <th style="padding: 10px; text-align: left; border: 1px solid var(--primary-dark);">Asignatura</th>
                                 <th style="padding: 10px; text-align: center; border: 1px solid var(--primary-dark);">📝 Tarea</th>
@@ -2962,18 +2964,18 @@
                                     '</tr>';
                                 }).join('')}
                             </tbody>
-                        </table>
+                        </table></div>
                 `;
 
                 const promedioGeneral = resumen.length > 0 ? resumen.reduce((a, r) => a + r.promedio, 0) / resumen.length : 0;
                 const colorGeneral = promedioGeneral >= 3.0 ? '#22c55e' : '#ef4444';
 
                 html += `
-                        <div style="background: ${colorGeneral}; color: white; padding: 14px 20px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;">
+                        <div class="bol-promedio" style="background: ${colorGeneral}; color: white; padding: 14px 20px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;">
                             <strong style="font-size: 1rem;">PROMEDIO GENERAL DEL PERIODO:</strong>
                             <strong style="font-size: 1.5rem;">${promedioGeneral.toFixed(1)}</strong>
                         </div>
-                        <div style="margin-top: 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 60px;">
+                        <div class="bol-firmas" style="margin-top: 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 60px;">
                             <div style="text-align: center;">
                                 <div style="border-top: 1px solid #000; padding-top: 6px; font-size: 0.8rem;">
                                     <strong>${usuarioActual?.nombre || 'Rector'}</strong><br>Rector(a)

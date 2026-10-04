@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>EduOne - Panel de Administración</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
@@ -484,18 +484,28 @@
             .modal-footer { padding: 12px 18px; flex-direction: column; }
             .modal-footer button { width: 100%; justify-content: center; }
         }
+        .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 99; }
+        @media (min-width: 769px) { .hamburger-btn { display: none !important; } }
+        @media (max-width: 768px) {
+            .sidebar { z-index: 1000; }
+            .sidebar-overlay.active { display: block; }
+            .sidebar-toggle { display: block; font-size: 1.4rem; }
+        }
     </style>
+    <link rel="stylesheet" href="../assets/responsive.css" />
+    <script src="../assets/responsive.js" defer></script>
 </head>
 <body>
 
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <div class="logo">
                 <i class="fas fa-graduation-cap"></i>
                 <span>EduOne</span>
             </div>
-            <button class="sidebar-toggle" id="sidebarToggle">
-                <i class="fas fa-bars"></i>
+            <button class="sidebar-toggle" id="sidebarToggle" aria-label="Cerrar menú">
+                <i class="fas fa-times"></i>
             </button>
         </div>
 
@@ -521,6 +531,7 @@
     <main class="main-content">
         <header class="top-header">
             <div class="header-left">
+                <button class="hamburger-btn" id="hamburgerBtn" aria-label="Abrir menú"><i class="fas fa-bars"></i></button>
                 <h1 id="pageTitle">Dashboard</h1>
             </div>
             <div class="header-right">
@@ -1356,7 +1367,17 @@
             configuracion: 'Configuración'
         };
 
-        if (toggleBtn) toggleBtn.addEventListener('click', () => sidebar.classList.toggle('collapsed'));
+        const overlay = document.getElementById('sidebarOverlay');
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const esMovil = () => window.innerWidth <= 768;
+        function abrirMenu() { sidebar.classList.remove('collapsed'); if (esMovil()) overlay.classList.add('active'); }
+        function cerrarMenu() { sidebar.classList.add('collapsed'); overlay.classList.remove('active'); }
+        // En celular el menú inicia cerrado
+        if (esMovil()) cerrarMenu();
+        window.addEventListener('resize', () => { if (!esMovil()) { sidebar.classList.remove('collapsed'); overlay.classList.remove('active'); } });
+        if (toggleBtn) toggleBtn.addEventListener('click', cerrarMenu);
+        if (hamburgerBtn) hamburgerBtn.addEventListener('click', abrirMenu);
+        if (overlay) overlay.addEventListener('click', cerrarMenu);
 
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
@@ -1368,7 +1389,7 @@
                 const targetPage = document.getElementById('page-' + page);
                 if (targetPage) targetPage.classList.add('active');
                 if (pageNames[page]) pageTitle.textContent = pageNames[page];
-                if (window.innerWidth <= 768) sidebar.classList.add('collapsed');
+                if (window.innerWidth <= 768) cerrarMenu();
 
                 if (page === 'dashboard' || page === 'colegios') cargarDashboard();
                 if (page === 'economia') cargarEconomia();

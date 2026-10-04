@@ -1,0 +1,128 @@
+/* =====================================================================
+   EduOne - responsive.css
+   Capa responsive compartida por todos los paneles (admin, rector,
+   profesor, estudiante, secretaría, coordinadores, acudiente).
+   Se carga AL FINAL del <head> para sobreescribir estilos previos.
+   ===================================================================== */
+
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+img, video, canvas, svg { max-width: 100%; }
+body { overflow-x: hidden; }
+
+/* Evita que un hijo ancho agrande toda la página (causa del "zoom out") */
+.main-content, .content-area, .page-content, .card, .card-body { min-width: 0; max-width: 100%; }
+
+/* ---------- Sidebar: el pie ("Cerrar sesión") siempre visible ---------- */
+.sidebar { height: 100vh; height: 100dvh; max-height: 100dvh; }
+.sidebar-nav { min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
+.sidebar-footer { flex-shrink: 0; padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px)); }
+.sidebar-overlay { z-index: 999; }
+
+/* Botón hamburguesa y overlay (usados por el panel admin) */
+.hamburger-btn { display: none; background: none; border: none; font-size: 1.4rem; color: inherit; cursor: pointer; padding: 6px 10px; border-radius: 8px; line-height: 1; }
+
+/* ---------- Tablas: scroll horizontal controlado ---------- */
+.table-responsive, .table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; max-width: 100%; }
+.table-modern .actions-cell, .table-modern td.acciones { white-space: normal; }
+
+/* ---------- Horarios (grid de 7 columnas): scroll + columna "Hora" fija ---------- */
+#horarioGrid, .horario-grid { min-width: 720px; }
+div:has(> #horarioGrid), div:has(> .horario-grid), #horarioContainer, #horarioVista .card-body { overflow-x: auto; -webkit-overflow-scrolling: touch; max-width: 100%; }
+
+/* ---------- Boletines ---------- */
+#boletinPreview, #boletinContent .card-body { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.bol-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 24px; }
+.bol-scroll table { min-width: 560px; }
+
+/* ---------- Tabs de contabilidad / filtros ---------- */
+.cont-tabs, .tabs, .tab-nav { display: flex; flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.cont-tabs::-webkit-scrollbar, .tabs::-webkit-scrollbar, .tab-nav::-webkit-scrollbar { display: none; }
+.cont-tab, .tabs > button, .tab-nav > button { flex-shrink: 0; white-space: nowrap; }
+
+/* ---------- Desplegable de asignaturas (estudiante) ---------- */
+.asignatura-bloque-header.acordeon { cursor: pointer; user-select: none; flex-wrap: nowrap; }
+.asignatura-bloque-header.acordeon .chevron { transition: transform .25s ease; color: var(--text-secondary, #64748b); font-size: 1rem; flex-shrink: 0; margin-left: auto; }
+.asignatura-bloque.abierto .asignatura-bloque-header.acordeon .chevron { transform: rotate(180deg); }
+.asignatura-bloque .asignatura-body { display: none; }
+.asignatura-bloque.abierto .asignatura-body { display: block; animation: rsFade .25s ease; }
+.asignatura-bloque-header .titulo { min-width: 0; }
+@keyframes rsFade { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+
+/* =====================================================================
+   TABLET / MÓVIL
+   ===================================================================== */
+@media (max-width: 992px) {
+  .hamburger-btn { display: inline-flex; align-items: center; }
+  .main-content { margin-left: 0 !important; width: 100%; }
+}
+
+@media (max-width: 768px) {
+  .content-area { padding: 14px !important; }
+  .top-header { padding: 0 12px !important; gap: 8px; }
+  .header-left { display: flex; align-items: center; gap: 4px; min-width: 0; }
+  .header-left h1 { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .user-info { display: none !important; }
+
+  /* Rejillas de estadísticas: 2 columnas que NO desbordan */
+  .stats-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr)) !important; gap: 12px !important; }
+  .stat-card { min-width: 0; padding: 14px !important; gap: 12px !important; }
+  .stat-info { min-width: 0; }
+  .stat-value { word-break: break-word; }
+
+  /* Formularios: UNA columna y se anula "grid-column: span 2" (causa del formulario cortado) */
+  .form-grid, .form-row, .detalle-grid { grid-template-columns: minmax(0, 1fr) !important; }
+  .form-grid > *, .form-row > * { grid-column: 1 / -1 !important; min-width: 0; }
+  .form-control, input, select, textarea { max-width: 100%; font-size: 16px; /* evita zoom en iOS */ }
+  input[type="date"], input[type="datetime-local"], input[type="month"], input[type="time"] { min-width: 0; width: 100%; }
+  small { overflow-wrap: anywhere; }
+
+  /* Modales */
+  .modal-content { width: calc(100% - 20px) !important; max-width: 100% !important; margin: 10px !important; max-height: 92vh; max-height: 92dvh; }
+  .modal-header { padding: 14px 16px !important; gap: 8px; }
+  .modal-header h2 { font-size: 1.05rem; min-width: 0; overflow-wrap: anywhere; }
+  .modal-body { padding: 16px !important; }
+  .modal-footer { padding: 12px 16px !important; flex-wrap: wrap; }
+  .modal-footer button { flex: 1 1 140px; justify-content: center; }
+
+  /* Cabeceras de página / tarjetas */
+  .page-header { flex-direction: column; align-items: stretch !important; gap: 10px; }
+  .page-header > .btn-primary, .page-header > .btn-success, .page-header > div > button, .action-bar .btn-primary { width: 100%; justify-content: center; }
+  .card-header { padding: 14px 16px !important; }
+  .card-body { padding: 14px; }
+  .eco-filtros, .filtros, .filters, .filter-bar { display: grid !important; grid-template-columns: minmax(0, 1fr) !important; gap: 10px; }
+
+  /* Tablas -> tarjetas (las marca responsive.js con .rs-stack) */
+  table.rs-stack { border: 0; width: 100%; min-width: 0 !important; }
+  table.rs-stack thead { display: none; }
+  table.rs-stack, table.rs-stack tbody, table.rs-stack tr, table.rs-stack td { display: block; width: 100%; }
+  table.rs-stack tbody tr { background: #fff !important; border: 1px solid #e2e8f0; border-radius: 12px; margin: 0 0 12px; padding: 6px 12px; box-shadow: 0 1px 3px rgba(0,0,0,.05); }
+  table.rs-stack tbody td { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 9px 0 !important; border: 0 !important; border-bottom: 1px dashed #e2e8f0 !important; text-align: right; overflow-wrap: anywhere; }
+  table.rs-stack tbody td:last-child { border-bottom: 0 !important; }
+  table.rs-stack tbody td::before { content: attr(data-label); flex: 0 0 38%; max-width: 45%; text-align: left; font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .4px; color: #64748b; }
+  table.rs-stack tbody td[data-label=""]::before, table.rs-stack tbody td[colspan]::before { display: none; }
+  table.rs-stack tbody td[colspan] { justify-content: center; text-align: center; }
+  table.rs-stack td .actions-cell, table.rs-stack td.actions-cell { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; }
+  .table-responsive:has(> table.rs-stack), .table-wrapper:has(table.rs-stack) { overflow-x: visible; }
+
+  /* Boletín (rector) */
+  .bol-wrap { padding: 14px !important; }
+  .bol-header { flex-direction: column; text-align: center; gap: 10px !important; }
+  .bol-header h1 { font-size: 1.25rem !important; overflow-wrap: anywhere; }
+  .bol-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important; gap: 10px 14px !important; padding: 12px !important; }
+  .bol-firmas { grid-template-columns: minmax(0, 1fr) !important; gap: 30px !important; margin-top: 30px !important; }
+  .bol-promedio { flex-direction: column; gap: 4px; text-align: center; }
+
+  /* Asignaturas del estudiante */
+  .asignatura-bloque-header { padding: 12px 14px !important; }
+  .periodo-seccion { padding: 12px 14px !important; }
+  .periodo-seccion-header { flex-wrap: wrap; gap: 8px; }
+  .categorias-grid { grid-template-columns: minmax(0, 1fr) !important; }
+}
+
+@media (max-width: 480px) {
+  .top-header { height: 58px !important; }
+  .stat-value { font-size: 1.2rem !important; }
+  .stat-icon { width: 40px !important; height: 40px !important; font-size: 1.1rem !important; }
+  .bol-grid { grid-template-columns: minmax(0, 1fr) !important; }
+  .btn-primary, .btn-secondary, .btn-success, .btn-danger, .btn-warning { padding: 9px 14px; }
+}
