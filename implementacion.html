@@ -1,391 +1,1118 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Servicio de implementación de EduOne: nosotros configuramos la plataforma por ti en hasta 7 días hábiles." />
-  <title>Implementación | EduOne</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --primary: #1a56db; --primary-dark: #1e3a8a; --primary-light: #3b82f6;
-      --secondary: #06b6d4; --background: #f8fafc; --surface: #ffffff;
-      --text: #0f172a; --text-muted: #64748b; --border: #e2e8f0;
-      --success: #10b981; --gradient: linear-gradient(135deg, #1e3a8a 0%, #1a56db 50%, #06b6d4 100%);
-      --radius: 12px; --shadow: 0 4px 24px rgba(26,86,219,0.10); --shadow-lg: 0 8px 48px rgba(26,86,219,0.15);
-    }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', Arial, sans-serif; background: var(--background); color: var(--text); line-height: 1.6; overflow-x: hidden; overflow-wrap: break-word; }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#0a0f1e" />
+    <meta name="description" content="Servicio de implementación integral de EduOne. Nuestro equipo configura la plataforma por ti en hasta 7 días hábiles y te entrega una página web institucional." />
+    <meta name="keywords" content="implementación EduOne, configuración plataforma escolar, página web colegio, servicio implementación" />
+    <meta name="author" content="EduOne" />
+    <meta property="og:title" content="Implementación | EduOne" />
+    <meta property="og:description" content="Configuramos tu plataforma y creamos la página web de tu colegio." />
+    <meta property="og:type" content="website" />
+    <link rel="canonical" href="https://eduone.com.co/implementacion.html" />
+    <title>Implementación | EduOne</title>
 
-    .navbar { position: sticky; top: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); transition: box-shadow 0.3s; }
-    .navbar.scrolled { box-shadow: 0 2px 24px rgba(26,86,219,0.12); }
-    .nav-container { max-width: 1280px; margin: 0 auto; padding: 0 24px; height: 68px; display: flex; align-items: center; justify-content: space-between; }
-    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
-    .nav-logo-mark { width: 36px; height: 36px; background: var(--gradient); border-radius: 9px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 16px; }
-    .nav-logo-text { font-size: 20px; font-weight: 700; color: var(--primary-dark); letter-spacing: -0.5px; }
-    .nav-menu { display: flex; align-items: center; gap: 4px; list-style: none; }
-    .nav-link { text-decoration: none; color: var(--text-muted); font-size: 14px; font-weight: 500; padding: 8px 12px; border-radius: 8px; transition: color 0.2s, background 0.2s; white-space: nowrap; }
-    .nav-link:hover { color: var(--primary); background: rgba(26,86,219,0.06); }
-    .nav-link.active { color: var(--primary); font-weight: 600; }
-    .nav-link-cta { background: var(--primary); color: white !important; padding: 8px 18px; border-radius: 8px; font-weight: 600; }
-    .nav-link-cta:hover { background: var(--primary-dark) !important; }
-    .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 8px; border-radius: 8px; }
-    .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; transition: transform 0.3s, opacity 0.3s; }
-    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
-    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    <!-- FAVICON -->
+    <link rel="icon" type="image/png" sizes="48x48" href="imagenes/logo.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="imagenes/logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="imagenes/logo.png">
 
-    .page-hero { background: var(--gradient); padding: 80px 24px; text-align: center; }
-    .page-hero-inner { max-width: 800px; margin: 0 auto; }
-    .page-hero-eyebrow { display: inline-block; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); border-radius: 100px; padding: 6px 18px; font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.85); margin-bottom: 20px; }
-    .page-hero h1 { font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 900; color: white; line-height: 1.15; letter-spacing: -1.5px; margin-bottom: 16px; }
-    .page-hero p { font-size: 17px; color: rgba(255,255,255,0.78); line-height: 1.7; }
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
-    .section { padding: 80px 24px; }
-    .section-inner { max-width: 1280px; margin: 0 auto; }
-    .section-eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--primary); margin-bottom: 12px; }
-    .section-title { font-size: clamp(1.7rem, 3vw, 2.5rem); font-weight: 800; color: var(--text); letter-spacing: -1px; line-height: 1.15; margin-bottom: 16px; }
-    .section-title span { color: var(--primary); }
-    .section-header { text-align: center; margin-bottom: 52px; }
-    .section-desc { font-size: 16px; color: var(--text-muted); line-height: 1.7; max-width: 600px; margin: 0 auto; }
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    /* OPTIONS */
-    .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-    .option-card { background: var(--surface); border: 2px solid var(--border); border-radius: 20px; padding: 40px; position: relative; }
-    .option-card.highlighted { border-color: var(--primary); }
-    .option-tag { position: absolute; top: -14px; left: 32px; font-size: 11px; font-weight: 700; letter-spacing: 1px; padding: 5px 16px; border-radius: 100px; }
-    .tag-free { background: #dcfce7; color: #166534; }
-    .tag-service { background: var(--primary); color: white; }
-    .option-icon { font-size: 40px; margin-bottom: 20px; }
-    .option-card h3 { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 12px; letter-spacing: -0.5px; }
-    .option-card p { font-size: 15px; color: var(--text-muted); line-height: 1.7; margin-bottom: 20px; }
-    .option-list { list-style: none; }
-    .option-list li { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--text-muted); padding: 7px 0; border-bottom: 1px solid var(--border); }
-    .option-list li:last-child { border-bottom: none; }
-    .opt-check { color: var(--success); font-weight: 700; }
+        :root {
+            --bg-0: #050814;
+            --bg-1: #0a0f1e;
+            --bg-2: #111a30;
+            --primary: #2563eb;
+            --primary-light: #3b82f6;
+            --cyan: #06b6d4;
+            --cyan-light: #22d3ee;
+            --lime: #a3e635;
+            --text-light: #e2e8f0;
+            --text-muted: #94a3b8;
+            --gradient-tech: linear-gradient(135deg, #2563eb 0%, #06b6d4 100%);
+            --gradient-glow: linear-gradient(135deg, #3b82f6 0%, #22d3ee 50%, #a3e635 100%);
+            --radius-sm: 10px;
+            --radius: 18px;
+            --radius-lg: 28px;
+            --radius-pill: 100px;
+            --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            --nav-h: 74px;
+        }
 
-    /* IMPLEMENTATION PRICING */
-    .impl-prices { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
-    .impl-price-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; text-align: center; transition: transform 0.2s, box-shadow 0.2s; }
-    .impl-price-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
-    .impl-range { font-size: 13px; color: var(--text-muted); font-weight: 500; margin-bottom: 10px; }
-    .impl-price { font-size: 26px; font-weight: 800; color: var(--primary-dark); letter-spacing: -1px; }
-    .impl-note { font-size: 12px; color: var(--text-muted); margin-top: 4px; font-weight: 500; }
+        html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; scroll-padding-top: var(--nav-h); }
 
-    /* WHAT'S INCLUDED */
-    .includes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
-    .include-item { display: flex; align-items: center; gap: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 20px; }
-    .inc-icon { font-size: 20px; flex-shrink: 0; }
-    .inc-text { font-size: 14px; font-weight: 500; color: var(--text); }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-0);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
 
-    /* TIMELINE */
-    .timeline-card { background: var(--gradient); border-radius: 20px; padding: 48px; text-align: center; color: white; }
-    .timeline-days { font-size: 80px; font-weight: 900; letter-spacing: -4px; line-height: 1; margin-bottom: 8px; }
-    .timeline-label { font-size: 20px; font-weight: 700; opacity: 0.9; margin-bottom: 20px; }
-    .timeline-desc { font-size: 16px; opacity: 0.75; line-height: 1.7; max-width: 560px; margin: 0 auto 12px; }
-    .timeline-note { font-size: 13px; opacity: 0.6; max-width: 540px; margin: 0 auto; }
+        img, video { max-width: 100%; height: auto; display: block; }
+        button { font-family: inherit; cursor: pointer; }
+        a { color: inherit; text-decoration: none; }
+        ul { list-style: none; }
 
-    /* EXAMPLE CALCULATOR */
-    .calculator-card { background: var(--surface); border: 1.5px solid var(--primary); border-radius: 20px; padding: 40px; max-width: 600px; margin: 0 auto; }
-    .calc-title { font-size: 14px; font-weight: 700; color: var(--primary); letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 24px; }
-    .calc-header { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 28px; letter-spacing: -0.5px; }
-    .calc-row { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--border); }
-    .calc-row:last-of-type { border-bottom: none; }
-    .calc-label { font-size: 15px; color: var(--text-muted); font-weight: 500; }
-    .calc-value { font-size: 16px; font-weight: 700; color: var(--text); }
-    .calc-total { background: rgba(26,86,219,0.06); border-radius: var(--radius); padding: 20px; margin-top: 16px; margin-bottom: 16px; }
-    .calc-total .calc-label { font-size: 16px; font-weight: 700; color: var(--primary-dark); }
-    .calc-total .calc-value { font-size: 22px; font-weight: 900; color: var(--primary-dark); }
-    .calc-renewal { font-size: 13px; color: var(--text-muted); text-align: center; }
+        /* Animaciones */
+        @keyframes floatY { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+        @keyframes pulseGlow { 0%, 100% { box-shadow: 0 0 20px rgba(37,99,235,0.4), 0 0 60px rgba(6,182,212,0.15); } 50% { box-shadow: 0 0 40px rgba(37,99,235,0.7), 0 0 90px rgba(6,182,212,0.35); } }
+        @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        @keyframes spinSlow { to { transform: rotate(360deg); } }
+        @keyframes slideLoadBar { 0% { transform: translateX(-100%); } 100% { transform: translateX(300%); } }
+        @keyframes fadeSlideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes gridMove { 0% { background-position: 0 0; } 100% { background-position: 60px 60px; } }
 
-    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 24px; border-radius: 10px; font-weight: 600; font-size: 15px; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s, background 0.2s; cursor: pointer; border: none; font-family: inherit; }
-    .btn:hover { transform: translateY(-2px); }
-    .btn-primary { background: var(--primary); color: white; box-shadow: var(--shadow); }
-    .btn-primary:hover { background: var(--primary-dark); }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+            .reveal, .stagger > * { opacity: 1 !important; transform: none !important; }
+        }
 
-    .footer { background: var(--primary-dark); color: white; padding: 64px 24px 32px; }
-    .footer-inner { max-width: 1280px; margin: 0 auto; }
-    .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
-    .footer-brand p { font-size: 14px; color: rgba(255,255,255,0.55); margin-top: 12px; line-height: 1.6; max-width: 300px; }
-    .footer-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
-    .footer-logo-mark { width: 32px; height: 32px; background: rgba(255,255,255,0.15); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; }
-    .footer-logo-text { font-size: 18px; font-weight: 700; }
-    .footer-col h4 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.45); margin-bottom: 16px; }
-    .footer-col ul { list-style: none; }
-    .footer-col li { margin-bottom: 10px; }
-    .footer-col a { text-decoration: none; color: rgba(255,255,255,0.65); font-size: 14px; transition: color 0.2s; }
-    .footer-col a:hover { color: white; }
-    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 28px; text-align: center; }
-    .footer-bottom p { font-size: 13px; color: rgba(255,255,255,0.4); margin-bottom: 4px; }
+        ::-webkit-scrollbar { width: 9px; }
+        ::-webkit-scrollbar-track { background: var(--bg-0); }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--primary) 0%, var(--cyan) 100%); border-radius: 100px; }
 
-    .back-to-top { position: fixed; bottom: 28px; right: 28px; width: 44px; height: 44px; background: var(--primary); color: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; cursor: pointer; border: none; box-shadow: 0 4px 20px rgba(26,86,219,0.35); opacity: 0; pointer-events: none; transition: opacity 0.3s, transform 0.3s; z-index: 999; }
-    .back-to-top.visible { opacity: 1; pointer-events: auto; }
-    .back-to-top:hover { transform: translateY(-3px); }
-    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
+        /* Fondo global tecnológico */
+        body::before {
+            content: ''; position: fixed; inset: 0; z-index: -2;
+            background: radial-gradient(ellipse 800px 600px at 15% 10%, rgba(37, 99, 235, 0.18) 0%, transparent 60%), radial-gradient(ellipse 700px 500px at 85% 80%, rgba(6, 182, 212, 0.14) 0%, transparent 60%), var(--bg-0);
+            pointer-events: none;
+        }
+        body::after {
+            content: ''; position: fixed; inset: 0; z-index: -1;
+            background-image: linear-gradient(rgba(59, 130, 246, 0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(59, 130, 246, 0.04) 1px, transparent 1px);
+            background-size: 60px 60px; animation: gridMove 30s linear infinite; pointer-events: none;
+            mask-image: radial-gradient(ellipse at center, black 30%, transparent 90%); -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 90%);
+        }
 
-    @media (max-width: 768px) {
-      .nav-menu { display: none; position: absolute; top: 68px; left: 0; right: 0; background: white; border-bottom: 1px solid var(--border); flex-direction: column; padding: 12px; gap: 4px; box-shadow: 0 8px 32px rgba(0,0,0,0.08); align-items: stretch; }
-      .nav-menu.open { display: flex; }
-      .nav-link { padding: 12px 16px; }
-      .nav-hamburger { display: flex; }
-      .section { padding: 56px 20px; }
-      .options-grid { grid-template-columns: 1fr; }
-      .footer-top { grid-template-columns: 1fr; gap: 32px; }
-    }
-  </style>
+        /* PRELOADER */
+        .preloader { position: fixed; inset: 0; z-index: 99999; display: flex; align-items: center; justify-content: center; background: var(--bg-0); transition: opacity 0.5s ease; }
+        .preloader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        .preloader-inner { display: flex; flex-direction: column; align-items: center; gap: 24px; }
+        .preloader-logo { font-family: 'Space Grotesk', sans-serif; font-size: 34px; font-weight: 700; background: var(--gradient-glow); background-size: 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: gradientShift 2s infinite; }
+        .preloader-ring { width: 60px; height: 60px; border-radius: 50%; border: 3px solid rgba(37,99,235,0.15); border-top-color: var(--cyan); border-right-color: var(--primary); animation: spinSlow 1s linear infinite; }
+        .preloader-bar { width: 200px; height: 3px; background: rgba(148,163,184,0.15); border-radius: 100px; overflow: hidden; position: relative; }
+        .preloader-bar::after { content: ''; position: absolute; inset: 0; width: 40%; background: var(--gradient-glow); border-radius: 100px; animation: slideLoadBar 1.4s infinite; }
+
+        /* NAVBAR */
+        .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; height: var(--nav-h); background: rgba(10, 15, 30, 0.55); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(148, 163, 184, 0.10); transition: background var(--transition); }
+        .navbar.scrolled { background: rgba(10, 15, 30, 0.88); box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4); border-bottom-color: rgba(37, 99, 235, 0.25); }
+        .nav-container { max-width: 1360px; margin: 0 auto; height: 100%; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+        .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; transition: transform var(--transition); }
+        .nav-logo:hover { transform: scale(1.04); }
+        .logo-mark { width: 40px; height: 40px; display: grid; place-items: center; }
+        .logo-mark svg { width: 100%; height: 100%; filter: drop-shadow(0 0 10px rgba(59,130,246,0.5)); }
+        .logo-text { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700; color: #fff; letter-spacing: -0.8px; }
+        .logo-text span { background: var(--gradient-glow); background-size: 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: gradientShift 4s infinite; }
+
+        .nav-menu { display: flex; align-items: center; gap: 4px; }
+        .nav-link { text-decoration: none; color: var(--text-light); font-size: 14px; font-weight: 500; padding: 8px 14px; border-radius: var(--radius-sm); position: relative; transition: color var(--transition), background var(--transition); white-space: nowrap; }
+        .nav-link::before { content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 2px; background: var(--gradient-glow); border-radius: 100px; transition: width var(--transition), left var(--transition); }
+        .nav-link:hover, .nav-link.active { color: #fff; }
+        .nav-link:hover::before, .nav-link.active::before { width: 60%; left: 20%; }
+
+        .nav-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+        .btn-nav-demo { display: inline-flex; align-items: center; gap: 7px; padding: 9px 18px; background: var(--gradient-tech); color: #fff; font-size: 13.5px; font-weight: 600; text-decoration: none; border-radius: var(--radius-pill); transition: transform var(--transition), box-shadow var(--transition); box-shadow: 0 4px 20px rgba(37, 99, 235, 0.35); white-space: nowrap; }
+        .btn-nav-demo:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 10px 30px rgba(6, 182, 212, 0.5); }
+        .btn-nav-login { display: inline-flex; align-items: center; gap: 7px; padding: 9px 16px; background: rgba(255,255,255,0.05); border: 1px solid rgba(148, 163, 184, 0.3); color: var(--text-light); font-size: 13.5px; font-weight: 600; text-decoration: none; border-radius: var(--radius-pill); transition: all var(--transition); white-space: nowrap; }
+        .btn-nav-login:hover { background: rgba(255,255,255,0.12); border-color: var(--cyan); color: #fff; transform: translateY(-2px); }
+
+        .nav-hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; padding: 10px; border-radius: 8px; cursor: pointer; }
+        .nav-hamburger span { width: 24px; height: 2.5px; background: #fff; border-radius: 2px; transition: transform var(--transition), opacity var(--transition); }
+        .nav-hamburger.open span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+        .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+        .nav-hamburger.open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+
+        /* CARRUSEL IMPLEMENTACIÓN */
+        .hero-carousel { position: relative; min-height: 100vh; min-height: 100svh; display: flex; align-items: center; overflow: hidden; padding: calc(var(--nav-h) + 20px) 24px 60px; }
+        .carousel-track { position: relative; width: 100%; max-width: 1360px; margin: 0 auto; height: 100%; display: flex; }
+        .carousel-slide { position: absolute; inset: 0; opacity: 0; visibility: hidden; transform: scale(0.98); transition: opacity 0.8s ease, transform 0.8s ease, visibility 0.8s; display: flex; align-items: center; }
+        .carousel-slide.active { opacity: 1; visibility: visible; transform: scale(1); z-index: 2; }
+        
+        .slide-content { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; width: 100%; }
+        .slide-text { color: #fff; animation: fadeSlideUp 0.9s cubic-bezier(0.16,1,0.3,1) both; }
+        .slide-badge { display: inline-flex; align-items: center; gap: 8px; padding: 7px 16px; background: transparent; border: 1px solid rgba(34,211,238,0.5); border-radius: var(--radius-pill); font-size: 12px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: var(--cyan-light); margin-bottom: 24px; }
+        .slide-badge .dot { width: 6px; height: 6px; background: var(--cyan-light); border-radius: 50%; box-shadow: 0 0 10px var(--cyan-light); }
+        .slide-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2.2rem, 4vw, 3.6rem); font-weight: 700; line-height: 1.1; letter-spacing: -1.5px; margin-bottom: 24px; }
+        .slide-title .gradient-text { background: var(--gradient-tech); background-size: 200% 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: inline-block; }
+        .slide-desc { font-size: clamp(16px, 1.5vw, 18px); color: rgba(226, 232, 240, 0.85); line-height: 1.7; margin-bottom: 36px; max-width: 540px; }
+        .slide-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+        
+        .btn-cta-primary { display: inline-flex; align-items: center; gap: 9px; padding: 16px 32px; background: var(--gradient-tech); color: #fff; font-size: 16px; font-weight: 600; text-decoration: none; border-radius: var(--radius-pill); box-shadow: 0 8px 30px rgba(37, 99, 235, 0.4); transition: transform var(--transition), box-shadow var(--transition); border: none; }
+        .btn-cta-primary:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 14px 45px rgba(6, 182, 212, 0.55); }
+        .btn-cta-secondary { display: inline-flex; align-items: center; gap: 9px; padding: 16px 32px; background: transparent; color: #fff; font-size: 16px; font-weight: 600; text-decoration: none; border-radius: var(--radius-pill); border: 1px solid rgba(148, 163, 184, 0.4); backdrop-filter: blur(10px); transition: all var(--transition); }
+        .btn-cta-secondary:hover { background: rgba(255, 255, 255, 0.08); border-color: var(--cyan-light); transform: translateY(-3px); }
+
+        .slide-visual { position: relative; display: flex; justify-content: center; align-items: center; animation: fadeSlideUp 0.9s cubic-bezier(0.16,1,0.3,1) 0.2s both; }
+        .slide-visual img { width: 100%; max-width: 700px; height: auto; object-fit: contain; filter: drop-shadow(0 20px 50px rgba(0,0,0,0.5)); }
+
+        /* Controles del carrusel */
+        .carousel-controls { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 10; display: flex; align-items: center; gap: 20px; background: rgba(10,15,30,0.7); border: 1px solid rgba(59,130,246,0.3); padding: 10px 20px; border-radius: var(--radius-pill); backdrop-filter: blur(20px); }
+        .carousel-indicators { display: flex; gap: 10px; align-items: center; }
+        .carousel-dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(148,163,184,0.35); border: none; cursor: pointer; transition: all var(--transition); padding: 0; }
+        .carousel-dot.active { width: 32px; border-radius: 100px; background: var(--gradient-tech); box-shadow: 0 0 15px rgba(6,182,212,0.7); }
+        .carousel-arrow { width: 38px; height: 38px; border-radius: 50%; background: rgba(255,255,255,0.06); border: 1px solid rgba(148,163,184,0.25); color: #fff; display: grid; place-items: center; transition: all var(--transition); font-size: 14px; }
+        .carousel-arrow:hover { background: var(--gradient-tech); border-color: transparent; transform: scale(1.1); box-shadow: 0 0 20px rgba(6,182,212,0.6); }
+
+        /* SECCIONES BASE */
+        .section { padding: 100px 24px; position: relative; }
+        .section-inner { max-width: 1280px; margin: 0 auto; position: relative; z-index: 2; }
+        .section-header { text-align: center; margin-bottom: 64px; max-width: 800px; margin-left: auto; margin-right: auto; }
+        .section-eyebrow { display: inline-flex; align-items: center; gap: 10px; padding: 7px 16px; background: rgba(37,99,235,0.12); border: 1px solid rgba(59,130,246,0.35); border-radius: var(--radius-pill); font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--cyan-light); margin-bottom: 20px; }
+        .section-eyebrow .dot { width: 6px; height: 6px; background: var(--cyan-light); border-radius: 50%; animation: pulseGlow 1.6s ease infinite; }
+        .section-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.9rem, 3.8vw, 3rem); font-weight: 700; color: #fff; letter-spacing: -1.5px; line-height: 1.12; margin-bottom: 18px; }
+        .section-title .grad { background: var(--gradient-glow); background-size: 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: gradientShift 5s infinite; }
+        .section-desc { font-size: 17px; color: var(--text-muted); max-width: 720px; margin: 0 auto; line-height: 1.7; }
+
+        /* REVEAL */
+        .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1); }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .stagger > * { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+        .stagger.visible > * { opacity: 1; transform: translateY(0); }
+        .stagger.visible > *:nth-child(1) { transition-delay: 0.05s; }
+        .stagger.visible > *:nth-child(2) { transition-delay: 0.15s; }
+        .stagger.visible > *:nth-child(3) { transition-delay: 0.25s; }
+        .stagger.visible > *:nth-child(4) { transition-delay: 0.35s; }
+
+        /* DOS OPCIONES (Autónoma vs Integral) */
+        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        .option-card { background: rgba(10,15,30,0.6); border: 1px solid rgba(59,130,246,0.18); border-radius: var(--radius); padding: 40px 32px; position: relative; transition: all var(--transition); backdrop-filter: blur(10px); display: flex; flex-direction: column; }
+        .option-card:hover { transform: translateY(-5px); border-color: rgba(34,211,238,0.5); box-shadow: 0 20px 50px rgba(6,182,212,0.15); }
+        .option-card.highlighted { border-color: var(--cyan); box-shadow: 0 0 30px rgba(6,182,212,0.2); background: linear-gradient(180deg, rgba(37,99,235,0.1), transparent); }
+        .option-tag { position: absolute; top: -14px; left: 32px; font-size: 11px; font-weight: 700; letter-spacing: 1px; padding: 6px 16px; border-radius: var(--radius-pill); text-transform: uppercase; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        .tag-free { background: rgba(16,185,129,0.2); color: #34d399; border: 1px solid #059669; }
+        .tag-service { background: var(--gradient-tech); color: #fff; }
+        .option-icon { width: 60px; height: 60px; border-radius: 16px; background: rgba(37,99,235,0.12); color: var(--cyan-light); border: 1px solid rgba(59,130,246,0.3); display: grid; place-items: center; font-size: 26px; margin-bottom: 22px; }
+        .option-card h3 { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 12px; }
+        .option-card > p { font-size: 15px; color: var(--text-muted); line-height: 1.7; margin-bottom: 22px; }
+        .option-list { list-style: none; margin-top: auto; }
+        .option-list li { display: flex; align-items: flex-start; gap: 12px; font-size: 14.5px; color: var(--text-light); padding: 10px 0; border-bottom: 1px solid rgba(148,163,184,0.1); font-weight: 500; }
+        .option-list li:last-child { border-bottom: none; }
+        .option-list i { color: var(--cyan-light); font-size: 16px; margin-top: 2px; }
+
+        /* PRECIOS */
+        .prices-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+        .price-card { background: rgba(10,15,30,0.6); border: 1px solid rgba(59,130,246,0.18); border-radius: var(--radius); padding: 32px 24px; text-align: center; backdrop-filter: blur(10px); transition: all var(--transition); display: flex; flex-direction: column; justify-content: center; }
+        .price-card:hover { transform: translateY(-5px); border-color: rgba(34,211,238,0.5); box-shadow: 0 15px 40px rgba(6,182,212,0.15); }
+        .price-card.web-addon { border-color: var(--lime); box-shadow: 0 0 20px rgba(163,230,53,0.1); background: linear-gradient(180deg, rgba(163,230,53,0.05), transparent); }
+        .price-range { font-size: 13px; color: var(--text-muted); font-weight: 600; margin-bottom: 12px; }
+        .price-value { font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 700; color: #fff; line-height: 1.1; margin-bottom: 6px; }
+        .price-note { font-size: 12.5px; color: var(--text-muted); font-weight: 500; }
+        .price-note a { color: var(--cyan-light); font-weight: 700; }
+
+        /* QUÉ INCLUYE */
+        .includes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+        .include-item { background: rgba(10,15,30,0.6); border: 1px solid rgba(59,130,246,0.18); border-radius: var(--radius-sm); padding: 16px 20px; display: flex; align-items: center; gap: 14px; backdrop-filter: blur(10px); transition: all var(--transition); }
+        .include-item:hover { transform: translateY(-3px); border-color: rgba(34,211,238,0.5); }
+        .inc-icon { width: 36px; height: 36px; border-radius: 10px; background: rgba(37,99,235,0.15); color: var(--cyan-light); display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
+        .inc-text { font-size: 14px; font-weight: 600; color: #fff; }
+
+        /* TIEMPO DE ENTREGA */
+        .timeline-card { background: linear-gradient(135deg, rgba(37,99,235,0.2), rgba(6,182,212,0.15)); border: 1px solid rgba(59,130,246,0.35); border-radius: var(--radius-lg); padding: 64px 48px; text-align: center; position: relative; overflow: hidden; }
+        .timeline-inner { position: relative; z-index: 1; }
+        .timeline-days { font-family: 'Space Grotesk', sans-serif; font-size: clamp(60px, 8vw, 90px); font-weight: 800; letter-spacing: -4px; line-height: 1; margin-bottom: 8px; background: var(--gradient-glow); background-size: 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: gradientShift 4s infinite; }
+        .timeline-label { font-size: clamp(18px, 2.4vw, 22px); font-weight: 700; color: #fff; margin-bottom: 24px; }
+        .timeline-desc { font-size: 16px; color: rgba(226,232,240,0.85); line-height: 1.7; max-width: 600px; margin: 0 auto 14px; }
+        .timeline-note { font-size: 13px; color: var(--text-muted); max-width: 560px; margin: 0 auto; line-height: 1.6; }
+
+        /* CALCULADORA (Ejemplo) */
+        .calculator-card { background: rgba(10,15,30,0.6); border: 1px solid rgba(59,130,246,0.3); border-radius: var(--radius); padding: 44px 40px; max-width: 640px; margin: 0 auto; box-shadow: 0 20px 50px rgba(0,0,0,0.4); backdrop-filter: blur(10px); position: relative; }
+        .calculator-card::before { content: ''; position: absolute; top: 0; left: 40px; right: 40px; height: 2px; background: var(--gradient-tech); border-radius: 0 0 6px 6px; }
+        .calc-title { font-size: 12px; font-weight: 800; color: var(--cyan-light); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 10px; }
+        .calc-header { font-size: clamp(18px, 2.2vw, 22px); font-weight: 700; color: #fff; margin-bottom: 28px; }
+        .calc-row { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; border-bottom: 1px solid rgba(148,163,184,0.1); gap: 16px; }
+        .calc-row:last-of-type { border-bottom: none; }
+        .calc-label { font-size: 14.5px; color: var(--text-muted); font-weight: 500; }
+        .calc-value { font-size: 15.5px; font-weight: 700; color: #fff; text-align: right; }
+        .calc-total { background: rgba(37,99,235,0.1); border: 1px solid rgba(59,130,246,0.2); border-radius: var(--radius-sm); padding: 20px 22px; margin-top: 16px; margin-bottom: 14px; }
+        .calc-total .calc-row { border: none; padding: 0; }
+        .calc-total .calc-label { font-size: 16px; font-weight: 700; color: var(--cyan-light); }
+        .calc-total .calc-value { font-size: clamp(20px, 2.4vw, 24px); font-weight: 800; color: #fff; }
+        .calc-renewal { font-size: 13px; color: var(--text-muted); text-align: center; padding-top: 14px; border-top: 1px solid rgba(148,163,184,0.1); line-height: 1.6; display: flex; align-items: flex-start; justify-content: center; gap: 8px; }
+        .calc-renewal i { color: var(--cyan-light); margin-top: 2px; }
+        .calc-renewal strong { color: var(--lime); }
+
+        /* CTA FINAL */
+        .cta-banner { background: linear-gradient(135deg, rgba(37,99,235,0.2), rgba(6,182,212,0.15)); border: 1px solid rgba(59,130,246,0.35); border-radius: var(--radius-lg); padding: 64px 48px; text-align: center; color: white; position: relative; overflow: hidden; }
+        .cta-banner::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 400px 300px at 20% 80%, rgba(6,182,212,0.15), transparent), radial-gradient(ellipse 300px 200px at 80% 20%, rgba(139,92,246,0.10), transparent); pointer-events: none; }
+        .cta-banner h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 700; margin-bottom: 12px; letter-spacing: -1px; position: relative; z-index: 1; }
+        .cta-banner p { font-size: 17px; opacity: 0.88; margin-bottom: 32px; position: relative; z-index: 1; }
+        .cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1; }
+
+        /* FOOTER */
+        .footer { background: linear-gradient(180deg, transparent 0%, rgba(5,8,20,0.9) 20%, #02040a 100%); border-top: 1px solid rgba(59,130,246,0.15); padding: 80px 24px 40px; position: relative; }
+        .footer-inner { max-width: 1280px; margin: 0 auto; }
+        .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 56px; }
+        .footer-brand-logo { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+        .footer-brand .logo-mark { width: 44px; height: 44px; }
+        .footer-brand .logo-text { font-size: 24px; }
+        .footer-brand p { font-size: 14px; color: var(--text-muted); line-height: 1.7; max-width: 340px; }
+        .footer-col h4 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.8px; color: rgba(148,163,184,0.5); margin-bottom: 20px; }
+        .footer-col li { margin-bottom: 12px; }
+        .footer-col a, .footer-col button.footer-link-btn { text-decoration: none; color: var(--text-muted); font-size: 14px; transition: color var(--transition), transform var(--transition); background: none; border: none; padding: 0; text-align: left; }
+        .footer-col a:hover, .footer-col button.footer-link-btn:hover { color: var(--cyan-light); transform: translateX(4px); display: inline-block; }
+        .footer-bottom { border-top: 1px solid rgba(148,163,184,0.1); padding-top: 32px; text-align: center; }
+        .footer-bottom p { font-size: 13px; color: rgba(148,163,184,0.4); margin-bottom: 6px; }
+
+        /* BOTONES FLOTANTES */
+        .back-to-top { position: fixed; bottom: 24px; right: 24px; width: 48px; height: 48px; border-radius: 50%; background: rgba(10,15,30,0.9); border: 1px solid rgba(59,130,246,0.4); color: #fff; display: grid; place-items: center; font-size: 18px; opacity: 0; pointer-events: none; z-index: 999; cursor: pointer; backdrop-filter: blur(14px); transition: all var(--transition); box-shadow: 0 8px 30px rgba(0,0,0,0.5); }
+        .back-to-top.visible { opacity: 1; pointer-events: auto; }
+        .back-to-top:hover { background: var(--gradient-tech); border-color: transparent; transform: translateY(-4px); box-shadow: 0 0 30px rgba(6,182,212,0.7); }
+
+        .help-fab { position: fixed; bottom: 24px; left: 24px; z-index: 998; }
+        .help-fab-btn { width: 56px; height: 56px; border-radius: 50%; background: var(--gradient-tech); border: none; color: #fff; font-size: 22px; display: grid; place-items: center; cursor: pointer; box-shadow: 0 8px 30px rgba(37,99,235,0.5); transition: transform var(--transition), box-shadow var(--transition); }
+        .help-fab-btn:hover { transform: scale(1.1) rotate(5deg); box-shadow: 0 0 40px rgba(6,182,212,0.8); }
+        .help-fab-btn .ico-close { display: none; }
+        .help-fab.open .help-fab-btn .ico-chat { display: none; }
+        .help-fab.open .help-fab-btn .ico-close { display: block; }
+        .help-panel { position: absolute; bottom: 72px; left: 0; width: 320px; background: rgba(10,15,30,0.95); border: 1px solid rgba(59,130,246,0.35); border-radius: var(--radius); overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.6); opacity: 0; visibility: hidden; transform: translateY(12px) scale(0.96); transform-origin: bottom left; transition: all var(--transition); backdrop-filter: blur(20px); }
+        .help-fab.open .help-panel { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
+        .help-panel-header { padding: 20px 22px; background: var(--gradient-tech); }
+        .help-panel-header h3 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+        .help-panel-header p { font-size: 12.5px; opacity: 0.9; }
+        .help-panel-body { padding: 10px; }
+        .help-option { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 10px; text-decoration: none; color: var(--text-light); transition: background var(--transition), transform var(--transition); }
+        .help-option:hover { background: rgba(37,99,235,0.15); transform: translateX(4px); }
+        .help-option .emoji { width: 38px; height: 38px; border-radius: 10px; background: rgba(37,99,235,0.2); display: grid; place-items: center; font-size: 18px; flex-shrink: 0; }
+        .help-option .lbl strong { display: block; font-size: 13.5px; font-weight: 600; color: #fff; margin-bottom: 2px; }
+        .help-option .lbl span { font-size: 11.5px; color: var(--text-muted); }
+
+        /* MODAL LEGAL */
+        .modal-terms { display: none; position: fixed; inset: 0; z-index: 9999; align-items: center; justify-content: center; background: rgba(5,8,20,0.85); backdrop-filter: blur(10px); padding: 16px; }
+        .modal-terms.show { display: flex; }
+        .modal-terms-content { background: var(--bg-2); border: 1px solid rgba(59,130,246,0.35); border-radius: var(--radius); max-width: 860px; width: 100%; max-height: 90vh; display: flex; flex-direction: column; box-shadow: 0 40px 100px rgba(0,0,0,0.8); overflow: hidden; animation: fadeSlideUp 0.35s ease; }
+        .modal-terms-header { padding: 24px 30px; background: var(--gradient-tech); color: #fff; display: flex; justify-content: space-between; align-items: center; }
+        .modal-terms-header h2 { font-family: 'Space Grotesk', sans-serif; font-size: 1.25rem; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+        .modal-terms-close { background: rgba(255,255,255,0.15); border: none; color: #fff; font-size: 1.6rem; cursor: pointer; width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; transition: background var(--transition); }
+        .modal-terms-close:hover { background: rgba(255,255,255,0.28); }
+        .modal-terms-tabs { display: flex; background: rgba(10,15,30,0.6); border-bottom: 1px solid rgba(59,130,246,0.2); padding: 0 20px; gap: 4px; overflow-x: auto; }
+        .modal-terms-tab { padding: 16px 22px; background: none; border: none; border-bottom: 3px solid transparent; font-size: 13.5px; font-weight: 600; color: var(--text-muted); cursor: pointer; white-space: nowrap; transition: all var(--transition); }
+        .modal-terms-tab:hover { color: var(--cyan-light); }
+        .modal-terms-tab.active { color: var(--cyan-light); border-bottom-color: var(--cyan); }
+        .modal-terms-body { padding: 30px 34px; overflow-y: auto; flex: 1; color: var(--text-light); font-size: 14.5px; line-height: 1.8; }
+        .modal-terms-body h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.05rem; font-weight: 700; color: var(--cyan-light); margin-top: 22px; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid rgba(59,130,246,0.15); }
+        .modal-terms-body h3:first-child { margin-top: 0; }
+        .modal-terms-body p { margin-bottom: 12px; color: var(--text-light); }
+        .modal-terms-body strong { color: var(--cyan-light); font-weight: 600; }
+        .modal-terms-body .contact-box { background: rgba(37,99,235,0.1); padding: 18px 22px; border-radius: 12px; border-left: 4px solid var(--cyan); margin: 18px 0; }
+        .modal-terms-body .contact-box strong { display: block; margin-bottom: 8px; }
+        .modal-terms-body .contact-box p { margin: 3px 0; }
+        .modal-terms-footer { padding: 18px 30px; border-top: 1px solid rgba(59,130,246,0.2); display: flex; justify-content: flex-end; gap: 12px; background: rgba(10,15,30,0.6); }
+
+        /* RESPONSIVE */
+        @media (max-width: 1100px) {
+            .options-grid { grid-template-columns: 1fr; }
+            .prices-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+        }
+        @media (max-width: 1024px) {
+            .slide-content { grid-template-columns: 1fr; gap: 40px; text-align: center; }
+            .slide-text { display: flex; flex-direction: column; align-items: center; }
+            .slide-desc { margin: 0 auto 30px; }
+            .slide-actions { justify-content: center; }
+            .slide-visual { max-width: 700px; margin: 0 auto; }
+        }
+        @media (max-width: 900px) {
+            .nav-container { padding: 0 16px; height: var(--nav-h); }
+            .logo-mark { width: 36px; height: 36px; }
+            .logo-text { font-size: 20px; }
+            .nav-menu { position: fixed; top: var(--nav-h); left: 0; right: 0; background: rgba(10,15,30,0.98); backdrop-filter: blur(20px); flex-direction: column; align-items: stretch; gap: 4px; padding: 20px; border-bottom: 1px solid rgba(59,130,246,0.25); transform: translateY(-120%); transition: transform 0.4s cubic-bezier(0.4,0,0.2,1); max-height: calc(100vh - var(--nav-h)); overflow-y: auto; }
+            .nav-menu.open { transform: translateY(0); }
+            .nav-link { padding: 14px 18px; font-size: 15.5px; }
+            .nav-link::before { display: none; }
+            .nav-link:hover, .nav-link.active { background: rgba(37,99,235,0.15); color: var(--cyan-light); }
+            .nav-actions { display: none; }
+            .nav-menu .nav-actions-mobile { display: flex !important; flex-direction: column; gap: 10px; margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(59,130,246,0.2); }
+            .nav-menu .nav-actions-mobile .btn-nav-demo, .nav-menu .nav-actions-mobile .btn-nav-login { width: 100%; justify-content: center; padding: 13px 20px; font-size: 15px; }
+            .nav-hamburger { display: flex; }
+        }
+        @media (max-width: 768px) {
+            .section { padding: 64px 18px; }
+            .hero-carousel { padding: calc(var(--nav-h) + 20px) 16px 60px; min-height: 90vh; }
+            .slide-title { font-size: 2.2rem; }
+            .slide-actions { flex-direction: column; width: 100%; max-width: 340px; }
+            .btn-cta-primary, .btn-cta-secondary { width: 100%; justify-content: center; padding: 14px 20px; font-size: 15px; }
+            .carousel-controls { bottom: 20px; padding: 8px 16px; gap: 14px; }
+            .carousel-arrow { width: 34px; height: 34px; font-size: 13px; }
+            
+            .prices-grid { grid-template-columns: 1fr; }
+            .includes-grid { grid-template-columns: 1fr; }
+            .timeline-card { padding: 48px 24px; }
+            .timeline-days { font-size: 60px; }
+            .calculator-card { padding: 32px 24px; }
+            .cta-banner { padding: 48px 24px; }
+            .cta-actions { flex-direction: column; align-items: center; }
+            .cta-actions .btn-cta-primary, .cta-actions .btn-cta-secondary { width: 100%; max-width: 340px; justify-content: center; }
+            .footer-top { grid-template-columns: 1fr; gap: 36px; text-align: center; }
+            .footer-brand-logo { justify-content: center; }
+            .footer-brand p { margin: 0 auto; }
+            .back-to-top { bottom: 18px; right: 18px; width: 44px; height: 44px; }
+            .help-fab { bottom: 18px; left: 18px; }
+            .help-fab-btn { width: 52px; height: 52px; }
+            .help-panel { width: 280px; }
+        }
+        @media (max-width: 480px) {
+            .nav-container { padding: 0 14px; }
+            .logo-mark { width: 32px; height: 32px; }
+            .logo-text { font-size: 19px; }
+            .hero-carousel { min-height: auto; }
+            .slide-title { font-size: 1.85rem; }
+            .section { padding: 48px 16px; }
+            .option-card { padding: 28px 22px; }
+            .footer { padding: 40px 16px 20px; }
+            .back-to-top { width: 40px; height: 40px; font-size: 16px; }
+            .help-fab-btn { width: 48px; height: 48px; }
+            .help-panel { width: calc(100vw - 28px); max-width: 300px; }
+        }
+                /* ══════════ FIX CARRUSEL EN MÓVILES ══════════ */
+        @media (max-width: 768px) {
+            /* 1. Quitar la altura forzada de pantalla completa */
+            .hero-carousel {
+                min-height: auto !important;
+                height: auto !important;
+                padding-top: calc(var(--nav-h) + 40px) !important;
+                padding-bottom: 40px !important;
+            }
+
+            /* 2. Hacer que el track no sea absoluto para que el contenido empuje la altura */
+            .carousel-track {
+                position: relative !important;
+                height: auto !important;
+                display: block !important;
+                min-height: 480px; /* Altura mínima para que no colapse al cambiar de slide */
+            }
+
+            /* 3. Ajustar los slides */
+            .carousel-slide {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+            }
+
+            /* 4. Convertir los controles en elementos estáticos debajo del contenido */
+            .carousel-controls {
+                position: relative !important;
+                bottom: auto !important;
+                left: auto !important;
+                transform: none !important;
+                margin: 30px auto 0 !important;
+                width: max-content !important;
+                display: flex !important;
+                justify-content: center !important;
+            }
+
+            /* 5. Ajustar un poco los márgenes de los textos para que no se peguen */
+            .slide-title { margin-bottom: 16px !important; }
+            .slide-desc { margin-bottom: 24px !important; }
+            .slide-visual img { max-width: 90% !important; margin: 0 auto; }
+        }
+                /* ══════════ FIX DEFINITIVO CARRUSEL MÓVIL ══════════ */
+        @media (max-width: 768px) {
+            /* 1. Contenedor principal adaptativo */
+            .hero-carousel {
+                min-height: auto !important;
+                height: auto !important;
+                padding: calc(var(--nav-h) + 20px) 16px 40px !important;
+            }
+
+            /* 2. Track adaptable al contenido */
+            .carousel-track {
+                position: relative !important;
+                display: flex !important;
+                flex-direction: column !important;
+                min-height: 650px; /* Altura para que quepa texto + imagen */
+            }
+
+            /* 3. Slider sin posición absoluta para que fluya */
+            .carousel-slide {
+                position: absolute !important;
+                top: 0; left: 0; right: 0;
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: flex-start !important;
+                height: 100%;
+            }
+
+            /* 4. Ajuste del texto */
+            .slide-content {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 24px !important;
+            }
+            
+            .slide-text {
+                text-align: center !important;
+            }
+
+            .slide-title { font-size: 1.8rem !important; }
+            
+            /* 5. Mostrar y ordenar la imagen */
+            .slide-visual {
+                display: block !important;
+                width: 100% !important;
+                margin-top: 10px !important;
+            }
+            .slide-visual img {
+                width: 100% !important;
+                max-width: 320px !important;
+                margin: 0 auto !important;
+            }
+
+            /* 6. Controles abajo del todo (Sin flotar) */
+            .carousel-controls {
+                position: absolute !important;
+                bottom: 0px !important;
+                left: 50% !important;
+                transform: translateX(-50%) !important;
+                width: max-content !important;
+                margin: 0 !important;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<nav class="navbar" id="navbar">
-  <div class="nav-container">
-    <a href="index.html" class="nav-logo" aria-label="EduOne - Inicio">
-      <div class="nav-logo-mark">E</div>
-      <span class="nav-logo-text">EduOne</span>
-    </a>
-    <button class="nav-hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-menu">
-      <span></span><span></span><span></span>
-    </button>
-    <ul class="nav-menu" id="nav-menu">
-      <li><a href="index.html" class="nav-link">Inicio</a></li>
-      <li><a href="sobrenosotros.html" class="nav-link">Sobre nosotros</a></li>
-      <li><a href="funcionalidades.html" class="nav-link">Funcionalidades</a></li>
-      <li><a href="beneficios.html" class="nav-link">Beneficios</a></li>
-      <li><a href="planes.html" class="nav-link">Planes</a></li>
-      <li><a href="implementacion.html" class="nav-link active" aria-current="page">Implementación</a></li>
-      <li><a href="contacto.html" class="nav-link">Contacto</a></li>
-      <li><a href="login.html" class="nav-link nav-link-cta">Iniciar sesión</a></li>
-    </ul>
-  </div>
-</nav>
-
-<section class="page-hero">
-  <div class="page-hero-inner">
-    <div class="page-hero-eyebrow">Servicio de implementación</div>
-    <h1>Nosotros configuramos EduOne por ti</h1>
-    <p>Recibe tu plataforma organizada y preparada para comenzar a trabajar desde el primer día. Dos opciones para adaptarse a tu institución.</p>
-  </div>
-</section>
-
-<!-- OPCIONES -->
-<section class="section" style="background: var(--surface);">
-  <div class="section-inner">
-    <div class="section-header reveal">
-      <div class="section-eyebrow">Dos caminos</div>
-      <h2 class="section-title">Elige cómo <span>comenzar</span></h2>
-    </div>
-    <div class="options-grid reveal">
-      <div class="option-card">
-        <div class="option-tag tag-free">INCLUIDO EN EL PLAN</div>
-        <div class="option-icon" aria-hidden="true">🖥️</div>
-        <h3>Configúralo tú mismo</h3>
-        <p>El colegio recibe acceso inmediato a la plataforma y puede configurar directamente toda la información académica. Ideal para instituciones con capacidad técnica.</p>
-        <ul class="option-list">
-          <li><span class="opt-check" aria-hidden="true">✓</span> Acceso inmediato a la plataforma</li>
-          <li><span class="opt-check" aria-hidden="true">✓</span> Registrar estudiantes</li>
-          <li><span class="opt-check" aria-hidden="true">✓</span> Registrar profesores</li>
-          <li><span class="opt-check" aria-hidden="true">✓</span> Crear grados y cursos</li>
-          <li><span class="opt-check" aria-hidden="true">✓</span> Crear asignaturas</li>
-          <li><span class="opt-check" aria-hidden="true">✓</span> Configurar horarios</li>
-          <li><span class="opt-check" aria-hidden="true">✓</span> Gestionar usuarios</li>
-          <li><span class="opt-check" aria-hidden="true">✓</span> Solo paga el plan anual</li>
-        </ul>
-      </div>
-      <div class="option-card highlighted">
-        <div class="option-tag tag-service">SERVICIO ADICIONAL</div>
-        <div class="option-icon" aria-hidden="true">🚀</div>
-        <h3>Implementación Integral EduOne</h3>
-        <p>El colegio entrega la información y nuestro equipo realiza toda la configuración inicial completa. Recibes la plataforma lista para comenzar a trabajar.</p>
-        <ul class="option-list">
-          <li><span class="opt-check" aria-hidden="true">✓</span> Equipo EduOne realiza la configuración</li>
-          <li><span class="opt-check" aria-hidden="true">✓</span> Registro completo de estudiantes</li>
-          <li><span class="opt-check" aria-hidden="true">✓</span> Registro de profesores y directivos</li>
-          <li><span class="opt-check" aria-hidden="true">✓</span> Creación de grados, cursos y asignaturas</li>
-          <li><span class="opt-check" aria-hidden="true">✓</span> Configuración de horarios y periodos</li>
-          <li><span class="opt-check" aria-hidden="true">✓</span> Creación y entrega de usuarios</li>
-          <li><span class="opt-check" aria-hidden="true">✓</span> Revisión general y acompañamiento</li>
-          <li><span class="opt-check" aria-hidden="true">✓</span> Plataforma lista en hasta 7 días hábiles</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PRECIOS IMPLEMENTACIÓN -->
-<section class="section" style="background: var(--background);">
-  <div class="section-inner">
-    <div class="section-header reveal">
-      <div class="section-eyebrow">Tarifas de implementación</div>
-      <h2 class="section-title">Precios de la <span>implementación integral</span></h2>
-      <p class="section-desc">Pago único. Solo se paga la primera vez. Los años siguientes únicamente pagas el plan anual de EduOne.</p>
-    </div>
-    <div class="impl-prices reveal">
-      <div class="impl-price-card">
-        <div class="impl-range">Hasta 400 estudiantes</div>
-        <div class="impl-price">$2.000.000</div>
-        <div class="impl-note">Pago único</div>
-      </div>
-      <div class="impl-price-card">
-        <div class="impl-range">401 – 600 estudiantes</div>
-        <div class="impl-price">$2.300.000</div>
-        <div class="impl-note">Pago único</div>
-      </div>
-      <div class="impl-price-card">
-        <div class="impl-range">601 – 800 estudiantes</div>
-        <div class="impl-price">$2.600.000</div>
-        <div class="impl-note">Pago único</div>
-      </div>
-      <div class="impl-price-card">
-        <div class="impl-range">801 – 1.000 estudiantes</div>
-        <div class="impl-price">$3.000.000</div>
-        <div class="impl-note">Pago único</div>
-      </div>
-      <div class="impl-price-card">
-        <div class="impl-range">Más de 1.000 estudiantes</div>
-        <div class="impl-price" style="font-size:18px; margin-top:6px;">Cotización personalizada</div>
-        <div class="impl-note"><a href="contacto.html" style="color:var(--primary); font-weight:600;">Contáctanos →</a></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- QUÉ INCLUYE -->
-<section class="section" style="background: var(--surface);">
-  <div class="section-inner">
-    <div class="section-header reveal">
-      <div class="section-eyebrow">Alcance del servicio</div>
-      <h2 class="section-title">¿Qué incluye la <span>implementación?</span></h2>
-    </div>
-    <div class="includes-grid reveal">
-      <div class="include-item"><span class="inc-icon" aria-hidden="true">👨‍🎓</span><span class="inc-text">Registro de estudiantes</span></div>
-      <div class="include-item"><span class="inc-icon" aria-hidden="true">👩‍🏫</span><span class="inc-text">Registro de profesores</span></div>
-      <div class="include-item"><span class="inc-icon" aria-hidden="true">🏫</span><span class="inc-text">Registro de directivos</span></div>
-      <div class="include-item"><span class="inc-icon" aria-hidden="true">📚</span><span class="inc-text">Creación de grados</span></div>
-      <div class="include-item"><span class="inc-icon" aria-hidden="true">📋</span><span class="inc-text">Creación de cursos</span></div>
-      <div class="include-item"><span class="inc-icon" aria-hidden="true">📖</span><span class="inc-text">Creación de asignaturas</span></div>
-      <div class="include-item"><span class="inc-icon" aria-hidden="true">🔗</span><span class="inc-text">Asociación de estudiantes</span></div>
-      <div class="include-item"><span class="inc-icon" aria-hidden="true">📌</span><span class="inc-text">Asignación de profesores</span></div>
-      <div class="include-item"><span class="inc-icon" aria-hidden="true">🕐</span><span class="inc-text">Configuración de horarios</span></div>
-      <div class="include-item"><span class="inc-icon" aria-hidden="true">📅</span><span class="inc-text">Configuración de periodos</span></div>
-      <div class="include-item"><span class="inc-icon" aria-hidden="true">👤</span><span class="inc-text">Creación de usuarios</span></div>
-      <div class="include-item"><span class="inc-icon" aria-hidden="true">📆</span><span class="inc-text">Configuración del año académico</span></div>
-      <div class="include-item"><span class="inc-icon" aria-hidden="true">🗂️</span><span class="inc-text">Organización inicial completa</span></div>
-      <div class="include-item"><span class="inc-icon" aria-hidden="true">🎨</span><span class="inc-text">Personalización básica</span></div>
-      <div class="include-item"><span class="inc-icon" aria-hidden="true">✅</span><span class="inc-text">Revisión general</span></div>
-      <div class="include-item"><span class="inc-icon" aria-hidden="true">🤝</span><span class="inc-text">Acompañamiento inicial</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- TIEMPO DE ENTREGA -->
-<section class="section" style="background: var(--background);">
-  <div class="section-inner">
-    <div class="timeline-card reveal">
-      <div class="timeline-days">7</div>
-      <div class="timeline-label">días hábiles</div>
-      <p class="timeline-desc">Una vez recibida y validada correctamente toda la información necesaria, nuestro equipo podrá realizar la implementación en hasta 7 días hábiles.</p>
-      <p class="timeline-note">El tiempo puede variar dependiendo del número de estudiantes, docentes, cursos, asignaturas, horarios y calidad de la información suministrada.</p>
-    </div>
-  </div>
-</section>
-
-<!-- EJEMPLO COMERCIAL -->
-<section class="section" style="background: var(--surface);">
-  <div class="section-inner">
-    <div class="section-header reveal">
-      <div class="section-eyebrow">Ejemplo real</div>
-      <h2 class="section-title">Calcula tu <span>inversión</span></h2>
-      <p class="section-desc">Mira cómo se ve la inversión para un colegio con 400 estudiantes en el primer año.</p>
-    </div>
-    <div class="calculator-card reveal">
-      <div class="calc-title">Ejemplo — Colegio con 400 estudiantes</div>
-      <div class="calc-header">Resumen de inversión primer año</div>
-      <div class="calc-row">
-        <span class="calc-label">Plan anual EduOne Esencial</span>
-        <span class="calc-value">$2.400.000</span>
-      </div>
-      <div class="calc-row">
-        <span class="calc-label">Implementación integral (opcional)</span>
-        <span class="calc-value">$2.000.000</span>
-      </div>
-      <div class="calc-total">
-        <div class="calc-row" style="border:none; padding:0;">
-          <span class="calc-label">Total primer año</span>
-          <span class="calc-value">$4.400.000</span>
+    <!-- PRELOADER -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-inner">
+            <div class="preloader-logo">EduOne</div>
+            <div class="preloader-ring"></div>
+            <div class="preloader-bar"></div>
         </div>
-      </div>
-      <div class="calc-row" style="padding-top:0;">
-        <span class="calc-label" style="font-size:14px; color:var(--success); font-weight:700;">Renovación año siguiente</span>
-        <span class="calc-value" style="color:var(--success);">$2.400.000</span>
-      </div>
-      <div class="calc-renewal">
-        ⓘ La implementación inicial se paga una sola vez. Los años siguientes solo pagas el plan anual.
-      </div>
     </div>
-    <div style="text-align:center; margin-top:32px;" class="reveal">
-      <a href="contacto.html" class="btn btn-primary">Solicitar implementación →</a>
-    </div>
-  </div>
-</section>
 
-<footer class="footer">
-  <div class="footer-inner">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <div class="footer-logo"><div class="footer-logo-mark">E</div><span class="footer-logo-text">EduOne</span></div>
-        <p>Educación, tecnología y gestión en un solo lugar.</p>
-      </div>
-      <div class="footer-col">
-        <h4>Navegación</h4>
-        <ul>
-          <li><a href="index.html">Inicio</a></li>
-          <li><a href="sobrenosotros.html">Sobre nosotros</a></li>
-          <li><a href="funcionalidades.html">Funcionalidades</a></li>
-          <li><a href="beneficios.html">Beneficios</a></li>
-          <li><a href="planes.html">Planes</a></li>
-          <li><a href="implementacion.html">Implementación</a></li>
-          <li><a href="contacto.html">Contacto</a></li>
-          <li><a href="login.html">Iniciar sesión</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Legal</h4>
-        <ul>
-          <li><a href="#">Política de privacidad</a></li>
-          <li><a href="#">Tratamiento de datos</a></li>
-          <li><a href="#">Términos y condiciones</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>© 2026 EduOne. Todos los derechos reservados.</p>
-      <p>Desarrollado por Daniel Steven Gutierrez y Camilo Rodriguez.</p>
-      <p>Escuela Tecnológica de Neiva FET.</p>
-    </div>
-  </div>
-</footer>
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo" aria-label="EduOne - Inicio">
+                <span class="logo-mark">
+                    <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" fill="none">
+                        <defs>
+                            <linearGradient id="gradCap" x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0%" stop-color="#3b82f6"/><stop offset="55%" stop-color="#22d3ee"/><stop offset="100%" stop-color="#a3e635"/>
+                            </linearGradient>
+                        </defs>
+                        <path d="M24 6 L44 16 L24 26 L4 16 Z" fill="url(#gradCap)"/>
+                        <path d="M12 21.5 V30 C12 33.5 17.4 36 24 36 C30.6 36 36 33.5 36 30 V21.5 L24 27.5 Z" fill="url(#gradCap)" opacity="0.85"/>
+                        <path d="M40 18 V29" stroke="url(#gradCap)" stroke-width="2.4" stroke-linecap="round"/>
+                        <circle cx="40" cy="30.5" r="2.6" fill="url(#gradCap)"/>
+                    </svg>
+                </span>
+                <span class="logo-text">Edu<span>One</span></span>
+            </a>
 
-<button class="back-to-top" id="backToTop" aria-label="Volver arriba">↑</button>
+            <button class="nav-hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-menu">
+                <span></span><span></span><span></span>
+            </button>
 
-<script>
-  const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled', window.scrollY > 20);
-    document.getElementById('backToTop').classList.toggle('visible', window.scrollY > 300);
-  });
-  const hamburger = document.getElementById('hamburger');
-  const navMenu = document.getElementById('nav-menu');
-  function closeMenu() { navMenu.classList.remove('open'); hamburger.classList.remove('open'); hamburger.setAttribute('aria-expanded','false'); }
-  hamburger.addEventListener('click', () => { navMenu.classList.contains('open') ? closeMenu() : (navMenu.classList.add('open'), hamburger.classList.add('open'), hamburger.setAttribute('aria-expanded','true')); });
-  navMenu.querySelectorAll('.nav-link').forEach(l => l.addEventListener('click', closeMenu));
-  document.addEventListener('click', e => { if (!navbar.contains(e.target)) closeMenu(); });
-  document.addEventListener('keydown', e => { if (e.key==='Escape') closeMenu(); });
-  document.getElementById('backToTop').addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
-  const observer = new IntersectionObserver(entries => entries.forEach((e,i) => { if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i*80); }), {threshold:0.08});
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-</script>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="index.html" class="nav-link">Inicio</a></li>
+                <li><a href="sobrenosotros.html" class="nav-link">Sobre nosotros</a></li>
+                <li><a href="funcionalidades.html" class="nav-link">Funcionalidades</a></li>
+                <li><a href="beneficios.html" class="nav-link">Beneficios</a></li>
+                <li><a href="planes.html" class="nav-link">Planes</a></li>
+                <li><a href="implementacion.html" class="nav-link active">Implementación</a></li>
+                <li><a href="contacto.html" class="nav-link">Contacto</a></li>
+                <li class="nav-actions-mobile" style="display:none;">
+                    <a href="contacto.html" class="btn-nav-demo">Solicitar demo</a>
+                    <a href="login.html" class="btn-nav-login"><i class="fas fa-right-to-bracket"></i> Iniciar sesión</a>
+                </li>
+            </ul>
+
+            <div class="nav-actions">
+                <a href="contacto.html" class="btn-nav-demo"><i class="fas fa-rocket"></i> Solicitar demo</a>
+                <a href="login.html" class="btn-nav-login"><i class="fas fa-right-to-bracket"></i> Iniciar sesión</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- CARRUSEL IMPLEMENTACIÓN -->
+    <section class="hero-carousel" id="heroCarousel">
+        <div class="carousel-track">
+            
+            <!-- SLIDE 1: Implementación Integral -->
+            <div class="carousel-slide active" data-slide="0">
+                <div class="slide-content">
+                    <div class="slide-text">
+                        <div class="slide-badge"><span class="dot"></span> Implementación EduOne</div>
+                        <h1 class="slide-title">Tu plataforma lista al 100%<br><span class="gradient-text">sin complicaciones</span></h1>
+                        <p class="slide-desc">Por un valor adicional, EduOne se encarga de la implementación completa para que tu institución reciba la plataforma organizada, configurada y lista para comenzar a operar desde el primer día.</p>
+                        <div class="slide-actions">
+                            <a href="#precios" class="btn-cta-primary"><i class="fas fa-check-circle"></i> Ver precios</a>
+                            <a href="contacto.html" class="btn-cta-secondary"><i class="fas fa-headset"></i> Contactar asesor</a>
+                        </div>
+                    </div>
+                    <div class="slide-visual">
+                        <img src="imagenes/pcimplementacion.png" alt="Implementación completa de EduOne">
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 2: Página Web por $400.000 -->
+            <div class="carousel-slide" data-slide="1">
+                <div class="slide-content">
+                    <div class="slide-text">
+                        <div class="slide-badge"><span class="dot"></span> Página Web para tu Colegio</div>
+                        <h2 class="slide-title">Tu página web escolar<br><span class="gradient-text">lista por solo $400.000</span></h2>
+                        <p class="slide-desc">Por un valor adicional de $400.000, EduOne diseña y entrega la página web de tu institución, con un diseño moderno, funcional y adaptado a tu identidad.</p>
+                        <div class="slide-actions">
+                            <a href="contacto.html" class="btn-cta-primary"><i class="fas fa-globe"></i> Solicitar mi página web</a>
+                            <a href="#" class="btn-cta-secondary"><i class="fas fa-play-circle"></i> Ver ejemplo</a>
+                        </div>
+                    </div>
+                    <div class="slide-visual">
+                        <img src="imagenes/pcimplementacion2.png" alt="Página web escolar por 400 mil pesos">
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 3: Todo en uno -->
+            <div class="carousel-slide" data-slide="2">
+                <div class="slide-content">
+                    <div class="slide-text">
+                        <div class="slide-badge"><span class="dot"></span> Implementación + Página Web</div>
+                        <h2 class="slide-title">Plataforma educativa<br><span class="gradient-text">+ página web en un solo servicio</span></h2>
+                        <p class="slide-desc">Implementamos tu plataforma EduOne y diseñamos la página web de tu institución, completamente integrada para que todo funcione desde el primer día.</p>
+                        <div class="slide-actions">
+                            <a href="contacto.html" class="btn-cta-primary"><i class="fas fa-rocket"></i> Quiero implementar mi colegio</a>
+                            <a href="#opciones" class="btn-cta-secondary"><i class="fas fa-play-circle"></i> Ver cómo funciona</a>
+                        </div>
+                    </div>
+                    <div class="slide-visual">
+                        <img src="imagenes/pcimplementacion3.png" alt="EduOne plataforma y página web integradas">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- CONTROLES DEL CARRUSEL -->
+        <div class="carousel-controls">
+            <button class="carousel-arrow" id="prevSlide" aria-label="Anterior"><i class="fas fa-chevron-left"></i></button>
+            <div class="carousel-indicators">
+                <button class="carousel-dot active" data-goto="0" aria-label="Slide 1"></button>
+                <button class="carousel-dot" data-goto="1" aria-label="Slide 2"></button>
+                <button class="carousel-dot" data-goto="2" aria-label="Slide 3"></button>
+            </div>
+            <button class="carousel-arrow" id="nextSlide" aria-label="Siguiente"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </section>
+
+    <!-- DOS OPCIONES DE IMPLEMENTACIÓN -->
+    <section class="section" id="opciones">
+        <div class="section-inner">
+            <div class="section-header reveal">
+                <div class="section-eyebrow"><span class="dot"></span> Dos caminos</div>
+                <h2 class="section-title">Elige cómo <span class="grad">comenzar</span></h2>
+                <p class="section-desc">Puedes configurar la plataforma de forma autónoma o contratar el servicio de implementación integral.</p>
+            </div>
+
+            <div class="options-grid reveal">
+                <!-- Opción 1 -->
+                <div class="option-card">
+                    <div class="option-tag tag-free">Incluido en el plan</div>
+                    <div class="option-icon"><i class="fas fa-laptop"></i></div>
+                    <h3>Configúralo tú mismo</h3>
+                    <p>El colegio recibe acceso inmediato a la plataforma y puede configurar directamente toda la información académica. Ideal para instituciones con capacidad técnica.</p>
+                    <ul class="option-list">
+                        <li><i class="fas fa-check-circle"></i> Acceso inmediato a la plataforma</li>
+                        <li><i class="fas fa-check-circle"></i> Registrar estudiantes y profesores</li>
+                        <li><i class="fas fa-check-circle"></i> Crear grados, cursos y asignaturas</li>
+                        <li><i class="fas fa-check-circle"></i> Configurar horarios</li>
+                        <li><i class="fas fa-check-circle"></i> Gestionar usuarios</li>
+                        <li><i class="fas fa-check-circle"></i> Solo pagas el plan anual</li>
+                    </ul>
+                </div>
+
+                <!-- Opción 2 -->
+                <div class="option-card highlighted">
+                    <div class="option-tag tag-service">Servicio adicional</div>
+                    <div class="option-icon"><i class="fas fa-cogs"></i></div>
+                    <h3>Implementación Integral EduOne</h3>
+                    <p>El colegio entrega la información y nuestro equipo realiza toda la configuración inicial completa. Recibes la plataforma lista para comenzar a trabajar.</p>
+                    <ul class="option-list">
+                        <li><i class="fas fa-check-circle"></i> Equipo EduOne realiza la configuración</li>
+                        <li><i class="fas fa-check-circle"></i> Registro completo de estudiantes</li>
+                        <li><i class="fas fa-check-circle"></i> Registro de profesores y directivos</li>
+                        <li><i class="fas fa-check-circle"></i> Creación de grados, cursos y asignaturas</li>
+                        <li><i class="fas fa-check-circle"></i> Configuración de horarios y periodos</li>
+                        <li><i class="fas fa-check-circle"></i> Plataforma lista en hasta 7 días hábiles</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRECIOS DE IMPLEMENTACIÓN Y WEB -->
+    <section class="section" id="precios" style="background: rgba(255,255,255,0.01);">
+        <div class="section-inner">
+            <div class="section-header reveal">
+                <div class="section-eyebrow"><span class="dot"></span> Tarifas</div>
+                <h2 class="section-title">Precios de <span class="grad">servicios adicionales</span></h2>
+                <p class="section-desc">Pago único. Solo se paga la primera vez. Los años siguientes únicamente pagas el plan anual de EduOne.</p>
+            </div>
+
+            <div class="prices-grid stagger reveal">
+                <div class="price-card">
+                    <div class="price-range">Hasta 400 estudiantes</div>
+                    <div class="price-value">$2.000.000</div>
+                    <div class="price-note">Pago único</div>
+                </div>
+                <div class="price-card">
+                    <div class="price-range">401 – 600 estudiantes</div>
+                    <div class="price-value">$2.300.000</div>
+                    <div class="price-note">Pago único</div>
+                </div>
+                <div class="price-card">
+                    <div class="price-range">601 – 800 estudiantes</div>
+                    <div class="price-value">$2.600.000</div>
+                    <div class="price-note">Pago único</div>
+                </div>
+                <div class="price-card">
+                    <div class="price-range">801 – 1.000 estudiantes</div>
+                    <div class="price-value">$3.000.000</div>
+                    <div class="price-note">Pago único</div>
+                </div>
+                <div class="price-card">
+                    <div class="price-range">Más de 1.000 estudiantes</div>
+                    <div class="price-value" style="font-size: 20px; margin-top: 8px;">Personalizado</div>
+                    <div class="price-note"><a href="contacto.html">Contáctanos →</a></div>
+                </div>
+                
+                <!-- PRECIO DE LA PÁGINA WEB -->
+                <div class="price-card web-addon">
+                    <div class="price-range" style="color: var(--lime);">Página Web Institucional</div>
+                    <div class="price-value">$400.000</div>
+                    <div class="price-note">Diseño y entrega de la web del colegio</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- QUÉ INCLUYE LA IMPLEMENTACIÓN -->
+    <section class="section">
+        <div class="section-inner">
+            <div class="section-header reveal">
+                <div class="section-eyebrow"><span class="dot"></span> Alcance del servicio</div>
+                <h2 class="section-title">¿Qué incluye la <span class="grad">implementación integral</span>?</h2>
+                <p class="section-desc">Nuestro equipo se encarga de dejar la plataforma completamente lista para tu institución.</p>
+            </div>
+
+            <div class="includes-grid stagger reveal">
+                <div class="include-item"><span class="inc-icon"><i class="fas fa-user-graduate"></i></span><span class="inc-text">Registro de estudiantes</span></div>
+                <div class="include-item"><span class="inc-icon"><i class="fas fa-chalkboard-teacher"></i></span><span class="inc-text">Registro de profesores</span></div>
+                <div class="include-item"><span class="inc-icon"><i class="fas fa-user-tie"></i></span><span class="inc-text">Registro de directivos</span></div>
+                <div class="include-item"><span class="inc-icon"><i class="fas fa-layer-group"></i></span><span class="inc-text">Creación de grados</span></div>
+                <div class="include-item"><span class="inc-icon"><i class="fas fa-folder-open"></i></span><span class="inc-text">Creación de cursos</span></div>
+                <div class="include-item"><span class="inc-icon"><i class="fas fa-book"></i></span><span class="inc-text">Creación de asignaturas</span></div>
+                <div class="include-item"><span class="inc-icon"><i class="fas fa-link"></i></span><span class="inc-text">Asociación de estudiantes</span></div>
+                <div class="include-item"><span class="inc-icon"><i class="fas fa-users"></i></span><span class="inc-text">Asignación de profesores</span></div>
+                <div class="include-item"><span class="inc-icon"><i class="fas fa-clock"></i></span><span class="inc-text">Configuración de horarios</span></div>
+                <div class="include-item"><span class="inc-icon"><i class="fas fa-calendar-alt"></i></span><span class="inc-text">Configuración de periodos</span></div>
+                <div class="include-item"><span class="inc-icon"><i class="fas fa-user-cog"></i></span><span class="inc-text">Creación de usuarios</span></div>
+                <div class="include-item"><span class="inc-icon"><i class="fas fa-calendar-check"></i></span><span class="inc-text">Configuración del año académico</span></div>
+                <div class="include-item"><span class="inc-icon"><i class="fas fa-sitemap"></i></span><span class="inc-text">Organización inicial completa</span></div>
+                <div class="include-item"><span class="inc-icon"><i class="fas fa-paint-brush"></i></span><span class="inc-text">Personalización básica</span></div>
+                <div class="include-item"><span class="inc-icon"><i class="fas fa-check-double"></i></span><span class="inc-text">Revisión general</span></div>
+                <div class="include-item"><span class="inc-icon"><i class="fas fa-handshake"></i></span><span class="inc-text">Acompañamiento inicial</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TIEMPO DE ENTREGA -->
+    <section class="section" style="background: rgba(255,255,255,0.01);">
+        <div class="section-inner">
+            <div class="timeline-card reveal">
+                <div class="timeline-inner">
+                    <div class="timeline-days">7</div>
+                    <div class="timeline-label">días hábiles</div>
+                    <p class="timeline-desc">Una vez recibida y validada correctamente toda la información necesaria, nuestro equipo podrá realizar la implementación en hasta 7 días hábiles.</p>
+                    <p class="timeline-note">El tiempo puede variar dependiendo del número de estudiantes, docentes, cursos, asignaturas, horarios y calidad de la información suministrada.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EJEMPLO COMERCIAL -->
+    <section class="section">
+        <div class="section-inner">
+            <div class="section-header reveal">
+                <div class="section-eyebrow"><span class="dot"></span> Ejemplo real</div>
+                <h2 class="section-title">Calcula tu <span class="grad">inversión</span></h2>
+                <p class="section-desc">Mira cómo se ve la inversión para un colegio con 400 estudiantes en el primer año.</p>
+            </div>
+
+            <div class="calculator-card reveal">
+                <div class="calc-title">Ejemplo — Colegio con 400 estudiantes</div>
+                <div class="calc-header">Resumen de inversión primer año</div>
+
+                <div class="calc-row">
+                    <span class="calc-label">Plan anual EduOne Esencial</span>
+                    <span class="calc-value">$2.400.000</span>
+                </div>
+                <div class="calc-row">
+                    <span class="calc-label">Implementación integral (opcional)</span>
+                    <span class="calc-value">$2.000.000</span>
+                </div>
+                <div class="calc-row" style="color: var(--lime);">
+                    <span class="calc-label" style="color: var(--lime);">Página web institucional (opcional)</span>
+                    <span class="calc-value" style="color: var(--lime);">$400.000</span>
+                </div>
+
+                <div class="calc-total">
+                    <div class="calc-row">
+                        <span class="calc-label">Total primer año</span>
+                        <span class="calc-value">$4.800.000</span>
+                    </div>
+                </div>
+
+                <div class="calc-renewal">
+                    <i class="fas fa-info-circle"></i>
+                    <span>La implementación y la página web se pagan una sola vez. Los años siguientes únicamente pagas el <strong>plan anual</strong>.</span>
+                </div>
+            </div>
+
+            <div style="text-align:center; margin-top:36px;" class="reveal">
+                <a href="contacto.html" class="btn-cta-primary"><i class="fas fa-rocket"></i> Solicitar servicios</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section class="section" style="padding-bottom: 100px;">
+        <div class="section-inner">
+            <div class="cta-banner reveal-scale">
+                <h2>Recibe tu plataforma y tu web listas para trabajar</h2>
+                <p>Nuestro equipo se encarga de toda la configuración inicial y el diseño de tu página web para que tu institución comience a usar EduOne desde el primer día.</p>
+                <div class="cta-actions">
+                    <a href="contacto.html" class="btn-cta-primary"><i class="fas fa-check-circle"></i> Solicitar implementación</a>
+                    <a href="planes.html" class="btn-cta-secondary"><i class="fas fa-tags"></i> Ver planes</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <div class="footer-brand-logo">
+                        <span class="logo-mark">
+                            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" fill="none">
+                                <defs>
+                                    <linearGradient id="gradCapF" x1="0" y1="0" x2="1" y2="1">
+                                        <stop offset="0%" stop-color="#3b82f6"/><stop offset="55%" stop-color="#22d3ee"/><stop offset="100%" stop-color="#a3e635"/>
+                                    </linearGradient>
+                                </defs>
+                                <path d="M24 6 L44 16 L24 26 L4 16 Z" fill="url(#gradCapF)"/>
+                                <path d="M12 21.5 V30 C12 33.5 17.4 36 24 36 C30.6 36 36 33.5 36 30 V21.5 L24 27.5 Z" fill="url(#gradCapF)" opacity="0.85"/>
+                                <path d="M40 18 V29" stroke="url(#gradCapF)" stroke-width="2.4" stroke-linecap="round"/>
+                                <circle cx="40" cy="30.5" r="2.6" fill="url(#gradCapF)"/>
+                            </svg>
+                        </span>
+                        <span class="logo-text">Edu<span>One</span></span>
+                    </div>
+                    <p>Plataforma tecnológica colombiana para la gestión académica, administrativa, financiera y de convivencia de instituciones educativas.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Producto</h4>
+                    <ul>
+                        <li><a href="funcionalidades.html">Funcionalidades</a></li>
+                        <li><a href="beneficios.html">Beneficios</a></li>
+                        <li><a href="planes.html">Planes</a></li>
+                        <li><a href="implementacion.html">Implementación</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Empresa</h4>
+                    <ul>
+                        <li><a href="sobrenosotros.html">Sobre nosotros</a></li>
+                        <li><a href="contacto.html">Contacto</a></li>
+                        <li><a href="contacto.html">Solicitar demo</a></li>
+                        <li><a href="login.html">Iniciar sesión</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><button type="button" class="footer-link-btn" data-open-legal="terms">Términos y condiciones</button></li>
+                        <li><button type="button" class="footer-link-btn" data-open-legal="privacy">Política de privacidad</button></li>
+                        <li><button type="button" class="footer-link-btn" data-open-legal="data">Tratamiento de datos</button></li>
+                        <li><a href="#">Política de cookies</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 EduOne. Todos los derechos reservados.</p>
+                <p>Tecnología educativa desarrollada en Colombia.</p>
+                <p>contacto@eduone.com.co · Neiva, Huila, Colombia · eduone.com.co</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- BOTONES FLOTANTES -->
+    <button class="back-to-top" id="backToTop" aria-label="Volver arriba"><i class="fas fa-arrow-up"></i></button>
+
+    <div class="help-fab" id="helpFab">
+        <button class="help-fab-btn" id="helpFabBtn" aria-label="Abrir menú de ayuda" aria-expanded="false">
+            <span class="ico-chat"><i class="fas fa-comment-dots"></i></span>
+            <span class="ico-close"><i class="fas fa-times"></i></span>
+        </button>
+        <div class="help-panel">
+            <div class="help-panel-header">
+                <h3>Hola 👋 Somos EduOne</h3>
+                <p>¿En qué podemos ayudarte?</p>
+            </div>
+            <div class="help-panel-body">
+                <a href="contacto.html" class="help-option"><span class="emoji">📅</span><span class="lbl"><strong>Solicitar demostración</strong><span>Conoce la plataforma en acción</span></span></a>
+                <a href="#" class="help-option"><span class="emoji">🛠️</span><span class="lbl"><strong>Soporte</strong><span>Atención técnica</span></span></a>
+                <a href="contacto.html" class="help-option"><span class="emoji">✉️</span><span class="lbl"><strong>Contacto</strong><span>Escríbenos directamente</span></span></a>
+                <a href="#" class="help-option"><span class="emoji">📣</span><span class="lbl"><strong>Novedades</strong><span>Mejoras y actualizaciones</span></span></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL LEGAL -->
+    <div class="modal-terms" id="modalTerms" role="dialog" aria-modal="true" aria-labelledby="modalTermsTitle">
+        <div class="modal-terms-content">
+            <div class="modal-terms-header">
+                <h2 id="modalTermsTitle"><i class="fas fa-file-contract"></i> Información legal</h2>
+                <button class="modal-terms-close" id="closeTermsModal" aria-label="Cerrar">&times;</button>
+            </div>
+            <div class="modal-terms-tabs">
+                <button class="modal-terms-tab active" data-legal-tab="terms">Términos y condiciones</button>
+                <button class="modal-terms-tab" data-legal-tab="privacy">Política de privacidad</button>
+                <button class="modal-terms-tab" data-legal-tab="data">Tratamiento de datos</button>
+            </div>
+            <div class="modal-terms-body" id="modalTermsBody"></div>
+            <div class="modal-terms-footer">
+                <button type="button" class="btn-cta-primary" id="closeTermsBtn">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script>
+        (function() {
+            'use strict';
+
+            // PRELOADER
+            const preloader = document.getElementById('preloader');
+            window.addEventListener('load', () => {
+                setTimeout(() => { if (preloader) preloader.classList.add('hidden'); }, 500);
+            });
+            setTimeout(() => { if (preloader) preloader.classList.add('hidden'); }, 2500);
+
+            // NAVBAR SCROLL + BOTÓN TOP
+            const navbar = document.getElementById('navbar');
+            const backToTop = document.getElementById('backToTop');
+            function onScroll() {
+                const y = window.scrollY;
+                if (navbar) navbar.classList.toggle('scrolled', y > 20);
+                if (backToTop) backToTop.classList.toggle('visible', y > 400);
+            }
+            window.addEventListener('scroll', onScroll, { passive: true });
+            onScroll();
+            if (backToTop) backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+            // HAMBURGUESA
+            const hamburger = document.getElementById('hamburger');
+            const navMenu = document.getElementById('nav-menu');
+            if (hamburger && navMenu) {
+                hamburger.addEventListener('click', () => {
+                    const isOpen = navMenu.classList.toggle('open');
+                    hamburger.classList.toggle('open', isOpen);
+                    hamburger.setAttribute('aria-expanded', String(isOpen));
+                });
+                navMenu.querySelectorAll('a').forEach(a => {
+                    a.addEventListener('click', () => {
+                        navMenu.classList.remove('open');
+                        hamburger.classList.remove('open');
+                        hamburger.setAttribute('aria-expanded', 'false');
+                    });
+                });
+            }
+
+            // REVEAL OBSERVER
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        revealObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
+            document.querySelectorAll('.reveal, .stagger, .reveal-scale').forEach(el => revealObserver.observe(el));
+
+            // CARRUSEL
+            const carousel = document.getElementById('heroCarousel');
+            const slides = carousel ? carousel.querySelectorAll('.carousel-slide') : [];
+            const dots = carousel ? carousel.querySelectorAll('.carousel-dot') : [];
+            const prevBtn = document.getElementById('prevSlide');
+            const nextBtn = document.getElementById('nextSlide');
+            let currentSlide = 0;
+            let autoplayTimer = null;
+            const AUTOPLAY_MS = 8000;
+
+            function goToSlide(index) {
+                if (index < 0) index = slides.length - 1;
+                if (index >= slides.length) index = 0;
+                slides[currentSlide].classList.remove('active');
+                dots[currentSlide].classList.remove('active');
+                currentSlide = index;
+                slides[currentSlide].classList.add('active');
+                dots[currentSlide].classList.add('active');
+                resetAutoplay();
+            }
+
+            function nextSlide() { goToSlide(currentSlide + 1); }
+            function prevSlide() { goToSlide(currentSlide - 1); }
+
+            function resetAutoplay() {
+                clearInterval(autoplayTimer);
+                autoplayTimer = setInterval(nextSlide, AUTOPLAY_MS);
+            }
+
+            if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+            if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+            
+            dots.forEach(dot => {
+                dot.addEventListener('click', () => {
+                    const idx = parseInt(dot.dataset.goto, 10);
+                    goToSlide(idx);
+                });
+            });
+
+            if (carousel) {
+                carousel.addEventListener('mouseenter', () => clearInterval(autoplayTimer));
+                carousel.addEventListener('mouseleave', resetAutoplay);
+                
+                // Swipe
+                let touchStartX = 0;
+                carousel.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
+                carousel.addEventListener('touchend', e => {
+                    const touchEndX = e.changedTouches[0].screenX;
+                    const diff = touchStartX - touchEndX;
+                    if (Math.abs(diff) > 50) {
+                        diff > 0 ? nextSlide() : prevSlide();
+                    }
+                }, { passive: true });
+            }
+
+            resetAutoplay();
+
+            // HELP FAB
+            const helpFab = document.getElementById('helpFab');
+            const helpFabBtn = document.getElementById('helpFabBtn');
+            if (helpFab && helpFabBtn) {
+                helpFabBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    helpFab.classList.toggle('open');
+                });
+                document.addEventListener('click', (e) => {
+                    if (!helpFab.contains(e.target) && helpFab.classList.contains('open')) {
+                        helpFab.classList.remove('open');
+                    }
+                });
+            }
+
+            // MODAL LEGAL
+            const modalTerms = document.getElementById('modalTerms');
+            const modalTermsBody = document.getElementById('modalTermsBody');
+            const legalContent = {
+                terms: `
+                    <h3>Términos y condiciones de uso</h3>
+                    <p>El acceso y uso de la plataforma <strong>EduOne</strong> implica la aceptación de los presentes términos y condiciones. EduOne es una plataforma tecnológica colombiana destinada a la gestión académica, administrativa, financiera y de convivencia de instituciones educativas.</p>
+                    <h3>Uso permitido</h3>
+                    <p>La plataforma debe ser utilizada únicamente para fines educativos e institucionales, conforme a las normas legales vigentes en Colombia. Queda prohibido el uso indebido de la información contenida en el sistema.</p>
+                    <h3>Responsabilidades</h3>
+                    <p>La institución educativa es responsable de la veracidad de la información cargada en la plataforma y del uso adecuado por parte de sus usuarios. EduOne actúa como proveedor tecnológico y no toma decisiones académicas ni administrativas.</p>
+                    <div class="contact-box">
+                        <strong>Contacto legal</strong>
+                        <p>📧 contacto@eduone.com.co</p>
+                        <p>📍 Neiva, Huila, Colombia</p>
+                    </div>
+                `,
+                privacy: `
+                    <h3>Política de privacidad</h3>
+                    <p>En <strong>EduOne</strong> protegemos la información personal de todos los usuarios de la comunidad educativa, conforme a la Ley 1581 de 2012 y el Decreto 1377 de 2013 de Colombia.</p>
+                    <h3>Información que recopilamos</h3>
+                    <p>Recopilamos información necesaria para la prestación del servicio: datos de estudiantes, docentes, acudientes y personal administrativo, así como registros académicos y de convivencia.</p>
+                    <h3>Finalidad del tratamiento</h3>
+                    <p>La información se utiliza exclusivamente para la gestión educativa, el seguimiento académico, la comunicación institucional y el cumplimiento de obligaciones legales.</p>
+                    <div class="contact-box">
+                        <strong>Contacto de privacidad</strong>
+                        <p>📧 contacto@eduone.com.co</p>
+                        <p>📍 Neiva, Huila, Colombia</p>
+                    </div>
+                `,
+                data: `
+                    <h3>Tratamiento de datos personales</h3>
+                    <p>EduOne realiza el tratamiento de datos personales conforme al <strong>Decreto 1074 de 2015</strong> y las normas concordantes en materia de protección de datos en Colombia.</p>
+                    <h3>Responsable del tratamiento</h3>
+                    <p>EduOne actúa como responsable del tratamiento de los datos personales de los usuarios de la plataforma. Las instituciones educativas actúan como responsables del tratamiento de los datos de su comunidad.</p>
+                    <h3>Ejercicio de derechos</h3>
+                    <p>Los titulares pueden ejercer sus derechos de conocer, actualizar, rectificar y suprimir información, así como revocar la autorización, escribiendo a contacto@eduone.com.co.</p>
+                    <div class="contact-box">
+                        <strong>Contacto de datos</strong>
+                        <p>📧 contacto@eduone.com.co</p>
+                        <p>📍 Neiva, Huila, Colombia</p>
+                    </div>
+                `
+            };
+
+            function abrirModalLegal(tabId) {
+                document.querySelectorAll('.modal-terms-tab').forEach(t => t.classList.remove('active'));
+                const activeTab = document.querySelector(`.modal-terms-tab[data-legal-tab="${tabId}"]`);
+                if (activeTab) activeTab.classList.add('active');
+                if (modalTermsBody) modalTermsBody.innerHTML = legalContent[tabId] || legalContent.terms;
+                if (modalTerms) modalTerms.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            }
+            function cerrarModalLegal() {
+                if (modalTerms) modalTerms.classList.remove('show');
+                document.body.style.overflow = '';
+            }
+
+            document.querySelectorAll('[data-open-legal]').forEach(btn => {
+                btn.addEventListener('click', (e) => { e.preventDefault(); abrirModalLegal(btn.dataset.openLegal); });
+            });
+            document.querySelectorAll('.modal-terms-tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    document.querySelectorAll('.modal-terms-tab').forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    if (modalTermsBody) modalTermsBody.innerHTML = legalContent[tab.dataset.legalTab] || legalContent.terms;
+                });
+            });
+            const closeTermsModal = document.getElementById('closeTermsModal');
+            const closeTermsBtn = document.getElementById('closeTermsBtn');
+            if (closeTermsModal) closeTermsModal.addEventListener('click', cerrarModalLegal);
+            if (closeTermsBtn) closeTermsBtn.addEventListener('click', cerrarModalLegal);
+            if (modalTerms) modalTerms.addEventListener('click', (e) => { if (e.target === modalTerms) cerrarModalLegal(); });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    cerrarModalLegal();
+                    if (navMenu) navMenu.classList.remove('open');
+                    if (hamburger) { hamburger.classList.remove('open'); hamburger.setAttribute('aria-expanded', 'false'); }
+                    if (helpFab) helpFab.classList.remove('open');
+                }
+            });
+
+        })();
+    </script>
+
 </body>
 </html>

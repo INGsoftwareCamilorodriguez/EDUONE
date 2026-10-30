@@ -195,6 +195,10 @@
         .table-toolbar .search-box i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--gray-400); font-size: 0.9rem; }
         .table-toolbar .search-box input { padding-left: 40px; }
         .table-toolbar select { max-width: 200px; }
+        /* ✅ NUEVO: Chip de correo en la tabla */
+        .est-correo { font-size: 0.78rem; color: var(--gray-600); word-break: break-all; }
+        .est-cell-nombre { font-weight: 600; color: var(--text-primary); }
+        .est-cell-sub { font-size: 0.72rem; color: var(--gray-500); margin-top: 2px; }
         @media (max-width: 992px) {
             .sidebar { transform: translateX(-100%); width: var(--sidebar-width); }
             .sidebar.open { transform: translateX(0); }
@@ -216,8 +220,100 @@
             .content-area { padding: 16px; }
             .modal-content { width: 96%; margin: 10px; }
             .user-info { display: none; }
+            .table-toolbar select { max-width: 100%; }
         }
-    </style>
+        .chat-layout{display:grid;grid-template-columns:minmax(190px,280px) 1fr;gap:18px}.chat-results{max-height:450px;overflow:auto;margin-top:12px}.chat-results button{width:100%;text-align:left;border:1px solid var(--border);background:white;border-radius:7px;padding:10px;margin-bottom:6px;cursor:pointer}.chat-mensajes{height:360px;overflow-y:auto;border:1px solid var(--border);border-radius:8px;padding:14px;margin:12px 0;background:#f8fafc}.chat-burbuja{border-radius:10px;padding:10px;margin:8px 0;background:#e0e7ff;max-width:85%;overflow-wrap:anywhere}.chat-burbuja.propia{background:#dcfce7;margin-left:auto}.chat-burbuja small{display:block;font-size:.7rem;color:#64748b;margin-top:4px}@media(max-width:700px){.chat-layout{grid-template-columns:1fr}.chat-mensajes{height:300px}}
+
+/* ===== EduOne UI 2026: estructura común, colores del colegio ===== */
+:root{--ui-rail:82px;--ui-ink:#142043;--ui-soft:color-mix(in srgb,var(--primary) 8%,white);--ui-line:#e8edf6;--ui-radius:18px;--ui-shadow:0 5px 24px rgba(24,43,87,.055)}
+body{background:#f5f8fd;color:var(--ui-ink)}
+.sidebar{width:var(--ui-rail);background:#fff;border-right:1px solid var(--ui-line);box-shadow:2px 0 18px rgba(28,45,78,.035)}
+.sidebar-header{padding:14px 12px;justify-content:center;border-bottom:1px solid var(--ui-line)}
+.sidebar-header .logo{justify-content:center;color:var(--primary);font-size:0}
+.sidebar-header .logo i{width:42px;height:42px;color:#fff;background:var(--primary);font-size:1.3rem;border-radius:12px}
+.sidebar-header .logo span,.sidebar-colegio,.sidebar-nav .nav-section,.sidebar-nav ul li a span,.sidebar-footer .btn-logout span,.sidebar-toggle{display:none!important}
+.sidebar-nav{padding:12px 8px}.sidebar-nav ul li{margin:4px 0}
+.sidebar-nav ul li a{justify-content:center;padding:13px 8px;border-radius:13px;min-height:48px;color:#617096;position:relative}
+.sidebar-nav ul li a i{margin:0;width:auto;font-size:1.12rem}
+.sidebar-nav ul li a:hover{background:var(--ui-soft);color:var(--primary)}
+.sidebar-nav ul li.active a{background:var(--primary);color:#fff;box-shadow:0 5px 12px color-mix(in srgb,var(--primary) 23%,transparent)}
+.sidebar-nav ul li a:focus-visible{outline:3px solid var(--primary);outline-offset:2px}
+.sidebar-footer{padding:8px;border-top:1px solid var(--ui-line)}.sidebar-footer .btn-logout{justify-content:center;color:#67718a}
+.sidebar-footer .btn-logout i{margin:0}.sidebar-footer .btn-logout:hover{background:#fff1f2;color:#dc2626}
+.main-content,.main-content.expanded{margin-left:var(--ui-rail);width:calc(100% - var(--ui-rail))}
+.top-header{height:72px;padding:0 30px;background:#fff;border-bottom:1px solid var(--ui-line);gap:16px}
+.header-left{min-width:135px}.header-left h1{font-size:1.08rem;font-weight:750}
+.edu-toplinks{display:flex;align-items:center;gap:5px;flex:1;justify-content:center;min-width:0;overflow-x:auto;scrollbar-width:none}
+.edu-toplinks::-webkit-scrollbar{display:none}
+.edu-toplink{font:600 .84rem var(--font);border:0;background:transparent;padding:11px 13px;border-radius:11px;color:#53617a;white-space:nowrap;cursor:pointer}
+.edu-toplink:hover,.edu-toplink.active{background:var(--ui-soft);color:var(--primary)}
+.edu-toplink.active{box-shadow:inset 0 -3px var(--primary)}
+.edu-school-mini{display:flex;align-items:center;gap:8px;color:#233153;font-size:.78rem;font-weight:700;max-width:170px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.edu-school-mini i{color:var(--primary)}
+.content-area{padding:24px 30px 50px;max-width:1750px;width:100%;margin:0 auto}
+.page-header{margin:20px 0 16px}.page-header h2{font-size:1.12rem;font-weight:750}
+.edu-hero{position:relative;overflow:hidden;min-height:133px;border-radius:20px;padding:28px 34px;color:#fff;background:linear-gradient(112deg,var(--primary-dark),var(--primary) 68%,color-mix(in srgb,var(--primary) 70%,#9c8aff));display:flex;align-items:center;gap:19px;box-shadow:var(--ui-shadow);margin-bottom:20px}
+.edu-hero:after{content:'';position:absolute;right:17%;top:-90px;width:280px;height:280px;border-radius:50%;background:rgba(255,255,255,.07);box-shadow:130px 100px 0 rgba(255,255,255,.055)}
+.edu-hero-icon{position:relative;z-index:1;flex:none;width:66px;height:66px;border-radius:17px;background:rgba(255,255,255,.94);color:var(--primary);display:grid;place-items:center;font-size:1.65rem}
+.edu-hero-copy{position:relative;z-index:1;min-width:0}.edu-hero h2{font-size:1.65rem;font-weight:780;line-height:1.2;margin:0 0 6px;color:#fff}.edu-hero p{opacity:.93;font-size:.89rem;margin:0}
+.edu-hero-deco{margin-left:auto;position:relative;z-index:1;font-size:4rem;color:rgba(255,255,255,.31);padding:0 32px}
+.card,.stat-card,.info-colegio-card{border:1px solid var(--ui-line);border-radius:var(--ui-radius);box-shadow:var(--ui-shadow);background:white}
+.card-header{padding:19px 24px;border-color:var(--ui-line)}.card-body{padding:22px 24px}
+.stats-grid{gap:16px}.stat-card{padding:20px}.stat-icon{border-radius:14px}
+.table-modern{border-collapse:separate;border-spacing:0;font-size:.83rem}.table-modern thead th{background:var(--ui-soft);color:#526181;border-bottom:0;padding:14px 13px;white-space:nowrap}.table-modern thead th:first-child{border-radius:10px 0 0 10px}.table-modern thead th:last-child{border-radius:0 10px 10px 0}.table-modern tbody td{padding:14px 13px;border-bottom:1px solid var(--ui-line)}.table-modern tbody tr:nth-child(even){background:#fafcff}
+.form-control{border-color:#dfe6f0;border-radius:10px}.form-control:focus{border-color:var(--primary)}
+.btn-primary,.btn-success,.btn-info,.btn-warning,.btn-danger{border-radius:10px;min-height:38px}.btn-primary{box-shadow:0 4px 11px color-mix(in srgb,var(--primary) 12%,transparent)}
+.page-content .plan-card,.page-content .welcome-banner{border-radius:18px}
+.chat-layout{grid-template-columns:minmax(230px,350px) minmax(0,1fr);gap:16px}.chat-mensajes{height:min(57vh,530px);min-height:320px;border-radius:15px;background:#f8faff}.chat-results button{border-radius:11px;padding:13px}
+#page-comunicados #comunicadosLista{height:min(57vh,540px);background:#f8faff}
+#page-perfil .card-body{max-width:1000px}
+.edu-hover-label{position:fixed;z-index:2500;background:#132342;color:#fff;border-radius:8px;padding:7px 11px;font:600 12px var(--font);pointer-events:none;white-space:nowrap;box-shadow:0 6px 20px #0002}
+.edu-theme-mark{width:26px;height:26px;background:var(--primary);border:3px solid #fff;box-shadow:0 0 0 1px #dce4f0;border-radius:50%;display:inline-block}
+@media(max-width:1160px){.edu-toplink{padding:10px 8px;font-size:.77rem}.top-header{padding:0 16px}.edu-school-mini{display:none}}
+@media(max-width:992px){.sidebar{width:250px;background:#fff;transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.sidebar-header .logo span,.sidebar-nav ul li a span,.sidebar-footer .btn-logout span,.sidebar-colegio,.sidebar-nav .nav-section{display:block!important}.sidebar-nav ul li a{justify-content:flex-start;padding:10px 14px}.sidebar-colegio{display:flex!important}.sidebar-nav .nav-section{color:#77809a}.sidebar-header .logo{font-size:1rem}.sidebar-header .logo span{color:var(--primary)}.sidebar-close-mobile{display:block!important}.main-content,.main-content.expanded{margin-left:0;width:100%}.edu-toplinks{justify-content:flex-start}.header-left{min-width:0}.content-area{padding:16px}.edu-hero{padding:22px;min-height:115px}.edu-hero h2{font-size:1.35rem}.edu-hero-deco{display:none}}
+@media(max-width:600px){.top-header{height:auto;min-height:64px;flex-wrap:wrap;padding:10px 14px}.edu-toplinks{order:3;flex-basis:100%;padding-top:4px}.header-right{margin-left:auto}.edu-hero{padding:18px;gap:12px}.edu-hero-icon{width:46px;height:46px;font-size:1.2rem}.edu-hero h2{font-size:1.15rem}.edu-hero p{font-size:.77rem}.card-body{padding:15px}.chat-layout{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.info-colegio-grid,.stats-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:430px){.info-colegio-grid,.stats-grid{grid-template-columns:1fr}}
+
+
+/* INICIO 2026 · Un único menú superior, color del colegio en las variables existentes */
+.sidebar,.sidebar-overlay{display:none!important}.main-content,.main-content.expanded{margin-left:0!important;width:100%!important}.top-header{height:74px;position:sticky;top:0;z-index:1100;background:#fff;box-shadow:0 3px 18px #0f172a0b;display:flex;gap:18px}.header-left{min-width:auto}.header-left .hamburger-btn{display:none!important}.header-left h1{font-size:1.15rem}.edu-school-mini{display:flex}.edu-unico-menu{overflow:visible;justify-content:center;gap:4px}.edu-toplink{font-size:.83rem}.edu-menu-group{position:relative;flex:none}.edu-menu-group summary{list-style:none;cursor:pointer;padding:12px 13px;border-radius:11px;color:#53617a;font-size:.84rem;font-weight:650;white-space:nowrap}.edu-menu-group summary::-webkit-details-marker{display:none}.edu-menu-group summary i{font-size:.65rem;margin-left:5px}.edu-menu-group[open] summary,.edu-menu-group summary:hover{background:var(--primary-bg);color:var(--primary)}.edu-menu-options{position:absolute;z-index:1200;top:100%;left:0;min-width:220px;display:grid;gap:3px;padding:10px;background:#fff;border:1px solid #e3e9f2;border-radius:15px;box-shadow:0 15px 40px #17264524}.edu-menu-options button{border:0;background:transparent;color:#263958;padding:11px 12px;border-radius:9px;text-align:left;font:600 .84rem var(--font);cursor:pointer}.edu-menu-options button:hover,.edu-menu-options button.active{background:var(--primary-bg);color:var(--primary)}.edu-mobile-menu-btn{display:none;border:1px solid #e1e8f3;background:#fff;border-radius:10px;padding:10px 12px;color:var(--primary);cursor:pointer}.edu-logout-top{color:#777}
+#page-inicio>.edu-hero,#page-inicio>.welcome-banner{display:none!important}
+.inicio-portada{--inicio-foto:none;position:relative;min-height:245px;overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr) 275px;align-items:center;padding:26px 32px;border-radius:19px;background:var(--primary-dark);color:#fff;margin-bottom:18px;isolation:isolate;gap:24px;box-shadow:0 12px 30px #00000013}
+.inicio-portada:before{content:'';position:absolute;inset:0;z-index:-2;background-image:linear-gradient(90deg,var(--primary-dark) 0%,color-mix(in srgb,var(--primary-dark) 88%,transparent) 36%,color-mix(in srgb,var(--primary) 38%,transparent) 100%),var(--inicio-foto);background-position:center,center;background-size:cover,cover}.inicio-portada-capa{position:absolute;inset:0;z-index:-1;background:linear-gradient(100deg,transparent 58%,#0003 100%)}.inicio-eyebrow{font-size:.72rem;letter-spacing:.14em;font-weight:700;opacity:.85}.inicio-portada h2{color:#fff;font-size:clamp(1.7rem,3vw,2.75rem);margin:6px 0;line-height:1.16}.inicio-portada-main>p:not(.inicio-eyebrow){opacity:.92;font-size:.95rem}.inicio-identidad{display:flex;align-items:center;gap:12px;margin-top:25px;flex-wrap:wrap}.inicio-logo-box{height:55px;width:55px;background:white;color:var(--primary);border-radius:13px;display:flex;align-items:center;justify-content:center;overflow:hidden;font-size:1.5rem;border:2px solid #ffffffb0;flex:none}.inicio-logo-box img{height:100%;width:100%;object-fit:contain}.inicio-identidad strong,.inicio-identidad small{display:block}.inicio-identidad small{opacity:.83;font-size:.77rem}.inicio-status{padding:5px 13px;background:#ffffff2a;border-radius:99px;color:#a6ffd1;font-size:.73rem;font-weight:700}.inicio-status.inactivo{color:#ffcece}.inicio-portada-side{background:#ffffff19;border:1px solid #ffffff3b;border-radius:16px;padding:18px;backdrop-filter:blur(10px)}.inicio-portada-label>i{font-size:1.2rem;margin-right:9px}.inicio-portada-label strong{font-size:.9rem}.inicio-portada-label p{font-size:.76rem;margin:8px 0 14px;opacity:.9}.inicio-foto-btn{background:#fff;color:var(--primary-dark);border:none;padding:10px 12px;border-radius:10px;font-weight:750;cursor:pointer;width:100%}.inicio-foto-btn:disabled{opacity:.6;cursor:wait}#inicioFotoEstado{display:block;margin-top:8px;font-size:.7rem}
+.inicio-central-grid{display:grid;grid-template-columns:1.08fr 1fr;gap:16px;margin-bottom:18px}.inicio-panel-plan,.inicio-panel-resumen{background:#fff;box-shadow:var(--ui-shadow);border:1px solid var(--ui-line);border-radius:16px;padding:20px 22px;min-width:0}.inicio-panel-plan{background:linear-gradient(110deg,var(--primary-dark),var(--primary));color:#fff}.inicio-plan-head{display:flex;gap:12px;align-items:center}.inicio-plan-head>i{font-size:1.4rem;padding:12px;background:#ffffff22;border-radius:11px}.inicio-plan-head strong,.inicio-plan-head span{display:block}.inicio-plan-head strong{font-size:1.2rem}.inicio-plan-head span{font-size:.76rem;opacity:.82}.inicio-plan-pill{margin-left:auto;border-radius:30px;background:#ffffff28;padding:5px 10px;font-size:.65rem!important;white-space:nowrap}.inicio-panel-plan>p{margin-top:24px;font-size:.8rem}.inicio-plan-counter{text-align:right;font-size:.85rem;font-weight:700;margin-top:-22px}.inicio-plan-track{height:10px;border-radius:20px;background:#ffffff3a;overflow:hidden;margin-top:12px}.inicio-plan-track>div{height:100%;width:0;background:#80d6ff;border-radius:20px}.inicio-plan-link{background:#ffffff20;color:white;border:1px solid #ffffff75;border-radius:22px;padding:9px 14px;margin-top:15px;font-weight:700;cursor:pointer}.inicio-panel-resumen h3{font-size:1rem}.inicio-panel-resumen h3 i{color:var(--primary)}.inicio-resumen-cifra{display:flex;align-items:center;gap:16px;border-top:1px solid #edf1f6;margin-top:12px;padding-top:15px}.inicio-resumen-icon{display:grid;place-items:center;width:65px;height:65px;background:var(--primary-bg);color:var(--primary);border-radius:14px;font-size:1.5rem}.inicio-resumen-cifra small,.inicio-resumen-cifra strong{display:block}.inicio-resumen-cifra strong{font-size:2rem;line-height:1.1;color:var(--primary)}.inicio-resumen-mini{display:flex;gap:12px;flex-wrap:wrap;font-size:.78rem;margin-top:12px;color:#5b6982}.inicio-resumen-mini strong{color:#172340}.inicio-atajos{background:#fff;border:1px solid var(--ui-line);box-shadow:var(--ui-shadow);border-radius:17px;padding:19px 20px}.inicio-atajos-head{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:13px}.inicio-atajos-head h3{font-size:1rem}.inicio-atajos-head small{color:#758198}.inicio-atajos-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.inicio-atajos-grid button{display:flex;align-items:center;gap:11px;text-align:left;background:#fff;border:1px solid #e6ebf2;padding:13px;border-radius:13px;cursor:pointer;min-width:0}.inicio-atajos-grid button:hover{border-color:var(--primary);background:var(--primary-bg)}.inicio-atajos-grid button>i:first-child{background:var(--primary-bg);color:var(--primary);padding:13px;border-radius:12px}.inicio-atajos-grid button>i:last-child{font-size:.7rem;margin-left:auto;color:var(--primary)}.inicio-atajos-grid b,.inicio-atajos-grid small{display:block}.inicio-atajos-grid b{font-size:.82rem}.inicio-atajos-grid small{font-size:.7rem;color:#69758d}
+@media(max-width:1100px){.edu-school-mini{display:none}.edu-unico-menu{gap:0}.edu-menu-group summary{padding:10px 8px}.edu-toplink{padding:10px 7px}}
+@media(max-width:850px){.top-header{height:auto;min-height:65px;flex-wrap:nowrap;padding:10px 16px}.edu-mobile-menu-btn{display:block;margin-left:auto}.edu-unico-menu{display:none;position:absolute;top:100%;left:8px;right:8px;z-index:1200;max-height:75vh;overflow-y:auto;flex-direction:column;align-items:stretch;background:white;padding:13px;box-shadow:0 12px 35px #0002;border-radius:0 0 15px 15px;border:1px solid #e7eaf2}.edu-unico-menu.menu-abierto{display:flex}.edu-unico-menu>.edu-toplink,.edu-menu-group summary{width:100%;text-align:left;padding:13px}.edu-menu-options{position:static;box-shadow:none;border:0;padding:5px 12px 10px;min-width:0}.header-right{margin-left:0}.content-area{padding:16px}.inicio-portada{grid-template-columns:1fr}.inicio-portada-side{max-width:390px}.inicio-central-grid{grid-template-columns:1fr}}
+@media(max-width:620px){.header-left h1{font-size:1rem}.inicio-portada{padding:22px 18px}.inicio-portada h2{font-size:1.7rem}.inicio-atajos-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.info-colegio-grid,.stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.inicio-plan-pill{display:none!important}}
+@media(max-width:390px){.inicio-atajos-grid,.info-colegio-grid,.stats-grid{grid-template-columns:1fr}}
+
+    
+/* EduOne: mejoras de módulos, colores heredados del colegio */
+.edu-section-head{display:flex;align-items:center;gap:16px;padding:23px 26px;margin-bottom:20px;border-radius:17px;color:#fff;background:linear-gradient(112deg,var(--primary-dark),var(--primary));box-shadow:0 10px 25px color-mix(in srgb,var(--primary) 22%,transparent)}
+.edu-section-head .edu-hicon{display:grid;place-items:center;width:55px;height:55px;border-radius:14px;background:rgba(255,255,255,.17);font-size:23px}
+.edu-section-head h2{font-size:1.35rem;margin:0}.edu-section-head p{margin:2px 0 0;opacity:.87;font-size:.87rem}
+#page-estudiantes .card,#page-personal .card,#page-notas .card,#page-chat .card,#page-comunicados .card,#page-perfil .card,#page-pensiones .card,#page-contabilidad .card{border:1px solid var(--border);border-radius:16px;box-shadow:0 5px 20px rgba(22,34,63,.05)}
+.edu-face{display:inline-flex;align-items:center;justify-content:center;flex:none;width:39px;height:39px;border-radius:50%;object-fit:cover;background:var(--primary-bg);color:var(--primary);font-size:15px;font-weight:800;border:2px solid white;box-shadow:0 1px 5px rgba(0,0,0,.08)}
+.edu-person{display:flex;align-items:center;gap:9px}.edu-photo-button{background:var(--primary-bg);border:1px solid var(--border);color:var(--primary);border-radius:7px;cursor:pointer;padding:6px 9px}
+.edu-kpi-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:0 0 18px}.edu-kpi{border:1px solid var(--border);background:#fff;border-radius:13px;padding:17px}.edu-kpi b{display:block;font-size:1.35rem;color:var(--primary)}.edu-kpi span{font-size:.8rem;color:var(--text-secondary)}
+.edu-note-profile{display:flex;align-items:center;gap:16px;background:#fff;border:1px solid var(--border);padding:17px;border-radius:14px;margin:16px 0}.edu-note-profile .edu-face{width:62px;height:62px;font-size:22px}.edu-note-profile strong{font-size:1.1rem}.edu-note-profile p{color:var(--text-secondary);font-size:.82rem}
+.edu-period-table{width:100%;border-collapse:collapse;margin-top:16px}.edu-period-table th,.edu-period-table td{text-align:center;padding:13px;border-bottom:1px solid var(--border)}.edu-period-table th:first-child,.edu-period-table td:first-child{text-align:left}.edu-period-table thead{background:var(--primary-bg)}
+.edu-chat-composer{display:flex!important;align-items:center;gap:9px;flex-wrap:wrap}.edu-chat-composer #chatTexto{flex:1;min-width:180px}.edu-upload-label{cursor:pointer;padding:10px 12px;border:1px solid var(--border);border-radius:9px;background:var(--primary-bg);color:var(--primary)}.edu-chat-composer input[type=file],#comunicadoForm input[type=file]{max-width:210px}
+.edu-chat-panel{background:linear-gradient(140deg,var(--primary-bg),#fff);border-radius:12px;min-height:300px}.chat-burbuja{box-shadow:0 2px 8px rgba(0,0,0,.035)}.chat-results button{display:flex;align-items:center;gap:10px}
+#page-perfil #fotoPerfilPreview{width:170px!important;height:170px!important;border:5px solid var(--primary-bg);box-shadow:0 6px 22px #0f172a18;margin-bottom:16px}
+.edu-small-note{font-size:.78rem;color:var(--text-secondary);margin-top:8px}
+@media(max-width:850px){.edu-kpi-row{grid-template-columns:repeat(2,minmax(0,1fr))}.edu-section-head{padding:17px}.edu-note-profile{flex-wrap:wrap}.edu-period-table{font-size:.78rem}}
+@media(max-width:480px){.edu-kpi-row{grid-template-columns:1fr 1fr}.edu-kpi{padding:11px}.edu-section-head h2{font-size:1.08rem}.edu-section-head p{font-size:.74rem}.edu-chat-composer #chatTexto{min-width:100%}}
+
+/* Controles de archivos accesibles y adaptables al menú superior existente */
+.edu-file-hidden{position:absolute!important;width:1px!important;height:1px!important;opacity:0!important;overflow:hidden!important;clip-path:inset(50%)!important}
+.edu-attach-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:12px 0}
+.edu-file-btn{border:1px solid var(--border);background:var(--primary-bg);color:var(--primary);border-radius:11px;min-height:42px;padding:10px 14px;display:inline-flex;gap:8px;align-items:center;justify-content:center;cursor:pointer;font:600 .83rem var(--font)}
+.edu-file-btn:hover,.edu-file-btn:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+.edu-file-name{font-size:.78rem;color:var(--text-secondary);overflow-wrap:anywhere;min-width:0}
+#chatForm .edu-file-btn{flex-shrink:0}
+#page-comunicados #comunicadosLista{overflow-y:auto;display:flex;flex-direction:column;gap:7px}
+@media(max-width:600px){.edu-file-btn span{display:none}.edu-file-btn{padding:10px}.edu-attach-row .edu-file-btn{font-size:.78rem}.edu-chat-composer #chatTexto{min-width:100%}}
+</style>
     <link rel="stylesheet" href="../assets/responsive.css" />
     <script src="../assets/responsive.js" defer></script>
 </head>
@@ -261,6 +357,12 @@
                 <li><a href="#" data-page="notas"><i class="fas fa-star"></i><span>Notas</span></a></li>
                 <li><a href="#" data-page="boletines"><i class="fas fa-file-pdf"></i><span>Boletines</span></a></li>
             </ul>
+            <div class="nav-section">COMUNICACIÓN</div>
+            <ul>
+                <li><a href="#" data-page="chat"><i class="fas fa-comments"></i><span>Chat</span></a></li>
+                <li><a href="#" data-page="comunicados"><i class="fas fa-bullhorn"></i><span>Comunicados</span></a></li>
+                <li><a href="#" data-page="perfil"><i class="fas fa-user-circle"></i><span>Mi fotografía</span></a></li>
+            </ul>
             <div class="nav-section">FINANZAS</div>
             <ul>
                 <li><a href="#" data-page="pensiones"><i class="fas fa-money-check-alt"></i><span>Pensiones</span></a></li>
@@ -278,6 +380,16 @@
                 <button class="hamburger-btn" id="hamburgerBtn"><i class="fas fa-bars"></i></button>
                 <h1 id="pageTitle">Inicio</h1>
             </div>
+            <nav class="edu-toplinks edu-unico-menu" aria-label="Menú principal del rector">
+              <button class="edu-toplink active" type="button" data-to="inicio"><i class="fas fa-home"></i> Inicio</button>
+              <details class="edu-menu-group"><summary>Gestión <i class="fas fa-chevron-down"></i></summary><div class="edu-menu-options"><button type="button" data-to="estudiantes">Estudiantes y matrículas</button><button type="button" data-to="personal">Personal</button></div></details>
+              <details class="edu-menu-group"><summary>Académico <i class="fas fa-chevron-down"></i></summary><div class="edu-menu-options"><button type="button" data-to="grados">Grados</button><button type="button" data-to="cursos">Cursos</button><button type="button" data-to="asignaturas">Asignaturas</button><button type="button" data-to="horarios">Horarios</button><button type="button" data-to="notas">Notas</button><button type="button" data-to="boletines">Boletines</button></div></details>
+              <details class="edu-menu-group"><summary>Finanzas <i class="fas fa-chevron-down"></i></summary><div class="edu-menu-options"><button type="button" data-to="pensiones">Pensiones</button><button type="button" data-to="contabilidad">Contabilidad</button></div></details>
+              <details class="edu-menu-group"><summary>Comunicación <i class="fas fa-chevron-down"></i></summary><div class="edu-menu-options"><button type="button" data-to="chat">Chat</button><button type="button" data-to="comunicados">Comunicados</button></div></details>
+              <button class="edu-toplink" type="button" data-to="perfil">Mi perfil</button>
+              <button class="edu-toplink edu-logout-top" type="button" id="eduLogoutTop"><i class="fas fa-sign-out-alt"></i> Salir</button>
+            </nav>
+            <button class="edu-mobile-menu-btn" type="button" id="eduMobileMenu" aria-controls="eduMenuDrawer" aria-expanded="false" aria-label="Abrir menú"><i class="fas fa-bars"></i></button>
             <div class="header-right">
                 <div class="user-info">
                     <span class="user-name" id="userName">Cargando...</span>
@@ -294,6 +406,17 @@
             </div>
 
             <div id="page-inicio" class="page-content active">
+                <section class="inicio-portada" id="inicioPortada" aria-label="Bienvenida del colegio">
+                  <div class="inicio-portada-capa"></div>
+                  <div class="inicio-portada-main">
+                    <p class="inicio-eyebrow">PANEL INSTITUCIONAL</p>
+                    <h2 id="inicioSaludo">¡Bienvenido!</h2>
+                    <p>Tu institución educativa, organizada en un solo lugar.</p>
+                    <div class="inicio-identidad"><span class="inicio-logo-box" id="inicioLogoBox"><i class="fas fa-school"></i></span><div><strong id="inicioNombreColegio">Colegio</strong><small id="inicioUbicacionColegio">Información institucional</small></div><span class="inicio-status" id="inicioEstado">● Activo</span></div>
+                  </div>
+                  <div class="inicio-portada-side"><div class="inicio-portada-label"><i class="fas fa-camera"></i><strong>Fotografía de tu colegio</strong><p>Personaliza la portada sin modificar los colores de EduOne.</p></div><button type="button" class="inicio-foto-btn" id="inicioCambiarFoto"><i class="fas fa-image"></i> Cambiar fotografía</button><input type="file" id="inicioFotoArchivo" accept="image/jpeg,image/png,image/webp" hidden><small id="inicioFotoEstado" role="status"></small></div>
+                </section>
+
                 <div class="welcome-banner" id="welcomeBanner">
                     <div style="display: flex; align-items: center; gap: 16px; flex: 1; min-width: 200px;">
                         <div id="bannerLogoContainer"><i class="fas fa-graduation-cap" style="font-size: 2.5rem;" id="bannerLogoIcon"></i></div>
@@ -318,6 +441,10 @@
                     <div class="plan-progress-header"><span>Estudiantes inscritos</span><strong><span id="planEstudiantesActuales">0</span> / <span id="planEstudiantesMax">0</span></strong></div>
                     <div class="plan-progress-bar"><div class="plan-progress-fill" id="planProgressFill" style="width: 0%;"></div></div>
                 </div>
+                <div class="inicio-central-grid">
+                  <div class="inicio-panel-plan"><div class="inicio-plan-head"><i class="fas fa-layer-group"></i><div><strong id="inicioPlanTitulo">Plan EduOne</strong><span>Plan de tu institución</span></div><span class="inicio-plan-pill">PLAN ACTUAL</span></div><p>Estudiantes inscritos</p><div class="inicio-plan-counter"><span id="inicioPlanCantidad">0 / 0</span></div><div class="inicio-plan-track"><div id="inicioPlanFill"></div></div><button type="button" class="inicio-plan-link" data-inicio-to="estudiantes">Administrar estudiantes <i class="fas fa-arrow-right"></i></button></div>
+                  <div class="inicio-panel-resumen"><h3><i class="fas fa-chart-line"></i> Resumen rápido</h3><div class="inicio-resumen-cifra"><span class="inicio-resumen-icon"><i class="fas fa-user-graduate"></i></span><div><small>Estudiantes registrados</small><strong id="inicioResumenEstudiantes">0</strong><small>Datos actuales de Firestore</small></div></div><div class="inicio-resumen-mini"><span><i class="fas fa-users"></i> Personal <strong id="inicioResumenPersonal">0</strong></span><span><i class="fas fa-calendar"></i> Horarios <strong id="inicioResumenHorarios">0</strong></span></div></div>
+                </div>
                 <div class="card">
                     <div class="card-header"><h2>Estadísticas del Colegio</h2></div>
                     <div class="card-body">
@@ -332,9 +459,11 @@
                         </div>
                     </div>
                 </div>
+                <section class="inicio-atajos"><div class="inicio-atajos-head"><h3>Acceso rápido a módulos</h3><small>Accede directamente a las funciones de tu colegio</small></div><div class="inicio-atajos-grid"><button type="button" data-inicio-to="notas"><i class="fas fa-star"></i><span><b>Notas</b><small>Consulta calificaciones</small></span><i class="fas fa-chevron-right"></i></button><button type="button" data-inicio-to="pensiones"><i class="fas fa-credit-card"></i><span><b>Pensiones</b><small>Pagos y obligaciones</small></span><i class="fas fa-chevron-right"></i></button><button type="button" data-inicio-to="comunicados"><i class="fas fa-bullhorn"></i><span><b>Comunicados</b><small>Información institucional</small></span><i class="fas fa-chevron-right"></i></button><button type="button" data-inicio-to="chat"><i class="fas fa-comments"></i><span><b>Chat</b><small>Comunicación interna</small></span><i class="fas fa-chevron-right"></i></button></div></section>
             </div>
 
             <div id="page-estudiantes" class="page-content">
+<div class="edu-section-head"><span class="edu-hicon"><i class="fas fa-user-graduate"></i></span><div><h2>Estudiantes y matrículas</h2><p>Gestión de estudiantes, registros y matrículas del colegio</p></div></div>
                 <div class="page-header">
                     <h2><i class="fas fa-user-graduate" style="color: var(--primary);"></i> Estudiantes y Matrículas</h2>
                     <button class="btn-primary" id="btnRegistrarEstudiante"><i class="fas fa-plus"></i> Inscribir / Matricular</button>
@@ -349,7 +478,8 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="table-toolbar">
-                            <div class="search-box"><i class="fas fa-search"></i><input type="text" id="buscarEstudiante" class="form-control" placeholder="Buscar por nombre, documento o acudiente..." /></div>
+                            <div class="search-box"><i class="fas fa-search"></i><input type="text" id="buscarEstudiante" class="form-control" placeholder="Buscar por nombre, documento, correo o acudiente..." /></div>
+                            <select id="filtroGradoEstudiante" class="form-control"><option value="">Todos los grados</option></select>
                             <select id="filtroCursoEstudiante" class="form-control"><option value="">Todos los cursos</option></select>
                             <select id="filtroEstadoEstudiante" class="form-control"><option value="">Todos los estados</option><option value="activo">Activo</option><option value="inactivo">Inactivo</option></select>
                         </div>
@@ -357,7 +487,22 @@
                             <div class="table-loading-overlay" id="loadingEstudiantes"><div class="spinner-sm"></div><span>Cargando estudiantes...</span></div>
                             <div class="table-responsive">
                                 <table class="table-modern">
-                                    <thead><tr><th>#</th><th>Estudiante</th><th>Documento</th><th>Grado</th><th>Curso</th><th>Pago matrícula</th><th>Abonado</th><th>Saldo</th><th>Estado</th><th>Acciones</th></tr></thead>
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Estudiante</th>
+                                            <th>Documento</th>
+                                            <th>Correo</th>
+                                            <th>Grado</th>
+                                            <th>Curso</th>
+                                            <th>Acudiente</th>
+                                            <th>Pago matrícula</th>
+                                            <th>Abonado</th>
+                                            <th>Saldo</th>
+                                            <th>Estado</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
                                     <tbody id="tablaEstudiantes"></tbody>
                                 </table>
                             </div>
@@ -368,6 +513,7 @@
             </div>
 
             <div id="page-personal" class="page-content">
+<div class="edu-section-head"><span class="edu-hicon"><i class="fas fa-users"></i></span><div><h2>Personal</h2><p>Directivos, docentes y colaboradores de la institución</p></div></div>
                 <div class="page-header">
                     <h2><i class="fas fa-users-cog" style="color: var(--primary);"></i> Personal del Colegio</h2>
                     <button class="btn-primary" id="btnRegistrarPersonal"><i class="fas fa-plus"></i> Registrar personal</button>
@@ -464,6 +610,7 @@
             </div>
 
             <div id="page-notas" class="page-content">
+<div class="edu-section-head"><span class="edu-hicon"><i class="fas fa-star"></i></span><div><h2>Notas</h2><p>Consulta las calificaciones por estudiante, asignatura y período</p></div></div>
                 <div class="page-header"><h2><i class="fas fa-star" style="color: var(--primary);"></i> Consulta de Notas</h2></div>
                 <div class="card"><div class="card-body">
                     <div class="form-grid" style="margin-bottom: 20px;">
@@ -479,7 +626,7 @@
                         </div>
                     </div>
                     <button class="btn-primary" id="btnConsultarNotas"><i class="fas fa-search"></i> Consultar notas</button>
-                    <div class="table-wrapper" style="margin-top: 16px;">
+                    <div id="eduNotaPerfil"></div><div id="eduNotasPeriodos" style="display:none"></div><div class="table-wrapper" id="eduNotasDetalle" style="margin-top: 16px;">
                         <div class="table-loading-overlay" id="loadingNotas"><div class="spinner-sm"></div><span>Calculando notas...</span></div>
                         <div class="table-responsive">
                             <table class="table-modern">
@@ -514,6 +661,17 @@
             </div>
 
             <div id="page-pensiones" class="page-content">
+<div class="edu-section-head"><span class="edu-hicon"><i class="fas fa-money-check-alt"></i></span><div><h2>Pensiones</h2><p>Control de las obligaciones mensuales y pagos</p></div></div>
+                <div class="card"><div class="card-body">
+                  <h3 style="margin-bottom:12px">Configuración global de pensiones</h3>
+                  <p class="text-muted" style="margin-bottom:12px">Configura el valor para el mes y año seleccionados. Luego genera las obligaciones para estudiantes activos. Se respetan las pensiones ya registradas.</p>
+                  <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:end">
+                    <div><label for="pensValorGlobal">Valor general (COP)</label><input class="form-control" id="pensValorGlobal" type="number" min="0" step="1" placeholder="Ej. 180000" /></div>
+                    <button type="button" class="btn-primary" id="pensGuardarGlobal">Guardar valor del mes</button>
+                    <button type="button" class="btn-success" id="pensGenerarMes">Generar obligaciones</button>
+                  </div><div id="pensConfigEstado" role="status" style="margin-top:12px"></div>
+                </div></div>
+                <div class="card"><div class="card-body" style="display:flex;gap:12px;flex-wrap:wrap;align-items:end"><div><label>Mes</label><select id="pensMesFiltro" class="form-control"></select></div><div><label>Año</label><input id="pensAnioFiltro" type="number" class="form-control" min="2020" max="2100"></div><div><label>Estado</label><select id="pensEstadoFiltro" class="form-control"><option value="todos">Todos</option><option value="debe">Con saldo pendiente</option><option value="pagado">Pagados</option></select></div><button id="pensAplicarFiltro" class="btn-primary" type="button">Filtrar</button><div id="pensPaginaInfo" aria-live="polite"></div><button type="button" id="pensAnterior" class="btn-secondary">Anterior</button><button type="button" id="pensSiguiente" class="btn-secondary">Siguiente</button></div></div>
                 <div class="page-header">
                     <h2><i class="fas fa-money-check-alt" style="color: var(--primary);"></i> Pensiones</h2>
                     <button class="btn-primary" id="btnRegistrarPagoPension"><i class="fas fa-plus"></i> Nueva pensión / Pago</button>
@@ -531,7 +689,31 @@
                 </div></div>
             </div>
 
+            <div id="page-chat" class="page-content">
+<div class="edu-section-head"><span class="edu-hicon"><i class="fas fa-comments"></i></span><div><h2>Chat interno</h2><p>Mensajes, imágenes, documentos y comunicación entre usuarios</p></div></div>
+                <div class="page-header"><h2><i class="fas fa-comments"></i> Chat interno</h2></div>
+                <div class="card"><div class="card-body"><div class="chat-layout">
+                    <aside><label for="chatBuscar">Buscar usuario del colegio</label><input id="chatBuscar" class="form-control" placeholder="Nombre o apellido" autocomplete="off"><div id="chatResultados" class="chat-results"></div></aside>
+                    <section><h3 id="chatContacto">Selecciona una persona</h3><div id="chatMensajes" class="chat-mensajes" aria-live="polite"></div>
+                    <form id="chatForm" class="edu-chat-composer"> <button type="button" class="edu-upload-label" id="eduEmojiChat" title="Insertar emoji">😊</button><input id="chatTexto" class="form-control" maxlength="3000" placeholder="Escribe un mensaje" disabled><label class="edu-file-btn" for="chatAdjunto" title="Adjuntar foto o documento"><i class="fas fa-paperclip"></i><span>Adjuntar</span></label><input class="edu-file-hidden" type="file" id="chatAdjunto" accept="image/jpeg,image/png,image/webp,application/pdf,text/plain,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" aria-label="Adjuntar imagen o documento" disabled><button class="edu-file-btn" type="button" id="chatCamaraBtn" title="Tomar fotografía"><i class="fas fa-camera"></i><span>Cámara</span></button><input class="edu-file-hidden" type="file" id="chatCamara" accept="image/*" capture="environment" aria-label="Tomar foto"> <span class="edu-file-name" id="chatArchivoNombre" aria-live="polite"></span><button id="chatEnviar" class="btn-primary" disabled>Enviar</button></form></section>
+                </div></div></div>
+            </div>
+            <div id="page-comunicados" class="page-content">
+<div class="edu-section-head"><span class="edu-hicon"><i class="fas fa-bullhorn"></i></span><div><h2>Comunicados institucionales</h2><p>Canal oficial del colegio para estudiantes, familias y personal</p></div></div>
+                <div class="page-header"><h2><i class="fas fa-bullhorn"></i> Comunicados institucionales</h2></div>
+                <div class="card"><div class="card-body"><div id="comunicadosLista" class="chat-mensajes" aria-live="polite"></div>
+                    <form id="comunicadoForm"><button type="button" class="edu-upload-label" id="eduEmojiComunicado" title="Insertar emoji">😊</button><label for="comunicadoTexto">Nuevo comunicado para estudiantes y acudientes</label><textarea id="comunicadoTexto" class="form-control" rows="3" maxlength="6000"></textarea><div class="edu-attach-row"><label class="edu-file-btn" for="comunicadoAdjunto"><i class="fas fa-paperclip"></i> Adjuntar imagen o documento</label><input class="edu-file-hidden" type="file" id="comunicadoAdjunto" accept="image/jpeg,image/png,image/webp,application/pdf,text/plain,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" aria-label="Adjuntar archivo al comunicado"><button type="button" class="edu-file-btn" id="comunicadoCamaraBtn"><i class="fas fa-camera"></i> Tomar foto</button><input class="edu-file-hidden" type="file" id="comunicadoCamara" accept="image/*" capture="environment" aria-label="Tomar fotografía para comunicado"><span class="edu-file-name" id="comunicadoArchivoNombre" aria-live="polite"></span></div><p style="margin-top:12px"><button id="comunicadoPublicar" class="btn-primary">Publicar comunicado</button></p></form>
+                </div></div>
+            </div>
+            <div id="page-perfil" class="page-content">
+<div class="edu-section-head"><span class="edu-hicon"><i class="fas fa-user-circle"></i></span><div><h2>Mi fotografía</h2><p>Configura tu imagen de perfil</p></div></div>
+                <div class="page-header"><h2>Configuración de mi perfil</h2></div><div class="card"><div class="card-body">
+                    <img id="fotoPerfilPreview" alt="Foto de perfil" style="width:110px;height:110px;border-radius:50%;object-fit:cover;display:none">
+                    <form id="fotoPerfilForm"><label for="fotoPerfilFile">Selecciona una fotografía JPG, PNG o WebP (hasta 3 MB)</label><input id="fotoPerfilFile" type="file" class="form-control" accept="image/jpeg,image/png,image/webp" required><button id="fotoPerfilGuardar" class="btn-primary" style="margin-top:12px">Guardar fotografía</button></form>
+                </div></div>
+            </div>
             <div id="page-contabilidad" class="page-content">
+<div class="edu-section-head"><span class="edu-hicon"><i class="fas fa-calculator"></i></span><div><h2>Contabilidad</h2><p>Ingresos, egresos y movimientos financieros</p></div></div>
                 <div class="page-header">
                     <h2><i class="fas fa-calculator" style="color: var(--primary);"></i> Contabilidad</h2>
                     <div style="display: flex; gap: 10px; flex-wrap: wrap;"><button class="btn-success" id="btnAgregarMovimiento"><i class="fas fa-plus"></i> Agregar movimiento</button></div>
@@ -582,7 +764,7 @@
         </section>
     </main>
 
-    <!-- MODALES -->
+    <!-- MODAL ESTUDIANTE -->
     <div class="modal" id="modalEstudiante">
         <div class="modal-overlay"></div>
         <div class="modal-content">
@@ -631,6 +813,7 @@
         </div>
     </div>
 
+    <!-- MODAL EDITAR ESTUDIANTE -->
     <div class="modal" id="modalEditarEstudiante">
         <div class="modal-overlay"></div>
         <div class="modal-content">
@@ -661,6 +844,7 @@
         </div>
     </div>
 
+    <!-- MODAL ABONAR MATRÍCULA -->
     <div class="modal" id="modalAbonarMatricula">
         <div class="modal-overlay"></div>
         <div class="modal-content" style="max-width: 600px;">
@@ -691,6 +875,7 @@
         </div>
     </div>
 
+    <!-- MODAL PERSONAL -->
     <div class="modal" id="modalPersonal">
         <div class="modal-overlay"></div>
         <div class="modal-content">
@@ -726,6 +911,7 @@
         </div>
     </div>
 
+    <!-- MODAL EDITAR PERSONAL -->
     <div class="modal" id="modalEditarPersonal">
         <div class="modal-overlay"></div>
         <div class="modal-content">
@@ -760,6 +946,7 @@
         </div>
     </div>
 
+    <!-- MODAL GRADO -->
     <div class="modal" id="modalGrado">
         <div class="modal-overlay"></div>
         <div class="modal-content">
@@ -780,6 +967,7 @@
         </div>
     </div>
 
+    <!-- MODAL CURSO -->
     <div class="modal" id="modalCurso">
         <div class="modal-overlay"></div>
         <div class="modal-content">
@@ -801,6 +989,7 @@
         </div>
     </div>
 
+    <!-- MODAL ASIGNATURA -->
     <div class="modal" id="modalAsignatura">
         <div class="modal-overlay"></div>
         <div class="modal-content">
@@ -821,11 +1010,13 @@
         </div>
     </div>
 
+    <!-- MODAL AGREGAR CLASE -->
     <div class="modal" id="modalAgregarClase">
         <div class="modal-overlay"></div>
         <div class="modal-content">
             <div class="modal-header"><h2><i class="fas fa-calendar-plus"></i> Agregar Clase</h2><button class="modal-close" id="closeClaseModal">&times;</button></div>
             <form id="formAgregarClase">
+                <div class="form-group" style="padding:14px 22px 0"><label>Tipo de bloque</label><select id="claseTipo" class="form-control"><option value="clase">Clase</option><option value="descanso">Descanso</option><option value="almuerzo">Almuerzo</option><option value="actividad">Actividad institucional</option></select></div>
                 <div class="modal-body">
                     <div class="form-grid">
                         <div class="form-group"><label>Día *</label>
@@ -850,6 +1041,7 @@
         </div>
     </div>
 
+    <!-- MODAL PAGO PENSIÓN -->
     <div class="modal" id="modalPagoPension">
         <div class="modal-overlay"></div>
         <div class="modal-content">
@@ -884,6 +1076,7 @@
         </div>
     </div>
 
+    <!-- MODAL EDITAR PENSIÓN -->
     <div class="modal" id="modalEditarPension">
         <div class="modal-overlay"></div>
         <div class="modal-content" style="max-width: 600px;">
@@ -907,6 +1100,7 @@
         </div>
     </div>
 
+    <!-- MODAL ABONAR PENSIÓN -->
     <div class="modal" id="modalAbonarPension">
         <div class="modal-overlay"></div>
         <div class="modal-content" style="max-width: 600px;">
@@ -938,6 +1132,7 @@
         </div>
     </div>
 
+    <!-- MODAL AGREGAR MOVIMIENTO -->
     <div class="modal" id="modalAgregarMovimiento">
         <div class="modal-overlay"></div>
         <div class="modal-content">
@@ -974,6 +1169,7 @@
         </div>
     </div>
 
+    <!-- MODAL VER PAGOS -->
     <div class="modal" id="modalVerPagos">
         <div class="modal-overlay"></div>
         <div class="modal-content" style="max-width: 700px;">
@@ -992,7 +1188,8 @@
             "imports": {
                 "firebase/app": "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js",
                 "firebase/auth": "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js",
-                "firebase/firestore": "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js"
+                "firebase/firestore": "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js",
+                "firebase/storage": "https://www.gstatic.com/firebasejs/11.3.1/firebase-storage.js"
             }
         }
     </script>
@@ -1000,7 +1197,8 @@
     <script type="module">
         import { initializeApp, getApps } from "firebase/app";
         import { getAuth, onAuthStateChanged, signOut, createUserWithEmailAndPassword } from "firebase/auth";
-        import { getFirestore, doc, getDoc, collection, getDocs, addDoc, updateDoc, deleteDoc, query, where, serverTimestamp, setDoc } from "firebase/firestore";
+        import { getFirestore, doc, getDoc, collection, getDocs, addDoc, updateDoc, deleteDoc, query, where, serverTimestamp, setDoc, onSnapshot, orderBy, limit } from "firebase/firestore";
+        import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "firebase/storage";
 
         const firebaseConfig = {
             apiKey: "AIzaSyA3U98y5BJWQwpypFCAyNioqSRfXkr9UA0",
@@ -1028,6 +1226,8 @@
         let matriculaEditActual = null;
         let estudiantesCache = [];
         let personalCache = [];
+        let gradosCache = [];
+        let cursosCache = [];
         const pagEstudiantes = { page: 1, perPage: 10 };
         const pagPersonal = { page: 1, perPage: 10 };
 
@@ -1109,9 +1309,6 @@
             }
         }
 
-        // =============================================
-        // HELPERS DE CARGA
-        // =============================================
         function mostrarCargando(id) { const el = document.getElementById(id); if (el) el.classList.add('show'); }
         function ocultarCargando(id) { const el = document.getElementById(id); if (el) el.classList.remove('show'); }
 
@@ -1124,23 +1321,18 @@
             try {
                 const q = query(collection(db, 'usuarios'), where('email', '==', emailLower));
                 const snap = await getDocs(q);
-                if (!snap.empty) { console.log('Correo existe en /usuarios.email'); return true; }
-            } catch (e) { console.warn('correoYaExiste intento 1:', e.code || e.message); }
-            try {
-                const q2 = query(collection(db, 'usuarios'), where('correo', '==', emailLower));
-                const snap2 = await getDocs(q2);
-                if (!snap2.empty) { console.log('Correo existe en /usuarios.correo'); return true; }
-            } catch (e) { console.warn('correoYaExiste intento 2:', e.code || e.message); }
+                if (!snap.empty) return true;
+            } catch (e) { console.warn(e.message); }
             try {
                 const q3 = query(collection(db, 'colegios', colegioId, 'profesores'), where('correo', '==', emailLower));
                 const snap3 = await getDocs(q3);
-                if (!snap3.empty) { console.log('Correo existe en /profesores'); return true; }
-            } catch (e) { console.warn('correoYaExiste intento 3:', e.code || e.message); }
+                if (!snap3.empty) return true;
+            } catch (e) { console.warn(e.message); }
             try {
                 const q4 = query(collection(db, 'colegios', colegioId, 'estudiantes'), where('correo', '==', emailLower));
                 const snap4 = await getDocs(q4);
-                if (!snap4.empty) { console.log('Correo existe en /estudiantes'); return true; }
-            } catch (e) { console.warn('correoYaExiste intento 4:', e.code || e.message); }
+                if (!snap4.empty) return true;
+            } catch (e) { console.warn(e.message); }
             return false;
         }
 
@@ -1158,17 +1350,13 @@
 
         async function crearCuentaUsuario(email, password, nombre, rol, colegioId, telefono) {
             const emailLimpio = (email || '').toLowerCase().trim();
-            // Validación previa
             try {
                 const q = query(collection(db, 'usuarios'), where('email', '==', emailLimpio));
                 const snap = await getDocs(q);
-                if (!snap.empty) {
-                    throw new Error('El correo ingresado ya está registrado en la plataforma. Por favor usa un correo diferente.');
-                }
+                if (!snap.empty) throw new Error('El correo ingresado ya está registrado en la plataforma. Por favor usa un correo diferente.');
             } catch (e) {
                 if (e.message && e.message.includes('registrado')) throw e;
             }
-
             const secondaryAuth = getAuth(getSecondaryApp());
             try {
                 const userCredential = await createUserWithEmailAndPassword(secondaryAuth, emailLimpio, password);
@@ -1183,15 +1371,9 @@
                 return user.uid;
             } catch (error) {
                 console.error('Error en crearCuentaUsuario:', error.code, error.message);
-                if (error.code === 'auth/email-already-in-use') {
-                    throw new Error('El correo ingresado ya está registrado en la plataforma. Por favor usa un correo diferente.');
-                }
-                if (error.code === 'auth/invalid-email') {
-                    throw new Error('El correo electrónico no es válido.');
-                }
-                if (error.code === 'auth/weak-password') {
-                    throw new Error('La contraseña es demasiado débil. Debe tener al menos 6 caracteres.');
-                }
+                if (error.code === 'auth/email-already-in-use') throw new Error('El correo ingresado ya está registrado en la plataforma.');
+                if (error.code === 'auth/invalid-email') throw new Error('El correo electrónico no es válido.');
+                if (error.code === 'auth/weak-password') throw new Error('La contraseña es demasiado débil. Debe tener al menos 6 caracteres.');
                 throw error;
             }
         }
@@ -1264,6 +1446,7 @@
 
                 aplicarColoresColegio(data.colorPrimario);
                 aplicarLogo(data.logoUrl);
+                aplicarInicioColegio(data);
 
                 maxEstudiantesPlan = data.maxEstudiantes || 999999;
                 planNombreActual = data.planNombre || 'Sin plan';
@@ -1298,6 +1481,7 @@
                 document.getElementById('statsAsignaturas').textContent = (await getDocs(collection(db, 'colegios', colegioId, 'asignaturas'))).size;
                 document.getElementById('statsHorarios').textContent = (await getDocs(collection(db, 'colegios', colegioId, 'horarios'))).size;
                 document.getElementById('statsNotas').textContent = (await getDocs(collection(db, 'colegios', colegioId, 'notas'))).size;
+                actualizarInicioEstadisticas();
 
                 document.getElementById('loadingState').style.display = 'none';
             } catch (error) {
@@ -1363,7 +1547,7 @@
         }
 
         // =============================================
-        // ESTUDIANTES
+        // ✅ ESTUDIANTES (MEJORADO PARA IMPORTACIÓN MASIVA)
         // =============================================
         async function cargarEstudiantes() {
             mostrarCargando('loadingEstudiantes');
@@ -1371,6 +1555,7 @@
                 const snap = await getDocs(collection(db, 'colegios', colegioId, 'estudiantes'));
                 estudiantesActualesCount = snap.size;
 
+                // Actualizar plan
                 const colegioDoc = await getDoc(doc(db, 'colegios', colegioId));
                 if (colegioDoc.exists()) {
                     maxEstudiantesPlan = colegioDoc.data().maxEstudiantes || 999999;
@@ -1378,58 +1563,124 @@
                 }
                 actualizarPlanUI(estudiantesActualesCount, maxEstudiantesPlan);
 
-                const cursosSnap = await getDocs(collection(db, 'colegios', colegioId, 'cursos'));
-                const cursosMap = {};
-                const filtroCurso = document.getElementById('filtroCursoEstudiante');
-                filtroCurso.innerHTML = '<option value="">Todos los cursos</option>';
-                cursosSnap.forEach(c => {
-                    const cd = c.data();
-                    cursosMap[c.id] = cd.nombre || 'Curso';
-                    filtroCurso.innerHTML += `<option value="${c.id}">${cd.nombre || 'Curso'}</option>`;
+                // ✅ Cargar GRADOS en caché
+                const gradosSnap = await getDocs(collection(db, 'colegios', colegioId, 'grados'));
+                gradosCache = [];
+                gradosSnap.forEach(g => gradosCache.push({ id: g.id, ...g.data() }));
+                gradosCache.sort((a, b) => (a.orden || 0) - (b.orden || 0));
+
+                const filtroGrado = document.getElementById('filtroGradoEstudiante');
+                filtroGrado.innerHTML = '<option value="">Todos los grados</option>';
+                gradosCache.forEach(g => {
+                    filtroGrado.innerHTML += `<option value="${g.id}">${g.nombre || 'Grado'}</option>`;
                 });
 
-                const gradosSnap = await getDocs(collection(db, 'colegios', colegioId, 'grados'));
-                const gradosMap = {};
-                gradosSnap.forEach(g => gradosMap[g.id] = g.data().nombre || 'Grado');
+                // ✅ Cargar CURSOS en caché
+                const cursosSnap = await getDocs(collection(db, 'colegios', colegioId, 'cursos'));
+                cursosCache = [];
+                cursosSnap.forEach(c => cursosCache.push({ id: c.id, ...c.data() }));
+                cursosCache.sort((a, b) => (a.nombre || '').localeCompare(b.nombre || ''));
 
-                estudiantesCache = [];
-                for (const docSnap of snap.docs) {
-                    const d = docSnap.data();
-                    let grado = '-', curso = '-', cursoId = null, gradoId = null;
-                    const matQ = query(collection(db, 'colegios', colegioId, 'matriculas'), where('estudianteId', '==', docSnap.id));
-                    const matSnap = await getDocs(matQ);
-                    let matricula = null;
-                    if (!matSnap.empty) {
-                        matricula = { id: matSnap.docs[0].id, ...matSnap.docs[0].data() };
-                        if (matricula.gradoId) { gradoId = matricula.gradoId; grado = gradosMap[matricula.gradoId] || '-'; }
-                        if (matricula.cursoId) { cursoId = matricula.cursoId; curso = cursosMap[matricula.cursoId] || '-'; }
+                const filtroCurso = document.getElementById('filtroCursoEstudiante');
+                filtroCurso.innerHTML = '<option value="">Todos los cursos</option>';
+                cursosCache.forEach(c => {
+                    filtroCurso.innerHTML += `<option value="${c.id}">${c.nombre || 'Curso'}</option>`;
+                });
+
+                // ✅ Cargar TODAS las matrículas de una sola vez (mucho más eficiente)
+                const matriculasSnap = await getDocs(collection(db, 'colegios', colegioId, 'matriculas'));
+                const matriculasPorEstudiante = {};
+                matriculasSnap.forEach(m => {
+                    const md = m.data();
+                    if (md.estudianteId) {
+                        // Guardar la más reciente por estudiante
+                        if (!matriculasPorEstudiante[md.estudianteId]) {
+                            matriculasPorEstudiante[md.estudianteId] = { id: m.id, ...md };
+                        }
                     }
+                });
+
+                // ✅ Construir cache de estudiantes
+                estudiantesCache = [];
+                snap.forEach(docSnap => {
+                    const d = docSnap.data();
+                    const matricula = matriculasPorEstudiante[docSnap.id] || null;
+                    let grado = '-', curso = '-', cursoId = null, gradoId = null;
+
+                    if (matricula) {
+                        if (matricula.gradoId) {
+                            gradoId = matricula.gradoId;
+                            const g = gradosCache.find(x => x.id === matricula.gradoId);
+                            grado = g ? (g.nombre || '-') : (d.gradoNombre || '-');
+                        } else if (d.gradoNombre) {
+                            grado = d.gradoNombre;
+                        }
+                        if (matricula.cursoId) {
+                            cursoId = matricula.cursoId;
+                            const c = cursosCache.find(x => x.id === matricula.cursoId);
+                            curso = c ? (c.nombre || '-') : (d.cursoNombre || '-');
+                        } else if (d.cursoNombre) {
+                            curso = d.cursoNombre;
+                        }
+                    } else {
+                        // Fallback: si no hay matrícula, usar los campos desnormalizados del estudiante
+                        grado = d.gradoNombre || '-';
+                        curso = d.cursoNombre || '-';
+                    }
+
                     const valorMat = Number(matricula?.valorMatricula) || 0;
                     const abonadoMat = Number(matricula?.totalAbonado) || 0;
                     const saldoMat = Math.max(0, valorMat - abonadoMat);
                     let estadoPago = matricula?.estadoPago || 'pendiente';
-                    if (valorMat === 0) estadoPago = 'sin-cobro';
-                    estudiantesCache.push({ id: docSnap.id, ...d, grado, curso, cursoId, gradoId, matricula, valorMat, abonadoMat, saldoMat, estadoPago });
-                }
+                    if (valorMat === 0 && !matricula) estadoPago = 'sin-matricula';
+                    else if (valorMat === 0) estadoPago = 'sin-cobro';
+
+                    estudiantesCache.push({
+                        id: docSnap.id,
+                        ...d,
+                        grado, curso, cursoId, gradoId,
+                        matricula, valorMat, abonadoMat, saldoMat, estadoPago
+                    });
+                });
+
+                // Ordenar por apellidos
+                estudiantesCache.sort((a, b) =>
+                    `${a.apellidos || ''} ${a.nombres || ''}`.localeCompare(`${b.apellidos || ''} ${b.nombres || ''}`)
+                );
+
                 pagEstudiantes.page = 1;
                 renderEstudiantes();
             } catch (error) {
                 console.error(error);
-                document.getElementById('tablaEstudiantes').innerHTML = `<tr><td colspan="10" class="text-center text-danger">Error al cargar</td></tr>`;
+                document.getElementById('tablaEstudiantes').innerHTML = `<tr><td colspan="12" class="text-center text-danger">Error al cargar: ${error.message}</td></tr>`;
             } finally { ocultarCargando('loadingEstudiantes'); }
         }
 
         function renderEstudiantes() {
             const tbody = document.getElementById('tablaEstudiantes');
             const busqueda = (document.getElementById('buscarEstudiante').value || '').toLowerCase();
+            const filtroGrado = document.getElementById('filtroGradoEstudiante').value;
             const filtroCurso = document.getElementById('filtroCursoEstudiante').value;
             const filtroEstado = document.getElementById('filtroEstadoEstudiante').value;
 
+            // ✅ Si hay filtro de grado, actualizar los cursos mostrados en el selector
+            if (filtroGrado) {
+                const cursosDelGrado = cursosCache.filter(c => c.gradoId === filtroGrado);
+                const filtroCursoSelect = document.getElementById('filtroCursoEstudiante');
+                const valorActual = filtroCursoSelect.value;
+                filtroCursoSelect.innerHTML = '<option value="">Todos los cursos</option>';
+                cursosDelGrado.forEach(c => {
+                    filtroCursoSelect.innerHTML += `<option value="${c.id}">${c.nombre || 'Curso'}</option>`;
+                });
+                if (cursosDelGrado.some(c => c.id === valorActual)) filtroCursoSelect.value = valorActual;
+            }
+
             let lista = estudiantesCache.filter(e => {
+                if (filtroGrado && e.gradoId !== filtroGrado) return false;
                 if (filtroCurso && e.cursoId !== filtroCurso) return false;
                 if (filtroEstado && (e.estado || 'activo') !== filtroEstado) return false;
                 if (busqueda) {
-                    const txt = `${e.nombres||''} ${e.apellidos||''} ${e.documento||''} ${e.acudiente||''} ${e.acudienteEmail||''}`.toLowerCase();
+                    const txt = `${e.nombres||''} ${e.apellidos||''} ${e.documento||''} ${e.correo||''} ${e.acudiente||''} ${e.acudienteEmail||''}`.toLowerCase();
                     if (!txt.includes(busqueda)) return false;
                 }
                 return true;
@@ -1441,7 +1692,7 @@
             const pagina = lista.slice(inicio, inicio + pagEstudiantes.perPage);
 
             if (pagina.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="10" class="text-center text-muted">No hay estudiantes que coincidan</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="12" class="text-center text-muted">Aún no hay estudiantes registrados en esta institución.</td></tr>`;
                 document.getElementById('pagEstudiantes').innerHTML = '';
                 return;
             }
@@ -1449,39 +1700,71 @@
             let html = '';
             let i = inicio + 1;
             for (const e of pagina) {
-                const badgeClass = e.estadoPago === 'pagado' ? 'badge-success' : e.estadoPago === 'abonado' ? 'badge-warning' : e.estadoPago === 'sin-cobro' ? 'badge-gray' : 'badge-danger';
-                const badgeText = e.estadoPago === 'pagado' ? 'Pagado' : e.estadoPago === 'abonado' ? 'Abonado' : e.estadoPago === 'sin-cobro' ? 'Sin cobro' : 'Pendiente';
+                const badgeClass = e.estadoPago === 'pagado' ? 'badge-success'
+                                 : e.estadoPago === 'abonado' ? 'badge-warning'
+                                 : (e.estadoPago === 'sin-cobro' || e.estadoPago === 'sin-matricula') ? 'badge-gray'
+                                 : 'badge-danger';
+                const badgeText = e.estadoPago === 'pagado' ? 'Pagado'
+                                : e.estadoPago === 'abonado' ? 'Abonado'
+                                : e.estadoPago === 'sin-cobro' ? 'Sin cobro'
+                                : e.estadoPago === 'sin-matricula' ? 'Sin matrícula'
+                                : 'Pendiente';
+
+                const nombreCompleto = `${e.nombres || ''} ${e.apellidos || ''}`.trim();
+                const correoTexto = e.correo && !e.correo.includes('@usuarios.eduone.com.co')
+                    ? e.correo
+                    : '<span style="color: var(--gray-400); font-style: italic;">Sin correo</span>';
+
                 html += `
                     <tr>
                         <td>${i++}</td>
-                        <td><strong>${e.nombres || ''} ${e.apellidos || ''}</strong></td>
+                        <td>
+                            <div class="edu-person"><span class="edu-face" data-est-avatar="${e.id}">${(nombreCompleto||'E').trim().charAt(0).toUpperCase()}</span><div><div class="est-cell-nombre">${nombreCompleto}</div></div></div>
+                            ${e.parentesco ? `<div class="est-cell-sub">Parentesco acudiente: ${e.parentesco}</div>` : ''}
+                        </td>
                         <td>${e.documento || '-'}</td>
-                        <td>${e.grado}</td>
-                        <td>${e.curso}</td>
+                        <td><div class="est-correo">${correoTexto}</div></td>
+                        <td>${e.grado || '-'}</td>
+                        <td>${e.curso || '-'}</td>
+                        <td>
+                            <div>${e.acudiente || '-'}</div>
+                            ${e.acudienteTelefono ? `<div class="est-cell-sub">📱 ${e.acudienteTelefono}</div>` : ''}
+                        </td>
                         <td><span class="badge ${badgeClass}">${badgeText}</span></td>
                         <td>${formatearPrecio(e.abonadoMat)}</td>
                         <td style="font-weight: 600; color: ${e.saldoMat > 0 ? 'var(--danger)' : 'var(--success)'};">${formatearPrecio(e.saldoMat)}</td>
                         <td><span class="badge ${e.estado === 'activo' ? 'badge-success' : 'badge-danger'}">${e.estado || 'inactivo'}</span></td>
                         <td>
-                            <button class="btn-success btn-sm" onclick="window.abonarMatricula('${e.id}')" title="Abonar"><i class="fas fa-money-bill"></i></button>
+                            <button class="edu-photo-button" type="button" onclick="window.eduCambiarFoto('estudiante','${e.id}')" title="Cambiar foto"><i class="fas fa-camera"></i></button> <button class="btn-success btn-sm" onclick="window.abonarMatricula('${e.id}')" title="Abonar"><i class="fas fa-money-bill"></i></button>
                             <button class="btn-warning btn-sm" onclick="window.editarEstudiante('${e.id}')" title="Editar"><i class="fas fa-edit"></i></button>
-                            <button class="btn-info btn-sm" onclick="window.verPagos('${e.id}', '${(e.nombres||'').replace(/'/g,"\\'")} ${(e.apellidos||'').replace(/'/g,"\\'")}')" title="Ver pagos"><i class="fas fa-receipt"></i></button>
+                            <button class="btn-info btn-sm" onclick="window.verPagos('${e.id}', '${nombreCompleto.replace(/'/g,"\\'")}')" title="Ver pagos"><i class="fas fa-receipt"></i></button>
                             <button class="btn-danger btn-sm" onclick="window.eliminarEstudiante('${e.id}')" title="Eliminar"><i class="fas fa-trash"></i></button>
                         </td>
                     </tr>
                 `;
             }
             tbody.innerHTML = html;
+            eduPintarFotosTabla('estudiante');
             renderPaginacion('pagEstudiantes', pagEstudiantes, lista.length, renderEstudiantes);
         }
 
         document.getElementById('buscarEstudiante')?.addEventListener('input', () => { pagEstudiantes.page = 1; renderEstudiantes(); });
+        document.getElementById('filtroGradoEstudiante')?.addEventListener('change', () => {
+            document.getElementById('filtroCursoEstudiante').value = '';
+            pagEstudiantes.page = 1;
+            renderEstudiantes();
+        });
         document.getElementById('filtroCursoEstudiante')?.addEventListener('change', () => { pagEstudiantes.page = 1; renderEstudiantes(); });
         document.getElementById('filtroEstadoEstudiante')?.addEventListener('change', () => { pagEstudiantes.page = 1; renderEstudiantes(); });
 
         window.eliminarEstudiante = async (id) => {
-            if (!confirm('¿Eliminar este estudiante?')) return;
+            if (!confirm('¿Eliminar este estudiante? Se eliminarán también sus matrículas asociadas.')) return;
             try {
+                // Eliminar matrículas asociadas
+                const matQ = query(collection(db, 'colegios', colegioId, 'matriculas'), where('estudianteId', '==', id));
+                const matSnap = await getDocs(matQ);
+                for (const m of matSnap.docs) await deleteDoc(m.ref);
+                // Eliminar estudiante
                 await deleteDoc(doc(db, 'colegios', colegioId, 'estudiantes', id));
                 await cargarEstudiantes();
                 cargarDashboard();
@@ -1596,7 +1879,7 @@
         document.getElementById('closeVerPagosBtn')?.addEventListener('click', () => document.getElementById('modalVerPagos').classList.remove('show'));
 
         // =============================================
-        // REGISTRAR ESTUDIANTE
+        // REGISTRAR ESTUDIANTE MANUAL
         // =============================================
         document.getElementById('btnRegistrarEstudiante')?.addEventListener('click', async () => {
             const estSnap = await getDocs(collection(db, 'colegios', colegioId, 'estudiantes'));
@@ -1673,16 +1956,28 @@
                     if (await correoYaExiste(emailEstudiante)) throw new Error(`El correo del estudiante "${emailEstudiante}" ya está registrado. Usa otro.`);
                 }
 
+                // Obtener nombres de grado y curso
+                let gradoNombre = '', cursoNombre = '';
+                try {
+                    const gDoc = await getDoc(doc(db, 'colegios', colegioId, 'grados', gradoId));
+                    if (gDoc.exists()) gradoNombre = gDoc.data().nombre || '';
+                    const cDoc = await getDoc(doc(db, 'colegios', colegioId, 'cursos', cursoId));
+                    if (cDoc.exists()) cursoNombre = cDoc.data().nombre || '';
+                } catch (err) { console.warn(err); }
+
                 const estRef = await addDoc(collection(db, 'colegios', colegioId, 'estudiantes'), {
                     nombres, apellidos, documento, correo: emailEstudiante,
                     fechaNacimiento: fechaNacimiento || '', direccion: direccion || '',
                     telefono: telefono || '', acudiente, acudienteTelefono: acudienteTelefono || '',
-                    acudienteEmail, estado, fechaRegistro: serverTimestamp()
+                    acudienteEmail, estado, fechaRegistro: serverTimestamp(),
+                    gradoId, gradoNombre, cursoId, cursoNombre
                 });
 
                 const estadoPagoFinal = valorMatricula === 0 ? 'sin-cobro' : (montoAbono >= valorMatricula ? 'pagado' : montoAbono > 0 ? 'abonado' : 'pendiente');
                 await addDoc(collection(db, 'colegios', colegioId, 'matriculas'), {
-                    estudianteId: estRef.id, gradoId, cursoId,
+                    estudianteId: estRef.id,
+                    estudianteNombre: `${nombres} ${apellidos}`,
+                    gradoId, cursoId,
                     anio: new Date().getFullYear(), estado: 'activo',
                     valorMatricula, totalAbonado: montoAbono,
                     saldo: Math.max(0, valorMatricula - montoAbono),
@@ -1767,7 +2062,6 @@
         document.getElementById('closeEditarEstudianteModal')?.addEventListener('click', () => document.getElementById('modalEditarEstudiante').classList.remove('show'));
         document.getElementById('cancelEditarEstudianteModal')?.addEventListener('click', () => document.getElementById('modalEditarEstudiante').classList.remove('show'));
 
-        // ABONAR MATRÍCULA
         document.getElementById('abonarMonto')?.addEventListener('input', () => {
             if (!matriculaEditActual) return;
             const monto = parseFloat(document.getElementById('abonarMonto').value) || 0;
@@ -1829,6 +2123,8 @@
             }
         });
 
+        // [El resto del código continúa igual: PERSONAL, GRADOS, CURSOS, ASIGNATURAS, HORARIOS, NOTAS, BOLETINES, PENSIONES, CONTABILIDAD, AUTH]
+
         // =============================================
         // PERSONAL
         // =============================================
@@ -1858,6 +2154,7 @@
                         email: p.correo || p.email || usuario?.email || '',
                         telefono: p.telefono || '',
                         rol: p.rol || usuario?.rol || 'profesor',
+                        fotoPerfilUrl: usuario?.fotoPerfilUrl || p.fotoPerfilUrl || p.fotoUrl || '',
                         activo: usuario ? (usuario.activo !== false) : (p.estado !== 'inactivo')
                     });
                 });
@@ -1872,7 +2169,7 @@
                         nombres: ud.nombre || '', apellidos: '',
                         nombre: ud.nombre || '', documento: ud.documento || '',
                         email: ud.email || '', telefono: ud.telefono || '',
-                        rol: ud.rol, activo: ud.activo !== false
+                        rol: ud.rol, fotoPerfilUrl: ud.fotoPerfilUrl || ud.fotoUrl || '', activo: ud.activo !== false
                     });
                 });
 
@@ -1927,20 +2224,21 @@
                 html += `
                     <tr>
                         <td>${inicio + idx + 1}</td>
-                        <td><strong>${p.nombre || '-'}</strong></td>
+                        <td><div class="edu-person"><span class="edu-face" data-personal-avatar="${p.id}">${(p.nombre||'P').trim().charAt(0).toUpperCase()}</span><strong>${p.nombre || '-'}</strong></div></td>
                         <td>${p.documento || '-'}</td>
                         <td>${p.email || '-'}</td>
                         <td>${p.telefono || '-'}</td>
                         <td><span class="badge-rol ${p.rol}">${rolLabel}</span></td>
                         <td><span class="badge ${p.activo ? 'badge-success' : 'badge-danger'}">${p.activo ? 'Activo' : 'Inactivo'}</span></td>
                         <td>
-                            <button class="btn-warning btn-sm" onclick="window.editarPersonal('${p.id}', '${p.uid || ''}')" title="Editar"><i class="fas fa-edit"></i></button>
+                            <button class="edu-photo-button" type="button" onclick="window.eduCambiarFoto('personal','${p.id}')" title="Cambiar foto"><i class="fas fa-camera"></i></button> <button class="btn-warning btn-sm" onclick="window.editarPersonal('${p.id}', '${p.uid || ''}')" title="Editar"><i class="fas fa-edit"></i></button>
                             <button class="btn-danger btn-sm" onclick="window.eliminarPersonal('${p.id}', '${p.uid || ''}', '${(p.email || '').replace(/'/g,"\\'")}')" title="Eliminar"><i class="fas fa-trash"></i></button>
                         </td>
                     </tr>
                 `;
             });
             tbody.innerHTML = html;
+            eduPintarFotosTabla('personal');
             renderPaginacion('pagPersonal', pagPersonal, lista.length, renderPersonal);
         }
 
@@ -2027,10 +2325,7 @@
             document.getElementById('personalAlert').className = 'alert';
 
             try {
-                // PASO 1: Crear la cuenta de usuario (Auth + Firestore). Si el correo ya existe, falla aquí.
                 await crearCuentaUsuario(correo, password, `${nombres} ${apellidos}`, rol, colegioId, telefono);
-
-                // PASO 2: Solo si Auth fue exitoso, guardar en la subcolección 'profesores'
                 await addDoc(collection(db, 'colegios', colegioId, 'profesores'), {
                     nombres, apellidos, documento,
                     correo, email: correo,
@@ -2039,7 +2334,6 @@
                     estado: 'activo',
                     fechaRegistro: serverTimestamp()
                 });
-
                 showPersonalAlert('✅ Personal registrado correctamente.', 'success');
                 setTimeout(async () => {
                     document.getElementById('modalPersonal').classList.remove('show');
@@ -2053,56 +2347,28 @@
                 }, 1000);
             } catch (error) {
                 console.error('❌ Error registrando personal:', error);
-                console.error('   Code:', error.code);
-                console.error('   Message:', error.message);
-
-                let mensaje = '❌ Error inesperado. Revisa la consola.';
+                let mensaje = '❌ Error inesperado.';
                 const msgLow = (error.message || '').toLowerCase();
-                const codeLow = (error.code || '').toLowerCase();
-
-                if (msgLow.includes('ya está registrado') || codeLow.includes('email-already-in-use') || msgLow.includes('already')) {
-                    mensaje = 'El correo "' + correo + '" ya está registrado en la plataforma. Por favor usa un correo diferente para este usuario.';
-                } else if (msgLow.includes('permission') || codeLow.includes('permission-denied')) {
-                    mensaje = 'No tienes permisos para registrar este usuario. Contacta al administrador.';
-                } else if (msgLow.includes('válido') || codeLow.includes('invalid-email')) {
-                    mensaje = 'El correo electrónico no es válido.';
-                } else if (msgLow.includes('débil') || codeLow.includes('weak-password')) {
-                    mensaje = 'La contraseña es demasiado débil. Debe tener al menos 6 caracteres.';
+                if (msgLow.includes('ya está registrado') || msgLow.includes('already')) {
+                    mensaje = `El correo "${correo}" ya está registrado. Usa un correo diferente.`;
+                } else if (msgLow.includes('permission')) {
+                    mensaje = 'No tienes permisos para registrar este usuario.';
                 } else if (error.message) {
                     mensaje = error.message;
                 }
-
-                // ✅ FORZAR el mensaje visible en 3 lugares
                 showPersonalAlert(mensaje, 'error');
-                // También como alert para que nunca se pierda
-                setTimeout(() => alert('⚠️ ' + mensaje), 100);
-
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-save"></i> Guardar';
                 guardandoPersonal = false;
             }
         });
 
-                function showPersonalAlert(message, type = 'error') {
+        function showPersonalAlert(message, type = 'error') {
             const alertEl = document.getElementById('personalAlert');
             const textEl = document.getElementById('personalAlertText');
-            if (!alertEl || !textEl) {
-                console.error('❌ No se encontró el elemento del alert');
-                alert(message);
-                return;
-            }
-            // Resetear clases
-            alertEl.className = 'alert';
-            alertEl.style.display = 'block';
-            // Aplicar el tipo
-            setTimeout(() => {
-                alertEl.className = `alert alert-${type} show`;
-                alertEl.style.display = 'block';
-            }, 10);
+            if (!alertEl || !textEl) { alert(message); return; }
+            alertEl.className = `alert alert-${type} show`;
             textEl.textContent = message;
-            // Hacer scroll al alert por si el modal tiene scroll
-            alertEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            console.log('✅ showPersonalAlert mostrado:', message);
         }
 
         document.getElementById('formEditarPersonal')?.addEventListener('submit', async (e) => {
@@ -2211,8 +2477,11 @@
                 let html = '', i = 1;
                 for (const docSnap of snap.docs) {
                     const d = docSnap.data();
-                    let gradoNombre = '-';
-                    if (d.gradoId) { const g = await getDoc(doc(db, 'colegios', colegioId, 'grados', d.gradoId)); gradoNombre = g.exists() ? g.data().nombre : '-'; }
+                    let gradoNombre = d.gradoNombre || '-';
+                    if (!gradoNombre && d.gradoId) {
+                        const g = await getDoc(doc(db, 'colegios', colegioId, 'grados', d.gradoId));
+                        gradoNombre = g.exists() ? (g.data().nombre || '-') : '-';
+                    }
                     html += `<tr>
                         <td>${i++}</td>
                         <td><strong>${d.nombre || '-'}</strong></td>
@@ -2320,9 +2589,8 @@
             } catch (err) { alert('Error: ' + err.message); }
             finally { guardandoAsignatura = false; }
         });
-        
         // =============================================
-        // HORARIOS - Divide bloques largos en bloques de 1 hora
+        // HORARIOS
         // =============================================
         async function cargarHorarios() {
             const gradoSelect = document.getElementById('horarioGrado');
@@ -2366,7 +2634,6 @@
                 const q = query(collection(db, 'colegios', colegioId, 'horarios'), where('cursoId', '==', cursoId));
                 const snap = await getDocs(q);
 
-                // ✅ Normalizar cada registro a bloques de 1 hora (compatibilidad con registros viejos)
                 const clases = [];
                 snap.forEach(doc => {
                     const h = doc.data();
@@ -2381,7 +2648,6 @@
                     const minI = hI * 60 + (mI || 0);
                     const minF = hF * 60 + (mF || 0);
 
-                    // Dividir en bloques de 1 hora
                     let cursor = minI;
                     while (cursor < minF) {
                         const fin = Math.min(cursor + 60, minF);
@@ -2456,6 +2722,7 @@
             if (!cursoActual) { alert('Primero carga un horario'); return; }
             document.getElementById('modalAgregarClase').classList.add('show');
             document.getElementById('formAgregarClase').reset();
+            claseTipoEdu?.dispatchEvent(new Event('change'));
         });
         document.getElementById('closeClaseModal')?.addEventListener('click', () => document.getElementById('modalAgregarClase').classList.remove('show'));
         document.getElementById('cancelClaseModal')?.addEventListener('click', () => document.getElementById('modalAgregarClase').classList.remove('show'));
@@ -2555,7 +2822,7 @@
         });
 
         // =============================================
-        // NOTAS - Tabla dinámica con secciones
+        // NOTAS
         // =============================================
         async function cargarFiltrosNotas() { await cargarFiltros('filtroGradoNotas', 'filtroCursoNotas', 'filtroEstudianteNotas'); }
         async function cargarFiltrosBoletines() { await cargarFiltros('filtroGradoBoletin', 'filtroCursoBoletin', 'filtroEstudianteBoletin'); }
@@ -2596,182 +2863,132 @@
             };
         }
 
-                async function obtenerResumenNotasEstudiante(estudianteId, periodo) {
-            // ============================================
-            // 1. NOTAS TRADICIONALES (tareas, actividades, etc.)
-            // ============================================
-            const notasSnap = await getDocs(query(
-                collection(db, 'colegios', colegioId, 'notas'),
-                where('estudianteId', '==', estudianteId)
-            ));
-            const notas = [];
-            notasSnap.forEach(d => {
+        // Motor de notas del rector: reproduce la ponderación por actividad de la planilla del profesor.
+        // Se usa igualmente desde Notas y Boletines, sin modificar las calificaciones almacenadas.
+        // Truncamiento a una cifra decimal, SIN redondear.
+        // Ejemplo: 2.875 -> 2.8 y 3.75 -> 3.7.
+        function truncarNota(valor) {
+            const numero = Number(valor);
+            if (!Number.isFinite(numero)) return null;
+            return Math.trunc((numero + Number.EPSILON * 10) * 10) / 10;
+        }
+        function mostrarNotaSinRedondeo(valor) {
+            const truncado = truncarNota(valor);
+            return truncado === null ? '-' : truncado.toFixed(1);
+        }
+
+        async function obtenerResumenNotasEstudiante(estudianteId, periodo) {
+            const base = (...partes) => collection(db, 'colegios', colegioId, ...partes);
+            const estDoc = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', estudianteId));
+            if (!estDoc.exists()) return [];
+            const est = estDoc.data();
+            let cursoId = est.cursoId || null;
+            if (!cursoId) {
+                const matriculas = await getDocs(query(base('matriculas'), where('estudianteId', '==', estudianteId)));
+                const registros = matriculas.docs.map(d => d.data());
+                const vigente = registros.find(m => m.estado === 'activo' || m.estado === 'matriculado') || registros[0];
+                cursoId = vigente?.cursoId || null;
+            }
+            if (!cursoId) throw new Error('No se encontró el curso del estudiante.');
+
+            const periodoFiltro = periodo ? Number(periodo) : null;
+            const [secSnap, actSnap, evalSnap, notaSnap, entregaSnap] = await Promise.all([
+                getDocs(query(base('secciones'), where('cursoId', '==', cursoId))),
+                getDocs(query(base('actividades'), where('cursoId', '==', cursoId))),
+                getDocs(query(base('evaluaciones'), where('cursoId', '==', cursoId))),
+                getDocs(query(base('notas'), where('estudianteId', '==', estudianteId))),
+                getDocs(query(base('entregas'), where('estudianteId', '==', estudianteId)))
+            ]);
+            const filtrarPeriodo = d => !periodoFiltro || Number(d.periodo) === periodoFiltro;
+            const secciones = secSnap.docs.map(d => ({ id: d.id, ...d.data() })).filter(filtrarPeriodo);
+            const actividades = actSnap.docs.map(d => ({ id: d.id, ...d.data() }))
+                .filter(d => filtrarPeriodo(d) && d.estado === 'activo');
+            const evaluaciones = evalSnap.docs.map(d => ({ id: d.id, ...d.data() })).filter(filtrarPeriodo);
+            const notasMap = {};
+            notaSnap.forEach(d => {
                 const n = d.data();
-                const v = parseFloat(n.valor);
-                if (n.actividadId && !isNaN(v)) notas.push({ actividadId: n.actividadId, valor: v });
+                if (n.actividadId && n.valor !== undefined && n.valor !== null && Number.isFinite(Number(n.valor)))
+                    notasMap[n.actividadId] = Number(n.valor);
             });
-
-            // ============================================
-            // 2. EVALUACIONES VIRTUALES (respuestas)
-            // ============================================
-            const evalSnap = await getDocs(collection(db, 'colegios', colegioId, 'evaluaciones'));
-            const notasVirtuales = [];
-
-            for (const evalDoc of evalSnap.docs) {
-                const evalData = evalDoc.data();
-
-                // Filtrar por periodo
-                if (periodo && parseInt(evalData.periodo || 1) !== parseInt(periodo)) continue;
-
-                // Buscar la respuesta de este estudiante
-                const respSnap = await getDocs(query(
-                    collection(db, 'colegios', colegioId, 'evaluaciones', evalDoc.id, 'respuestas'),
-                    where('estudianteId', '==', estudianteId)
-                ));
-                if (respSnap.empty) continue;
-
-                const respData = respSnap.docs[0].data();
-                const nota = parseFloat(respData.nota);
-                if (isNaN(nota)) continue;
-
-                notasVirtuales.push({
-                    evaluacionId: evalDoc.id,
-                    titulo: evalData.titulo || 'Evaluación',
-                    valor: nota,
-                    asignaturaId: evalData.asignaturaId || '',
-                    asignaturaNombre: evalData.asignaturaNombre || 'Asignatura',
-                    seccionId: evalData.seccionId || null,
-                    seccionNombre: evalData.seccionNombre || null,
-                    periodo: parseInt(evalData.periodo || 1)
-                });
+            entregaSnap.forEach(d => {
+                const e = d.data();
+                if (e.actividadId && e.nota !== undefined && e.nota !== null && notasMap[e.actividadId] === undefined)
+                    notasMap[e.actividadId] = Number(e.nota);
+            });
+            const respuestasMap = {};
+            for (const ev of evaluaciones) {
+                const respuestas = await getDocs(query(base('evaluaciones', ev.id, 'respuestas'), where('estudianteId', '==', estudianteId)));
+                const respuesta = respuestas.docs.map(d => d.data()).find(r => r.nota !== undefined && r.nota !== null);
+                if (respuesta) respuestasMap[ev.id] = Number(respuesta.nota);
             }
-
-            // Si no hay nada de nada, salir
-            if (notas.length === 0 && notasVirtuales.length === 0) return [];
-
-            // ============================================
-            // 3. CARGAR ACTIVIDADES Y SECCIONES DE NOTAS TRADICIONALES
-            // ============================================
-            const actIds = [...new Set(notas.map(n => n.actividadId))];
-            const actSnaps = await Promise.all(actIds.map(id => getDoc(doc(db, 'colegios', colegioId, 'actividades', id))));
-            const actMap = {};
-            actSnaps.forEach(a => { if (a.exists()) actMap[a.id] = { id: a.id, ...a.data() }; });
-
-            const seccionIds = [...new Set(Object.values(actMap).map(a => a.seccionId).filter(Boolean))];
-            const secSnaps = await Promise.all(seccionIds.map(id => getDoc(doc(db, 'colegios', colegioId, 'secciones', id))));
-            const secMap = {};
-            secSnaps.forEach(sn => { if (sn.exists()) secMap[sn.id] = { id: sn.id, ...sn.data() }; });
-
-            // ============================================
-            // 4. AGRUPAR POR ASIGNATURA → SECCIÓN → ACTIVIDADES
-            // ============================================
-            const porAsignatura = {};
-
-            // 4a. Notas tradicionales
-            for (const nota of notas) {
-                const act = actMap[nota.actividadId];
-                if (!act) continue;
-                if (periodo && parseInt(act.periodo || 1) !== parseInt(periodo)) continue;
-
-                const asigKey = act.asignaturaId || act.asignaturaNombre || 'sin-asignatura';
-                if (!porAsignatura[asigKey]) {
-                    porAsignatura[asigKey] = { nombre: act.asignaturaNombre || 'Asignatura', secciones: {} };
-                }
-
-                const secKey = act.seccionId || 'sin-seccion';
-                if (!porAsignatura[asigKey].secciones[secKey]) {
-                    porAsignatura[asigKey].secciones[secKey] = {
-                        nombre: secMap[secKey]?.nombre || act.seccionNombre || 'Sección',
-                        icono: secMap[secKey]?.icono || '📄',
-                        porcentaje: Number(secMap[secKey]?.porcentaje) || 0,
-                        actividades: {}
-                    };
-                }
-                porAsignatura[asigKey].secciones[secKey].actividades[nota.actividadId] = {
-                    nombre: act.titulo || 'Actividad',
-                    valor: nota.valor
-                };
+            const grupos = new Map();
+            for (const sec of secciones) {
+                if (!sec.asignaturaId) continue;
+                const key = sec.asignaturaId;
+                if (!grupos.has(key)) grupos.set(key, { nombre: sec.asignaturaNombre || 'Asignatura', secciones: [] });
+                grupos.get(key).secciones.push(sec);
             }
-
-            // 4b. Evaluaciones virtuales
-            for (const nv of notasVirtuales) {
-                const asigKey = nv.asignaturaId || nv.asignaturaNombre || 'sin-asignatura';
-                if (!porAsignatura[asigKey]) {
-                    porAsignatura[asigKey] = { nombre: nv.asignaturaNombre || 'Asignatura', secciones: {} };
-                }
-
-                let secKey, secNombre, secIcono, secPorcentaje;
-
-                if (nv.seccionId && secMap[nv.seccionId]) {
-                    // La evaluación pertenece a una sección existente
-                    secKey = nv.seccionId;
-                    secNombre = secMap[nv.seccionId].nombre || nv.seccionNombre || 'Sección';
-                    secIcono = secMap[nv.seccionId].icono || '📑';
-                    secPorcentaje = Number(secMap[nv.seccionId].porcentaje) || 0;
-                } else {
-                    // ✅ Agrupar TODAS las evaluaciones virtuales sin sección en una sola columna
-                    secKey = 'evaluaciones-virtuales';
-                    secNombre = 'Evaluación';
-                    secIcono = '💻';
-                    secPorcentaje = 0;
-                }
-
-                if (!porAsignatura[asigKey].secciones[secKey]) {
-                    porAsignatura[asigKey].secciones[secKey] = {
-                        nombre: secNombre,
-                        icono: secIcono,
-                        porcentaje: secPorcentaje,
-                        actividades: {}
-                    };
-                }
-                porAsignatura[asigKey].secciones[secKey].actividades[nv.evaluacionId] = {
-                    nombre: nv.titulo,
-                    valor: nv.valor
-                };
-            }
-
-            // ============================================
-            // 5. CALCULAR PROMEDIO PONDERADO POR SECCIONES
-            // ============================================
-            const resultado = [];
-            for (const [asigKey, asig] of Object.entries(porAsignatura)) {
-                let sumaFinal = 0;
-                let pesoTotal = 0;
-                const seccionesDetalle = [];
-
-                for (const [secKey, sec] of Object.entries(asig.secciones)) {
-                    const actividadesArr = Object.values(sec.actividades);
-                    if (actividadesArr.length === 0) continue;
-
-                    const promedioSeccion = actividadesArr.reduce((a, b) => a + b.valor, 0) / actividadesArr.length;
-                    const peso = sec.porcentaje / 100;
-
-                    if (peso > 0) {
-                        sumaFinal += promedioSeccion * peso;
-                        pesoTotal += peso;
+            const salida = [];
+            for (const [asigId, grupo] of grupos) {
+                let sumaPonderada = 0, pesoTotal = 0;
+                const detalle = [];
+                for (const sec of grupo.secciones) {
+                    const actSec = actividades.filter(a => a.seccionId === sec.id);
+                    const ordinarias = actSec.filter(a => a.tipoEvaluacion !== 'presencial' && a.tipoEvaluacion !== 'virtual');
+                    const pruebas = evaluaciones.filter(e => e.seccionId === sec.id && e.asignaturaId === asigId);
+                    const virtualesLegacy = actSec.filter(a => a.tipoEvaluacion === 'presencial' || a.tipoEvaluacion === 'virtual');
+                    const ids = new Set();
+                    const items = [];
+                    for (const x of [...ordinarias, ...pruebas, ...virtualesLegacy]) {
+                        if (!ids.has(x.id)) { ids.add(x.id); items.push(x); }
                     }
-                        seccionesDetalle.push({
-                        seccionId: secKey,           // ✅ ID único de la sección
-                        nombre: sec.nombre,
-                        icono: sec.icono,
-                        porcentaje: sec.porcentaje,
-                        promedio: promedioSeccion,
-                        cantidadActividades: actividadesArr.length
+                    // La planilla del profesor reparte el peso de la sección entre TODOS sus ítems.
+                    const pesoPorItem = items.length ? (Number(sec.porcentaje) || 1) / items.length : 0;
+                    const notasValidas = [];
+                    for (const item of items) {
+                        const esPrueba = pruebas.some(e => e.id === item.id);
+                        const v = esPrueba ? (respuestasMap[item.id] ?? notasMap[item.id]) : notasMap[item.id];
+                        // Conserva el criterio actual del profesor: las notas <= 0 no cuentan aún.
+                        if (v !== undefined && Number.isFinite(Number(v)) && Number(v) > 0) {
+                            notasValidas.push(Number(v));
+                            sumaPonderada += Number(v) * pesoPorItem;
+                            pesoTotal += pesoPorItem;
+                        }
+                    }
+                    if (!notasValidas.length) continue;
+                    detalle.push({
+                        seccionId: sec.id,
+                        nombre: sec.nombre || 'Sección', icono: sec.icono || '📄',
+                        porcentaje: Number(sec.porcentaje) || 0,
+                        promedio: notasValidas.reduce((a,b) => a+b,0) / notasValidas.length,
+                        cantidadActividades: notasValidas.length
                     });
                 }
-
-                let promedioFinal = 0;
-                if (pesoTotal > 0) {
-                    promedioFinal = sumaFinal / pesoTotal;
-                } else if (seccionesDetalle.length > 0) {
-                    promedioFinal = seccionesDetalle.reduce((a, s) => a + s.promedio, 0) / seccionesDetalle.length;
+                if (!detalle.length) continue;
+                // PROMEDIO SIMPLE: promediar las cuatro columnas que ve el rector.
+                // Primero agrupar secciones por categoría para usar exactamente los mismos
+                // valores en la tabla de Notas y en el Boletín.
+                const categorias = { tarea: [], quiz: [], trabajo: [], evaluacion: [] };
+                for (const seccion of detalle) {
+                    const nombre = (seccion.nombre || '').toLowerCase();
+                    const tipo = nombre.includes('tarea') ? 'tarea'
+                        : nombre.includes('quiz') ? 'quiz'
+                        : nombre.includes('trabajo') ? 'trabajo' : 'evaluacion';
+                    categorias[tipo].push(seccion.promedio);
                 }
-
-                const estado = promedioFinal >= 3.0 ? 'Aprobado' : (promedioFinal > 0 ? 'Reprobado' : 'Sin nota');
-                resultado.push({ nombre: asig.nombre, promedio: promedioFinal, estado, secciones: seccionesDetalle });
+                const cuatroNotas = ['tarea', 'quiz', 'trabajo', 'evaluacion'].map(tipo => {
+                    const valores = categorias[tipo];
+                    return valores.length ? valores.reduce((a,b) => a + b, 0) / valores.length : null;
+                });
+                // Si hay cuatro categorías calificadas: (tarea + quiz + trabajo + evaluación) / 4.
+                // Si faltan notas, no tratarlas como ceros: dividir entre las categorías calificadas.
+                const disponibles = cuatroNotas.filter(v => v !== null && Number.isFinite(v));
+                if (!disponibles.length) continue;
+                const promedio = disponibles.reduce((a,b) => a+b, 0) / disponibles.length;
+                salida.push({ nombre: grupo.nombre, promedio, estado: truncarNota(promedio) >= 3 ? 'Aprobado' : 'Reprobado', secciones: detalle });
             }
-            resultado.sort((a, b) => a.nombre.localeCompare(b.nombre));
-            return resultado;
+            salida.sort((a,b) => a.nombre.localeCompare(b.nombre, 'es'));
+            return salida;
         }
 
         document.getElementById('btnConsultarNotas')?.addEventListener('click', async () => {
@@ -2782,6 +2999,13 @@
             const thead = document.getElementById('theadNotas');
             const tbody = document.getElementById('tablaNotas');
             try {
+                await eduMostrarPerfilNota(estudianteId);
+                if (!periodo) {
+                    await eduMostrarNotasPorPeriodos(estudianteId);
+                    return;
+                }
+                document.getElementById('eduNotasPeriodos').style.display='none';
+                document.getElementById('eduNotasDetalle').style.display='block';
                 const resumen = await obtenerResumenNotasEstudiante(estudianteId, periodo);
                 if (resumen.length === 0) {
                     thead.innerHTML = '<tr><th>Asignatura</th><th>Tarea</th><th>Quiz</th><th>Trabajo en Clase</th><th>Evaluación</th><th>Promedio</th><th>Estado</th></tr>';
@@ -2789,25 +3013,15 @@
                     return;
                 }
 
-                // ✅ Columnas estándar fijas
-                const COLUMNAS_ESTANDAR = [
-                    { key: 'tarea', nombre: 'Tarea', icono: '📝' },
-                    { key: 'quiz', nombre: 'Quiz', icono: '📊' },
-                    { key: 'trabajo', nombre: 'Trabajo en Clase', icono: '📄' },
-                    { key: 'evaluacion', nombre: 'Evaluación', icono: '📑' }
-                ];
-
-                // Mapear cada sección del resumen a una columna estándar según su nombre
                 function normalizarNombreSeccion(nombre) {
                     const n = (nombre || '').toLowerCase();
                     if (n.includes('tarea')) return 'tarea';
                     if (n.includes('quiz')) return 'quiz';
                     if (n.includes('trabajo')) return 'trabajo';
                     if (n.includes('evaluac') || n.includes('parcial') || n.includes('examen')) return 'evaluacion';
-                    return 'evaluacion'; // Fallback a evaluación
+                    return 'evaluacion';
                 }
 
-                // Thead simple
                 thead.innerHTML = `
                     <tr>
                         <th style="text-align: left;">Asignatura</th>
@@ -2820,20 +3034,16 @@
                     </tr>
                 `;
 
-                // Body
                 let html = '';
                 for (const r of resumen) {
                     const color = r.promedio >= 3.0 ? 'var(--success)' : (r.promedio > 0 ? 'var(--danger)' : 'var(--gray-400)');
 
-                    // Agrupar secciones por columna estándar
                     const valoresPorColumna = { tarea: [], quiz: [], trabajo: [], evaluacion: [] };
                     r.secciones.forEach(s => {
                         const col = normalizarNombreSeccion(s.nombre);
-                        // Promedio ponderado por cada actividad (ya viene promediado en s.promedio)
                         valoresPorColumna[col].push(s.promedio);
                     });
 
-                    // Promedio de cada columna
                     function calcularPromColumna(arr) {
                         if (arr.length === 0) return null;
                         return arr.reduce((a, b) => a + b, 0) / arr.length;
@@ -2849,7 +3059,7 @@
                     function renderCelda(valor) {
                         if (valor === null) return `<td style="text-align: center; color: var(--gray-400);">-</td>`;
                         const colorV = valor >= 3.0 ? 'var(--success)' : valor > 0 ? 'var(--danger)' : 'var(--gray-400)';
-                        return `<td style="text-align: center; color: ${colorV}; font-weight: 600;">${valor.toFixed(1)}</td>`;
+                        return `<td style="text-align: center; color: ${colorV}; font-weight: 600;">${mostrarNotaSinRedondeo(valor)}</td>`;
                     }
 
                     html += `<tr>
@@ -2858,7 +3068,7 @@
                         ${renderCelda(proms.quiz)}
                         ${renderCelda(proms.trabajo)}
                         ${renderCelda(proms.evaluacion)}
-                        <td style="text-align: center;"><strong style="font-size: 1.05rem;">${r.promedio.toFixed(1)}</strong></td>
+                        <td style="text-align: center;"><strong style="font-size: 1.05rem;">${mostrarNotaSinRedondeo(r.promedio)}</strong></td>
                         <td style="text-align: center;"><span style="color: ${color}; font-weight: 600;">${r.estado}</span></td>
                     </tr>`;
                 }
@@ -2891,17 +3101,6 @@
                     if (m.gradoId) { const g = await getDoc(doc(db, 'colegios', colegioId, 'grados', m.gradoId)); gradoNombre = g.exists() ? g.data().nombre : '-'; }
                     if (m.cursoId) { const c = await getDoc(doc(db, 'colegios', colegioId, 'cursos', m.cursoId)); cursoNombre = c.exists() ? c.data().nombre : '-'; }
                 }
-
-                const seccionesSet = new Map();
-                resumen.forEach(r => {
-                    r.secciones.forEach(s => {
-                        const key = `${s.seccionId || s.nombre}`;
-                        if (!seccionesSet.has(key)) {
-                            seccionesSet.set(key, { icono: s.icono, nombre: s.nombre, porcentaje: s.porcentaje });
-                        }
-                    });
-                });
-                const seccionesColumnas = Array.from(seccionesSet.entries());
 
                 let html = `
                     <div class="bol-wrap" style="padding: 30px; font-family: 'Inter', sans-serif; background: #fff;">
@@ -2951,7 +3150,7 @@
                                     const celda = (v) => {
                                         if (v === null) return '<td style="padding: 8px; text-align: center; border: 1px solid var(--gray-200); color: #94a3b8;">-</td>';
                                         const c = v >= 3.0 ? '#22c55e' : v > 0 ? '#ef4444' : '#94a3b8';
-                                        return '<td style="padding: 8px; text-align: center; border: 1px solid var(--gray-200); color: ' + c + '; font-weight: 600;">' + v.toFixed(1) + '</td>';
+                                        return '<td style="padding: 8px; text-align: center; border: 1px solid var(--gray-200); color: ' + c + '; font-weight: 600;">' + mostrarNotaSinRedondeo(v) + '</td>';
                                     };
                                     return '<tr>' +
                                         '<td style="padding: 8px; border: 1px solid var(--gray-200);"><strong>' + r.nombre + '</strong></td>' +
@@ -2959,7 +3158,7 @@
                                         celda(prom(valoresPorColumna.quiz)) +
                                         celda(prom(valoresPorColumna.trabajo)) +
                                         celda(prom(valoresPorColumna.evaluacion)) +
-                                        '<td style="padding: 8px; text-align: center; font-weight: 700; border: 1px solid var(--gray-200); color: ' + color + '; font-size: 1rem;">' + r.promedio.toFixed(1) + '</td>' +
+                                        '<td style="padding: 8px; text-align: center; font-weight: 700; border: 1px solid var(--gray-200); color: ' + color + '; font-size: 1rem;">' + mostrarNotaSinRedondeo(r.promedio) + '</td>' +
                                         '<td style="padding: 8px; text-align: center; font-weight: 600; border: 1px solid var(--gray-200); color: ' + color + ';">' + r.estado + '</td>' +
                                     '</tr>';
                                 }).join('')}
@@ -2973,7 +3172,7 @@
                 html += `
                         <div class="bol-promedio" style="background: ${colorGeneral}; color: white; padding: 14px 20px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;">
                             <strong style="font-size: 1rem;">PROMEDIO GENERAL DEL PERIODO:</strong>
-                            <strong style="font-size: 1.5rem;">${promedioGeneral.toFixed(1)}</strong>
+                            <strong style="font-size: 1.5rem;">${mostrarNotaSinRedondeo(promedioGeneral)}</strong>
                         </div>
                         <div class="bol-firmas" style="margin-top: 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 60px;">
                             <div style="text-align: center;">
@@ -3004,17 +3203,70 @@
         // =============================================
         // PENSIONES
         // =============================================
+        // Configuración mensual por colegio. La creación es idempotente por alumno/mes.
+        const pensionMesSeleccionado = () => Number(document.getElementById('pensMesFiltro').value || new Date().getMonth()+1);
+        const pensionAnioSeleccionado = () => Number(document.getElementById('pensAnioFiltro').value || new Date().getFullYear());
+        const pensionConfigId = () => `${pensionAnioSeleccionado()}-${String(pensionMesSeleccionado()).padStart(2,'0')}`;
+        async function consultarValorPensionGlobal() {
+            if(!colegioId)return;
+            const d=await getDoc(doc(db,'colegios',colegioId,'configuracion_pensiones',pensionConfigId()));
+            document.getElementById('pensValorGlobal').value=d.exists()?d.data().valor:'';
+            return d.exists()?Number(d.data().valor):null;
+        }
+        async function registrarObligacionesPension() {
+            if(!colegioId)throw new Error('No se encontró el colegio');
+            const valorGlobal=await consultarValorPensionGlobal();
+            if(!(valorGlobal>0))throw new Error('Primero configura un valor mensual mayor que cero');
+            const estudiantes=await getDocs(collection(db,'colegios',colegioId,'estudiantes'));
+            const existentes=await getDocs(collection(db,'colegios',colegioId,'pensiones'));
+            const ya=new Set(existentes.docs.filter(d=>Number(d.data().mes)===pensionMesSeleccionado() && Number(d.data().anio)===pensionAnioSeleccionado()).map(d=>d.data().estudianteId));
+            let creadas=0, omitidas=0;
+            for(const e of estudiantes.docs){
+                const est=e.data();
+                if(est.activo===false || est.estado==='inactivo'||est.estado==='retirado'){omitidas++;continue;}
+                if(ya.has(e.id)){omitidas++;continue;}
+                const individual=Number(est.valorPension ?? est.pensionMensual ?? 0);
+                const valor=individual>0?individual:valorGlobal;
+                // Documento único: dos clics no producen dos obligaciones.
+                const ref=doc(db,'colegios',colegioId,'pensiones',`${pensionConfigId()}_${e.id}`);
+                const existe=await getDoc(ref);
+                if(existe.exists()){omitidas++;continue;}
+                await setDoc(ref,{estudianteId:e.id,mes:pensionMesSeleccionado(),anio:pensionAnioSeleccionado(),valorPension:valor,totalAbonado:0,estado:'pendiente',creadoEn:serverTimestamp()});
+                creadas++;
+            }
+            return {creadas,omitidas};
+        }
+        document.getElementById('pensGuardarGlobal')?.addEventListener('click',async()=>{
+            const btn=document.getElementById('pensGuardarGlobal');edEstado(btn,true,'Guardar valor del mes');
+            try{
+                const valor=Number(document.getElementById('pensValorGlobal').value);
+                if(!Number.isFinite(valor)||valor<=0)throw new Error('Ingresa un valor válido mayor que cero');
+                await setDoc(doc(db,'colegios',colegioId,'configuracion_pensiones',pensionConfigId()),{colegioId,mes:pensionMesSeleccionado(),anio:pensionAnioSeleccionado(),valor,actualizadoEn:serverTimestamp()});
+                document.getElementById('pensConfigEstado').textContent='Valor mensual guardado. Ahora puedes generar las obligaciones.';
+            }catch(e){document.getElementById('pensConfigEstado').textContent='Error: '+e.message;}
+            finally{edEstado(btn,false,'Guardar valor del mes');}
+        });
+        document.getElementById('pensGenerarMes')?.addEventListener('click',async()=>{
+            if(!confirm(`¿Generar obligaciones de ${MESES[pensionMesSeleccionado()-1]} ${pensionAnioSeleccionado()} para los estudiantes activos sin una existente?`))return;
+            const btn=document.getElementById('pensGenerarMes');edEstado(btn,true,'Generar obligaciones');
+            try{const r=await registrarObligacionesPension();document.getElementById('pensConfigEstado').textContent=`${r.creadas} obligaciones generadas. ${r.omitidas} registros omitidos (existentes o inactivos).`;await cargarPensiones();}
+            catch(e){document.getElementById('pensConfigEstado').textContent='Error: '+e.message;}
+            finally{edEstado(btn,false,'Generar obligaciones');}
+        });
+        document.getElementById('pensMesFiltro')?.addEventListener('change',()=>consultarValorPensionGlobal().catch(console.error));
+        document.getElementById('pensAnioFiltro')?.addEventListener('change',()=>consultarValorPensionGlobal().catch(console.error));
+
         async function cargarPensiones() {
             mostrarCargando('loadingPensiones');
             const tbody = document.getElementById('tablaPensiones');
             try {
-                const snap = await getDocs(collection(db, 'colegios', colegioId, 'pensiones'));
-                if (snap.empty) { tbody.innerHTML = `<tr><td colspan="9" class="text-center text-muted">No hay pensiones registradas</td></tr>`; return; }
+                const [snap, estSnap] = await Promise.all([getDocs(collection(db, 'colegios', colegioId, 'pensiones')),getDocs(collection(db, 'colegios', colegioId, 'estudiantes'))]);
+                const estudiantesPorId = new Map(estSnap.docs.map(d=>[d.id,d.data()]));
+                if (snap.empty) { tbody.innerHTML = `<tr><td colspan="9" class="text-center text-muted">No hay obligaciones de pensión generadas. Los estudiantes sin obligación creada no aparecen automáticamente como deudores.</td></tr>`; return; }
                 let html = '', i = 1;
                 for (const docSnap of snap.docs) {
                     const p = docSnap.data();
-                    const estDoc = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', p.estudianteId));
-                    const est = estDoc.data() || {};
+                    const est = estudiantesPorId.get(p.estudianteId) || {};
                     const valor = Number(p.valorPension) || 0;
                     const abonado = Number(p.totalAbonado) || 0;
                     const saldo = Math.max(0, valor - abonado);
@@ -3464,6 +3716,213 @@
         });
 
         // =============================================
+        // EXTENSIONES: chat, comunicados, fotografía y descansos
+        // =============================================
+        const edStorage = getStorage(app);
+        let chatDestino = null, unsubscribeChat = null, unsubscribeAvisos = null;
+        const chatUid = () => auth.currentUser?.uid || '';
+        const edEsc = str => String(str ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+        // Fotos por registro sin crear usuarios duplicados ni alterar la matrícula.
+        const eduEsc = v => String(v||'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+        function eduPintarFotosTabla(tipo) {
+            const cache=tipo==='estudiante'?estudiantesCache:personalCache;
+            const atributo=tipo==='estudiante'?'data-est-avatar':'data-personal-avatar';
+            document.querySelectorAll('['+atributo+']').forEach(el=>{
+                const p=cache.find(x=>x.id===el.getAttribute(atributo));
+                const url=p?.fotoPerfilUrl || p?.fotoUrl || p?.foto || '';
+                if(url && /^https:\/\//.test(url)){const im=document.createElement('img');im.className='edu-face';im.alt='Foto de perfil';im.src=url;im.onerror=()=>{im.replaceWith(document.createTextNode((p?.nombre||p?.nombres||'U').charAt(0)));};el.replaceChildren(im);}
+            });
+        }
+        window.eduCambiarFoto=async(tipo,id)=>{
+            const campo=document.createElement('input');campo.type='file';campo.accept='image/jpeg,image/png,image/webp';
+            campo.addEventListener('change',async()=>{
+                const archivo=campo.files?.[0];if(!archivo)return;
+                if(archivo.size>3*1024*1024){alert('Máximo 3 MB');return;}
+                if(!confirm('¿Actualizar la fotografía de este perfil?'))return;
+                try{
+                    const carpeta=tipo==='estudiante'?'estudiantes':'profesores';
+                    const ruta=storageRef(edStorage,`colegios/${colegioId}/perfiles/${carpeta}/${id}/${Date.now()}`);
+                    await uploadBytes(ruta,archivo,{contentType:archivo.type});
+                    const fotoPerfilUrl=await getDownloadURL(ruta);
+                    await updateDoc(doc(db,'colegios',colegioId,carpeta,id),{fotoPerfilUrl});
+                    const cache=tipo==='estudiante'?estudiantesCache:personalCache;const registro=cache.find(v=>v.id===id);if(registro)registro.fotoPerfilUrl=fotoPerfilUrl;
+                    if(tipo==='estudiante')renderEstudiantes();else renderPersonal();
+                    alert('Fotografía guardada');
+                }catch(error){alert('No se pudo guardar la fotografía: '+error.message);}
+            });campo.click();
+        };
+        async function eduMostrarPerfilNota(estudianteId){
+            const host=document.getElementById('eduNotaPerfil');const snap=await getDoc(doc(db,'colegios',colegioId,'estudiantes',estudianteId));
+            const est=snap.data()||{};const nombre=`${est.nombres||''} ${est.apellidos||''}`.trim();
+            host.innerHTML=`<div class="edu-note-profile"><span class="edu-face" id="eduNotaAvatar">${eduEsc(nombre.charAt(0)||'E')}</span><div><strong>${eduEsc(nombre)}</strong><p>${eduEsc(est.gradoNombre||'')} · ${eduEsc(est.cursoNombre||'')} ${est.documento?' · Código: '+eduEsc(est.documento):''}</p></div></div>`;
+            if(est.fotoPerfilUrl||est.fotoUrl){const im=document.createElement('img');im.className='edu-face';im.alt='Foto del estudiante';im.src=est.fotoPerfilUrl||est.fotoUrl;host.querySelector('#eduNotaAvatar').replaceWith(im);}
+        }
+        async function eduMostrarNotasPorPeriodos(estudianteId){
+            const host=document.getElementById('eduNotasPeriodos');host.style.display='block';document.getElementById('eduNotasDetalle').style.display='none';
+            host.innerHTML='<p class="text-muted">Consultando los cuatro períodos...</p>';
+            // No se calculan períodos ausentes como cero. Solo se consultan datos reales.
+            const res=await Promise.allSettled([1,2,3,4].map(p=>obtenerResumenNotasEstudiante(estudianteId,String(p))));
+            const errores=res.filter(r=>r.status==='rejected');
+            if(errores.length){host.textContent='No se pudieron consultar todos los períodos: '+errores[0].reason?.message;return;}
+            const datos=res.map(r=>r.value);const tabla=new Map();
+            datos.forEach((filas,i)=>filas.forEach(f=>{
+                const key=f.nombre||'Asignatura';if(!tabla.has(key))tabla.set(key,{nombre:key,periodos:[null,null,null,null]});
+                tabla.get(key).periodos[i]=f.promedio;
+            }));
+            if(!tabla.size){host.textContent='Aún no hay calificaciones registradas.';return;}
+            let html='<div class="table-responsive"><table class="edu-period-table"><thead><tr><th>Asignatura</th><th>Período 1</th><th>Período 2</th><th>Período 3</th><th>Período 4</th><th>Definitiva</th></tr></thead><tbody>';
+            for(const r of [...tabla.values()].sort((a,b)=>a.nombre.localeCompare(b.nombre,'es'))){
+                const validas=r.periodos.filter(v=>v!==null&&Number.isFinite(v));
+                const final=validas.length?validas.reduce((a,b)=>a+b,0)/validas.length:null;
+                html+='<tr><td><strong>'+eduEsc(r.nombre)+'</strong></td>'+r.periodos.map(v=>'<td>'+(v===null?'':mostrarNotaSinRedondeo(v))+'</td>').join('')+'<td><strong>'+(final===null?'':mostrarNotaSinRedondeo(final))+'</strong></td></tr>';
+            }
+            host.innerHTML=html+'</tbody></table></div><p class="edu-small-note">Los períodos sin notas quedan vacíos. La definitiva es provisional y promedia únicamente los períodos registrados, sin redondear.</p>';
+        }
+        function eduAgregarEmoji(id){const el=document.getElementById(id);if(!el)return;const emoji=prompt('Escribe o pega un emoji (por ejemplo: 😊 📚 ✅ 🎓)');if(emoji){el.value+=(el.value?' ':'')+emoji;el.focus();}}
+        document.getElementById('eduEmojiChat')?.addEventListener('click',()=>eduAgregarEmoji('chatTexto'));
+        document.getElementById('eduEmojiComunicado')?.addEventListener('click',()=>eduAgregarEmoji('comunicadoTexto'));
+        function eduFileDisplay(id,labelId){const el=document.getElementById(id),label=document.getElementById(labelId);if(el&&label)label.textContent=el.files?.[0]?.name||'';}
+        for(const [file,label] of [['chatAdjunto','chatArchivoNombre'],['comunicadoAdjunto','comunicadoArchivoNombre']])document.getElementById(file)?.addEventListener('change',()=>eduFileDisplay(file,label));
+        document.getElementById('chatCamaraBtn')?.addEventListener('click',()=>{
+            if(document.getElementById('chatAdjunto')?.disabled)return;
+            document.getElementById('chatCamara')?.click();
+        });
+        document.getElementById('comunicadoCamaraBtn')?.addEventListener('click',()=>document.getElementById('comunicadoCamara')?.click());
+        for(const [camera,dest,label] of [['chatCamara','chatAdjunto','chatArchivoNombre'],['comunicadoCamara','comunicadoAdjunto','comunicadoArchivoNombre']]){
+            document.getElementById(camera)?.addEventListener('change',()=>{
+                const f=document.getElementById(camera).files?.[0];if(!f)return;
+                const transfer=new DataTransfer();transfer.items.add(f);
+                const input=document.getElementById(dest);input.files=transfer.files;eduFileDisplay(dest,label);
+            });
+        }
+
+        const edFecha = t => t?.toDate ? t.toDate().toLocaleString('es-CO') : '';
+        const edEstado = (btn, cargando, txt) => { if(!btn)return;btn.disabled=cargando;btn.textContent=cargando?'Cargando...':txt; };
+        async function cargarAdjuntoEdu(archivo,carpeta){
+            if(!['image/jpeg','image/png','image/webp','application/pdf','text/plain','application/msword','application/vnd.openxmlformats-officedocument.wordprocessingml.document'].includes(archivo.type))throw new Error('Archivo no permitido');
+            if(archivo.size>5*1024*1024)throw new Error('Máximo 5 MB por archivo');
+            const nombre=`${Date.now()}-${crypto.randomUUID()}`;
+            const ref=storageRef(edStorage,`${carpeta}/${nombre}`);
+            await uploadBytes(ref,archivo,{contentType:archivo.type});
+            return await getDownloadURL(ref);
+        }
+        let chatPersonas=[];
+        async function cargarContactosEdu() {
+            if(!colegioId)return;
+            const s=await getDocs(query(collection(db,'usuarios'),where('colegioId','==',colegioId)));
+            chatPersonas=s.docs.filter(d=>d.id!==chatUid() && d.data().activo!==false).map(d=>({id:d.data().uid||d.data().authUid||d.id,documentoUsuarioId:d.id,...d.data()}));
+            buscarContactosEdu();
+        }
+        function buscarContactosEdu(){
+            const filtro=document.getElementById('chatBuscar')?.value.trim().toLocaleLowerCase('es') || '';
+            const resultados=chatPersonas.filter(u=>String(u.nombre || `${u.nombres||''} ${u.apellidos||''}`).toLocaleLowerCase('es').includes(filtro)).slice(0,40);
+            const host=document.getElementById('chatResultados');if(!host)return;
+            host.replaceChildren();
+            for(const u of resultados){const b=document.createElement('button');b.type='button';b.textContent=`${u.nombre || `${u.nombres||''} ${u.apellidos||''}`.trim() || 'Usuario'} · ${u.rol||'Usuario'}`;b.addEventListener('click',()=>seleccionarChatEdu(u));host.append(b);}
+        }
+        document.getElementById('chatBuscar')?.addEventListener('input',buscarContactosEdu);
+        async function seleccionarChatEdu(u){
+            chatDestino=u;const uid=chatUid();if(!uid)return;
+            const chatId=[uid,u.id].sort().join('_');
+            document.getElementById('chatContacto').textContent=`${u.nombre||u.nombres||'Usuario'} · ${u.rol||'Usuario'}`;
+            document.getElementById('chatTexto').disabled=false;document.getElementById('chatAdjunto').disabled=false;document.getElementById('chatEnviar').disabled=false;
+            if(unsubscribeChat)unsubscribeChat();
+            const hostMensajes=document.getElementById('chatMensajes');
+            hostMensajes.textContent='Cargando conversación...';
+            try {
+                const parentRef=doc(db,'colegios',colegioId,'chats',chatId);
+                const existente=await getDoc(parentRef);
+                if(!existente.exists()) await setDoc(parentRef,{colegioId,participantes:[uid,u.id],actualizadoEn:serverTimestamp()});
+            } catch(err) { hostMensajes.textContent='No se pudo abrir el chat: '+err.message+'. Comprueba que los participantes tengan cuenta en Authentication y documento usuarios/{uid} del mismo colegio, y que las reglas de chats estén publicadas.'; return; }
+            if(chatDestino?.id!==u.id) return;
+            const q=query(collection(db,'colegios',colegioId,'chats',chatId,'mensajes'),orderBy('creadoEn','asc'),limit(150));
+            unsubscribeChat=onSnapshot(q,snap=>{
+                const host=document.getElementById('chatMensajes');host.replaceChildren();
+                snap.forEach(d=>{const m=d.data(),div=document.createElement('div');div.className='chat-burbuja'+(m.remitenteUid===uid?' propia':'');
+                    const p=document.createElement('p');p.textContent=m.texto||'';const sm=document.createElement('small');sm.textContent=edFecha(m.creadoEn);div.append(p);if(m.imagenUrl){const im=document.createElement('img');im.src=m.imagenUrl;im.alt='Imagen adjunta';im.style.cssText='max-width:260px;width:100%;border-radius:10px;display:block;margin:6px 0';im.loading='lazy';div.append(im);}if(m.archivoUrl){const a=document.createElement('a');a.href=m.archivoUrl;a.target='_blank';a.rel='noopener noreferrer';a.textContent='📎 '+(m.archivoNombre||'Ver archivo');div.append(a);}div.append(sm);host.append(div);});
+                host.scrollTop=host.scrollHeight;
+            },e=>{document.getElementById('chatMensajes').textContent=`Error consultando chat: ${e.message}`;});
+        }
+        document.getElementById('chatForm')?.addEventListener('submit',async e=>{
+            e.preventDefault();if(!chatDestino||!colegioId)return;
+            const input=document.getElementById('chatTexto'),texto=input.value.trim(),adj=document.getElementById('chatAdjunto'),archivo=adj.files[0];if(!texto&&!archivo)return;
+            const btn=document.getElementById('chatEnviar');edEstado(btn,true,'Enviar');
+            try{const uid=chatUid(),chatId=[uid,chatDestino.id].sort().join('_');
+                await setDoc(doc(db,'colegios',colegioId,'chats',chatId),{colegioId,participantes:[uid,chatDestino.id],actualizadoEn:serverTimestamp()},{merge:true});
+                const datos={colegioId,remitenteUid:uid,destinatarioUid:chatDestino.id,texto,creadoEn:serverTimestamp()};if(archivo){const url=await cargarAdjuntoEdu(archivo,`colegios/${colegioId}/chats/${chatId}/${uid}`);if(archivo.type.startsWith('image/'))datos.imagenUrl=url;else{datos.archivoUrl=url;datos.archivoNombre=archivo.name;}}await addDoc(collection(db,'colegios',colegioId,'chats',chatId,'mensajes'),datos);input.value='';adj.value='';document.getElementById('chatArchivoNombre')&&(document.getElementById('chatArchivoNombre').textContent='');
+            }catch(err){alert('No se pudo enviar: '+err.message);}finally{edEstado(btn,false,'Enviar');}
+        });
+        function conectarComunicadosEdu(){if(!colegioId)return;if(unsubscribeAvisos)unsubscribeAvisos();
+            unsubscribeAvisos=onSnapshot(query(collection(db,'colegios',colegioId,'comunicados'),orderBy('creadoEn','desc'),limit(100)),s=>{
+                const host=document.getElementById('comunicadosLista');host.replaceChildren();
+                [...s.docs].reverse().forEach(d=>{const a=d.data(),div=document.createElement('div');div.className='chat-burbuja';
+                    const h=document.createElement('strong');h.textContent=a.autorNombre||'Institución';const p=document.createElement('p');p.textContent=a.texto||'';const f=document.createElement('small');f.textContent=edFecha(a.creadoEn);div.append(h,p);if(a.imagenUrl){const im=document.createElement('img');im.src=a.imagenUrl;im.alt='Adjunto del comunicado';im.loading='lazy';im.style.cssText='width:100%;max-width:450px;border-radius:10px;display:block;margin:8px 0';div.append(im);}if(a.archivoUrl){const link=document.createElement('a');link.href=a.archivoUrl;link.target='_blank';link.rel='noopener noreferrer';link.textContent='📎 '+(a.archivoNombre||'Documento adjunto');div.append(link);}div.append(f);host.append(div);});host.scrollTop=host.scrollHeight;
+            },e=>{document.getElementById('comunicadosLista').textContent=`Error: ${e.message}`;});
+        }
+        document.getElementById('comunicadoForm')?.addEventListener('submit',async e=>{
+            e.preventDefault();const btn=document.getElementById('comunicadoPublicar'),input=document.getElementById('comunicadoTexto'),texto=input.value.trim(),adj=document.getElementById('comunicadoAdjunto'),archivo=adj.files[0];if((!texto&&!archivo)||!colegioId)return;edEstado(btn,true,'Publicar comunicado');
+            try{const datos={colegioId,texto,autorUid:chatUid(),autorNombre:usuarioActual?.nombre||'Rector',autorRol:'rector',creadoEn:serverTimestamp()};if(archivo){const url=await cargarAdjuntoEdu(archivo,`colegios/${colegioId}/comunicados/${chatUid()}`);if(archivo.type.startsWith('image/'))datos.imagenUrl=url;else{datos.archivoUrl=url;datos.archivoNombre=archivo.name;}}await addDoc(collection(db,'colegios',colegioId,'comunicados'),datos);input.value='';adj.value='';document.getElementById('comunicadoArchivoNombre').textContent='';
+                // Push/email requieren backend autorizado; no afirmar entregas desde aquí.
+            }catch(err){alert('Error publicando: '+err.message);}finally{edEstado(btn,false,'Publicar comunicado');}
+        });
+        document.getElementById('fotoPerfilForm')?.addEventListener('submit',async e=>{
+            e.preventDefault();const btn=document.getElementById('fotoPerfilGuardar'),file=document.getElementById('fotoPerfilFile').files[0],uid=chatUid();
+            if(!uid||!file)return;if(!['image/png','image/jpeg','image/webp'].includes(file.type)||file.size>3*1024*1024){alert('Selecciona JPG, PNG o WebP de máximo 3 MB');return;}
+            edEstado(btn,true,'Guardar fotografía');
+            try{const ruta=storageRef(edStorage,`colegios/${colegioId}/perfiles/${uid}/${Date.now()}-${file.name.replace(/[^a-zA-Z0-9._-]/g,'_')}`);
+                await uploadBytes(ruta,file,{contentType:file.type});const url=await getDownloadURL(ruta);
+                await updateDoc(doc(db,'usuarios',uid),{fotoPerfilUrl:url});
+                document.getElementById('fotoPerfilPreview').src=url;document.getElementById('fotoPerfilPreview').style.display='block';
+                document.querySelector('.user-avatar').innerHTML='';const img=document.createElement('img');img.src=url;img.alt='Mi fotografía';img.style.cssText='width:36px;height:36px;border-radius:50%;object-fit:cover';document.querySelector('.user-avatar').append(img);
+            }catch(err){alert('Error al subir la foto: '+err.message);}finally{edEstado(btn,false,'Guardar fotografía');}
+        });
+        // Un bloque de descanso no crea asignatura ni demanda profesor.
+        const claseTipoEdu=document.getElementById('claseTipo');
+        claseTipoEdu?.addEventListener('change',()=>{
+            const especial=claseTipoEdu.value!=='clase';for(const id of ['claseAsignatura','claseProfesor']){
+                const sel=document.getElementById(id);if(sel){sel.required=!especial;sel.disabled=especial;sel.closest('.form-group').style.display=especial?'none':'';}}
+        });
+        document.getElementById('formAgregarClase')?.addEventListener('submit',async e=>{
+            if(claseTipoEdu?.value==='clase')return;
+            e.preventDefault();e.stopImmediatePropagation();
+            const dia=document.getElementById('claseDia').value,hi=document.getElementById('claseHoraInicio').value,hf=document.getElementById('claseHoraFin').value,tipo=claseTipoEdu.value;
+            if(!cursoActual||!dia||!hi||!hf||hi>=hf){alert('Revisa curso, día y horas');return;}
+            const btn=e.currentTarget.querySelector('[type="submit"]');edEstado(btn,true,'Guardar');
+            try{const q=query(collection(db,'colegios',colegioId,'horarios'),where('cursoId','==',cursoActual));const snap=await getDocs(q);
+                const solapa=snap.docs.some(d=>{const a=d.data();return String(a.dia)===String(dia) && hi<(a.horaFin||'00:00') && hf>(a.horaInicio||'23:59');});
+                if(solapa)throw new Error('Ya hay una clase o bloque en ese horario');
+                await addDoc(collection(db,'colegios',colegioId,'horarios'),{cursoId:cursoActual,dia,horaInicio:hi,horaFin:hf,tipo,asignaturaNombre:tipo.charAt(0).toUpperCase()+tipo.slice(1),profesorNombre:'',creadoEn:serverTimestamp()});
+                document.getElementById('modalAgregarClase').classList.remove('show');document.getElementById('btnCargarHorario').click();
+            }catch(err){alert('Error: '+err.message);}finally{edEstado(btn,false,'Guardar');}
+        },true);
+        // Los datos se activan después de verificar la autenticación del rector.
+        async function activarExtensionesEdu(){
+            const mes=document.getElementById('pensMesFiltro');if(mes&&!mes.options.length){MESES.forEach((m,i)=>mes.add(new Option(m,String(i+1))));mes.value=String(new Date().getMonth()+1);}
+            const anio=document.getElementById('pensAnioFiltro');if(anio&&!anio.value)anio.value=String(new Date().getFullYear());
+            if(usuarioActual?.fotoPerfilUrl){document.getElementById('fotoPerfilPreview').src=usuarioActual.fotoPerfilUrl;document.getElementById('fotoPerfilPreview').style.display='block';}
+            await consultarValorPensionGlobal().catch(console.warn);
+            conectarComunicadosEdu();try { await cargarContactosEdu(); } catch (error) { console.warn("Contactos no disponibles: ", error.message); document.getElementById("chatResultados").textContent = "No se pudieron cargar los contactos; revisa los permisos de Firebase."; }
+        }
+        let pensPaginaActual=1;
+        function filtrarPensionesEdu(){
+            const tabla=document.getElementById('tablaPensiones');if(!tabla)return;
+            const mes=Number(document.getElementById('pensMesFiltro').value),anio=Number(document.getElementById('pensAnioFiltro').value),estado=document.getElementById('pensEstadoFiltro').value;
+            const filas=[...tabla.querySelectorAll('tr')].filter(tr=>tr.children.length>=9);
+            const visibles=filas.filter(tr=>{
+                const c=tr.children,mesFila=MESES.findIndex(m=>m===c[2]?.textContent.trim())+1,anioFila=Number(c[3]?.textContent.trim()),saldo=Number((c[6]?.textContent||'0').replace(/[^\d]/g,''));
+                return (!mes||mesFila===mes)&&(!anio||anioFila===anio)&&(estado==='todos'||(estado==='debe'?saldo>0:saldo===0));
+            });const total=Math.max(1,Math.ceil(visibles.length/10));pensPaginaActual=Math.min(Math.max(1,pensPaginaActual),total);
+            filas.forEach(tr=>tr.style.display='none');visibles.slice((pensPaginaActual-1)*10,pensPaginaActual*10).forEach(tr=>tr.style.display='');
+            document.getElementById('pensPaginaInfo').textContent=`Página ${pensPaginaActual} de ${total} · ${visibles.length} pensiones`;
+            document.getElementById('pensAnterior').disabled=pensPaginaActual===1;
+            document.getElementById('pensSiguiente').disabled=pensPaginaActual===total;
+        }
+        document.getElementById('pensAplicarFiltro')?.addEventListener('click',()=>{pensPaginaActual=1;filtrarPensionesEdu();});
+        document.getElementById('pensAnterior')?.addEventListener('click',()=>{pensPaginaActual--;filtrarPensionesEdu();});
+        document.getElementById('pensSiguiente')?.addEventListener('click',()=>{pensPaginaActual++;filtrarPensionesEdu();});
+        new MutationObserver(()=>{if(document.getElementById('tablaPensiones').children.length)filtrarPensionesEdu();}).observe(document.getElementById('tablaPensiones'),{childList:true});
+        // =============================================
         // AUTH
         // =============================================
         onAuthStateChanged(auth, async (user) => {
@@ -3481,6 +3940,7 @@
                     document.getElementById('userName').textContent = data.nombre || user.email;
                     document.getElementById('userRole').textContent = 'Rector';
                     await cargarDashboard();
+                    await activarExtensionesEdu();
                 } else if (data.rol === 'rector' && data.activo === false) {
                     alert('⛔ Cuenta inactiva.');
                     await signOut(auth);
@@ -3514,6 +3974,114 @@
                 } catch (e) { alert('Error'); isLoggingOut = false; }
             }
         });
+
+
+        // ===== Capa visual: no modifica operaciones de Firebase ni lógica de negocio =====
+        const eduVista = {
+            inicio:['Inicio','Panorama de tu institución y accesos rápidos','fa-house'],
+            estudiantes:['Estudiantes y matrículas','Administra matrículas, estudiantes y acudientes desde un solo lugar','fa-user-graduate'],
+            personal:['Personal del colegio','Consulta y administra los miembros de tu equipo','fa-users'],
+            grados:['Grados','Organiza la estructura académica de la institución','fa-layer-group'],
+            cursos:['Cursos','Consulta y organiza los grupos de cada grado','fa-users-rectangle'],
+            asignaturas:['Asignaturas','Gestiona las materias de tu institución','fa-book-open'],
+            horarios:['Horarios','Planifica clases, descansos y actividades del colegio','fa-calendar-days'],
+            notas:['Notas','Consulta las calificaciones y promedios por estudiante','fa-star'],
+            boletines:['Boletines','Genera los informes académicos de cada período','fa-file-lines'],
+            pensiones:['Pensiones','Control y seguimiento de obligaciones, abonos y pagos','fa-credit-card'],
+            contabilidad:['Contabilidad','Movimientos, ingresos, egresos y cartera institucional','fa-calculator'],
+            chat:['Chat interno','Conversaciones privadas entre usuarios autorizados','fa-comments'],
+            comunicados:['Comunicados institucionales','Canal oficial: publica rectoría y coordinación; el colegio recibe','fa-bullhorn'],
+            perfil:['Mi perfil','Administra tu fotografía e identidad en la plataforma','fa-user-circle']
+        };
+        for (const [clave,datos] of Object.entries(eduVista)) {
+            const pagina=document.getElementById('page-'+clave);
+            if(!pagina)continue;
+            if(clave==='inicio')continue;
+            const hero=document.createElement('div');hero.className='edu-hero';
+            hero.innerHTML='<div class="edu-hero-icon"><i class="fas '+datos[2]+'"></i></div><div class="edu-hero-copy"><h2>'+datos[0]+'</h2><p>'+datos[1]+'</p></div><div class="edu-hero-deco" aria-hidden="true"><i class="fas '+datos[2]+'"></i></div>';
+            pagina.insertBefore(hero,pagina.firstChild);
+        }
+        const eduNavegacion=Array.from(document.querySelectorAll('.sidebar-nav a[data-page]'));
+        document.querySelectorAll('.edu-toplink').forEach(btn=>btn.addEventListener('click',()=>{
+            eduNavegacion.find(a=>a.dataset.page===btn.dataset.to)?.click();
+        }));
+        const eduGrupo={inicio:'inicio',estudiantes:'estudiantes',personal:'estudiantes',grados:'grados',cursos:'grados',asignaturas:'grados',horarios:'grados',notas:'grados',boletines:'grados',pensiones:'pensiones',contabilidad:'contabilidad',chat:'comunicados',comunicados:'comunicados',perfil:''};
+        const eduActualizarCabecera=()=>{
+            const activo=document.querySelector('.sidebar-nav li.active a[data-page]');
+            const p=activo?.dataset.page;
+            document.querySelectorAll('.edu-toplink').forEach(b=>b.classList.toggle('active',b.dataset.to===eduGrupo[p]));
+            if(p&&eduVista[p])document.getElementById('pageTitle').textContent=eduVista[p][0];
+        };
+        eduNavegacion.forEach(a=>{a.setAttribute('title',eduVista[a.dataset.page]?.[0]||a.textContent.trim());a.setAttribute('aria-label',eduVista[a.dataset.page]?.[0]||a.textContent.trim());a.addEventListener('click',()=>queueMicrotask(eduActualizarCabecera));});
+        eduActualizarCabecera();
+        const eduSchool=document.createElement('span');eduSchool.className='edu-school-mini';eduSchool.innerHTML='<i class="fas fa-school"></i><span id="eduSchoolTitle">EduOne</span>';
+        document.querySelector('.header-left')?.appendChild(eduSchool);
+        const eduSchoolText=document.getElementById('colegioNombreSidebar');
+        if(eduSchoolText){const eduObs=new MutationObserver(()=>{document.getElementById('eduSchoolTitle').textContent=eduSchoolText.textContent});eduObs.observe(eduSchoolText,{childList:true,characterData:true,subtree:true});}
+        // Compatible con la personalización que ya aplica el superadministrador a través de colorPrimario.
+
+
+        // Portada de Inicio; solo modifica presentación y el campo fotoPortadaUrl del colegio.
+        function aplicarInicioColegio(data) {
+            document.getElementById('inicioSaludo').textContent = '¡Bienvenido, ' + (usuarioActual?.nombre || 'Rector') + '!';
+            document.getElementById('inicioNombreColegio').textContent = data.nombre || 'Colegio';
+            document.getElementById('inicioUbicacionColegio').textContent = [data.ciudad,data.departamento].filter(Boolean).join(', ') || 'Institución educativa';
+            const estadoEl=document.getElementById('inicioEstado');
+            estadoEl.textContent=(data.estado==='activo'?'● Activo':'● Inactivo');
+            estadoEl.classList.toggle('inactivo',data.estado!=='activo');
+            const portada=document.getElementById('inicioPortada');
+            const foto=data.fotoPortadaUrl || data.imagenPortadaUrl || data.fotoColegioUrl || '';
+            portada.style.setProperty('--inicio-foto',foto && /^https:\/\//i.test(foto) ? `url("${foto.replace(/["\\]/g,'')}")` : 'none');
+            const logo=document.getElementById('inicioLogoBox');
+            logo.replaceChildren();
+            if(data.logoUrl && /^https:\/\//i.test(data.logoUrl)) {
+                const img=document.createElement('img'); img.alt='Logo del colegio'; img.src=data.logoUrl;
+                img.onerror=()=>{logo.textContent='🏫'}; logo.append(img);
+            } else {const i=document.createElement('i');i.className='fas fa-school';logo.append(i)}
+            document.getElementById('inicioPlanTitulo').textContent=data.planNombre || 'Plan EduOne';
+        }
+        function actualizarInicioEstadisticas(){
+            const valor=id=>document.getElementById(id)?.textContent || '0';
+            document.getElementById('inicioResumenEstudiantes').textContent=valor('statsEstudiantes');
+            document.getElementById('inicioResumenPersonal').textContent=valor('statsProfesores');
+            document.getElementById('inicioResumenHorarios').textContent=valor('statsHorarios');
+            document.getElementById('inicioPlanCantidad').textContent=valor('planEstudiantesActuales')+' / '+valor('planEstudiantesMax');
+            const src=document.getElementById('planProgressFill');
+            document.getElementById('inicioPlanFill').style.width=src?.style.width||'0%';
+        }
+        document.getElementById('inicioCambiarFoto')?.addEventListener('click',()=>document.getElementById('inicioFotoArchivo')?.click());
+        document.getElementById('inicioFotoArchivo')?.addEventListener('change',async e=>{
+            const archivo=e.target.files?.[0];if(!archivo)return;
+            const estado=document.getElementById('inicioFotoEstado');const boton=document.getElementById('inicioCambiarFoto');
+            if(!['image/jpeg','image/png','image/webp'].includes(archivo.type)||archivo.size>5*1024*1024){estado.textContent='Usa JPG, PNG o WebP de hasta 5 MB.';e.target.value='';return}
+            if(!colegioId||!auth.currentUser){estado.textContent='Inicia sesión para actualizar la portada.';return}
+            try{
+                boton.disabled=true;estado.textContent='Subiendo fotografía…';
+                const extension={ 'image/jpeg':'jpg','image/png':'png','image/webp':'webp'}[archivo.type];
+                const ruta=storageRef(getStorage(app),`colegios/${colegioId}/portada/portada_${Date.now()}.${extension}`);
+                await uploadBytes(ruta,archivo,{contentType:archivo.type});
+                const url=await getDownloadURL(ruta);
+                await updateDoc(doc(db,'colegios',colegioId),{fotoPortadaUrl:url});
+                document.getElementById('inicioPortada').style.setProperty('--inicio-foto',`url("${url}")`);
+                estado.textContent='Fotografía guardada correctamente.';
+            }catch(error){console.error('Portada:',error);estado.textContent='No se pudo guardar: '+(error.code||error.message)+'. Revisa permisos de Storage.'}
+            finally{boton.disabled=false;e.target.value=''}
+        });
+        // Un único menú de navegación arriba; se reutilizan los controladores originales de las secciones.
+        const eduNavDispatch=dest=>{
+            document.querySelector(`.sidebar-nav a[data-page="${dest}"]`)?.click();
+            document.querySelectorAll('.edu-menu-group').forEach(x=>x.open=false);
+            document.querySelector('.edu-unico-menu')?.classList.remove('menu-abierto');
+            document.getElementById('eduMobileMenu')?.setAttribute('aria-expanded','false');
+            document.querySelectorAll('.edu-unico-menu [data-to]').forEach(btn=>btn.classList.toggle('active',btn.dataset.to===dest));
+        };
+        document.querySelectorAll('.edu-menu-options [data-to], [data-inicio-to]').forEach(btn=>btn.addEventListener('click',()=>eduNavDispatch(btn.dataset.to||btn.dataset.inicioTo)));
+        document.getElementById('eduLogoutTop')?.addEventListener('click',()=>document.getElementById('logoutBtn')?.click());
+        document.getElementById('eduMobileMenu')?.addEventListener('click',()=>{
+            const el=document.querySelector('.edu-unico-menu');const open=el.classList.toggle('menu-abierto');
+            document.getElementById('eduMobileMenu').setAttribute('aria-expanded',String(open));
+        });
+        document.querySelectorAll('.edu-menu-group').forEach(group=>group.addEventListener('toggle',()=>{if(group.open)document.querySelectorAll('.edu-menu-group').forEach(other=>{if(other!==group)other.open=false})}));
 
         console.log('✅ EduOne - Panel del Rector cargado correctamente');
     </script>

@@ -1,367 +1,1002 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Descubre todas las funcionalidades de EduOne: gestión académica, calificaciones, tareas, boletines y más." />
-  <title>Funcionalidades | EduOne</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --primary: #1a56db; --primary-dark: #1e3a8a; --primary-light: #3b82f6;
-      --secondary: #06b6d4; --background: #f8fafc; --surface: #ffffff;
-      --text: #0f172a; --text-muted: #64748b; --border: #e2e8f0;
-      --success: #10b981; --gradient: linear-gradient(135deg, #1e3a8a 0%, #1a56db 50%, #06b6d4 100%);
-      --radius: 12px; --shadow: 0 4px 24px rgba(26,86,219,0.10); --shadow-lg: 0 8px 48px rgba(26,86,219,0.15);
-    }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', Arial, sans-serif; background: var(--background); color: var(--text); line-height: 1.6; overflow-x: hidden; overflow-wrap: break-word; }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#0a0f1e" />
+    <meta name="description" content="Conoce las funcionalidades de EduOne para gestionar estudiantes, matrículas, notas, horarios, asistencia, boletines, convivencia, finanzas y comunicación escolar." />
+    <meta name="keywords" content="EduOne, funcionalidades, gestión escolar, software educativo, Colombia" />
+    <meta name="author" content="EduOne" />
+    <meta property="og:title" content="Funcionalidades | EduOne" />
+    <meta property="og:description" content="Todo lo que EduOne puede hacer para tu institución educativa." />
+    <meta property="og:type" content="website" />
+    <link rel="canonical" href="https://eduone.com.co/funcionalidades.html" />
+    <title>Funcionalidades | EduOne</title>
 
-    .navbar { position: sticky; top: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); transition: box-shadow 0.3s; }
-    .navbar.scrolled { box-shadow: 0 2px 24px rgba(26,86,219,0.12); }
-    .nav-container { max-width: 1280px; margin: 0 auto; padding: 0 24px; height: 68px; display: flex; align-items: center; justify-content: space-between; }
-    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
-    .nav-logo-mark { width: 36px; height: 36px; background: var(--gradient); border-radius: 9px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 16px; }
-    .nav-logo-text { font-size: 20px; font-weight: 700; color: var(--primary-dark); letter-spacing: -0.5px; }
-    .nav-menu { display: flex; align-items: center; gap: 4px; list-style: none; }
-    .nav-link { text-decoration: none; color: var(--text-muted); font-size: 14px; font-weight: 500; padding: 8px 12px; border-radius: 8px; transition: color 0.2s, background 0.2s; white-space: nowrap; }
-    .nav-link:hover { color: var(--primary); background: rgba(26,86,219,0.06); }
-    .nav-link.active { color: var(--primary); font-weight: 600; }
-    .nav-link-cta { background: var(--primary); color: white !important; padding: 8px 18px; border-radius: 8px; font-weight: 600; }
-    .nav-link-cta:hover { background: var(--primary-dark) !important; }
-    .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 8px; border-radius: 8px; }
-    .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; transition: transform 0.3s, opacity 0.3s; }
-    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
-    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    <!-- FAVICON -->
+    <link rel="icon" type="image/png" sizes="48x48" href="imagenes/logo.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="imagenes/logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="imagenes/logo.png">
 
-    .page-hero { background: var(--gradient); padding: 80px 24px; text-align: center; }
-    .page-hero-inner { max-width: 800px; margin: 0 auto; }
-    .page-hero-eyebrow { display: inline-block; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); border-radius: 100px; padding: 6px 18px; font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.85); margin-bottom: 20px; }
-    .page-hero h1 { font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 900; color: white; line-height: 1.15; letter-spacing: -1.5px; margin-bottom: 16px; }
-    .page-hero p { font-size: 17px; color: rgba(255,255,255,0.78); line-height: 1.7; }
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
-    .section { padding: 80px 24px; }
-    .section-inner { max-width: 1280px; margin: 0 auto; }
-    .section-eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--primary); margin-bottom: 12px; }
-    .section-title { font-size: clamp(1.7rem, 3vw, 2.5rem); font-weight: 800; color: var(--text); letter-spacing: -1px; line-height: 1.15; margin-bottom: 16px; }
-    .section-title span { color: var(--primary); }
-    .section-header { text-align: center; margin-bottom: 52px; }
-    .section-desc { font-size: 16px; color: var(--text-muted); line-height: 1.7; max-width: 600px; margin: 0 auto; }
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    /* FEATURE CARDS BIG */
-    .features-big { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
-    .feature-big-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 32px; transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s; }
-    .feature-big-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); border-color: rgba(26,86,219,0.25); }
-    .fb-icon { width: 56px; height: 56px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 20px; }
-    .fb-blue { background: rgba(26,86,219,0.10); }
-    .fb-cyan { background: rgba(6,182,212,0.10); }
-    .fb-green { background: rgba(16,185,129,0.10); }
-    .fb-purple { background: rgba(139,92,246,0.10); }
-    .fb-orange { background: rgba(249,115,22,0.10); }
-    .fb-red { background: rgba(239,68,68,0.10); }
-    .feature-big-card h3 { font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 10px; letter-spacing: -0.3px; }
-    .feature-big-card p { font-size: 14px; color: var(--text-muted); line-height: 1.65; }
+        :root {
+            --bg-0: #050814;
+            --bg-1: #0a0f1e;
+            --bg-2: #111a30;
+            --primary: #2563eb;
+            --primary-light: #3b82f6;
+            --cyan: #06b6d4;
+            --cyan-light: #22d3ee;
+            --lime: #a3e635;
+            --text-light: #e2e8f0;
+            --text-muted: #94a3b8;
+            --gradient-tech: linear-gradient(135deg, #2563eb 0%, #06b6d4 100%);
+            --gradient-glow: linear-gradient(135deg, #3b82f6 0%, #22d3ee 50%, #a3e635 100%);
+            --radius-sm: 10px;
+            --radius: 18px;
+            --radius-lg: 28px;
+            --radius-pill: 100px;
+            --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            --nav-h: 74px;
+        }
 
-    /* ROLES */
-    .roles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
-    .role-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 28px; }
-    .role-card:hover { box-shadow: var(--shadow); }
-    .role-header { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
-    .role-icon { width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 22px; }
-    .role-card h3 { font-size: 16px; font-weight: 700; color: var(--text); }
-    .role-list { list-style: none; }
-    .role-list li { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--text-muted); padding: 7px 0; border-bottom: 1px solid var(--border); }
-    .role-list li:last-child { border-bottom: none; }
-    .check { color: var(--success); font-size: 16px; flex-shrink: 0; }
+        html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--nav-h) + 60px); }
 
-    /* COMING SOON */
-    .coming-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
-    .coming-item { display: flex; align-items: center; gap: 12px; background: var(--surface); border: 1.5px dashed var(--border); border-radius: var(--radius); padding: 16px; }
-    .coming-badge { font-size: 10px; font-weight: 700; background: rgba(249,115,22,0.1); color: #ea580c; padding: 3px 8px; border-radius: 100px; letter-spacing: 0.5px; white-space: nowrap; }
-    .coming-icon { font-size: 20px; }
-    .coming-label { font-size: 13px; font-weight: 600; color: var(--text-muted); }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-0);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
 
-    .footer { background: var(--primary-dark); color: white; padding: 64px 24px 32px; }
-    .footer-inner { max-width: 1280px; margin: 0 auto; }
-    .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
-    .footer-brand p { font-size: 14px; color: rgba(255,255,255,0.55); margin-top: 12px; line-height: 1.6; max-width: 300px; }
-    .footer-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
-    .footer-logo-mark { width: 32px; height: 32px; background: rgba(255,255,255,0.15); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; }
-    .footer-logo-text { font-size: 18px; font-weight: 700; }
-    .footer-col h4 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.45); margin-bottom: 16px; }
-    .footer-col ul { list-style: none; }
-    .footer-col li { margin-bottom: 10px; }
-    .footer-col a { text-decoration: none; color: rgba(255,255,255,0.65); font-size: 14px; transition: color 0.2s; }
-    .footer-col a:hover { color: white; }
-    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 28px; text-align: center; }
-    .footer-bottom p { font-size: 13px; color: rgba(255,255,255,0.4); margin-bottom: 4px; }
+        img, video { max-width: 100%; height: auto; display: block; }
+        button { font-family: inherit; cursor: pointer; }
+        a { color: inherit; text-decoration: none; }
+        ul { list-style: none; }
 
-    .back-to-top { position: fixed; bottom: 28px; right: 28px; width: 44px; height: 44px; background: var(--primary); color: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; cursor: pointer; border: none; box-shadow: 0 4px 20px rgba(26,86,219,0.35); opacity: 0; pointer-events: none; transition: opacity 0.3s, transform 0.3s; z-index: 999; }
-    .back-to-top.visible { opacity: 1; pointer-events: auto; }
-    .back-to-top:hover { transform: translateY(-3px); }
-    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
+        @keyframes floatY { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        @keyframes pulseGlow { 0%, 100% { box-shadow: 0 0 20px rgba(37,99,235,0.4); } 50% { box-shadow: 0 0 40px rgba(6,182,212,0.7); } }
+        @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        @keyframes spinSlow { to { transform: rotate(360deg); } }
+        @keyframes slideLoadBar { 0% { transform: translateX(-100%); } 100% { transform: translateX(300%); } }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-    .coming-soon-section { background: linear-gradient(135deg, #fef3c7, #fde68a); border: 1px solid #f59e0b; border-radius: 20px; padding: 48px; }
-    .coming-soon-section h2 { font-size: clamp(1.5rem, 2.5vw, 2rem); font-weight: 800; color: #92400e; margin-bottom: 8px; }
-    .coming-soon-section > p { font-size: 15px; color: #78350f; margin-bottom: 32px; }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+            .reveal, .stagger > * { opacity: 1 !important; transform: none !important; }
+        }
 
-    @media (max-width: 768px) {
-      .nav-menu { display: none; position: absolute; top: 68px; left: 0; right: 0; background: white; border-bottom: 1px solid var(--border); flex-direction: column; padding: 12px; gap: 4px; box-shadow: 0 8px 32px rgba(0,0,0,0.08); align-items: stretch; }
-      .nav-menu.open { display: flex; }
-      .nav-link { padding: 12px 16px; }
-      .nav-hamburger { display: flex; }
-      .section { padding: 56px 20px; }
-      .footer-top { grid-template-columns: 1fr; gap: 32px; }
-    }
-  </style>
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-0); }
+        ::-webkit-scrollbar-thumb { background: var(--gradient-tech); border-radius: 100px; }
+
+        /* Fondo tecnológico */
+        body::before {
+            content: ''; position: fixed; inset: 0; z-index: -2;
+            background: radial-gradient(ellipse 800px 600px at 15% 10%, rgba(37, 99, 235, 0.18) 0%, transparent 60%), radial-gradient(ellipse 700px 500px at 85% 80%, rgba(6, 182, 212, 0.14) 0%, transparent 60%), var(--bg-0);
+            pointer-events: none;
+        }
+
+        /* PRELOADER */
+        .preloader { position: fixed; inset: 0; z-index: 99999; display: flex; align-items: center; justify-content: center; background: var(--bg-0); transition: opacity 0.5s ease; }
+        .preloader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        .preloader-inner { display: flex; flex-direction: column; align-items: center; gap: 24px; }
+        .preloader-logo { font-family: 'Space Grotesk', sans-serif; font-size: 34px; font-weight: 700; background: var(--gradient-glow); background-size: 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: gradientShift 2s infinite; }
+        .preloader-ring { width: 60px; height: 60px; border-radius: 50%; border: 3px solid rgba(37,99,235,0.15); border-top-color: var(--cyan); border-right-color: var(--primary); animation: spinSlow 1s linear infinite; }
+        .preloader-bar { width: 200px; height: 3px; background: rgba(148,163,184,0.15); border-radius: 100px; overflow: hidden; position: relative; }
+        .preloader-bar::after { content: ''; position: absolute; inset: 0; width: 40%; background: var(--gradient-glow); border-radius: 100px; animation: slideLoadBar 1.4s infinite; }
+
+        /* NAVBAR */
+        .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; height: var(--nav-h); background: rgba(10, 15, 30, 0.55); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(148, 163, 184, 0.10); transition: background var(--transition); }
+        .navbar.scrolled { background: rgba(10, 15, 30, 0.88); box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4); border-bottom-color: rgba(37, 99, 235, 0.25); }
+        .nav-container { max-width: 1360px; margin: 0 auto; height: 100%; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+        .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; transition: transform var(--transition); }
+        .nav-logo:hover { transform: scale(1.04); }
+        .logo-mark { width: 40px; height: 40px; display: grid; place-items: center; }
+        .logo-mark svg { width: 100%; height: 100%; filter: drop-shadow(0 0 10px rgba(59,130,246,0.5)); }
+        .logo-text { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700; color: #fff; letter-spacing: -0.8px; }
+        .logo-text span { background: var(--gradient-glow); background-size: 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: gradientShift 4s infinite; }
+
+        .nav-menu { display: flex; align-items: center; gap: 4px; }
+        .nav-link { text-decoration: none; color: var(--text-light); font-size: 14px; font-weight: 500; padding: 8px 14px; border-radius: var(--radius-sm); position: relative; transition: color var(--transition), background var(--transition); white-space: nowrap; }
+        .nav-link::before { content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 2px; background: var(--gradient-glow); border-radius: 100px; transition: width var(--transition), left var(--transition); }
+        .nav-link:hover, .nav-link.active { color: #fff; }
+        .nav-link:hover::before, .nav-link.active::before { width: 60%; left: 20%; }
+
+        .nav-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+        .btn-nav-demo { display: inline-flex; align-items: center; gap: 7px; padding: 9px 18px; background: var(--gradient-tech); color: #fff; font-size: 13.5px; font-weight: 600; border-radius: var(--radius-pill); transition: transform var(--transition), box-shadow var(--transition); box-shadow: 0 4px 20px rgba(37, 99, 235, 0.35); white-space: nowrap; }
+        .btn-nav-demo:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 10px 30px rgba(6, 182, 212, 0.5); }
+        .btn-nav-login { display: inline-flex; align-items: center; gap: 7px; padding: 9px 16px; background: rgba(255,255,255,0.05); border: 1px solid rgba(148, 163, 184, 0.3); color: var(--text-light); font-size: 13.5px; font-weight: 600; border-radius: var(--radius-pill); transition: all var(--transition); white-space: nowrap; }
+        .btn-nav-login:hover { background: rgba(255,255,255,0.12); border-color: var(--cyan); color: #fff; transform: translateY(-2px); }
+
+        .nav-hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; padding: 10px; border-radius: 8px; cursor: pointer; }
+        .nav-hamburger span { width: 24px; height: 2.5px; background: #fff; border-radius: 2px; transition: transform var(--transition), opacity var(--transition); }
+        .nav-hamburger.open span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+        .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+        .nav-hamburger.open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+
+        /* HERO */
+        .hero-page { padding: calc(var(--nav-h) + 60px) 24px 60px; position: relative; overflow: hidden; text-align: center; }
+        .hero-page::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 800px 500px at 50% 20%, rgba(37,99,235,0.2), transparent 70%); pointer-events: none; }
+        .hero-inner { max-width: 900px; margin: 0 auto; position: relative; z-index: 2; animation: fadeUp 0.9s ease both; }
+        .hero-badge { display: inline-flex; align-items: center; gap: 8px; padding: 7px 16px; background: rgba(37, 99, 235, 0.15); border: 1px solid rgba(59, 130, 246, 0.4); border-radius: var(--radius-pill); font-size: 12.5px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: var(--cyan-light); margin-bottom: 24px; }
+        .hero-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 700; line-height: 1.15; letter-spacing: -1.5px; margin-bottom: 24px; }
+        .hero-title .gradient-text { background: var(--gradient-glow); background-size: 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: gradientShift 4s infinite; }
+        .hero-desc { font-size: clamp(16px, 1.8vw, 18px); color: rgba(226, 232, 240, 0.85); line-height: 1.7; max-width: 760px; margin: 0 auto 20px; }
+        
+        /* VIDEO CONTAINER */
+        .hero-video-wrap { max-width: 900px; margin: 40px auto 0; padding: 0 20px; position: relative; z-index: 2; animation: fadeUp 0.9s ease 0.2s both; }
+        .video-container { position: relative; width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 20px; overflow: hidden; border: 1px solid rgba(59,130,246,0.4); box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 60px rgba(6,182,212,0.2); }
+        .video-container video { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        /* STICKY SUB-NAV */
+        .sub-nav { position: sticky; top: var(--nav-h); z-index: 900; background: rgba(10, 15, 30, 0.85); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(59,130,246,0.2); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .sub-nav-inner { max-width: 1360px; margin: 0 auto; padding: 0 24px; display: flex; overflow-x: auto; scrollbar-width: none; }
+        .sub-nav-inner::-webkit-scrollbar { display: none; }
+        .sub-nav-link { padding: 18px 24px; color: var(--text-muted); font-size: 14px; font-weight: 600; white-space: nowrap; border-bottom: 3px solid transparent; transition: all var(--transition); }
+        .sub-nav-link:hover { color: var(--cyan-light); background: rgba(255,255,255,0.02); }
+        .sub-nav-link.active { color: var(--cyan-light); border-bottom-color: var(--cyan); }
+
+        /* SECCIONES BASE */
+        .section { padding: 100px 24px; scroll-margin-top: 140px; }
+        .section-inner { max-width: 1280px; margin: 0 auto; position: relative; z-index: 2; }
+        .section-header { text-align: center; margin-bottom: 64px; max-width: 800px; margin-left: auto; margin-right: auto; }
+        .section-eyebrow { display: inline-flex; align-items: center; gap: 10px; padding: 7px 16px; background: rgba(37,99,235,0.12); border: 1px solid rgba(59,130,246,0.35); border-radius: var(--radius-pill); font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--cyan-light); margin-bottom: 20px; }
+        .section-eyebrow .dot { width: 6px; height: 6px; background: var(--cyan-light); border-radius: 50%; animation: pulseGlow 1.6s ease infinite; }
+        .section-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 700; color: #fff; letter-spacing: -1.5px; line-height: 1.12; margin-bottom: 18px; }
+        .section-title .grad { background: var(--gradient-glow); background-size: 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: gradientShift 5s infinite; }
+        .section-desc { font-size: 17px; color: var(--text-muted); max-width: 720px; margin: 0 auto; line-height: 1.7; }
+
+        /* REVEAL ANIMATIONS */
+        .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1); }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .reveal-left { opacity: 0; transform: translateX(-50px); transition: all 0.9s cubic-bezier(0.16,1,0.3,1); }
+        .reveal-left.visible { opacity: 1; transform: translateX(0); }
+        .reveal-right { opacity: 0; transform: translateX(50px); transition: all 0.9s cubic-bezier(0.16,1,0.3,1); }
+        .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+        /* SPLIT LAYOUT (Módulos) */
+        .split-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; margin-bottom: 100px; }
+        .split-layout:last-child { margin-bottom: 0; }
+        .split-layout.reverse { direction: rtl; }
+        .split-layout.reverse > * { direction: ltr; }
+        
+        .split-text h3 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.5rem, 2.5vw, 2rem); font-weight: 700; margin-bottom: 20px; color: #fff; letter-spacing: -0.5px; }
+        .split-text p { font-size: 16px; color: var(--text-muted); line-height: 1.8; margin-bottom: 24px; }
+        .split-text ul { margin-bottom: 30px; display: grid; grid-template-columns: 1fr; gap: 12px; }
+        .split-text ul li { display: flex; align-items: flex-start; gap: 12px; font-size: 15px; color: var(--text-light); font-weight: 500; }
+        .split-text ul li i { color: var(--cyan-light); font-size: 16px; margin-top: 3px; flex-shrink: 0; }
+
+        /* IMAGE GLASSMORPHISM */
+        .img-glass-wrap { position: relative; padding: 12px; background: linear-gradient(135deg, rgba(37,99,235,0.15), rgba(6,182,212,0.05)); border: 1px solid rgba(59,130,246,0.25); border-radius: 24px; box-shadow: 0 30px 60px rgba(0,0,0,0.4); backdrop-filter: blur(10px); transition: transform var(--transition); }
+        .img-glass-wrap:hover { transform: translateY(-5px); border-color: rgba(34,211,238,0.5); box-shadow: 0 40px 80px rgba(6,182,212,0.2); }
+        .img-glass-wrap img { border-radius: 14px; width: 100%; display: block; cursor: zoom-in; transition: transform 0.5s; }
+        .img-glass-wrap img:hover { transform: scale(1.02); }
+
+        /* HIGHLIGHT BOX (Carga Masiva) */
+        .highlight-box { background: linear-gradient(135deg, rgba(37,99,235,0.15), rgba(6,182,212,0.1)); border: 1px solid rgba(59,130,246,0.3); border-radius: var(--radius-lg); padding: 48px; display: flex; gap: 32px; align-items: flex-start; margin-top: 80px; position: relative; overflow: hidden; }
+        .highlight-box::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at top right, rgba(6,182,212,0.2), transparent 70%); pointer-events: none; }
+        .highlight-icon { width: 70px; height: 70px; border-radius: 20px; background: var(--gradient-tech); color: #fff; display: grid; place-items: center; font-size: 30px; flex-shrink: 0; box-shadow: 0 10px 30px rgba(6,182,212,0.4); position: relative; z-index: 1; }
+        .highlight-content { position: relative; z-index: 1; }
+        .highlight-content h4 { font-family: 'Space Grotesk', sans-serif; font-size: 24px; font-weight: 700; color: #fff; margin-bottom: 12px; }
+        .highlight-content p { font-size: 16px; color: var(--text-light); line-height: 1.7; margin-bottom: 24px; opacity: 0.9; }
+        .highlight-content ul { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+        .highlight-content ul li { font-size: 14.5px; color: var(--text-light); display: flex; align-items: center; gap: 10px; font-weight: 500; }
+        .highlight-content ul li i { color: var(--lime); }
+
+        /* TABS DE GALERÍA */
+        .role-tabs { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 48px; }
+        .role-tab { padding: 14px 28px; background: rgba(255,255,255,0.03); border: 1px solid rgba(59,130,246,0.2); border-radius: var(--radius-pill); font-size: 14.5px; font-weight: 600; color: var(--text-muted); transition: all var(--transition); display: flex; align-items: center; gap: 10px; }
+        .role-tab:hover { background: rgba(37,99,235,0.1); color: var(--cyan-light); border-color: rgba(34,211,238,0.4); }
+        .role-tab.active { background: var(--gradient-tech); color: #fff; border-color: transparent; box-shadow: 0 8px 25px rgba(6,182,212,0.4); }
+        .role-tab i { font-size: 16px; }
+
+        .role-content { display: none; animation: fadeUp 0.5s ease both; }
+        .role-content.active { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+
+        .gallery-card { border-radius: 16px; overflow: hidden; background: rgba(255,255,255,0.02); border: 1px solid rgba(59,130,246,0.15); cursor: zoom-in; transition: all var(--transition); position: relative; }
+        .gallery-card:hover { transform: translateY(-6px); border-color: rgba(34,211,238,0.5); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+        .gallery-card img { width: 100%; aspect-ratio: 16/10; object-fit: cover; display: block; transition: transform 0.5s; }
+        .gallery-card:hover img { transform: scale(1.05); }
+
+        /* MÓDULOS GRID (Roles/Tecnología) */
+        .module-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+        .module-card { background: rgba(10,15,30,0.6); border: 1px solid rgba(59,130,246,0.18); border-radius: var(--radius); padding: 32px 28px; text-align: center; backdrop-filter: blur(10px); transition: all var(--transition); }
+        .module-card:hover { transform: translateY(-5px); border-color: rgba(34,211,238,0.4); box-shadow: 0 20px 40px rgba(6,182,212,0.15); }
+        .module-icon { width: 64px; height: 64px; border-radius: 50%; background: rgba(37,99,235,0.12); color: var(--cyan-light); display: grid; place-items: center; font-size: 26px; margin: 0 auto 20px; border: 1px solid rgba(59,130,246,0.3); transition: all var(--transition); }
+        .module-card:hover .module-icon { transform: scale(1.1) rotate(5deg); background: var(--gradient-tech); color: #fff; border-color: transparent; }
+        .module-card h4 { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+        .module-card p { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+
+        /* CTA FINAL */
+        .cta-banner { background: linear-gradient(135deg, rgba(37,99,235,0.2), rgba(6,182,212,0.15)); border: 1px solid rgba(59,130,246,0.35); border-radius: var(--radius-lg); padding: 80px 48px; text-align: center; color: #fff; position: relative; overflow: hidden; }
+        .cta-banner::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 500px 300px at 20% 80%, rgba(6,182,212,0.2), transparent), radial-gradient(ellipse 400px 250px at 80% 20%, rgba(139,92,246,0.15), transparent); pointer-events: none; }
+        .cta-banner h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.8rem, 3.2vw, 2.8rem); font-weight: 700; margin-bottom: 16px; letter-spacing: -1.5px; position: relative; z-index: 1; }
+        .cta-banner p { font-size: 17px; opacity: 0.9; margin-bottom: 34px; position: relative; z-index: 1; max-width: 620px; margin-left: auto; margin-right: auto; }
+        .cta-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1; }
+        .btn-primary { display: inline-flex; align-items: center; gap: 8px; padding: 15px 32px; background: var(--gradient-tech); color: #fff; font-size: 15px; font-weight: 600; border-radius: var(--radius-pill); box-shadow: 0 8px 30px rgba(37,99,235,0.4); border: none; transition: transform var(--transition), box-shadow var(--transition); }
+        .btn-primary:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 14px 45px rgba(6,182,212,0.55); }
+        .btn-secondary { display: inline-flex; align-items: center; gap: 8px; padding: 15px 32px; background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.2); font-size: 15px; font-weight: 600; border-radius: var(--radius-pill); transition: all var(--transition); }
+        .btn-secondary:hover { background: rgba(255,255,255,0.12); border-color: #fff; transform: translateY(-3px); }
+
+        /* FOOTER */
+        .footer { background: linear-gradient(180deg, transparent 0%, rgba(5,8,20,0.9) 20%, #02040a 100%); border-top: 1px solid rgba(59,130,246,0.15); padding: 80px 24px 40px; position: relative; }
+        .footer-inner { max-width: 1280px; margin: 0 auto; }
+        .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 56px; }
+        .footer-brand-logo { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+        .footer-brand .logo-mark { width: 44px; height: 44px; }
+        .footer-brand .logo-text { font-size: 24px; }
+        .footer-brand p { font-size: 14px; color: var(--text-muted); line-height: 1.7; max-width: 340px; }
+        .footer-col h4 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.8px; color: rgba(148,163,184,0.5); margin-bottom: 20px; }
+        .footer-col li { margin-bottom: 12px; }
+        .footer-col a { text-decoration: none; color: var(--text-muted); font-size: 14px; transition: color var(--transition), transform var(--transition); }
+        .footer-col a:hover { color: var(--cyan-light); transform: translateX(4px); display: inline-block; }
+        .footer-bottom { border-top: 1px solid rgba(148,163,184,0.1); padding-top: 32px; text-align: center; }
+        .footer-bottom p { font-size: 13px; color: rgba(148,163,184,0.4); margin-bottom: 6px; }
+
+        /* BOTONES FLOTANTES */
+        .back-to-top { position: fixed; bottom: 24px; right: 24px; width: 48px; height: 48px; border-radius: 50%; background: rgba(10,15,30,0.9); border: 1px solid rgba(59,130,246,0.4); color: #fff; display: grid; place-items: center; font-size: 18px; opacity: 0; pointer-events: none; z-index: 999; cursor: pointer; backdrop-filter: blur(14px); transition: all var(--transition); box-shadow: 0 8px 30px rgba(0,0,0,0.5); }
+        .back-to-top.visible { opacity: 1; pointer-events: auto; }
+        .back-to-top:hover { background: var(--gradient-tech); border-color: transparent; transform: translateY(-4px); box-shadow: 0 0 30px rgba(6,182,212,0.7); }
+
+        .help-fab { position: fixed; bottom: 24px; left: 24px; z-index: 998; }
+        .help-fab-btn { width: 56px; height: 56px; border-radius: 50%; background: var(--gradient-tech); border: none; color: #fff; font-size: 22px; display: grid; place-items: center; cursor: pointer; box-shadow: 0 8px 30px rgba(37,99,235,0.5); transition: transform var(--transition), box-shadow var(--transition); }
+        .help-fab-btn:hover { transform: scale(1.1) rotate(5deg); box-shadow: 0 0 40px rgba(6,182,212,0.8); }
+        .help-fab-btn .ico-close { display: none; }
+        .help-fab.open .help-fab-btn .ico-chat { display: none; }
+        .help-fab.open .help-fab-btn .ico-close { display: block; }
+        .help-panel { position: absolute; bottom: 72px; left: 0; width: 320px; background: rgba(10,15,30,0.95); border: 1px solid rgba(59,130,246,0.35); border-radius: var(--radius); overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.6); opacity: 0; visibility: hidden; transform: translateY(12px) scale(0.96); transform-origin: bottom left; transition: all var(--transition); backdrop-filter: blur(20px); }
+        .help-fab.open .help-panel { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
+        .help-panel-header { padding: 20px 22px; background: var(--gradient-tech); }
+        .help-panel-header h3 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+        .help-panel-header p { font-size: 12.5px; opacity: 0.9; }
+        .help-panel-body { padding: 10px; }
+        .help-option { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 10px; text-decoration: none; color: var(--text-light); transition: background var(--transition), transform var(--transition); }
+        .help-option:hover { background: rgba(37,99,235,0.15); transform: translateX(4px); }
+        .help-option .emoji { width: 38px; height: 38px; border-radius: 10px; background: rgba(37,99,235,0.2); display: grid; place-items: center; font-size: 18px; flex-shrink: 0; }
+        .help-option .lbl strong { display: block; font-size: 13.5px; font-weight: 600; color: #fff; margin-bottom: 2px; }
+        .help-option .lbl span { font-size: 11.5px; color: var(--text-muted); }
+
+        /* LIGHTBOX */
+        .lightbox { display: none; position: fixed; inset: 0; z-index: 10000; background: rgba(5,8,20,0.92); backdrop-filter: blur(10px); padding: 40px 20px; align-items: center; justify-content: center; }
+        .lightbox.show { display: flex; animation: fadeUp 0.3s ease; }
+        .lightbox img { max-width: 95vw; max-height: 90vh; border-radius: 12px; box-shadow: 0 30px 80px rgba(0,0,0,0.8); border: 1px solid rgba(59,130,246,0.3); }
+        .lightbox-close { position: absolute; top: 24px; right: 24px; width: 48px; height: 48px; border-radius: 50%; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; font-size: 24px; cursor: pointer; display: grid; place-items: center; transition: all var(--transition); }
+        .lightbox-close:hover { background: rgba(255,255,255,0.25); transform: rotate(90deg); }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .split-layout { grid-template-columns: 1fr; gap: 40px; text-align: center; margin-bottom: 70px; }
+            .split-layout.reverse { direction: ltr; }
+            .split-text ul { text-align: left; display: inline-grid; }
+            .footer-top { grid-template-columns: 1fr 1fr; }
+            .highlight-box { flex-direction: column; align-items: center; text-align: center; }
+            .highlight-content ul { justify-content: center; }
+        }
+        @media (max-width: 900px) {
+            .nav-container { padding: 0 16px; height: var(--nav-h); }
+            .logo-mark { width: 36px; height: 36px; }
+            .logo-text { font-size: 20px; }
+            .nav-menu { position: fixed; top: var(--nav-h); left: 0; right: 0; background: rgba(10,15,30,0.98); backdrop-filter: blur(20px); flex-direction: column; align-items: stretch; gap: 4px; padding: 20px; border-bottom: 1px solid rgba(59,130,246,0.25); transform: translateY(-120%); transition: transform 0.4s cubic-bezier(0.4,0,0.2,1); max-height: calc(100vh - var(--nav-h)); overflow-y: auto; }
+            .nav-menu.open { transform: translateY(0); }
+            .nav-link { padding: 14px 18px; font-size: 15.5px; }
+            .nav-link::before { display: none; }
+            .nav-link:hover, .nav-link.active { background: rgba(37,99,235,0.15); color: var(--cyan-light); }
+            .nav-actions { display: none; }
+            .nav-menu .nav-actions-mobile { display: flex !important; flex-direction: column; gap: 10px; margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(59,130,246,0.2); }
+            .nav-menu .nav-actions-mobile .btn-nav-demo, .nav-menu .nav-actions-mobile .btn-nav-login { width: 100%; justify-content: center; padding: 13px 20px; font-size: 15px; }
+            .nav-hamburger { display: flex; }
+            .sub-nav { top: var(--nav-h); }
+        }
+        @media (max-width: 768px) {
+            .section { padding: 64px 18px; scroll-margin-top: 120px; }
+            .hero-page { padding: calc(var(--nav-h) + 40px) 18px 60px; }
+            .hero-title { font-size: 2.2rem; }
+            .highlight-box { padding: 32px 24px; }
+            .highlight-content ul { grid-template-columns: 1fr; text-align: left; display: inline-grid; }
+            .cta-banner { padding: 48px 24px; }
+            .cta-actions { flex-direction: column; align-items: center; }
+            .cta-actions .btn-primary, .cta-actions .btn-secondary { width: 100%; max-width: 340px; justify-content: center; }
+            .footer-top { grid-template-columns: 1fr; gap: 36px; text-align: center; }
+            .footer-brand-logo { justify-content: center; }
+            .footer-brand p { margin: 0 auto; }
+            .back-to-top { bottom: 18px; right: 18px; width: 44px; height: 44px; }
+            .help-fab { bottom: 18px; left: 18px; }
+            .help-fab-btn { width: 52px; height: 52px; }
+            .help-panel { width: 280px; }
+            .role-tabs { gap: 8px; }
+            .role-tab { padding: 10px 20px; font-size: 13px; }
+        }
+        @media (max-width: 480px) {
+            .nav-container { padding: 0 14px; }
+            .logo-mark { width: 32px; height: 32px; }
+            .logo-text { font-size: 19px; }
+            .hero-title { font-size: 1.85rem; }
+            .section { padding: 48px 16px; }
+            .footer { padding: 40px 16px 20px; }
+            .back-to-top { width: 40px; height: 40px; font-size: 16px; }
+            .help-fab-btn { width: 48px; height: 48px; }
+            .help-panel { width: calc(100vw - 28px); max-width: 300px; }
+        }
+    </style>
 </head>
 <body>
 
-<nav class="navbar" id="navbar">
-  <div class="nav-container">
-    <a href="index.html" class="nav-logo" aria-label="EduOne - Inicio">
-      <div class="nav-logo-mark">E</div>
-      <span class="nav-logo-text">EduOne</span>
-    </a>
-    <button class="nav-hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-menu">
-      <span></span><span></span><span></span>
-    </button>
-    <ul class="nav-menu" id="nav-menu">
-      <li><a href="index.html" class="nav-link">Inicio</a></li>
-      <li><a href="sobrenosotros.html" class="nav-link">Sobre nosotros</a></li>
-      <li><a href="funcionalidades.html" class="nav-link active" aria-current="page">Funcionalidades</a></li>
-      <li><a href="beneficios.html" class="nav-link">Beneficios</a></li>
-      <li><a href="planes.html" class="nav-link">Planes</a></li>
-      <li><a href="implementacion.html" class="nav-link">Implementación</a></li>
-      <li><a href="contacto.html" class="nav-link">Contacto</a></li>
-      <li><a href="login.html" class="nav-link nav-link-cta">Iniciar sesión</a></li>
-    </ul>
-  </div>
-</nav>
-
-<section class="page-hero">
-  <div class="page-hero-inner">
-    <div class="page-hero-eyebrow">Plataforma completa</div>
-    <h1>Todo lo que tu institución necesita, en un solo lugar</h1>
-    <p>EduOne centraliza las principales herramientas académicas y administrativas necesarias para gestionar una institución educativa de forma eficiente y moderna.</p>
-  </div>
-</section>
-
-<!-- FUNCIONALIDADES PRINCIPALES -->
-<section class="section" style="background: var(--surface);">
-  <div class="section-inner">
-    <div class="section-header reveal">
-      <div class="section-eyebrow">Módulos disponibles</div>
-      <h2 class="section-title">Funcionalidades <span>actuales</span></h2>
-      <p class="section-desc">Herramientas diseñadas para cada proceso académico y administrativo de tu institución.</p>
-    </div>
-    <div class="features-big reveal">
-      <div class="feature-big-card">
-        <div class="fb-icon fb-blue" aria-hidden="true">👨‍🎓</div>
-        <h3>Gestión de estudiantes</h3>
-        <p>Registra, organiza, consulta y administra la información de los estudiantes según grado y curso. Acceso completo a perfiles académicos.</p>
-      </div>
-      <div class="feature-big-card">
-        <div class="fb-icon fb-purple" aria-hidden="true">👩‍🏫</div>
-        <h3>Gestión de docentes</h3>
-        <p>Administra profesores y sus asignaciones académicas. Gestiona perfiles, cursos asignados y materias de cada docente.</p>
-      </div>
-      <div class="feature-big-card">
-        <div class="fb-icon fb-cyan" aria-hidden="true">🏫</div>
-        <h3>Grados y cursos</h3>
-        <p>Organiza fácilmente la estructura académica de la institución. Crea grados, cursos y asocia estudiantes y docentes a cada uno.</p>
-      </div>
-      <div class="feature-big-card">
-        <div class="fb-icon fb-green" aria-hidden="true">📖</div>
-        <h3>Asignaturas</h3>
-        <p>Relaciona materias con grados, cursos y profesores. Mantén un control claro de cada asignatura dentro de la estructura académica.</p>
-      </div>
-      <div class="feature-big-card">
-        <div class="fb-icon fb-blue" aria-hidden="true">📊</div>
-        <h3>Calificaciones</h3>
-        <p>Permite registrar y consultar el desempeño académico de los estudiantes por asignatura y periodo académico.</p>
-      </div>
-      <div class="feature-big-card">
-        <div class="fb-icon fb-orange" aria-hidden="true">📝</div>
-        <h3>Tareas y actividades</h3>
-        <p>Los profesores pueden publicar actividades, instrucciones, recursos y fechas de entrega para sus estudiantes.</p>
-      </div>
-      <div class="feature-big-card">
-        <div class="fb-icon fb-cyan" aria-hidden="true">📄</div>
-        <h3>Boletines</h3>
-        <p>Organiza la información académica por estudiante y periodo. Genera boletines claros con el rendimiento de cada alumno.</p>
-      </div>
-      <div class="feature-big-card">
-        <div class="fb-icon fb-purple" aria-hidden="true">📢</div>
-        <h3>Comunicados</h3>
-        <p>Publica información institucional para diferentes integrantes de la comunidad educativa de forma organizada.</p>
-      </div>
-      <div class="feature-big-card">
-        <div class="fb-icon fb-green" aria-hidden="true">📈</div>
-        <h3>Seguimiento académico</h3>
-        <p>Realiza seguimiento continuo al rendimiento de los estudiantes, facilitando la identificación temprana de dificultades.</p>
-      </div>
-      <div class="feature-big-card">
-        <div class="fb-icon fb-red" aria-hidden="true">⚙️</div>
-        <h3>Administración de usuarios</h3>
-        <p>Gestiona perfiles y permisos según cada rol: rector, coordinador, docente, estudiante y acudiente.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ROLES -->
-<section class="section" style="background: var(--background);">
-  <div class="section-inner">
-    <div class="section-header reveal">
-      <div class="section-eyebrow">Accesos diferenciados</div>
-      <h2 class="section-title">Una experiencia diseñada para <span>cada usuario</span></h2>
-      <p class="section-desc">Cada rol tiene acceso a las herramientas que necesita, con una interfaz pensada para sus responsabilidades.</p>
-    </div>
-    <div class="roles-grid reveal">
-      <div class="role-card">
-        <div class="role-header">
-          <div class="role-icon fb-blue" aria-hidden="true">🏫</div>
-          <h3>Rector y Directivos</h3>
+    <!-- PRELOADER -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-inner">
+            <div class="preloader-logo">EduOne</div>
+            <div class="preloader-ring"></div>
+            <div class="preloader-bar"></div>
         </div>
-        <ul class="role-list">
-          <li><span class="check" aria-hidden="true">✓</span> Administrar estudiantes</li>
-          <li><span class="check" aria-hidden="true">✓</span> Administrar profesores</li>
-          <li><span class="check" aria-hidden="true">✓</span> Crear grados y cursos</li>
-          <li><span class="check" aria-hidden="true">✓</span> Crear asignaturas</li>
-          <li><span class="check" aria-hidden="true">✓</span> Consultar calificaciones</li>
-          <li><span class="check" aria-hidden="true">✓</span> Gestionar comunicados</li>
-          <li><span class="check" aria-hidden="true">✓</span> Administrar usuarios</li>
-        </ul>
-      </div>
-      <div class="role-card">
-        <div class="role-header">
-          <div class="role-icon fb-purple" aria-hidden="true">👩‍🏫</div>
-          <h3>Profesores</h3>
-        </div>
-        <ul class="role-list">
-          <li><span class="check" aria-hidden="true">✓</span> Consultar cursos asignados</li>
-          <li><span class="check" aria-hidden="true">✓</span> Registrar notas</li>
-          <li><span class="check" aria-hidden="true">✓</span> Crear tareas y actividades</li>
-          <li><span class="check" aria-hidden="true">✓</span> Consultar estudiantes</li>
-          <li><span class="check" aria-hidden="true">✓</span> Realizar seguimiento académico</li>
-        </ul>
-      </div>
-      <div class="role-card">
-        <div class="role-header">
-          <div class="role-icon fb-cyan" aria-hidden="true">👨‍🎓</div>
-          <h3>Estudiantes</h3>
-        </div>
-        <ul class="role-list">
-          <li><span class="check" aria-hidden="true">✓</span> Consultar asignaturas</li>
-          <li><span class="check" aria-hidden="true">✓</span> Consultar tareas</li>
-          <li><span class="check" aria-hidden="true">✓</span> Consultar calificaciones</li>
-          <li><span class="check" aria-hidden="true">✓</span> Revisar comunicados</li>
-        </ul>
-      </div>
-      <div class="role-card">
-        <div class="role-header">
-          <div class="role-icon fb-green" aria-hidden="true">👨‍👩‍👧</div>
-          <h3>Padres y Acudientes</h3>
-        </div>
-        <ul class="role-list">
-          <li><span class="check" aria-hidden="true">✓</span> Consultar rendimiento académico</li>
-          <li><span class="check" aria-hidden="true">✓</span> Consultar boletines</li>
-          <li><span class="check" aria-hidden="true">✓</span> Revisar tareas pendientes</li>
-          <li><span class="check" aria-hidden="true">✓</span> Consultar comunicados</li>
-          <li><span class="check" aria-hidden="true">✓</span> Acompañar el proceso académico</li>
-        </ul>
-      </div>
     </div>
-  </div>
-</section>
 
-<!-- PRÓXIMAMENTE -->
-<section class="section" style="background: var(--surface);">
-  <div class="section-inner">
-    <div class="reveal">
-      <div class="coming-soon-section">
-        <h2>🚀 EduOne continúa creciendo</h2>
-        <p>Las siguientes funcionalidades están en desarrollo y llegarán próximamente. No están disponibles actualmente.</p>
-        <div class="coming-grid">
-          <div class="coming-item"><span class="coming-icon" aria-hidden="true">📅</span><div><div class="coming-label">Asistencia</div><div class="coming-badge">PRÓXIMAMENTE</div></div></div>
-          <div class="coming-item"><span class="coming-icon" aria-hidden="true">👁️</span><div><div class="coming-label">Observador del estudiante</div><div class="coming-badge">PRÓXIMAMENTE</div></div></div>
-          <div class="coming-item"><span class="coming-icon" aria-hidden="true">🗓️</span><div><div class="coming-label">Calendario académico</div><div class="coming-badge">PRÓXIMAMENTE</div></div></div>
-          <div class="coming-item"><span class="coming-icon" aria-hidden="true">📋</span><div><div class="coming-label">Matrículas</div><div class="coming-badge">PRÓXIMAMENTE</div></div></div>
-          <div class="coming-item"><span class="coming-icon" aria-hidden="true">🕐</span><div><div class="coming-label">Horarios</div><div class="coming-badge">PRÓXIMAMENTE</div></div></div>
-          <div class="coming-item"><span class="coming-icon" aria-hidden="true">📁</span><div><div class="coming-label">Gestión documental</div><div class="coming-badge">PRÓXIMAMENTE</div></div></div>
-          <div class="coming-item"><span class="coming-icon" aria-hidden="true">📊</span><div><div class="coming-label">Estadísticas</div><div class="coming-badge">PRÓXIMAMENTE</div></div></div>
-          <div class="coming-item"><span class="coming-icon" aria-hidden="true">📑</span><div><div class="coming-label">Reportes</div><div class="coming-badge">PRÓXIMAMENTE</div></div></div>
-          <div class="coming-item"><span class="coming-icon" aria-hidden="true">🔔</span><div><div class="coming-label">Notificaciones</div><div class="coming-badge">PRÓXIMAMENTE</div></div></div>
-          <div class="coming-item"><span class="coming-icon" aria-hidden="true">📱</span><div><div class="coming-label">Aplicación móvil</div><div class="coming-badge">PRÓXIMAMENTE</div></div></div>
-          <div class="coming-item"><span class="coming-icon" aria-hidden="true">🤖</span><div><div class="coming-label">Inteligencia artificial</div><div class="coming-badge">PRÓXIMAMENTE</div></div></div>
-          <div class="coming-item"><span class="coming-icon" aria-hidden="true">⚠️</span><div><div class="coming-label">Alertas académicas</div><div class="coming-badge">PRÓXIMAMENTE</div></div></div>
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo" aria-label="EduOne - Inicio">
+                <span class="logo-mark">
+                    <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" fill="none">
+                        <defs>
+                            <linearGradient id="gradCap" x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0%" stop-color="#3b82f6"/><stop offset="55%" stop-color="#22d3ee"/><stop offset="100%" stop-color="#a3e635"/>
+                            </linearGradient>
+                        </defs>
+                        <path d="M24 6 L44 16 L24 26 L4 16 Z" fill="url(#gradCap)"/>
+                        <path d="M12 21.5 V30 C12 33.5 17.4 36 24 36 C30.6 36 36 33.5 36 30 V21.5 L24 27.5 Z" fill="url(#gradCap)" opacity="0.85"/>
+                        <path d="M40 18 V29" stroke="url(#gradCap)" stroke-width="2.4" stroke-linecap="round"/>
+                        <circle cx="40" cy="30.5" r="2.6" fill="url(#gradCap)"/>
+                    </svg>
+                </span>
+                <span class="logo-text">Edu<span>One</span></span>
+            </a>
+
+            <button class="nav-hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-menu">
+                <span></span><span></span><span></span>
+            </button>
+
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="index.html" class="nav-link">Inicio</a></li>
+                <li><a href="sobrenosotros.html" class="nav-link">Sobre nosotros</a></li>
+                <li><a href="funcionalidades.html" class="nav-link active">Funcionalidades</a></li>
+                <li><a href="beneficios.html" class="nav-link">Beneficios</a></li>
+                <li><a href="planes.html" class="nav-link">Planes</a></li>
+                <li><a href="implementacion.html" class="nav-link">Implementación</a></li>
+                <li><a href="contacto.html" class="nav-link">Contacto</a></li>
+                <li class="nav-actions-mobile" style="display:none;">
+                    <a href="contacto.html" class="btn-nav-demo">Solicitar demo</a>
+                    <a href="login.html" class="btn-nav-login"><i class="fas fa-right-to-bracket"></i> Iniciar sesión</a>
+                </li>
+            </ul>
+
+            <div class="nav-actions">
+                <a href="contacto.html" class="btn-nav-demo"><i class="fas fa-rocket"></i> Solicitar demo</a>
+                <a href="login.html" class="btn-nav-login"><i class="fas fa-right-to-bracket"></i> Iniciar sesión</a>
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+    </nav>
 
-<footer class="footer">
-  <div class="footer-inner">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <div class="footer-logo"><div class="footer-logo-mark">E</div><span class="footer-logo-text">EduOne</span></div>
-        <p>Educación, tecnología y gestión en un solo lugar.</p>
-      </div>
-      <div class="footer-col">
-        <h4>Navegación</h4>
-        <ul>
-          <li><a href="index.html">Inicio</a></li>
-          <li><a href="sobrenosotros.html">Sobre nosotros</a></li>
-          <li><a href="funcionalidades.html">Funcionalidades</a></li>
-          <li><a href="beneficios.html">Beneficios</a></li>
-          <li><a href="planes.html">Planes</a></li>
-          <li><a href="implementacion.html">Implementación</a></li>
-          <li><a href="contacto.html">Contacto</a></li>
-          <li><a href="login.html">Iniciar sesión</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Legal</h4>
-        <ul>
-          <li><a href="#">Política de privacidad</a></li>
-          <li><a href="#">Tratamiento de datos</a></li>
-          <li><a href="#">Términos y condiciones</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>© 2026 EduOne. Todos los derechos reservados.</p>
-      <p>Desarrollado por Daniel Steven Gutierrez y Camilo Rodriguez.</p>
-      <p>Escuela Tecnológica de Neiva FET.</p>
-    </div>
-  </div>
-</footer>
+    <!-- HERO -->
+    <section class="hero-page">
+        <div class="hero-inner">
+            <div class="hero-badge"><span class="dot"></span> Funcionalidades de EduOne</div>
+            <h1 class="hero-title">Todo lo que necesitas para <span class="gradient-text">gestionar tu institución</span></h1>
+            <p class="hero-desc">EduOne integra herramientas académicas, administrativas, financieras, de convivencia y comunicación en una sola plataforma inteligente.</p>
+        </div>
+    </section>
 
-<button class="back-to-top" id="backToTop" aria-label="Volver arriba">↑</button>
+    <!-- VIDEO -->
+    <div class="hero-video-wrap">
+        <div class="video-container">
+            <video controls playsinline poster="imagenes/miniatura2.png">
+                <source src="imagenes/video2.mp4" type="video/mp4">
+                Tu navegador no soporta la reproducción de video.
+            </video>
+        </div>
+    </div>
 
-<script>
-  const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled', window.scrollY > 20);
-    document.getElementById('backToTop').classList.toggle('visible', window.scrollY > 300);
-  });
-  const hamburger = document.getElementById('hamburger');
-  const navMenu = document.getElementById('nav-menu');
-  function closeMenu() { navMenu.classList.remove('open'); hamburger.classList.remove('open'); hamburger.setAttribute('aria-expanded','false'); }
-  hamburger.addEventListener('click', () => { navMenu.classList.contains('open') ? closeMenu() : (navMenu.classList.add('open'), hamburger.classList.add('open'), hamburger.setAttribute('aria-expanded','true')); });
-  navMenu.querySelectorAll('.nav-link').forEach(l => l.addEventListener('click', closeMenu));
-  document.addEventListener('click', e => { if (!navbar.contains(e.target)) closeMenu(); });
-  document.addEventListener('keydown', e => { if (e.key==='Escape') closeMenu(); });
-  document.getElementById('backToTop').addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
-  const observer = new IntersectionObserver(entries => entries.forEach((e,i) => { if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i*80); }), {threshold:0.08});
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-</script>
+    <!-- STICKY SUB-NAV -->
+    <div class="sub-nav">
+        <div class="sub-nav-inner">
+            <a href="#gestion" class="sub-nav-link active">Gestión institucional</a>
+            <a href="#academico" class="sub-nav-link">Académico</a>
+            <a href="#docentes" class="sub-nav-link">Docentes</a>
+            <a href="#estudiantes" class="sub-nav-link">Estudiantes</a>
+            <a href="#familias" class="sub-nav-link">Familias</a>
+            <a href="#convivencia" class="sub-nav-link">Convivencia</a>
+            <a href="#finanzas" class="sub-nav-link">Finanzas</a>
+            <a href="#comunicacion" class="sub-nav-link">Comunicación</a>
+            <a href="#galeria" class="sub-nav-link">Galería</a>
+        </div>
+    </div>
+
+    <!-- 1. GESTIÓN INSTITUCIONAL -->
+    <section class="section" id="gestion">
+        <div class="section-inner">
+            <div class="split-layout reverse reveal">
+                <div class="split-text">
+                    <div class="section-eyebrow" style="justify-content: flex-start;"><span class="dot"></span> Módulo 1</div>
+                    <h3>Gestión institucional</h3>
+                    <p>EduOne permite organizar la información principal de la institución y administrar la estructura escolar de forma centralizada, segura y rápida.</p>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> Gestión de estudiantes y matrículas</li>
+                        <li><i class="fas fa-check-circle"></i> Creación de grados y cursos</li>
+                        <li><i class="fas fa-check-circle"></i> Administración de asignaturas y personal</li>
+                        <li><i class="fas fa-check-circle"></i> Gestión de roles y permisos</li>
+                        <li><i class="fas fa-check-circle"></i> Organización por año escolar</li>
+                        <li><i class="fas fa-check-circle"></i> Control de cupos según plan</li>
+                    </ul>
+                </div>
+                <div class="img-glass-wrap reveal-right">
+                    <img src="imagenes/panelrector2.png" alt="Gestión institucional en EduOne" class="zoomable">
+                </div>
+            </div>
+
+            <!-- HIGHLIGHT BOX: CARGA MASIVA -->
+            <div class="highlight-box reveal">
+                <div class="highlight-icon"><i class="fas fa-file-excel"></i></div>
+                <div class="highlight-content">
+                    <h4>Implementación masiva de estudiantes</h4>
+                    <p>EduOne permite realizar cargas masivas mediante archivos Excel para facilitar el proceso inicial de implementación, ahorrando cientos de horas de trabajo manual.</p>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Validar datos y detectar duplicados</li>
+                        <li><i class="fas fa-check"></i> Crear estudiantes y matrículas</li>
+                        <li><i class="fas fa-check"></i> Generar cuentas de acceso</li>
+                        <li><i class="fas fa-check"></i> Crear y reutilizar acudientes</li>
+                        <li><i class="fas fa-check"></i> Crear grados y cursos</li>
+                        <li><i class="fas fa-check"></i> Distribuir estudiantes automáticamente</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. ACADÉMICO -->
+    <section class="section" id="academico">
+        <div class="section-inner">
+            <div class="section-header reveal">
+                <div class="section-eyebrow"><span class="dot"></span> Módulo 2</div>
+                <h2 class="section-title">Gestión <span class="grad">académica</span></h2>
+                <p class="section-desc">Herramientas para gestionar horarios, calificaciones, actividades, evaluaciones y boletines.</p>
+            </div>
+            
+            <div class="split-layout reveal">
+                <div class="img-glass-wrap reveal-left">
+                    <img src="imagenes/panelrector4.png" alt="Gestión de horarios en EduOne" class="zoomable">
+                </div>
+                <div class="split-text">
+                    <h3>Gestión de horarios</h3>
+                    <p>EduOne permite organizar horarios por grado, curso, profesor y estudiante, mostrando materias, docentes y bloques horarios de forma visual e intuitiva.</p>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> Creación de bloques horarios</li>
+                        <li><i class="fas fa-check-circle"></i> Asignación de materias y docentes</li>
+                        <li><i class="fas fa-check-circle"></i> Consulta según rol</li>
+                        <li><i class="fas fa-check-circle"></i> Organización por días y horas</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="split-layout reverse reveal">
+                <div class="split-text">
+                    <h3>Calificaciones y planilla docente</h3>
+                    <p>Los docentes pueden registrar y organizar notas por actividad, sección, periodo, curso y estudiante, utilizando una planilla completa y automatizada.</p>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> Registro de quizzes, trabajos y tareas</li>
+                        <li><i class="fas fa-check-circle"></i> Evaluaciones con porcentajes definidos</li>
+                        <li><i class="fas fa-check-circle"></i> Cálculo de promedio ponderado</li>
+                        <li><i class="fas fa-check-circle"></i> Resultados por sección y periodo</li>
+                    </ul>
+                </div>
+                <div class="img-glass-wrap reveal-right">
+                    <img src="imagenes/panelprofesor3.png" alt="Planilla de calificaciones en EduOne" class="zoomable">
+                </div>
+            </div>
+
+            <div class="split-layout reveal">
+                <div class="img-glass-wrap reveal-left">
+                    <img src="imagenes/panelprofesor4.png" alt="Actividades y entregas en EduOne" class="zoomable">
+                </div>
+                <div class="split-text">
+                    <h3>Actividades y entregas</h3>
+                    <p>Los docentes pueden crear actividades, definir fechas y asignar cursos. Los estudiantes pueden consultar tareas y revisar el estado de sus entregas.</p>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> Creación de actividades con fechas</li>
+                        <li><i class="fas fa-check-circle"></i> Seguimiento de entregas (pendiente, entregado, revisado)</li>
+                        <li><i class="fas fa-check-circle"></i> Organización de evaluaciones académicas</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. DOCENTES -->
+    <section class="section" id="docentes">
+        <div class="section-inner">
+            <div class="section-header reveal">
+                <div class="section-eyebrow"><span class="dot"></span> Módulo 3</div>
+                <h2 class="section-title">Herramientas para <span class="grad">docentes</span></h2>
+                <p class="section-desc">Los profesores cuentan con un espacio diseñado para gestionar sus cursos, actividades y calificaciones.</p>
+            </div>
+            
+            <div class="split-layout reveal">
+                <div class="split-text">
+                    <h3>Panel docente</h3>
+                    <p>Una vista completa de los cursos, horarios, estudiantes y herramientas de evaluación, todo desde un mismo lugar.</p>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> Mi horario</li>
+                        <li><i class="fas fa-check-circle"></i> Mis cursos y estudiantes</li>
+                        <li><i class="fas fa-check-circle"></i> Actividades y secciones</li>
+                        <li><i class="fas fa-check-circle"></i> Planilla, entregas y evaluaciones</li>
+                        <li><i class="fas fa-check-circle"></i> Registro de asistencia</li>
+                    </ul>
+                </div>
+                <div class="img-glass-wrap reveal-right">
+                    <img src="imagenes/panelprofesor1.png" alt="Panel principal del docente en EduOne" class="zoomable">
+                </div>
+            </div>
+            
+            <!-- Galería docente extra -->
+            <div class="role-content active" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-top: 40px;" class="reveal">
+                <div class="gallery-card">
+                    <img src="imagenes/panelprofesor2.png" alt="Panel docente - Horarios" class="zoomable" loading="lazy">
+                </div>
+                <div class="gallery-card">
+                    <img src="imagenes/panelprofesor3.png" alt="Panel docente - Planilla" class="zoomable" loading="lazy">
+                </div>
+                <div class="gallery-card">
+                    <img src="imagenes/panelprofesor5.png" alt="Panel docente - Evaluaciones" class="zoomable" loading="lazy">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. ESTUDIANTES -->
+    <section class="section" id="estudiantes">
+        <div class="section-inner">
+            <div class="section-header reveal">
+                <div class="section-eyebrow"><span class="dot"></span> Módulo 4</div>
+                <h2 class="section-title">Experiencia para el <span class="grad">estudiante</span></h2>
+                <p class="section-desc">Acceso organizado a la información académica y a las actividades del día a día.</p>
+            </div>
+
+            <div class="split-layout reverse reveal">
+                <div class="split-text">
+                    <h3>Mi espacio de aprendizaje</h3>
+                    <p>Los estudiantes pueden consultar horarios, asignaturas, tareas, notas, asistencia y boletines desde cualquier dispositivo.</p>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> Mi horario</li>
+                        <li><i class="fas fa-check-circle"></i> Mis asignaturas y tareas</li>
+                        <li><i class="fas fa-check-circle"></i> Mi asistencia y observaciones</li>
+                        <li><i class="fas fa-check-circle"></i> Mis notas y boletines</li>
+                        <li><i class="fas fa-check-circle"></i> Comunicados del colegio</li>
+                    </ul>
+                </div>
+                <div class="img-glass-wrap reveal-left">
+                    <img src="imagenes/panelestudiante1.png" alt="Panel del estudiante en EduOne" class="zoomable">
+                </div>
+            </div>
+
+            <div class="role-content active" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-top: 40px;">
+                <div class="gallery-card">
+                    <img src="imagenes/panelestudiante2.png" alt="Estudiante - Asignaturas" class="zoomable" loading="lazy">
+                </div>
+                <div class="gallery-card">
+                    <img src="imagenes/panelestudiante3.png" alt="Estudiante - Tareas" class="zoomable" loading="lazy">
+                </div>
+                <div class="gallery-card">
+                    <img src="imagenes/panelestudiante4.png" alt="Estudiante - Notas" class="zoomable" loading="lazy">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. FAMILIAS -->
+    <section class="section" id="familias">
+        <div class="section-inner">
+            <div class="section-header reveal">
+                <div class="section-eyebrow"><span class="dot"></span> Módulo 5</div>
+                <h2 class="section-title">Seguimiento para <span class="grad">familias</span></h2>
+                <p class="section-desc">Los acudientes pueden acompañar el proceso educativo de sus hijos con información clara y accesible.</p>
+            </div>
+
+            <div class="split-layout reveal">
+                <div class="img-glass-wrap reveal-right">
+                    <img src="imagenes/panelacudiente1.png" alt="Panel del acudiente en EduOne" class="zoomable">
+                </div>
+                <div class="split-text">
+                    <h3>Acompañamiento familiar</h3>
+                    <p>Acceso a la información habilitada por la institución para realizar seguimiento académico y administrativo.</p>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> Información general del estudiante</li>
+                        <li><i class="fas fa-check-circle"></i> Seguimiento académico y calificaciones</li>
+                        <li><i class="fas fa-check-circle"></i> Asistencia y boletines</li>
+                        <li><i class="fas fa-check-circle"></i> Comunicados institucionales</li>
+                        <li><i class="fas fa-check-circle"></i> Estado de pagos (según permisos)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="role-content active" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-top: 40px;">
+                <div class="gallery-card">
+                    <img src="imagenes/panelacudiente1.png" alt="Acudiente - Panel general" class="zoomable" loading="lazy">
+                </div>
+                <div class="gallery-card">
+                    <img src="imagenes/panelacudiente2.png" alt="Acudiente - Seguimiento académico" class="zoomable" loading="lazy">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. CONVIVENCIA -->
+    <section class="section" id="convivencia">
+        <div class="section-inner">
+            <div class="split-layout reverse reveal">
+                <div class="split-text">
+                    <div class="section-eyebrow" style="justify-content: flex-start;"><span class="dot"></span> Módulo 6</div>
+                    <h3>Convivencia y observador</h3>
+                    <p>EduOne permite centralizar registros relacionados con convivencia y el seguimiento integral del estudiante.</p>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> Registro de observaciones</li>
+                        <li><i class="fas fa-check-circle"></i> Seguimiento de situaciones</li>
+                        <li><i class="fas fa-check-circle"></i> Consulta de historial</li>
+                        <li><i class="fas fa-check-circle"></i> Acompañamiento institucional</li>
+                    </ul>
+                </div>
+                <div class="img-glass-wrap reveal-left">
+                    <img src="imagenes/panelrector5.png" alt="Módulo de convivencia en EduOne" class="zoomable">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. FINANZAS -->
+    <section class="section" id="finanzas">
+        <div class="section-inner">
+            <div class="section-header reveal">
+                <div class="section-eyebrow"><span class="dot"></span> Módulo 7</div>
+                <h2 class="section-title">Gestión <span class="grad">financiera</span></h2>
+                <p class="section-desc">Control organizado de los procesos financieros relacionados con la gestión escolar.</p>
+            </div>
+
+            <div class="split-layout reveal">
+                <div class="img-glass-wrap reveal-right">
+                    <img src="imagenes/panelrector6.png" alt="Módulo de finanzas en EduOne" class="zoomable">
+                </div>
+                <div class="split-text">
+                    <h3>Control de pensiones y pagos</h3>
+                    <p>La institución puede llevar un control de matrículas, pensiones, ingresos, egresos y saldos, mientras los acudientes consultan el estado de pagos.</p>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> Pagos de matrícula y pensiones</li>
+                        <li><i class="fas fa-check-circle"></i> Movimientos de ingresos y egresos</li>
+                        <li><i class="fas fa-check-circle"></i> Consulta de saldos y estados de pago</li>
+                        <li><i class="fas fa-check-circle"></i> Historial de transacciones</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. COMUNICACIÓN -->
+    <section class="section" id="comunicacion">
+        <div class="section-inner">
+            <div class="split-layout reverse reveal">
+                <div class="split-text">
+                    <div class="section-eyebrow" style="justify-content: flex-start;"><span class="dot"></span> Módulo 8</div>
+                    <h3>Comunicación institucional</h3>
+                    <p>EduOne permite organizar la información y los comunicados dirigidos a los distintos miembros de la comunidad educativa.</p>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> Publicación de comunicados</li>
+                        <li><i class="fas fa-check-circle"></i> Avisos y novedades</li>
+                        <li><i class="fas fa-check-circle"></i> Información institucional</li>
+                    </ul>
+                </div>
+                <div class="img-glass-wrap reveal-left">
+                    <img src="imagenes/panelrector3.png" alt="Comunicación institucional en EduOne" class="zoomable">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ROLES Y PERMISOS -->
+    <section class="section">
+        <div class="section-inner">
+            <div class="section-header reveal">
+                <div class="section-eyebrow"><span class="dot"></span> Seguridad</div>
+                <h2 class="section-title">Acceso según <span class="grad">el rol</span></h2>
+                <p class="section-desc">Cada usuario visualiza las herramientas correspondientes a su función dentro de la institución.</p>
+            </div>
+            <div class="module-grid reveal">
+                <div class="module-card"><div class="module-icon"><i class="fas fa-school"></i></div><h4>Rector</h4><p>Visión completa de la institución.</p></div>
+                <div class="module-card"><div class="module-icon"><i class="fas fa-user-tie"></i></div><h4>Coordinador</h4><p>Seguimiento académico y de convivencia.</p></div>
+                <div class="module-card"><div class="module-icon"><i class="fas fa-chalkboard-teacher"></i></div><h4>Profesor</h4><p>Gestión de cursos y calificaciones.</p></div>
+                <div class="module-card"><div class="module-icon"><i class="fas fa-user-graduate"></i></div><h4>Estudiante</h4><p>Consulta de su información académica.</p></div>
+                <div class="module-card"><div class="module-icon"><i class="fas fa-users"></i></div><h4>Acudiente</h4><p>Seguimiento del proceso de sus hijos.</p></div>
+                <div class="module-card"><div class="module-icon"><i class="fas fa-folder-open"></i></div><h4>Secretaría</h4><p>Apoyo administrativo y de matrícula.</p></div>
+                <div class="module-card"><div class="module-icon"><i class="fas fa-calculator"></i></div><h4>Contador</h4><p>Administración de información financiera.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GALERÍA GENERAL CON TABS -->
+    <section class="section" id="galeria">
+        <div class="section-inner">
+            <div class="section-header reveal">
+                <div class="section-eyebrow"><span class="dot"></span> Explora</div>
+                <h2 class="section-title">Explora la <span class="grad">plataforma</span></h2>
+                <p class="section-desc">Haz clic en cualquier imagen para verla en tamaño completo.</p>
+            </div>
+            
+            <div class="role-tabs reveal">
+                <button class="role-tab active" data-target="gal-rector"><i class="fas fa-school"></i> Rector</button>
+                <button class="role-tab" data-target="gal-profesor"><i class="fas fa-chalkboard-teacher"></i> Profesor</button>
+                <button class="role-tab" data-target="gal-estudiante"><i class="fas fa-user-graduate"></i> Estudiante</button>
+                <button class="role-tab" data-target="gal-acudiente"><i class="fas fa-users"></i> Acudiente</button>
+            </div>
+
+            <div class="role-content active" id="gal-rector">
+                <div class="gallery-card"><img src="imagenes/panelrector1.png" alt="Rector 1" class="zoomable" loading="lazy"></div>
+                <div class="gallery-card"><img src="imagenes/panelrector2.png" alt="Rector 2" class="zoomable" loading="lazy"></div>
+                <div class="gallery-card"><img src="imagenes/panelrector3.png" alt="Rector 3" class="zoomable" loading="lazy"></div>
+                <div class="gallery-card"><img src="imagenes/panelrector4.png" alt="Rector 4" class="zoomable" loading="lazy"></div>
+                <div class="gallery-card"><img src="imagenes/panelrector5.png" alt="Rector 5" class="zoomable" loading="lazy"></div>
+                <div class="gallery-card"><img src="imagenes/panelrector6.png" alt="Rector 6" class="zoomable" loading="lazy"></div>
+            </div>
+
+            <div class="role-content" id="gal-profesor">
+                <div class="gallery-card"><img src="imagenes/panelprofesor1.png" alt="Profesor 1" class="zoomable" loading="lazy"></div>
+                <div class="gallery-card"><img src="imagenes/panelprofesor2.png" alt="Profesor 2" class="zoomable" loading="lazy"></div>
+                <div class="gallery-card"><img src="imagenes/panelprofesor3.png" alt="Profesor 3" class="zoomable" loading="lazy"></div>
+                <div class="gallery-card"><img src="imagenes/panelprofesor4.png" alt="Profesor 4" class="zoomable" loading="lazy"></div>
+                <div class="gallery-card"><img src="imagenes/panelprofesor5.png" alt="Profesor 5" class="zoomable" loading="lazy"></div>
+            </div>
+
+            <div class="role-content" id="gal-estudiante">
+                <div class="gallery-card"><img src="imagenes/panelestudiante1.png" alt="Estudiante 1" class="zoomable" loading="lazy"></div>
+                <div class="gallery-card"><img src="imagenes/panelestudiante2.png" alt="Estudiante 2" class="zoomable" loading="lazy"></div>
+                <div class="gallery-card"><img src="imagenes/panelestudiante3.png" alt="Estudiante 3" class="zoomable" loading="lazy"></div>
+                <div class="gallery-card"><img src="imagenes/panelestudiante4.png" alt="Estudiante 4" class="zoomable" loading="lazy"></div>
+                <div class="gallery-card"><img src="imagenes/panelestudiante5.png" alt="Estudiante 5" class="zoomable" loading="lazy"></div>
+            </div>
+
+            <div class="role-content" id="gal-acudiente">
+                <div class="gallery-card"><img src="imagenes/panelacudiente1.png" alt="Acudiente 1" class="zoomable" loading="lazy"></div>
+                <div class="gallery-card"><img src="imagenes/panelacudiente2.png" alt="Acudiente 2" class="zoomable" loading="lazy"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section class="section" style="padding-bottom: 100px;">
+        <div class="section-inner">
+            <div class="cta-banner reveal-scale">
+                <h2>¿Listo para conocer EduOne en funcionamiento?</h2>
+                <p>Solicita una demostración y descubre cómo estas herramientas pueden integrarse en tu institución.</p>
+                <div class="cta-actions">
+                    <a href="contacto.html" class="btn-primary"><i class="fas fa-rocket"></i> Solicitar demostración</a>
+                    <a href="planes.html" class="btn-secondary"><i class="fas fa-tags"></i> Ver planes</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <div class="footer-brand-logo">
+                        <span class="logo-mark">
+                            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" fill="none">
+                                <defs>
+                                    <linearGradient id="gradCapF" x1="0" y1="0" x2="1" y2="1">
+                                        <stop offset="0%" stop-color="#3b82f6"/><stop offset="55%" stop-color="#22d3ee"/><stop offset="100%" stop-color="#a3e635"/>
+                                    </linearGradient>
+                                </defs>
+                                <path d="M24 6 L44 16 L24 26 L4 16 Z" fill="url(#gradCapF)"/>
+                                <path d="M12 21.5 V30 C12 33.5 17.4 36 24 36 C30.6 36 36 33.5 36 30 V21.5 L24 27.5 Z" fill="url(#gradCapF)" opacity="0.85"/>
+                                <path d="M40 18 V29" stroke="url(#gradCapF)" stroke-width="2.4" stroke-linecap="round"/>
+                                <circle cx="40" cy="30.5" r="2.6" fill="url(#gradCapF)"/>
+                            </svg>
+                        </span>
+                        <span class="logo-text">Edu<span>One</span></span>
+                    </div>
+                    <p>Plataforma tecnológica colombiana para la gestión académica, administrativa, financiera y de convivencia de instituciones educativas.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Navegación</h4>
+                    <ul>
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="sobrenosotros.html">Sobre nosotros</a></li>
+                        <li><a href="funcionalidades.html">Funcionalidades</a></li>
+                        <li><a href="beneficios.html">Beneficios</a></li>
+                        <li><a href="planes.html">Planes</a></li>
+                        <li><a href="implementacion.html">Implementación</a></li>
+                        <li><a href="contacto.html">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Soporte</h4>
+                    <ul>
+                        <li><a href="#">Centro de ayuda</a></li>
+                        <li><a href="#">Soporte técnico</a></li>
+                        <li><a href="contacto.html">Solicitar demostración</a></li>
+                        <li><a href="contacto.html">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Términos y condiciones</a></li>
+                        <li><a href="#">Política de privacidad</a></li>
+                        <li><a href="#">Tratamiento de datos</a></li>
+                        <li><a href="#">Política de cookies</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 EduOne. Todos los derechos reservados.</p>
+                <p>Tecnología educativa desarrollada en Colombia.</p>
+                <p>contacto@eduone.com.co · Neiva, Huila, Colombia · eduone.com.co</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- BOTONES FLOTANTES -->
+    <button class="back-to-top" id="backToTop" aria-label="Volver arriba"><i class="fas fa-arrow-up"></i></button>
+
+    <div class="help-fab" id="helpFab">
+        <button class="help-fab-btn" id="helpFabBtn" aria-label="Abrir menú de ayuda" aria-expanded="false">
+            <span class="ico-chat"><i class="fas fa-comment-dots"></i></span>
+            <span class="ico-close"><i class="fas fa-times"></i></span>
+        </button>
+        <div class="help-panel">
+            <div class="help-panel-header">
+                <h3>Hola 👋 Somos EduOne</h3>
+                <p>¿En qué podemos ayudarte?</p>
+            </div>
+            <div class="help-panel-body">
+                <a href="contacto.html" class="help-option"><span class="emoji">📅</span><span class="lbl"><strong>Solicitar demostración</strong><span>Conoce la plataforma en acción</span></span></a>
+                <a href="#" class="help-option"><span class="emoji">🛠️</span><span class="lbl"><strong>Soporte</strong><span>Atención técnica</span></span></a>
+                <a href="contacto.html" class="help-option"><span class="emoji">✉️</span><span class="lbl"><strong>Contacto</strong><span>Escríbenos directamente</span></span></a>
+                <a href="#" class="help-option"><span class="emoji">📣</span><span class="lbl"><strong>Novedades</strong><span>Mejoras y actualizaciones</span></span></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- LIGHTBOX -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightboxClose" aria-label="Cerrar">&times;</button>
+        <img src="" alt="Captura ampliada" id="lightboxImg">
+    </div>
+
+    <!-- SCRIPTS -->
+    <script>
+        (function() {
+            'use strict';
+
+            // PRELOADER
+            const preloader = document.getElementById('preloader');
+            window.addEventListener('load', () => {
+                setTimeout(() => { if (preloader) preloader.classList.add('hidden'); }, 500);
+            });
+            setTimeout(() => { if (preloader) preloader.classList.add('hidden'); }, 2500);
+
+            // NAVBAR SCROLL + BACK TO TOP
+            const navbar = document.getElementById('navbar');
+            const backToTop = document.getElementById('backToTop');
+            if(navbar && backToTop) {
+                window.addEventListener('scroll', () => {
+                    const y = window.scrollY;
+                    navbar.classList.toggle('scrolled', y > 20);
+                    backToTop.classList.toggle('visible', y > 400);
+                }, { passive: true });
+                backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+            }
+
+            // HAMBURGER
+            const hamburger = document.getElementById('hamburger');
+            const navMenu = document.getElementById('nav-menu');
+            if(hamburger && navMenu) {
+                hamburger.addEventListener('click', () => {
+                    const isOpen = navMenu.classList.contains('open');
+                    navMenu.classList.toggle('open');
+                    hamburger.classList.toggle('open');
+                    hamburger.setAttribute('aria-expanded', !isOpen);
+                });
+                navMenu.querySelectorAll('a').forEach(a => {
+                    a.addEventListener('click', () => {
+                        navMenu.classList.remove('open');
+                        hamburger.classList.remove('open');
+                        hamburger.setAttribute('aria-expanded', 'false');
+                    });
+                });
+            }
+
+            // HELP FAB
+            const helpFab = document.getElementById('helpFab');
+            const helpFabBtn = document.getElementById('helpFabBtn');
+            if(helpFab && helpFabBtn) {
+                helpFabBtn.addEventListener('click', (e) => { e.stopPropagation(); helpFab.classList.toggle('open'); });
+                document.addEventListener('click', (e) => { if (!helpFab.contains(e.target)) helpFab.classList.remove('open'); });
+            }
+
+            // REVEAL ANIMATION
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        revealObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+            document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => revealObserver.observe(el));
+
+            // TABS DE GALERÍA
+            document.querySelectorAll('.role-tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    document.querySelectorAll('.role-tab').forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('.role-content').forEach(c => c.classList.remove('active'));
+                    tab.classList.add('active');
+                    const target = document.getElementById(tab.dataset.target);
+                    if(target) target.classList.add('active');
+                });
+            });
+
+            // SUB-NAV ACTIVO AL HACER SCROLL
+            const subNavLinks = document.querySelectorAll('.sub-nav-link');
+            const sections = document.querySelectorAll('.section[id]');
+            
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (window.pageYOffset >= sectionTop - 200) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                subNavLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === '#' + current) {
+                        link.classList.add('active');
+                    }
+                });
+            }, { passive: true });
+
+            // LIGHTBOX
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightboxImg');
+            const lightboxClose = document.getElementById('lightboxClose');
+            
+            if(lightbox && lightboxImg) {
+                document.querySelectorAll('.zoomable').forEach(img => {
+                    img.addEventListener('click', () => {
+                        lightboxImg.src = img.src;
+                        lightbox.classList.add('show');
+                    });
+                });
+                if(lightboxClose) lightboxClose.addEventListener('click', () => lightbox.classList.remove('show'));
+                lightbox.addEventListener('click', (e) => { if (e.target === lightbox) lightbox.classList.remove('show'); });
+            }
+
+            // ESC to close lightbox / menu
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    if(lightbox) lightbox.classList.remove('show');
+                    if(helpFab) helpFab.classList.remove('open');
+                }
+            });
+
+        })();
+    </script>
+
 </body>
 </html>

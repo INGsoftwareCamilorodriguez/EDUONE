@@ -46,6 +46,7 @@
 
         .btn-primary { display: inline-flex; align-items: center; gap: 8px; padding: 10px 24px; background: var(--primary); color: #fff; border: none; border-radius: 8px; font-size: 0.9rem; font-weight: 600; font-family: var(--font); cursor: pointer; transition: background 0.2s; }
         .btn-primary:hover { background: var(--primary-dark); }
+        .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
         .btn-secondary { display: inline-flex; align-items: center; gap: 8px; padding: 10px 24px; background: var(--gray-200); color: var(--gray-700); border: none; border-radius: 8px; font-size: 0.9rem; font-weight: 600; font-family: var(--font); cursor: pointer; }
         .btn-secondary:hover { background: var(--gray-300); }
         .btn-danger { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; background: var(--danger); color: #fff; border: none; border-radius: 6px; font-size: 0.8rem; font-weight: 500; font-family: var(--font); cursor: pointer; }
@@ -191,7 +192,6 @@
         .pago-item:last-child { border-bottom: none; }
         .pago-item .pago-fecha { color: var(--gray-500); font-size: 0.75rem; }
 
-        /* Economía */
         .mov-tipo-entrada { color: var(--success); font-weight: 700; }
         .mov-tipo-salida { color: var(--danger); font-weight: 700; }
         .mov-tipo-badge { display: inline-block; padding: 2px 10px; border-radius: 50px; font-size: 0.7rem; font-weight: 600; }
@@ -200,245 +200,132 @@
         .eco-filtros { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
         .eco-filtros select { max-width: 220px; }
 
-        /* ============================================= */
-        /* MEJORAS DE DISEÑO - TABLA COLEGIOS            */
-        /* ============================================= */
         .row-num {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 26px;
-            height: 26px;
-            border-radius: 8px;
-            background: var(--gray-100);
-            color: var(--gray-600);
-            font-weight: 600;
-            font-size: 0.75rem;
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 26px; height: 26px; border-radius: 8px;
+            background: var(--gray-100); color: var(--gray-600);
+            font-weight: 600; font-size: 0.75rem;
         }
+        .colegio-cell { display: flex; align-items: center; gap: 12px; min-width: 200px; }
+        .colegio-avatar-img, .colegio-avatar-fallback {
+            width: 42px; height: 42px; border-radius: 10px; object-fit: cover; flex-shrink: 0;
+            border: 2px solid #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+        .colegio-avatar-fallback { display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 1.1rem; }
+        .colegio-cell-info { display: flex; flex-direction: column; min-width: 0; }
+        .colegio-cell-name { font-weight: 600; font-size: 0.9rem; color: var(--gray-800); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .colegio-cell-sub { font-size: 0.72rem; color: var(--gray-500); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-        .colegio-cell {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            min-width: 200px;
-        }
-        .colegio-avatar-img,
-        .colegio-avatar-fallback {
-            width: 42px;
-            height: 42px;
-            border-radius: 10px;
-            object-fit: cover;
-            flex-shrink: 0;
-            border: 2px solid #fff;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-        }
-        .colegio-avatar-fallback {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            font-weight: 700;
-            font-size: 1.1rem;
-        }
-        .colegio-cell-info {
-            display: flex;
-            flex-direction: column;
-            min-width: 0;
-        }
-        .colegio-cell-name {
-            font-weight: 600;
-            font-size: 0.9rem;
-            color: var(--gray-800);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .colegio-cell-sub {
-            font-size: 0.72rem;
-            color: var(--gray-500);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
+        .plan-pill { display: inline-block; padding: 4px 12px; border-radius: 50px; background: linear-gradient(135deg, #eef2ff, #e0e7ff); color: var(--primary); font-size: 0.72rem; font-weight: 600; white-space: nowrap; border: 1px solid #c7d2fe; }
 
-        .plan-pill {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 50px;
-            background: linear-gradient(135deg, #eef2ff, #e0e7ff);
-            color: var(--primary);
-            font-size: 0.72rem;
-            font-weight: 600;
-            white-space: nowrap;
-            border: 1px solid #c7d2fe;
-        }
+        .cupos-cell { min-width: 120px; }
+        .cupos-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+        .cupos-num { font-size: 0.78rem; color: var(--gray-700); }
+        .cupos-num strong { color: var(--gray-900); font-size: 0.9rem; }
+        .cupos-pct { font-size: 0.7rem; font-weight: 700; }
+        .cupos-bar { height: 5px; background: var(--gray-200); border-radius: 4px; overflow: hidden; }
+        .cupos-fill { height: 100%; border-radius: 4px; transition: width 0.4s ease; }
 
-        .cupos-cell {
-            min-width: 120px;
-        }
-        .cupos-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 4px;
-        }
-        .cupos-num {
-            font-size: 0.78rem;
-            color: var(--gray-700);
-        }
-        .cupos-num strong {
-            color: var(--gray-900);
-            font-size: 0.9rem;
-        }
-        .cupos-pct {
-            font-size: 0.7rem;
-            font-weight: 700;
-        }
-        .cupos-bar {
-            height: 5px;
-            background: var(--gray-200);
-            border-radius: 4px;
-            overflow: hidden;
-        }
-        .cupos-fill {
-            height: 100%;
-            border-radius: 4px;
-            transition: width 0.4s ease;
-        }
+        .fecha-venc { font-size: 0.68rem; color: var(--gray-500); margin-top: 4px; display: flex; align-items: center; gap: 4px; }
 
-        .fecha-venc {
-            font-size: 0.68rem;
-            color: var(--gray-500);
-            margin-top: 4px;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
+        .badge .dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+        .dot-on { background: #16a34a; box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.2); animation: pulseDot 2s infinite; }
+        .dot-off { background: #94a3b8; }
+        @keyframes pulseDot { 0%, 100% { box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.2); } 50% { box-shadow: 0 0 0 5px rgba(22, 163, 74, 0.1); } }
 
-        .badge .dot {
-            display: inline-block;
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            margin-right: 6px;
-            vertical-align: middle;
-        }
-        .dot-on {
-            background: #16a34a;
-            box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.2);
-            animation: pulseDot 2s infinite;
-        }
-        .dot-off {
-            background: #94a3b8;
-        }
-        @keyframes pulseDot {
-            0%, 100% { box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.2); }
-            50% { box-shadow: 0 0 0 5px rgba(22, 163, 74, 0.1); }
-        }
+        .rector-cell { display: flex; align-items: center; gap: 6px; font-size: 0.82rem; color: var(--gray-600); }
+        .rector-cell i { color: var(--gray-400); font-size: 0.75rem; }
 
-        .rector-cell {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.82rem;
-            color: var(--gray-600);
-        }
-        .rector-cell i {
-            color: var(--gray-400);
-            font-size: 0.75rem;
-        }
+        .actions-cell { display: flex; gap: 5px; flex-wrap: wrap; }
+        .actions-cell .btn-sm { width: 30px; height: 30px; padding: 0; justify-content: center; border-radius: 8px; transition: transform 0.15s, box-shadow 0.15s; }
+        .actions-cell .btn-sm:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+        .table-modern tbody tr { transition: background 0.15s; }
+        .table-modern tbody tr:hover { background: linear-gradient(90deg, var(--primary-bg), transparent 60%); }
 
-        .actions-cell {
-            display: flex;
-            gap: 5px;
-            flex-wrap: wrap;
-        }
-        .actions-cell .btn-sm {
-            width: 30px;
-            height: 30px;
-            padding: 0;
-            justify-content: center;
-            border-radius: 8px;
-            transition: transform 0.15s, box-shadow 0.15s;
-        }
-        .actions-cell .btn-sm:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-        }
+        .rector-box { background: var(--gray-50); border: 1px dashed var(--gray-300); border-radius: 10px; padding: 16px; margin-bottom: 16px; }
+        .rector-box h4 { font-size: 0.85rem; color: var(--gray-700); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .rector-box .rector-actual { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 12px; background: #fff; border-radius: 8px; border: 1px solid var(--gray-200); margin-bottom: 12px; flex-wrap: wrap; }
+        .rector-box .rector-actual-info { display: flex; flex-direction: column; min-width: 0; }
+        .rector-box .rector-actual-info strong { font-size: 0.9rem; color: var(--gray-800); }
+        .rector-box .rector-actual-info span { font-size: 0.75rem; color: var(--gray-500); }
+        .rector-toggle { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--gray-700); cursor: pointer; font-weight: 500; user-select: none; }
+        .rector-toggle input { accent-color: var(--primary); width: 16px; height: 16px; cursor: pointer; }
+        .nuevo-rector-fields { display: none; margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--gray-300); }
+        .nuevo-rector-fields.show { display: block; }
 
-        .table-modern tbody tr {
-            transition: background 0.15s;
-        }
-        .table-modern tbody tr:hover {
-            background: linear-gradient(90deg, var(--primary-bg), transparent 60%);
-        }
+        /* ============================================= */
+        /* MÓDULO IMPLEMENTACIÓN                          */
+        /* ============================================= */
+        .impl-step { background: #fff; border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 20px; overflow: hidden; }
+        .impl-step-header { padding: 16px 22px; background: var(--gray-50); border-bottom: 1px solid var(--gray-200); display: flex; align-items: center; gap: 12px; }
+        .impl-step-num { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%; background: var(--primary); color: #fff; font-weight: 700; font-size: 0.85rem; flex-shrink: 0; }
+        .impl-step.done .impl-step-num { background: var(--success); }
+        .impl-step.active .impl-step-num { background: var(--primary); animation: pulseStep 1.5s infinite; }
+        @keyframes pulseStep { 0%, 100% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.5); } 50% { box-shadow: 0 0 0 8px rgba(79, 70, 229, 0); } }
+        .impl-step-header h3 { font-size: 1rem; font-weight: 600; color: var(--gray-800); }
+        .impl-step-header .step-desc { font-size: 0.78rem; color: var(--gray-500); margin-top: 2px; }
+        .impl-step-body { padding: 22px; }
+        .impl-step-body.disabled { opacity: 0.45; pointer-events: none; }
 
-        /* Bloque del rector en edición */
-        .rector-box {
-            background: var(--gray-50);
-            border: 1px dashed var(--gray-300);
-            border-radius: 10px;
-            padding: 16px;
-            margin-bottom: 16px;
-        }
-        .rector-box h4 {
-            font-size: 0.85rem;
-            color: var(--gray-700);
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .rector-box .rector-actual {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            padding: 10px 12px;
-            background: #fff;
-            border-radius: 8px;
-            border: 1px solid var(--gray-200);
-            margin-bottom: 12px;
-            flex-wrap: wrap;
-        }
-        .rector-box .rector-actual-info {
-            display: flex;
-            flex-direction: column;
-            min-width: 0;
-        }
-        .rector-box .rector-actual-info strong {
-            font-size: 0.9rem;
-            color: var(--gray-800);
-        }
-        .rector-box .rector-actual-info span {
-            font-size: 0.75rem;
-            color: var(--gray-500);
-        }
-        .rector-toggle {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.85rem;
-            color: var(--gray-700);
-            cursor: pointer;
-            font-weight: 500;
-            user-select: none;
-        }
-        .rector-toggle input {
-            accent-color: var(--primary);
-            width: 16px;
-            height: 16px;
-            cursor: pointer;
-        }
-        .nuevo-rector-fields {
-            display: none;
-            margin-top: 12px;
-            padding-top: 12px;
-            border-top: 1px dashed var(--gray-300);
-        }
-        .nuevo-rector-fields.show {
-            display: block;
-        }
+        .colegio-info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-top: 18px; }
+        .info-box { background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 10px; padding: 14px 16px; }
+        .info-box .info-label { display: block; font-size: 0.72rem; color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; margin-bottom: 4px; }
+        .info-box .info-value { display: block; font-size: 1.15rem; font-weight: 700; color: var(--gray-900); line-height: 1.2; }
+        .info-box .info-value.success { color: var(--success); }
+        .info-box .info-value.warning { color: var(--warning); }
+        .info-box .info-value.danger { color: var(--danger); }
+
+        .impl-upload-zone { border: 2px dashed var(--gray-300); border-radius: 12px; padding: 36px 20px; text-align: center; background: var(--gray-50); cursor: pointer; transition: border-color 0.2s, background 0.2s; }
+        .impl-upload-zone:hover, .impl-upload-zone.dragover { border-color: var(--primary); background: var(--primary-bg); }
+        .impl-upload-zone i { font-size: 2.4rem; color: var(--primary); margin-bottom: 12px; }
+        .impl-upload-zone h4 { font-size: 1rem; color: var(--gray-800); margin-bottom: 6px; }
+        .impl-upload-zone p { font-size: 0.82rem; color: var(--gray-500); }
+        .impl-upload-zone .file-name { display: inline-block; margin-top: 12px; padding: 6px 14px; background: #fff; border: 1px solid var(--gray-200); border-radius: 100px; font-size: 0.8rem; color: var(--gray-700); font-weight: 600; }
+
+        .impl-preview-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin: 18px 0; }
+        .impl-preview-stat { background: #fff; border: 1px solid var(--gray-200); border-radius: 10px; padding: 14px; text-align: center; }
+        .impl-preview-stat .num { display: block; font-size: 1.6rem; font-weight: 800; color: var(--gray-900); line-height: 1.1; }
+        .impl-preview-stat .lbl { display: block; font-size: 0.72rem; color: var(--gray-500); font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px; margin-top: 4px; }
+        .impl-preview-stat.ok .num { color: var(--success); }
+        .impl-preview-stat.err .num { color: var(--danger); }
+        .impl-preview-stat.warn .num { color: var(--warning); }
+
+        .impl-table-wrap { max-height: 420px; overflow: auto; border: 1px solid var(--gray-200); border-radius: 10px; }
+        .impl-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+        .impl-table thead th { position: sticky; top: 0; background: var(--gray-100); padding: 10px 12px; text-align: left; font-size: 0.7rem; color: var(--gray-600); text-transform: uppercase; letter-spacing: 0.4px; border-bottom: 1px solid var(--gray-200); z-index: 1; }
+        .impl-table tbody td { padding: 9px 12px; border-bottom: 1px solid var(--gray-100); vertical-align: top; }
+        .impl-table tbody tr:hover { background: var(--gray-50); }
+        .impl-table tbody tr.row-error { background: #fef2f2; }
+        .impl-table tbody tr.row-warn { background: #fffbeb; }
+
+        .progress-wrap { background: var(--gray-100); border-radius: 10px; padding: 20px; margin-top: 18px; }
+        .progress-bar-outer { height: 12px; background: var(--gray-200); border-radius: 8px; overflow: hidden; margin: 12px 0; }
+        .progress-bar-inner { height: 100%; width: 0%; background: linear-gradient(90deg, var(--primary), var(--primary-light)); border-radius: 8px; transition: width 0.3s ease; }
+        .progress-label { display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 600; color: var(--gray-700); }
+        .progress-current { font-size: 0.8rem; color: var(--gray-500); margin-top: 6px; }
+        .progress-counters { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-top: 16px; }
+        .progress-counter { background: #fff; border: 1px solid var(--gray-200); border-radius: 8px; padding: 10px 12px; font-size: 0.78rem; color: var(--gray-600); }
+        .progress-counter strong { display: block; font-size: 1.1rem; color: var(--gray-900); margin-top: 2px; }
+        .progress-counter.ok strong { color: var(--success); }
+        .progress-counter.err strong { color: var(--danger); }
+        .progress-counter.warn strong { color: var(--warning); }
+
+        .impl-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+
+        .impl-summary { background: linear-gradient(135deg, #ecfdf5, #d1fae5); border: 2px solid var(--success); border-radius: var(--radius); padding: 28px; text-align: center; }
+        .impl-summary h2 { color: #065f46; font-size: 1.4rem; margin-bottom: 8px; }
+        .impl-summary .big-check { font-size: 3rem; color: var(--success); margin-bottom: 10px; }
+        .impl-summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin: 20px 0; text-align: left; }
+        .impl-summary-item { background: #fff; border-radius: 8px; padding: 12px 14px; font-size: 0.82rem; display: flex; justify-content: space-between; align-items: center; }
+        .impl-summary-item strong { font-size: 1.05rem; color: #065f46; }
+
+        .impl-errores-lista { background: #fff; border: 1px solid var(--gray-200); border-radius: 10px; padding: 16px; margin-top: 16px; max-height: 300px; overflow-y: auto; display: none; }
+        .impl-errores-lista.show { display: block; }
+        .impl-errores-lista h4 { font-size: 0.9rem; color: var(--danger); margin-bottom: 10px; }
+        .impl-error-item { padding: 8px 10px; border-bottom: 1px solid var(--gray-100); font-size: 0.82rem; }
+        .impl-error-item:last-child { border-bottom: none; }
+        .impl-error-item strong { color: var(--gray-800); }
+        .impl-error-item span { color: var(--danger); font-size: 0.78rem; }
 
         @media (max-width: 992px) {
             .sidebar { width: 72px; }
@@ -472,6 +359,13 @@
             .card-header { flex-direction: column; gap: 8px; align-items: flex-start; }
             .page-header { flex-direction: column; align-items: flex-start; }
             .user-info { display: none; }
+            .impl-step-body { padding: 16px; }
+            .impl-step-header { padding: 12px 16px; }
+            .colegio-info-grid { grid-template-columns: 1fr 1fr; }
+            .impl-preview-stats { grid-template-columns: 1fr 1fr; }
+            .impl-actions { flex-direction: column; }
+            .impl-actions button { width: 100%; justify-content: center; }
+            .progress-counters { grid-template-columns: 1fr 1fr; }
         }
         @media (max-width: 480px) {
             .top-header { padding: 0 12px; height: 60px; }
@@ -483,6 +377,7 @@
             .modal-body { padding: 18px; }
             .modal-footer { padding: 12px 18px; flex-direction: column; }
             .modal-footer button { width: 100%; justify-content: center; }
+            .colegio-info-grid { grid-template-columns: 1fr; }
         }
         .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 99; }
         @media (min-width: 769px) { .hamburger-btn { display: none !important; } }
@@ -494,6 +389,8 @@
     </style>
     <link rel="stylesheet" href="../assets/responsive.css" />
     <script src="../assets/responsive.js" defer></script>
+    <!-- SheetJS para leer archivos Excel -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body>
 
@@ -513,6 +410,7 @@
             <ul>
                 <li class="active"><a href="#" data-page="dashboard"><i class="fas fa-th-large"></i><span>Inicio</span></a></li>
                 <li><a href="#" data-page="colegios"><i class="fas fa-school"></i><span>Colegios</span></a></li>
+                <li><a href="#" data-page="implementacion"><i class="fas fa-school-circle-check"></i><span>Implementación</span></a></li>
                 <li><a href="#" data-page="economia"><i class="fas fa-chart-line"></i><span>Economía</span></a></li>
                 <li><a href="#" data-page="usuarios"><i class="fas fa-users"></i><span>Usuarios</span></a></li>
                 <li><a href="#" data-page="planes"><i class="fas fa-crown"></i><span>Planes</span></a></li>
@@ -645,6 +543,310 @@
                 </div>
             </div>
 
+            <!-- ========================================= -->
+            <!-- IMPLEMENTACIÓN                            -->
+            <!-- ========================================= -->
+            <div id="page-implementacion" class="page-content">
+                <div class="page-header">
+                    <h2><i class="fas fa-school-circle-check" style="color: var(--primary);"></i> Implementación de colegios</h2>
+                </div>
+
+                <!-- PASO 1 -->
+                <div class="impl-step" id="step-seleccionar">
+                    <div class="impl-step-header">
+                        <span class="impl-step-num">1</span>
+                        <div>
+                            <h3>Seleccionar institución</h3>
+                            <div class="step-desc">Elige el colegio sobre el que vas a trabajar</div>
+                        </div>
+                    </div>
+                    <div class="impl-step-body">
+                        <div class="form-group">
+                            <label>Colegio</label>
+                            <select id="implColegioSelect" class="form-control">
+                                <option value="">— Selecciona un colegio —</option>
+                            </select>
+                        </div>
+
+                        <div id="implColegioInfo" style="display: none;">
+                            <div class="colegio-info-grid">
+                                <div class="info-box">
+                                    <span class="info-label">Plan actual</span>
+                                    <span class="info-value" id="implPlanNombre">—</span>
+                                </div>
+                                <div class="info-box">
+                                    <span class="info-label">Máx. estudiantes</span>
+                                    <span class="info-value" id="implPlanMax">0</span>
+                                </div>
+                                <div class="info-box">
+                                    <span class="info-label">Estudiantes actuales</span>
+                                    <span class="info-value" id="implEstActuales">0</span>
+                                </div>
+                                <div class="info-box">
+                                    <span class="info-label">Cupos disponibles</span>
+                                    <span class="info-value success" id="implCuposDisp">0</span>
+                                </div>
+                                <div class="info-box">
+                                    <span class="info-label">Estado</span>
+                                    <span class="info-value" id="implEstadoColegio">—</span>
+                                </div>
+                                <div class="info-box">
+                                    <span class="info-label">Ciudad</span>
+                                    <span class="info-value" id="implCiudadColegio">—</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PASO 2 -->
+                <div class="impl-step" id="step-config">
+                    <div class="impl-step-header">
+                        <span class="impl-step-num">2</span>
+                        <div>
+                            <h3>Configuración de matrícula</h3>
+                            <div class="step-desc">Valor que se aplicará a cada matrícula creada</div>
+                        </div>
+                    </div>
+                    <div class="impl-step-body disabled" id="stepConfigBody">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Valor de matrícula por estudiante (COP) *</label>
+                                <input type="number" id="implValorMatricula" class="form-control" min="0" placeholder="Ej: 400000" />
+                                <small style="color: var(--gray-500); font-size: 0.75rem;" id="implValorMatriculaPreview">$0</small>
+                            </div>
+                        </div>
+                        <div class="impl-actions">
+                            <button type="button" class="btn-primary" id="btnGuardarConfigMatricula">
+                                <i class="fas fa-save"></i> Guardar valor de matrícula
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PASO 3 -->
+                <div class="impl-step" id="step-servicio">
+                    <div class="impl-step-header">
+                        <span class="impl-step-num">3</span>
+                        <div>
+                            <h3>Servicio de implementación EduOne</h3>
+                            <div class="step-desc">Registra si el colegio contrató este servicio (opcional)</div>
+                        </div>
+                    </div>
+                    <div class="impl-step-body disabled" id="stepServicioBody">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>¿Contrató el servicio? *</label>
+                                <select id="implContratada" class="form-control">
+                                    <option value="no">No</option>
+                                    <option value="si">Sí</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Valor cobrado (COP)</label>
+                                <input type="number" id="implValorServicio" class="form-control" min="0" placeholder="Ej: 2000000" />
+                            </div>
+                            <div class="form-group">
+                                <label>Estado de pago</label>
+                                <select id="implEstadoPago" class="form-control">
+                                    <option value="pendiente">Pendiente</option>
+                                    <option value="parcial">Parcial</option>
+                                    <option value="pagado">Pagado</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Método</label>
+                                <select id="implMetodoPago" class="form-control">
+                                    <option value="">— Sin especificar —</option>
+                                    <option value="Transferencia">Transferencia</option>
+                                    <option value="Efectivo">Efectivo</option>
+                                    <option value="Consignación">Consignación</option>
+                                    <option value="Otro">Otro</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Referencia</label>
+                                <input type="text" id="implReferencia" class="form-control" placeholder="Ej: TRX-12345" />
+                            </div>
+                            <div class="form-group">
+                                <label>Fecha</label>
+                                <input type="date" id="implFechaServicio" class="form-control" />
+                            </div>
+                            <div class="form-group" style="grid-column: span 2;">
+                                <label>Observaciones</label>
+                                <textarea id="implObservaciones" class="form-control" rows="2" placeholder="Notas adicionales..."></textarea>
+                            </div>
+                        </div>
+                        <div class="impl-actions">
+                            <button type="button" class="btn-primary" id="btnGuardarServicio">
+                                <i class="fas fa-save"></i> Guardar servicio
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PASO 4 -->
+                <div class="impl-step" id="step-excel">
+                    <div class="impl-step-header">
+                        <span class="impl-step-num">4</span>
+                        <div>
+                            <h3>Importar estudiantes desde Excel</h3>
+                            <div class="step-desc">Carga el archivo con la información de estudiantes y acudientes</div>
+                        </div>
+                    </div>
+                    <div class="impl-step-body disabled" id="stepExcelBody">
+                        <div class="impl-upload-zone" id="implUploadZone">
+                            <i class="fas fa-file-excel"></i>
+                            <h4>Arrastra el archivo aquí o haz clic para seleccionarlo</h4>
+                            <p>Formatos aceptados: .xlsx, .xls</p>
+                            <div class="file-name" id="implFileName" style="display: none;"></div>
+                            <input type="file" id="implFileInput" accept=".xlsx,.xls" style="display: none;" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PASO 5 -->
+                <div class="impl-step" id="step-preview" style="display: none;">
+                    <div class="impl-step-header">
+                        <span class="impl-step-num">5</span>
+                        <div>
+                            <h3>Vista previa y validación</h3>
+                            <div class="step-desc">Revisa los datos antes de importar</div>
+                        </div>
+                    </div>
+                    <div class="impl-step-body">
+                        <div class="impl-preview-stats">
+                            <div class="impl-preview-stat">
+                                <span class="num" id="prevTotal">0</span>
+                                <span class="lbl">Registros</span>
+                            </div>
+                            <div class="impl-preview-stat ok">
+                                <span class="num" id="prevValidos">0</span>
+                                <span class="lbl">Válidos</span>
+                            </div>
+                            <div class="impl-preview-stat err">
+                                <span class="num" id="prevErrores">0</span>
+                                <span class="lbl">Con errores</span>
+                            </div>
+                            <div class="impl-preview-stat warn">
+                                <span class="num" id="prevCupos">0</span>
+                                <span class="lbl">Cupos restantes</span>
+                            </div>
+                        </div>
+
+                        <div id="implPreviewAlert" style="display: none; background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; padding: 14px 18px; border-radius: 10px; margin-bottom: 16px; font-size: 0.85rem;">
+                            <i class="fas fa-triangle-exclamation"></i>
+                            <span id="implPreviewAlertText"></span>
+                        </div>
+
+                        <div class="impl-table-wrap">
+                            <table class="impl-table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Estudiante</th>
+                                        <th>Documento</th>
+                                        <th>Grado</th>
+                                        <th>Curso asignado</th>
+                                        <th>Correo estudiante</th>
+                                        <th>Acudiente</th>
+                                        <th>Correo acudiente</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="implPreviewBody"></tbody>
+                            </table>
+                        </div>
+
+                        <div class="impl-actions">
+                            <button type="button" class="btn-secondary" id="btnCancelarImport">
+                                <i class="fas fa-times"></i> Cancelar
+                            </button>
+                            <button type="button" class="btn-secondary" id="btnDescargarErrores">
+                                <i class="fas fa-download"></i> Descargar errores
+                            </button>
+                            <button type="button" class="btn-primary" id="btnImportarValidos">
+                                <i class="fas fa-upload"></i> Importar registros válidos
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PASO 6 -->
+                <div class="impl-step" id="step-progress" style="display: none;">
+                    <div class="impl-step-header">
+                        <span class="impl-step-num">6</span>
+                        <div>
+                            <h3>Importando estudiantes</h3>
+                            <div class="step-desc">No cierres esta ventana mientras se procesa</div>
+                        </div>
+                    </div>
+                    <div class="impl-step-body">
+                        <div class="progress-wrap">
+                            <div class="progress-label">
+                                <span id="progStepLabel">Procesando...</span>
+                                <span id="progStepPct">0%</span>
+                            </div>
+                            <div class="progress-bar-outer">
+                                <div class="progress-bar-inner" id="progBar"></div>
+                            </div>
+                            <div class="progress-current" id="progCurrent">Preparando...</div>
+                        </div>
+
+                        <div class="progress-counters">
+                            <div class="progress-counter ok">Estudiantes creados<strong id="cntEstudiantes">0</strong></div>
+                            <div class="progress-counter ok">Matrículas creadas<strong id="cntMatriculas">0</strong></div>
+                            <div class="progress-counter ok">Cuentas estudiante<strong id="cntCuentasEst">0</strong></div>
+                            <div class="progress-counter ok">Acudientes nuevos<strong id="cntAcudientes">0</strong></div>
+                            <div class="progress-counter ok">Acudientes reutilizados<strong id="cntAcudientesReuso">0</strong></div>
+                            <div class="progress-counter ok">Grados creados<strong id="cntGrados">0</strong></div>
+                            <div class="progress-counter ok">Cursos creados<strong id="cntCursos">0</strong></div>
+                            <div class="progress-counter warn">Omitidos<strong id="cntOmitidos">0</strong></div>
+                            <div class="progress-counter err">Errores<strong id="cntErrores">0</strong></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PASO 7 -->
+                <div class="impl-step" id="step-result" style="display: none;">
+                    <div class="impl-step-body">
+                        <div class="impl-summary">
+                            <div class="big-check"><i class="fas fa-circle-check"></i></div>
+                            <h2>Implementación completada</h2>
+                            <p style="color: #065f46; font-size: 0.9rem;" id="implResultColegio">Colegio</p>
+
+                            <div class="impl-summary-grid">
+                                <div class="impl-summary-item"><span>Estudiantes</span><strong id="resEstudiantes">0</strong></div>
+                                <div class="impl-summary-item"><span>Matrículas</span><strong id="resMatriculas">0</strong></div>
+                                <div class="impl-summary-item"><span>Cuentas estudiante</span><strong id="resCuentasEst">0</strong></div>
+                                <div class="impl-summary-item"><span>Acudientes nuevos</span><strong id="resAcudientes">0</strong></div>
+                                <div class="impl-summary-item"><span>Acudientes reutilizados</span><strong id="resAcudientesReuso">0</strong></div>
+                                <div class="impl-summary-item"><span>Grados</span><strong id="resGrados">0</strong></div>
+                                <div class="impl-summary-item"><span>Cursos</span><strong id="resCursos">0</strong></div>
+                                <div class="impl-summary-item"><span>Errores</span><strong id="resErrores" style="color: var(--danger);">0</strong></div>
+                            </div>
+
+                            <div class="impl-actions" style="justify-content: center;">
+                                <button type="button" class="btn-secondary" id="btnVerErrores">
+                                    <i class="fas fa-list"></i> Ver errores
+                                </button>
+                                <button type="button" class="btn-primary" id="btnDescargarCredenciales">
+                                    <i class="fas fa-key"></i> Descargar credenciales
+                                </button>
+                                <button type="button" class="btn-secondary" id="btnReiniciarImpl">
+                                    <i class="fas fa-rotate"></i> Nueva importación
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="impl-errores-lista" id="implErroresLista">
+                            <h4><i class="fas fa-exclamation-circle"></i> Registros con errores</h4>
+                            <div id="implErroresBody"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- ECONOMÍA -->
             <div id="page-economia" class="page-content">
                 <div class="page-header">
@@ -768,8 +970,10 @@
     </main>
 
     <!-- =========================================== -->
-    <!-- MODAL: Registrar Colegio                    -->
+    <!-- MODALES                                      -->
     <!-- =========================================== -->
+
+    <!-- Modal Registrar Colegio -->
     <div class="modal" id="modalRegistrarColegio">
         <div class="modal-overlay"></div>
         <div class="modal-content">
@@ -866,9 +1070,7 @@
         </div>
     </div>
 
-    <!-- =========================================== -->
-    <!-- MODAL: Editar Colegio                       -->
-    <!-- =========================================== -->
+    <!-- Modal Editar Colegio -->
     <div class="modal" id="modalEditarColegio">
         <div class="modal-overlay"></div>
         <div class="modal-content">
@@ -950,9 +1152,7 @@
                     <h3 style="font-size: 0.9rem; color: var(--gray-600); margin-bottom: 12px;"><i class="fas fa-user-tie"></i> Rector del colegio</h3>
 
                     <div class="rector-box" id="rectorBoxEditar">
-                        <div id="rectorActualContainer">
-                            <!-- Se llena por JS -->
-                        </div>
+                        <div id="rectorActualContainer"></div>
 
                         <label class="rector-toggle" for="toggleCambiarRector">
                             <input type="checkbox" id="toggleCambiarRector" />
@@ -968,7 +1168,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn-secondary" id="cancelarEditar">Cancelar</button>
@@ -978,9 +1177,7 @@
         </div>
     </div>
 
-    <!-- =========================================== -->
-    <!-- MODAL: Ver Detalle Colegio                  -->
-    <!-- =========================================== -->
+    <!-- Modal Ver Detalle -->
     <div class="modal" id="modalDetalleColegio">
         <div class="modal-overlay"></div>
         <div class="modal-content">
@@ -995,9 +1192,7 @@
         </div>
     </div>
 
-    <!-- =========================================== -->
-    <!-- MODAL: Cambiar Plan                         -->
-    <!-- =========================================== -->
+    <!-- Modal Cambiar Plan -->
     <div class="modal" id="modalCambiarPlan">
         <div class="modal-overlay"></div>
         <div class="modal-content">
@@ -1019,9 +1214,7 @@
         </div>
     </div>
 
-    <!-- =========================================== -->
-    <!-- MODAL: Registrar Pago                       -->
-    <!-- =========================================== -->
+    <!-- Modal Registrar Pago -->
     <div class="modal" id="modalRegistrarPago">
         <div class="modal-overlay"></div>
         <div class="modal-content">
@@ -1060,9 +1253,7 @@
         </div>
     </div>
 
-    <!-- =========================================== -->
-    <!-- MODAL: Nuevo Movimiento (Economía)          -->
-    <!-- =========================================== -->
+    <!-- Modal Nuevo Movimiento -->
     <div class="modal" id="modalNuevoMovimiento">
         <div class="modal-overlay"></div>
         <div class="modal-content">
@@ -1106,11 +1297,7 @@
             </form>
         </div>
     </div>
-
-    <!-- =========================================== -->
-    <!-- SCRIPTS                                     -->
-    <!-- =========================================== -->
-    <script type="importmap">
+        <script type="importmap">
         {
             "imports": {
                 "firebase/app": "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js",
@@ -1158,7 +1345,7 @@
             return secondaryApp;
         }
 
-        async function crearCuentaUsuario(email, password, nombre, rol, colegioId, telefono) {
+        async function crearCuentaUsuario(email, password, nombre, rol, colegioId, telefono, extraData = {}) {
             const secondaryAuth = getAuth(getSecondaryApp());
             try {
                 const userCredential = await createUserWithEmailAndPassword(secondaryAuth, email, password);
@@ -1167,13 +1354,13 @@
                     nombre, email, rol, colegioId,
                     telefono: telefono || '',
                     activo: true,
-                    fechaCreacion: serverTimestamp()
+                    fechaCreacion: serverTimestamp(),
+                    ...extraData
                 });
                 await signOut(secondaryAuth);
                 return user.uid;
             } catch (error) {
                 if (error.code === 'auth/email-already-in-use') {
-                    // Buscar usuario existente y actualizarlo
                     const q = query(collection(db, 'usuarios'), where('email', '==', email));
                     const snap = await getDocs(q);
                     if (!snap.empty) {
@@ -1182,7 +1369,8 @@
                             nombre, rol, colegioId,
                             telefono: telefono || '',
                             activo: true,
-                            fechaActualizacion: serverTimestamp()
+                            fechaActualizacion: serverTimestamp(),
+                            ...extraData
                         });
                         return userDoc.id;
                     }
@@ -1201,9 +1389,6 @@
             { id: 'enterprise', nombre: 'Enterprise (personalizado)', maxEstudiantes: 999999, precio: 0 }
         ];
 
-        // =============================================
-        // DOM
-        // =============================================
         const userNameEl = document.getElementById('userName');
         const userRoleEl = document.getElementById('userRole');
         const totalColegiosEl = document.getElementById('totalColegios');
@@ -1281,9 +1466,6 @@
             return PLANES.find(p => p.id === id) || PLANES[0];
         }
 
-        // =============================================
-        // CONTAR ESTUDIANTES ÚNICOS
-        // =============================================
         async function contarEstudiantesUnicos(colegioId) {
             try {
                 const estSnap = await getDocs(collection(db, 'colegios', colegioId, 'estudiantes'));
@@ -1304,13 +1486,9 @@
             }
         }
 
-        // =============================================
-        // ✅ CONTAR PERSONAL DESDE 'profesores' (no usuarios)
-        // =============================================
         async function contarPersonalUnico(colegioId) {
             try {
                 const profSnap = await getDocs(collection(db, 'colegios', colegioId, 'profesores'));
-                // ✅ Simplemente contamos documentos: cada persona = 1 documento en 'profesores'
                 return profSnap.size;
             } catch (e) {
                 console.warn('Error contando personal:', e);
@@ -1318,9 +1496,6 @@
             }
         }
 
-        // =============================================
-        // SELECTOR DE PLANES
-        // =============================================
         function renderPlanSelector(container, selectedId, onSelect) {
             container.innerHTML = PLANES.map(p => `
                 <div class="plan-option ${p.id === selectedId ? 'selected' : ''}" data-plan-id="${p.id}">
@@ -1345,8 +1520,7 @@
             const venc = new Date();
             venc.setFullYear(venc.getFullYear() + 1);
             document.getElementById('planResumenVence').textContent = venc.toLocaleDateString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric' });
-            if (plan.precio > 0) el.style.display = 'block';
-            else el.style.display = 'block';
+            el.style.display = 'block';
         }
 
         // =============================================
@@ -1361,6 +1535,7 @@
         const pageNames = {
             dashboard: 'Dashboard',
             colegios: 'Gestión de Colegios',
+            implementacion: 'Implementación de colegios',
             economia: 'Economía',
             usuarios: 'Usuarios',
             planes: 'Planes',
@@ -1372,7 +1547,6 @@
         const esMovil = () => window.innerWidth <= 768;
         function abrirMenu() { sidebar.classList.remove('collapsed'); if (esMovil()) overlay.classList.add('active'); }
         function cerrarMenu() { sidebar.classList.add('collapsed'); overlay.classList.remove('active'); }
-        // En celular el menú inicia cerrado
         if (esMovil()) cerrarMenu();
         window.addEventListener('resize', () => { if (!esMovil()) { sidebar.classList.remove('collapsed'); overlay.classList.remove('active'); } });
         if (toggleBtn) toggleBtn.addEventListener('click', cerrarMenu);
@@ -1394,6 +1568,7 @@
                 if (page === 'dashboard' || page === 'colegios') cargarDashboard();
                 if (page === 'economia') cargarEconomia();
                 if (page === 'planes') renderPlanesGlobal();
+                if (page === 'implementacion') cargarListaColegiosImpl();
             });
         });
 
@@ -1471,9 +1646,6 @@
             } else credencialesBox.classList.remove('show');
         }
 
-        // =============================================
-        // SUBIR LOGO
-        // =============================================
         async function subirLogo(colegioId, file) {
             return new Promise((resolve) => {
                 const nombreLimpio = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
@@ -1494,7 +1666,7 @@
         }
 
         // =============================================
-        // ✅ REGISTRAR COLEGIO (con registro en Economía)
+        // REGISTRAR COLEGIO
         // =============================================
         formRegistrarColegio.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -1543,6 +1715,13 @@
                     fechaVencimiento: vencimiento,
                     pagos: [],
                     estadoPago: 'al-dia',
+                    valorMatricula: 0,
+                    implementacion: {
+                        contratada: false,
+                        valor: 0,
+                        estadoPago: 'pendiente',
+                        estado: 'pendiente'
+                    },
                     creadoPor: user.uid,
                     fechaCreacion: serverTimestamp()
                 };
@@ -1555,7 +1734,6 @@
                     if (r.success) await updateDoc(colegioRef, { logoUrl: r.url });
                 }
 
-                // ✅ Crear el usuario del rector SIN perder la sesión del superadmin
                 let rectorUid = null;
                 try {
                     rectorUid = await crearCuentaUsuario(rectorEmailVal, rectorPass, rectorNom, 'rector', colegioId, rectorTel);
@@ -1564,7 +1742,6 @@
                     alert('⚠️ Colegio creado, pero no se pudo crear la cuenta del rector: ' + err.message);
                 }
 
-                // ✅ Registrar el pago en Economía (movimientos raíz)
                 if (plan.precio > 0) {
                     await addDoc(collection(db, 'movimientos'), {
                         tipo: 'entrada',
@@ -1581,7 +1758,6 @@
                     });
                 }
 
-                // ✅ Registrar pago en el array del colegio
                 const pagos = [];
                 if (plan.precio > 0) {
                     pagos.push({
@@ -1766,9 +1942,7 @@
                 const c = coleDoc.data();
 
                 const numEst = await contarEstudiantesUnicos(id);
-                // ✅ Ahora cuenta el personal desde la subcolección 'profesores'
                 const numProf = await contarPersonalUnico(id);
-
                 const pagos = c.pagos || [];
 
                 body.innerHTML = `
@@ -1795,10 +1969,10 @@
                         <div class="item"><div class="label">Plan</div><div class="value">${c.planNombre || '-'} ${c.precioPlan ? '(' + formatearPrecio(c.precioPlan) + '/año)' : ''}</div></div>
                         <div class="item"><div class="label">Estudiantes</div><div class="value">${numEst} / ${c.maxEstudiantes || '∞'}</div></div>
                         <div class="item"><div class="label">Personal</div><div class="value">${numProf}</div></div>
+                        <div class="item"><div class="label">Valor matrícula</div><div class="value">${formatearPrecio(c.valorMatricula || 0)}</div></div>
                         <div class="item"><div class="label">Último pago</div><div class="value">${c.fechaUltimoPago ? formatearFecha(c.fechaUltimoPago) : 'Sin registro'}</div></div>
                         <div class="item"><div class="label">Vence</div><div class="value">${c.fechaVencimiento ? formatearFecha(c.fechaVencimiento) : '-'}</div></div>
-                        <div class="item"><div class="label">Color primario</div><div class="value"><span style="display:inline-block;width:16px;height:16px;background:${c.colorPrimario || '#4f46e5'};border-radius:4px;vertical-align:middle;margin-right:6px;"></span>${c.colorPrimario || '-'}</div></div>
-                        <div class="item"><div class="label">Color secundario</div><div class="value"><span style="display:inline-block;width:16px;height:16px;background:${c.colorSecundario || '#ffffff'};border:1px solid #ccc;border-radius:4px;vertical-align:middle;margin-right:6px;"></span>${c.colorSecundario || '-'}</div></div>
+                        <div class="item"><div class="label">Implementación</div><div class="value">${c.implementacion?.contratada ? `Sí (${formatearPrecio(c.implementacion.valor)})` : 'No'}</div></div>
                     </div>
 
                     <h4 style="margin-top: 16px; font-size: 0.95rem;">Historial de pagos (${pagos.length})</h4>
@@ -1830,7 +2004,7 @@
         document.querySelector('#modalDetalleColegio .modal-overlay').addEventListener('click', () => document.getElementById('modalDetalleColegio').classList.remove('show'));
 
         // =============================================
-        // ✅ EDITAR COLEGIO (con opción de cambiar rector)
+        // EDITAR COLEGIO
         // =============================================
         window.editarColegio = async function(id) {
             try {
@@ -1862,7 +2036,6 @@
                     document.getElementById('editarLogoPlaceholder').style.display = 'flex';
                 }
 
-                // Cargar el rector actual
                 const rectorContainer = document.getElementById('rectorActualContainer');
                 rectorActualCache = null;
                 try {
@@ -1897,7 +2070,6 @@
                     rectorContainer.innerHTML = `<div class="text-center text-muted">Error al cargar rector</div>`;
                 }
 
-                // Resetear toggle
                 document.getElementById('toggleCambiarRector').checked = false;
                 document.getElementById('nuevoRectorFields').classList.remove('show');
                 document.getElementById('editarNuevoRectorNombre').value = '';
@@ -1914,7 +2086,6 @@
             }
         };
 
-        // Toggle mostrar/ocultar campos de nuevo rector
         document.getElementById('toggleCambiarRector').addEventListener('change', (e) => {
             const fields = document.getElementById('nuevoRectorFields');
             if (e.target.checked) fields.classList.add('show');
@@ -1934,7 +2105,6 @@
             ];
             const faltantes = campos.filter(c => !document.getElementById(c.id).value.trim());
 
-            // Si el toggle de cambiar rector está activo, validar también los campos del nuevo rector
             if (document.getElementById('toggleCambiarRector').checked) {
                 const n = document.getElementById('editarNuevoRectorNombre').value.trim();
                 const e = document.getElementById('editarNuevoRectorEmail').value.trim();
@@ -2028,7 +2198,6 @@
 
                 await updateDoc(doc(db, 'colegios', id), datos);
 
-                // ✅ Si el toggle de cambiar rector está activo, eliminar al actual y crear uno nuevo
                 const cambiarRector = document.getElementById('toggleCambiarRector').checked;
                 if (cambiarRector) {
                     const nuevoNombre = document.getElementById('editarNuevoRectorNombre').value.trim();
@@ -2043,7 +2212,6 @@
                         return;
                     }
 
-                    // Eliminar el rector actual de Firestore (su cuenta de Auth seguirá existiendo pero sin permisos)
                     if (rectorActualCache && rectorActualCache.uid) {
                         try {
                             await deleteDoc(doc(db, 'usuarios', rectorActualCache.uid));
@@ -2052,7 +2220,6 @@
                         }
                     }
 
-                    // Crear el nuevo rector
                     try {
                         await crearCuentaUsuario(nuevoEmail, nuevoPassword, nuevoNombre, 'rector', id, nuevoTelefono);
                         alert('✅ Colegio actualizado y rector cambiado correctamente.\n\nNuevo rector: ' + nuevoNombre + '\nEmail: ' + nuevoEmail + '\nContraseña: ' + nuevoPassword);
@@ -2318,6 +2485,787 @@
         });
 
         // =============================================
+        // 🚀 MÓDULO IMPLEMENTACIÓN
+        // =============================================
+
+        const IMPL = {
+            colegioId: null,
+            colegioData: null,
+            estudiantesActuales: 0,
+            valorMatricula: 0,
+            servicio: {
+                contratada: 'no', valor: 0, estadoPago: 'pendiente',
+                metodoPago: '', referencia: '', fecha: '', observaciones: '', estado: 'pendiente'
+            },
+            filas: [],
+            gradosCreados: {}, // { "sexto": gradoId }
+            cursosCreados: {},  // { "sexto|A": cursoId }
+            acudientesCache: {}, // { "correo": { uid, nombre, existente: bool } }
+            estudiantesDocs: {}, // { "documento": { id, correo } }
+            correosUsuarios: new Set(),
+            credenciales: [], // { estudiante, grado, curso, correoEst, passEst, acudiente, correoAcu, passAcu, existente }
+            errores: [],
+            resumen: null,
+            procesando: false,
+            cancelar: false
+        };
+
+        const implColegioSelect = document.getElementById('implColegioSelect');
+        const implColegioInfo = document.getElementById('implColegioInfo');
+        const implValorMatricula = document.getElementById('implValorMatricula');
+        const implValorMatriculaPreview = document.getElementById('implValorMatriculaPreview');
+        const implUploadZone = document.getElementById('implUploadZone');
+        const implFileInput = document.getElementById('implFileInput');
+        const implFileName = document.getElementById('implFileName');
+
+        let implColegiosCargados = false;
+
+        async function cargarListaColegiosImpl() {
+            if (implColegiosCargados) return;
+            try {
+                const snap = await getDocs(collection(db, 'colegios'));
+                implColegioSelect.innerHTML = '<option value="">— Selecciona un colegio —</option>' +
+                    snap.docs.map(d => {
+                        const c = d.data();
+                        return `<option value="${d.id}">${c.nombre || 'Sin nombre'} — ${c.ciudad || ''}</option>`;
+                    }).join('');
+                implColegiosCargados = true;
+            } catch (e) {
+                console.error('Error cargando colegios:', e);
+            }
+        }
+
+        implColegioSelect.addEventListener('change', async (e) => {
+            const id = e.target.value;
+            if (!id) {
+                implColegioInfo.style.display = 'none';
+                document.getElementById('stepConfigBody').classList.add('disabled');
+                document.getElementById('stepServicioBody').classList.add('disabled');
+                document.getElementById('stepExcelBody').classList.add('disabled');
+                IMPL.colegioId = null;
+                return;
+            }
+
+            IMPL.colegioId = id;
+            const coleDoc = await getDoc(doc(db, 'colegios', id));
+            if (!coleDoc.exists()) return;
+            const c = coleDoc.data();
+            IMPL.colegioData = c;
+
+            IMPL.estudiantesActuales = await contarEstudiantesUnicos(id);
+            const max = c.maxEstudiantes || 0;
+            const disp = Math.max(0, max - IMPL.estudiantesActuales);
+
+            document.getElementById('implPlanNombre').textContent = c.planNombre || 'Sin plan';
+            document.getElementById('implPlanMax').textContent = max === 999999 ? '∞' : max;
+            document.getElementById('implEstActuales').textContent = IMPL.estudiantesActuales;
+            document.getElementById('implCuposDisp').textContent = disp;
+            document.getElementById('implEstadoColegio').textContent = c.estado || 'activo';
+            document.getElementById('implCiudadColegio').textContent = c.ciudad || '-';
+            implColegioInfo.style.display = 'block';
+
+            IMPL.valorMatricula = c.valorMatricula || 0;
+            implValorMatricula.value = IMPL.valorMatricula || '';
+            implValorMatriculaPreview.textContent = formatearPrecio(IMPL.valorMatricula);
+
+            // Cargar servicio existente
+            if (c.implementacion) {
+                IMPL.servicio = { ...IMPL.servicio, ...c.implementacion };
+                document.getElementById('implContratada').value = c.implementacion.contratada ? 'si' : 'no';
+                document.getElementById('implValorServicio').value = c.implementacion.valor || '';
+                document.getElementById('implEstadoPago').value = c.implementacion.estadoPago || 'pendiente';
+                document.getElementById('implMetodoPago').value = c.implementacion.metodoPago || '';
+                document.getElementById('implReferencia').value = c.implementacion.referencia || '';
+                document.getElementById('implFechaServicio').value = c.implementacion.fecha || '';
+                document.getElementById('implObservaciones').value = c.implementacion.observaciones || '';
+            }
+
+            document.getElementById('stepConfigBody').classList.remove('disabled');
+            document.getElementById('stepServicioBody').classList.remove('disabled');
+            document.getElementById('stepExcelBody').classList.remove('disabled');
+
+            // Marcar paso 1 como completado
+            document.getElementById('step-seleccionar').classList.add('done');
+        });
+
+        implValorMatricula.addEventListener('input', () => {
+            implValorMatriculaPreview.textContent = formatearPrecio(parseFloat(implValorMatricula.value) || 0);
+        });
+
+        document.getElementById('btnGuardarConfigMatricula').addEventListener('click', async () => {
+            if (!IMPL.colegioId) return alert('Selecciona un colegio primero');
+            const v = parseFloat(implValorMatricula.value) || 0;
+            if (v <= 0) return alert('Ingresa un valor válido');
+            try {
+                await updateDoc(doc(db, 'colegios', IMPL.colegioId), { valorMatricula: v });
+                IMPL.valorMatricula = v;
+                alert('✅ Valor de matrícula guardado');
+                document.getElementById('step-config').classList.add('done');
+            } catch (e) { alert('❌ ' + e.message); }
+        });
+
+        document.getElementById('btnGuardarServicio').addEventListener('click', async () => {
+            if (!IMPL.colegioId) return alert('Selecciona un colegio primero');
+            const contratada = document.getElementById('implContratada').value === 'si';
+            const valor = parseFloat(document.getElementById('implValorServicio').value) || 0;
+            const estadoPago = document.getElementById('implEstadoPago').value;
+            const metodoPago = document.getElementById('implMetodoPago').value;
+            const referencia = document.getElementById('implReferencia').value.trim();
+            const fecha = document.getElementById('implFechaServicio').value;
+            const observaciones = document.getElementById('implObservaciones').value.trim();
+
+            const servicio = {
+                contratada,
+                valor,
+                estadoPago,
+                metodoPago,
+                referencia,
+                fecha,
+                observaciones,
+                estado: contratada ? 'en_proceso' : 'pendiente',
+                fechaActualizacion: new Date().toISOString()
+            };
+
+            try {
+                await updateDoc(doc(db, 'colegios', IMPL.colegioId), { implementacion: servicio });
+
+                // Si se marcó como pagado, crear movimiento en /movimientos
+                if (contratada && estadoPago === 'pagado' && valor > 0) {
+                    const refMov = `IMPL-${IMPL.colegioId.slice(0, 8)}`;
+                    const dupQuery = query(collection(db, 'movimientos'), where('referencia', '==', refMov));
+                    const dupSnap = await getDocs(dupQuery);
+
+                    if (dupSnap.empty) {
+                        await addDoc(collection(db, 'movimientos'), {
+                            tipo: 'entrada',
+                            categoria: 'Implementación',
+                            monto: valor,
+                            metodo: metodoPago || 'N/A',
+                            descripcion: `Servicio de implementación - ${IMPL.colegioData.nombre}`,
+                            referencia: refMov,
+                            fecha: fecha || new Date().toISOString().split('T')[0],
+                            colegioId: IMPL.colegioId,
+                            colegioNombre: IMPL.colegioData.nombre,
+                            creadoPor: auth.currentUser?.uid || '',
+                            fechaCreacion: serverTimestamp()
+                        });
+                        alert('✅ Servicio guardado y registrado en Economía');
+                    } else {
+                        alert('✅ Servicio actualizado (el movimiento ya existía)');
+                    }
+                } else {
+                    alert('✅ Servicio guardado');
+                }
+                document.getElementById('step-servicio').classList.add('done');
+            } catch (e) { alert('❌ ' + e.message); }
+        });
+
+        // =============================================
+        // CARGA DE EXCEL
+        // =============================================
+        implUploadZone.addEventListener('click', () => implFileInput.click());
+
+        implUploadZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            implUploadZone.classList.add('dragover');
+        });
+        implUploadZone.addEventListener('dragleave', () => implUploadZone.classList.remove('dragover'));
+        implUploadZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            implUploadZone.classList.remove('dragover');
+            const file = e.dataTransfer.files[0];
+            if (file) procesarExcel(file);
+        });
+
+        implFileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) procesarExcel(file);
+        });
+
+        function normalizarHeader(h) {
+            return String(h || '').trim().toUpperCase()
+                .replace(/\s+/g, '_')
+                .replace(/[ÁÀÄÂ]/g, 'A').replace(/[ÉÈËÊ]/g, 'E')
+                .replace(/[ÍÌÏÎ]/g, 'I').replace(/[ÓÒÖÔ]/g, 'O')
+                .replace(/[ÚÙÜÛ]/g, 'U').replace(/Ñ/g, 'N');
+        }
+
+        const MAPA_COLUMNAS = {
+            'NOMBRES': 'nombres', 'NOMBRE': 'nombres', 'NOMBRE_COMPLETO': 'nombres',
+            'APELLIDOS': 'apellidos', 'APELLIDO': 'apellidos',
+            'DOCUMENTO': 'documento', 'CEDULA': 'documento', 'TI': 'documento',
+            'FECHA_NACIMIENTO': 'fechaNacimiento', 'FECHA_DE_NACIMIENTO': 'fechaNacimiento', 'NACIMIENTO': 'fechaNacimiento',
+            'GRADO': 'grado', 'CURSO': 'grado',
+            'DIRECCION': 'direccion', 'DIRECCIÓN': 'direccion',
+            'TELEFONO': 'telefono', 'CELULAR': 'telefono', 'TELÉFONO': 'telefono',
+            'CORREO_ESTUDIANTE': 'correoEstudiante', 'CORREO': 'correoEstudiante', 'EMAIL': 'correoEstudiante',
+            'ACUDIENTE': 'acudiente', 'NOMBRE_ACUDIENTE': 'acudiente',
+            'PARENTESCO': 'parentesco',
+            'TELEFONO_ACUDIENTE': 'telefonoAcudiente', 'CELULAR_ACUDIENTE': 'telefonoAcudiente',
+            'CORREO_ACUDIENTE': 'correoAcudiente', 'EMAIL_ACUDIENTE': 'correoAcudiente'
+        };
+
+        function procesarExcel(file) {
+            if (!window.XLSX) { alert('❌ Error: la librería XLSX no se cargó'); return; }
+            implFileName.textContent = `📄 ${file.name}`;
+            implFileName.style.display = 'inline-block';
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, { type: 'array' });
+                    const sheet = workbook.Sheets[workbook.SheetNames[0]];
+                    const rows = XLSX.utils.sheet_to_json(sheet, { defval: '' });
+
+                    if (!rows.length) { alert('⚠️ El archivo está vacío'); return; }
+
+                    // Mapear encabezados
+                    const encabezadosOriginales = Object.keys(rows[0]);
+                    const mapeo = {};
+                    encabezadosOriginales.forEach(h => {
+                        const norm = normalizarHeader(h);
+                        if (MAPA_COLUMNAS[norm]) mapeo[h] = MAPA_COLUMNAS[norm];
+                    });
+
+                    IMPL.filas = rows.map((r, i) => {
+                        const fila = { _num: i + 1 };
+                        Object.keys(mapeo).forEach(k => fila[mapeo[k]] = String(r[k] || '').trim());
+                        return fila;
+                    });
+
+                    mostrarVistaPrevia();
+                } catch (err) {
+                    console.error(err);
+                    alert('❌ Error leyendo el archivo: ' + err.message);
+                }
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        function normalizarGrado(grado) {
+            return String(grado || '').trim().toUpperCase()
+                .normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        }
+
+        function gradoANumero(grado) {
+            const g = normalizarGrado(grado);
+            const map = {
+                'PRIMERO': 1, 'SEGUNDO': 2, 'TERCERO': 3, 'CUARTO': 4, 'QUINTO': 5,
+                'SEXTO': 6, 'SEPTIMO': 7, 'OCTAVO': 8, 'NOVENO': 9, 'DECIMO': 10, 'UNDECIMO': 11
+            };
+            for (const k in map) if (g.includes(k)) return map[k];
+            const num = parseInt(g);
+            return isNaN(num) ? null : num;
+        }
+
+        function limpiarNombre(n) {
+            return String(n || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+                .replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+        }
+
+        function validarFila(fila) {
+            const errores = [];
+            if (!fila.nombres) errores.push('Falta nombre');
+            if (!fila.apellidos) errores.push('Falta apellido');
+            if (!fila.documento) errores.push('Falta documento');
+            if (!fila.fechaNacimiento) errores.push('Falta fecha nacimiento');
+            if (!fila.grado) errores.push('Falta grado');
+            if (fila.correoEstudiante && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fila.correoEstudiante)) errores.push('Correo estudiante inválido');
+            if (!fila.acudiente) errores.push('Falta acudiente');
+            if (!fila.correoAcudiente) errores.push('Falta correo acudiente');
+            else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fila.correoAcudiente)) errores.push('Correo acudiente inválido');
+            return errores;
+        }
+
+        function generarCorreoTemporal(nombres, apellidos, existentes) {
+            const base = `${limpiarNombre(nombres)}.${limpiarNombre(apellidos)}`;
+            let correo = `${base}@usuarios.eduone.com.co`;
+            let i = 2;
+            while (existentes.has(correo)) {
+                correo = `${base}${i}@usuarios.eduone.com.co`;
+                i++;
+            }
+            existentes.add(correo);
+            return correo;
+        }
+
+        function generarPasswordTemp(nombre) {
+            const n = String(nombre || '').trim().split(/\s+/)[0] || 'EduOne';
+            const limpio = n.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-zA-Z]/g, '');
+            return (limpio.charAt(0).toUpperCase() + limpio.slice(1).toLowerCase() + '123').slice(0, 20);
+        }
+
+        async function precargarCorreosUsuarios() {
+            if (IMPL.correosUsuarios.size > 0) return;
+            const snap = await getDocs(collection(db, 'usuarios'));
+            snap.forEach(d => {
+                const u = d.data();
+                if (u.email) IMPL.correosUsuarios.add(u.email.toLowerCase());
+            });
+        }
+
+        async function mostrarVistaPrevia() {
+            await precargarCorreosUsuarios();
+
+            const documentosVistos = new Set();
+            const correosEstVistos = new Set();
+            let validos = 0, errores = 0;
+
+            // Calcular distribución de cursos
+            const porGrado = {};
+            IMPL.filas.forEach(f => {
+                if (!f.grado) return;
+                const num = gradoANumero(f.grado);
+                if (num === null) return;
+                if (!porGrado[num]) porGrado[num] = [];
+                porGrado[num].push(f);
+            });
+
+            // Asignar curso a cada fila
+            Object.keys(porGrado).forEach(numGrado => {
+                const filasGrado = porGrado[numGrado];
+                const total = filasGrado.length;
+                const numCursos = Math.max(1, Math.ceil(total / 25));
+                const tamano = Math.ceil(total / numCursos);
+                filasGrado.forEach((f, idx) => {
+                    const letraIdx = Math.floor(idx / tamano);
+                    const letra = String.fromCharCode(65 + letraIdx);
+                    f._cursoLetra = letra;
+                    f._numGrado = numGrado;
+                });
+            });
+
+            // Validar cada fila
+            IMPL.filas.forEach(fila => {
+                const errs = validarFila(fila);
+
+                // Duplicados internos
+                if (fila.documento) {
+                    if (documentosVistos.has(fila.documento)) errs.push('Documento duplicado');
+                    else documentosVistos.add(fila.documento);
+                }
+                if (fila.correoEstudiante) {
+                    const ce = fila.correoEstudiante.toLowerCase();
+                    if (correosEstVistos.has(ce)) errs.push('Correo estudiante duplicado');
+                    else correosEstVistos.add(ce);
+                }
+
+                // Límite del plan
+                if (IMPL.colegioData) {
+                    const max = IMPL.colegioData.maxEstudiantes || 0;
+                    if (max !== 999999 && IMPL.estudiantesActuales + validos + 1 > max) {
+                        errs.push(`Supera el límite del plan (${max})`);
+                    }
+                }
+
+                fila._errores = errs;
+                if (errs.length === 0) validos++;
+                else errores++;
+            });
+
+            // Mostrar stats
+            document.getElementById('prevTotal').textContent = IMPL.filas.length;
+            document.getElementById('prevValidos').textContent = validos;
+            document.getElementById('prevErrores').textContent = errores;
+            const cuposRestantes = IMPL.colegioData
+                ? Math.max(0, (IMPL.colegioData.maxEstudiantes || 0) - IMPL.estudiantesActuales)
+                : 0;
+            document.getElementById('prevCupos').textContent = cuposRestantes;
+
+            // Alert de límite
+            const alertDiv = document.getElementById('implPreviewAlert');
+            if (validos > cuposRestantes) {
+                alertDiv.style.display = 'block';
+                document.getElementById('implPreviewAlertText').textContent =
+                    `El plan permite hasta ${IMPL.colegioData.maxEstudiantes} estudiantes. Actualmente hay ${IMPL.estudiantesActuales} y estás intentando agregar ${validos}. Actualiza el plan antes de continuar.`;
+            } else {
+                alertDiv.style.display = 'none';
+            }
+
+            // Tabla
+            const body = document.getElementById('implPreviewBody');
+            body.innerHTML = IMPL.filas.map(f => {
+                const tieneError = f._errores.length > 0;
+                const gradoTexto = f.grado || '-';
+                const cursoTexto = f._numGrado ? `${f._numGrado}° ${f._cursoLetra}` : '-';
+                return `
+                    <tr class="${tieneError ? 'row-error' : ''}">
+                        <td>${f._num}</td>
+                        <td>${f.nombres || ''} ${f.apellidos || ''}</td>
+                        <td>${f.documento || '-'}</td>
+                        <td>${gradoTexto}</td>
+                        <td>${cursoTexto}</td>
+                        <td>${f.correoEstudiante || '(temporal)'}</td>
+                        <td>${f.acudiente || '-'}</td>
+                        <td>${f.correoAcudiente || '-'}</td>
+                        <td>${tieneError ? '<span class="badge badge-danger">' + f._errores.join(', ') + '</span>' : '<span class="badge badge-success">Válido</span>'}</td>
+                    </tr>
+                `;
+            }).join('');
+
+            document.getElementById('step-preview').style.display = 'block';
+            document.getElementById('step-preview').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        document.getElementById('btnCancelarImport').addEventListener('click', () => {
+            if (!confirm('¿Cancelar la importación?')) return;
+            IMPL.filas = [];
+            implFileInput.value = '';
+            implFileName.style.display = 'none';
+            document.getElementById('step-preview').style.display = 'none';
+        });
+
+        document.getElementById('btnDescargarErrores').addEventListener('click', () => {
+            const conError = IMPL.filas.filter(f => f._errores.length > 0);
+            if (!conError.length) return alert('No hay errores que descargar');
+            const data = conError.map(f => ({
+                '#': f._num,
+                'Nombres': f.nombres, 'Apellidos': f.apellidos,
+                'Documento': f.documento, 'Grado': f.grado,
+                'Acudiente': f.acudiente, 'Correo acudiente': f.correoAcudiente,
+                'Errores': f._errores.join(' | ')
+            }));
+            const ws = XLSX.utils.json_to_sheet(data);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, 'Errores');
+            XLSX.writeFile(wb, `Errores_EduOne_${Date.now()}.xlsx`);
+        });
+
+        // =============================================
+        // IMPORTACIÓN
+        // =============================================
+        document.getElementById('btnImportarValidos').addEventListener('click', async () => {
+            const validos = IMPL.filas.filter(f => f._errores.length === 0);
+            if (!validos.length) return alert('No hay registros válidos');
+
+            const cuposRestantes = (IMPL.colegioData.maxEstudiantes || 0) - IMPL.estudiantesActuales;
+            if (IMPL.colegioData.maxEstudiantes !== 999999 && validos.length > cuposRestantes) {
+                return alert(`❌ El plan solo permite ${cuposRestantes} cupos más.`);
+            }
+
+            if (!confirm(`¿Importar ${validos.length} estudiantes?`)) return;
+
+            IMPL.procesando = true;
+            IMPL.cancelar = false;
+
+            document.getElementById('step-preview').style.display = 'none';
+            document.getElementById('step-progress').style.display = 'block';
+            document.getElementById('step-progress').scrollIntoView({ behavior: 'smooth' });
+
+            // Inicializar contadores
+            const cnt = {
+                estudiantes: 0, matriculas: 0, cuentasEst: 0,
+                acudientes: 0, acudientesReuso: 0,
+                grados: 0, cursos: 0, omitidos: 0, errores: 0
+            };
+            IMPL.errores = [];
+            IMPL.credenciales = [];
+
+            // Precargar grados y cursos existentes
+            await precargarGradosCursos();
+
+            const total = validos.length;
+            let procesados = 0;
+
+            for (const fila of validos) {
+                if (IMPL.cancelar) break;
+                procesados++;
+
+                // Actualizar progreso
+                const pct = Math.round((procesados / total) * 100);
+                document.getElementById('progBar').style.width = pct + '%';
+                document.getElementById('progStepPct').textContent = pct + '%';
+                document.getElementById('progStepLabel').textContent = `${procesados} / ${total}`;
+                document.getElementById('progCurrent').textContent = `Procesando: ${fila.nombres} ${fila.apellidos}`;
+
+                try {
+                    const resultado = await importarFila(fila);
+                    Object.keys(resultado.contadores).forEach(k => {
+                        cnt[k] = (cnt[k] || 0) + resultado.contadores[k];
+                    });
+                    if (resultado.credencial) IMPL.credenciales.push(resultado.credencial);
+                    if (resultado.omitido) cnt.omitidos++;
+                } catch (err) {
+                    console.error('Error en fila', fila._num, err);
+                    cnt.errores++;
+                    IMPL.errores.push({ fila: fila._num, nombre: `${fila.nombres} ${fila.apellidos}`, error: err.message });
+                }
+
+                // Actualizar contadores visuales
+                document.getElementById('cntEstudiantes').textContent = cnt.estudiantes;
+                document.getElementById('cntMatriculas').textContent = cnt.matriculas;
+                document.getElementById('cntCuentasEst').textContent = cnt.cuentasEst;
+                document.getElementById('cntAcudientes').textContent = cnt.acudientes;
+                document.getElementById('cntAcudientesReuso').textContent = cnt.acudientesReuso;
+                document.getElementById('cntGrados').textContent = cnt.grados;
+                document.getElementById('cntCursos').textContent = cnt.cursos;
+                document.getElementById('cntOmitidos').textContent = cnt.omitidos;
+                document.getElementById('cntErrores').textContent = cnt.errores;
+
+                // Pequeña pausa para no saturar Firebase
+                await new Promise(r => setTimeout(r, 100));
+            }
+
+            IMPL.resumen = cnt;
+            IMPL.procesando = false;
+
+            // Mostrar resultado
+            document.getElementById('step-progress').style.display = 'none';
+            document.getElementById('step-result').style.display = 'block';
+            document.getElementById('implResultColegio').textContent = IMPL.colegioData.nombre;
+            document.getElementById('resEstudiantes').textContent = cnt.estudiantes;
+            document.getElementById('resMatriculas').textContent = cnt.matriculas;
+            document.getElementById('resCuentasEst').textContent = cnt.cuentasEst;
+            document.getElementById('resAcudientes').textContent = cnt.acudientes;
+            document.getElementById('resAcudientesReuso').textContent = cnt.acudientesReuso;
+            document.getElementById('resGrados').textContent = cnt.grados;
+            document.getElementById('resCursos').textContent = cnt.cursos;
+            document.getElementById('resErrores').textContent = cnt.errores;
+            document.getElementById('step-result').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        async function precargarGradosCursos() {
+            if (!IMPL.colegioId) return;
+            const gradosSnap = await getDocs(collection(db, 'colegios', IMPL.colegioId, 'grados'));
+            gradosSnap.forEach(d => {
+                const g = d.data();
+                const key = normalizarGrado(g.nombre || g.grado || '');
+                if (key) IMPL.gradosCreados[key] = d.id;
+            });
+
+            const cursosSnap = await getDocs(collection(db, 'colegios', IMPL.colegioId, 'cursos'));
+            cursosSnap.forEach(d => {
+                const c = d.data();
+                const key = `${c.gradoNumero || ''}|${c.letra || ''}`;
+                if (key) IMPL.cursosCreados[key] = d.id;
+            });
+        }
+
+        async function crearObtenerGrado(numGrado, nombreGrado) {
+            const key = normalizarGrado(nombreGrado);
+            if (IMPL.gradosCreados[key]) return { id: IMPL.gradosCreados[key], creado: false };
+
+            const ref = await addDoc(collection(db, 'colegios', IMPL.colegioId, 'grados'), {
+                nombre: nombreGrado,
+                numero: numGrado,
+                anio: IMPL.colegioData.anioEscolar || new Date().getFullYear(),
+                estado: 'activo',
+                fechaCreacion: serverTimestamp()
+            });
+            IMPL.gradosCreados[key] = ref.id;
+            return { id: ref.id, creado: true };
+        }
+
+        async function crearObtenerCurso(numGrado, letra, gradoId, nombreGrado) {
+            const key = `${numGrado}|${letra}`;
+            if (IMPL.cursosCreados[key]) return { id: IMPL.cursosCreados[key], creado: false };
+
+            const ref = await addDoc(collection(db, 'colegios', IMPL.colegioId, 'cursos'), {
+                nombre: `${numGrado}° ${letra}`,
+                gradoId: gradoId,
+                gradoNombre: nombreGrado,
+                gradoNumero: numGrado,
+                letra: letra,
+                anio: IMPL.colegioData.anioEscolar || new Date().getFullYear(),
+                estado: 'activo',
+                fechaCreacion: serverTimestamp()
+            });
+            IMPL.cursosCreados[key] = ref.id;
+            return { id: ref.id, creado: true };
+        }
+
+        async function importarFila(fila) {
+            const contadores = { estudiantes: 0, matriculas: 0, cuentasEst: 0, acudientes: 0, acudientesReuso: 0, grados: 0, cursos: 0 };
+            const colegioId = IMPL.colegioId;
+            const anio = IMPL.colegioData.anioEscolar || new Date().getFullYear();
+
+            // 1. Crear/obtener grado
+            const numGrado = fila._numGrado;
+            const nombreGrado = fila.grado;
+            const gradoRes = await crearObtenerGrado(numGrado, nombreGrado);
+            if (gradoRes.creado) contadores.grados++;
+
+            // 2. Crear/obtener curso
+            const letra = fila._cursoLetra || 'A';
+            const cursoRes = await crearObtenerCurso(numGrado, letra, gradoRes.id, nombreGrado);
+            if (cursoRes.creado) contadores.cursos++;
+
+            // 3. Correo del estudiante
+            let correoEst = fila.correoEstudiante;
+            let requiereActualizarCorreo = false;
+            if (!correoEst) {
+                correoEst = generarCorreoTemporal(fila.nombres, fila.apellidos, IMPL.correosUsuarios);
+                requiereActualizarCorreo = true;
+            }
+
+            // 4. Crear cuenta del estudiante
+            const passEst = generarPasswordTemp(fila.nombres);
+            let estudianteUid = null;
+            let cuentaEstCreada = false;
+            try {
+                estudianteUid = await crearCuentaUsuario(
+                    correoEst, passEst, `${fila.nombres} ${fila.apellidos}`,
+                    'estudiante', colegioId, fila.telefono || '',
+                    {
+                        requiereCambioPassword: true,
+                        requiereActualizarCorreo: requiereActualizarCorreo
+                    }
+                );
+                cuentaEstCreada = true;
+                contadores.cuentasEst++;
+            } catch (err) {
+                console.warn('No se pudo crear cuenta estudiante:', err.message);
+            }
+
+            // 5. Crear documento del estudiante
+            const estudianteRef = await addDoc(collection(db, 'colegios', colegioId, 'estudiantes'), {
+                nombres: fila.nombres,
+                apellidos: fila.apellidos,
+                documento: fila.documento,
+                correo: correoEst,
+                fechaNacimiento: fila.fechaNacimiento,
+                direccion: fila.direccion || '',
+                telefono: fila.telefono || '',
+                acudiente: fila.acudiente,
+                acudienteTelefono: fila.telefonoAcudiente || '',
+                acudienteEmail: fila.correoAcudiente,
+                parentesco: fila.parentesco || '',
+                gradoId: gradoRes.id,
+                gradoNombre: nombreGrado,
+                cursoId: cursoRes.id,
+                cursoNombre: `${numGrado}° ${letra}`,
+                estado: 'activo',
+                uid: estudianteUid || '',
+                fechaRegistro: serverTimestamp()
+            });
+            contadores.estudiantes++;
+
+            // 6. Crear matrícula
+            await addDoc(collection(db, 'colegios', colegioId, 'matriculas'), {
+                estudianteId: estudianteRef.id,
+                estudianteNombre: `${fila.nombres} ${fila.apellidos}`,
+                gradoId: gradoRes.id,
+                cursoId: cursoRes.id,
+                anio: anio,
+                estado: 'activo',
+                valorMatricula: IMPL.valorMatricula,
+                totalAbonado: 0,
+                saldo: IMPL.valorMatricula,
+                estadoPago: 'pendiente',
+                fechaRegistro: serverTimestamp()
+            });
+            contadores.matriculas++;
+
+            // 7. Acudiente
+            const correoAcu = fila.correoAcudiente.toLowerCase();
+            let passAcu = null;
+            let acuExistente = false;
+
+            if (IMPL.acudientesCache[correoAcu]) {
+                passAcu = null;
+                acuExistente = true;
+                contadores.acudientesReuso++;
+            } else {
+                // Verificar si ya existe en /usuarios
+                const q = query(collection(db, 'usuarios'), where('email', '==', correoAcu), where('rol', '==', 'acudiente'));
+                const snap = await getDocs(q);
+
+                if (!snap.empty) {
+                    const uid = snap.docs[0].id;
+                    IMPL.acudientesCache[correoAcu] = { uid, nombre: fila.acudiente, existente: true };
+                    passAcu = null;
+                    acuExistente = true;
+                    contadores.acudientesReuso++;
+                } else {
+                    passAcu = generarPasswordTemp(fila.acudiente);
+                    try {
+                        const uid = await crearCuentaUsuario(
+                            correoAcu, passAcu, fila.acudiente,
+                            'acudiente', colegioId, fila.telefonoAcudiente || '',
+                            { requiereCambioPassword: true }
+                        );
+                        IMPL.acudientesCache[correoAcu] = { uid, nombre: fila.acudiente, existente: false };
+                        contadores.acudientes++;
+                    } catch (err) {
+                        console.warn('No se pudo crear acudiente:', err.message);
+                    }
+                }
+            }
+
+            // 8. Credenciales
+            IMPL.credenciales.push({
+                estudiante: `${fila.nombres} ${fila.apellidos}`,
+                grado: nombreGrado,
+                curso: `${numGrado}° ${letra}`,
+                correoEstudiante: correoEst,
+                passEstudiante: passEst,
+                acudiente: fila.acudiente,
+                correoAcudiente: fila.correoAcudiente,
+                passAcudiente: passAcu,
+                acuExistente: acuExistente
+            });
+
+            return { contadores, credencial: null, omitido: false };
+        }
+
+        // Botón ver errores
+        document.getElementById('btnVerErrores').addEventListener('click', () => {
+            const lista = document.getElementById('implErroresLista');
+            const body = document.getElementById('implErroresBody');
+            if (IMPL.errores.length === 0) {
+                body.innerHTML = '<div class="text-center text-muted">No hubo errores 🎉</div>';
+            } else {
+                body.innerHTML = IMPL.errores.map(e =>
+                    `<div class="impl-error-item"><strong>#${e.fila} — ${e.nombre}</strong><br><span>${e.error}</span></div>`
+                ).join('');
+            }
+            lista.classList.toggle('show');
+        });
+
+        // Descargar credenciales
+        document.getElementById('btnDescargarCredenciales').addEventListener('click', () => {
+            if (IMPL.credenciales.length === 0) return alert('No hay credenciales para descargar');
+            const data = IMPL.credenciales.map(c => ({
+                'ESTUDIANTE': c.estudiante,
+                'GRADO': c.grado,
+                'CURSO': c.curso,
+                'CORREO_ESTUDIANTE': c.correoEstudiante,
+                'CONTRASEÑA_TEMPORAL_ESTUDIANTE': c.passEstudiante,
+                'ACUDIENTE': c.acudiente,
+                'CORREO_ACUDIENTE': c.correoAcudiente,
+                'CONTRASEÑA_TEMPORAL_ACUDIENTE': c.acuExistente ? 'CUENTA EXISTENTE' : c.passAcudiente
+            }));
+            const ws = XLSX.utils.json_to_sheet(data);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, 'Credenciales');
+            const nombreColegio = (IMPL.colegioData?.nombre || 'Colegio').replace(/[^a-zA-Z0-9]/g, '_');
+            XLSX.writeFile(wb, `credenciales_EduOne_${nombreColegio}.xlsx`);
+        });
+
+        // Reiniciar
+        document.getElementById('btnReiniciarImpl').addEventListener('click', () => {
+            if (!confirm('¿Reiniciar el módulo de implementación?')) return;
+            IMPL.filas = [];
+            IMPL.credenciales = [];
+            IMPL.errores = [];
+            IMPL.gradosCreados = {};
+            IMPL.cursosCreados = {};
+            IMPL.acudientesCache = {};
+            IMPL.correosUsuarios.clear();
+            implFileInput.value = '';
+            implFileName.style.display = 'none';
+
+            ['step-preview', 'step-progress', 'step-result'].forEach(id => {
+                document.getElementById(id).style.display = 'none';
+            });
+            document.getElementById('step-seleccionar').classList.remove('done');
+            document.getElementById('step-config').classList.remove('done');
+            document.getElementById('step-servicio').classList.remove('done');
+            document.getElementById('step-seleccionar').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // =============================================
         // AUTH
         // =============================================
         let isLoggingOut = false;
@@ -2333,8 +3281,6 @@
                             userRoleEl.textContent = userData.rol || 'superadmin';
                             cargarDashboard();
                         } else {
-                            // ⚠️ NO cerramos sesión automáticamente si es un usuario recién creado en segundo plano.
-                            // Solo actuamos si el usuario logueado en la app principal NO es superadmin.
                             console.warn('Usuario logueado no es superadmin:', userData.rol);
                         }
                     }

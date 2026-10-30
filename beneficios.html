@@ -1,331 +1,798 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Descubre los beneficios de EduOne: información centralizada, comunicación eficiente y seguimiento académico." />
-  <title>Beneficios | EduOne</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --primary: #1a56db; --primary-dark: #1e3a8a; --primary-light: #3b82f6;
-      --secondary: #06b6d4; --background: #f8fafc; --surface: #ffffff;
-      --text: #0f172a; --text-muted: #64748b; --border: #e2e8f0;
-      --success: #10b981; --gradient: linear-gradient(135deg, #1e3a8a 0%, #1a56db 50%, #06b6d4 100%);
-      --radius: 12px; --shadow: 0 4px 24px rgba(26,86,219,0.10); --shadow-lg: 0 8px 48px rgba(26,86,219,0.15);
-    }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', Arial, sans-serif; background: var(--background); color: var(--text); line-height: 1.6; overflow-x: hidden; overflow-wrap: break-word; }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#0a0f1e" />
+    <meta name="description" content="Conoce los beneficios de EduOne para instituciones educativas, docentes, estudiantes y familias: más organización, seguimiento, comunicación y control institucional." />
+    <meta name="keywords" content="beneficios EduOne, gestión escolar, software educativo, Colombia" />
+    <meta name="author" content="EduOne" />
+    <meta property="og:title" content="Beneficios | EduOne" />
+    <meta property="og:description" content="Más organización, menos tareas repetitivas." />
+    <meta property="og:type" content="website" />
+    <link rel="canonical" href="https://eduone.com.co/beneficios.html" />
+    <title>Beneficios | EduOne</title>
 
-    .navbar { position: sticky; top: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); transition: box-shadow 0.3s; }
-    .navbar.scrolled { box-shadow: 0 2px 24px rgba(26,86,219,0.12); }
-    .nav-container { max-width: 1280px; margin: 0 auto; padding: 0 24px; height: 68px; display: flex; align-items: center; justify-content: space-between; }
-    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
-    .nav-logo-mark { width: 36px; height: 36px; background: var(--gradient); border-radius: 9px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 16px; }
-    .nav-logo-text { font-size: 20px; font-weight: 700; color: var(--primary-dark); letter-spacing: -0.5px; }
-    .nav-menu { display: flex; align-items: center; gap: 4px; list-style: none; }
-    .nav-link { text-decoration: none; color: var(--text-muted); font-size: 14px; font-weight: 500; padding: 8px 12px; border-radius: 8px; transition: color 0.2s, background 0.2s; white-space: nowrap; }
-    .nav-link:hover { color: var(--primary); background: rgba(26,86,219,0.06); }
-    .nav-link.active { color: var(--primary); font-weight: 600; }
-    .nav-link-cta { background: var(--primary); color: white !important; padding: 8px 18px; border-radius: 8px; font-weight: 600; }
-    .nav-link-cta:hover { background: var(--primary-dark) !important; }
-    .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 8px; border-radius: 8px; }
-    .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; transition: transform 0.3s, opacity 0.3s; }
-    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
-    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    <!-- FAVICON -->
+    <link rel="icon" type="image/png" sizes="48x48" href="imagenes/logo.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="imagenes/logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="imagenes/logo.png">
 
-    .page-hero { background: var(--gradient); padding: 80px 24px; text-align: center; }
-    .page-hero-inner { max-width: 800px; margin: 0 auto; }
-    .page-hero-eyebrow { display: inline-block; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); border-radius: 100px; padding: 6px 18px; font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.85); margin-bottom: 20px; }
-    .page-hero h1 { font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 900; color: white; line-height: 1.15; letter-spacing: -1.5px; margin-bottom: 16px; }
-    .page-hero p { font-size: 17px; color: rgba(255,255,255,0.78); line-height: 1.7; }
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
-    .section { padding: 80px 24px; }
-    .section-inner { max-width: 1280px; margin: 0 auto; }
-    .section-eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--primary); margin-bottom: 12px; }
-    .section-title { font-size: clamp(1.7rem, 3vw, 2.5rem); font-weight: 800; color: var(--text); letter-spacing: -1px; line-height: 1.15; margin-bottom: 16px; }
-    .section-title span { color: var(--primary); }
-    .section-header { text-align: center; margin-bottom: 52px; }
-    .section-desc { font-size: 16px; color: var(--text-muted); line-height: 1.7; max-width: 600px; margin: 0 auto; }
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    /* BENEFITS GRID */
-    .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
-    .benefit-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 32px; transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s; }
-    .benefit-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); border-color: rgba(26,86,219,0.2); }
-    .benefit-icon { width: 56px; height: 56px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 20px; }
-    .bi-blue { background: rgba(26,86,219,0.10); }
-    .bi-cyan { background: rgba(6,182,212,0.10); }
-    .bi-green { background: rgba(16,185,129,0.10); }
-    .bi-purple { background: rgba(139,92,246,0.10); }
-    .bi-orange { background: rgba(249,115,22,0.10); }
-    .benefit-card h3 { font-size: 17px; font-weight: 700; color: var(--text); margin-bottom: 10px; letter-spacing: -0.3px; }
-    .benefit-card p { font-size: 14px; color: var(--text-muted); line-height: 1.65; }
+        :root {
+            --bg-0: #050814;
+            --bg-1: #0a0f1e;
+            --bg-2: #111a30;
+            --primary: #2563eb;
+            --primary-light: #3b82f6;
+            --cyan: #06b6d4;
+            --cyan-light: #22d3ee;
+            --lime: #a3e635;
+            --text-light: #e2e8f0;
+            --text-muted: #94a3b8;
+            --gradient-tech: linear-gradient(135deg, #2563eb 0%, #06b6d4 100%);
+            --gradient-glow: linear-gradient(135deg, #3b82f6 0%, #22d3ee 50%, #a3e635 100%);
+            --radius-sm: 10px;
+            --radius: 18px;
+            --radius-lg: 28px;
+            --radius-pill: 100px;
+            --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            --nav-h: 74px;
+        }
 
-    /* COMPARISON */
-    .comparison-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-    .comparison-col { background: var(--surface); border-radius: 20px; padding: 36px; }
-    .comparison-col.before { border: 2px solid #fca5a5; background: #fff5f5; }
-    .comparison-col.after { border: 2px solid #86efac; background: #f0fdf4; }
-    .comparison-header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
-    .comp-badge { font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 100px; letter-spacing: 0.5px; }
-    .comp-badge.before { background: #fecaca; color: #b91c1c; }
-    .comp-badge.after { background: #bbf7d0; color: #166534; }
-    .comparison-header h3 { font-size: 18px; font-weight: 800; }
-    .comparison-col.before h3 { color: #b91c1c; }
-    .comparison-col.after h3 { color: #166534; }
-    .comp-list { list-style: none; }
-    .comp-item { display: flex; align-items: center; gap: 14px; padding: 12px 0; border-bottom: 1px solid; font-size: 15px; font-weight: 500; }
-    .comparison-col.before .comp-item { border-color: #fecaca; color: #7f1d1d; }
-    .comparison-col.after .comp-item { border-color: #86efac; color: #14532d; }
-    .comp-item:last-child { border-bottom: none; }
-    .comp-icon { font-size: 18px; flex-shrink: 0; }
+        html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; scroll-padding-top: var(--nav-h); }
 
-    /* CTA BANNER */
-    .cta-banner { background: var(--gradient); border-radius: 20px; padding: 64px 48px; text-align: center; color: white; }
-    .cta-banner h2 { font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 800; margin-bottom: 16px; letter-spacing: -1px; }
-    .cta-banner p { font-size: 17px; opacity: 0.82; margin-bottom: 36px; }
-    .cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
-    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 24px; border-radius: 10px; font-weight: 600; font-size: 15px; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s, background 0.2s; cursor: pointer; border: none; font-family: inherit; }
-    .btn:hover { transform: translateY(-2px); }
-    .btn-white { background: white; color: var(--primary); box-shadow: 0 4px 20px rgba(255,255,255,0.2); }
-    .btn-outline { background: rgba(255,255,255,0.12); color: white; border: 1.5px solid rgba(255,255,255,0.3); }
-    .btn-outline:hover { background: rgba(255,255,255,0.2); }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-0);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
 
-    .footer { background: var(--primary-dark); color: white; padding: 64px 24px 32px; }
-    .footer-inner { max-width: 1280px; margin: 0 auto; }
-    .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
-    .footer-brand p { font-size: 14px; color: rgba(255,255,255,0.55); margin-top: 12px; line-height: 1.6; max-width: 300px; }
-    .footer-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
-    .footer-logo-mark { width: 32px; height: 32px; background: rgba(255,255,255,0.15); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; }
-    .footer-logo-text { font-size: 18px; font-weight: 700; }
-    .footer-col h4 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.45); margin-bottom: 16px; }
-    .footer-col ul { list-style: none; }
-    .footer-col li { margin-bottom: 10px; }
-    .footer-col a { text-decoration: none; color: rgba(255,255,255,0.65); font-size: 14px; transition: color 0.2s; }
-    .footer-col a:hover { color: white; }
-    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 28px; text-align: center; }
-    .footer-bottom p { font-size: 13px; color: rgba(255,255,255,0.4); margin-bottom: 4px; }
+        img, video { max-width: 100%; height: auto; display: block; }
+        button { font-family: inherit; cursor: pointer; }
+        a { color: inherit; text-decoration: none; }
+        ul { list-style: none; }
 
-    .back-to-top { position: fixed; bottom: 28px; right: 28px; width: 44px; height: 44px; background: var(--primary); color: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; cursor: pointer; border: none; box-shadow: 0 4px 20px rgba(26,86,219,0.35); opacity: 0; pointer-events: none; transition: opacity 0.3s, transform 0.3s; z-index: 999; }
-    .back-to-top.visible { opacity: 1; pointer-events: auto; }
-    .back-to-top:hover { transform: translateY(-3px); }
-    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
+        /* Animaciones */
+        @keyframes floatY { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+        @keyframes pulseGlow { 0%, 100% { box-shadow: 0 0 20px rgba(37,99,235,0.4), 0 0 60px rgba(6,182,212,0.15); } 50% { box-shadow: 0 0 40px rgba(37,99,235,0.7), 0 0 90px rgba(6,182,212,0.35); } }
+        @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        @keyframes spinSlow { to { transform: rotate(360deg); } }
+        @keyframes slideLoadBar { 0% { transform: translateX(-100%); } 100% { transform: translateX(300%); } }
+        @keyframes fadeSlideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes gridMove { 0% { background-position: 0 0; } 100% { background-position: 60px 60px; } }
 
-    @media (max-width: 768px) {
-      .nav-menu { display: none; position: absolute; top: 68px; left: 0; right: 0; background: white; border-bottom: 1px solid var(--border); flex-direction: column; padding: 12px; gap: 4px; box-shadow: 0 8px 32px rgba(0,0,0,0.08); align-items: stretch; }
-      .nav-menu.open { display: flex; }
-      .nav-link { padding: 12px 16px; }
-      .nav-hamburger { display: flex; }
-      .section { padding: 56px 20px; }
-      .comparison-grid { grid-template-columns: 1fr; }
-      .cta-banner { padding: 40px 24px; }
-      .footer-top { grid-template-columns: 1fr; gap: 32px; }
-    }
-  </style>
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+            .reveal, .stagger > * { opacity: 1 !important; transform: none !important; }
+        }
+
+        ::-webkit-scrollbar { width: 9px; }
+        ::-webkit-scrollbar-track { background: var(--bg-0); }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--primary) 0%, var(--cyan) 100%); border-radius: 100px; }
+
+        /* Fondo global idéntico al index */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            background:
+                radial-gradient(ellipse 800px 600px at 15% 10%, rgba(37, 99, 235, 0.18) 0%, transparent 60%),
+                radial-gradient(ellipse 700px 500px at 85% 80%, rgba(6, 182, 212, 0.14) 0%, transparent 60%),
+                radial-gradient(ellipse 600px 400px at 50% 50%, rgba(139, 92, 246, 0.08) 0%, transparent 70%),
+                var(--bg-0);
+            pointer-events: none;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background-image:
+                linear-gradient(rgba(59, 130, 246, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(59, 130, 246, 0.04) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridMove 30s linear infinite;
+            pointer-events: none;
+            mask-image: radial-gradient(ellipse at center, black 30%, transparent 90%);
+            -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 90%);
+        }
+
+        /* PRELOADER */
+        .preloader { position: fixed; inset: 0; z-index: 99999; display: flex; align-items: center; justify-content: center; background: var(--bg-0); transition: opacity 0.5s ease, visibility 0.5s ease; }
+        .preloader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        .preloader-inner { display: flex; flex-direction: column; align-items: center; gap: 24px; }
+        .preloader-logo { font-family: 'Space Grotesk', sans-serif; font-size: 34px; font-weight: 700; background: var(--gradient-glow); background-size: 200% 200%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: gradientShift 2s ease infinite; }
+        .preloader-ring { width: 60px; height: 60px; border-radius: 50%; border: 3px solid rgba(37,99,235,0.15); border-top-color: var(--cyan); border-right-color: var(--primary); animation: spinSlow 1s linear infinite; }
+        .preloader-bar { width: 200px; height: 3px; background: rgba(148,163,184,0.15); border-radius: 100px; overflow: hidden; position: relative; }
+        .preloader-bar::after { content: ''; position: absolute; inset: 0; width: 40%; background: var(--gradient-glow); border-radius: 100px; animation: slideLoadBar 1.4s ease-in-out infinite; }
+
+        /* NAVBAR */
+        .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; height: var(--nav-h); background: rgba(10, 15, 30, 0.55); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border-bottom: 1px solid rgba(148, 163, 184, 0.10); transition: background var(--transition), box-shadow var(--transition); }
+        .navbar.scrolled { background: rgba(10, 15, 30, 0.88); box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4); border-bottom-color: rgba(37, 99, 235, 0.25); }
+        .nav-container { max-width: 1360px; margin: 0 auto; height: 100%; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+        .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; transition: transform var(--transition); }
+        .nav-logo:hover { transform: scale(1.04); }
+        .logo-mark { width: 40px; height: 40px; display: grid; place-items: center; }
+        .logo-mark svg { width: 100%; height: 100%; filter: drop-shadow(0 0 10px rgba(59,130,246,0.5)); }
+        .logo-text { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700; color: #fff; letter-spacing: -0.8px; }
+        .logo-text span { background: var(--gradient-glow); background-size: 200% 200%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: gradientShift 4s ease infinite; }
+
+        .nav-menu { display: flex; align-items: center; gap: 4px; }
+        .nav-link { text-decoration: none; color: var(--text-light); font-size: 14px; font-weight: 500; padding: 8px 14px; border-radius: var(--radius-sm); position: relative; transition: color var(--transition), background var(--transition); white-space: nowrap; }
+        .nav-link::before { content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 2px; background: var(--gradient-glow); border-radius: 100px; transition: width var(--transition), left var(--transition); }
+        .nav-link:hover, .nav-link.active { color: #fff; }
+        .nav-link:hover::before, .nav-link.active::before { width: 60%; left: 20%; }
+
+        .nav-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+        .btn-nav-demo { display: inline-flex; align-items: center; gap: 7px; padding: 9px 18px; background: var(--gradient-tech); color: #fff; font-size: 13.5px; font-weight: 600; text-decoration: none; border-radius: var(--radius-pill); transition: transform var(--transition), box-shadow var(--transition); box-shadow: 0 4px 20px rgba(37, 99, 235, 0.35); white-space: nowrap; }
+        .btn-nav-demo:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 10px 30px rgba(6, 182, 212, 0.5); }
+        .btn-nav-login { display: inline-flex; align-items: center; gap: 7px; padding: 9px 16px; background: rgba(255,255,255,0.05); border: 1px solid rgba(148, 163, 184, 0.3); color: var(--text-light); font-size: 13.5px; font-weight: 600; text-decoration: none; border-radius: var(--radius-pill); transition: all var(--transition); white-space: nowrap; }
+        .btn-nav-login:hover { background: rgba(255,255,255,0.12); border-color: var(--cyan); color: #fff; transform: translateY(-2px); }
+
+        .nav-hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; padding: 10px; border-radius: 8px; cursor: pointer; }
+        .nav-hamburger span { width: 24px; height: 2.5px; background: #fff; border-radius: 2px; transition: transform var(--transition), opacity var(--transition); }
+        .nav-hamburger.open span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+        .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+        .nav-hamburger.open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+
+        /* HERO BENEFICIOS (El diseño de la imagen) */
+        .hero-beneficios { position: relative; padding: calc(var(--nav-h) + 60px) 24px 80px; overflow: hidden; }
+        .hero-inner { max-width: 1360px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; position: relative; z-index: 2; }
+        
+        .hero-text { color: #fff; animation: fadeSlideUp 0.9s cubic-bezier(0.16,1,0.3,1) both; }
+        .hero-badge { display: inline-flex; align-items: center; gap: 8px; padding: 7px 16px; background: transparent; border: 1px solid rgba(34,211,238,0.5); border-radius: var(--radius-pill); font-size: 12px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: var(--cyan-light); margin-bottom: 24px; }
+        .hero-badge .dot { width: 6px; height: 6px; background: var(--cyan-light); border-radius: 50%; box-shadow: 0 0 10px var(--cyan-light); }
+        .hero-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2.4rem, 4.5vw, 4rem); font-weight: 700; line-height: 1.1; letter-spacing: -1.5px; margin-bottom: 24px; }
+        .hero-title .gradient-text { background: var(--gradient-tech); background-size: 200% 200%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; display: inline-block; }
+        .hero-desc { font-size: clamp(16px, 1.5vw, 18px); color: rgba(226, 232, 240, 0.85); line-height: 1.7; margin-bottom: 36px; max-width: 540px; }
+        .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+        
+        .btn-cta-primary { display: inline-flex; align-items: center; gap: 9px; padding: 16px 32px; background: var(--gradient-tech); color: #fff; font-size: 16px; font-weight: 600; text-decoration: none; border-radius: var(--radius-pill); box-shadow: 0 8px 30px rgba(37, 99, 235, 0.4); transition: transform var(--transition), box-shadow var(--transition); border: none; }
+        .btn-cta-primary:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 14px 45px rgba(6, 182, 212, 0.55); }
+        .btn-cta-secondary { display: inline-flex; align-items: center; gap: 9px; padding: 16px 32px; background: transparent; color: #fff; font-size: 16px; font-weight: 600; text-decoration: none; border-radius: var(--radius-pill); border: 1px solid rgba(148, 163, 184, 0.4); backdrop-filter: blur(10px); transition: all var(--transition); }
+        .btn-cta-secondary:hover { background: rgba(255, 255, 255, 0.08); border-color: var(--cyan-light); transform: translateY(-3px); }
+
+        .hero-visual { position: relative; display: flex; justify-content: center; align-items: center; animation: fadeSlideUp 0.9s cubic-bezier(0.16,1,0.3,1) 0.2s both; }
+        .hero-visual img { width: 100%; max-width: 700px; height: auto; object-fit: contain; filter: drop-shadow(0 20px 50px rgba(0,0,0,0.5)); }
+
+        /* CARDS DE BENEFICIOS (Las 5 de la imagen) */
+        .benefits-row { max-width: 1360px; margin: 0 auto; padding: 0 24px 80px; position: relative; z-index: 2; display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+        .benefit-mini-card { background: rgba(10,15,30,0.6); border: 1px solid rgba(59,130,246,0.2); border-radius: var(--radius); padding: 24px 20px; backdrop-filter: blur(10px); transition: all var(--transition); display: flex; flex-direction: column; }
+        .benefit-mini-card:hover { transform: translateY(-5px); border-color: rgba(34,211,238,0.5); box-shadow: 0 15px 40px rgba(6,182,212,0.15); }
+        .bm-icon { width: 44px; height: 44px; border-radius: 12px; background: rgba(37,99,235,0.15); color: var(--cyan-light); display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 16px; border: 1px solid rgba(59,130,246,0.3); }
+        .benefit-mini-card h3 { font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 8px; line-height: 1.3; }
+        .benefit-mini-card p { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+
+        /* SECCIONES GENERALES (Resto de la página) */
+        .section { padding: 100px 24px; position: relative; }
+        .section-inner { max-width: 1280px; margin: 0 auto; position: relative; z-index: 2; }
+        .section-header { text-align: center; margin-bottom: 64px; max-width: 800px; margin-left: auto; margin-right: auto; }
+        .section-eyebrow { display: inline-flex; align-items: center; gap: 10px; padding: 7px 16px; background: rgba(37,99,235,0.12); border: 1px solid rgba(59,130,246,0.35); border-radius: var(--radius-pill); font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--cyan-light); margin-bottom: 20px; }
+        .section-eyebrow .dot { width: 6px; height: 6px; background: var(--cyan-light); border-radius: 50%; animation: pulseGlow 1.6s ease infinite; }
+        .section-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.9rem, 3.8vw, 3rem); font-weight: 700; color: #fff; letter-spacing: -1.5px; line-height: 1.12; margin-bottom: 18px; }
+        .section-title .grad { background: var(--gradient-glow); background-size: 200% 200%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: gradientShift 5s ease infinite; }
+        .section-desc { font-size: 17px; color: var(--text-muted); max-width: 720px; margin: 0 auto; line-height: 1.7; }
+
+        .btn-primary { display: inline-flex; align-items: center; gap: 8px; padding: 14px 30px; background: var(--gradient-tech); color: #fff; font-size: 15px; font-weight: 600; text-decoration: none; border-radius: var(--radius-pill); box-shadow: 0 8px 30px rgba(37,99,235,0.4); border: none; transition: transform var(--transition), box-shadow var(--transition); }
+        .btn-primary:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 14px 45px rgba(6,182,212,0.55); }
+
+        .btn-secondary { display: inline-flex; align-items: center; gap: 8px; padding: 14px 30px; background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.2); font-size: 15px; font-weight: 600; border-radius: var(--radius-pill); transition: all var(--transition); }
+        .btn-secondary:hover { background: rgba(255,255,255,0.12); border-color: #fff; transform: translateY(-3px); }
+
+        /* REVEAL */
+        .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1); }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .reveal-left { opacity: 0; transform: translateX(-50px); transition: all 0.9s cubic-bezier(0.16,1,0.3,1); }
+        .reveal-left.visible { opacity: 1; transform: translateX(0); }
+        .reveal-right { opacity: 0; transform: translateX(50px); transition: all 0.9s cubic-bezier(0.16,1,0.3,1); }
+        .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+        /* SPLIT LAYOUT (Beneficios por rol) */
+        .split-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; margin-bottom: 80px; }
+        .split-layout:last-child { margin-bottom: 0; }
+        .split-layout.reverse { direction: rtl; }
+        .split-layout.reverse > * { direction: ltr; }
+        
+        .split-text h3 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.5rem, 2.5vw, 2rem); font-weight: 700; margin-bottom: 20px; color: #fff; letter-spacing: -0.5px; }
+        .split-text p { font-size: 16px; color: var(--text-muted); line-height: 1.8; margin-bottom: 24px; }
+        .split-text ul { margin-bottom: 30px; display: grid; grid-template-columns: 1fr; gap: 12px; }
+        .split-text ul li { display: flex; align-items: flex-start; gap: 12px; font-size: 15px; color: var(--text-light); font-weight: 500; }
+        .split-text ul li i { color: var(--cyan-light); font-size: 16px; margin-top: 3px; flex-shrink: 0; }
+
+        .img-glass-wrap { position: relative; padding: 12px; background: linear-gradient(135deg, rgba(37,99,235,0.15), rgba(6,182,212,0.05)); border: 1px solid rgba(59,130,246,0.25); border-radius: 24px; box-shadow: 0 30px 60px rgba(0,0,0,0.4); backdrop-filter: blur(10px); transition: transform var(--transition); }
+        .img-glass-wrap:hover { transform: translateY(-5px); border-color: rgba(34,211,238,0.5); box-shadow: 0 40px 80px rgba(6,182,212,0.2); }
+        .img-glass-wrap img { border-radius: 14px; width: 100%; display: block; }
+
+        /* ANTES Y CON EDUONE */
+        .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+        .compare-col { background: rgba(10,15,30,0.6); border-radius: 18px; padding: 40px 32px; border: 1px solid rgba(59,130,246,0.18); backdrop-filter: blur(10px); }
+        .compare-col.before { border-top: 3px solid #ef4444; }
+        .compare-col.after { border-top: 3px solid var(--cyan); background: rgba(6,182,212,0.05); }
+        .compare-col h3 { font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 24px; color: #fff; display: flex; align-items: center; gap: 10px; }
+        .compare-list li { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid rgba(148,163,184,0.1); font-size: 15px; font-weight: 500; color: var(--text-light); }
+        .compare-list li:last-child { border-bottom: none; }
+        .compare-list i { margin-top: 3px; flex-shrink: 0; font-size: 16px; }
+        .compare-col.before .compare-list i { color: #ef4444; }
+        .compare-col.after .compare-list i { color: var(--cyan-light); }
+
+        /* CENTRALIZACIÓN BOX */
+        .centralize-box { background: linear-gradient(135deg, rgba(37,99,235,0.15), rgba(6,182,212,0.1)); border: 1px solid rgba(59,130,246,0.3); border-radius: var(--radius-lg); padding: 64px 48px; color: white; text-align: center; position: relative; overflow: hidden; }
+        .centralize-box::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 400px 300px at 20% 80%, rgba(6,182,212,0.2), transparent), radial-gradient(ellipse 300px 200px at 80% 20%, rgba(139,92,246,0.15), transparent); pointer-events: none; }
+        .centralize-inner { position: relative; z-index: 1; max-width: 800px; margin: 0 auto; }
+        .centralize-box h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 700; margin-bottom: 16px; letter-spacing: -1px; }
+        .centralize-box p { font-size: 17px; opacity: 0.9; line-height: 1.7; margin-bottom: 40px; }
+        .centralize-icons { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
+        .centralize-icon { display: flex; flex-direction: column; align-items: center; gap: 8px; width: 90px; }
+        .centralize-icon .ci-box { width: 56px; height: 56px; border-radius: 14px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 22px; backdrop-filter: blur(8px); color: var(--cyan-light); transition: all var(--transition); }
+        .centralize-icon:hover .ci-box { background: var(--gradient-tech); color: #fff; transform: translateY(-5px); }
+        .centralize-icon span { font-size: 12px; font-weight: 600; opacity: 0.85; }
+
+        /* CITA DESTACADA */
+        .quote-section { text-align: center; padding: 100px 24px; }
+        .quote-box { max-width: 800px; margin: 0 auto; position: relative; }
+        .quote-mark { font-size: 80px; color: var(--cyan); opacity: 0.2; line-height: 0.8; font-family: Georgia, serif; }
+        .quote-text { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 700; color: #fff; line-height: 1.4; letter-spacing: -0.5px; margin: 16px 0 24px; }
+        .quote-text span { background: var(--gradient-glow); background-size: 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: gradientShift 4s infinite; }
+        .quote-sub { font-size: 15px; color: var(--text-muted); line-height: 1.7; max-width: 600px; margin: 0 auto; }
+
+        /* TARJETAS DE ROLES */
+        .roles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; }
+        .role-card { background: rgba(10,15,30,0.6); border-radius: 16px; padding: 28px 22px; border: 1px solid rgba(59,130,246,0.18); text-align: center; transition: all var(--transition); backdrop-filter: blur(10px); }
+        .role-card:hover { transform: translateY(-4px); box-shadow: 0 15px 30px rgba(6,182,212,0.15); border-color: rgba(34,211,238,0.5); }
+        .role-icon { width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 22px; background: rgba(37,99,235,0.12); color: var(--cyan-light); border: 1px solid rgba(59,130,246,0.3); transition: all var(--transition); }
+        .role-card:hover .role-icon { transform: scale(1.1); background: var(--gradient-tech); color: #fff; border-color: transparent; }
+        .role-card h3 { font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 8px; color: #fff; }
+        .role-card p { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+
+        /* BENEFICIOS POR ÁREA */
+        .area-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+        .area-card { background: rgba(10,15,30,0.6); padding: 32px 28px; border-radius: 18px; border: 1px solid rgba(59,130,246,0.18); backdrop-filter: blur(10px); transition: all var(--transition); }
+        .area-card:hover { border-color: rgba(34,211,238,0.4); transform: translateY(-4px); }
+        .area-card h4 { font-family: 'Space Grotesk', sans-serif; font-size: 17px; font-weight: 700; margin-bottom: 16px; color: #fff; display: flex; align-items: center; gap: 10px; }
+        .area-card h4 i { color: var(--cyan-light); }
+        .area-card ul li { font-size: 14px; color: var(--text-muted); padding: 8px 0; display: flex; gap: 8px; align-items: center; }
+        .area-card ul li::before { content: '•'; color: var(--primary-light); font-weight: 700; font-size: 16px; }
+
+        /* CTA FINAL */
+        .cta-mid { background: linear-gradient(135deg, rgba(37,99,235,0.15), rgba(6,182,212,0.1)); border: 1px solid rgba(59,130,246,0.3); border-radius: 20px; padding: 48px 40px; text-align: center; }
+        .cta-mid h3 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.4rem, 2.5vw, 1.9rem); font-weight: 700; color: #fff; margin-bottom: 12px; letter-spacing: -0.5px; }
+        .cta-mid p { font-size: 16px; color: var(--text-muted); margin-bottom: 24px; }
+        
+        .cta-banner { background: linear-gradient(135deg, rgba(37,99,235,0.2), rgba(6,182,212,0.15)); border: 1px solid rgba(59,130,246,0.35); border-radius: var(--radius-lg); padding: 64px 48px; text-align: center; color: white; position: relative; overflow: hidden; }
+        .cta-banner::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 400px 300px at 20% 80%, rgba(6,182,212,0.15), transparent), radial-gradient(ellipse 300px 200px at 80% 20%, rgba(139,92,246,0.10), transparent); pointer-events: none; }
+        .cta-banner h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 700; margin-bottom: 12px; letter-spacing: -1px; position: relative; z-index: 1; }
+        .cta-banner p { font-size: 17px; opacity: 0.88; margin-bottom: 32px; position: relative; z-index: 1; }
+        .cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1; }
+
+        /* FOOTER (Idéntico al index) */
+        .footer { background: linear-gradient(180deg, transparent 0%, rgba(5,8,20,0.9) 20%, #02040a 100%); border-top: 1px solid rgba(59,130,246,0.15); padding: 80px 24px 40px; position: relative; }
+        .footer-inner { max-width: 1280px; margin: 0 auto; }
+        .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 56px; }
+        .footer-brand-logo { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+        .footer-brand .logo-mark { width: 44px; height: 44px; }
+        .footer-brand .logo-text { font-size: 24px; }
+        .footer-brand p { font-size: 14px; color: var(--text-muted); line-height: 1.7; max-width: 340px; }
+        .footer-col h4 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.8px; color: rgba(148,163,184,0.5); margin-bottom: 20px; }
+        .footer-col li { margin-bottom: 12px; }
+        .footer-col a, .footer-col button.footer-link-btn { text-decoration: none; color: var(--text-muted); font-size: 14px; transition: color var(--transition), transform var(--transition); background: none; border: none; padding: 0; text-align: left; }
+        .footer-col a:hover, .footer-col button.footer-link-btn:hover { color: var(--cyan-light); transform: translateX(4px); display: inline-block; }
+        .footer-bottom { border-top: 1px solid rgba(148,163,184,0.1); padding-top: 32px; text-align: center; }
+        .footer-bottom p { font-size: 13px; color: rgba(148,163,184,0.4); margin-bottom: 6px; }
+
+        /* BOTONES FLOTANTES */
+        .back-to-top { position: fixed; bottom: 24px; right: 24px; width: 48px; height: 48px; border-radius: 50%; background: rgba(10,15,30,0.9); border: 1px solid rgba(59,130,246,0.4); color: #fff; display: grid; place-items: center; font-size: 18px; opacity: 0; pointer-events: none; z-index: 999; cursor: pointer; backdrop-filter: blur(14px); transition: all var(--transition); box-shadow: 0 8px 30px rgba(0,0,0,0.5); }
+        .back-to-top.visible { opacity: 1; pointer-events: auto; }
+        .back-to-top:hover { background: var(--gradient-tech); border-color: transparent; transform: translateY(-4px); box-shadow: 0 0 30px rgba(6,182,212,0.7); }
+
+        .help-fab { position: fixed; bottom: 24px; left: 24px; z-index: 998; }
+        .help-fab-btn { width: 56px; height: 56px; border-radius: 50%; background: var(--gradient-tech); border: none; color: #fff; font-size: 22px; display: grid; place-items: center; cursor: pointer; box-shadow: 0 8px 30px rgba(37,99,235,0.5); transition: transform var(--transition), box-shadow var(--transition); }
+        .help-fab-btn:hover { transform: scale(1.1) rotate(5deg); box-shadow: 0 0 40px rgba(6,182,212,0.8); }
+        .help-fab-btn .ico-close { display: none; }
+        .help-fab.open .help-fab-btn .ico-chat { display: none; }
+        .help-fab.open .help-fab-btn .ico-close { display: block; }
+        .help-panel { position: absolute; bottom: 72px; left: 0; width: 320px; background: rgba(10,15,30,0.95); border: 1px solid rgba(59,130,246,0.35); border-radius: var(--radius); overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.6); opacity: 0; visibility: hidden; transform: translateY(12px) scale(0.96); transform-origin: bottom left; transition: all var(--transition); backdrop-filter: blur(20px); }
+        .help-fab.open .help-panel { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
+        .help-panel-header { padding: 20px 22px; background: var(--gradient-tech); }
+        .help-panel-header h3 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+        .help-panel-header p { font-size: 12.5px; opacity: 0.9; }
+        .help-panel-body { padding: 10px; }
+        .help-option { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 10px; text-decoration: none; color: var(--text-light); transition: background var(--transition), transform var(--transition); }
+        .help-option:hover { background: rgba(37,99,235,0.15); transform: translateX(4px); }
+        .help-option .emoji { width: 38px; height: 38px; border-radius: 10px; background: rgba(37,99,235,0.2); display: grid; place-items: center; font-size: 18px; flex-shrink: 0; }
+        .help-option .lbl strong { display: block; font-size: 13.5px; font-weight: 600; color: #fff; margin-bottom: 2px; }
+        .help-option .lbl span { font-size: 11.5px; color: var(--text-muted); }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .hero-inner { grid-template-columns: 1fr; gap: 40px; text-align: center; }
+            .hero-text { display: flex; flex-direction: column; align-items: center; }
+            .hero-desc { margin: 0 auto 30px; }
+            .hero-actions { justify-content: center; }
+            .hero-visual { max-width: 700px; margin: 0 auto; }
+            .benefits-row { grid-template-columns: repeat(3, 1fr); }
+            .split-layout { grid-template-columns: 1fr; gap: 40px; text-align: center; margin-bottom: 70px; }
+            .split-layout.reverse { direction: ltr; }
+            .split-text ul { text-align: left; display: inline-grid; }
+            .compare-grid { grid-template-columns: 1fr; }
+            .footer-top { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 900px) {
+            .nav-container { padding: 0 16px; height: var(--nav-h); }
+            .logo-mark { width: 36px; height: 36px; }
+            .logo-text { font-size: 20px; }
+            .nav-menu { position: fixed; top: var(--nav-h); left: 0; right: 0; background: rgba(10,15,30,0.98); backdrop-filter: blur(20px); flex-direction: column; align-items: stretch; gap: 4px; padding: 20px; border-bottom: 1px solid rgba(59,130,246,0.25); transform: translateY(-120%); transition: transform 0.4s cubic-bezier(0.4,0,0.2,1); max-height: calc(100vh - var(--nav-h)); overflow-y: auto; }
+            .nav-menu.open { transform: translateY(0); }
+            .nav-link { padding: 14px 18px; font-size: 15.5px; }
+            .nav-link::before { display: none; }
+            .nav-link:hover, .nav-link.active { background: rgba(37,99,235,0.15); color: var(--cyan-light); }
+            .nav-actions { display: none; }
+            .nav-menu .nav-actions-mobile { display: flex !important; flex-direction: column; gap: 10px; margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(59,130,246,0.2); }
+            .nav-menu .nav-actions-mobile .btn-nav-demo, .nav-menu .nav-actions-mobile .btn-nav-login { width: 100%; justify-content: center; padding: 13px 20px; font-size: 15px; }
+            .nav-hamburger { display: flex; }
+        }
+        @media (max-width: 768px) {
+            .hero-beneficios { padding: calc(var(--nav-h) + 20px) 16px 40px; }
+            .hero-title { font-size: 2.2rem; }
+            .hero-actions { flex-direction: column; width: 100%; max-width: 340px; }
+            .btn-cta-primary, .btn-cta-secondary { width: 100%; justify-content: center; padding: 14px 20px; font-size: 15px; }
+            .benefits-row { grid-template-columns: 1fr; padding-bottom: 60px; }
+            .section { padding: 64px 18px; }
+            .compare-col { padding: 32px 24px; }
+            .centralize-box { padding: 48px 24px; }
+            .cta-banner { padding: 48px 24px; }
+            .cta-actions { flex-direction: column; align-items: center; }
+            .cta-actions .btn-primary, .cta-actions .btn-secondary { width: 100%; max-width: 340px; justify-content: center; }
+            .footer-top { grid-template-columns: 1fr; gap: 36px; text-align: center; }
+            .footer-brand-logo { justify-content: center; }
+            .footer-brand p { margin: 0 auto; }
+            .back-to-top { bottom: 18px; right: 18px; width: 44px; height: 44px; }
+            .help-fab { bottom: 18px; left: 18px; }
+            .help-fab-btn { width: 52px; height: 52px; }
+            .help-panel { width: 280px; }
+        }
+        @media (max-width: 480px) {
+            .nav-container { padding: 0 14px; }
+            .logo-mark { width: 32px; height: 32px; }
+            .logo-text { font-size: 19px; }
+            .hero-title { font-size: 1.85rem; }
+            .section { padding: 48px 16px; }
+            .benefits-row { grid-template-columns: 1fr; }
+            .quote-section { padding: 64px 16px; }
+            .roles-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+            .role-card { padding: 22px 16px; }
+            .role-icon { width: 48px; height: 48px; font-size: 18px; }
+            .area-grid { grid-template-columns: 1fr; }
+            .cta-mid { padding: 32px 20px; }
+            .cta-banner { padding: 32px 18px; }
+            .footer { padding: 40px 16px 20px; }
+            .back-to-top { width: 40px; height: 40px; font-size: 16px; }
+            .help-fab-btn { width: 48px; height: 48px; }
+            .help-panel { width: calc(100vw - 28px); max-width: 300px; }
+        }
+    </style>
 </head>
 <body>
 
-<nav class="navbar" id="navbar">
-  <div class="nav-container">
-    <a href="index.html" class="nav-logo" aria-label="EduOne - Inicio">
-      <div class="nav-logo-mark">E</div>
-      <span class="nav-logo-text">EduOne</span>
-    </a>
-    <button class="nav-hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-menu">
-      <span></span><span></span><span></span>
-    </button>
-    <ul class="nav-menu" id="nav-menu">
-      <li><a href="index.html" class="nav-link">Inicio</a></li>
-      <li><a href="sobrenosotros.html" class="nav-link">Sobre nosotros</a></li>
-      <li><a href="funcionalidades.html" class="nav-link">Funcionalidades</a></li>
-      <li><a href="beneficios.html" class="nav-link active" aria-current="page">Beneficios</a></li>
-      <li><a href="planes.html" class="nav-link">Planes</a></li>
-      <li><a href="implementacion.html" class="nav-link">Implementación</a></li>
-      <li><a href="contacto.html" class="nav-link">Contacto</a></li>
-      <li><a href="login.html" class="nav-link nav-link-cta">Iniciar sesión</a></li>
-    </ul>
-  </div>
-</nav>
-
-<section class="page-hero">
-  <div class="page-hero-inner">
-    <div class="page-hero-eyebrow">¿Por qué EduOne?</div>
-    <h1>Más organización. Más comunicación. Más educación.</h1>
-    <p>Descubre cómo EduOne transforma la gestión de tu institución educativa con beneficios concretos y medibles.</p>
-  </div>
-</section>
-
-<!-- BENEFICIOS -->
-<section class="section" style="background: var(--surface);">
-  <div class="section-inner">
-    <div class="section-header reveal">
-      <div class="section-eyebrow">Ventajas concretas</div>
-      <h2 class="section-title">Beneficios que <span>transforman</span></h2>
-      <p class="section-desc">Cada funcionalidad de EduOne está diseñada para generar un impacto real en el día a día de tu institución.</p>
-    </div>
-    <div class="benefits-grid reveal">
-      <div class="benefit-card">
-        <div class="benefit-icon bi-blue" aria-hidden="true">🗂️</div>
-        <h3>Información centralizada</h3>
-        <p>Toda la información académica organizada dentro de una sola plataforma. Sin archivos dispersos, sin información duplicada.</p>
-      </div>
-      <div class="benefit-card">
-        <div class="benefit-icon bi-cyan" aria-hidden="true">⚙️</div>
-        <h3>Mayor organización</h3>
-        <p>Administra estudiantes, profesores, cursos, asignaturas y procesos académicos desde un mismo entorno bien estructurado.</p>
-      </div>
-      <div class="benefit-card">
-        <div class="benefit-icon bi-green" aria-hidden="true">💬</div>
-        <h3>Comunicación eficiente</h3>
-        <p>Conecta a directivos, profesores, estudiantes y familias con comunicados claros y accesibles en tiempo real.</p>
-      </div>
-      <div class="benefit-card">
-        <div class="benefit-icon bi-purple" aria-hidden="true">📈</div>
-        <h3>Seguimiento académico</h3>
-        <p>Facilita el acompañamiento continuo del desempeño estudiantil, permitiendo identificar oportunidades de mejora a tiempo.</p>
-      </div>
-      <div class="benefit-card">
-        <div class="benefit-icon bi-orange" aria-hidden="true">📉</div>
-        <h3>Menos procesos manuales</h3>
-        <p>Reduce el uso de documentos físicos, hojas de cálculo y procesos repetitivos que consumen tiempo valioso.</p>
-      </div>
-      <div class="benefit-card">
-        <div class="benefit-icon bi-cyan" aria-hidden="true">📱</div>
-        <h3>Acceso desde diferentes dispositivos</h3>
-        <p>Consulta la información utilizando computador, tablet o teléfono móvil, desde cualquier lugar con conexión a internet.</p>
-      </div>
-      <div class="benefit-card">
-        <div class="benefit-icon bi-green" aria-hidden="true">✨</div>
-        <h3>Facilidad de uso</h3>
-        <p>Una experiencia intuitiva diseñada para usuarios con diferentes niveles de conocimiento tecnológico. Sin curva de aprendizaje difícil.</p>
-      </div>
-      <div class="benefit-card">
-        <div class="benefit-icon bi-blue" aria-hidden="true">📦</div>
-        <h3>Escalabilidad</h3>
-        <p>EduOne puede crecer junto con cada institución. Desde colegios pequeños hasta instituciones con más de 1.500 estudiantes.</p>
-      </div>
-      <div class="benefit-card">
-        <div class="benefit-icon bi-purple" aria-hidden="true">🔄</div>
-        <h3>Actualización continua</h3>
-        <p>La plataforma evoluciona constantemente mediante nuevas funcionalidades y mejoras, sin costos adicionales para el usuario.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- COMPARACIÓN -->
-<section class="section" style="background: var(--background);">
-  <div class="section-inner">
-    <div class="section-header reveal">
-      <div class="section-eyebrow">Comparación</div>
-      <h2 class="section-title">Antes de EduOne <span>vs.</span> Con EduOne</h2>
-      <p class="section-desc">La diferencia es clara. Mira cómo EduOne transforma cada aspecto de la gestión educativa.</p>
-    </div>
-    <div class="comparison-grid reveal">
-      <div class="comparison-col before">
-        <div class="comparison-header">
-          <span class="comp-badge before">ANTES</span>
-          <h3>Sin EduOne</h3>
+    <!-- PRELOADER -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-inner">
+            <div class="preloader-logo">EduOne</div>
+            <div class="preloader-ring"></div>
+            <div class="preloader-bar"></div>
         </div>
-        <ul class="comp-list">
-          <li class="comp-item"><span class="comp-icon" aria-hidden="true">📂</span> Información dispersa en múltiples fuentes</li>
-          <li class="comp-item"><span class="comp-icon" aria-hidden="true">📊</span> Archivos Excel y documentos físicos</li>
-          <li class="comp-item"><span class="comp-icon" aria-hidden="true">🔁</span> Procesos repetitivos y manuales</li>
-          <li class="comp-item"><span class="comp-icon" aria-hidden="true">🔍</span> Dificultad para consultar notas rápidamente</li>
-          <li class="comp-item"><span class="comp-icon" aria-hidden="true">📵</span> Comunicación fragmentada y lenta</li>
-        </ul>
-      </div>
-      <div class="comparison-col after">
-        <div class="comparison-header">
-          <span class="comp-badge after">CON EDUONE</span>
-          <h3>Con EduOne</h3>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo" aria-label="EduOne - Inicio">
+                <span class="logo-mark">
+                    <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" fill="none">
+                        <defs>
+                            <linearGradient id="gradCap" x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0%" stop-color="#3b82f6"/><stop offset="55%" stop-color="#22d3ee"/><stop offset="100%" stop-color="#a3e635"/>
+                            </linearGradient>
+                        </defs>
+                        <path d="M24 6 L44 16 L24 26 L4 16 Z" fill="url(#gradCap)"/>
+                        <path d="M12 21.5 V30 C12 33.5 17.4 36 24 36 C30.6 36 36 33.5 36 30 V21.5 L24 27.5 Z" fill="url(#gradCap)" opacity="0.85"/>
+                        <path d="M40 18 V29" stroke="url(#gradCap)" stroke-width="2.4" stroke-linecap="round"/>
+                        <circle cx="40" cy="30.5" r="2.6" fill="url(#gradCap)"/>
+                    </svg>
+                </span>
+                <span class="logo-text">Edu<span>One</span></span>
+            </a>
+
+            <button class="nav-hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-menu">
+                <span></span><span></span><span></span>
+            </button>
+
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="index.html" class="nav-link">Inicio</a></li>
+                <li><a href="sobrenosotros.html" class="nav-link">Sobre nosotros</a></li>
+                <li><a href="funcionalidades.html" class="nav-link">Funcionalidades</a></li>
+                <li><a href="beneficios.html" class="nav-link active">Beneficios</a></li>
+                <li><a href="planes.html" class="nav-link">Planes</a></li>
+                <li><a href="implementacion.html" class="nav-link">Implementación</a></li>
+                <li><a href="contacto.html" class="nav-link">Contacto</a></li>
+                <li class="nav-actions-mobile" style="display:none;">
+                    <a href="contacto.html" class="btn-nav-demo">Solicitar demo</a>
+                    <a href="login.html" class="btn-nav-login"><i class="fas fa-right-to-bracket"></i> Iniciar sesión</a>
+                </li>
+            </ul>
+
+            <div class="nav-actions">
+                <a href="contacto.html" class="btn-nav-demo"><i class="fas fa-rocket"></i> Solicitar demo</a>
+                <a href="login.html" class="btn-nav-login"><i class="fas fa-right-to-bracket"></i> Iniciar sesión</a>
+            </div>
         </div>
-        <ul class="comp-list">
-          <li class="comp-item"><span class="comp-icon" aria-hidden="true">✅</span> Información centralizada y organizada</li>
-          <li class="comp-item"><span class="comp-icon" aria-hidden="true">✅</span> Procesos digitales y estructurados</li>
-          <li class="comp-item"><span class="comp-icon" aria-hidden="true">✅</span> Automatización y seguimiento claro</li>
-          <li class="comp-item"><span class="comp-icon" aria-hidden="true">✅</span> Acceso rápido a calificaciones y boletines</li>
-          <li class="comp-item"><span class="comp-icon" aria-hidden="true">✅</span> Comunicación integrada y eficiente</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
+    </nav>
 
-<!-- CTA -->
-<section class="section" style="background: var(--surface);">
-  <div class="section-inner">
-    <div class="cta-banner reveal">
-      <h2>¿Listo para transformar tu institución?</h2>
-      <p>Conecta a toda tu comunidad educativa con EduOne. Planes accesibles para cada institución.</p>
-      <div class="cta-actions">
-        <a href="planes.html" class="btn btn-white">Ver planes</a>
-        <a href="contacto.html" class="btn btn-outline">Contáctanos</a>
-      </div>
-    </div>
-  </div>
-</section>
+    <!-- HERO CON LA FOTO Y TEXTOS DE LA IMAGEN -->
+    <section class="hero-beneficios">
+        <div class="hero-inner">
+            <div class="hero-text">
+                <div class="hero-badge"><span class="dot"></span> Beneficios de EduOne</div>
+                <h1 class="hero-title">Impulsa tu institución<br>con una plataforma<br><span class="gradient-text">más ágil</span></h1>
+                <p class="hero-desc">EduOne reúne procesos académicos, administrativos y de comunicación para que tu colegio ahorre tiempo, mejore la gestión y mantenga a toda la comunidad conectada.</p>
+                <div class="hero-actions">
+                    <a href="contacto.html" class="btn-cta-primary"><i class="fas fa-rocket"></i> Solicitar demo</a>
+                    <a href="#beneficios-abajo" class="btn-cta-secondary"><i class="fas fa-chart-bar"></i> Ver beneficios</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <!-- Aquí va tu imagen de los dispositivos -->
+                <img src="imagenes/beneficio1.png" alt="EduOne en computador y celular">
+            </div>
+        </div>
+    </section>
 
-<footer class="footer">
-  <div class="footer-inner">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <div class="footer-logo"><div class="footer-logo-mark">E</div><span class="footer-logo-text">EduOne</span></div>
-        <p>Educación, tecnología y gestión en un solo lugar.</p>
-      </div>
-      <div class="footer-col">
-        <h4>Navegación</h4>
-        <ul>
-          <li><a href="index.html">Inicio</a></li>
-          <li><a href="sobrenosotros.html">Sobre nosotros</a></li>
-          <li><a href="funcionalidades.html">Funcionalidades</a></li>
-          <li><a href="beneficios.html">Beneficios</a></li>
-          <li><a href="planes.html">Planes</a></li>
-          <li><a href="implementacion.html">Implementación</a></li>
-          <li><a href="contacto.html">Contacto</a></li>
-          <li><a href="login.html">Iniciar sesión</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Legal</h4>
-        <ul>
-          <li><a href="#">Política de privacidad</a></li>
-          <li><a href="#">Tratamiento de datos</a></li>
-          <li><a href="#">Términos y condiciones</a></li>
-        </ul>
-      </div>
+    <!-- LAS 5 TARJETAS DE LA IMAGEN -->
+    <div class="benefits-row">
+        <div class="benefit-mini-card reveal">
+            <div class="bm-icon"><i class="fas fa-cogs"></i></div>
+            <h3>Automatización inteligente</h3>
+            <p>Reduce tareas manuales y optimiza procesos diarios.</p>
+        </div>
+        <div class="benefit-mini-card reveal" style="transition-delay: 0.1s;">
+            <div class="bm-icon"><i class="fas fa-chart-bar"></i></div>
+            <h3>Control y seguimiento</h3>
+            <p>Consulta indicadores, reportes y avances en tiempo real.</p>
+        </div>
+        <div class="benefit-mini-card reveal" style="transition-delay: 0.2s;">
+            <div class="bm-icon"><i class="fas fa-comment-dots"></i></div>
+            <h3>Comunicación conectada</h3>
+            <p>Mantén informados a docentes, familias y estudiantes.</p>
+        </div>
+        <div class="benefit-mini-card reveal" style="transition-delay: 0.3s;">
+            <div class="bm-icon"><i class="fas fa-laptop"></i></div>
+            <h3>Acceso multidispositivo</h3>
+            <p>Usa la plataforma desde computador, tablet o celular.</p>
+        </div>
+        <div class="benefit-mini-card reveal" style="transition-delay: 0.4s;">
+            <div class="bm-icon"><i class="fas fa-star"></i></div>
+            <h3>Experiencia simple</h3>
+            <p>Interfaz intuitiva, rápida y fácil de usar.</p>
+        </div>
     </div>
-    <div class="footer-bottom">
-      <p>© 2026 EduOne. Todos los derechos reservados.</p>
-      <p>Desarrollado por Daniel Steven Gutierrez y Camilo Rodriguez.</p>
-      <p>Escuela Tecnológica de Neiva FET.</p>
+
+    <!-- RESTO DEL CONTENIDO DE BENEFICIOS (Mismo del código original) -->
+    <section class="section" id="beneficios-abajo">
+        <div class="section-inner">
+            <div class="section-header reveal">
+                <div class="section-eyebrow"><span class="dot"></span> Ventajas concretas</div>
+                <h2 class="section-title">Beneficios que se sienten <span class="grad">en el día a día</span></h2>
+            </div>
+            <div class="benefits-grid reveal" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;">
+                <div class="benefit-card" style="background: rgba(10,15,30,0.6); padding: 36px 32px; border-radius: 18px; border: 1px solid rgba(59,130,246,0.18);">
+                    <div class="benefit-icon" style="width: 56px; height: 56px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 20px; background: rgba(37,99,235,0.12); color: var(--cyan-light); border: 1px solid rgba(59,130,246,0.3);"><i class="fas fa-database"></i></div>
+                    <h3 style="font-family: 'Space Grotesk', sans-serif; font-size: 19px; font-weight: 700; margin-bottom: 10px; color: #fff;">Información centralizada</h3>
+                    <p style="font-size: 14.5px; color: var(--text-muted); line-height: 1.7;">Reduce la dispersión de datos al concentrar procesos académicos, administrativos y de seguimiento en una misma plataforma.</p>
+                </div>
+                <div class="benefit-card" style="background: rgba(10,15,30,0.6); padding: 36px 32px; border-radius: 18px; border: 1px solid rgba(59,130,246,0.18);">
+                    <div class="benefit-icon" style="width: 56px; height: 56px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 20px; background: rgba(37,99,235,0.12); color: var(--cyan-light); border: 1px solid rgba(59,130,246,0.3);"><i class="fas fa-tasks"></i></div>
+                    <h3 style="font-family: 'Space Grotesk', sans-serif; font-size: 19px; font-weight: 700; margin-bottom: 10px; color: #fff;">Menos trabajo repetitivo</h3>
+                    <p style="font-size: 14.5px; color: var(--text-muted); line-height: 1.7;">Facilita tareas que normalmente requieren revisar varios documentos, archivos o canales diferentes.</p>
+                </div>
+                <div class="benefit-card" style="background: rgba(10,15,30,0.6); padding: 36px 32px; border-radius: 18px; border: 1px solid rgba(59,130,246,0.18);">
+                    <div class="benefit-icon" style="width: 56px; height: 56px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 20px; background: rgba(37,99,235,0.12); color: var(--cyan-light); border: 1px solid rgba(59,130,246,0.3);"><i class="fas fa-chart-line"></i></div>
+                    <h3 style="font-family: 'Space Grotesk', sans-serif; font-size: 19px; font-weight: 700; margin-bottom: 10px; color: #fff;">Seguimiento más claro</h3>
+                    <p style="font-size: 14.5px; color: var(--text-muted); line-height: 1.7;">Permite consultar información académica y de asistencia de forma organizada para facilitar el acompañamiento de los estudiantes.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ANTES Y CON EDUONE -->
+    <section class="section" style="background: rgba(255,255,255,0.01);">
+        <div class="section-inner">
+            <div class="section-header reveal">
+                <div class="section-eyebrow"><span class="dot"></span> Comparación</div>
+                <h2 class="section-title">Una forma más <span class="grad">organizada de trabajar</span></h2>
+            </div>
+            <div class="compare-grid reveal">
+                <div class="compare-col before">
+                    <h3><i class="fas fa-times-circle" style="color: #ef4444;"></i> Sin una plataforma centralizada</h3>
+                    <ul class="compare-list">
+                        <li><i class="fas fa-times"></i> Información en diferentes archivos</li>
+                        <li><i class="fas fa-times"></i> Procesos repetidos</li>
+                        <li><i class="fas fa-times"></i> Dificultad para encontrar datos</li>
+                        <li><i class="fas fa-times"></i> Múltiples canales de comunicación</li>
+                        <li><i class="fas fa-times"></i> Más tiempo administrativo</li>
+                        <li><i class="fas fa-times"></i> Seguimiento fragmentado</li>
+                    </ul>
+                </div>
+                <div class="compare-col after">
+                    <h3><i class="fas fa-check-circle" style="color: var(--cyan-light);"></i> Con EduOne</h3>
+                    <ul class="compare-list">
+                        <li><i class="fas fa-check"></i> Información centralizada</li>
+                        <li><i class="fas fa-check"></i> Procesos organizados</li>
+                        <li><i class="fas fa-check"></i> Acceso por roles</li>
+                        <li><i class="fas fa-check"></i> Mejor seguimiento</li>
+                        <li><i class="fas fa-check"></i> Comunicación más estructurada</li>
+                        <li><i class="fas fa-check"></i> Consulta rápida</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BENEFICIO: CENTRALIZACIÓN -->
+    <section class="section">
+        <div class="section-inner">
+            <div class="centralize-box reveal">
+                <div class="centralize-inner">
+                    <h2>Todo conectado en un mismo entorno</h2>
+                    <p>Uno de los principales beneficios de EduOne es reducir la fragmentación de la información. La institución puede consultar diferentes procesos desde una misma plataforma y mantener una estructura de trabajo más organizada.</p>
+                    <div class="centralize-icons">
+                        <div class="centralize-icon"><div class="ci-box"><i class="fas fa-user-graduate"></i></div><span>Estudiantes</span></div>
+                        <div class="centralize-icon"><div class="ci-box"><i class="fas fa-chalkboard-teacher"></i></div><span>Docentes</span></div>
+                        <div class="centralize-icon"><div class="ci-box"><i class="fas fa-clipboard-list"></i></div><span>Notas</span></div>
+                        <div class="centralize-icon"><div class="ci-box"><i class="fas fa-calendar-check"></i></div><span>Asistencia</span></div>
+                        <div class="centralize-icon"><div class="ci-box"><i class="fas fa-clock"></i></div><span>Horarios</span></div>
+                        <div class="centralize-icon"><div class="ci-box"><i class="fas fa-handshake"></i></div><span>Convivencia</span></div>
+                        <div class="centralize-icon"><div class="ci-box"><i class="fas fa-coins"></i></div><span>Finanzas</span></div>
+                        <div class="centralize-icon"><div class="ci-box"><i class="fas fa-bullhorn"></i></div><span>Comunicaciones</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CITA DESTACADA -->
+    <section class="quote-section">
+        <div class="quote-box reveal">
+            <div class="quote-mark">"</div>
+            <p class="quote-text">Un estudiante. Una historia. <span>Una plataforma.</span></p>
+            <p class="quote-sub">Tener información académica, asistencia, observaciones y otros registros organizados facilita que la institución y las familias puedan hacer un seguimiento más oportuno.</p>
+        </div>
+    </section>
+
+    <!-- BENEFICIO: INFORMACIÓN SEGÚN EL ROL -->
+    <section class="section" style="background: rgba(255,255,255,0.01);">
+        <div class="section-inner">
+            <div class="section-header reveal">
+                <div class="section-eyebrow"><span class="dot"></span> Acceso por roles</div>
+                <h2 class="section-title">Cada usuario ve <span class="grad">lo que necesita</span></h2>
+                <p class="section-desc">EduOne organiza el acceso a la información según las responsabilidades de cada usuario dentro de la institución, evitando interfaces cargadas con información innecesaria.</p>
+            </div>
+            <div class="roles-grid reveal">
+                <div class="role-card">
+                    <div class="role-icon"><i class="fas fa-user-tie"></i></div>
+                    <h3>Rector</h3>
+                    <p>Visión general de la institución.</p>
+                </div>
+                <div class="role-card">
+                    <div class="role-icon"><i class="fas fa-user-cog"></i></div>
+                    <h3>Coordinador</h3>
+                    <p>Seguimiento académico y de convivencia.</p>
+                </div>
+                <div class="role-card">
+                    <div class="role-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+                    <h3>Profesor</h3>
+                    <p>Gestión de sus cursos y estudiantes.</p>
+                </div>
+                <div class="role-card">
+                    <div class="role-icon"><i class="fas fa-user-graduate"></i></div>
+                    <h3>Estudiante</h3>
+                    <p>Consulta de su proceso académico.</p>
+                </div>
+                <div class="role-card">
+                    <div class="role-icon"><i class="fas fa-users"></i></div>
+                    <h3>Acudiente</h3>
+                    <p>Acompañamiento del proceso de sus hijos.</p>
+                </div>
+                <div class="role-card">
+                    <div class="role-icon"><i class="fas fa-folder-open"></i></div>
+                    <h3>Secretaría</h3>
+                    <p>Gestión administrativa y de matrículas.</p>
+                </div>
+                <div class="role-card">
+                    <div class="role-icon"><i class="fas fa-calculator"></i></div>
+                    <h3>Contabilidad</h3>
+                    <p>Control de pagos y movimientos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section class="section" style="padding-bottom: 100px;">
+        <div class="section-inner">
+            <div class="cta-banner reveal-scale">
+                <h2>¿Listo para conocer EduOne en funcionamiento?</h2>
+                <p>Solicita una demostración y conoce cómo la plataforma puede adaptarse a tu institución.</p>
+                <div class="cta-actions">
+                    <a href="contacto.html" class="btn-primary"><i class="fas fa-rocket"></i> Solicitar demostración</a>
+                    <a href="planes.html" class="btn-secondary"><i class="fas fa-tags"></i> Ver planes</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <div class="footer-brand-logo">
+                        <span class="logo-mark">
+                            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" fill="none">
+                                <defs>
+                                    <linearGradient id="gradCapF" x1="0" y1="0" x2="1" y2="1">
+                                        <stop offset="0%" stop-color="#3b82f6"/><stop offset="55%" stop-color="#22d3ee"/><stop offset="100%" stop-color="#a3e635"/>
+                                    </linearGradient>
+                                </defs>
+                                <path d="M24 6 L44 16 L24 26 L4 16 Z" fill="url(#gradCapF)"/>
+                                <path d="M12 21.5 V30 C12 33.5 17.4 36 24 36 C30.6 36 36 33.5 36 30 V21.5 L24 27.5 Z" fill="url(#gradCapF)" opacity="0.85"/>
+                                <path d="M40 18 V29" stroke="url(#gradCapF)" stroke-width="2.4" stroke-linecap="round"/>
+                                <circle cx="40" cy="30.5" r="2.6" fill="url(#gradCapF)"/>
+                            </svg>
+                        </span>
+                        <span class="logo-text">Edu<span>One</span></span>
+                    </div>
+                    <p>Plataforma tecnológica colombiana para la gestión académica, administrativa, financiera y de convivencia de instituciones educativas.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Producto</h4>
+                    <ul>
+                        <li><a href="funcionalidades.html">Funcionalidades</a></li>
+                        <li><a href="beneficios.html">Beneficios</a></li>
+                        <li><a href="planes.html">Planes</a></li>
+                        <li><a href="implementacion.html">Implementación</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Empresa</h4>
+                    <ul>
+                        <li><a href="sobrenosotros.html">Sobre nosotros</a></li>
+                        <li><a href="contacto.html">Contacto</a></li>
+                        <li><a href="contacto.html">Solicitar demo</a></li>
+                        <li><a href="login.html">Iniciar sesión</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contacto</h4>
+                    <ul>
+                        <li><a href="mailto:contacto@eduone.com.co">contacto@eduone.com.co</a></li>
+                        <li><a href="#">Neiva, Huila, Colombia</a></li>
+                        <li><a href="https://eduone.com.co">eduone.com.co</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© <span id="year"></span> EduOne. Todos los derechos reservados.</p>
+                <p>Hecho con dedicación para la educación colombiana.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- BOTONES FLOTANTES -->
+    <button class="back-to-top" id="backToTop" aria-label="Volver arriba"><i class="fas fa-arrow-up"></i></button>
+
+    <div class="help-fab" id="helpFab">
+        <button class="help-fab-btn" id="helpFabBtn" aria-label="Abrir menú de ayuda" aria-expanded="false">
+            <span class="ico-chat"><i class="fas fa-comment-dots"></i></span>
+            <span class="ico-close"><i class="fas fa-times"></i></span>
+        </button>
+        <div class="help-panel">
+            <div class="help-panel-header">
+                <h3>Hola 👋 Somos EduOne</h3>
+                <p>¿En qué podemos ayudarte?</p>
+            </div>
+            <div class="help-panel-body">
+                <a href="contacto.html" class="help-option"><span class="emoji">📅</span><span class="lbl"><strong>Solicitar demostración</strong><span>Conoce la plataforma en acción</span></span></a>
+                <a href="#" class="help-option"><span class="emoji">🛠️</span><span class="lbl"><strong>Soporte</strong><span>Atención técnica</span></span></a>
+                <a href="contacto.html" class="help-option"><span class="emoji">✉️</span><span class="lbl"><strong>Contacto</strong><span>Escríbenos directamente</span></span></a>
+                <a href="#" class="help-option"><span class="emoji">📣</span><span class="lbl"><strong>Novedades</strong><span>Mejoras y actualizaciones</span></span></a>
+            </div>
+        </div>
     </div>
-  </div>
-</footer>
 
-<button class="back-to-top" id="backToTop" aria-label="Volver arriba">↑</button>
+    <script>
+        // PRELOADER
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            if (preloader) {
+                setTimeout(() => {
+                    preloader.classList.add('hidden');
+                    setTimeout(() => preloader.remove(), 500);
+                }, 600);
+            }
+        });
 
-<script>
-  const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled', window.scrollY > 20);
-    document.getElementById('backToTop').classList.toggle('visible', window.scrollY > 300);
-  });
-  const hamburger = document.getElementById('hamburger');
-  const navMenu = document.getElementById('nav-menu');
-  function closeMenu() { navMenu.classList.remove('open'); hamburger.classList.remove('open'); hamburger.setAttribute('aria-expanded','false'); }
-  hamburger.addEventListener('click', () => { navMenu.classList.contains('open') ? closeMenu() : (navMenu.classList.add('open'), hamburger.classList.add('open'), hamburger.setAttribute('aria-expanded','true')); });
-  navMenu.querySelectorAll('.nav-link').forEach(l => l.addEventListener('click', closeMenu));
-  document.addEventListener('click', e => { if (!navbar.contains(e.target)) closeMenu(); });
-  document.addEventListener('keydown', e => { if (e.key==='Escape') closeMenu(); });
-  document.getElementById('backToTop').addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
-  const observer = new IntersectionObserver(entries => entries.forEach((e,i) => { if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i*80); }), {threshold:0.08});
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-</script>
+        // NAVBAR SCROLL
+        const navbar = document.getElementById('navbar');
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) navbar.classList.add('scrolled');
+            else navbar.classList.remove('scrolled');
+            
+            if (window.scrollY > 400) backToTop.classList.add('visible');
+            else backToTop.classList.remove('visible');
+        });
+
+        // HAMBURGER
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('nav-menu');
+        hamburger.addEventListener('click', () => {
+            const isOpen = navMenu.classList.toggle('open');
+            hamburger.classList.toggle('open', isOpen);
+            hamburger.setAttribute('aria-expanded', isOpen);
+        });
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('open');
+                hamburger.classList.remove('open');
+                hamburger.setAttribute('aria-expanded', 'false');
+            });
+        });
+
+        // REVEAL ON SCROLL
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12 });
+        document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => revealObserver.observe(el));
+
+        // BACK TO TOP
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // HELP FAB
+        const helpFab = document.getElementById('helpFab');
+        const helpFabBtn = document.getElementById('helpFabBtn');
+        if(helpFab && helpFabBtn) {
+            helpFabBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                helpFab.classList.toggle('open');
+            });
+            document.addEventListener('click', (e) => {
+                if (!helpFab.contains(e.target) && helpFab.classList.contains('open')) {
+                    helpFab.classList.remove('open');
+                }
+            });
+        }
+
+        // AÑO EN FOOTER
+        const yearEl = document.getElementById('year');
+        if (yearEl) yearEl.textContent = new Date().getFullYear();
+    </script>
 </body>
 </html>

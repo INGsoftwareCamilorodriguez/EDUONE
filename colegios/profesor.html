@@ -380,11 +380,36 @@
             .pregunta-card .opcion-item { flex-wrap: wrap; }
             .evaluacion-preview .header { flex-direction: column; align-items: flex-start; }
         }
-    </style>
+
+/* EDUONE PROFESOR 2026: tema institucional, menú superior único */
+body{display:block;background:#f3f7fc} .sidebar,.sidebar-overlay{display:none!important}.main-content,.main-content.expanded,.main-content.full{margin-left:0!important;width:100%}.top-header{height:auto;min-height:72px;gap:14px;padding:10px clamp(14px,3vw,42px);background:#fff;flex-wrap:wrap}.header-left{gap:18px}.header-left .hamburger-btn{display:none!important}.edu-brand{font-size:1.32rem!important;white-space:nowrap;color:#13264c!important}.edu-brand i,.edu-brand span{color:var(--primary)}.edu-institution{font-weight:600;font-size:.83rem;color:var(--gray-600);padding-left:14px;border-left:1px solid var(--border)}.edu-topnav{display:flex;align-items:center;gap:7px;flex:1;justify-content:center;min-width:0}.edu-topnav a,.edu-topnav summary{font-size:.85rem;font-weight:600;cursor:pointer;color:#33415f;border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:7px;list-style:none;text-decoration:none;white-space:nowrap}.edu-topnav a:hover,.edu-topnav summary:hover,.edu-topnav .selected{background:var(--primary-bg);color:var(--primary)}.edu-topnav details{position:relative}.edu-topnav summary::-webkit-details-marker{display:none}.edu-topnav summary i{font-size:.65rem}.edu-subnav{position:absolute;top:100%;left:0;background:white;box-shadow:0 14px 40px #243a5c26;border:1px solid var(--border);padding:8px;border-radius:12px;min-width:210px;z-index:80}.edu-subnav button{display:block;width:100%;border:0;background:white;padding:11px 13px;text-align:left;border-radius:8px;color:var(--gray-700);font:600 .85rem var(--font);cursor:pointer}.edu-subnav button:hover{background:var(--primary-bg);color:var(--primary)}.header-right{margin-left:auto}.content-area{padding:25px clamp(14px,3vw,44px);max-width:1900px;margin:auto;width:100%}.edu-hero{background:linear-gradient(110deg,var(--primary-dark),var(--primary));color:#fff;border-radius:18px;padding:26px 30px;display:flex;align-items:center;gap:20px;margin-bottom:22px;min-height:116px;box-shadow:0 8px 24px #223e6d1c}.edu-hero h2{font-size:1.5rem;line-height:1.25;margin-bottom:6px}.edu-hero p{color:#fff;opacity:.87;font-size:.92rem}.edu-hero-icon{width:64px;height:64px;flex-shrink:0;display:grid;place-items:center;background:#ffffff25;border:1px solid #ffffff40;border-radius:17px;font-size:1.5rem}.card{border-radius:17px;border:1px solid #e6edf6;box-shadow:0 5px 20px #1932560c}.card-header{background:#fff}.stat-card{border-radius:16px;box-shadow:0 5px 20px #1932560c}.stat-icon{border-radius:14px}.table-modern thead th{background:var(--primary-bg);color:var(--gray-700)}.table-responsive{border-radius:10px}.form-control{min-height:40px}.edu-chat-grid{display:grid;grid-template-columns:minmax(230px,32%) minmax(0,1fr);gap:18px}.edu-contact-list{margin-top:15px;max-height:520px;overflow:auto}.edu-contact-list button{display:flex;align-items:center;gap:12px;width:100%;background:#fff;border:0;border-bottom:1px solid var(--border);text-align:left;padding:12px;cursor:pointer;font:500 .87rem var(--font)}.edu-contact-list button:hover{background:var(--primary-bg)}.edu-mini-avatar{width:40px;height:40px;border-radius:50%;object-fit:cover;background:var(--primary-bg);color:var(--primary);display:grid;place-items:center;font-weight:700;flex:none}.edu-messages{background:#f7faff;border:1px solid var(--border);border-radius:15px;min-height:330px;height:min(55vh,520px);overflow:auto;padding:18px;display:flex;flex-direction:column;gap:10px}.edu-bubble{padding:12px 15px;background:#fff;border:1px solid var(--border);border-radius:14px;max-width:85%;align-self:flex-start;overflow-wrap:anywhere}.edu-bubble.mine{align-self:flex-end;background:var(--primary-bg)}.edu-bubble small{display:block;color:var(--gray-500);margin-top:7px;font-size:.68rem}.edu-bubble img{max-width:100%;max-height:300px;border-radius:9px;margin-top:8px}.edu-composer{display:flex;gap:9px;align-items:center;margin-top:14px}.edu-upload{cursor:pointer;border:1px solid var(--border);padding:10px;border-radius:9px;color:var(--primary)}.edu-composer input.form-control{flex:1;min-width:70px}.edu-profile{display:flex;gap:22px;align-items:center}.edu-avatar-xl{width:110px;height:110px;border-radius:50%;display:grid;place-items:center;background:var(--primary-bg);color:var(--primary);font-size:2rem;overflow:hidden}.edu-avatar-xl img{width:100%;height:100%;object-fit:cover}
+@media(max-width:1000px){.top-header{justify-content:space-between}.edu-topnav{order:3;width:100%;overflow-x:auto;justify-content:flex-start;padding:3px 0}.edu-topnav details{position:static}.edu-subnav{top:auto;position:absolute}.content-area{padding:18px}.edu-chat-grid{grid-template-columns:1fr}}
+@media(max-width:600px){.edu-institution{font-size:.72rem;max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.edu-hero{padding:20px 17px;gap:12px;min-height:95px}.edu-hero-icon{width:45px;height:45px;font-size:1.2rem}.edu-hero h2{font-size:1.2rem}.edu-hero p{font-size:.75rem}.card-body{padding:15px}.edu-messages{height:44vh;min-height:250px}.edu-composer{flex-wrap:wrap}.edu-composer .btn-primary{padding:9px}.user-info{display:none}.stats-grid{grid-template-columns:1fr 1fr}}
+
+
+.edu-school-cover{background:linear-gradient(95deg,var(--primary-dark),color-mix(in srgb,var(--primary) 82%,transparent)),var(--edu-school-image,linear-gradient(120deg,var(--primary-dark),var(--primary)));background-size:cover;background-position:center;min-height:190px}
+.edu-student-name{display:flex;align-items:center;gap:10px;min-width:135px}.edu-student-name .edu-mini-avatar{flex:none}.edu-course-tabs{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}.edu-course-tabs button{border:1px solid var(--border);border-radius:12px;background:#fff;padding:13px 17px;font:600 .85rem var(--font);cursor:pointer;min-width:120px;text-align:left}.edu-course-tabs button.active{border-color:var(--primary);background:var(--primary-bg);color:var(--primary)}.edu-photo-form{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:14px}.edu-photo-form small{width:100%}.edu-photo-btn{cursor:pointer}.edu-inline-loader{display:flex;gap:8px;align-items:center;color:var(--gray-500);padding:16px}.edu-hero + .page-header{margin-top:8px}.edu-contact-list button:focus-visible,.edu-course-tabs button:focus-visible{outline:2px solid var(--primary);outline-offset:2px}@media(max-width:650px){.edu-school-cover{min-height:140px}.edu-course-tabs{flex-wrap:nowrap;overflow:auto}.edu-course-tabs button{flex:none}.edu-profile{align-items:flex-start;flex-direction:column}.edu-chat-grid .card{min-width:0}}
+
+
+.edu-mobile-menu{display:none;align-items:center;gap:8px;border:1px solid var(--border);background:white;padding:10px 13px;border-radius:10px;font:600 .84rem var(--font);color:var(--primary)}
+.edu-global-busy{position:fixed;right:22px;bottom:24px;z-index:9998;display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--border);border-radius:12px;box-shadow:0 12px 35px #18244c25;padding:12px 16px;font-size:.85rem}
+.edu-global-busy[hidden]{display:none}.edu-loading-wheel{width:18px;height:18px;border:3px solid var(--primary-bg);border-top-color:var(--primary);border-radius:50%;animation:spin .7s linear infinite}
+.edu-course-group{display:grid;gap:7px;margin:12px 0}.edu-course-group h3{font-size:.82rem;margin:4px 0;color:var(--text-secondary)}.edu-group-option{padding:11px 12px;background:var(--primary-bg);border:1px solid var(--border);border-radius:9px;cursor:pointer;text-align:left;color:var(--primary);font-weight:650}
+.edu-search-help{font-size:.73rem;color:var(--text-secondary);margin:15px 0 6px}.edu-bubble{font-size:.82rem;line-height:1.45}.edu-contact-list button{font-size:.8rem}.edu-messages{font-size:.82rem}
+@media(max-width:850px){.edu-mobile-menu{display:flex}.edu-topnav{display:none!important;position:absolute;top:100%;left:12px;right:12px;background:white;z-index:120;border:1px solid var(--border);border-radius:14px;box-shadow:0 15px 35px #13274b28;max-height:75vh;overflow:auto;flex-direction:column;align-items:stretch;padding:12px}.edu-topnav.mobile-open{display:flex!important}.edu-topnav details{width:100%;position:static}.edu-topnav summary,.edu-topnav a{width:100%;justify-content:space-between}.edu-subnav{position:static;box-shadow:none;min-width:0;margin:3px 0 10px 14px}.edu-subnav button{width:100%}.header-right{gap:8px}.content-area{padding:13px!important}.edu-hero{padding:18px;min-height:90px}.edu-hero h2{font-size:1.18rem}.edu-institution{display:none}.edu-chat-grid{grid-template-columns:1fr}.edu-composer{flex-wrap:wrap}.table-responsive{overflow-x:auto}.edu-global-busy{bottom:12px;right:12px;left:12px}}
+
+    
+.edu-unsaved{outline:2px solid #f59e0b!important;background:#fffbeb!important;opacity:1!important;pointer-events:auto!important}
+.edu-saving{opacity:.6}.edu-history-item{display:block;width:100%;background:#fff;border:1px solid var(--border);border-radius:9px;padding:9px;text-align:left;margin-bottom:6px;cursor:pointer;font:500 .78rem var(--font)}
+.edu-bubble{font-size:.8rem;line-height:1.45}.edu-chat-grid .edu-contact-list{max-height:210px}
+#page-planilla .planilla-table input.nota-input{color:var(--text-primary)!important;opacity:1!important;pointer-events:auto!important;min-width:55px;cursor:text}
+@media(max-width:850px){#eduMobileMenu{display:flex!important}.edu-topnav:not(.mobile-open){display:none!important}}
+</style>
     <link rel="stylesheet" href="../assets/responsive.css" />
     <script src="../assets/responsive.js" defer></script>
 </head>
 <body>
+<div id="eduGlobalBusy" class="edu-global-busy" role="status" aria-live="polite" hidden><span class="edu-loading-wheel"></span><span data-busy-text>Cargando...</span></div>
 
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
@@ -455,9 +480,18 @@
                 <button class="hamburger-btn" id="hamburgerBtn">
                     <i class="fas fa-bars"></i>
                 </button>
-                <h1 id="pageTitle">Inicio</h1>
+                <h1 id="pageTitle" class="edu-brand"><i class="fas fa-graduation-cap"></i> Edu<span>One</span></h1><div class="edu-institution" id="eduInstitutionName">Colegio</div>
             </div>
-            <div class="header-right">
+            <button type="button" class="edu-mobile-menu" id="eduMobileMenu" aria-controls="eduTopNav" aria-expanded="false" aria-label="Abrir menú"><i class="fas fa-bars"></i> Menú</button>
+            <nav class="edu-topnav" id="eduTopNav" aria-label="Menú principal">
+<a href="#" data-prof-page="inicio"><i class="fas fa-home"></i> Inicio</a>
+<details><summary>Académico <i class="fas fa-chevron-down"></i></summary><div class="edu-subnav"><button data-prof-page="horario">Mi horario</button><button data-prof-page="cursos">Mis cursos</button><button data-prof-page="estudiantes">Estudiantes</button></div></details>
+<details><summary>Evaluación <i class="fas fa-chevron-down"></i></summary><div class="edu-subnav"><button data-prof-page="actividades">Actividades</button><button data-prof-page="secciones">Secciones</button><button data-prof-page="planilla">Planilla</button><button data-prof-page="entregas">Entregas</button><button data-prof-page="evaluaciones">Evaluaciones</button></div></details>
+<details><summary>Gestión <i class="fas fa-chevron-down"></i></summary><div class="edu-subnav"><button data-prof-page="asistencia">Asistencia</button><button data-prof-page="observaciones">Observaciones</button></div></details>
+<details><summary>Comunicación <i class="fas fa-chevron-down"></i></summary><div class="edu-subnav"><button data-prof-page="chat">Chat</button><button data-prof-page="comunicados">Comunicados</button></div></details>
+<a href="#" data-prof-page="perfil"><i class="fas fa-user-circle"></i> Mi perfil</a>
+</nav>
+<div class="header-right">
                 <div class="notificaciones" id="notificacionesBtn" title="Notificaciones">
                     <i class="fas fa-bell"></i>
                     <span class="badge-noti" id="notiCount">0</span>
@@ -480,7 +514,7 @@
             </div>
 
             <!-- INICIO -->
-            <div id="page-inicio" class="page-content active">
+            <div id="page-inicio" class="page-content active"><div class="edu-hero edu-welcome edu-school-cover" id="eduSchoolCover"><div class="edu-hero-icon" id="eduHomeSchoolLogo"><i class="fas fa-chalkboard-teacher"></i></div><div><h2 id="eduWelcomeTeacher">Bienvenido al panel del profesor</h2><p id="eduWelcomeSchool">Organiza tus cursos, actividades, planillas y asistencia</p></div></div>
                 <div class="card">
                     <div class="card-body">
                         <h2 id="bienvenida" style="margin-bottom: 8px;">Bienvenido, Profesor</h2>
@@ -520,8 +554,20 @@
                 </div>
             </div>
 
+
+<div id="page-chat" class="page-content">
+ <div class="edu-hero"><div class="edu-hero-icon"><i class="fas fa-comments"></i></div><div><h2>Chat interno</h2><p>Comunícate con los usuarios autorizados de tu colegio</p></div></div>
+ <div class="edu-chat-grid"><div class="card"><div class="card-header"><h2>Contactos</h2></div><div class="card-body"><input id="eduChatSearch" class="form-control" placeholder="🔎 Buscar contacto privado por nombre" autocomplete="off"><div class="edu-course-group" id="eduChatGroups" aria-label="Grupos de mis cursos"></div><h3 style="margin:16px 0 8px;font-size:.9rem">Historial de conversaciones</h3><div id="eduChatHistory" class="edu-contact-list" aria-live="polite">Cargando conversaciones...</div><p class="edu-search-help">Para escribir en privado, busca un estudiante o acudiente por nombre.</p><div class="edu-contact-list" id="eduChatContacts">Usa la lupa para buscar un contacto privado</div></div></div>
+ <div class="card"><div class="card-header"><h2 id="eduChatPerson">Selecciona un contacto</h2></div><div class="card-body"><div class="edu-messages" id="eduChatMessages" aria-live="polite"></div><form id="eduChatForm" class="edu-composer"><label class="edu-upload" title="Adjuntar imagen o documento"><i class="fas fa-paperclip"></i><input type="file" id="eduChatFile" accept="image/*,.pdf,.doc,.docx" hidden></label><input class="form-control" id="eduChatText" placeholder="Escribe un mensaje..." maxlength="3000"><button class="btn-primary" type="submit"><i class="fas fa-paper-plane"></i> Enviar</button></form><small id="eduChatFilename" class="text-muted"></small></div></div></div>
+</div>
+<div id="page-comunicados" class="page-content">
+ <div class="edu-hero"><div class="edu-hero-icon"><i class="fas fa-bullhorn"></i></div><div><h2>Comunicados institucionales</h2><p>Mensajes oficiales de rectoría y coordinación para la comunidad educativa</p></div></div>
+ <div class="card"><div class="card-header"><h2>Canal institucional</h2><span class="badge badge-info">Solo lectura</span></div><div class="card-body"><div class="edu-messages edu-avisos" id="eduAvisosLista" aria-live="polite">Cargando comunicados...</div><p class="text-muted" style="padding-top:14px">Las publicaciones son enviadas por rectoría y coordinación. Como profesor puedes consultarlas aquí.</p></div></div>
+</div>
+<div id="page-perfil" class="page-content"><div class="edu-hero"><div class="edu-hero-icon"><i class="fas fa-id-badge"></i></div><div><h2>Mi perfil</h2><p>Consulta tu información institucional y tu fotografía</p></div></div><div class="card"><div class="card-body edu-profile"><div class="edu-avatar-xl" id="eduAvatarProfile"><i class="fas fa-user"></i></div><div><h2 id="eduProfileName">Profesor</h2><p id="eduProfileEmail" class="text-muted"></p><p class="text-muted">Docente · <span id="eduProfileSchool"></span></p><p class="text-muted">Cambia tu fotografía sin modificar los datos del colegio.</p><form id="eduPhotoForm" class="edu-photo-form"><label class="btn-primary edu-photo-btn" for="eduPhotoFile"><i class="fas fa-camera"></i> Seleccionar fotografía</label><input type="file" id="eduPhotoFile" accept="image/jpeg,image/png,image/webp" hidden><button class="btn-secondary" type="submit" id="eduPhotoSave">Guardar foto</button><small id="eduPhotoStatus" role="status"></small></form></div></div></div></div>
+
             <!-- HORARIO -->
-            <div id="page-horario" class="page-content">
+            <div id="page-horario" class="page-content"><div class="edu-hero"><div class="edu-hero-icon"><i class="fas fa-calendar-alt"></i></div><div><h2>Mi horario</h2><p>Consulta tu programación de clases</p></div></div>
                 <div class="page-header">
                     <h2><i class="fas fa-calendar-alt" style="color: var(--primary);"></i> Mi Horario</h2>
                 </div>
@@ -537,7 +583,7 @@
             </div>
 
             <!-- MIS CURSOS -->
-            <div id="page-cursos" class="page-content">
+            <div id="page-cursos" class="page-content"><div class="edu-hero"><div class="edu-hero-icon"><i class="fas fa-users"></i></div><div><h2>Mis cursos</h2><p>Asignaturas y grupos asignados</p></div></div>
                 <div class="page-header">
                     <h2><i class="fas fa-users" style="color: var(--primary);"></i> Mis Cursos</h2>
                 </div>
@@ -568,7 +614,7 @@
             </div>
 
             <!-- ESTUDIANTES -->
-            <div id="page-estudiantes" class="page-content">
+            <div id="page-estudiantes" class="page-content"><div class="edu-hero"><div class="edu-hero-icon"><i class="fas fa-user-graduate"></i></div><div><h2>Estudiantes</h2><p>Consulta los estudiantes de tus cursos</p></div></div>
                 <div class="page-header">
                     <h2><i class="fas fa-user-graduate" style="color: var(--primary);"></i> Estudiantes</h2>
                 </div>
@@ -613,7 +659,7 @@
             </div>
 
             <!-- ACTIVIDADES -->
-            <div id="page-actividades" class="page-content">
+            <div id="page-actividades" class="page-content"><div class="edu-hero"><div class="edu-hero-icon"><i class="fas fa-tasks"></i></div><div><h2>Actividades</h2><p>Crea y gestiona las actividades de tus asignaturas</p></div></div>
                 <div class="page-header">
                     <h2><i class="fas fa-tasks" style="color: var(--primary);"></i> Actividades</h2>
                     <button class="btn-primary" id="btnCrearActividadDirecta">
@@ -623,7 +669,7 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <div class="filtros-secciones">
+                        <div id="eduActivityCourses" class="edu-course-tabs" aria-label="Cursos asignados"></div><div class="filtros-secciones">
                             <div class="filtro-item">
                                 <label style="display: block; font-size: 0.8rem; font-weight: 500; margin-bottom: 4px;">Curso</label>
                                 <select id="actividadFiltroCurso" class="form-control">
@@ -661,7 +707,7 @@
             </div>
 
             <!-- SECCIONES -->
-            <div id="page-secciones" class="page-content">
+            <div id="page-secciones" class="page-content"><div class="edu-hero"><div class="edu-hero-icon"><i class="fas fa-layer-group"></i></div><div><h2>Secciones de evaluación</h2><p>Organiza los componentes de evaluación</p></div></div>
                 <div class="page-header">
                     <h2><i class="fas fa-layer-group" style="color: var(--primary);"></i> Secciones de Evaluación</h2>
                     <button class="btn-primary" id="btnCrearSeccion">
@@ -701,7 +747,7 @@
             </div>
 
             <!-- PLANILLA -->
-            <div id="page-planilla" class="page-content">
+            <div id="page-planilla" class="page-content"><div class="edu-hero"><div class="edu-hero-icon"><i class="fas fa-table"></i></div><div><h2>Planilla de notas</h2><p>Registra y consulta calificaciones</p></div></div>
                 <div class="page-header">
                     <h2><i class="fas fa-table" style="color: var(--primary);"></i> Planilla de Notas</h2>
                 </div>
@@ -777,7 +823,7 @@
             </div>
 
             <!-- ENTREGAS -->
-            <div id="page-entregas" class="page-content">
+            <div id="page-entregas" class="page-content"><div class="edu-hero"><div class="edu-hero-icon"><i class="fas fa-file-upload"></i></div><div><h2>Entregas</h2><p>Revisa los trabajos entregados</p></div></div>
                 <div class="page-header">
                     <h2><i class="fas fa-file-upload" style="color: var(--primary);"></i> Entregas de Estudiantes</h2>
                 </div>
@@ -820,7 +866,7 @@
             </div>
 
             <!-- ASISTENCIA -->
-            <div id="page-asistencia" class="page-content">
+            <div id="page-asistencia" class="page-content"><div class="edu-hero"><div class="edu-hero-icon"><i class="fas fa-clipboard-check"></i></div><div><h2>Asistencia</h2><p>Registro diario de asistencia</p></div></div>
                 <div class="page-header">
                     <h2><i class="fas fa-clipboard-check" style="color: var(--primary);"></i> Asistencia</h2>
                 </div>
@@ -881,7 +927,7 @@
             </div>
 
             <!-- OBSERVACIONES -->
-            <div id="page-observaciones" class="page-content">
+            <div id="page-observaciones" class="page-content"><div class="edu-hero"><div class="edu-hero-icon"><i class="fas fa-comment"></i></div><div><h2>Observaciones</h2><p>Seguimiento de estudiantes</p></div></div>
                 <div class="page-header">
                     <h2><i class="fas fa-comment" style="color: var(--primary);"></i> Observaciones</h2>
                     <button class="btn-primary" id="btnCrearObservacion">
@@ -933,7 +979,7 @@
             </div>
 
             <!-- EVALUACIONES -->
-            <div id="page-evaluaciones" class="page-content">
+            <div id="page-evaluaciones" class="page-content"><div class="edu-hero"><div class="edu-hero-icon"><i class="fas fa-pencil-alt"></i></div><div><h2>Evaluaciones</h2><p>Gestiona evaluaciones y resultados</p></div></div>
                 <div class="page-header">
                     <h2><i class="fas fa-pencil-alt" style="color: var(--primary);"></i> Evaluaciones</h2>
                     <button class="btn-primary" id="btnCrearEvaluacion">
@@ -1411,7 +1457,7 @@
         import { initializeApp } from "firebase/app";
         import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
         import { getFirestore, doc, getDoc, collection, getDocs, addDoc, updateDoc, deleteDoc,
-            query, where, serverTimestamp, orderBy, setDoc } from "firebase/firestore";
+            query, where, serverTimestamp, orderBy, setDoc, onSnapshot, limit } from "firebase/firestore";
         import { getStorage, ref, uploadBytesResumable, getDownloadURL, deleteObject } from "firebase/storage";
 
         const firebaseConfig = {
@@ -1556,25 +1602,24 @@
         // =============================================
         // HELPERS FIREBASE
         // =============================================
+        let eduCursosFetchedAt=0;
         async function obtenerCursosDelProfesor() {
+            if(cursosProfesorCache?.length && Date.now()-eduCursosFetchedAt<45000){
+                return {cursosList:cursosProfesorCache,cursosMap:Object.fromEntries(cursosProfesorCache.map(c=>[c.id,c.nombre]))};
+            }
             const cursosMap = {};
             const cursosList = [];
             try {
                 const q = query(collection(db, 'colegios', colegioId, 'horarios'), where('profesorId', '==', profesorId));
                 const snap = await getDocs(q);
-                for (const docSnap of snap.docs) {
-                    const h = docSnap.data();
-                    if (h.cursoId && !cursosMap[h.cursoId]) {
-                        let nombre = 'Curso sin nombre';
-                        try {
-                            const cursoDoc = await getDoc(doc(db, 'colegios', colegioId, 'cursos', h.cursoId));
-                            if (cursoDoc.exists()) nombre = cursoDoc.data().nombre || 'Curso sin nombre';
-                        } catch (e) {}
-                        cursosMap[h.cursoId] = nombre;
-                        cursosList.push({ id: h.cursoId, nombre: nombre });
-                    }
-                }
-                cursosProfesorCache = cursosList;
+                const porId=new Map();
+                snap.docs.forEach(d=>{const h=d.data();if(h.cursoId&&!porId.has(h.cursoId))porId.set(h.cursoId,h.cursoNombre||'')});
+                await Promise.all([...porId].map(async ([id,nombre])=>{
+                    if(!nombre){try{const cursoDoc=await getDoc(doc(db,'colegios',colegioId,'cursos',id));nombre=cursoDoc.data()?.nombre||'Curso'}catch{nombre='Curso'}}
+                    cursosMap[id]=nombre;cursosList.push({id,nombre});
+                }));
+                cursosList.sort((a,b)=>a.nombre.localeCompare(b.nombre,'es',{numeric:true}));
+                cursosProfesorCache = cursosList;eduCursosFetchedAt=Date.now();
             } catch (error) { console.error('Error obteniendo cursos:', error); }
             return { cursosMap, cursosList };
         }
@@ -1928,6 +1973,7 @@
                     aplicarColoresColegio(data.colorPrimario);
                     aplicarLogo(data.logoUrl);
                     document.getElementById('colegioNombreSidebar').textContent = data.nombre || 'Colegio';
+                    document.getElementById('eduInstitutionName').textContent = data.nombre || 'Colegio';
                     document.getElementById('bienvenida').textContent = `Bienvenido, ${usuarioActual?.nombre || 'Profesor'}`;
                     document.getElementById('infoColegio').textContent = `Colegio: ${data.nombre || 'Sin nombre'} - ${data.ciudad || ''}`;
                 }
@@ -2092,7 +2138,7 @@
         // =============================================
         // HORARIO
         // =============================================
-        async function cargarHorario() {
+        async function eduOriginal_cargarHorario() {
             const container = document.getElementById('horarioContainer');
             try {
                 const q = query(collection(db, 'colegios', colegioId, 'horarios'), where('profesorId', '==', profesorId));
@@ -2198,7 +2244,7 @@
         // =============================================
         // MIS CURSOS
         // =============================================
-        async function cargarCursosProfesor() {
+        async function eduOriginal_cargarCursosProfesor() {
             const tbody = document.getElementById('tablaCursosProfesor');
             try {
                 const q = query(collection(db, 'colegios', colegioId, 'horarios'), where('profesorId', '==', profesorId));
@@ -2287,87 +2333,50 @@
         // =============================================
         // ESTUDIANTES
         // =============================================
-        async function cargarEstudiantesProfesor() {
+        let eduStudentsCache = null;
+        let eduStudentCourseFilter = '';
+        let eduStudentSearchTimer = null;
+        async function eduOriginal_cargarEstudiantesProfesor(force=false) {
             const tbody = document.getElementById('tablaEstudiantesProfesor');
-            const filtroCurso = document.getElementById('estudianteFiltroCurso');
-            const buscarInput = document.getElementById('estudianteBuscar');
-
+            const filtro = document.getElementById('estudianteFiltroCurso');
+            const busca = document.getElementById('estudianteBuscar');
+            if (!colegioId) return;
+            tbody.innerHTML = '<tr><td colspan="7" class="text-center"><span class="spinner-sm spinner-dark"></span> Cargando estudiantes...</td></tr>';
             try {
-                const { cursosList } = await obtenerCursosDelProfesor();
-                filtroCurso.innerHTML = '<option value="">Todos los cursos</option>';
-                cursosList.forEach(curso => filtroCurso.innerHTML += `<option value="${curso.id}">${curso.nombre}</option>`);
-
-                let estudiantesMap = {};
-                for (const curso of cursosList) {
-                    const matQ = query(collection(db, 'colegios', colegioId, 'matriculas'), where('cursoId', '==', curso.id), where('estado', '==', 'activo'));
-                    const matSnap = await getDocs(matQ);
-                    for (const docSnap of matSnap.docs) {
-                        const mat = docSnap.data();
-                        if (!estudiantesMap[mat.estudianteId]) {
-                            estudiantesMap[mat.estudianteId] = { estudianteId: mat.estudianteId, cursoId: curso.id, cursoNombre: curso.nombre };
-                        }
-                    }
+                if(force || !eduStudentsCache){
+                    const {cursosList} = await obtenerCursosDelProfesor();
+                    const matriculas = await Promise.all(cursosList.map(async c => {
+                        const snap = await getDocs(query(collection(db,'colegios',colegioId,'matriculas'),where('cursoId','==',c.id),where('estado','==','activo')));
+                        return snap.docs.map(d=>({ ...d.data(), cursoId:c.id, cursoNombre:c.nombre }));
+                    }));
+                    const map = new Map();
+                    matriculas.flat().forEach(m=>{if(m.estudianteId && !map.has(m.estudianteId))map.set(m.estudianteId,m)});
+                    const all = await Promise.all(Array.from(map.entries()).map(async ([id,m]) => {
+                        try{const d=await getDoc(doc(db,'colegios',colegioId,'estudiantes',id));return d.exists()?{id,...d.data(),cursoId:m.cursoId,cursoNombre:m.cursoNombre}:null}catch{return null}
+                    }));
+                    eduStudentsCache={cursos:cursosList,estudiantes:all.filter(Boolean)};
                 }
-
-                const filtroVal = filtroCurso.value;
-                if (filtroVal) {
-                    estudiantesMap = Object.fromEntries(Object.entries(estudiantesMap).filter(([k, v]) => v.cursoId === filtroVal));
+                const before=filtro.value;
+                filtro.replaceChildren(new Option('Todos los cursos',''));
+                eduStudentsCache.cursos.forEach(c=>filtro.add(new Option(c.nombre,c.id)));
+                filtro.value=before;
+                const q=busca.value.trim().toLocaleLowerCase('es');
+                const visibles=eduStudentsCache.estudiantes.filter(e=>(!filtro.value || e.cursoId===filtro.value)&&(`${e.nombres||''} ${e.apellidos||''} ${e.documento||''}`).toLocaleLowerCase('es').includes(q));
+                tbody.replaceChildren();
+                if(!visibles.length)tbody.innerHTML='<tr><td colspan="7" class="text-center text-muted">Sin estudiantes para estos filtros.</td></tr>';
+                for(const [index,est] of visibles.entries()){
+                    const tr=document.createElement('tr');
+                    const name=[est.nombres,est.apellidos].filter(Boolean).join(' ');
+                    const tdIndex=document.createElement('td');tdIndex.textContent=index+1;tr.appendChild(tdIndex);
+                    const tdName=document.createElement('td');tdName.className='edu-student-name';tdName.append(eduAvatar(name,est.fotoPerfilUrl||est.fotoUrl||est.fotografiaUrl));const txt=document.createElement('span');txt.textContent=est.nombres||'-';tdName.append(txt);tr.append(tdName);
+                    for(const t of [est.apellidos||'-',est.documento||'-',est.acudiente||est.nombreAcudiente||'-',est.cursoNombre||'-']){const td=document.createElement('td');td.textContent=t;tr.append(td)}
+                    const tdAction=document.createElement('td');const btn=document.createElement('button');btn.className='btn-primary btn-sm';btn.title='Ver entregas';btn.innerHTML='<i class="fas fa-folder-open"></i> Entregas';btn.onclick=()=>{eduGoPage('entregas');const select=document.getElementById('entregaFiltroCurso');if(select){select.value=est.cursoId;select.dispatchEvent(new Event('change'))}};tdAction.append(btn);tr.append(tdAction);tbody.append(tr);
                 }
-
-                if (Object.keys(estudiantesMap).length === 0) {
-                    tbody.innerHTML = `<tr><td colspan="7" class="text-center text-muted">No hay estudiantes en tus cursos.</td></tr>`;
-                    return;
-                }
-
-                let html = '';
-                let i = 1;
-                const buscar = buscarInput.value.toLowerCase();
-
-                for (const [estId, data] of Object.entries(estudiantesMap)) {
-                    const estDoc = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', estId));
-                    if (!estDoc.exists()) continue;
-                    const est = estDoc.data();
-                    const nombreCompleto = `${est.nombres || ''} ${est.apellidos || ''}`.toLowerCase();
-                    if (buscar && !nombreCompleto.includes(buscar)) continue;
-
-                    html += `
-                        <tr>
-                            <td>${i++}</td>
-                            <td>${est.nombres || '-'}</td>
-                            <td>${est.apellidos || '-'}</td>
-                            <td>${est.documento || '-'}</td>
-                            <td>${est.acudiente || '-'}</td>
-                            <td>${data.cursoNombre || 'Sin curso'}</td>
-                            <td>
-                                <button class="btn-primary btn-sm" onclick="window.verEntregasEstudiante('${estId}')" title="Ver entregas"><i class="fas fa-file-upload"></i></button>
-                            </td>
-                        </tr>
-                    `;
-                }
-                tbody.innerHTML = html;
-
-                window.verEntregasEstudiante = (estudianteId) => {
-                    document.querySelector('.sidebar-nav a[data-page="entregas"]').click();
-                    setTimeout(() => {
-                        const cursoSelect = document.getElementById('entregaFiltroCurso');
-                        for (let [key, val] of Object.entries(estudiantesMap)) {
-                            if (key === estudianteId) {
-                                for (let option of cursoSelect.options) {
-                                    if (option.value === val.cursoId) { cursoSelect.value = val.cursoId; break; }
-                                }
-                                cursoSelect.dispatchEvent(new Event('change'));
-                                break;
-                            }
-                        }
-                    }, 500);
-                };
-            } catch (error) {
-                tbody.innerHTML = `<tr><td colspan="7" class="text-center text-danger">Error: ${error.message}</td></tr>`;
-            }
+                document.getElementById('eduEstudiantesCount')?.replaceChildren(document.createTextNode(visibles.length+' estudiantes'));
+            }catch(error){tbody.innerHTML='<tr><td colspan="7" class="text-center text-danger">No se pudieron cargar los estudiantes. '+eduEsc(error.message)+'</td></tr>'}
         }
-
-        document.getElementById('estudianteFiltroCurso')?.addEventListener('change', cargarEstudiantesProfesor);
-        document.getElementById('estudianteBuscar')?.addEventListener('input', cargarEstudiantesProfesor);
+        document.getElementById('estudianteFiltroCurso')?.addEventListener('change',()=>cargarEstudiantesProfesor());
+        document.getElementById('estudianteBuscar')?.addEventListener('input',()=>{clearTimeout(eduStudentSearchTimer);eduStudentSearchTimer=setTimeout(()=>cargarEstudiantesProfesor(),180)});
 
         // =============================================
         // SECCIONES
@@ -2409,7 +2418,7 @@
             }
         }
 
-        async function cargarSecciones() {
+        async function eduOriginal_cargarSecciones() {
             const container = document.getElementById('seccionesContainer');
             const filtroCurso = document.getElementById('seccionFiltroCurso');
             const filtroAsig = document.getElementById('seccionFiltroAsignatura');
@@ -2417,17 +2426,19 @@
 
             try {
                 const { cursosList } = await obtenerCursosDelProfesor();
+                const prevCurso = filtroCurso.value;
                 filtroCurso.innerHTML = '<option value="">Todos los cursos</option>';
                 cursosList.forEach(curso => filtroCurso.innerHTML += `<option value="${curso.id}">${curso.nombre}</option>`);
+                if (cursosList.some(c => c.id === prevCurso)) filtroCurso.value = prevCurso;
 
-                filtroCurso.onchange = async () => {
-                    const cursoId = filtroCurso.value;
-                    filtroAsig.innerHTML = '<option value="">Todas las asignaturas</option>';
-                    if (cursoId) {
-                        const asignaturas = await obtenerAsignaturasPorCurso(cursoId);
-                        asignaturas.forEach(asig => filtroAsig.innerHTML += `<option value="${asig.id}">${asig.nombre}</option>`);
-                    }
-                };
+                const prevAsignatura = filtroAsig.value;
+                const asignaturasPosibles = new Map();
+                const cursosAsignados = filtroCurso.value ? cursosList.filter(c=>c.id===filtroCurso.value) : cursosList;
+                const listas = await Promise.all(cursosAsignados.map(c=>obtenerAsignaturasPorCurso(c.id)));
+                listas.flat().forEach(asig=>asignaturasPosibles.set(asig.id,asig));
+                filtroAsig.innerHTML = '<option value="">Todas las asignaturas</option>';
+                asignaturasPosibles.forEach(asig=>{const op=document.createElement('option');op.value=asig.id;op.textContent=asig.nombre;filtroAsig.appendChild(op)});
+                if(asignaturasPosibles.has(prevAsignatura)) filtroAsig.value=prevAsignatura;
 
                 let q = query(collection(db, 'colegios', colegioId, 'secciones'), where('profesorId', '==', profesorId));
                 const cursoVal = filtroCurso.value;
@@ -2706,7 +2717,7 @@
         // =============================================
         // MENÚ ACTIVIDADES
         // =============================================
-        async function cargarMenuActividades() {
+        async function eduOriginal_cargarMenuActividades() {
             const container = document.getElementById('actividadesContainer');
             const filtroCurso = document.getElementById('actividadFiltroCurso');
             const filtroAsig = document.getElementById('actividadFiltroAsignatura');
@@ -2715,17 +2726,19 @@
 
             try {
                 const { cursosList } = await obtenerCursosDelProfesor();
+                const prevCurso = filtroCurso.value;
                 filtroCurso.innerHTML = '<option value="">Todos los cursos</option>';
                 cursosList.forEach(curso => filtroCurso.innerHTML += `<option value="${curso.id}">${curso.nombre}</option>`);
+                if (cursosList.some(c => c.id === prevCurso)) filtroCurso.value = prevCurso;
 
-                filtroCurso.onchange = async () => {
-                    const cursoId = filtroCurso.value;
-                    filtroAsig.innerHTML = '<option value="">Todas las asignaturas</option>';
-                    if (cursoId) {
-                        const asignaturas = await obtenerAsignaturasPorCurso(cursoId);
-                        asignaturas.forEach(asig => filtroAsig.innerHTML += `<option value="${asig.id}">${asig.nombre}</option>`);
-                    }
-                };
+                const prevAsignatura = filtroAsig.value;
+                const asignaturasPosibles = new Map();
+                const cursosAsignados = filtroCurso.value ? cursosList.filter(c=>c.id===filtroCurso.value) : cursosList;
+                const listas = await Promise.all(cursosAsignados.map(c=>obtenerAsignaturasPorCurso(c.id)));
+                listas.flat().forEach(asig=>asignaturasPosibles.set(asig.id,asig));
+                filtroAsig.innerHTML = '<option value="">Todas las asignaturas</option>';
+                asignaturasPosibles.forEach(asig=>{const op=document.createElement('option');op.value=asig.id;op.textContent=asig.nombre;filtroAsig.appendChild(op)});
+                if(asignaturasPosibles.has(prevAsignatura)) filtroAsig.value=prevAsignatura;
 
                 let q = query(collection(db, 'colegios', colegioId, 'actividades'), where('profesorId', '==', profesorId));
                 const cursoVal = filtroCurso.value;
@@ -3143,7 +3156,7 @@
             await cargarPlanilla(cursoId, asignaturaId, parseInt(periodo));
         });
 
-        async function cargarPlanilla(cursoId, asignaturaId, periodo) {
+        async function eduOriginal_cargarPlanilla(cursoId, asignaturaId, periodo) {
             const tbody = document.getElementById('tablaPlanilla');
             const container = document.getElementById('planillaContainer');
             const thead = document.getElementById('planillaThead');
@@ -3344,6 +3357,7 @@
             const inputs = document.querySelectorAll('.nota-input');
             const notasGuardar = [];
             inputs.forEach(input => {
+                if (input.dataset.dirty !== 'true') return;
                 const estudianteId = input.dataset.estudiante;
                 const actividadId = input.dataset.actividad;
                 const valor = parseFloat(input.value);
@@ -3358,20 +3372,21 @@
             btn.innerHTML = '<span class="spinner-sm"></span> Guardando...';
 
             try {
+                // Consultar notas una sola vez por estudiante; escrituras concurrentes limitadas.
                 let guardadas = 0;
-                for (const nota of notasGuardar) {
-                    const q = query(collection(db, 'colegios', colegioId, 'notas'), where('estudianteId', '==', nota.estudianteId), where('actividadId', '==', nota.actividadId));
-                    const snap = await getDocs(q);
-                    if (!snap.empty) {
-                        await updateDoc(snap.docs[0].ref, { valor: nota.valor, fechaActualizacion: serverTimestamp() });
-                    } else {
-                        await addDoc(collection(db, 'colegios', colegioId, 'notas'), {
-                            estudianteId: nota.estudianteId, actividadId: nota.actividadId,
-                            valor: nota.valor, profesorId, fechaRegistro: serverTimestamp()
-                        });
-                    }
-                    guardadas++;
+                const agrupadas = new Map();
+                notasGuardar.forEach(n => { if(!agrupadas.has(n.estudianteId)) agrupadas.set(n.estudianteId, []); agrupadas.get(n.estudianteId).push(n); });
+                const trabajo = [];
+                for (const [eid, notas] of agrupadas) {
+                    const snap = await getDocs(query(collection(db,'colegios',colegioId,'notas'),where('estudianteId','==',eid)));
+                    const existentes = new Map(snap.docs.map(d=>[d.data().actividadId,d.ref]));
+                    for(const n of notas){ trabajo.push(async()=>{ const refExistente=existentes.get(n.actividadId);
+                        if(refExistente) await updateDoc(refExistente,{valor:n.valor,fechaActualizacion:serverTimestamp()});
+                        else await addDoc(collection(db,'colegios',colegioId,'notas'),{estudianteId:eid,actividadId:n.actividadId,valor:n.valor,profesorId,fechaRegistro:serverTimestamp()});
+                        guardadas++; }); }
                 }
+                for(let i=0;i<trabajo.length;i+=8) await Promise.all(trabajo.slice(i,i+8).map(fn=>fn()));
+                document.querySelectorAll('.nota-input[data-dirty="true"]').forEach(el=>{el.dataset.dirty='false';el.classList.remove('edu-unsaved')});
                 showToast(`✅ ${guardadas} notas guardadas`, 'success');
                 document.getElementById('btnCargarPlanilla').click();
             } catch (error) {
@@ -3385,7 +3400,7 @@
         // =============================================
         // ENTREGAS (con soporte para virtuales y filtro por periodo)
         // =============================================
-        async function cargarFiltrosEntregas() {
+        async function eduOriginal_cargarFiltrosEntregas() {
             const filtroCurso = document.getElementById('entregaFiltroCurso');
             const filtroAsig = document.getElementById('entregaFiltroAsignatura');
             try {
@@ -3625,6 +3640,25 @@
                     }
                 };
 
+// Planilla editable: resaltar cambios y permitir guardar notas sin perder lo escrito.
+document.addEventListener('input', event => {
+ if (!event.target.matches('.nota-input')) return;
+ event.target.dataset.dirty='true';event.target.classList.add('edu-unsaved');
+ const boton=document.getElementById('btnGuardarPlanilla'); if(boton) boton.innerHTML='<i class="fas fa-save"></i> Guardar cambios pendientes';
+});
+// En Entregas, guardar al terminar de editar la nota, sin pulsar un botón por estudiante.
+document.addEventListener('change', async event => {
+ const input=event.target;
+ if(!input.matches('input[id^="nota-"]') || input.disabled || input.value.trim()==='') return;
+ const match=/^nota-(.+)-(.+)$/.exec(input.id);if(!match)return;
+ const valor=Number(input.value);
+ if(!Number.isFinite(valor)||valor<0||valor>5){showToast('La nota debe estar entre 0 y 5','warning');return;}
+ if(input.dataset.lastSaved===input.value)return;
+ input.disabled=true;input.classList.add('edu-saving');
+ try {await window.guardarNotaPresencial(match[1],match[2]);input.dataset.lastSaved=input.value;}
+ catch(e){console.error('Error al guardar nota desde Entregas',e)}
+ finally {input.disabled=false;input.classList.remove('edu-saving');}
+});
 window.guardarNotaPresencial = async (estudianteId, actividadId) => {
     const input = document.getElementById(`nota-${estudianteId}-${actividadId}`);
     if (!input) return;
@@ -3656,7 +3690,7 @@ window.guardarNotaPresencial = async (estudianteId, actividadId) => {
         // Si NO existe entrega y es presencial, no pasa nada — la nota ya quedó guardada en /notas
 
         showToast('✅ Nota guardada', 'success');
-    } catch (error) { showToast('❌ ' + error.message, 'error'); }
+    } catch (error) { showToast('❌ ' + error.message, 'error'); throw error; }
 };
 
                 window.verDetalleEntrega = async (entregaId) => {
@@ -3715,7 +3749,7 @@ window.guardarNotaPresencial = async (estudianteId, actividadId) => {
                 // =============================================
         // ASISTENCIA
         // =============================================
-        async function cargarAsistencia() {
+        async function eduOriginal_cargarAsistencia() {
             const cursoSelect = document.getElementById('asistenciaCurso');
             try {
                 const { cursosList } = await obtenerCursosDelProfesor();
@@ -3833,7 +3867,7 @@ window.guardarNotaPresencial = async (estudianteId, actividadId) => {
         // =============================================
         // OBSERVACIONES
         // =============================================
-        async function cargarObservaciones() {
+        async function eduOriginal_cargarObservaciones() {
             const tbody = document.getElementById('tablaObservaciones');
             const filtroCurso = document.getElementById('observacionFiltroCurso');
             const filtroEstudiante = document.getElementById('observacionFiltroEstudiante');
@@ -3996,7 +4030,7 @@ window.guardarNotaPresencial = async (estudianteId, actividadId) => {
         // =============================================
         // EVALUACIONES VIRTUALES
         // =============================================
-        async function cargarEvaluaciones() {
+        async function eduOriginal_cargarEvaluaciones() {
             const container = document.getElementById('evaluacionesContainer');
             const filtroCurso = document.getElementById('evalFiltroCurso');
             const filtroAsig = document.getElementById('evalFiltroAsignatura');
@@ -4470,7 +4504,7 @@ window.guardarNotaPresencial = async (estudianteId, actividadId) => {
                 if (page === 'horario') cargarHorario();
                 if (page === 'cursos') cargarCursosProfesor();
                 if (page === 'estudiantes') cargarEstudiantesProfesor();
-                if (page === 'actividades') cargarMenuActividades();
+                if (page === 'actividades') { cargarMenuActividades(); eduShowActivityCourses(); }
                 if (page === 'secciones') cargarSecciones();
                 if (page === 'planilla') cargarSelectoresPlanilla();
                 if (page === 'entregas') cargarFiltrosEntregas();
@@ -4480,6 +4514,155 @@ window.guardarNotaPresencial = async (estudianteId, actividadId) => {
             });
         });
 
+
+// NUEVA NAVEGACIÓN: misma acción de los enlaces originales (conservados internamente)
+const eduGoPage = (page) => {
+ if(['chat','comunicados','perfil'].includes(page)){
+  pages.forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+page)?.classList.add('active');
+  pageTitle.textContent={chat:'Chat',comunicados:'Comunicados',perfil:'Mi perfil'}[page]||page;
+  if(page==='chat'){eduLoadGroups();eduLoadContacts();eduLoadChatHistory();}
+  if(page==='comunicados') eduLoadAnnouncements();
+  if(page==='perfil') eduUpdateProfile();
+ } else document.querySelector(`.sidebar-nav a[data-page="${page}"]`)?.click();
+ document.querySelectorAll('.edu-topnav details').forEach(d=>d.open=false);
+ document.querySelectorAll('[data-prof-page]').forEach(a=>a.classList.toggle('selected',a.dataset.profPage===page));
+ window.scrollTo({top:0,behavior:'smooth'});
+};
+document.querySelectorAll('[data-prof-page]').forEach(b=>b.addEventListener('click',e=>{e.preventDefault();eduGoPage(b.dataset.profPage);eduCloseMenu()}));
+// Menú: mantener solamente un desplegable abierto en escritorio y móvil.
+document.querySelectorAll('#eduTopNav details').forEach(menu => {
+ menu.addEventListener('toggle', () => { if (menu.open) document.querySelectorAll('#eduTopNav details').forEach(other => { if (other !== menu) other.open = false; }); });
+});
+document.addEventListener('pointerdown', event => {
+ const nav = document.getElementById('eduTopNav');
+ if (nav && !nav.contains(event.target) && !document.getElementById('eduMobileMenu')?.contains(event.target)) eduCloseMenu();
+});
+function eduCloseMenu(){document.getElementById('eduTopNav')?.classList.remove('mobile-open');document.getElementById('eduMobileMenu')?.setAttribute('aria-expanded','false');document.querySelectorAll('#eduTopNav details').forEach(d=>d.open=false)}
+document.getElementById('eduMobileMenu')?.addEventListener('click',()=>{const nav=document.getElementById('eduTopNav');const opened=nav.classList.toggle('mobile-open');document.getElementById('eduMobileMenu').setAttribute('aria-expanded',String(opened))});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')eduCloseMenu()});
+let eduChatUnsub=null, eduAnnouncementsUnsub=null, eduSelectedContact=null, eduSelectedGroup=null;
+const eduEsc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const eduUid=()=>auth.currentUser?.uid||'';
+const eduDate=t=>{try{return(t?.toDate?t.toDate():new Date(t)).toLocaleString('es-CO')}catch{return ''}};
+const eduAvatar=(name,url)=>{const el=document.createElement('span');el.className='edu-mini-avatar';if(url){const i=document.createElement('img');i.src=url;i.alt='';i.className='edu-mini-avatar';el.appendChild(i)}else el.textContent=(name||'?').slice(0,1).toUpperCase();return el};
+
+async function eduLoadGroups(){
+ const host=document.getElementById('eduChatGroups');if(!host)return;
+ host.textContent='Cargando grupos de mis cursos...';
+ try{
+  const {cursosList}=await obtenerCursosDelProfesor();host.replaceChildren();
+  const label=document.createElement('h3');label.textContent='Grupos de curso';host.appendChild(label);
+  for(const c of cursosList){
+    const button=document.createElement('button');button.type='button';button.className='edu-group-option';
+    button.innerHTML='<i class="fas fa-users"></i> ';button.append(document.createTextNode('Curso '+c.nombre));
+    button.addEventListener('click',()=>eduOpenGroup(c));host.append(button);
+  }
+  if(!cursosList.length)host.textContent='No tienes cursos asignados.';
+ }catch(e){host.textContent='No se pudieron obtener los grupos: '+e.message}
+}
+async function eduOpenGroup(curso){
+ eduSelectedContact=null;eduSelectedGroup={id:'curso_'+curso.id,cursoId:curso.id};
+ eduChatUnsub?.();const host=document.getElementById('eduChatMessages');host.textContent='Cargando mensajes del curso...';
+ document.getElementById('eduChatPerson').textContent='Grupo · '+curso.nombre;
+ const groupRef=doc(db,'colegios',colegioId,'chatGrupos',eduSelectedGroup.id);
+ try{
+  const group=await getDoc(groupRef);
+  if(!group.exists())await setDoc(groupRef,{colegioId,cursoId:curso.id,profesores:[eduUid()],creadoEn:serverTimestamp()});
+  eduChatUnsub=onSnapshot(query(collection(groupRef,'mensajes'),orderBy('creadoEn','asc'),limit(100)),snap=>{
+    host.replaceChildren();for(const row of snap.docs){const m=row.data(),bubble=document.createElement('div');bubble.className='edu-bubble'+(m.remitenteUid===eduUid()?' mine':'');
+      const text=document.createElement('p');text.textContent=m.texto||'';bubble.append(text);
+      if(m.imagenUrl){const img=document.createElement('img');img.src=m.imagenUrl;img.alt='Imagen del grupo';bubble.append(img)}
+      if(m.archivoUrl){const link=document.createElement('a');link.href=m.archivoUrl;link.target='_blank';link.rel='noopener noreferrer';link.textContent=m.archivoNombre||'Adjunto';bubble.append(link)}
+      const small=document.createElement('small');small.textContent=eduDate(m.creadoEn);bubble.append(small);host.append(bubble)
+    }host.scrollTop=host.scrollHeight;
+  },err=>host.textContent='No se pudo consultar el grupo: '+err.message);
+ }catch(err){host.textContent='No se pudo abrir el grupo: '+err.message}
+}
+// Historial personal: consultar exclusivamente conversaciones del usuario autenticado.
+let eduChatHistoryUnsub=null;
+function eduLoadChatHistory(){
+ const host=document.getElementById('eduChatHistory');if(!host||!colegioId||!eduUid())return;
+ host.textContent='Cargando conversaciones...';eduChatHistoryUnsub?.();
+ eduChatHistoryUnsub=onSnapshot(query(collection(db,'colegios',colegioId,'chats'),where('participantes','array-contains',eduUid()),limit(50)), snap=>{
+  host.replaceChildren();
+  for(const row of snap.docs){const d=row.data(),other=(d.participantes||[]).find(id=>id!==eduUid());if(!other)continue;
+   const btn=document.createElement('button');btn.type='button';btn.className='edu-history-item';
+   const name=(eduChatKnownContacts||[]).find(x=>x.uid===other)?.nombre||'Conversación '+other.slice(0,7);
+   btn.textContent=name+(d.ultimoMensaje?' · '+String(d.ultimoMensaje).slice(0,35):'');
+   btn.onclick=()=>eduOpenChat({uid:other,nombre:name});host.append(btn);
+  }
+  if(!snap.size)host.textContent='Aún no tienes conversaciones privadas.';
+ },e=>host.textContent='No se pudo consultar el historial: '+e.message);
+}
+let eduChatKnownContacts=[];
+async function eduLoadContacts(){
+ const host=document.getElementById('eduChatContacts');host.textContent='Buscando usuarios...';
+ try{
+  const snap=await getDocs(query(collection(db,'usuarios'),where('colegioId','==',colegioId)));
+  const contacts=snap.docs.map(d=>({...d.data(),id:d.id,uid:d.data().authUid||d.data().uid||d.id})).filter(x=>x.uid!==eduUid()&&x.activo!==false);eduChatKnownContacts=contacts;eduLoadChatHistory();
+  const render=()=>{host.replaceChildren();const v=document.getElementById('eduChatSearch').value.toLowerCase().trim();let visibles=v.length>=2?contacts.filter(x=>`${x.nombre||''} ${x.rol||''}`.toLowerCase().includes(v)).slice(0,30):[];if(!visibles.length)host.textContent=v.length<2?'Escribe al menos 2 letras para buscar':'No hay contactos para esta búsqueda';for(const x of visibles){const btn=document.createElement('button');btn.appendChild(eduAvatar(x.nombre,x.fotoUrl||x.fotoPerfilUrl));const label=document.createElement('span');label.textContent=`${x.nombre||'Usuario'} · ${x.rol||'Usuario'}`;btn.appendChild(label);btn.addEventListener('click',()=>eduOpenChat(x));host.appendChild(btn)}};
+  document.getElementById('eduChatSearch').oninput=render;render();
+ }catch(e){host.textContent='No se pudo consultar usuarios: '+e.message}
+}
+async function eduOpenChat(contact){
+ eduSelectedGroup=null;eduSelectedContact=contact;const other=contact.uid||contact.authUid||contact.id;const me=eduUid();const chatId=[me,other].sort().join('_');
+ document.getElementById('eduChatPerson').textContent=contact.nombre||'Conversación';
+ const host=document.getElementById('eduChatMessages');host.textContent='Abriendo conversación...';eduChatUnsub?.();
+ try{
+  // Identificadores de autenticación para ambos participantes; no crear permisos abiertos.
+  const chatRef=doc(db,'colegios',colegioId,'chats',chatId);
+  const exists=await getDoc(chatRef);
+  if(!exists.exists())await setDoc(chatRef,{colegioId,participantes:[me,other],creadoEn:serverTimestamp()});
+  eduChatUnsub=onSnapshot(query(collection(chatRef,'mensajes'),orderBy('creadoEn','asc'),limit(150)),snap=>{
+   host.replaceChildren();for(const d of snap.docs){const m=d.data();const b=document.createElement('div');b.className='edu-bubble'+((m.remitenteUid||m.autorUid)===me?' mine':'');const t=document.createElement('div');t.textContent=m.texto||'';b.appendChild(t);if(m.imagenUrl){const img=document.createElement('img');img.src=m.imagenUrl;img.alt='Imagen adjunta';b.appendChild(img)}if(m.archivoUrl){const a=document.createElement('a');a.href=m.archivoUrl;a.target='_blank';a.rel='noopener noreferrer';a.textContent='📎 '+(m.archivoNombre||'Archivo adjunto');b.appendChild(a)}const date=document.createElement('small');date.textContent=eduDate(m.creadoEn);b.appendChild(date);host.appendChild(b)}host.scrollTop=host.scrollHeight;
+  },e=>host.textContent='Error al consultar mensajes: '+e.message);
+ }catch(e){host.textContent='No se pudo abrir el chat: '+e.message+' (revisa permisos y UIDs de usuarios)'}
+}
+const eduChatForm=document.getElementById('eduChatForm');
+eduChatForm?.addEventListener('submit',async e=>{e.preventDefault();if(!eduSelectedContact&&!eduSelectedGroup)return showToast('Selecciona un grupo o contacto','warning');const input=document.getElementById('eduChatText'),file=document.getElementById('eduChatFile').files[0];const texto=input.value.trim();if(!texto&&!file)return;const btn=eduChatForm.querySelector('button[type=submit]');btn.disabled=true;try{const other=eduSelectedContact?.uid||eduSelectedContact?.authUid||eduSelectedContact?.id;const chatId=eduSelectedGroup?eduSelectedGroup.id:[eduUid(),other].sort().join('_');const data=eduSelectedGroup?{colegioId,remitenteUid:eduUid(),texto,creadoEn:serverTimestamp(),tipo:'grupo'}:{colegioId,remitenteUid:eduUid(),destinatarioUid:other,texto,creadoEn:serverTimestamp()};if(file){if(file.size>10*1024*1024)throw Error('Archivo mayor a 10 MB');const path=`colegios/${colegioId}/chats/${chatId}/${eduUid()}/${Date.now()}_${file.name.replace(/[^a-zA-Z0-9._-]/g,'_')}`;const storageRef=ref(storage,path);const task=uploadBytesResumable(storageRef,file);await new Promise((resolve,reject)=>task.on('state_changed',()=>{},reject,resolve));const url=await getDownloadURL(storageRef);if(file.type.startsWith('image/'))data.imagenUrl=url;else{data.archivoUrl=url;data.archivoNombre=file.name}}await addDoc(eduSelectedGroup?collection(db,'colegios',colegioId,'chatGrupos',chatId,'mensajes'):collection(db,'colegios',colegioId,'chats',chatId,'mensajes'),data);input.value='';document.getElementById('eduChatFile').value='';document.getElementById('eduChatFilename').textContent='';}catch(err){showToast('No se pudo enviar: '+err.message,'error')}finally{btn.disabled=false}});
+document.getElementById('eduChatFile')?.addEventListener('change',e=>document.getElementById('eduChatFilename').textContent=e.target.files[0]?.name||'');
+function eduLoadAnnouncements(){const host=document.getElementById('eduAvisosLista');host.textContent='Cargando comunicados...';eduAnnouncementsUnsub?.();eduAnnouncementsUnsub=onSnapshot(query(collection(db,'colegios',colegioId,'comunicados'),orderBy('creadoEn','asc'),limit(100)),snap=>{host.replaceChildren();for(const d of snap.docs){const m=d.data();const b=document.createElement('article');b.className='edu-bubble';const title=document.createElement('strong');title.textContent=`${m.autorNombre||'Rectoría'} · ${m.autorRol||'Institución'}`;const text=document.createElement('p');text.textContent=m.texto||'';b.append(title,text);if(m.imagenUrl){const img=document.createElement('img');img.src=m.imagenUrl;img.alt='Adjunto';b.appendChild(img)}if(m.archivoUrl){const a=document.createElement('a');a.href=m.archivoUrl;a.target='_blank';a.rel='noopener noreferrer';a.textContent='📎 '+(m.archivoNombre||'Ver archivo');b.appendChild(a)}const small=document.createElement('small');small.textContent=eduDate(m.creadoEn);b.appendChild(small);host.appendChild(b)}host.scrollTop=host.scrollHeight;},e=>host.textContent='No se pudieron consultar los comunicados: '+e.message)}
+function eduUpdateProfile(){const u=usuarioActual||{};document.getElementById('eduProfileName').textContent=u.nombre||'Profesor';document.getElementById('eduProfileEmail').textContent=u.email||'';document.getElementById('eduProfileSchool').textContent=document.getElementById('colegioNombreSidebar').textContent;const el=document.getElementById('eduAvatarProfile');if(u.fotoUrl||u.fotoPerfilUrl){el.replaceChildren();const img=document.createElement('img');img.src=u.fotoUrl||u.fotoPerfilUrl;img.alt='Foto del profesor';el.appendChild(img)}}
+
+
+// Mejoras de interfaz del profesor: solo datos del colegio autenticado.
+let eduSchoolData={};
+async function eduSyncSchoolAppearance(){
+ if(!colegioId)return;
+ try{const d=await getDoc(doc(db,'colegios',colegioId));if(!d.exists())return;eduSchoolData=d.data();
+  const name=eduSchoolData.nombre||'Tu colegio';document.getElementById('eduWelcomeSchool').textContent=name+' · Tus cursos y actividades en un solo lugar';
+  const u=usuarioActual||{};document.getElementById('eduWelcomeTeacher').textContent='¡Bienvenido, '+(u.nombre||'Profesor')+'!';
+  const hero=document.getElementById('eduSchoolCover');const url=eduSchoolData.fotoPortadaUrl||eduSchoolData.fotoColegioUrl||'';
+  if(url){hero.style.backgroundImage=`linear-gradient(95deg,var(--primary-dark),color-mix(in srgb,var(--primary) 35%,transparent)),url("${String(url).replace(/["\\]/g,'')}")`}
+  const logo=eduSchoolData.logoUrl;if(logo){const holder=document.getElementById('eduHomeSchoolLogo');holder.replaceChildren();const img=document.createElement('img');img.src=logo;img.alt='Logo del colegio';img.style.cssText='width:100%;height:100%;object-fit:contain;border-radius:12px';holder.append(img)}
+ }catch(e){console.warn('No se pudo mostrar la portada',e)}
+}
+async function eduShowActivityCourses(){
+ const host=document.getElementById('eduActivityCourses'),filter=document.getElementById('actividadFiltroCurso');if(!host||!filter)return;
+ try{const {cursosList}=await obtenerCursosDelProfesor();host.replaceChildren();
+  for(const c of cursosList){const b=document.createElement('button');b.textContent=c.nombre;b.classList.toggle('active',filter.value===c.id);b.onclick=()=>{filter.value=c.id;filter.dispatchEvent(new Event('change'));host.querySelectorAll('button').forEach(el=>el.classList.toggle('active',el===b))};host.append(b)}
+ }catch(e){host.textContent='No se pudieron obtener los cursos';}
+}
+document.getElementById('eduPhotoFile')?.addEventListener('change',e=>{const file=e.target.files[0];document.getElementById('eduPhotoStatus').textContent=file?file.name:'';if(file&&file.type.startsWith('image/')){const el=document.getElementById('eduAvatarProfile');el.replaceChildren();const im=document.createElement('img');im.alt='Vista previa de foto';im.src=URL.createObjectURL(file);im.onload=()=>URL.revokeObjectURL(im.src);el.append(im)}});
+document.getElementById('eduPhotoForm')?.addEventListener('submit',async e=>{e.preventDefault();const file=document.getElementById('eduPhotoFile').files[0];const status=document.getElementById('eduPhotoStatus'),btn=document.getElementById('eduPhotoSave');if(!file)return status.textContent='Selecciona una foto';if(!['image/jpeg','image/png','image/webp'].includes(file.type)||file.size>3*1024*1024)return status.textContent='Formato JPG, PNG o WebP; máximo 3 MB';btn.disabled=true;status.textContent='Subiendo foto...';try{const uid=eduUid();const path=`colegios/${colegioId}/perfiles/${uid}/${Date.now()}_${file.name.replace(/[^a-zA-Z0-9._-]/g,'_')}`;const storeRef=ref(storage,path);const task=uploadBytesResumable(storeRef,file);await new Promise((ok,no)=>task.on('state_changed',()=>{},no,ok));const url=await getDownloadURL(storeRef);await updateDoc(doc(db,'usuarios',uid),{fotoPerfilUrl:url,fotoPerfilPath:path});usuarioActual.fotoPerfilUrl=url;status.textContent='Fotografía guardada';eduUpdateProfile();}catch(err){status.textContent='No se pudo guardar: '+err.message}finally{btn.disabled=false}});
+
+let eduPendingLoads=0;
+const eduBusyOverlay=()=>document.getElementById('eduGlobalBusy');
+async function eduWithLoading(label,work){
+ const overlay=eduBusyOverlay();eduPendingLoads++;if(overlay){overlay.hidden=false;overlay.querySelector('[data-busy-text]').textContent=label}
+ try{return await work()}finally{eduPendingLoads=Math.max(0,eduPendingLoads-1);if(overlay&&eduPendingLoads===0)overlay.hidden=true}
+}
+async function cargarMenuActividades(...args){return eduWithLoading('Consultando actividades',()=>eduOriginal_cargarMenuActividades(...args))}
+async function cargarSecciones(...args){return eduWithLoading('Consultando secciones',()=>eduOriginal_cargarSecciones(...args))}
+async function cargarPlanilla(...args){return eduWithLoading('Cargando planilla',()=>eduOriginal_cargarPlanilla(...args))}
+async function cargarFiltrosEntregas(...args){return eduWithLoading('Cargando entregas',()=>eduOriginal_cargarFiltrosEntregas(...args))}
+async function cargarEvaluaciones(...args){return eduWithLoading('Cargando evaluaciones',()=>eduOriginal_cargarEvaluaciones(...args))}
+async function cargarAsistencia(...args){return eduWithLoading('Consultando asistencia',()=>eduOriginal_cargarAsistencia(...args))}
+async function cargarObservaciones(...args){return eduWithLoading('Consultando observaciones',()=>eduOriginal_cargarObservaciones(...args))}
+async function cargarCursosProfesor(...args){return eduWithLoading('Cargando cursos',()=>eduOriginal_cargarCursosProfesor(...args))}
+async function cargarHorario(...args){return eduWithLoading('Cargando horario',()=>eduOriginal_cargarHorario(...args))}
+async function cargarEstudiantesProfesor(...args){return eduWithLoading('Cargando estudiantes',()=>eduOriginal_cargarEstudiantesProfesor(...args))}
         // =============================================
         // SIDEBAR
         // =============================================
@@ -4596,6 +4779,7 @@ window.guardarNotaPresencial = async (estudianteId, actividadId) => {
                 } catch (error) {}
 
                 await cargarDashboard();
+                eduSyncSchoolAppearance();
             } catch (error) {
                 console.error('Error:', error);
                 const loadingEl = document.getElementById('loadingState');

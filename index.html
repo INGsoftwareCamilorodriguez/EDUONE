@@ -1,2280 +1,1224 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="EduOne conecta directivos, docentes, estudiantes y familias en un mismo entorno digital de gestión educativa." />
-  <title>EduOne | Gestión educativa en un solo lugar</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --primary: #1a56db;
-      --primary-dark: #1e3a8a;
-      --primary-light: #3b82f6;
-      --secondary: #06b6d4;
-      --accent: #8b5cf6;
-      --background: #f0f4ff;
-      --surface: #ffffff;
-      --text: #0f172a;
-      --text-muted: #64748b;
-      --border: #e2e8f0;
-      --success: #10b981;
-      --gradient: linear-gradient(135deg, #1e3a8a 0%, #1a56db 40%, #06b6d4 100%);
-      --radius: 16px;
-      --radius-sm: 10px;
-      --shadow: 0 4px 24px rgba(26,86,219,0.10);
-      --shadow-lg: 0 12px 48px rgba(26,86,219,0.15);
-      --shadow-xl: 0 24px 64px rgba(26,86,219,0.20);
-      --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--background);
-      color: var(--text);
-      line-height: 1.6;
-      overflow-x: hidden; overflow-wrap: break-word; }
-
-    /* ── ANIMACIONES GLOBALES ── */
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(32px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeInLeft {
-      from { opacity: 0; transform: translateX(-40px); }
-      to { opacity: 1; transform: translateX(0); }
-    }
-    @keyframes fadeInRight {
-      from { opacity: 0; transform: translateX(40px); }
-      to { opacity: 1; transform: translateX(0); }
-    }
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.4; }
-    }
-    @keyframes shimmer {
-      0% { background-position: -200% center; }
-      100% { background-position: 200% center; }
-    }
-    @keyframes countUp {
-      from { opacity: 0; transform: scale(0.8); }
-      to { opacity: 1; transform: scale(1); }
-    }
-
-    /* ── REDUCED MOTION ── */
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-      }
-      .reveal { opacity: 1 !important; transform: none !important; }
-    }
-
-    /* ── SCROLLBAR ── */
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: var(--background); }
-    ::-webkit-scrollbar-thumb { background: var(--primary-light); border-radius: 100px; }
-    ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
-
-    /* ── NAVBAR ── */
-    .navbar {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      background: rgba(255,255,255,0.88);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(26,86,219,0.06);
-      transition: box-shadow var(--transition), background var(--transition);
-    }
-    .navbar.scrolled {
-      background: rgba(255,255,255,0.96);
-      box-shadow: 0 2px 32px rgba(26,86,219,0.08);
-    }
-
-    .nav-container {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 0 24px;
-      height: 72px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .nav-logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      text-decoration: none;
-      flex-shrink: 0;
-    }
-    .nav-logo img {
-      height: 40px;
-      width: auto;
-      display: block;
-    }
-    .nav-logo-text {
-      font-size: 22px;
-      font-weight: 800;
-      color: var(--primary-dark);
-      letter-spacing: -0.5px;
-    }
-    .nav-logo-text span {
-      color: var(--secondary);
-    }
-
-    .nav-menu {
-      display: flex;
-      align-items: center;
-      gap: 2px;
-      list-style: none;
-    }
-
-    .nav-link {
-      text-decoration: none;
-      color: var(--text-muted);
-      font-size: 14px;
-      font-weight: 500;
-      padding: 8px 14px;
-      border-radius: var(--radius-sm);
-      transition: color var(--transition), background var(--transition);
-      white-space: nowrap;
-      position: relative;
-    }
-    .nav-link::after {
-      content: '';
-      position: absolute;
-      bottom: 2px;
-      left: 50%;
-      width: 0;
-      height: 2px;
-      background: var(--primary);
-      border-radius: 100px;
-      transition: width var(--transition), left var(--transition);
-    }
-    .nav-link:hover::after,
-    .nav-link.active::after {
-      width: 60%;
-      left: 20%;
-    }
-    .nav-link:hover {
-      color: var(--primary);
-      background: rgba(26,86,219,0.05);
-    }
-    .nav-link.active {
-      color: var(--primary);
-      font-weight: 600;
-    }
-
-    .nav-link-cta {
-      background: var(--primary);
-      color: white !important;
-      padding: 9px 22px;
-      border-radius: var(--radius-sm);
-      font-weight: 600;
-      transition: background var(--transition), transform var(--transition), box-shadow var(--transition) !important;
-      box-shadow: 0 2px 12px rgba(26,86,219,0.25);
-    }
-    .nav-link-cta::after { display: none !important; }
-    .nav-link-cta:hover {
-      background: var(--primary-dark) !important;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 20px rgba(26,86,219,0.35) !important;
-    }
-
-    .nav-hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      cursor: pointer;
-      background: none;
-      border: none;
-      padding: 10px;
-      border-radius: var(--radius-sm);
-      transition: background var(--transition);
-    }
-    .nav-hamburger:hover { background: rgba(26,86,219,0.06); }
-    .nav-hamburger span {
-      display: block;
-      width: 24px;
-      height: 2.5px;
-      background: var(--text);
-      border-radius: 2px;
-      transition: transform var(--transition), opacity var(--transition);
-      transform-origin: center;
-    }
-    .nav-hamburger.open span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
-    .nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
-
-    /* ── HERO ── */
-    .hero-wrapper {
-      background: var(--gradient);
-      position: relative;
-      overflow: hidden;
-      isolation: isolate;
-    }
-    .hero-wrapper::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 600px 400px at 10% 20%, rgba(6,182,212,0.15) 0%, transparent 70%),
-        radial-gradient(ellipse 500px 300px at 90% 80%, rgba(139,92,246,0.10) 0%, transparent 70%);
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* Formas decorativas */
-    .hero-shapes {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-      overflow: hidden;
-    }
-    .hero-shapes .shape {
-      position: absolute;
-      border-radius: 50%;
-      opacity: 0.08;
-      background: white;
-    }
-    .hero-shapes .shape-1 {
-      width: 500px;
-      height: 500px;
-      top: -150px;
-      right: -100px;
-      animation: float 20s ease-in-out infinite;
-    }
-    .hero-shapes .shape-2 {
-      width: 300px;
-      height: 300px;
-      bottom: -50px;
-      left: -50px;
-      animation: float 25s ease-in-out infinite reverse;
-    }
-    .hero-shapes .shape-3 {
-      width: 200px;
-      height: 200px;
-      top: 40%;
-      right: 40%;
-      animation: float 18s ease-in-out infinite 2s;
-    }
-
-    .hero {
-      position: relative;
-      z-index: 1;
-      min-height: 92vh;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      align-items: center;
-      gap: 64px;
-      padding: 80px 24px;
-      max-width: 1280px;
-      margin: 0 auto;
-    }
-
-    .hero-content {
-      animation: fadeInLeft 0.9s ease both;
-    }
-
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: rgba(255,255,255,0.12);
-      border: 1px solid rgba(255,255,255,0.20);
-      border-radius: 100px;
-      padding: 7px 20px 7px 16px;
-      color: white;
-      font-size: 13px;
-      font-weight: 500;
-      margin-bottom: 28px;
-      backdrop-filter: blur(4px);
-    }
-    .hero-badge-dot {
-      width: 7px;
-      height: 7px;
-      background: var(--secondary);
-      border-radius: 50%;
-      animation: pulse 2s infinite;
-    }
-    .hero-badge span {
-      opacity: 0.7;
-      font-weight: 400;
-    }
-
-    .hero h1 {
-      font-size: clamp(2.4rem, 5vw, 3.8rem);
-      font-weight: 900;
-      color: white;
-      line-height: 1.08;
-      letter-spacing: -1.5px;
-      margin-bottom: 20px;
-    }
-    .hero h1 span {
-      background: linear-gradient(135deg, #34d399, var(--secondary));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .hero-desc {
-      font-size: 18px;
-      color: rgba(255,255,255,0.80);
-      max-width: 520px;
-      margin-bottom: 12px;
-      line-height: 1.7;
-    }
-
-    .hero-tagline {
-      font-size: 15px;
-      font-weight: 600;
-      color: rgba(255,255,255,0.50);
-      letter-spacing: 0.5px;
-      margin-bottom: 36px;
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
-    }
-
-    /* ── BUTTONS ── */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 14px 28px;
-      border-radius: var(--radius-sm);
-      font-weight: 600;
-      font-size: 15px;
-      text-decoration: none;
-      transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
-      cursor: pointer;
-      border: none;
-      position: relative;
-      overflow: hidden;
-    }
-    .btn:active { transform: scale(0.97); }
-
-    .btn-white {
-      background: white;
-      color: var(--primary);
-      box-shadow: 0 4px 24px rgba(255,255,255,0.20);
-    }
-    .btn-white:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 40px rgba(255,255,255,0.30);
-    }
-
-    .btn-outline-light {
-      background: rgba(255,255,255,0.08);
-      color: white;
-      border: 1.5px solid rgba(255,255,255,0.25);
-      backdrop-filter: blur(4px);
-    }
-    .btn-outline-light:hover {
-      background: rgba(255,255,255,0.18);
-      transform: translateY(-3px);
-      border-color: rgba(255,255,255,0.4);
-    }
-
-    .btn-primary {
-      background: var(--primary);
-      color: white;
-      box-shadow: var(--shadow);
-    }
-    .btn-primary:hover {
-      background: var(--primary-dark);
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-lg);
-    }
-
-    .btn-secondary {
-      background: white;
-      color: var(--primary);
-      border: 1.5px solid var(--border);
-    }
-    .btn-secondary:hover {
-      border-color: var(--primary-light);
-      background: rgba(26,86,219,0.03);
-      transform: translateY(-3px);
-    }
-
-    .btn-gradient {
-      background: var(--gradient);
-      color: white;
-      box-shadow: var(--shadow-lg);
-    }
-    .btn-gradient:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-xl);
-    }
-
-    /* ── DASHBOARD CARD ── */
-    .hero-visual {
-      animation: fadeInRight 0.9s ease 0.2s both;
-      perspective: 1200px;
-    }
-
-    .dashboard-card {
-      background: rgba(255,255,255,0.08);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 24px;
-      padding: 28px;
-      box-shadow: 0 24px 80px rgba(0,0,0,0.20);
-      transition: transform 0.1s ease;
-      transform-style: preserve-3d;
-    }
-
-    .dashboard-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 20px;
-    }
-    .dashboard-title {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 14px;
-      font-weight: 700;
-      color: white;
-      letter-spacing: 0.3px;
-    }
-    .dashboard-title svg {
-      width: 18px;
-      height: 18px;
-      opacity: 0.7;
-    }
-    .dashboard-badge {
-      font-size: 11px;
-      background: rgba(16,185,129,0.15);
-      color: #6ee7b7;
-      padding: 4px 12px;
-      border-radius: 100px;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .dashboard-badge .dot {
-      width: 6px;
-      height: 6px;
-      background: #6ee7b7;
-      border-radius: 50%;
-      animation: pulse 2s infinite;
-    }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-    .stat-item {
-      background: rgba(255,255,255,0.06);
-      border-radius: 14px;
-      padding: 16px 12px;
-      text-align: center;
-      transition: background var(--transition);
-      cursor: default;
-    }
-    .stat-item:hover {
-      background: rgba(255,255,255,0.12);
-    }
-    .stat-icon {
-      font-size: 20px;
-      margin-bottom: 4px;
-      display: block;
-    }
-    .stat-value {
-      font-size: 26px;
-      font-weight: 800;
-      color: white;
-      letter-spacing: -0.5px;
-      display: block;
-    }
-    .stat-label {
-      font-size: 11px;
-      color: rgba(255,255,255,0.55);
-      margin-top: 2px;
-      font-weight: 500;
-    }
-
-    .progress-section {
-      margin-bottom: 14px;
-    }
-    .progress-section:last-of-type {
-      margin-bottom: 18px;
-    }
-    .progress-label {
-      display: flex;
-      justify-content: space-between;
-      font-size: 12px;
-      color: rgba(255,255,255,0.65);
-      font-weight: 500;
-      margin-bottom: 5px;
-    }
-    .progress-label span:last-child {
-      font-weight: 600;
-      color: white;
-    }
-    .progress-bar {
-      height: 6px;
-      background: rgba(255,255,255,0.10);
-      border-radius: 100px;
-      overflow: hidden;
-    }
-    .progress-fill {
-      height: 100%;
-      border-radius: 100px;
-      background: linear-gradient(90deg, var(--secondary), #34d399);
-      transition: width 1.8s cubic-bezier(0.4, 0, 0.2, 1);
-      width: 0%;
-    }
-
-    .mini-list {
-      list-style: none;
-      margin-top: 14px;
-      border-top: 1px solid rgba(255,255,255,0.06);
-      padding-top: 14px;
-    }
-    .mini-list li {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 7px 0;
-      font-size: 12px;
-      color: rgba(255,255,255,0.70);
-      opacity: 0;
-      transform: translateX(-10px);
-      animation: fadeInRight 0.4s ease forwards;
-    }
-    .mini-list li:nth-child(1) { animation-delay: 0.1s; }
-    .mini-list li:nth-child(2) { animation-delay: 0.3s; }
-    .mini-list li:nth-child(3) { animation-delay: 0.5s; }
-    .mini-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-    .mini-dot.pulse-dot {
-      animation: pulse 2s infinite;
-    }
-
-    /* ── SECTION SHARED ── */
-    .section {
-      padding: 88px 24px;
-    }
-    .section-inner {
-      max-width: 1280px;
-      margin: 0 auto;
-    }
-
-    .section-eyebrow {
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--primary);
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-    }
-    .section-eyebrow::before,
-    .section-eyebrow::after {
-      content: '';
-      width: 24px;
-      height: 2px;
-      background: var(--primary);
-      opacity: 0.2;
-      border-radius: 100px;
-    }
-
-    .section-title {
-      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-      font-weight: 800;
-      color: var(--text);
-      letter-spacing: -1px;
-      line-height: 1.15;
-      margin-bottom: 16px;
-    }
-    .section-title span { color: var(--primary); }
-    .section-desc {
-      font-size: 17px;
-      color: var(--text-muted);
-      max-width: 600px;
-      line-height: 1.7;
-      margin-bottom: 48px;
-    }
-    .section-header {
-      text-align: center;
-      margin-bottom: 56px;
-    }
-    .section-header .section-desc {
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    /* ── CARDS ── */
-    .cards-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 24px;
-    }
-    .cards-grid-2 {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
-    }
-
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 30px 28px;
-      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
-      position: relative;
-      overflow: hidden;
-    }
-    .card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(26,86,219,0.03), transparent);
-      opacity: 0;
-      transition: opacity var(--transition);
-    }
-    .card:hover::before {
-      opacity: 1;
-    }
-    .card:hover {
-      transform: translateY(-6px);
-      box-shadow: var(--shadow-lg);
-      border-color: rgba(26,86,219,0.15);
-    }
-
-    .card-icon {
-      width: 52px;
-      height: 52px;
-      border-radius: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 22px;
-      margin-bottom: 18px;
-      transition: transform var(--transition);
-      flex-shrink: 0;
-    }
-    .card:hover .card-icon {
-      transform: scale(1.05) rotate(-2deg);
-    }
-    .icon-blue { background: rgba(26,86,219,0.08); color: var(--primary); }
-    .icon-cyan { background: rgba(6,182,212,0.08); color: var(--secondary); }
-    .icon-green { background: rgba(16,185,129,0.08); color: var(--success); }
-    .icon-purple { background: rgba(139,92,246,0.08); color: var(--accent); }
-    .icon-orange { background: rgba(249,115,22,0.08); color: #f97316; }
-
-    .card h3 {
-      font-size: 17px;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 8px;
-      letter-spacing: -0.3px;
-    }
-    .card p {
-      font-size: 14px;
-      color: var(--text-muted);
-      line-height: 1.65;
-    }
-
-    .card-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      margin-top: 16px;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--primary);
-      text-decoration: none;
-      transition: gap var(--transition);
-    }
-    .card-link:hover {
-      gap: 12px;
-    }
-
-    /* ── TABS SECTION ── */
-    .tabs-container {
-      background: var(--surface);
-      border-radius: var(--radius);
-      border: 1px solid var(--border);
-      overflow: hidden;
-      box-shadow: var(--shadow);
-    }
-    .tabs-header {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      border-bottom: 1px solid var(--border);
-      background: var(--background);
-    }
-    .tab-btn {
-      padding: 18px 16px;
-      background: none;
-      border: none;
-      font-family: 'Inter', sans-serif;
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-muted);
-      cursor: pointer;
-      transition: color var(--transition), background var(--transition), box-shadow var(--transition);
-      position: relative;
-      border-bottom: 3px solid transparent;
-    }
-    .tab-btn:hover {
-      color: var(--text);
-      background: rgba(26,86,219,0.04);
-    }
-    .tab-btn.active {
-      color: var(--primary);
-      border-bottom-color: var(--primary);
-      background: white;
-    }
-    .tab-btn .tab-icon {
-      margin-right: 8px;
-      font-size: 16px;
-    }
-
-    .tab-panels {
-      padding: 32px 28px;
-      background: white;
-      min-height: 280px;
-    }
-    .tab-panel {
-      display: none;
-      animation: fadeInUp 0.4s ease both;
-    }
-    .tab-panel.active {
-      display: block;
-    }
-    .tab-panel h3 {
-      font-size: 20px;
-      font-weight: 700;
-      margin-bottom: 8px;
-      color: var(--text);
-    }
-    .tab-panel p {
-      color: var(--text-muted);
-      margin-bottom: 16px;
-      font-size: 15px;
-    }
-    .tab-features {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 12px;
-      list-style: none;
-    }
-    .tab-features li {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 14px;
-      background: var(--background);
-      border-radius: var(--radius-sm);
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text);
-      transition: background var(--transition), transform var(--transition);
-    }
-    .tab-features li:hover {
-      background: rgba(26,86,219,0.06);
-      transform: translateX(4px);
-    }
-    .tab-features li .check {
-      color: var(--success);
-      font-weight: 700;
-    }
-
-    /* ── STEPS / HOW IT WORKS ── */
-    .steps-wrapper {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 24px;
-      position: relative;
-    }
-    .steps-wrapper::before {
-      content: '';
-      position: absolute;
-      top: 44px;
-      left: 15%;
-      right: 15%;
-      height: 2px;
-      background: linear-gradient(90deg, var(--primary-light), var(--secondary));
-      opacity: 0.15;
-    }
-    @media (max-width: 768px) {
-      .steps-wrapper::before { display: none; }
-    }
-
-    .step-item {
-      text-align: center;
-      position: relative;
-      z-index: 1;
-    }
-    .step-number {
-      width: 48px;
-      height: 48px;
-      background: var(--gradient);
-      color: white;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-      font-size: 18px;
-      margin: 0 auto 16px;
-      box-shadow: 0 4px 16px rgba(26,86,219,0.25);
-      transition: transform var(--transition), box-shadow var(--transition);
-    }
-    .step-item:hover .step-number {
-      transform: scale(1.08);
-      box-shadow: 0 8px 32px rgba(26,86,219,0.30);
-    }
-    .step-item h4 {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 4px;
-    }
-    .step-item p {
-      font-size: 13px;
-      color: var(--text-muted);
-      max-width: 200px;
-      margin: 0 auto;
-    }
-
-    /* ── DEVICES MOCKUP ── */
-    .devices-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 32px;
-      align-items: end;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-    .device-mockup {
-      text-align: center;
-    }
-    .device-mockup .device-frame {
-      background: var(--surface);
-      border-radius: 20px;
-      border: 1px solid var(--border);
-      padding: 16px 12px;
-      box-shadow: var(--shadow);
-      transition: transform var(--transition), box-shadow var(--transition);
-      margin-bottom: 12px;
-    }
-    .device-mockup:hover .device-frame {
-      transform: translateY(-6px);
-      box-shadow: var(--shadow-lg);
-    }
-    .device-mockup .device-screen {
-      background: var(--gradient);
-      border-radius: 12px;
-      height: 120px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-weight: 700;
-      font-size: 14px;
-      background-size: 200% 200%;
-      animation: shimmer 4s ease-in-out infinite;
-    }
-    .device-mockup .device-label {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text);
-    }
-    .device-mockup .device-sub {
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    .device-mockup.desktop .device-frame { max-width: 320px; margin: 0 auto; }
-    .device-mockup.desktop .device-screen { height: 160px; }
-    .device-mockup.tablet .device-frame { max-width: 220px; margin: 0 auto; }
-    .device-mockup.tablet .device-screen { height: 130px; }
-    .device-mockup.mobile .device-frame { max-width: 140px; margin: 0 auto; }
-    .device-mockup.mobile .device-screen { height: 200px; }
-
-    @media (max-width: 768px) {
-      .devices-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 16px;
-      }
-      .device-mockup.desktop .device-screen { height: 100px; }
-      .device-mockup.tablet .device-screen { height: 80px; }
-      .device-mockup.mobile .device-screen { height: 120px; }
-    }
-
-    /* ── FEATURES STRIP ── */
-    .features-strip {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 16px;
-    }
-    .feature-item {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 16px 20px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
-      cursor: default;
-    }
-    .feature-item:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow);
-      border-color: rgba(26,86,219,0.12);
-    }
-    .feature-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: var(--primary);
-      flex-shrink: 0;
-      transition: transform var(--transition);
-    }
-    .feature-item:hover .feature-dot {
-      transform: scale(1.3);
-    }
-    .feature-label {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text);
-    }
-
-    /* ── STATS BAR ── */
-    .stats-bar {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 24px;
-      background: var(--surface);
-      border-radius: var(--radius);
-      padding: 40px 32px;
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow);
-    }
-    .stats-bar-item {
-      text-align: center;
-    }
-    .stats-bar-item .number {
-      font-size: 32px;
-      font-weight: 800;
-      color: var(--primary-dark);
-      letter-spacing: -1px;
-      display: block;
-    }
-    .stats-bar-item .label {
-      font-size: 14px;
-      color: var(--text-muted);
-      font-weight: 500;
-    }
-
-    /* ── PRICES ── */
-    .prices-row {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-    }
-    .price-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 32px 24px;
-      text-align: center;
-      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
-    }
-    .price-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-lg);
-    }
-    .price-card.popular {
-      border-color: var(--primary);
-      box-shadow: 0 4px 24px rgba(26,86,219,0.12);
-    }
-    .price-card.popular .popular-badge {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--primary);
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-    .price-range {
-      font-size: 13px;
-      color: var(--text-muted);
-      font-weight: 500;
-      margin-bottom: 12px;
-    }
-    .price-amount {
-      font-size: 28px;
-      font-weight: 800;
-      color: var(--primary-dark);
-      letter-spacing: -1px;
-      line-height: 1;
-    }
-    .price-period {
-      font-size: 13px;
-      color: var(--text-muted);
-      font-weight: 500;
-      margin-top: 4px;
-    }
-
-    /* ── IMPL BANNER ── */
-    .impl-banner {
-      background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
-      border: 1px solid #bae6fd;
-      border-radius: var(--radius);
-      padding: 48px 40px;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      align-items: center;
-      gap: 32px;
-    }
-    .impl-banner h2 {
-      font-size: clamp(1.4rem, 2.5vw, 2rem);
-      font-weight: 800;
-      color: var(--primary-dark);
-      letter-spacing: -0.5px;
-      margin-bottom: 8px;
-    }
-    .impl-banner p {
-      font-size: 15px;
-      color: #0369a1;
-      line-height: 1.65;
-    }
-    @media (max-width: 768px) {
-      .impl-banner { grid-template-columns: 1fr; text-align: center; }
-      .impl-banner .btn { justify-content: center; }
-    }
-
-    /* ── FAQ ── */
-    .faq-list {
-      max-width: 720px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .faq-item {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      overflow: hidden;
-      transition: border-color var(--transition);
-    }
-    .faq-item:hover {
-      border-color: rgba(26,86,219,0.15);
-    }
-    .faq-item.open {
-      border-color: var(--primary-light);
-    }
-    .faq-question {
-      width: 100%;
-      padding: 18px 22px;
-      background: none;
-      border: none;
-      font-family: 'Inter', sans-serif;
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--text);
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-      text-align: left;
-      transition: color var(--transition);
-      background: transparent;
-    }
-    .faq-question:hover {
-      color: var(--primary);
-    }
-    .faq-question .faq-icon {
-      font-size: 20px;
-      transition: transform var(--transition);
-      flex-shrink: 0;
-      color: var(--text-muted);
-    }
-    .faq-item.open .faq-question .faq-icon {
-      transform: rotate(180deg);
-      color: var(--primary);
-    }
-    .faq-answer {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height var(--transition), padding var(--transition);
-      padding: 0 22px;
-      color: var(--text-muted);
-      font-size: 14px;
-      line-height: 1.7;
-    }
-    .faq-item.open .faq-answer {
-      max-height: 200px;
-      padding: 0 22px 20px;
-    }
-
-    /* ── CTA BANNER ── */
-    .cta-banner {
-      background: var(--gradient);
-      border-radius: var(--radius);
-      padding: 64px 48px;
-      text-align: center;
-      color: white;
-      position: relative;
-      overflow: hidden;
-    }
-    .cta-banner::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 400px 300px at 20% 80%, rgba(6,182,212,0.15), transparent),
-        radial-gradient(ellipse 300px 200px at 80% 20%, rgba(139,92,246,0.10), transparent);
-      pointer-events: none;
-    }
-    .cta-banner h2 {
-      font-size: clamp(1.8rem, 3vw, 2.6rem);
-      font-weight: 800;
-      margin-bottom: 12px;
-      letter-spacing: -1px;
-      position: relative;
-      z-index: 1;
-    }
-    .cta-banner p {
-      font-size: 17px;
-      opacity: 0.85;
-      margin-bottom: 32px;
-      position: relative;
-      z-index: 1;
-    }
-    .cta-actions {
-      display: flex;
-      gap: 14px;
-      justify-content: center;
-      flex-wrap: wrap;
-      position: relative;
-      z-index: 1;
-    }
-
-    /* ── FOOTER ── */
-    .footer {
-      background: var(--primary-dark);
-      color: white;
-      padding: 64px 24px 32px;
-    }
-    .footer-inner {
-      max-width: 1280px;
-      margin: 0 auto;
-    }
-    .footer-top {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr;
-      gap: 48px;
-      margin-bottom: 48px;
-    }
-    .footer-brand img {
-      height: 40px;
-      width: auto;
-      display: block;
-      margin-bottom: 8px;
-    }
-    .footer-brand p {
-      font-size: 14px;
-      color: rgba(255,255,255,0.55);
-      line-height: 1.6;
-      max-width: 300px;
-    }
-    .footer-logo-text {
-      font-size: 20px;
-      font-weight: 700;
-      letter-spacing: -0.3px;
-      display: block;
-      margin-bottom: 4px;
-    }
-    .footer-logo-text span { color: var(--secondary); }
-
-    .footer-col h4 {
-      font-size: 12px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: rgba(255,255,255,0.35);
-      margin-bottom: 16px;
-    }
-    .footer-col ul { list-style: none; }
-    .footer-col li { margin-bottom: 10px; }
-    .footer-col a {
-      text-decoration: none;
-      color: rgba(255,255,255,0.55);
-      font-size: 14px;
-      transition: color var(--transition);
-    }
-    .footer-col a:hover { color: white; }
-
-    .footer-bottom {
-      border-top: 1px solid rgba(255,255,255,0.06);
-      padding-top: 28px;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      text-align: center;
-    }
-    .footer-bottom p {
-      font-size: 13px;
-      color: rgba(255,255,255,0.30);
-    }
-    .footer-bottom p strong {
-      color: rgba(255,255,255,0.50);
-      font-weight: 500;
-    }
-
-    /* ── BACK TO TOP ── */
-    .back-to-top {
-      position: fixed;
-      bottom: 28px;
-      right: 28px;
-      width: 48px;
-      height: 48px;
-      background: var(--surface);
-      color: var(--primary);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 22px;
-      cursor: pointer;
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity var(--transition), transform var(--transition), box-shadow var(--transition);
-      z-index: 999;
-    }
-    .back-to-top.visible {
-      opacity: 1;
-      pointer-events: auto;
-    }
-    .back-to-top:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-lg);
-      border-color: var(--primary-light);
-    }
-
-    /* ── REVEAL ── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(32px);
-      transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .reveal-left {
-      opacity: 0;
-      transform: translateX(-40px);
-      transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .reveal-left.visible {
-      opacity: 1;
-      transform: translateX(0);
-    }
-    .reveal-right {
-      opacity: 0;
-      transform: translateX(40px);
-      transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .reveal-right.visible {
-      opacity: 1;
-      transform: translateX(0);
-    }
-
-    .stagger-children > * {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .stagger-children.visible > *:nth-child(1) { transition-delay: 0.05s; }
-    .stagger-children.visible > *:nth-child(2) { transition-delay: 0.12s; }
-    .stagger-children.visible > *:nth-child(3) { transition-delay: 0.19s; }
-    .stagger-children.visible > *:nth-child(4) { transition-delay: 0.26s; }
-    .stagger-children.visible > *:nth-child(5) { transition-delay: 0.33s; }
-    .stagger-children.visible > *:nth-child(6) { transition-delay: 0.40s; }
-    .stagger-children.visible > * {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 1024px) {
-      .hero {
-        grid-template-columns: 1fr;
-        min-height: auto;
-        gap: 48px;
-        padding: 60px 24px;
-      }
-      .hero-visual {
-        max-width: 560px;
-        margin: 0 auto;
-      }
-      .footer-top {
-        grid-template-columns: 1fr 1fr;
-      }
-      .tabs-header {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 768px) {
-      .nav-menu {
-        display: none;
-        position: absolute;
-        top: 72px;
-        left: 0;
-        right: 0;
-        background: white;
-        border-bottom: 1px solid var(--border);
-        flex-direction: column;
-        padding: 16px;
-        gap: 2px;
-        box-shadow: 0 16px 48px rgba(0,0,0,0.06);
-        align-items: stretch;
-      }
-      .nav-menu.open { display: flex; }
-      .nav-link {
-        padding: 12px 16px;
-        white-space: normal;
-      }
-      .nav-link::after { display: none; }
-      .nav-link-cta {
-        text-align: center;
-        margin-top: 8px;
-      }
-      .nav-hamburger { display: flex; }
-
-      .hero { padding: 48px 20px; }
-      .hero-visual { max-width: 100%; }
-
-      .section { padding: 56px 20px; }
-      .stats-grid { grid-template-columns: repeat(2, 1fr); }
-
-      .tabs-header {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      .tab-btn {
-        font-size: 13px;
-        padding: 14px 12px;
-      }
-      .tab-btn .tab-icon { margin-right: 4px; }
-      .tab-panels { padding: 24px 16px; }
-
-      .footer-top { grid-template-columns: 1fr; gap: 32px; }
-
-      .cta-banner { padding: 40px 24px; }
-      .impl-banner { padding: 32px 24px; }
-
-      .stats-bar { padding: 28px 20px; }
-      .stats-bar-item .number { font-size: 26px; }
-    }
-
-    @media (max-width: 480px) {
-      .hero { padding: 32px 16px; }
-      .hero h1 { font-size: 1.8rem; }
-      .hero-desc { font-size: 15px; }
-      .dashboard-card { padding: 18px; }
-      .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
-      .stat-item { padding: 12px 8px; }
-      .stat-value { font-size: 20px; }
-      .tabs-header { grid-template-columns: 1fr 1fr; }
-      .tab-btn { font-size: 12px; padding: 10px 8px; }
-      .tab-features { grid-template-columns: 1fr; }
-      .steps-wrapper { grid-template-columns: 1fr 1fr; }
-      .devices-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
-      .device-mockup.desktop .device-screen { height: 70px; }
-      .device-mockup.tablet .device-screen { height: 60px; }
-      .device-mockup.mobile .device-screen { height: 90px; }
-      .prices-row { grid-template-columns: 1fr; }
-      .faq-question { font-size: 14px; padding: 14px 16px; }
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#0a0f1e" />
+    <meta name="description" content="EduOne es la plataforma colombiana de gestión educativa que conecta academia, administración, finanzas, convivencia y comunicación en un solo lugar." />
+    <meta name="keywords" content="gestión escolar, software educativo, colegios, plataforma escolar, EduOne, Colombia, transformación digital educativa" />
+    <meta name="author" content="EduOne" />
+    <meta name="robots" content="index,follow" />
+
+    <meta property="og:title" content="EduOne Colombia | Plataforma de gestión educativa para colegios" />
+    <meta property="og:description" content="Todo tu colegio, en una sola plataforma. Gestión académica, administrativa, financiera y de convivencia." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://eduone.com.co/index.html" />
+    <meta property="og:image" content="https://eduone.com.co/imagenes/panelrector1.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href="https://eduone.com.co/index.html" />
+
+    <!-- FAVICON -->
+    <link rel="icon" type="image/png" sizes="48x48" href="imagenes/logo.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="imagenes/logo.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="imagenes/logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="imagenes/logo.png">
+    <link rel="manifest" href="site.webmanifest">
+
+    <title>EduOne Colombia | Plataforma de gestión educativa para colegios</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg-0: #050814;
+            --bg-1: #0a0f1e;
+            --bg-2: #111a30;
+            --bg-3: #1a2540;
+            --surface: #ffffff;
+            --primary: #2563eb;
+            --primary-light: #3b82f6;
+            --primary-glow: #60a5fa;
+            --cyan: #06b6d4;
+            --cyan-light: #22d3ee;
+            --teal: #14b8a6;
+            --violet: #8b5cf6;
+            --lime: #a3e635;
+            --text: #0f172a;
+            --text-light: #e2e8f0;
+            --text-muted: #94a3b8;
+            --text-muted-dark: #64748b;
+            --border: #e2e8f0;
+            --border-dark: rgba(148, 163, 184, 0.15);
+            --gradient-hero: linear-gradient(135deg, #050814 0%, #0a0f1e 40%, #111a30 70%, #0a1f3a 100%);
+            --gradient-tech: linear-gradient(135deg, #2563eb 0%, #06b6d4 100%);
+            --gradient-glow: linear-gradient(135deg, #3b82f6 0%, #22d3ee 50%, #a3e635 100%);
+            --gradient-violet: linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%);
+            --radius-sm: 10px;
+            --radius: 18px;
+            --radius-lg: 28px;
+            --radius-pill: 100px;
+            --shadow-glow: 0 0 40px rgba(37, 99, 235, 0.35);
+            --shadow-glow-cyan: 0 0 40px rgba(6, 182, 212, 0.35);
+            --shadow-card: 0 20px 60px rgba(0, 0, 0, 0.25);
+            --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            --nav-h: 74px;
+        }
+
+        html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; scroll-padding-top: var(--nav-h); }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-0);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        img, video { max-width: 100%; height: auto; display: block; }
+        button { font-family: inherit; cursor: pointer; }
+        a { color: inherit; }
+        ul { list-style: none; }
+
+        @keyframes floatY { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+        @keyframes floatSoft { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-8px) rotate(2deg); } }
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(37,99,235,0.4), 0 0 60px rgba(6,182,212,0.15); }
+            50% { box-shadow: 0 0 40px rgba(37,99,235,0.7), 0 0 90px rgba(6,182,212,0.35); }
+        }
+        @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        @keyframes spinSlow { to { transform: rotate(360deg); } }
+        @keyframes gridMove { 0% { background-position: 0 0; } 100% { background-position: 60px 60px; } }
+        @keyframes fadeSlideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+            .reveal, .stagger > * { opacity: 1 !important; transform: none !important; }
+        }
+
+        ::-webkit-scrollbar { width: 9px; }
+        ::-webkit-scrollbar-track { background: var(--bg-0); }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--primary) 0%, var(--cyan) 100%); border-radius: 100px; }
+
+        /* FONDO GLOBAL */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            background:
+                radial-gradient(ellipse 800px 600px at 15% 10%, rgba(37, 99, 235, 0.18) 0%, transparent 60%),
+                radial-gradient(ellipse 700px 500px at 85% 80%, rgba(6, 182, 212, 0.14) 0%, transparent 60%),
+                radial-gradient(ellipse 600px 400px at 50% 50%, rgba(139, 92, 246, 0.08) 0%, transparent 70%),
+                var(--bg-0);
+            pointer-events: none;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background-image:
+                linear-gradient(rgba(59, 130, 246, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(59, 130, 246, 0.04) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridMove 30s linear infinite;
+            pointer-events: none;
+            mask-image: radial-gradient(ellipse at center, black 30%, transparent 90%);
+            -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 90%);
+        }
+
+        /* PRELOADER */
+        .preloader { position: fixed; inset: 0; z-index: 99999; display: flex; align-items: center; justify-content: center; background: var(--bg-0); transition: opacity 0.5s ease, visibility 0.5s ease; }
+        .preloader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        .preloader-inner { display: flex; flex-direction: column; align-items: center; gap: 24px; }
+        .preloader-logo {
+            font-family: 'Space Grotesk', sans-serif; font-size: 34px; font-weight: 700; letter-spacing: -1.5px;
+            background: var(--gradient-glow); background-size: 200% 200%;
+            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+            animation: gradientShift 2s ease infinite;
+        }
+        .preloader-ring { width: 60px; height: 60px; border-radius: 50%; border: 3px solid rgba(37,99,235,0.15); border-top-color: var(--cyan); border-right-color: var(--primary); animation: spinSlow 1s linear infinite; }
+        .preloader-bar { width: 200px; height: 3px; background: rgba(148,163,184,0.15); border-radius: 100px; overflow: hidden; position: relative; }
+        .preloader-bar::after { content: ''; position: absolute; inset: 0; width: 40%; background: var(--gradient-glow); border-radius: 100px; animation: slideLoadBar 1.4s ease-in-out infinite; }
+        @keyframes slideLoadBar { 0% { transform: translateX(-100%); } 100% { transform: translateX(300%); } }
+        .preloader-caption { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); font-weight: 500; }
+
+        /* NAVBAR */
+        .navbar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000; height: var(--nav-h);
+            background: rgba(10, 15, 30, 0.55);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid rgba(148, 163, 184, 0.10);
+            transition: background var(--transition), box-shadow var(--transition);
+        }
+        .navbar.scrolled { background: rgba(10, 15, 30, 0.88); box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4); border-bottom-color: rgba(37, 99, 235, 0.25); }
+        .nav-container { max-width: 1360px; margin: 0 auto; height: 100%; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+        .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; transition: transform var(--transition); }
+        .nav-logo:hover { transform: scale(1.04); }
+        .logo-mark { width: 40px; height: 40px; display: grid; place-items: center; }
+        .logo-mark svg { width: 100%; height: 100%; filter: drop-shadow(0 0 10px rgba(59,130,246,0.5)); }
+        .logo-text { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700; color: #fff; letter-spacing: -0.8px; }
+        .logo-text span { background: var(--gradient-glow); background-size: 200% 200%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: gradientShift 4s ease infinite; }
+
+        .nav-menu { display: flex; align-items: center; gap: 4px; }
+        .nav-link { text-decoration: none; color: var(--text-light); font-size: 14px; font-weight: 500; padding: 8px 14px; border-radius: var(--radius-sm); position: relative; transition: color var(--transition), background var(--transition); white-space: nowrap; }
+        .nav-link::before { content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 2px; background: var(--gradient-glow); border-radius: 100px; transition: width var(--transition), left var(--transition); }
+        .nav-link:hover, .nav-link.active { color: #fff; }
+        .nav-link:hover::before, .nav-link.active::before { width: 60%; left: 20%; }
+
+        .nav-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+        .btn-nav-demo {
+            display: inline-flex; align-items: center; gap: 7px; padding: 9px 18px;
+            background: var(--gradient-tech); color: #fff; font-size: 13.5px; font-weight: 600;
+            text-decoration: none; border-radius: var(--radius-pill);
+            transition: transform var(--transition), box-shadow var(--transition);
+            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.35); white-space: nowrap;
+        }
+        .btn-nav-demo:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 10px 30px rgba(6, 182, 212, 0.5); }
+        .btn-nav-login {
+            display: inline-flex; align-items: center; gap: 7px; padding: 9px 16px;
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(148, 163, 184, 0.3);
+            color: var(--text-light); font-size: 13.5px; font-weight: 600; text-decoration: none;
+            border-radius: var(--radius-pill); transition: all var(--transition); white-space: nowrap;
+        }
+        .btn-nav-login:hover { background: rgba(255,255,255,0.12); border-color: var(--cyan); color: #fff; transform: translateY(-2px); }
+
+        .nav-hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; padding: 10px; border-radius: 8px; cursor: pointer; }
+        .nav-hamburger span { width: 24px; height: 2.5px; background: #fff; border-radius: 2px; transition: transform var(--transition), opacity var(--transition); }
+        .nav-hamburger.open span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+        .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+        .nav-hamburger.open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+
+        /* HERO ESTÁTICO */
+        .hero { position: relative; min-height: 100vh; min-height: 100svh; display: flex; align-items: center; padding: calc(var(--nav-h) + 40px) 24px 60px; overflow: hidden; background: var(--gradient-hero); }
+        .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 900px 600px at 20% 30%, rgba(37,99,235,0.35), transparent 60%), radial-gradient(ellipse 700px 500px at 85% 75%, rgba(6,182,212,0.30), transparent 60%); z-index: 0; opacity: 0.6; }
+        .hero::after { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(59,130,246,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(59,130,246,0.07) 1px, transparent 1px); background-size: 50px 50px; mask-image: radial-gradient(ellipse at center, black 20%, transparent 75%); -webkit-mask-image: radial-gradient(ellipse at center, black 20%, transparent 75%); opacity: 0.6; z-index: 0; pointer-events: none; }
+        
+        .hero-inner { max-width: 1360px; width: 100%; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; position: relative; z-index: 2; }
+        
+        .hero-text { color: #fff; animation: fadeSlideUp 0.9s cubic-bezier(0.16,1,0.3,1) both; }
+        .hero-badge { display: inline-flex; align-items: center; gap: 8px; padding: 7px 16px; background: rgba(37, 99, 235, 0.15); border: 1px solid rgba(59, 130, 246, 0.4); border-radius: var(--radius-pill); font-size: 12.5px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: var(--cyan-light); margin-bottom: 24px; backdrop-filter: blur(10px); }
+        .hero-badge .dot { width: 7px; height: 7px; background: var(--cyan-light); border-radius: 50%; animation: pulseGlow 1.6s ease infinite; }
+        .hero-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2.4rem, 4.5vw, 4rem); font-weight: 700; line-height: 1.05; letter-spacing: -2px; margin-bottom: 24px; }
+        .hero-title .gradient-text { background: var(--gradient-glow); background-size: 200% 200%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: gradientShift 4s ease infinite; }
+        .hero-desc { font-size: clamp(16px, 1.5vw, 18px); color: rgba(226, 232, 240, 0.85); line-height: 1.7; margin-bottom: 36px; max-width: 540px; }
+        .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+
+        .btn-cta-primary {
+            display: inline-flex; align-items: center; gap: 9px; padding: 16px 32px;
+            background: var(--gradient-tech); color: #fff; font-size: 16px; font-weight: 600; text-decoration: none;
+            border-radius: var(--radius-pill); box-shadow: 0 8px 30px rgba(37, 99, 235, 0.4);
+            transition: transform var(--transition), box-shadow var(--transition); border: none;
+        }
+        .btn-cta-primary:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 14px 45px rgba(6, 182, 212, 0.55); }
+        .btn-cta-secondary {
+            display: inline-flex; align-items: center; gap: 9px; padding: 16px 32px;
+            background: rgba(255, 255, 255, 0.06); color: #fff; font-size: 16px; font-weight: 600; text-decoration: none;
+            border-radius: var(--radius-pill); border: 1px solid rgba(148, 163, 184, 0.35); backdrop-filter: blur(10px);
+            transition: all var(--transition);
+        }
+        .btn-cta-secondary:hover { background: rgba(255, 255, 255, 0.12); border-color: var(--cyan-light); transform: translateY(-3px); }
+
+        /* HERO VIDEO */
+        .hero-visual { position: relative; animation: fadeSlideUp 0.9s cubic-bezier(0.16,1,0.3,1) 0.2s both; }
+        .video-container { position: relative; width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 22px; overflow: hidden; border: 1px solid rgba(59,130,246,0.4); box-shadow: 0 40px 100px rgba(0,0,0,0.6), 0 0 80px rgba(6,182,212,0.25); }
+        .video-container video { width: 100%; height: 100%; object-fit: cover; display: block; }
+        
+        .float-chip { position: absolute; display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; background: rgba(10, 15, 30, 0.9); border: 1px solid rgba(59, 130, 246, 0.4); border-radius: var(--radius-pill); font-size: 12.5px; font-weight: 600; color: #fff; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); backdrop-filter: blur(14px); z-index: 3; white-space: nowrap; }
+        .float-chip i { color: var(--cyan-light); font-size: 13px; }
+        .chip-a { top: -16px; right: 20px; animation: floatY 4s ease-in-out infinite; }
+        .chip-b { bottom: -16px; left: 20px; animation: floatY 4.5s ease-in-out infinite 0.5s; }
+
+               /* ══════════ FIX DEFINITIVO RESPONSIVE (MOBILE FIRST) ══════════ */
+        @media (max-width: 1024px) {
+            .hero-inner { grid-template-columns: 1fr !important; gap: 40px; text-align: center; }
+            .hero-text { display: flex; flex-direction: column; align-items: center; width: 100%; }
+            .hero-desc { margin: 0 auto 30px; max-width: 100%; }
+            .hero-actions { justify-content: center; width: 100%; }
+            .hero-visual { width: 100%; max-width: 700px; margin: 0 auto; }
+        }
+
+        @media (max-width: 768px) {
+            /* 1. Prevenir desbordamiento global */
+            html, body { 
+                overflow-x: hidden !important; 
+                width: 100% !important; 
+                max-width: 100vw !important; 
+            }
+            * { box-sizing: border-box; }
+
+            /* 2. Ajustar Navbar para que el menú no empuje a la derecha */
+            .nav-container { padding: 0 16px !important; width: 100%; }
+            .nav-menu {
+                width: 100vw !important;
+                left: 0 !important;
+                right: auto !important;
+                padding: 20px 16px !important;
+            }
+
+            /* 3. Ajustar Hero y textos para que se centren */
+            .hero { padding: calc(var(--nav-h) + 20px) 16px 40px !important; min-height: auto !important; width: 100%; }
+            .hero-title { font-size: 2.2rem !important; line-height: 1.15; text-align: center; width: 100%; }
+            .hero-desc { font-size: 15px; padding: 0 10px; text-align: center; width: 100%; }
+            .hero-actions { flex-direction: column; gap: 12px; width: 100%; max-width: 340px; }
+            .btn-cta-primary, .btn-cta-secondary { width: 100%; justify-content: center; padding: 14px 20px; font-size: 15px; }
+            .video-container { border-radius: 16px; width: 100%; }
+
+            /* 4. Reparar las tarjetas y secciones (que no se salgan de la pantalla) */
+            .section { padding: 60px 16px !important; width: 100%; }
+            .section-header { text-align: center; width: 100%; }
+            .section-title { font-size: 2rem !important; }
+            
+            /* 5. Arreglar los layouts divididos (Split) para que el texto no quede a la izquierda */
+            .split-layout { 
+                grid-template-columns: 1fr !important; 
+                text-align: center; 
+                gap: 30px; 
+                width: 100%; 
+            }
+            .split-text { 
+                display: flex; 
+                flex-direction: column; 
+                align-items: center; 
+                width: 100%; 
+            }
+            .split-text .section-title, 
+            .split-text .section-desc { text-align: center !important; }
+            .split-text .section-eyebrow { justify-content: center !important; }
+
+            /* 6. Reparar las cuadrículas de estadísticas, roles y funcionalidades */
+            .stats-grid, .roles-grid, .features-grid, .func-grid, .prices-grid, .steps-grid { 
+                grid-template-columns: 1fr !important; 
+                gap: 16px !important; 
+                width: 100%; 
+            }
+            .stat-card, .role-card, .feature-card, .func-item, .price-card, .step-item {
+                width: 100%;
+                margin: 0 auto;
+            }
+
+            /* 7. Reparar el diagrama del estudiante */
+            .student-diagram { grid-template-columns: 1fr !important; width: 100%; gap: 20px; }
+            .diagram-target-inner { width: 100%; min-width: auto; }
+
+            /* 8. Footer */
+            .footer-top { grid-template-columns: 1fr !important; text-align: center; width: 100%; }
+            .footer-brand { display: flex; flex-direction: column; align-items: center; }
+            .footer-brand p { text-align: center; }
+
+            /* 9. Ocultar los chips flotantes del Hero */
+            .float-chip { display: none !important; }
+        }
+    </style>
+</head>
+    <style>
+        /* ══════════════ SECCIONES GENERALES ══════════════ */
+        .section { padding: 110px 24px; position: relative; }
+        .section-inner { max-width: 1280px; margin: 0 auto; position: relative; z-index: 2; }
+        .section-header { text-align: center; margin-bottom: 64px; max-width: 800px; margin-left: auto; margin-right: auto; }
+        .section-eyebrow { display: inline-flex; align-items: center; gap: 10px; padding: 7px 16px; background: rgba(37,99,235,0.12); border: 1px solid rgba(59,130,246,0.35); border-radius: var(--radius-pill); font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--cyan-light); margin-bottom: 20px; backdrop-filter: blur(10px); }
+        .section-eyebrow .dot { width: 6px; height: 6px; background: var(--cyan-light); border-radius: 50%; animation: pulseGlow 1.6s ease infinite; }
+        .section-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.9rem, 3.8vw, 3rem); font-weight: 700; color: #fff; letter-spacing: -1.5px; line-height: 1.12; margin-bottom: 18px; }
+        .section-title .grad { background: var(--gradient-glow); background-size: 200% 200%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: gradientShift 5s ease infinite; }
+        .section-desc { font-size: 17px; color: var(--text-muted); max-width: 720px; margin: 0 auto; line-height: 1.7; }
+
+        .btn-primary {
+            display: inline-flex; align-items: center; gap: 8px; padding: 14px 30px;
+            background: var(--gradient-tech); color: #fff; font-size: 15px; font-weight: 600;
+            text-decoration: none; border-radius: var(--radius-pill);
+            box-shadow: 0 8px 30px rgba(37,99,235,0.4); border: none;
+            transition: transform var(--transition), box-shadow var(--transition);
+        }
+        .btn-primary:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 14px 45px rgba(6,182,212,0.55); }
+
+        /* ══════════════ REVEAL ══════════════ */
+        .reveal { opacity: 0; transform: translateY(50px); transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1); }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .reveal-left { opacity: 0; transform: translateX(-60px); transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1); }
+        .reveal-left.visible { opacity: 1; transform: translateX(0); }
+        .reveal-right { opacity: 0; transform: translateX(60px); transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1); }
+        .reveal-right.visible { opacity: 1; transform: translateX(0); }
+        .reveal-scale { opacity: 0; transform: scale(0.92); transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1); }
+        .reveal-scale.visible { opacity: 1; transform: scale(1); }
+        .stagger > * { opacity: 0; transform: translateY(30px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+        .stagger.visible > * { opacity: 1; transform: translateY(0); }
+        .stagger.visible > *:nth-child(1) { transition-delay: 0.05s; }
+        .stagger.visible > *:nth-child(2) { transition-delay: 0.15s; }
+        .stagger.visible > *:nth-child(3) { transition-delay: 0.25s; }
+        .stagger.visible > *:nth-child(4) { transition-delay: 0.35s; }
+        .stagger.visible > *:nth-child(5) { transition-delay: 0.45s; }
+        .stagger.visible > *:nth-child(6) { transition-delay: 0.55s; }
+        .stagger.visible > *:nth-child(7) { transition-delay: 0.65s; }
+
+        /* ══════════════ STATS ══════════════ */
+        .stats-section { padding: 60px 24px; background: linear-gradient(180deg, transparent 0%, rgba(37,99,235,0.04) 50%, transparent 100%); }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; max-width: 1200px; margin: 0 auto; }
+        .stat-card { background: rgba(10,15,30,0.6); border: 1px solid rgba(59,130,246,0.2); border-radius: var(--radius); padding: 32px 24px; text-align: center; transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition); backdrop-filter: blur(10px); position: relative; overflow: hidden; }
+        .stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--gradient-glow); transform: scaleX(0); transform-origin: left; transition: transform 0.5s; }
+        .stat-card:hover { transform: translateY(-6px); border-color: rgba(34,211,238,0.5); box-shadow: 0 20px 50px rgba(6,182,212,0.2); }
+        .stat-card:hover::before { transform: scaleX(1); }
+        .stat-num { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2.4rem, 4vw, 3.4rem); font-weight: 700; background: var(--gradient-glow); background-size: 200% 200%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: gradientShift 4s ease infinite; line-height: 1; margin-bottom: 10px; letter-spacing: -2px; }
+        .stat-label { font-size: 13px; color: var(--text-muted); font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase; }
+
+        /* ══════════════ FEATURES / POR QUÉ EDUONE ══════════════ */
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+        .feature-card { position: relative; background: rgba(10,15,30,0.6); border: 1px solid rgba(59,130,246,0.18); border-radius: var(--radius-lg); padding: 36px 30px; transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition); backdrop-filter: blur(10px); overflow: hidden; }
+        .feature-card::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at top right, rgba(37,99,235,0.15), transparent 60%); opacity: 0; transition: opacity var(--transition); pointer-events: none; }
+        .feature-card:hover { transform: translateY(-8px); border-color: rgba(34,211,238,0.4); box-shadow: 0 30px 70px rgba(6,182,212,0.18); }
+        .feature-card:hover::before { opacity: 1; }
+        .feature-icon { width: 62px; height: 62px; border-radius: 16px; display: grid; place-items: center; font-size: 26px; margin-bottom: 22px; background: rgba(37,99,235,0.12); color: var(--cyan-light); border: 1px solid rgba(59,130,246,0.3); transition: transform var(--transition), background var(--transition); position: relative; }
+        .feature-card:hover .feature-icon { transform: rotate(-6deg) scale(1.1); background: var(--gradient-tech); color: #fff; border-color: transparent; box-shadow: 0 0 25px rgba(6,182,212,0.5); }
+        .feature-card h3 { font-family: 'Space Grotesk', sans-serif; font-size: 19px; font-weight: 600; color: #fff; margin-bottom: 10px; letter-spacing: -0.3px; }
+        .feature-card p { font-size: 14.5px; color: var(--text-muted); line-height: 1.65; }
+
+        /* ══════════════ ROLES ══════════════ */
+        .roles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+        .role-card { background: rgba(10,15,30,0.6); border: 1px solid rgba(59,130,246,0.18); border-radius: var(--radius); padding: 30px 22px; text-align: center; transition: all var(--transition); backdrop-filter: blur(10px); }
+        .role-card:hover { transform: translateY(-6px); border-color: rgba(34,211,238,0.5); box-shadow: 0 20px 50px rgba(6,182,212,0.2); }
+        .role-icon { width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center; margin: 0 auto 18px; font-size: 26px; background: rgba(37,99,235,0.12); color: var(--cyan-light); border: 1px solid rgba(59,130,246,0.3); transition: all var(--transition); }
+        .role-card:hover .role-icon { transform: scale(1.12) rotate(6deg); background: var(--gradient-tech); color: #fff; border-color: transparent; box-shadow: 0 0 25px rgba(6,182,212,0.5); }
+        .role-card h3 { font-family: 'Space Grotesk', sans-serif; font-size: 17px; font-weight: 600; margin-bottom: 8px; color: #fff; }
+        .role-card p { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+
+        /* ══════════════ SPLIT LAYOUT ══════════════ */
+        .split-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+        .split-layout.reverse { direction: rtl; }
+        .split-layout.reverse > * { direction: ltr; }
+        .split-text .section-eyebrow { margin-bottom: 16px; }
+        .split-text .section-title { text-align: left; margin-bottom: 18px; }
+        .split-text .section-desc { text-align: left; margin: 0 0 28px; }
+        .split-visual { position: relative; }
+
+        /* ══════════════ DIAGRAMA ESTUDIANTE ══════════════ */
+        .student-diagram { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; align-items: center; max-width: 1080px; margin: 0 auto; }
+        .diagram-sources { display: flex; flex-direction: column; gap: 14px; }
+        .diagram-node { display: flex; align-items: center; gap: 12px; background: rgba(10,15,30,0.7); border: 1px solid rgba(59,130,246,0.25); border-radius: var(--radius-pill); padding: 12px 20px; font-size: 14px; font-weight: 600; color: #fff; backdrop-filter: blur(10px); transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition); }
+        .diagram-node:hover { transform: translateX(8px); border-color: rgba(34,211,238,0.6); box-shadow: 0 10px 30px rgba(6,182,212,0.25); }
+        .diagram-node i { color: var(--cyan-light); font-size: 16px; width: 22px; text-align: center; }
+        .diagram-lines { display: flex; align-items: center; justify-content: center; height: 100%; }
+        .diagram-lines svg { width: 100%; height: 240px; }
+        .diagram-target { display: flex; justify-content: center; }
+        .diagram-target-inner { background: var(--gradient-tech); color: #fff; border-radius: 22px; padding: 36px 30px; text-align: center; box-shadow: 0 30px 80px rgba(37,99,235,0.5), 0 0 60px rgba(6,182,212,0.4); display: flex; flex-direction: column; align-items: center; gap: 14px; min-width: 190px; transition: transform var(--transition); animation: pulseGlow 4s ease infinite; }
+        .diagram-target-inner:hover { transform: scale(1.06); }
+        .diagram-target-inner i { font-size: 40px; animation: floatY 3s infinite; }
+        .diagram-target-inner span { font-size: 15px; font-weight: 700; letter-spacing: -0.3px; }
+
+        /* ══════════════ FUNCIONALIDADES GRID ══════════════ */
+        .func-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+        .func-item { background: rgba(10,15,30,0.6); border: 1px solid rgba(59,130,246,0.18); border-radius: var(--radius-sm); padding: 22px 20px; display: flex; align-items: center; gap: 14px; transition: all var(--transition); backdrop-filter: blur(10px); }
+        .func-item:hover { transform: translateY(-5px); border-color: rgba(34,211,238,0.5); box-shadow: 0 15px 40px rgba(6,182,212,0.18); background: rgba(37,99,235,0.08); }
+        .func-item i { color: var(--cyan-light); font-size: 20px; width: 26px; text-align: center; transition: transform var(--transition); }
+        .func-item:hover i { transform: rotate(-10deg) scale(1.2); }
+        .func-item span { font-size: 14.5px; font-weight: 600; color: #fff; }
+
+        /* ══════════════ TECH BANNER ══════════════ */
+        .tech-banner { position: relative; background: linear-gradient(135deg, rgba(37,99,235,0.15) 0%, rgba(6,182,212,0.10) 100%); border: 1px solid rgba(59,130,246,0.3); border-radius: var(--radius-lg); padding: 80px 48px; text-align: center; overflow: hidden; transition: transform var(--transition), box-shadow var(--transition); }
+        .tech-banner::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 500px 300px at 20% 80%, rgba(6,182,212,0.20), transparent), radial-gradient(ellipse 400px 250px at 80% 20%, rgba(139,92,246,0.15), transparent); pointer-events: none; animation: pulseGlow 5s infinite; }
+        .tech-banner:hover { transform: scale(1.005); box-shadow: 0 40px 100px rgba(6,182,212,0.2); }
+        .tech-inner { position: relative; z-index: 1; max-width: 800px; margin: 0 auto; }
+        .tech-icon { width: 72px; height: 72px; border-radius: 50%; background: var(--gradient-tech); display: grid; place-items: center; font-size: 28px; color: #fff; margin: 0 auto 24px; animation: floatY 3s infinite; box-shadow: 0 0 40px rgba(6,182,212,0.5); }
+        .tech-banner .section-title { color: #fff; }
+        .tech-location { display: inline-flex; align-items: center; gap: 8px; background: rgba(10,15,30,0.5); border: 1px solid rgba(59,130,246,0.4); border-radius: var(--radius-pill); padding: 10px 22px; font-size: 14px; font-weight: 600; color: #fff; margin-top: 20px; backdrop-filter: blur(10px); transition: transform var(--transition); }
+        .tech-location:hover { transform: scale(1.05); }
+        .tech-location i { color: var(--lime); }
+
+        /* ══════════════ PLANES ══════════════ */
+        .prices-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 26px; max-width: 1000px; margin: 0 auto; }
+        .price-card { background: rgba(10,15,30,0.6); border: 1px solid rgba(59,130,246,0.18); border-radius: var(--radius-lg); padding: 40px 30px; text-align: center; position: relative; transition: all var(--transition); backdrop-filter: blur(10px); }
+        .price-card:hover { transform: translateY(-8px); border-color: rgba(34,211,238,0.5); box-shadow: 0 30px 70px rgba(6,182,212,0.2); }
+        .price-card.featured { border-color: var(--cyan); border-width: 2px; box-shadow: 0 20px 60px rgba(6,182,212,0.3); background: linear-gradient(135deg, rgba(37,99,235,0.12), rgba(6,182,212,0.08)); }
+        .price-badge { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: var(--gradient-tech); color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 7px 18px; border-radius: var(--radius-pill); white-space: nowrap; box-shadow: 0 0 25px rgba(6,182,212,0.6); animation: pulseGlow 2.5s infinite; }
+        .price-name { font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--cyan-light); margin-bottom: 10px; }
+        .price-students { font-size: 14px; color: var(--text-muted); margin-bottom: 22px; }
+        .price-amount { font-family: 'Space Grotesk', sans-serif; font-size: 34px; font-weight: 700; color: #fff; line-height: 1.1; margin-bottom: 6px; letter-spacing: -1px; }
+        .price-period { font-size: 13px; color: var(--text-muted); }
+
+        /* ══════════════ STEPS ══════════════ */
+        .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 26px; max-width: 1100px; margin: 0 auto; }
+        .step-item { text-align: center; position: relative; }
+        .step-number { width: 60px; height: 60px; border-radius: 50%; background: var(--gradient-tech); color: #fff; display: grid; place-items: center; font-weight: 800; font-size: 22px; margin: 0 auto 18px; box-shadow: 0 10px 30px rgba(37,99,235,0.5); transition: transform var(--transition), box-shadow var(--transition); font-family: 'Space Grotesk', sans-serif; }
+        .step-item:hover .step-number { transform: scale(1.12) rotate(6deg); box-shadow: 0 0 40px rgba(6,182,212,0.7); }
+        .step-item h4 { font-size: 15px; font-weight: 600; color: #fff; line-height: 1.4; }
+
+        /* ══════════════ CTA BANNER ══════════════ */
+        .cta-banner { background: linear-gradient(135deg, rgba(37,99,235,0.2) 0%, rgba(6,182,212,0.15) 100%); border: 1px solid rgba(59,130,246,0.35); border-radius: var(--radius-lg); padding: 80px 48px; text-align: center; color: #fff; position: relative; overflow: hidden; transition: transform var(--transition), box-shadow var(--transition); }
+        .cta-banner::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 500px 300px at 20% 80%, rgba(6,182,212,0.2), transparent), radial-gradient(ellipse 400px 250px at 80% 20%, rgba(139,92,246,0.15), transparent); pointer-events: none; animation: pulseGlow 4s infinite; }
+        .cta-banner:hover { transform: scale(1.005); box-shadow: 0 40px 100px rgba(6,182,212,0.25); }
+        .cta-banner h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.9rem, 3.2vw, 2.8rem); font-weight: 700; margin-bottom: 16px; letter-spacing: -1.5px; position: relative; z-index: 1; }
+        .cta-banner p { font-size: 17px; opacity: 0.9; margin-bottom: 34px; position: relative; z-index: 1; max-width: 620px; margin-left: auto; margin-right: auto; }
+        .cta-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1; }
+
+        /* ══════════════ FOOTER ══════════════ */
+        .footer { background: linear-gradient(180deg, transparent 0%, rgba(5,8,20,0.9) 20%, #02040a 100%); border-top: 1px solid rgba(59,130,246,0.15); padding: 80px 24px 40px; position: relative; }
+        .footer::before { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 200px; height: 1px; background: var(--gradient-tech); box-shadow: 0 0 30px var(--cyan); }
+        .footer-inner { max-width: 1280px; margin: 0 auto; }
+        .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 56px; }
+        .footer-brand-logo { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+        .footer-brand .logo-mark { width: 44px; height: 44px; }
+        .footer-brand .logo-text { font-size: 24px; }
+        .footer-brand p { font-size: 14px; color: var(--text-muted); line-height: 1.7; max-width: 340px; }
+        .footer-col h4 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.8px; color: rgba(148,163,184,0.5); margin-bottom: 20px; }
+        .footer-col li { margin-bottom: 12px; }
+        .footer-col a, .footer-col button.footer-link-btn { text-decoration: none; color: var(--text-muted); font-size: 14px; transition: color var(--transition), transform var(--transition); background: none; border: none; padding: 0; text-align: left; }
+        .footer-col a:hover, .footer-col button.footer-link-btn:hover { color: var(--cyan-light); transform: translateX(4px); display: inline-block; }
+        .footer-bottom { border-top: 1px solid rgba(148,163,184,0.1); padding-top: 32px; text-align: center; }
+        .footer-bottom p { font-size: 13px; color: rgba(148,163,184,0.4); margin-bottom: 6px; }
+
+        /* ══════════════ BOTONES FLOTANTES Y MODAL ══════════════ */
+        .back-to-top { position: fixed; bottom: 24px; right: 24px; width: 48px; height: 48px; border-radius: 50%; background: rgba(10,15,30,0.9); border: 1px solid rgba(59,130,246,0.4); color: #fff; display: grid; place-items: center; font-size: 18px; opacity: 0; pointer-events: none; z-index: 999; cursor: pointer; backdrop-filter: blur(14px); transition: all var(--transition); box-shadow: 0 8px 30px rgba(0,0,0,0.5); }
+        .back-to-top.visible { opacity: 1; pointer-events: auto; }
+        .back-to-top:hover { background: var(--gradient-tech); border-color: transparent; transform: translateY(-4px); box-shadow: 0 0 30px rgba(6,182,212,0.7); }
+
+        .help-fab { position: fixed; bottom: 24px; left: 24px; z-index: 998; }
+        .help-fab-btn { width: 56px; height: 56px; border-radius: 50%; background: var(--gradient-tech); border: none; color: #fff; font-size: 22px; display: grid; place-items: center; cursor: pointer; box-shadow: 0 8px 30px rgba(37,99,235,0.5); transition: transform var(--transition), box-shadow var(--transition); }
+        .help-fab-btn:hover { transform: scale(1.1) rotate(5deg); box-shadow: 0 0 40px rgba(6,182,212,0.8); }
+        .help-fab-btn .ico-close { display: none; }
+        .help-fab.open .help-fab-btn .ico-chat { display: none; }
+        .help-fab.open .help-fab-btn .ico-close { display: block; }
+        .help-panel { position: absolute; bottom: 72px; left: 0; width: 320px; background: rgba(10,15,30,0.95); border: 1px solid rgba(59,130,246,0.35); border-radius: var(--radius); overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.6); opacity: 0; visibility: hidden; transform: translateY(12px) scale(0.96); transform-origin: bottom left; transition: all var(--transition); backdrop-filter: blur(20px); }
+        .help-fab.open .help-panel { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
+        .help-panel-header { padding: 20px 22px; background: var(--gradient-tech); }
+        .help-panel-header h3 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+        .help-panel-header p { font-size: 12.5px; opacity: 0.9; }
+        .help-panel-body { padding: 10px; }
+        .help-option { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 10px; text-decoration: none; color: var(--text-light); transition: background var(--transition), transform var(--transition); }
+        .help-option:hover { background: rgba(37,99,235,0.15); transform: translateX(4px); }
+        .help-option .emoji { width: 38px; height: 38px; border-radius: 10px; background: rgba(37,99,235,0.2); display: grid; place-items: center; font-size: 18px; flex-shrink: 0; }
+        .help-option .lbl strong { display: block; font-size: 13.5px; font-weight: 600; color: #fff; margin-bottom: 2px; }
+        .help-option .lbl span { font-size: 11.5px; color: var(--text-muted); }
+
+        .modal-terms { display: none; position: fixed; inset: 0; z-index: 9999; align-items: center; justify-content: center; background: rgba(5,8,20,0.85); backdrop-filter: blur(10px); padding: 16px; }
+        .modal-terms.show { display: flex; }
+        .modal-terms-content { background: var(--bg-2); border: 1px solid rgba(59,130,246,0.35); border-radius: var(--radius); max-width: 860px; width: 100%; max-height: 90vh; display: flex; flex-direction: column; box-shadow: 0 40px 100px rgba(0,0,0,0.8), 0 0 60px rgba(37,99,235,0.3); overflow: hidden; animation: fadeSlideUp 0.35s ease; }
+        .modal-terms-header { padding: 24px 30px; background: var(--gradient-tech); color: #fff; display: flex; justify-content: space-between; align-items: center; }
+        .modal-terms-header h2 { font-family: 'Space Grotesk', sans-serif; font-size: 1.25rem; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+        .modal-terms-close { background: rgba(255,255,255,0.15); border: none; color: #fff; font-size: 1.6rem; cursor: pointer; width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; transition: background var(--transition), transform var(--transition); }
+        .modal-terms-close:hover { background: rgba(255,255,255,0.28); transform: rotate(90deg); }
+        .modal-terms-tabs { display: flex; background: rgba(10,15,30,0.6); border-bottom: 1px solid rgba(59,130,246,0.2); padding: 0 20px; gap: 4px; overflow-x: auto; }
+        .modal-terms-tab { padding: 16px 22px; background: none; border: none; border-bottom: 3px solid transparent; font-size: 13.5px; font-weight: 600; color: var(--text-muted); cursor: pointer; white-space: nowrap; transition: all var(--transition); }
+        .modal-terms-tab:hover { color: var(--cyan-light); }
+        .modal-terms-tab.active { color: var(--cyan-light); border-bottom-color: var(--cyan); }
+        .modal-terms-body { padding: 30px 34px; overflow-y: auto; flex: 1; color: var(--text-light); font-size: 14.5px; line-height: 1.8; }
+        .modal-terms-body h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.05rem; font-weight: 700; color: var(--cyan-light); margin-top: 22px; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid rgba(59,130,246,0.15); }
+        .modal-terms-body h3:first-child { margin-top: 0; }
+        .modal-terms-body p { margin-bottom: 12px; color: var(--text-light); }
+        .modal-terms-body strong { color: var(--cyan-light); font-weight: 600; }
+        .modal-terms-body .contact-box { background: rgba(37,99,235,0.1); padding: 18px 22px; border-radius: 12px; border-left: 4px solid var(--cyan); margin: 18px 0; }
+        .modal-terms-body .contact-box strong { display: block; margin-bottom: 8px; }
+        .modal-terms-body .contact-box p { margin: 3px 0; }
+        .modal-terms-footer { padding: 18px 30px; border-top: 1px solid rgba(59,130,246,0.2); display: flex; justify-content: flex-end; gap: 12px; background: rgba(10,15,30,0.6); }
+
+        /* ══════════════ RESPONSIVE ══════════════ */
+        @media (max-width: 1100px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; } }
+        @media (max-width: 1024px) {
+            .split-layout { grid-template-columns: 1fr; gap: 44px; text-align: center; }
+            .split-layout.reverse { direction: ltr; }
+            .split-text .section-title, .split-text .section-desc, .split-text .section-eyebrow { text-align: center; }
+            .split-text .section-eyebrow { justify-content: center; }
+            .student-diagram { grid-template-columns: 1fr; gap: 32px; }
+            .diagram-lines { display: none; }
+            .diagram-target { order: -1; }
+        }
+        @media (max-width: 900px) {
+            :root { --nav-h: 70px; }
+            .nav-container { padding: 0 18px; }
+            .nav-menu { position: fixed; top: var(--nav-h); left: 0; right: 0; background: rgba(10,15,30,0.98); backdrop-filter: blur(20px); flex-direction: column; align-items: stretch; gap: 4px; padding: 20px; border-bottom: 1px solid rgba(59,130,246,0.25); transform: translateY(-120%); transition: transform 0.4s cubic-bezier(0.4,0,0.2,1); max-height: calc(100vh - var(--nav-h)); overflow-y: auto; }
+            .nav-menu.open { transform: translateY(0); }
+            .nav-link { padding: 14px 18px; font-size: 15.5px; }
+            .nav-link::before { display: none; }
+            .nav-link:hover, .nav-link.active { background: rgba(37,99,235,0.15); color: var(--cyan-light); }
+            .nav-actions { display: none; }
+            .nav-menu .nav-actions-mobile { display: flex !important; flex-direction: column; gap: 10px; margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(59,130,246,0.2); }
+            .nav-menu .nav-actions-mobile .btn-nav-demo, .nav-menu .nav-actions-mobile .btn-nav-login { width: 100%; justify-content: center; padding: 13px 20px; font-size: 15px; }
+            .nav-hamburger { display: flex; }
+        }
+        @media (max-width: 768px) {
+            .section { padding: 80px 18px; }
+            .section-header { margin-bottom: 48px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+            .stat-card { padding: 26px 18px; }
+            .tech-banner { padding: 60px 26px; }
+            .cta-banner { padding: 60px 26px; }
+            .cta-actions { flex-direction: column; align-items: center; }
+            .cta-actions .btn-cta-primary, .cta-actions .btn-cta-secondary { width: 100%; max-width: 340px; justify-content: center; }
+            .footer { padding: 60px 20px 30px; }
+            .footer-top { grid-template-columns: 1fr; gap: 36px; text-align: center; }
+            .footer-brand-logo { justify-content: center; }
+            .footer-brand p { margin: 0 auto; }
+            .back-to-top { bottom: 18px; right: 18px; width: 46px; height: 46px; }
+            .help-fab { bottom: 18px; left: 18px; }
+            .help-fab-btn { width: 52px; height: 52px; font-size: 20px; }
+            .help-panel { width: 290px; }
+            .modal-terms-body { padding: 24px 22px; }
+        }
+        @media (max-width: 480px) {
+            .nav-container { padding: 0 14px; }
+            .logo-mark { width: 36px; height: 36px; }
+            .logo-text { font-size: 20px; }
+            .section { padding: 64px 16px; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .tech-banner { padding: 48px 20px; }
+            .cta-banner { padding: 48px 20px; }
+            .price-amount { font-size: 28px; }
+            .footer { padding: 48px 16px 24px; }
+            .help-fab { bottom: 14px; left: 14px; }
+            .help-fab-btn { width: 48px; height: 48px; font-size: 18px; }
+            .help-panel { width: calc(100vw - 28px); max-width: 300px; }
+            .back-to-top { bottom: 14px; right: 14px; width: 42px; height: 42px; }
+            .modal-terms { padding: 8px; }
+            .modal-terms-header { padding: 18px 20px; }
+            .modal-terms-header h2 { font-size: 1.05rem; }
+        }
+        
+    </style>
 </head>
 <body>
 
-<!-- ═══ NAVBAR ═══ -->
-<nav class="navbar" id="navbar" role="navigation" aria-label="Navegación principal">
-  <div class="nav-container">
-    <a href="index.html" class="nav-logo" aria-label="EduOne - Inicio">
-      <!-- LOGO REAL DE EDUONE -->
-      <img src="logo-eduone.svg" alt="EduOne" onerror="this.style.display='none'" />
-      <span class="nav-logo-text">Edu<span>One</span></span>
-    </a>
-
-    <button class="nav-hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-menu">
-      <span></span><span></span><span></span>
-    </button>
-
-    <ul class="nav-menu" id="nav-menu" role="list">
-      <li><a href="index.html" class="nav-link active" aria-current="page">Inicio</a></li>
-      <li><a href="sobrenosotros.html" class="nav-link">Sobre nosotros</a></li>
-      <li><a href="funcionalidades.html" class="nav-link">Funcionalidades</a></li>
-      <li><a href="beneficios.html" class="nav-link">Beneficios</a></li>
-      <li><a href="planes.html" class="nav-link">Planes</a></li>
-      <li><a href="implementacion.html" class="nav-link">Implementación</a></li>
-      <li><a href="contacto.html" class="nav-link">Contacto</a></li>
-      <li><a href="login.html" class="nav-link nav-link-cta">Iniciar sesión</a></li>
-    </ul>
-  </div>
-</nav>
-
-<!-- ═══ HERO ═══ -->
-<div class="hero-wrapper">
-  <!-- Formas decorativas -->
-  <div class="hero-shapes" aria-hidden="true">
-    <div class="shape shape-1"></div>
-    <div class="shape shape-2"></div>
-    <div class="shape shape-3"></div>
-  </div>
-
-  <div class="hero">
-    <div class="hero-content">
-      <div class="hero-badge">
-        <div class="hero-badge-dot"></div>
-        Plataforma educativa digital
-        <span>· v2.0</span>
-      </div>
-      <h1>Gestión educativa en <span>un solo lugar</span></h1>
-      <p class="hero-desc">EduOne conecta a directivos, docentes, estudiantes y familias en un mismo entorno digital, facilitando la gestión académica, la comunicación y el seguimiento estudiantil.</p>
-      <p class="hero-tagline">Educación, tecnología y gestión en un solo lugar.</p>
-      <div class="hero-actions">
-        <a href="sobrenosotros.html" class="btn btn-white">Conocer EduOne</a>
-        <a href="planes.html" class="btn btn-outline-light">Ver planes</a>
-        <a href="login.html" class="btn btn-outline-light">Iniciar sesión</a>
-      </div>
+    <!-- PRELOADER -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-inner">
+            <div class="preloader-logo">EduOne</div>
+            <div class="preloader-ring"></div>
+            <div class="preloader-bar"></div>
+            <div class="preloader-caption">Cargando experiencia</div>
+        </div>
     </div>
 
-    <div class="hero-visual">
-      <div class="dashboard-card" id="dashboardCard">
-        <div class="dashboard-header">
-          <div class="dashboard-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="3" y="3" width="7" height="7" rx="1"/>
-              <rect x="14" y="3" width="7" height="7" rx="1"/>
-              <rect x="3" y="14" width="7" height="7" rx="1"/>
-              <rect x="14" y="14" width="7" height="7" rx="1"/>
-            </svg>
-            Panel EduOne
-          </div>
-          <span class="dashboard-badge"><span class="dot"></span> En línea</span>
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo" aria-label="EduOne - Inicio">
+                <span class="logo-mark">
+                    <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" fill="none">
+                        <defs>
+                            <linearGradient id="gradCap" x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0%" stop-color="#3b82f6"/><stop offset="55%" stop-color="#22d3ee"/><stop offset="100%" stop-color="#a3e635"/>
+                            </linearGradient>
+                        </defs>
+                        <path d="M24 6 L44 16 L24 26 L4 16 Z" fill="url(#gradCap)"/>
+                        <path d="M12 21.5 V30 C12 33.5 17.4 36 24 36 C30.6 36 36 33.5 36 30 V21.5 L24 27.5 Z" fill="url(#gradCap)" opacity="0.85"/>
+                        <path d="M24 27.5 L36 21.5" stroke="#ffffff" stroke-opacity="0.35" stroke-width="1.2" stroke-linecap="round"/>
+                        <path d="M40 18 V29" stroke="url(#gradCap)" stroke-width="2.4" stroke-linecap="round"/>
+                        <circle cx="40" cy="30.5" r="2.6" fill="url(#gradCap)"/>
+                    </svg>
+                </span>
+                <span class="logo-text">Edu<span>One</span></span>
+            </a>
+
+            <button class="nav-hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-menu">
+                <span></span><span></span><span></span>
+            </button>
+
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="index.html" class="nav-link active">Inicio</a></li>
+                <li><a href="sobrenosotros.html" class="nav-link">Sobre nosotros</a></li>
+                <li><a href="funcionalidades.html" class="nav-link">Funcionalidades</a></li>
+                <li><a href="beneficios.html" class="nav-link">Beneficios</a></li>
+                <li><a href="planes.html" class="nav-link">Planes</a></li>
+                <li><a href="implementacion.html" class="nav-link">Implementación</a></li>
+                <li><a href="contacto.html" class="nav-link">Contacto</a></li>
+                <li class="nav-actions-mobile" style="display:none;">
+                    <a href="contacto.html" class="btn-nav-demo">Solicitar demo</a>
+                    <a href="login.html" class="btn-nav-login"><i class="fas fa-right-to-bracket"></i> Iniciar sesión</a>
+                </li>
+            </ul>
+
+            <div class="nav-actions">
+                <a href="contacto.html" class="btn-nav-demo"><i class="fas fa-rocket"></i> Solicitar demo</a>
+                <a href="login.html" class="btn-nav-login"><i class="fas fa-right-to-bracket"></i> Iniciar sesión</a>
+            </div>
         </div>
+    </nav>
 
-        <div class="stats-grid" id="statsGrid">
-          <div class="stat-item">
-            <span class="stat-icon">👨‍🎓</span>
-            <span class="stat-value" data-counter="412">0</span>
-            <span class="stat-label">Estudiantes</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-icon">👩‍🏫</span>
-            <span class="stat-value" data-counter="38">0</span>
-            <span class="stat-label">Docentes</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-icon">📚</span>
-            <span class="stat-value" data-counter="24">0</span>
-            <span class="stat-label">Cursos</span>
-          </div>
+    <!-- HERO PRINCIPAL (VIDEO) -->
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="hero-text">
+                <div class="hero-badge"><span class="dot"></span> Plataforma educativa del futuro</div>
+                <h1 class="hero-title">Todo tu colegio,<br><span class="gradient-text">en una sola plataforma</span></h1>
+                <p class="hero-desc">EduOne conecta la academia, la administración, las finanzas, la convivencia y la comunicación de tu institución en un ecosistema digital moderno, seguro y fácil de usar.</p>
+                <div class="hero-actions">
+                    <a href="contacto.html" class="btn-cta-primary"><i class="fas fa-rocket"></i> Solicitar demostración</a>
+                    <a href="login.html" class="btn-cta-secondary"><i class="fas fa-right-to-bracket"></i> Iniciar sesión</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="float-chip chip-a"><i class="fas fa-star"></i> Notas y boletines</div>
+                <div class="float-chip chip-b"><i class="fas fa-clipboard-check"></i> Asistencia</div>
+                <div class="video-container">
+                    <video controls playsinline poster="imagenes/miniatura.png">
+                        <source src="imagenes/video1.mp4" type="video/mp4">
+                        Tu navegador no soporta la reproducción de video.
+                    </video>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <div class="progress-section">
-          <div class="progress-label">
-            <span>📊 Promedio académico</span>
-            <span id="promedioLabel">0%</span>
-          </div>
-          <div class="progress-bar">
-            <div class="progress-fill" id="promedioFill" style="width:0%"></div>
-          </div>
+    <!-- STATS -->
+    <section class="stats-section">
+        <div class="stats-grid stagger reveal">
+            <div class="stat-card">
+                <div class="stat-num" data-count="120">0</div>
+                <div class="stat-label">Instituciones activas*</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-num" data-count="35000">0</div>
+                <div class="stat-label">Estudiantes gestionados*</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-num" data-count="99" data-suffix="%">0</div>
+                <div class="stat-label">Disponibilidad*</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-num" data-count="7">0</div>
+                <div class="stat-label">Roles integrados</div>
+            </div>
         </div>
-        <div class="progress-section">
-          <div class="progress-label">
-            <span>✅ Tareas completadas</span>
-            <span id="tareasLabel">0%</span>
-          </div>
-          <div class="progress-bar">
-            <div class="progress-fill" id="tareasFill" style="width:0%; background: linear-gradient(90deg, #3b82f6, #818cf8);"></div>
-          </div>
+        <p style="text-align:center;font-size:11px;color:rgba(148,163,184,0.5);margin-top:24px;">* Datos de ejemplo para fines demostrativos.</p>
+    </section>
+
+    <!-- POR QUÉ EDUONE -->
+    <section class="section" id="por-que-eduone">
+        <div class="section-inner">
+            <div class="section-header reveal">
+                <div class="section-eyebrow"><span class="dot"></span> ¿Por qué EduOne?</div>
+                <h2 class="section-title">Menos procesos separados.<br><span class="grad">Más organización.</span></h2>
+                <p class="section-desc">EduOne reúne información que normalmente se encuentra distribuida entre diferentes archivos, documentos y canales de trabajo.</p>
+            </div>
+            <div class="features-grid stagger reveal">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-database"></i></div>
+                    <h3>Información centralizada</h3>
+                    <p>Mantén los datos institucionales organizados en un mismo entorno, seguro y accesible según rol.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+                    <h3>Seguimiento académico</h3>
+                    <p>Facilita la consulta y organización del proceso de los estudiantes con datos claros y en tiempo real.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-user-shield"></i></div>
+                    <h3>Acceso por roles</h3>
+                    <p>Cada integrante de la institución accede a las herramientas que necesita, con la seguridad adecuada.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-bullhorn"></i></div>
+                    <h3>Comunicación organizada</h3>
+                    <p>Facilita la consulta de comunicados e información institucional desde un solo canal.</p>
+                </div>
+            </div>
         </div>
-        <div class="progress-section">
-          <div class="progress-label">
-            <span>📄 Boletines generados</span>
-            <span id="boletinesLabel">0%</span>
-          </div>
-          <div class="progress-bar">
-            <div class="progress-fill" id="boletinesFill" style="width:0%; background: linear-gradient(90deg, #f59e0b, #fb923c);"></div>
-          </div>
+    </section>
+
+    <!-- ROLES -->
+    <section class="section" id="comunidad">
+        <div class="section-inner">
+            <div class="section-header reveal">
+                <div class="section-eyebrow"><span class="dot"></span> Roles y accesos</div>
+                <h2 class="section-title">Una plataforma para<br><span class="grad">toda la comunidad educativa</span></h2>
+            </div>
+            <div class="roles-grid stagger reveal">
+                <div class="role-card"><div class="role-icon"><i class="fas fa-school"></i></div><h3>Rector</h3><p>Visión general y control institucional.</p></div>
+                <div class="role-card"><div class="role-icon"><i class="fas fa-user-tie"></i></div><h3>Coordinador</h3><p>Seguimiento académico y de convivencia.</p></div>
+                <div class="role-card"><div class="role-icon"><i class="fas fa-chalkboard-teacher"></i></div><h3>Profesor</h3><p>Gestión de cursos, notas y asistencia.</p></div>
+                <div class="role-card"><div class="role-icon"><i class="fas fa-user-graduate"></i></div><h3>Estudiante</h3><p>Consulta de su proceso académico.</p></div>
+                <div class="role-card"><div class="role-icon"><i class="fas fa-users"></i></div><h3>Acudiente</h3><p>Acompañamiento del proceso de sus hijos.</p></div>
+                <div class="role-card"><div class="role-icon"><i class="fas fa-folder-open"></i></div><h3>Secretaría</h3><p>Gestión administrativa y de matrículas.</p></div>
+                <div class="role-card"><div class="role-icon"><i class="fas fa-calculator"></i></div><h3>Contabilidad</h3><p>Control de pagos y movimientos.</p></div>
+            </div>
         </div>
+    </section>
 
-        <ul class="mini-list" id="actividadesList">
-          <li><span class="mini-dot" style="background:#10b981"></span> Cargando actividades...</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</div>
+    <!-- TRABAJO DIARIO -->
+    <section class="section">
+        <div class="section-inner">
+            <div class="split-layout reveal">
+                <div class="split-visual reveal-left">
+                    <div class="mockup-frame">
+                        <div class="mockup-bar">
+                            <div class="mockup-dots"><span class="mockup-dot r"></span><span class="mockup-dot y"></span><span class="mockup-dot g"></span></div>
+                            <div class="mockup-url"><i class="fas fa-lock"></i> eduone.com.co/profesor</div>
+                        </div>
+                        <div class="mockup-img">
+                            <img src="imagenes/panelprofesor1.png" alt="Panel del docente en EduOne" loading="lazy" />
+                        </div>
+                    </div>
+                </div>
+                <div class="split-text reveal-right">
+                    <div class="section-eyebrow"><span class="dot"></span> Para docentes</div>
+                    <h2 class="section-title">Diseñada para el <span class="grad">trabajo diario</span></h2>
+                    <p class="section-desc">Los docentes cuentan con un entorno organizado para consultar cursos, registrar actividades, gestionar notas, asistencia y seguimiento académico.</p>
+                    <a href="funcionalidades.html" class="btn-primary"><i class="fas fa-cubes"></i> Ver funcionalidades</a>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<!-- ═══ TODO TU COLEGIO CONECTADO ═══ -->
-<section class="section" style="background: var(--surface);">
-  <div class="section-inner">
-    <div class="section-header reveal">
-      <div class="section-eyebrow">Roles y accesos</div>
-      <h2 class="section-title">Todo tu colegio <span>conectado</span></h2>
-      <p class="section-desc">Cada miembro de la comunidad educativa tiene su propio espacio diseñado para sus necesidades específicas.</p>
-    </div>
-    <div class="cards-grid stagger-children reveal">
-      <div class="card">
-        <div class="card-icon icon-blue" aria-hidden="true">🏫</div>
-        <h3>Directivos</h3>
-        <p>Administra y supervisa los procesos académicos de tu institución con una visión integral y herramientas de control.</p>
-        <a href="sobrenosotros.html" class="card-link">Conocer funciones →</a>
-      </div>
-      <div class="card">
-        <div class="card-icon icon-purple" aria-hidden="true">👩‍🏫</div>
-        <h3>Profesores</h3>
-        <p>Gestiona clases, actividades y calificaciones desde un solo lugar, con acceso rápido a tus cursos y estudiantes.</p>
-        <a href="sobrenosotros.html" class="card-link">Conocer funciones →</a>
-      </div>
-      <div class="card">
-        <div class="card-icon icon-cyan" aria-hidden="true">👨‍🎓</div>
-        <h3>Estudiantes</h3>
-        <p>Consulta tareas, notas y toda tu información académica en tiempo real desde cualquier dispositivo.</p>
-        <a href="sobrenosotros.html" class="card-link">Conocer funciones →</a>
-      </div>
-      <div class="card">
-        <div class="card-icon icon-green" aria-hidden="true">👨‍👩‍👧</div>
-        <h3>Familias</h3>
-        <p>Acompaña activamente el proceso académico de tus hijos con información actualizada y comunicación directa.</p>
-        <a href="sobrenosotros.html" class="card-link">Conocer funciones →</a>
-      </div>
-    </div>
-  </div>
-</section>
+    <!-- ESTUDIANTE -->
+    <section class="section">
+        <div class="section-inner">
+            <div class="section-header reveal">
+                <div class="section-eyebrow"><span class="dot"></span> Seguimiento del estudiante</div>
+                <h2 class="section-title">Un estudiante. Una historia.<br><span class="grad">Una plataforma.</span></h2>
+                <p class="section-desc">EduOne permite mantener organizada la información académica, asistencia, actividades, convivencia y otros registros relacionados con el proceso del estudiante.</p>
+            </div>
+            <div class="student-diagram reveal">
+                <div class="diagram-sources">
+                    <div class="diagram-node"><i class="fas fa-star"></i><span>Notas</span></div>
+                    <div class="diagram-node"><i class="fas fa-clipboard-check"></i><span>Asistencia</span></div>
+                    <div class="diagram-node"><i class="fas fa-tasks"></i><span>Actividades</span></div>
+                    <div class="diagram-node"><i class="fas fa-handshake"></i><span>Convivencia</span></div>
+                    <div class="diagram-node"><i class="fas fa-users"></i><span>Familia</span></div>
+                </div>
+                <div class="diagram-lines">
+                    <svg viewBox="0 0 400 200" preserveAspectRatio="none" aria-hidden="true">
+                        <path d="M 20 20 Q 200 100 380 100" stroke="#22d3ee" stroke-width="2" fill="none" stroke-dasharray="4 4" opacity="0.5"/>
+                        <path d="M 20 60 Q 200 100 380 100" stroke="#22d3ee" stroke-width="2" fill="none" stroke-dasharray="4 4" opacity="0.5"/>
+                        <path d="M 20 100 L 380 100" stroke="#22d3ee" stroke-width="2" fill="none" stroke-dasharray="4 4" opacity="0.5"/>
+                        <path d="M 20 140 Q 200 100 380 100" stroke="#22d3ee" stroke-width="2" fill="none" stroke-dasharray="4 4" opacity="0.5"/>
+                        <path d="M 20 180 Q 200 100 380 100" stroke="#22d3ee" stroke-width="2" fill="none" stroke-dasharray="4 4" opacity="0.5"/>
+                    </svg>
+                </div>
+                <div class="diagram-target">
+                    <div class="diagram-target-inner">
+                        <i class="fas fa-id-card"></i>
+                        <span>Perfil del estudiante</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+        <!-- FAMILIAS -->
+    <section class="section">
+        <div class="section-inner">
+            <div class="split-layout reverse reveal">
+                <div class="split-visual reveal-right">
+                    <div class="mockup-frame">
+                        <div class="mockup-bar">
+                            <div class="mockup-dots"><span class="mockup-dot r"></span><span class="mockup-dot y"></span><span class="mockup-dot g"></span></div>
+                            <div class="mockup-url"><i class="fas fa-lock"></i> eduone.com.co/acudiente</div>
+                        </div>
+                        <div class="mockup-img">
+                            <img src="imagenes/panelacudiente1.png" alt="Panel del acudiente en EduOne" loading="lazy" />
+                        </div>
+                    </div>
+                </div>
+                <div class="split-text reveal-left">
+                    <div class="section-eyebrow"><span class="dot"></span> Para familias</div>
+                    <h2 class="section-title">Más información para <span class="grad">acompañar mejor</span></h2>
+                    <p class="section-desc">Los acudientes pueden consultar la información habilitada por la institución y realizar un seguimiento más cercano al proceso educativo de sus hijos.</p>
+                    <a href="beneficios.html" class="btn-primary"><i class="fas fa-gift"></i> Conocer beneficios</a>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<!-- ═══ TABS: UNA PLATAFORMA PARA CADA ROL ═══ -->
-<section class="section" style="background: var(--background);">
-  <div class="section-inner">
-    <div class="section-header reveal">
-      <div class="section-eyebrow">Multi-rol</div>
-      <h2 class="section-title">Una plataforma para cada miembro de tu <span>comunidad educativa</span></h2>
-      <p class="section-desc">Cada usuario accede a las herramientas y la información que realmente necesita.</p>
-    </div>
+    <!-- FUNCIONALIDADES -->
+    <section class="section" id="funcionalidades">
+        <div class="section-inner">
+            <div class="section-header reveal">
+                <div class="section-eyebrow"><span class="dot"></span> Funcionalidades</div>
+                <h2 class="section-title">Herramientas <span class="grad">destacadas</span></h2>
+            </div>
+            <div class="func-grid stagger reveal">
+                <div class="func-item"><i class="fas fa-user-graduate"></i><span>Estudiantes y matrículas</span></div>
+                <div class="func-item"><i class="fas fa-star"></i><span>Calificaciones</span></div>
+                <div class="func-item"><i class="fas fa-clipboard-check"></i><span>Asistencia</span></div>
+                <div class="func-item"><i class="fas fa-calendar-alt"></i><span>Horarios</span></div>
+                <div class="func-item"><i class="fas fa-file-pdf"></i><span>Boletines</span></div>
+                <div class="func-item"><i class="fas fa-tasks"></i><span>Actividades</span></div>
+                <div class="func-item"><i class="fas fa-handshake"></i><span>Convivencia</span></div>
+                <div class="func-item"><i class="fas fa-money-check-dollar"></i><span>Finanzas</span></div>
+            </div>
+            <div style="text-align:center;margin-top:48px;" class="reveal">
+                <a href="funcionalidades.html" class="btn-primary"><i class="fas fa-arrow-right"></i> Conocer todas las funcionalidades</a>
+            </div>
+        </div>
+    </section>
 
-    <div class="tabs-container reveal">
-      <div class="tabs-header" role="tablist">
-        <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="tab-rector" data-tab="tab-rector">
-          <span class="tab-icon">🏛️</span> Rector / Directivo
+    <!-- TECNOLOGÍA COLOMBIANA -->
+    <section class="section">
+        <div class="section-inner">
+            <div class="tech-banner reveal-scale">
+                <div class="tech-inner">
+                    <div class="tech-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <div class="section-eyebrow" style="margin-bottom:14px;"><span class="dot"></span> Origen</div>
+                    <h2 class="section-title">Tecnología educativa<br><span class="grad">desarrollada en Colombia</span></h2>
+                    <p class="section-desc" style="color:rgba(226,232,240,0.85);margin-bottom:8px;">EduOne nace con el propósito de ofrecer una solución cercana a las necesidades de las instituciones educativas colombianas.</p>
+                    <div class="tech-location"><i class="fas fa-map-pin"></i> Neiva, Huila, Colombia</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PLANES -->
+    <section class="section" id="planes">
+        <div class="section-inner">
+            <div class="section-header reveal">
+                <div class="section-eyebrow"><span class="dot"></span> Planes</div>
+                <h2 class="section-title">Un plan para <span class="grad">cada institución</span></h2>
+                <p class="section-desc">Nuestros planes se adaptan al número de estudiantes de cada colegio. Todos los roles incluidos.</p>
+            </div>
+            <div class="prices-grid stagger reveal">
+                <div class="price-card">
+                    <div class="price-name">EduOne Inicial</div>
+                    <div class="price-students">Hasta 200 estudiantes</div>
+                    <div class="price-amount">$1.800.000</div>
+                    <div class="price-period">/ año</div>
+                </div>
+                <div class="price-card featured">
+                    <div class="price-badge">Recomendado</div>
+                    <div class="price-name">EduOne Esencial</div>
+                    <div class="price-students">Hasta 400 estudiantes</div>
+                    <div class="price-amount">$2.400.000</div>
+                    <div class="price-period">/ año</div>
+                </div>
+                <div class="price-card">
+                    <div class="price-name">EduOne Profesional</div>
+                    <div class="price-students">Hasta 600 estudiantes</div>
+                    <div class="price-amount">$3.000.000</div>
+                    <div class="price-period">/ año</div>
+                </div>
+            </div>
+            <div style="text-align:center;margin-top:48px;" class="reveal">
+                <a href="planes.html" class="btn-primary"><i class="fas fa-tags"></i> Ver todos los planes</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- IMPLEMENTACIÓN -->
+    <section class="section">
+        <div class="section-inner">
+            <div class="section-header reveal">
+                <div class="section-eyebrow"><span class="dot"></span> Implementación</div>
+                <h2 class="section-title">Te acompañamos en <span class="grad">la puesta en marcha</span></h2>
+            </div>
+            <div class="steps-grid stagger reveal">
+                <div class="step-item"><div class="step-number">1</div><h4>Conocemos la institución</h4></div>
+                <div class="step-item"><div class="step-number">2</div><h4>Configuramos EduOne</h4></div>
+                <div class="step-item"><div class="step-number">3</div><h4>Organizamos la información</h4></div>
+                <div class="step-item"><div class="step-number">4</div><h4>Capacitamos al equipo</h4></div>
+                <div class="step-item"><div class="step-number">5</div><h4>Iniciamos operación</h4></div>
+            </div>
+            <div style="text-align:center;margin-top:48px;" class="reveal">
+                <a href="implementacion.html" class="btn-primary"><i class="fas fa-route"></i> Conocer implementación</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section class="section" style="padding-bottom:100px;">
+        <div class="section-inner">
+            <div class="cta-banner reveal-scale">
+                <h2>¿Listo para conocer EduOne en funcionamiento?</h2>
+                <p>Solicita una demostración y conoce cómo la plataforma puede adaptarse a tu institución.</p>
+                <div class="cta-actions">
+                    <a href="contacto.html" class="btn-cta-primary"><i class="fas fa-rocket"></i> Solicitar demostración</a>
+                    <a href="login.html" class="btn-cta-secondary"><i class="fas fa-right-to-bracket"></i> Iniciar sesión</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <div class="footer-brand-logo">
+                        <span class="logo-mark">
+                            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" fill="none">
+                                <defs>
+                                    <linearGradient id="gradCapF" x1="0" y1="0" x2="1" y2="1">
+                                        <stop offset="0%" stop-color="#3b82f6"/><stop offset="55%" stop-color="#22d3ee"/><stop offset="100%" stop-color="#a3e635"/>
+                                    </linearGradient>
+                                </defs>
+                                <path d="M24 6 L44 16 L24 26 L4 16 Z" fill="url(#gradCapF)"/>
+                                <path d="M12 21.5 V30 C12 33.5 17.4 36 24 36 C30.6 36 36 33.5 36 30 V21.5 L24 27.5 Z" fill="url(#gradCapF)" opacity="0.85"/>
+                                <path d="M40 18 V29" stroke="url(#gradCapF)" stroke-width="2.4" stroke-linecap="round"/>
+                                <circle cx="40" cy="30.5" r="2.6" fill="url(#gradCapF)"/>
+                            </svg>
+                        </span>
+                        <span class="logo-text">Edu<span>One</span></span>
+                    </div>
+                    <p>Plataforma tecnológica colombiana para la gestión académica, administrativa, financiera y de convivencia de instituciones educativas.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Navegación</h4>
+                    <ul>
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="sobrenosotros.html">Sobre nosotros</a></li>
+                        <li><a href="funcionalidades.html">Funcionalidades</a></li>
+                        <li><a href="beneficios.html">Beneficios</a></li>
+                        <li><a href="planes.html">Planes</a></li>
+                        <li><a href="implementacion.html">Implementación</a></li>
+                        <li><a href="contacto.html">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Soporte</h4>
+                    <ul>
+                        <li><a href="#">Centro de ayuda</a></li>
+                        <li><a href="#">Soporte técnico</a></li>
+                        <li><a href="contacto.html">Solicitar demostración</a></li>
+                        <li><a href="contacto.html">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><button type="button" class="footer-link-btn" data-open-legal="terms">Términos y condiciones</button></li>
+                        <li><button type="button" class="footer-link-btn" data-open-legal="privacy">Política de privacidad</button></li>
+                        <li><button type="button" class="footer-link-btn" data-open-legal="data">Tratamiento de datos</button></li>
+                        <li><a href="#">Política de cookies</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 EduOne. Todos los derechos reservados.</p>
+                <p>Tecnología educativa desarrollada en Colombia.</p>
+                <p>contacto@eduone.com.co · Neiva, Huila, Colombia · eduone.com.co</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- BOTONES FLOTANTES -->
+    <button class="back-to-top" id="backToTop" aria-label="Volver arriba"><i class="fas fa-arrow-up"></i></button>
+
+    <div class="help-fab" id="helpFab">
+        <button class="help-fab-btn" id="helpFabBtn" aria-label="Abrir menú de ayuda" aria-expanded="false">
+            <span class="ico-chat"><i class="fas fa-comment-dots"></i></span>
+            <span class="ico-close"><i class="fas fa-times"></i></span>
         </button>
-        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-profesor" data-tab="tab-profesor">
-          <span class="tab-icon">👩‍🏫</span> Profesor
-        </button>
-        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-estudiante" data-tab="tab-estudiante">
-          <span class="tab-icon">👨‍🎓</span> Estudiante
-        </button>
-        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-familia" data-tab="tab-familia">
-          <span class="tab-icon">👨‍👩‍👧</span> Familia
-        </button>
-      </div>
-
-      <div class="tab-panels">
-        <div class="tab-panel active" id="tab-rector" role="tabpanel">
-          <h3>🏛️ Gestión institucional completa</h3>
-          <p>Visualiza y administra toda la información de tu institución desde un solo lugar.</p>
-          <ul class="tab-features">
-            <li><span class="check">✓</span> Gestión de estudiantes</li>
-            <li><span class="check">✓</span> Gestión de docentes</li>
-            <li><span class="check">✓</span> Cursos y grados</li>
-            <li><span class="check">✓</span> Asignaturas</li>
-            <li><span class="check">✓</span> Reportes institucionales</li>
-            <li><span class="check">✓</span> Seguimiento académico</li>
-          </ul>
+        <div class="help-panel">
+            <div class="help-panel-header">
+                <h3>Hola 👋 Somos EduOne</h3>
+                <p>¿En qué podemos ayudarte?</p>
+            </div>
+            <div class="help-panel-body">
+                <a href="contacto.html" class="help-option"><span class="emoji">📅</span><span class="lbl"><strong>Solicitar demostración</strong><span>Conoce la plataforma en acción</span></span></a>
+                <a href="#" class="help-option"><span class="emoji">🛠️</span><span class="lbl"><strong>Soporte</strong><span>Atención técnica</span></span></a>
+                <a href="contacto.html" class="help-option"><span class="emoji">✉️</span><span class="lbl"><strong>Contacto</strong><span>Escríbenos directamente</span></span></a>
+                <a href="#" class="help-option"><span class="emoji">📣</span><span class="lbl"><strong>Novedades</strong><span>Mejoras y actualizaciones</span></span></a>
+            </div>
         </div>
+    </div>
 
-        <div class="tab-panel" id="tab-profesor" role="tabpanel">
-          <h3>👩‍🏫 Tu aula digital</h3>
-          <p>Gestiona tus cursos, publica tareas y califica a tus estudiantes sin complicaciones.</p>
-          <ul class="tab-features">
-            <li><span class="check">✓</span> Cursos asignados</li>
-            <li><span class="check">✓</span> Publicación de tareas</li>
-            <li><span class="check">✓</span> Calificaciones</li>
-            <li><span class="check">✓</span> Asistencia</li>
-            <li><span class="check">✓</span> Seguimiento académico</li>
-          </ul>
+    <!-- MODAL LEGAL -->
+    <div class="modal-terms" id="modalTerms" role="dialog" aria-modal="true" aria-labelledby="modalTermsTitle">
+        <div class="modal-terms-content">
+            <div class="modal-terms-header">
+                <h2 id="modalTermsTitle"><i class="fas fa-file-contract"></i> Información legal</h2>
+                <button class="modal-terms-close" id="closeTermsModal" aria-label="Cerrar">&times;</button>
+            </div>
+            <div class="modal-terms-tabs">
+                <button class="modal-terms-tab active" data-legal-tab="terms">Términos y condiciones</button>
+                <button class="modal-terms-tab" data-legal-tab="privacy">Política de privacidad</button>
+                <button class="modal-terms-tab" data-legal-tab="data">Tratamiento de datos</button>
+            </div>
+            <div class="modal-terms-body" id="modalTermsBody"></div>
+            <div class="modal-terms-footer">
+                <button type="button" class="btn-primary" id="closeTermsBtn">Cerrar</button>
+            </div>
         </div>
-
-        <div class="tab-panel" id="tab-estudiante" role="tabpanel">
-          <h3>👨‍🎓 Tu espacio de aprendizaje</h3>
-          <p>Accede a toda tu información académica y mantente al día con tus tareas.</p>
-          <ul class="tab-features">
-            <li><span class="check">✓</span> Tareas pendientes</li>
-            <li><span class="check">✓</span> Notas y calificaciones</li>
-            <li><span class="check">✓</span> Cursos inscritos</li>
-            <li><span class="check">✓</span> Comunicados</li>
-            <li><span class="check">✓</span> Boletines</li>
-          </ul>
-        </div>
-
-        <div class="tab-panel" id="tab-familia" role="tabpanel">
-          <h3>👨‍👩‍👧 Acompaña el proceso de tus hijos</h3>
-          <p>Recibe información actualizada y comunícate con la institución educativa.</p>
-          <ul class="tab-features">
-            <li><span class="check">✓</span> Seguimiento de hijos</li>
-            <li><span class="check">✓</span> Notas y calificaciones</li>
-            <li><span class="check">✓</span> Tareas asignadas</li>
-            <li><span class="check">✓</span> Comunicados</li>
-            <li><span class="check">✓</span> Boletines</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ ASÍ FUNCIONA EDUONE ═══ -->
-<section class="section" style="background: var(--surface);">
-  <div class="section-inner">
-    <div class="section-header reveal">
-      <div class="section-eyebrow">Proceso</div>
-      <h2 class="section-title">Así funciona <span>EduOne</span></h2>
-      <p class="section-desc">Un flujo sencillo para que tu institución esté conectada en pocos pasos.</p>
     </div>
 
-    <div class="steps-wrapper stagger-children reveal">
-      <div class="step-item">
-        <div class="step-number">1</div>
-        <h4>Configura tu institución</h4>
-        <p>Registra los datos generales de tu colegio.</p>
-      </div>
-      <div class="step-item">
-        <div class="step-number">2</div>
-        <h4>Registra estudiantes y docentes</h4>
-        <p>Importa o crea los perfiles de tu comunidad.</p>
-      </div>
-      <div class="step-item">
-        <div class="step-number">3</div>
-        <h4>Organiza grados y cursos</h4>
-        <p>Estructura la oferta académica de tu institución.</p>
-      </div>
-      <div class="step-item">
-        <div class="step-number">4</div>
-        <h4>Gestiona tareas y calificaciones</h4>
-        <p>Administra el día a día académico.</p>
-      </div>
-      <div class="step-item">
-        <div class="step-number">5</div>
-        <h4>Genera boletines</h4>
-        <p>Comunica el desempeño a las familias.</p>
-      </div>
-      <div class="step-item">
-        <div class="step-number">6</div>
-        <h4>Mantén informadas a las familias</h4>
-        <p>Comunicación constante y transparente.</p>
-      </div>
-    </div>
-  </div>
-</section>
+    <!-- SCRIPTS -->
+    <script>
+    (function() {
+        'use strict';
 
-<!-- ═══ DISPOSITIVOS ═══ -->
-<section class="section" style="background: var(--background);">
-  <div class="section-inner">
-    <div class="section-header reveal">
-      <div class="section-eyebrow">Multi-dispositivo</div>
-      <h2 class="section-title">Accede desde <span>cualquier dispositivo</span></h2>
-      <p class="section-desc">EduOne está diseñado para funcionar perfectamente en computador, tablet y celular.</p>
-    </div>
+        /* ══════ PRELOADER ══════ */
+        const preloader = document.getElementById('preloader');
+        window.addEventListener('load', () => {
+            setTimeout(() => { if (preloader) preloader.classList.add('hidden'); }, 500);
+        });
+        setTimeout(() => { if (preloader) preloader.classList.add('hidden'); }, 2600);
 
-    <div class="devices-grid stagger-children reveal">
-      <div class="device-mockup desktop">
-        <div class="device-frame">
-          <div class="device-screen">💻 EduOne Desktop</div>
-        </div>
-        <div class="device-label">Computador</div>
-        <div class="device-sub">Experiencia completa</div>
-      </div>
-      <div class="device-mockup tablet">
-        <div class="device-frame">
-          <div class="device-screen">📱 EduOne Tablet</div>
-        </div>
-        <div class="device-label">Tablet</div>
-        <div class="device-sub">Diseño adaptado</div>
-      </div>
-      <div class="device-mockup mobile">
-        <div class="device-frame">
-          <div class="device-screen">📲 EduOne Móvil</div>
-        </div>
-        <div class="device-label">Celular</div>
-        <div class="device-sub">Siempre contigo</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ FUNCIONALIDADES ═══ -->
-<section class="section" style="background: var(--surface);">
-  <div class="section-inner">
-    <div class="section-header reveal">
-      <div class="section-eyebrow">Plataforma completa</div>
-      <h2 class="section-title">Funcionalidades <span>principales</span></h2>
-      <p class="section-desc">Herramientas pensadas para simplificar cada proceso académico y administrativo de tu institución.</p>
-    </div>
-    <div class="features-strip stagger-children reveal">
-      <div class="feature-item">
-        <div class="feature-dot"></div>
-        <span class="feature-label">Gestión de estudiantes</span>
-      </div>
-      <div class="feature-item">
-        <div class="feature-dot"></div>
-        <span class="feature-label">Gestión de docentes</span>
-      </div>
-      <div class="feature-item">
-        <div class="feature-dot" style="background:var(--secondary)"></div>
-        <span class="feature-label">Calificaciones</span>
-      </div>
-      <div class="feature-item">
-        <div class="feature-dot" style="background:var(--secondary)"></div>
-        <span class="feature-label">Tareas</span>
-      </div>
-      <div class="feature-item">
-        <div class="feature-dot" style="background:var(--success)"></div>
-        <span class="feature-label">Boletines</span>
-      </div>
-      <div class="feature-item">
-        <div class="feature-dot" style="background:var(--success)"></div>
-        <span class="feature-label">Comunicados</span>
-      </div>
-    </div>
-    <div style="text-align:center; margin-top:40px;" class="reveal">
-      <a href="funcionalidades.html" class="btn btn-primary">Ver todas las funcionalidades →</a>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ ESTADÍSTICAS ═══ -->
-<section class="section" style="background: var(--background);">
-  <div class="section-inner">
-    <div class="stats-bar stagger-children reveal">
-      <div class="stats-bar-item">
-        <span class="number" data-counter="100">0</span>
-        <span class="label">% Responsive</span>
-      </div>
-      <div class="stats-bar-item">
-        <span class="number">4+</span>
-        <span class="label">Tipos de usuario</span>
-      </div>
-      <div class="stats-bar-item">
-        <span class="number">1</span>
-        <span class="label">Plataforma centralizada</span>
-      </div>
-      <div class="stats-bar-item">
-        <span class="number" data-counter="24">0</span>
-        <span class="label">/ 7 Disponibilidad</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ BENEFICIOS ═══ -->
-<section class="section" style="background: var(--surface);">
-  <div class="section-inner">
-    <div class="section-header reveal">
-      <div class="section-eyebrow">¿Por qué EduOne?</div>
-      <h2 class="section-title">Beneficios que <span>transforman</span></h2>
-    </div>
-    <div class="cards-grid-2 stagger-children reveal">
-      <div class="card">
-        <div class="card-icon icon-blue" aria-hidden="true">🗂️</div>
-        <h3>Información centralizada</h3>
-        <p>Todos los datos académicos organizados y accesibles en un solo entorno digital seguro.</p>
-      </div>
-      <div class="card">
-        <div class="card-icon icon-green" aria-hidden="true">📱</div>
-        <h3>Acceso desde cualquier dispositivo</h3>
-        <p>Computador, tablet o teléfono — EduOne funciona donde tú estés, cuando lo necesites.</p>
-      </div>
-      <div class="card">
-        <div class="card-icon icon-cyan" aria-hidden="true">💬</div>
-        <h3>Comunicación eficiente</h3>
-        <p>Conecta a toda la comunidad educativa con comunicados y seguimiento académico en tiempo real.</p>
-      </div>
-      <div class="card">
-        <div class="card-icon icon-purple" aria-hidden="true">📉</div>
-        <h3>Menos procesos manuales</h3>
-        <p>Reduce el uso de documentos físicos, hojas de cálculo y tareas repetitivas que consumen tiempo.</p>
-      </div>
-      <div class="card">
-        <div class="card-icon icon-orange" aria-hidden="true">📈</div>
-        <h3>Seguimiento académico</h3>
-        <p>Facilita el acompañamiento continuo del desempeño estudiantil con información clara y actualizada.</p>
-      </div>
-      <div class="card">
-        <div class="card-icon icon-green" aria-hidden="true">⚙️</div>
-        <h3>Mayor organización</h3>
-        <p>Administra estudiantes, profesores, cursos y procesos desde un mismo entorno bien estructurado.</p>
-      </div>
-    </div>
-    <div style="text-align:center; margin-top:40px;" class="reveal">
-      <a href="beneficios.html" class="btn btn-secondary">Conocer todos los beneficios →</a>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ PLANES ═══ -->
-<section class="section" style="background: var(--background);">
-  <div class="section-inner">
-    <div class="section-header reveal">
-      <div class="section-eyebrow">Precios</div>
-      <h2 class="section-title">Planes accesibles para <span>cada institución</span></h2>
-      <p class="section-desc">Valores anuales. Profesores, rectores y padres/acudientes incluidos sin costo adicional.</p>
-    </div>
-    <div class="prices-row stagger-children reveal">
-      <div class="price-card">
-        <div class="price-range">Hasta 200 estudiantes</div>
-        <div class="price-amount">$1.800.000</div>
-        <div class="price-period">por año · $150.000/mes</div>
-      </div>
-      <div class="price-card popular">
-        <div class="popular-badge">⭐ MÁS POPULAR</div>
-        <div class="price-range">Hasta 400 estudiantes</div>
-        <div class="price-amount">$2.400.000</div>
-        <div class="price-period">por año · $200.000/mes</div>
-      </div>
-      <div class="price-card">
-        <div class="price-range">Hasta 600 estudiantes</div>
-        <div class="price-amount">$3.000.000</div>
-        <div class="price-period">por año · $250.000/mes</div>
-      </div>
-    </div>
-    <div style="text-align:center; margin-top:40px;" class="reveal">
-      <a href="planes.html" class="btn btn-primary">Ver todos los planes →</a>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ IMPLEMENTACIÓN ═══ -->
-<section class="section" style="background: var(--surface);">
-  <div class="section-inner">
-    <div class="impl-banner reveal">
-      <div>
-        <h2>¿Quieres recibir EduOne completamente configurado?</h2>
-        <p>Nosotros podemos registrar y organizar estudiantes, docentes, grados, cursos, asignaturas, horarios y estructura académica para entregar tu plataforma lista para comenzar.</p>
-      </div>
-      <a href="implementacion.html" class="btn btn-primary" style="white-space:nowrap; flex-shrink:0;">Conocer implementación →</a>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ FAQ ═══ -->
-<section class="section" style="background: var(--background);">
-  <div class="section-inner">
-    <div class="section-header reveal">
-      <div class="section-eyebrow">Preguntas frecuentes</div>
-      <h2 class="section-title">Resolvemos tus <span>dudas</span></h2>
-    </div>
-
-    <div class="faq-list reveal">
-      <div class="faq-item open">
-        <button class="faq-question" aria-expanded="true">
-          ¿EduOne funciona desde celular?
-          <span class="faq-icon">▾</span>
-        </button>
-        <div class="faq-answer">Sí, EduOne es completamente responsive y funciona perfectamente en celulares, tablets y computadores.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
-          ¿Los profesores tienen costo adicional?
-          <span class="faq-icon">▾</span>
-        </button>
-        <div class="faq-answer">No. Todos los profesores, rectores y padres/acudientes están incluidos sin costo adicional en todos los planes.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
-          ¿Los padres o acudientes pagan?
-          <span class="faq-icon">▾</span>
-        </button>
-        <div class="faq-answer">No. El acceso para padres y acudientes es completamente gratuito dentro del plan contratado por la institución.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
-          ¿La información queda centralizada?
-          <span class="faq-icon">▾</span>
-        </button>
-        <div class="faq-answer">Sí. Toda la información académica y administrativa se encuentra centralizada en un solo lugar, accesible para los diferentes roles.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
-          ¿Puedo administrar varios cursos?
-          <span class="faq-icon">▾</span>
-        </button>
-        <div class="faq-answer">Sí. Los profesores pueden administrar múltiples cursos y los directivos tienen visibilidad de toda la estructura académica.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
-          ¿EduOne genera boletines?
-          <span class="faq-icon">▾</span>
-        </button>
-        <div class="faq-answer">Sí. EduOne permite generar boletines automáticos con las calificaciones y el desempeño de cada estudiante por periodo.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
-          ¿La plataforma puede entregarse configurada?
-          <span class="faq-icon">▾</span>
-        </button>
-        <div class="faq-answer">Sí. Ofrecemos un servicio de implementación donde configuramos toda la estructura académica de tu institución.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ CTA FINAL ═══ -->
-<section class="section" style="background: var(--surface); padding-bottom: 32px;">
-  <div class="section-inner">
-    <div class="cta-banner reveal">
-      <h2>Transforma la gestión de tu institución</h2>
-      <p>Conecta a toda tu comunidad educativa con EduOne.</p>
-      <div class="cta-actions">
-        <a href="planes.html" class="btn btn-white">Ver planes</a>
-        <a href="contacto.html" class="btn btn-outline-light">Contáctanos</a>
-        <a href="contacto.html" class="btn btn-outline-light">Solicitar demostración</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ FOOTER ═══ -->
-<footer class="footer" role="contentinfo">
-  <div class="footer-inner">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <img src="logo-eduone.svg" alt="EduOne" onerror="this.style.display='none'" />
-        <span class="footer-logo-text">Edu<span>One</span></span>
-        <p>Educación, tecnología y gestión en un solo lugar.</p>
-      </div>
-      <div class="footer-col">
-        <h4>Navegación</h4>
-        <ul>
-          <li><a href="index.html">Inicio</a></li>
-          <li><a href="sobrenosotros.html">Sobre nosotros</a></li>
-          <li><a href="funcionalidades.html">Funcionalidades</a></li>
-          <li><a href="beneficios.html">Beneficios</a></li>
-          <li><a href="planes.html">Planes</a></li>
-          <li><a href="implementacion.html">Implementación</a></li>
-          <li><a href="contacto.html">Contacto</a></li>
-          <li><a href="login.html">Iniciar sesión</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Legal</h4>
-        <ul>
-          <li><a href="#">Política de privacidad</a></li>
-          <li><a href="#">Tratamiento de datos</a></li>
-          <li><a href="#">Términos y condiciones</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>© 2026 EduOne. Todos los derechos reservados.</p>
-      <p>Desarrollado por <strong>Daniel Steven Gutierrez</strong> y <strong>Camilo Rodriguez</strong>.</p>
-      <p>Escuela Tecnológica de Neiva FET.</p>
-    </div>
-  </div>
-</footer>
-
-<!-- ═══ BACK TO TOP ═══ -->
-<button class="back-to-top" id="backToTop" aria-label="Volver arriba">↑</button>
-
-<!-- ═══ SCRIPT ═══ -->
-<script>
-  (function() {
-    'use strict';
-
-    // ── NAVBAR SCROLL ──
-    const navbar = document.getElementById('navbar');
-    let lastScroll = 0;
-    window.addEventListener('scroll', () => {
-      const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-      navbar.classList.toggle('scrolled', currentScroll > 20);
-      document.getElementById('backToTop').classList.toggle('visible', currentScroll > 400);
-      lastScroll = currentScroll;
-    }, { passive: true });
-
-    // ── HAMBURGER ──
-    const hamburger = document.getElementById('hamburger');
-    const navMenu = document.getElementById('nav-menu');
-
-    function closeMenu() {
-      navMenu.classList.remove('open');
-      hamburger.classList.remove('open');
-      hamburger.setAttribute('aria-expanded', 'false');
-    }
-    function openMenu() {
-      navMenu.classList.add('open');
-      hamburger.classList.add('open');
-      hamburger.setAttribute('aria-expanded', 'true');
-    }
-
-    hamburger.addEventListener('click', () => {
-      navMenu.classList.contains('open') ? closeMenu() : openMenu();
-    });
-
-    navMenu.querySelectorAll('.nav-link').forEach(link => {
-      link.addEventListener('click', closeMenu);
-    });
-
-    document.addEventListener('click', (e) => {
-      if (!navbar.contains(e.target)) closeMenu();
-    });
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeMenu();
-    });
-
-    // ── BACK TO TOP ──
-    document.getElementById('backToTop').addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-
-    // ── DASHBOARD ANIMATION ──
-    function animateDashboard() {
-      const promedio = 87;
-      const tareas = 74;
-      const boletines = 96;
-
-      const promedioLabel = document.getElementById('promedioLabel');
-      const tareasLabel = document.getElementById('tareasLabel');
-      const boletinesLabel = document.getElementById('boletinesLabel');
-      const promedioFill = document.getElementById('promedioFill');
-      const tareasFill = document.getElementById('tareasFill');
-      const boletinesFill = document.getElementById('boletinesFill');
-
-      let currentProm = 0, currentTar = 0, currentBol = 0;
-
-      function updateProgress() {
-        if (currentProm < promedio) {
-          currentProm = Math.min(currentProm + 1.5, promedio);
-          promedioLabel.textContent = Math.round(currentProm) + '%';
-          promedioFill.style.width = currentProm + '%';
+        /* ══════ NAVBAR SCROLL + BOTÓN TOP ══════ */
+        const navbar = document.getElementById('navbar');
+        const backToTop = document.getElementById('backToTop');
+        function onScroll() {
+            const y = window.scrollY;
+            if (navbar) navbar.classList.toggle('scrolled', y > 20);
+            if (backToTop) backToTop.classList.toggle('visible', y > 500);
         }
-        if (currentTar < tareas) {
-          currentTar = Math.min(currentTar + 1.2, tareas);
-          tareasLabel.textContent = Math.round(currentTar) + '%';
-          tareasFill.style.width = currentTar + '%';
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+        if (backToTop) backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+        /* ══════ HAMBURGUESA ══════ */
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('nav-menu');
+        if (hamburger && navMenu) {
+            hamburger.addEventListener('click', () => {
+                const isOpen = navMenu.classList.toggle('open');
+                hamburger.classList.toggle('open', isOpen);
+                hamburger.setAttribute('aria-expanded', String(isOpen));
+            });
+            navMenu.querySelectorAll('a').forEach(a => {
+                a.addEventListener('click', () => {
+                    navMenu.classList.remove('open');
+                    hamburger.classList.remove('open');
+                    hamburger.setAttribute('aria-expanded', 'false');
+                });
+            });
         }
-        if (currentBol < boletines) {
-          currentBol = Math.min(currentBol + 1.6, boletines);
-          boletinesLabel.textContent = Math.round(currentBol) + '%';
-          boletinesFill.style.width = currentBol + '%';
+
+        /* ══════ REVEAL OBSERVER ══════ */
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+        document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale, .stagger').forEach(el => revealObserver.observe(el));
+
+        /* ══════ CONTADORES ══════ */
+        const counters = document.querySelectorAll('[data-count]');
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                const el = entry.target;
+                const target = parseInt(el.dataset.count, 10);
+                const suffix = el.dataset.suffix || '';
+                const duration = 1800;
+                const start = performance.now();
+                function tick(now) {
+                    const p = Math.min((now - start) / duration, 1);
+                    const eased = 1 - Math.pow(1 - p, 3);
+                    const val = Math.floor(eased * target);
+                    el.textContent = (val >= 1000 ? val.toLocaleString('es-CO') : val) + suffix;
+                    if (p < 1) requestAnimationFrame(tick);
+                    else el.textContent = (target >= 1000 ? target.toLocaleString('es-CO') : target) + suffix;
+                }
+                requestAnimationFrame(tick);
+                counterObserver.unobserve(el);
+            });
+        }, { threshold: 0.4 });
+        counters.forEach(c => counterObserver.observe(c));
+
+        /* ══════ HELP FAB ══════ */
+        const helpFab = document.getElementById('helpFab');
+        const helpFabBtn = document.getElementById('helpFabBtn');
+        if (helpFab && helpFabBtn) {
+            helpFabBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const open = helpFab.classList.toggle('open');
+                helpFabBtn.setAttribute('aria-expanded', String(open));
+            });
+            document.addEventListener('click', (e) => {
+                if (!helpFab.contains(e.target)) helpFab.classList.remove('open');
+            });
         }
-        if (currentProm < promedio || currentTar < tareas || currentBol < boletines) {
-          requestAnimationFrame(updateProgress);
+
+        /* ══════ MODAL LEGAL ══════ */
+        const modalTerms = document.getElementById('modalTerms');
+        const modalTermsBody = document.getElementById('modalTermsBody');
+        const legalContent = {
+            terms: `
+                <h3>Términos y condiciones de uso</h3>
+                <p>El acceso y uso de la plataforma <strong>EduOne</strong> implica la aceptación de los presentes términos y condiciones. EduOne es una plataforma tecnológica colombiana destinada a la gestión académica, administrativa, financiera y de convivencia de instituciones educativas.</p>
+                <h3>Uso permitido</h3>
+                <p>La plataforma debe ser utilizada únicamente para fines educativos e institucionales, conforme a las normas legales vigentes en Colombia. Queda prohibido el uso indebido de la información contenida en el sistema.</p>
+                <h3>Responsabilidades</h3>
+                <p>La institución educativa es responsable de la veracidad de la información cargada en la plataforma y del uso adecuado por parte de sus usuarios. EduOne actúa como proveedor tecnológico y no toma decisiones académicas ni administrativas.</p>
+                <h3>Propiedad intelectual</h3>
+                <p>Todos los derechos de propiedad intelectual sobre la plataforma EduOne pertenecen a sus creadores. Se prohíbe la reproducción, distribución o modificación no autorizada.</p>
+                <div class="contact-box">
+                    <strong>Contacto legal</strong>
+                    <p>📧 contacto@eduone.com.co</p>
+                    <p>📍 Neiva, Huila, Colombia</p>
+                </div>
+            `,
+            privacy: `
+                <h3>Política de privacidad</h3>
+                <p>En <strong>EduOne</strong> protegemos la información personal de todos los usuarios de la comunidad educativa, conforme a la Ley 1581 de 2012 y el Decreto 1377 de 2013 de Colombia.</p>
+                <h3>Información que recopilamos</h3>
+                <p>Recopilamos información necesaria para la prestación del servicio: datos de estudiantes, docentes, acudientes y personal administrativo, así como registros académicos y de convivencia.</p>
+                <h3>Finalidad del tratamiento</h3>
+                <p>La información se utiliza exclusivamente para la gestión educativa, el seguimiento académico, la comunicación institucional y el cumplimiento de obligaciones legales.</p>
+                <div class="contact-box">
+                    <strong>Contacto de privacidad</strong>
+                    <p>📧 contacto@eduone.com.co</p>
+                    <p>📍 Neiva, Huila, Colombia</p>
+                </div>
+            `,
+            data: `
+                <h3>Tratamiento de datos personales</h3>
+                <p>EduOne realiza el tratamiento de datos personales conforme al <strong>Decreto 1074 de 2015</strong> y las normas concordantes en materia de protección de datos en Colombia.</p>
+                <h3>Responsable del tratamiento</h3>
+                <p>EduOne actúa como responsable del tratamiento de los datos personales de los usuarios de la plataforma. Las instituciones educativas actúan como responsables del tratamiento de los datos de su comunidad.</p>
+                <h3>Ejercicio de derechos</h3>
+                <p>Los titulares pueden ejercer sus derechos de conocer, actualizar, rectificar y suprimir información, así como revocar la autorización, escribiendo a contacto@eduone.com.co.</p>
+                <div class="contact-box">
+                    <strong>Contacto de datos</strong>
+                    <p>📧 contacto@eduone.com.co</p>
+                    <p>📍 Neiva, Huila, Colombia</p>
+                </div>
+            `
+        };
+
+        function abrirModalLegal(tabId) {
+            document.querySelectorAll('.modal-terms-tab').forEach(t => t.classList.remove('active'));
+            const activeTab = document.querySelector(`.modal-terms-tab[data-legal-tab="${tabId}"]`);
+            if (activeTab) activeTab.classList.add('active');
+            if (modalTermsBody) modalTermsBody.innerHTML = legalContent[tabId] || legalContent.terms;
+            if (modalTerms) modalTerms.classList.add('show');
+            document.body.style.overflow = 'hidden';
         }
-      }
+        function cerrarModalLegal() {
+            if (modalTerms) modalTerms.classList.remove('show');
+            document.body.style.overflow = '';
+        }
 
-      setTimeout(updateProgress, 400);
-    }
+        document.querySelectorAll('[data-open-legal]').forEach(btn => {
+            btn.addEventListener('click', (e) => { e.preventDefault(); abrirModalLegal(btn.dataset.openLegal); });
+        });
+        document.querySelectorAll('.modal-terms-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.modal-terms-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                if (modalTermsBody) modalTermsBody.innerHTML = legalContent[tab.dataset.legalTab] || legalContent.terms;
+            });
+        });
+        const closeTermsModal = document.getElementById('closeTermsModal');
+        const closeTermsBtn = document.getElementById('closeTermsBtn');
+        if (closeTermsModal) closeTermsModal.addEventListener('click', cerrarModalLegal);
+        if (closeTermsBtn) closeTermsBtn.addEventListener('click', cerrarModalLegal);
+        if (modalTerms) modalTerms.addEventListener('click', (e) => { if (e.target === modalTerms) cerrarModalLegal(); });
 
-    // ── COUNTER ANIMATION ──
-    function animateCounter(el) {
-      const target = parseInt(el.dataset.counter);
-      if (!target || target === 0) {
-        el.textContent = '0';
-        return;
-      }
-      let current = 0;
-      const step = Math.max(1, Math.ceil(target / 60));
-      const timer = setInterval(() => {
-        current = Math.min(current + step, target);
-        el.textContent = current;
-        if (current >= target) clearInterval(timer);
-      }, 25);
-    }
-
-    // ── SCROLL REVEAL ──
-    const revealObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const el = entry.target;
-          el.classList.add('visible');
-
-          // Iniciar contadores dentro del elemento
-          el.querySelectorAll('[data-counter]').forEach(counterEl => {
-            if (!counterEl.dataset.counted) {
-              counterEl.dataset.counted = 'true';
-              animateCounter(counterEl);
+        /* ══════ ESC ══════ */
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                cerrarModalLegal();
+                if (navMenu) navMenu.classList.remove('open');
+                if (hamburger) { hamburger.classList.remove('open'); hamburger.setAttribute('aria-expanded', 'false'); }
+                if (helpFab) helpFab.classList.remove('open');
             }
-          });
-
-          // Iniciar progresos del dashboard si es el dashboard
-          if (el.id === 'dashboardCard' || el.closest('#dashboardCard')) {
-            animateDashboard();
-          }
-        }
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-
-    document.querySelectorAll('.reveal, .stagger-children, .reveal-left, .reveal-right').forEach(el => {
-      revealObserver.observe(el);
-    });
-
-    // Observar también el dashboard directamente
-    const dashboardCard = document.getElementById('dashboardCard');
-    if (dashboardCard) revealObserver.observe(dashboardCard);
-
-    // ── TABS ──
-    const tabButtons = document.querySelectorAll('.tab-btn');
-    const tabPanels = document.querySelectorAll('.tab-panel');
-
-    tabButtons.forEach(btn => {
-      btn.addEventListener('click', function() {
-        const tabId = this.dataset.tab;
-
-        tabButtons.forEach(b => {
-          b.classList.remove('active');
-          b.setAttribute('aria-selected', 'false');
-        });
-        tabPanels.forEach(p => p.classList.remove('active'));
-
-        this.classList.add('active');
-        this.setAttribute('aria-selected', 'true');
-        document.getElementById(tabId).classList.add('active');
-      });
-    });
-
-    // ── FAQ ──
-    const faqItems = document.querySelectorAll('.faq-item');
-    faqItems.forEach(item => {
-      const question = item.querySelector('.faq-question');
-      const answer = item.querySelector('.faq-answer');
-
-      question.addEventListener('click', function() {
-        const isOpen = item.classList.contains('open');
-
-        // Cerrar todos los demás (acordeón)
-        faqItems.forEach(other => {
-          if (other !== item) {
-            other.classList.remove('open');
-            other.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
-          }
         });
 
-        if (isOpen) {
-          item.classList.remove('open');
-          this.setAttribute('aria-expanded', 'false');
-        } else {
-          item.classList.add('open');
-          this.setAttribute('aria-expanded', 'true');
-        }
-      });
-
-      // Teclado: Enter y Space
-      question.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          question.click();
-        }
-      });
-    });
-
-    // ── DASHBOARD TILT 3D ──
-    const card = document.getElementById('dashboardCard');
-    if (card) {
-      card.addEventListener('mousemove', function(e) {
-        const rect = this.getBoundingClientRect();
-        const x = (e.clientX - rect.left) / rect.width - 0.5;
-        const y = (e.clientY - rect.top) / rect.height - 0.5;
-        const rotateX = y * 6;
-        const rotateY = x * 6;
-        this.style.transform = `rotateX(${-rotateX}deg) rotateY(${rotateY}deg)`;
-      });
-      card.addEventListener('mouseleave', function() {
-        this.style.transform = 'rotateX(0deg) rotateY(0deg)';
-        this.style.transition = 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
-      });
-      card.addEventListener('mouseenter', function() {
-        this.style.transition = 'none';
-      });
-    }
-
-    // ── ACTIVIDADES RECIENTES (SIMULADAS) ──
-    const actividades = [
-      { dot: '#10b981', text: 'Nueva tarea de Matemáticas publicada' },
-      { dot: '#3b82f6', text: 'Boletín P1 disponible para consulta' },
-      { dot: '#f59e0b', text: 'Nuevo comunicado institucional' }
-    ];
-
-    const list = document.getElementById('actividadesList');
-    if (list) {
-      list.innerHTML = '';
-      actividades.forEach((item, index) => {
-        const li = document.createElement('li');
-        li.innerHTML = `<span class="mini-dot pulse-dot" style="background:${item.dot}"></span> ${item.text}`;
-        li.style.animationDelay = (index * 0.2) + 's';
-        list.appendChild(li);
-      });
-    }
-
-    // ── INICIAR CONTADORES VISIBLES INICIALMENTE ──
-    document.querySelectorAll('[data-counter]').forEach(el => {
-      const rect = el.getBoundingClientRect();
-      const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
-      if (isVisible && !el.dataset.counted) {
-        el.dataset.counted = 'true';
-        animateCounter(el);
-      }
-    });
-
-    // ── INICIAR DASHBOARD SI ESTÁ VISIBLE ──
-    const cardRect = dashboardCard?.getBoundingClientRect();
-    if (cardRect && cardRect.top < window.innerHeight && cardRect.bottom > 0) {
-      animateDashboard();
-    }
-
-    console.log('🚀 EduOne | Plataforma de gestión educativa');
-    console.log('📚 Desarrollado con ❤️ por Daniel Steven Gutierrez y Camilo Rodriguez');
-    console.log('🏫 Escuela Tecnológica de Neiva FET');
-
-  })();
-</script>
+    })();
+    </script>
 
 </body>
 </html>

@@ -1,460 +1,1019 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Contacta con EduOne: solicita una demostración, cotización o más información sobre la plataforma educativa." />
-  <title>Contacto | EduOne</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --primary: #1a56db; --primary-dark: #1e3a8a; --primary-light: #3b82f6;
-      --secondary: #06b6d4; --background: #f8fafc; --surface: #ffffff;
-      --text: #0f172a; --text-muted: #64748b; --border: #e2e8f0;
-      --success: #10b981; --error: #ef4444;
-      --gradient: linear-gradient(135deg, #1e3a8a 0%, #1a56db 50%, #06b6d4 100%);
-      --radius: 12px; --shadow: 0 4px 24px rgba(26,86,219,0.10); --shadow-lg: 0 8px 48px rgba(26,86,219,0.15);
-    }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', Arial, sans-serif; background: var(--background); color: var(--text); line-height: 1.6; overflow-x: hidden; overflow-wrap: break-word; }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#0a0f1e" />
+    <meta name="description" content="Contacta con EduOne: solicita una demostración, cotización o más información sobre la plataforma educativa." />
+    <meta name="keywords" content="contacto EduOne, demostración plataforma escolar, cotización software educativo Colombia" />
+    <meta name="author" content="EduOne" />
+    <meta property="og:title" content="Contacto | EduOne" />
+    <meta property="og:description" content="Solicita una demostración o cotización de EduOne para tu institución educativa." />
+    <meta property="og:type" content="website" />
+    <link rel="canonical" href="https://eduone.com.co/contacto.html" />
+    <title>Contacto | EduOne</title>
 
-    .navbar { position: sticky; top: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); transition: box-shadow 0.3s; }
-    .navbar.scrolled { box-shadow: 0 2px 24px rgba(26,86,219,0.12); }
-    .nav-container { max-width: 1280px; margin: 0 auto; padding: 0 24px; height: 68px; display: flex; align-items: center; justify-content: space-between; }
-    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
-    .nav-logo-mark { width: 36px; height: 36px; background: var(--gradient); border-radius: 9px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 16px; }
-    .nav-logo-text { font-size: 20px; font-weight: 700; color: var(--primary-dark); letter-spacing: -0.5px; }
-    .nav-menu { display: flex; align-items: center; gap: 4px; list-style: none; }
-    .nav-link { text-decoration: none; color: var(--text-muted); font-size: 14px; font-weight: 500; padding: 8px 12px; border-radius: 8px; transition: color 0.2s, background 0.2s; white-space: nowrap; }
-    .nav-link:hover { color: var(--primary); background: rgba(26,86,219,0.06); }
-    .nav-link.active { color: var(--primary); font-weight: 600; }
-    .nav-link-cta { background: var(--primary); color: white !important; padding: 8px 18px; border-radius: 8px; font-weight: 600; }
-    .nav-link-cta:hover { background: var(--primary-dark) !important; }
-    .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 8px; border-radius: 8px; }
-    .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; transition: transform 0.3s, opacity 0.3s; }
-    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
-    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    <!-- FAVICON -->
+    <link rel="icon" type="image/png" sizes="48x48" href="imagenes/logo.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="imagenes/logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="imagenes/logo.png">
 
-    .page-hero { background: var(--gradient); padding: 80px 24px; text-align: center; }
-    .page-hero-inner { max-width: 700px; margin: 0 auto; }
-    .page-hero-eyebrow { display: inline-block; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); border-radius: 100px; padding: 6px 18px; font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.85); margin-bottom: 20px; }
-    .page-hero h1 { font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 900; color: white; line-height: 1.15; letter-spacing: -1.5px; margin-bottom: 16px; }
-    .page-hero p { font-size: 17px; color: rgba(255,255,255,0.78); line-height: 1.7; }
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
-    .section { padding: 80px 24px; }
-    .section-inner { max-width: 1280px; margin: 0 auto; }
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    /* CONTACT LAYOUT */
-    .contact-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 48px; align-items: start; }
+        :root {
+            --bg-0: #050814;
+            --bg-1: #0a0f1e;
+            --bg-2: #111a30;
+            --primary: #2563eb;
+            --primary-light: #3b82f6;
+            --cyan: #06b6d4;
+            --cyan-light: #22d3ee;
+            --lime: #a3e635;
+            --whatsapp: #25d366;
+            --whatsapp-hover: #1ebe5b;
+            --text-light: #e2e8f0;
+            --text-muted: #94a3b8;
+            --error: #ef4444;
+            --success: #10b981;
+            --gradient-tech: linear-gradient(135deg, #2563eb 0%, #06b6d4 100%);
+            --gradient-glow: linear-gradient(135deg, #3b82f6 0%, #22d3ee 50%, #a3e635 100%);
+            --radius-sm: 10px;
+            --radius: 18px;
+            --radius-lg: 28px;
+            --radius-pill: 100px;
+            --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            --nav-h: 74px;
+        }
 
-    /* FORM */
-    .form-card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 40px; box-shadow: var(--shadow); }
-    .form-card h2 { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 8px; letter-spacing: -0.5px; }
-    .form-card > p { font-size: 14px; color: var(--text-muted); margin-bottom: 28px; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
-    .form-group label { font-size: 13px; font-weight: 600; color: var(--text); }
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      width: 100%;
-      padding: 11px 14px;
-      border: 1.5px solid var(--border);
-      border-radius: 10px;
-      font-size: 14px;
-      font-family: inherit;
-      color: var(--text);
-      background: var(--surface);
-      transition: border-color 0.2s, box-shadow 0.2s;
-      outline: none;
-    }
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(26,86,219,0.12);
-    }
-    .form-group input.error,
-    .form-group select.error,
-    .form-group textarea.error { border-color: var(--error); }
-    .form-group textarea { resize: vertical; min-height: 110px; }
-    .form-group .field-error { font-size: 12px; color: var(--error); font-weight: 500; display: none; }
-    .form-group .field-error.visible { display: block; }
+        html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; scroll-padding-top: var(--nav-h); }
 
-    .checkbox-group { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 24px; }
-    .checkbox-group input[type="checkbox"] { width: 18px; height: 18px; margin-top: 2px; cursor: pointer; accent-color: var(--primary); flex-shrink: 0; }
-    .checkbox-group label { font-size: 13px; color: var(--text-muted); cursor: pointer; line-height: 1.5; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-0);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
 
-    .form-submit {
-      width: 100%;
-      padding: 14px 24px;
-      background: var(--primary);
-      color: white;
-      border: none;
-      border-radius: 12px;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-      font-family: inherit;
-      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
-      box-shadow: var(--shadow);
-    }
-    .form-submit:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: var(--shadow-lg); }
-    .form-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+        img, video { max-width: 100%; height: auto; display: block; }
+        button { font-family: inherit; cursor: pointer; }
+        a { color: inherit; text-decoration: none; }
+        ul { list-style: none; }
 
-    /* SUCCESS STATE */
-    .form-success { display: none; background: #f0fdf4; border: 1.5px solid #86efac; border-radius: 16px; padding: 32px; text-align: center; }
-    .form-success.visible { display: block; }
-    .success-icon { font-size: 48px; margin-bottom: 16px; }
-    .form-success h3 { font-size: 20px; font-weight: 800; color: #166534; margin-bottom: 10px; }
-    .form-success p { font-size: 14px; color: #166534; line-height: 1.65; }
+        /* Animaciones */
+        @keyframes floatY { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+        @keyframes pulseGlow { 0%, 100% { box-shadow: 0 0 20px rgba(37,99,235,0.4), 0 0 60px rgba(6,182,212,0.15); } 50% { box-shadow: 0 0 40px rgba(37,99,235,0.7), 0 0 90px rgba(6,182,212,0.35); } }
+        @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        @keyframes spinSlow { to { transform: rotate(360deg); } }
+        @keyframes slideLoadBar { 0% { transform: translateX(-100%); } 100% { transform: translateX(300%); } }
+        @keyframes fadeSlideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes gridMove { 0% { background-position: 0 0; } 100% { background-position: 60px 60px; } }
 
-    /* SIDEBAR */
-    .contact-sidebar { display: flex; flex-direction: column; gap: 20px; }
-    .info-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 24px; }
-    .info-card h3 { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 12px; }
-    .info-card p { font-size: 14px; color: var(--text-muted); line-height: 1.65; }
-    .info-list { list-style: none; }
-    .info-list li { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 14px; color: var(--text-muted); }
-    .info-list li:last-child { border-bottom: none; }
-    .info-icon { font-size: 18px; flex-shrink: 0; }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+            .reveal, .stagger > * { opacity: 1 !important; transform: none !important; }
+        }
 
-    .cta-sidebar { background: var(--gradient); border-radius: 16px; padding: 28px; color: white; }
-    .cta-sidebar h3 { font-size: 17px; font-weight: 800; margin-bottom: 8px; }
-    .cta-sidebar p { font-size: 13px; opacity: 0.75; line-height: 1.6; }
+        ::-webkit-scrollbar { width: 9px; }
+        ::-webkit-scrollbar-track { background: var(--bg-0); }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--primary) 0%, var(--cyan) 100%); border-radius: 100px; }
 
-    .footer { background: var(--primary-dark); color: white; padding: 64px 24px 32px; }
-    .footer-inner { max-width: 1280px; margin: 0 auto; }
-    .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
-    .footer-brand p { font-size: 14px; color: rgba(255,255,255,0.55); margin-top: 12px; line-height: 1.6; max-width: 300px; }
-    .footer-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
-    .footer-logo-mark { width: 32px; height: 32px; background: rgba(255,255,255,0.15); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; }
-    .footer-logo-text { font-size: 18px; font-weight: 700; }
-    .footer-col h4 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.45); margin-bottom: 16px; }
-    .footer-col ul { list-style: none; }
-    .footer-col li { margin-bottom: 10px; }
-    .footer-col a { text-decoration: none; color: rgba(255,255,255,0.65); font-size: 14px; transition: color 0.2s; }
-    .footer-col a:hover { color: white; }
-    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 28px; text-align: center; }
-    .footer-bottom p { font-size: 13px; color: rgba(255,255,255,0.4); margin-bottom: 4px; }
+        /* Fondo global tecnológico */
+        body::before {
+            content: ''; position: fixed; inset: 0; z-index: -2;
+            background: radial-gradient(ellipse 800px 600px at 15% 10%, rgba(37, 99, 235, 0.18) 0%, transparent 60%), radial-gradient(ellipse 700px 500px at 85% 80%, rgba(6, 182, 212, 0.14) 0%, transparent 60%), var(--bg-0);
+            pointer-events: none;
+        }
+        body::after {
+            content: ''; position: fixed; inset: 0; z-index: -1;
+            background-image: linear-gradient(rgba(59, 130, 246, 0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(59, 130, 246, 0.04) 1px, transparent 1px);
+            background-size: 60px 60px; animation: gridMove 30s linear infinite; pointer-events: none;
+            mask-image: radial-gradient(ellipse at center, black 30%, transparent 90%); -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 90%);
+        }
 
-    .back-to-top { position: fixed; bottom: 28px; right: 28px; width: 44px; height: 44px; background: var(--primary); color: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; cursor: pointer; border: none; box-shadow: 0 4px 20px rgba(26,86,219,0.35); opacity: 0; pointer-events: none; transition: opacity 0.3s, transform 0.3s; z-index: 999; }
-    .back-to-top.visible { opacity: 1; pointer-events: auto; }
-    .back-to-top:hover { transform: translateY(-3px); }
-    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
+        /* PRELOADER */
+        .preloader { position: fixed; inset: 0; z-index: 99999; display: flex; align-items: center; justify-content: center; background: var(--bg-0); transition: opacity 0.5s ease; }
+        .preloader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        .preloader-inner { display: flex; flex-direction: column; align-items: center; gap: 24px; }
+        .preloader-logo { font-family: 'Space Grotesk', sans-serif; font-size: 34px; font-weight: 700; background: var(--gradient-glow); background-size: 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: gradientShift 2s infinite; }
+        .preloader-ring { width: 60px; height: 60px; border-radius: 50%; border: 3px solid rgba(37,99,235,0.15); border-top-color: var(--cyan); border-right-color: var(--primary); animation: spinSlow 1s linear infinite; }
+        .preloader-bar { width: 200px; height: 3px; background: rgba(148,163,184,0.15); border-radius: 100px; overflow: hidden; position: relative; }
+        .preloader-bar::after { content: ''; position: absolute; inset: 0; width: 40%; background: var(--gradient-glow); border-radius: 100px; animation: slideLoadBar 1.4s infinite; }
 
-    @media (max-width: 1024px) {
-      .contact-grid { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 768px) {
-      .nav-menu { display: none; position: absolute; top: 68px; left: 0; right: 0; background: white; border-bottom: 1px solid var(--border); flex-direction: column; padding: 12px; gap: 4px; box-shadow: 0 8px 32px rgba(0,0,0,0.08); align-items: stretch; }
-      .nav-menu.open { display: flex; }
-      .nav-link { padding: 12px 16px; }
-      .nav-hamburger { display: flex; }
-      .section { padding: 56px 20px; }
-      .form-row { grid-template-columns: 1fr; }
-      .form-card { padding: 24px; }
-      .footer-top { grid-template-columns: 1fr; gap: 32px; }
-    }
-  </style>
+        /* NAVBAR */
+        .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; height: var(--nav-h); background: rgba(10, 15, 30, 0.55); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(148, 163, 184, 0.10); transition: background var(--transition); }
+        .navbar.scrolled { background: rgba(10, 15, 30, 0.88); box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4); border-bottom-color: rgba(37, 99, 235, 0.25); }
+        .nav-container { max-width: 1360px; margin: 0 auto; height: 100%; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+        .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; transition: transform var(--transition); }
+        .nav-logo:hover { transform: scale(1.04); }
+        .logo-mark { width: 40px; height: 40px; display: grid; place-items: center; }
+        .logo-mark svg { width: 100%; height: 100%; filter: drop-shadow(0 0 10px rgba(59,130,246,0.5)); }
+        .logo-text { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700; color: #fff; letter-spacing: -0.8px; }
+        .logo-text span { background: var(--gradient-glow); background-size: 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: gradientShift 4s infinite; }
+
+        .nav-menu { display: flex; align-items: center; gap: 4px; }
+        .nav-link { text-decoration: none; color: var(--text-light); font-size: 14px; font-weight: 500; padding: 8px 14px; border-radius: var(--radius-sm); position: relative; transition: color var(--transition), background var(--transition); white-space: nowrap; }
+        .nav-link::before { content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 2px; background: var(--gradient-glow); border-radius: 100px; transition: width var(--transition), left var(--transition); }
+        .nav-link:hover, .nav-link.active { color: #fff; }
+        .nav-link:hover::before, .nav-link.active::before { width: 60%; left: 20%; }
+
+        .nav-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+        .btn-nav-demo { display: inline-flex; align-items: center; gap: 7px; padding: 9px 18px; background: var(--gradient-tech); color: #fff; font-size: 13.5px; font-weight: 600; text-decoration: none; border-radius: var(--radius-pill); transition: transform var(--transition), box-shadow var(--transition); box-shadow: 0 4px 20px rgba(37, 99, 235, 0.35); white-space: nowrap; }
+        .btn-nav-demo:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 10px 30px rgba(6, 182, 212, 0.5); }
+        .btn-nav-login { display: inline-flex; align-items: center; gap: 7px; padding: 9px 16px; background: rgba(255,255,255,0.05); border: 1px solid rgba(148, 163, 184, 0.3); color: var(--text-light); font-size: 13.5px; font-weight: 600; text-decoration: none; border-radius: var(--radius-pill); transition: all var(--transition); white-space: nowrap; }
+        .btn-nav-login:hover { background: rgba(255,255,255,0.12); border-color: var(--cyan); color: #fff; transform: translateY(-2px); }
+
+        .nav-hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; padding: 10px; border-radius: 8px; cursor: pointer; }
+        .nav-hamburger span { width: 24px; height: 2.5px; background: #fff; border-radius: 2px; transition: transform var(--transition), opacity var(--transition); }
+        .nav-hamburger.open span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+        .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+        .nav-hamburger.open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+
+        /* HERO CONTACTO */
+        .hero-contacto { padding: calc(var(--nav-h) + 60px) 24px 60px; position: relative; overflow: hidden; text-align: center; }
+        .hero-contacto::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 800px 500px at 50% 20%, rgba(37,99,235,0.2), transparent 70%); pointer-events: none; }
+        .hero-inner { max-width: 900px; margin: 0 auto; position: relative; z-index: 2; animation: fadeSlideUp 0.9s ease both; }
+        .hero-badge { display: inline-flex; align-items: center; gap: 8px; padding: 7px 16px; background: rgba(37, 99, 235, 0.15); border: 1px solid rgba(59, 130, 246, 0.4); border-radius: var(--radius-pill); font-size: 12.5px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: var(--cyan-light); margin-bottom: 24px; }
+        .hero-badge .dot { width: 6px; height: 6px; background: var(--cyan-light); border-radius: 50%; box-shadow: 0 0 10px var(--cyan-light); }
+        .hero-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 700; line-height: 1.15; letter-spacing: -1.5px; margin-bottom: 24px; }
+        .hero-title .gradient-text { background: var(--gradient-glow); background-size: 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: gradientShift 4s infinite; }
+        .hero-desc { font-size: clamp(16px, 1.8vw, 18px); color: rgba(226, 232, 240, 0.85); line-height: 1.7; max-width: 760px; margin: 0 auto; }
+
+        /* SECCIONES BASE */
+        .section { padding: 80px 24px; position: relative; }
+        .section-inner { max-width: 1280px; margin: 0 auto; position: relative; z-index: 2; }
+
+        /* GRID CONTACTO */
+        .contact-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 40px; align-items: start; }
+
+        /* FORMULARIO */
+        .form-card { background: rgba(10,15,30,0.6); border: 1px solid rgba(59,130,246,0.18); border-radius: var(--radius); padding: 44px 40px; backdrop-filter: blur(10px); box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
+        .form-card h2 { font-family: 'Space Grotesk', sans-serif; font-size: 24px; font-weight: 700; color: #fff; margin-bottom: 8px; letter-spacing: -0.5px; }
+        .form-card > p { font-size: 14.5px; color: var(--text-muted); margin-bottom: 32px; line-height: 1.65; }
+        
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 18px; }
+        .form-group label { font-size: 13px; font-weight: 600; color: var(--text-light); letter-spacing: -0.1px; }
+        .form-group label .req { color: var(--error); margin-left: 2px; }
+        
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%; padding: 12px 14px; border: 1px solid rgba(59,130,246,0.2); border-radius: var(--radius-sm);
+            font-size: 14px; font-family: inherit; color: #fff; background: rgba(255,255,255,0.03);
+            transition: border-color var(--transition), background var(--transition); outline: none;
+        }
+        .form-group select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2394a3b8' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
+        .form-group select option { background: var(--bg-2); color: #fff; }
+        
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--cyan); background: rgba(255,255,255,0.06); box-shadow: 0 0 0 3px rgba(6,182,212,0.15); }
+        .form-group input.error, .form-group select.error, .form-group textarea.error { border-color: var(--error); }
+        .form-group textarea { resize: vertical; min-height: 120px; }
+        
+        .form-group .field-error { font-size: 12px; color: var(--error); font-weight: 500; display: none; }
+        .form-group .field-error.visible { display: block; }
+
+        .checkbox-group { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 24px; }
+        .checkbox-group input[type="checkbox"] { width: 18px; height: 18px; margin-top: 2px; cursor: pointer; accent-color: var(--cyan); flex-shrink: 0; }
+        .checkbox-group label { font-size: 13px; color: var(--text-muted); cursor: pointer; line-height: 1.55; }
+        .checkbox-group label a { color: var(--cyan-light); font-weight: 600; text-decoration: none; }
+        .checkbox-group label a:hover { text-decoration: underline; }
+
+        .form-submit {
+            width: 100%; padding: 16px 24px; background: var(--whatsapp); color: #fff; border: none;
+            border-radius: var(--radius-pill); font-size: 16px; font-weight: 700; font-family: inherit;
+            cursor: pointer; transition: all var(--transition); box-shadow: 0 4px 20px rgba(37,211,102,0.30);
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+        }
+        .form-submit:hover { background: var(--whatsapp-hover); transform: translateY(-3px) scale(1.02); box-shadow: 0 10px 30px rgba(37,211,102,0.45); }
+        .form-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+        .form-submit i { font-size: 20px; }
+
+        /* SUCCESS STATE */
+        .form-success { display: none; background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3); border-radius: var(--radius); padding: 40px 32px; text-align: center; animation: fadeSlideUp 0.5s ease; }
+        .form-success.visible { display: block; }
+        .success-icon-wrap { width: 72px; height: 72px; border-radius: 50%; background: rgba(16,185,129,0.2); color: var(--success); display: grid; place-items: center; font-size: 32px; margin: 0 auto 20px; }
+        .form-success h3 { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 12px; }
+        .form-success p { font-size: 15px; color: var(--text-light); line-height: 1.7; margin-bottom: 8px; }
+        .form-success strong { color: var(--lime); font-weight: 700; }
+        .btn-resend { margin-top: 20px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 10px 20px; border-radius: var(--radius-pill); font-weight: 600; font-size: 14px; cursor: pointer; transition: all var(--transition); }
+        .btn-resend:hover { background: rgba(255,255,255,0.2); }
+
+        /* SIDEBAR */
+        .contact-sidebar { display: flex; flex-direction: column; gap: 20px; position: sticky; top: 100px; }
+        
+        .contact-channel { background: rgba(10,15,30,0.6); border: 1px solid rgba(59,130,246,0.18); border-radius: var(--radius); padding: 22px 24px; display: flex; align-items: center; gap: 16px; transition: all var(--transition); backdrop-filter: blur(10px); }
+        .contact-channel:hover { transform: translateY(-3px); border-color: rgba(34,211,238,0.4); box-shadow: 0 15px 30px rgba(6,182,212,0.15); }
+        .channel-icon { width: 48px; height: 48px; border-radius: 12px; display: grid; place-items: center; font-size: 24px; flex-shrink: 0; }
+        .channel-icon.whatsapp { background: rgba(37,211,102,0.15); color: var(--whatsapp); }
+        .channel-icon.email { background: rgba(37,99,235,0.15); color: var(--cyan-light); }
+        .channel-info h4 { font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 600; color: #fff; margin-bottom: 4px; }
+        .channel-info p { font-size: 14px; color: var(--text-muted); }
+
+        .info-card { background: rgba(10,15,30,0.6); border: 1px solid rgba(59,130,246,0.18); border-radius: var(--radius); padding: 28px 24px; backdrop-filter: blur(10px); }
+        .info-card h3 { font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 600; color: #fff; margin-bottom: 18px; }
+        .info-list li { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid rgba(148,163,184,0.08); font-size: 14px; color: var(--text-light); font-weight: 500; }
+        .info-list li:last-child { border-bottom: none; }
+        .info-list i { color: var(--cyan-light); font-size: 16px; width: 20px; text-align: center; }
+
+        .cta-sidebar { background: linear-gradient(135deg, rgba(37,99,235,0.2), rgba(6,182,212,0.15)); border: 1px solid rgba(59,130,246,0.35); border-radius: var(--radius); padding: 32px 24px; position: relative; overflow: hidden; }
+        .cta-sidebar h3 { font-family: 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 10px; }
+        .cta-sidebar p { font-size: 14px; color: var(--text-light); opacity: 0.9; margin-bottom: 20px; line-height: 1.6; }
+        .btn-cta-sidebar { display: inline-flex; align-items: center; gap: 8px; background: #fff; color: var(--primary); padding: 10px 20px; border-radius: var(--radius-pill); font-size: 14px; font-weight: 600; transition: all var(--transition); }
+        .btn-cta-sidebar:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+
+        /* FOOTER */
+        .footer { background: linear-gradient(180deg, transparent 0%, rgba(5,8,20,0.9) 20%, #02040a 100%); border-top: 1px solid rgba(59,130,246,0.15); padding: 80px 24px 40px; position: relative; }
+        .footer-inner { max-width: 1280px; margin: 0 auto; }
+        .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 56px; }
+        .footer-brand-logo { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+        .footer-brand .logo-mark { width: 44px; height: 44px; }
+        .footer-brand .logo-text { font-size: 24px; }
+        .footer-brand p { font-size: 14px; color: var(--text-muted); line-height: 1.7; max-width: 340px; }
+        .footer-col h4 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.8px; color: rgba(148,163,184,0.5); margin-bottom: 20px; }
+        .footer-col li { margin-bottom: 12px; }
+        .footer-col a, .footer-col button.footer-link-btn { text-decoration: none; color: var(--text-muted); font-size: 14px; transition: color var(--transition), transform var(--transition); background: none; border: none; padding: 0; text-align: left; }
+        .footer-col a:hover, .footer-col button.footer-link-btn:hover { color: var(--cyan-light); transform: translateX(4px); display: inline-block; }
+        .footer-bottom { border-top: 1px solid rgba(148,163,184,0.1); padding-top: 32px; text-align: center; }
+        .footer-bottom p { font-size: 13px; color: rgba(148,163,184,0.4); margin-bottom: 6px; }
+
+        /* BOTONES FLOTANTES */
+        .back-to-top { position: fixed; bottom: 24px; right: 24px; width: 48px; height: 48px; border-radius: 50%; background: rgba(10,15,30,0.9); border: 1px solid rgba(59,130,246,0.4); color: #fff; display: grid; place-items: center; font-size: 18px; opacity: 0; pointer-events: none; z-index: 999; cursor: pointer; backdrop-filter: blur(14px); transition: all var(--transition); box-shadow: 0 8px 30px rgba(0,0,0,0.5); }
+        .back-to-top.visible { opacity: 1; pointer-events: auto; }
+        .back-to-top:hover { background: var(--gradient-tech); border-color: transparent; transform: translateY(-4px); box-shadow: 0 0 30px rgba(6,182,212,0.7); }
+
+        .help-fab { position: fixed; bottom: 24px; left: 24px; z-index: 998; }
+        .help-fab-btn { width: 56px; height: 56px; border-radius: 50%; background: var(--gradient-tech); border: none; color: #fff; font-size: 22px; display: grid; place-items: center; cursor: pointer; box-shadow: 0 8px 30px rgba(37,99,235,0.5); transition: transform var(--transition), box-shadow var(--transition); }
+        .help-fab-btn:hover { transform: scale(1.1) rotate(5deg); box-shadow: 0 0 40px rgba(6,182,212,0.8); }
+        .help-fab-btn .ico-close { display: none; }
+        .help-fab.open .help-fab-btn .ico-chat { display: none; }
+        .help-fab.open .help-fab-btn .ico-close { display: block; }
+        .help-panel { position: absolute; bottom: 72px; left: 0; width: 320px; background: rgba(10,15,30,0.95); border: 1px solid rgba(59,130,246,0.35); border-radius: var(--radius); overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.6); opacity: 0; visibility: hidden; transform: translateY(12px) scale(0.96); transform-origin: bottom left; transition: all var(--transition); backdrop-filter: blur(20px); }
+        .help-fab.open .help-panel { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
+        .help-panel-header { padding: 20px 22px; background: var(--gradient-tech); }
+        .help-panel-header h3 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+        .help-panel-header p { font-size: 12.5px; opacity: 0.9; }
+        .help-panel-body { padding: 10px; }
+        .help-option { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 10px; text-decoration: none; color: var(--text-light); transition: background var(--transition), transform var(--transition); }
+        .help-option:hover { background: rgba(37,99,235,0.15); transform: translateX(4px); }
+        .help-option .emoji { width: 38px; height: 38px; border-radius: 10px; background: rgba(37,99,235,0.2); display: grid; place-items: center; font-size: 18px; flex-shrink: 0; }
+        .help-option .lbl strong { display: block; font-size: 13.5px; font-weight: 600; color: #fff; margin-bottom: 2px; }
+        .help-option .lbl span { font-size: 11.5px; color: var(--text-muted); }
+
+        /* MODAL LEGAL */
+        .modal-terms { display: none; position: fixed; inset: 0; z-index: 9999; align-items: center; justify-content: center; background: rgba(5,8,20,0.85); backdrop-filter: blur(10px); padding: 16px; }
+        .modal-terms.show { display: flex; }
+        .modal-terms-content { background: var(--bg-2); border: 1px solid rgba(59,130,246,0.35); border-radius: var(--radius); max-width: 860px; width: 100%; max-height: 90vh; display: flex; flex-direction: column; box-shadow: 0 40px 100px rgba(0,0,0,0.8); overflow: hidden; animation: fadeSlideUp 0.35s ease; }
+        .modal-terms-header { padding: 24px 30px; background: var(--gradient-tech); color: #fff; display: flex; justify-content: space-between; align-items: center; }
+        .modal-terms-header h2 { font-family: 'Space Grotesk', sans-serif; font-size: 1.25rem; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+        .modal-terms-close { background: rgba(255,255,255,0.15); border: none; color: #fff; font-size: 1.6rem; cursor: pointer; width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; transition: background var(--transition); }
+        .modal-terms-close:hover { background: rgba(255,255,255,0.28); }
+        .modal-terms-tabs { display: flex; background: rgba(10,15,30,0.6); border-bottom: 1px solid rgba(59,130,246,0.2); padding: 0 20px; gap: 4px; overflow-x: auto; }
+        .modal-terms-tab { padding: 16px 22px; background: none; border: none; border-bottom: 3px solid transparent; font-size: 13.5px; font-weight: 600; color: var(--text-muted); cursor: pointer; white-space: nowrap; transition: all var(--transition); }
+        .modal-terms-tab:hover { color: var(--cyan-light); }
+        .modal-terms-tab.active { color: var(--cyan-light); border-bottom-color: var(--cyan); }
+        .modal-terms-body { padding: 30px 34px; overflow-y: auto; flex: 1; color: var(--text-light); font-size: 14.5px; line-height: 1.8; }
+        .modal-terms-body h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.05rem; font-weight: 700; color: var(--cyan-light); margin-top: 22px; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid rgba(59,130,246,0.15); }
+        .modal-terms-body h3:first-child { margin-top: 0; }
+        .modal-terms-body p { margin-bottom: 12px; color: var(--text-light); }
+        .modal-terms-body strong { color: var(--cyan-light); font-weight: 600; }
+        .modal-terms-body .contact-box { background: rgba(37,99,235,0.1); padding: 18px 22px; border-radius: 12px; border-left: 4px solid var(--cyan); margin: 18px 0; }
+        .modal-terms-body .contact-box strong { display: block; margin-bottom: 8px; }
+        .modal-terms-body .contact-box p { margin: 3px 0; }
+        .modal-terms-body .last-update { font-size: 0.85rem; color: var(--text-muted); background: rgba(37,99,235,0.1); padding: 12px 16px; border-radius: 8px; margin-bottom: 22px; border-left: 3px solid var(--primary); }
+        .modal-terms-panel { display: none; }
+        .modal-terms-panel.active { display: block; }
+        .modal-terms-footer { padding: 18px 30px; border-top: 1px solid rgba(59,130,246,0.2); display: flex; justify-content: flex-end; gap: 12px; background: rgba(10,15,30,0.6); }
+        .btn-close-modal { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 10px 24px; border-radius: var(--radius-pill); font-weight: 600; cursor: pointer; transition: all var(--transition); }
+        .btn-close-modal:hover { background: rgba(255,255,255,0.2); }
+
+        /* REVEAL */
+        .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1); }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+            .contact-sidebar { position: static; }
+            .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+        }
+        @media (max-width: 900px) {
+            .nav-container { padding: 0 16px; height: var(--nav-h); }
+            .logo-mark { width: 36px; height: 36px; }
+            .logo-text { font-size: 20px; }
+            .nav-menu { position: fixed; top: var(--nav-h); left: 0; right: 0; background: rgba(10,15,30,0.98); backdrop-filter: blur(20px); flex-direction: column; align-items: stretch; gap: 4px; padding: 20px; border-bottom: 1px solid rgba(59,130,246,0.25); transform: translateY(-120%); transition: transform 0.4s cubic-bezier(0.4,0,0.2,1); max-height: calc(100vh - var(--nav-h)); overflow-y: auto; }
+            .nav-menu.open { transform: translateY(0); }
+            .nav-link { padding: 14px 18px; font-size: 15.5px; }
+            .nav-link::before { display: none; }
+            .nav-link:hover, .nav-link.active { background: rgba(37,99,235,0.15); color: var(--cyan-light); }
+            .nav-actions { display: none; }
+            .nav-menu .nav-actions-mobile { display: flex !important; flex-direction: column; gap: 10px; margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(59,130,246,0.2); }
+            .nav-menu .nav-actions-mobile .btn-nav-demo, .nav-menu .nav-actions-mobile .btn-nav-login { width: 100%; justify-content: center; padding: 13px 20px; font-size: 15px; }
+            .nav-hamburger { display: flex; }
+        }
+        @media (max-width: 768px) {
+            .section { padding: 64px 18px; }
+            .hero-contacto { padding: calc(var(--nav-h) + 40px) 18px 60px; }
+            .hero-title { font-size: 2.2rem; }
+            .form-card { padding: 32px 24px; }
+            .form-card h2 { font-size: 21px; }
+            .form-row { grid-template-columns: 1fr; gap: 0; }
+            .contact-channel { padding: 20px; }
+            .footer-top { grid-template-columns: 1fr; gap: 36px; text-align: center; }
+            .footer-brand-logo { justify-content: center; }
+            .footer-brand p { margin: 0 auto; }
+            .back-to-top { bottom: 18px; right: 18px; width: 44px; height: 44px; }
+            .help-fab { bottom: 18px; left: 18px; }
+            .help-fab-btn { width: 52px; height: 52px; }
+            .help-panel { width: 280px; }
+            .modal-terms-body { padding: 24px 20px; }
+        }
+        @media (max-width: 480px) {
+            .nav-container { padding: 0 14px; }
+            .logo-mark { width: 32px; height: 32px; }
+            .logo-text { font-size: 19px; }
+            .hero-title { font-size: 1.85rem; }
+            .section { padding: 48px 16px; }
+            .form-card { padding: 26px 20px; }
+            .form-card h2 { font-size: 19px; }
+            .form-submit { padding: 14px 20px; font-size: 15px; }
+            .footer { padding: 40px 16px 20px; }
+            .back-to-top { width: 40px; height: 40px; font-size: 16px; }
+            .help-fab-btn { width: 48px; height: 48px; }
+            .help-panel { width: calc(100vw - 28px); max-width: 300px; }
+        }
+    </style>
 </head>
 <body>
 
-<nav class="navbar" id="navbar">
-  <div class="nav-container">
-    <a href="index.html" class="nav-logo" aria-label="EduOne - Inicio">
-      <div class="nav-logo-mark">E</div>
-      <span class="nav-logo-text">EduOne</span>
-    </a>
-    <button class="nav-hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-menu">
-      <span></span><span></span><span></span>
-    </button>
-    <ul class="nav-menu" id="nav-menu">
-      <li><a href="index.html" class="nav-link">Inicio</a></li>
-      <li><a href="sobrenosotros.html" class="nav-link">Sobre nosotros</a></li>
-      <li><a href="funcionalidades.html" class="nav-link">Funcionalidades</a></li>
-      <li><a href="beneficios.html" class="nav-link">Beneficios</a></li>
-      <li><a href="planes.html" class="nav-link">Planes</a></li>
-      <li><a href="implementacion.html" class="nav-link">Implementación</a></li>
-      <li><a href="contacto.html" class="nav-link active" aria-current="page">Contacto</a></li>
-      <li><a href="login.html" class="nav-link nav-link-cta">Iniciar sesión</a></li>
-    </ul>
-  </div>
-</nav>
-
-<section class="page-hero">
-  <div class="page-hero-inner">
-    <div class="page-hero-eyebrow">Estamos aquí para ayudarte</div>
-    <h1>Hablemos de tu institución</h1>
-    <p>Cuéntanos sobre tu colegio y descubre cómo EduOne puede ayudarte a transformar la gestión educativa.</p>
-  </div>
-</section>
-
-<section class="section" style="background: var(--background);">
-  <div class="section-inner">
-    <div class="contact-grid reveal">
-      <!-- FORMULARIO -->
-      <div>
-        <div class="form-card">
-          <h2>Envíanos tu solicitud</h2>
-          <p>Completa el formulario y te responderemos lo antes posible.</p>
-
-          <!-- FORM -->
-          <form id="contactForm" novalidate>
-            <div class="form-row">
-              <div class="form-group">
-                <label for="nombre">Nombre completo <span aria-hidden="true" style="color:var(--error)">*</span></label>
-                <input type="text" id="nombre" name="nombre" placeholder="Tu nombre completo" aria-required="true" />
-                <span class="field-error" id="err-nombre">Por favor ingresa tu nombre completo.</span>
-              </div>
-              <div class="form-group">
-                <label for="colegio">Nombre del colegio <span aria-hidden="true" style="color:var(--error)">*</span></label>
-                <input type="text" id="colegio" name="colegio" placeholder="Nombre de la institución" aria-required="true" />
-                <span class="field-error" id="err-colegio">Por favor ingresa el nombre del colegio.</span>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label for="cargo">Cargo <span aria-hidden="true" style="color:var(--error)">*</span></label>
-                <input type="text" id="cargo" name="cargo" placeholder="Rector, coordinador, etc." aria-required="true" />
-                <span class="field-error" id="err-cargo">Por favor ingresa tu cargo.</span>
-              </div>
-              <div class="form-group">
-                <label for="ciudad">Ciudad <span aria-hidden="true" style="color:var(--error)">*</span></label>
-                <input type="text" id="ciudad" name="ciudad" placeholder="Ciudad de tu institución" aria-required="true" />
-                <span class="field-error" id="err-ciudad">Por favor ingresa tu ciudad.</span>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label for="email">Correo electrónico <span aria-hidden="true" style="color:var(--error)">*</span></label>
-                <input type="email" id="email" name="email" placeholder="correo@institucion.edu.co" aria-required="true" />
-                <span class="field-error" id="err-email">Por favor ingresa un correo electrónico válido.</span>
-              </div>
-              <div class="form-group">
-                <label for="telefono">Teléfono <span aria-hidden="true" style="color:var(--error)">*</span></label>
-                <input type="tel" id="telefono" name="telefono" placeholder="300 000 0000" aria-required="true" />
-                <span class="field-error" id="err-telefono">Por favor ingresa un número de teléfono válido.</span>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label for="estudiantes">Número aproximado de estudiantes <span aria-hidden="true" style="color:var(--error)">*</span></label>
-                <select id="estudiantes" name="estudiantes" aria-required="true">
-                  <option value="">Selecciona un rango</option>
-                  <option value="hasta-200">Hasta 200</option>
-                  <option value="201-400">201 – 400</option>
-                  <option value="401-600">401 – 600</option>
-                  <option value="601-800">601 – 800</option>
-                  <option value="801-1000">801 – 1.000</option>
-                  <option value="1001-1500">1.001 – 1.500</option>
-                  <option value="mas-1500">Más de 1.500</option>
-                </select>
-                <span class="field-error" id="err-estudiantes">Por favor selecciona el número de estudiantes.</span>
-              </div>
-              <div class="form-group">
-                <label for="motivo">Motivo de contacto <span aria-hidden="true" style="color:var(--error)">*</span></label>
-                <select id="motivo" name="motivo" aria-required="true">
-                  <option value="">Selecciona un motivo</option>
-                  <option value="demo">Solicitar demostración</option>
-                  <option value="cotizacion">Solicitar cotización</option>
-                  <option value="compra">Comprar plan</option>
-                  <option value="implementacion">Implementación</option>
-                  <option value="soporte">Soporte</option>
-                  <option value="informacion">Información general</option>
-                </select>
-                <span class="field-error" id="err-motivo">Por favor selecciona un motivo de contacto.</span>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="mensaje">Mensaje <span aria-hidden="true" style="color:var(--error)">*</span></label>
-              <textarea id="mensaje" name="mensaje" placeholder="Cuéntanos sobre tu institución y cómo podemos ayudarte..." aria-required="true"></textarea>
-              <span class="field-error" id="err-mensaje">Por favor escribe un mensaje (mínimo 10 caracteres).</span>
-            </div>
-            <div class="checkbox-group">
-              <input type="checkbox" id="privacidad" name="privacidad" aria-required="true" />
-              <label for="privacidad">He leído y acepto el <a href="#" style="color:var(--primary)">tratamiento de mis datos personales</a> conforme a la política de privacidad de EduOne.</label>
-            </div>
-            <div class="field-error" id="err-privacidad" style="margin-bottom:16px;">Debes aceptar el tratamiento de datos para continuar.</div>
-
-            <button type="submit" class="form-submit" id="submitBtn">Enviar solicitud →</button>
-          </form>
-
-          <!-- SUCCESS MESSAGE -->
-          <div class="form-success" id="formSuccess">
-            <div class="success-icon" aria-hidden="true">✅</div>
-            <h3>¡Solicitud recibida!</h3>
-            <p>Tu solicitud está lista. Próximamente nuestro equipo podrá integrar este formulario con el servicio de contacto de EduOne y te responderemos a la brevedad.</p>
-          </div>
+    <!-- PRELOADER -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-inner">
+            <div class="preloader-logo">EduOne</div>
+            <div class="preloader-ring"></div>
+            <div class="preloader-bar"></div>
         </div>
-      </div>
-
-      <!-- SIDEBAR -->
-      <div class="contact-sidebar">
-        <div class="info-card">
-          <h3>¿Qué puedes solicitar?</h3>
-          <ul class="info-list">
-            <li><span class="info-icon" aria-hidden="true">🎯</span> Demostración personalizada</li>
-            <li><span class="info-icon" aria-hidden="true">💰</span> Cotización para tu colegio</li>
-            <li><span class="info-icon" aria-hidden="true">🚀</span> Servicio de implementación</li>
-            <li><span class="info-icon" aria-hidden="true">ℹ️</span> Información general</li>
-            <li><span class="info-icon" aria-hidden="true">🛠️</span> Soporte técnico</li>
-          </ul>
-        </div>
-
-        <div class="info-card">
-          <h3>Tiempos de respuesta</h3>
-          <p>Revisamos todas las solicitudes y te responderemos lo antes posible. Para implementaciones, el proceso toma hasta 7 días hábiles una vez validada la información.</p>
-        </div>
-
-        <div class="cta-sidebar">
-          <h3>¿Ya conoces los planes?</h3>
-          <p>Revisa nuestros planes anuales y elige el que mejor se adapta al tamaño de tu institución.</p>
-          <a href="planes.html" style="display:inline-block; margin-top:16px; background:rgba(255,255,255,0.2); color:white; padding:8px 18px; border-radius:8px; font-size:13px; font-weight:600; text-decoration:none; border:1px solid rgba(255,255,255,0.3);">Ver planes →</a>
-        </div>
-
-        <div class="info-card">
-          <h3>Desarrollado en Colombia</h3>
-          <p>EduOne es un proyecto desarrollado por estudiantes de la Escuela Tecnológica de Neiva FET, con el propósito de transformar la gestión educativa en Colombia.</p>
-        </div>
-      </div>
     </div>
-  </div>
-</section>
 
-<footer class="footer">
-  <div class="footer-inner">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <div class="footer-logo"><div class="footer-logo-mark">E</div><span class="footer-logo-text">EduOne</span></div>
-        <p>Educación, tecnología y gestión en un solo lugar.</p>
-      </div>
-      <div class="footer-col">
-        <h4>Navegación</h4>
-        <ul>
-          <li><a href="index.html">Inicio</a></li>
-          <li><a href="sobrenosotros.html">Sobre nosotros</a></li>
-          <li><a href="funcionalidades.html">Funcionalidades</a></li>
-          <li><a href="beneficios.html">Beneficios</a></li>
-          <li><a href="planes.html">Planes</a></li>
-          <li><a href="implementacion.html">Implementación</a></li>
-          <li><a href="contacto.html">Contacto</a></li>
-          <li><a href="login.html">Iniciar sesión</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Legal</h4>
-        <ul>
-          <li><a href="#">Política de privacidad</a></li>
-          <li><a href="#">Tratamiento de datos</a></li>
-          <li><a href="#">Términos y condiciones</a></li>
-        </ul>
-      </div>
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo" aria-label="EduOne - Inicio">
+                <span class="logo-mark">
+                    <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" fill="none">
+                        <defs>
+                            <linearGradient id="gradCap" x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0%" stop-color="#3b82f6"/><stop offset="55%" stop-color="#22d3ee"/><stop offset="100%" stop-color="#a3e635"/>
+                            </linearGradient>
+                        </defs>
+                        <path d="M24 6 L44 16 L24 26 L4 16 Z" fill="url(#gradCap)"/>
+                        <path d="M12 21.5 V30 C12 33.5 17.4 36 24 36 C30.6 36 36 33.5 36 30 V21.5 L24 27.5 Z" fill="url(#gradCap)" opacity="0.85"/>
+                        <path d="M40 18 V29" stroke="url(#gradCap)" stroke-width="2.4" stroke-linecap="round"/>
+                        <circle cx="40" cy="30.5" r="2.6" fill="url(#gradCap)"/>
+                    </svg>
+                </span>
+                <span class="logo-text">Edu<span>One</span></span>
+            </a>
+
+            <button class="nav-hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-menu">
+                <span></span><span></span><span></span>
+            </button>
+
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="index.html" class="nav-link">Inicio</a></li>
+                <li><a href="sobrenosotros.html" class="nav-link">Sobre nosotros</a></li>
+                <li><a href="funcionalidades.html" class="nav-link">Funcionalidades</a></li>
+                <li><a href="beneficios.html" class="nav-link">Beneficios</a></li>
+                <li><a href="planes.html" class="nav-link">Planes</a></li>
+                <li><a href="implementacion.html" class="nav-link">Implementación</a></li>
+                <li><a href="contacto.html" class="nav-link active">Contacto</a></li>
+                <li class="nav-actions-mobile" style="display:none;">
+                    <a href="contacto.html" class="btn-nav-demo">Solicitar demo</a>
+                    <a href="login.html" class="btn-nav-login"><i class="fas fa-right-to-bracket"></i> Iniciar sesión</a>
+                </li>
+            </ul>
+
+            <div class="nav-actions">
+                <a href="contacto.html" class="btn-nav-demo"><i class="fas fa-rocket"></i> Solicitar demo</a>
+                <a href="login.html" class="btn-nav-login"><i class="fas fa-right-to-bracket"></i> Iniciar sesión</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero-contacto">
+        <div class="hero-inner">
+            <div class="hero-badge"><span class="dot"></span> Estamos aquí para ayudarte</div>
+            <h1 class="hero-title">Hablemos de <span class="gradient-text">tu institución</span></h1>
+            <p class="hero-desc">Cuéntanos sobre tu colegio y descubre cómo EduOne puede ayudarte a transformar la gestión educativa.</p>
+        </div>
+    </section>
+
+    <!-- CONTACTO -->
+    <section class="section">
+        <div class="section-inner">
+            <div class="contact-grid reveal">
+
+                <!-- FORMULARIO -->
+                <div>
+                    <div class="form-card">
+                        <h2>Envíanos tu solicitud</h2>
+                        <p>Completa el formulario y te contactaremos por WhatsApp directamente. Tu mensaje llegará con toda la información que nos compartas.</p>
+
+                        <form id="contactForm" novalidate>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="nombre">Nombre completo <span class="req">*</span></label>
+                                    <input type="text" id="nombre" name="nombre" placeholder="Tu nombre completo" aria-required="true" autocomplete="name" />
+                                    <span class="field-error" id="err-nombre">Por favor ingresa tu nombre completo.</span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="colegio">Nombre del colegio <span class="req">*</span></label>
+                                    <input type="text" id="colegio" name="colegio" placeholder="Nombre de la institución" aria-required="true" />
+                                    <span class="field-error" id="err-colegio">Por favor ingresa el nombre del colegio.</span>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="cargo">Cargo <span class="req">*</span></label>
+                                    <input type="text" id="cargo" name="cargo" placeholder="Rector, coordinador, etc." aria-required="true" />
+                                    <span class="field-error" id="err-cargo">Por favor ingresa tu cargo.</span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="ciudad">Ciudad <span class="req">*</span></label>
+                                    <input type="text" id="ciudad" name="ciudad" placeholder="Ciudad de tu institución" aria-required="true" />
+                                    <span class="field-error" id="err-ciudad">Por favor ingresa tu ciudad.</span>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="email">Correo electrónico <span class="req">*</span></label>
+                                    <input type="email" id="email" name="email" placeholder="correo@institucion.edu.co" aria-required="true" autocomplete="email" />
+                                    <span class="field-error" id="err-email">Por favor ingresa un correo electrónico válido.</span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="telefono">Teléfono <span class="req">*</span></label>
+                                    <input type="tel" id="telefono" name="telefono" placeholder="300 000 0000" aria-required="true" autocomplete="tel" />
+                                    <span class="field-error" id="err-telefono">Por favor ingresa un número de teléfono válido.</span>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="estudiantes">Número de estudiantes <span class="req">*</span></label>
+                                    <select id="estudiantes" name="estudiantes" aria-required="true">
+                                        <option value="">Selecciona un rango</option>
+                                        <option value="Hasta 200">Hasta 200</option>
+                                        <option value="201 - 400">201 – 400</option>
+                                        <option value="401 - 600">401 – 600</option>
+                                        <option value="601 - 800">601 – 800</option>
+                                        <option value="801 - 1.000">801 – 1.000</option>
+                                        <option value="1.001 - 1.500">1.001 – 1.500</option>
+                                        <option value="Más de 1.500">Más de 1.500</option>
+                                    </select>
+                                    <span class="field-error" id="err-estudiantes">Por favor selecciona el número de estudiantes.</span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="motivo">Motivo de contacto <span class="req">*</span></label>
+                                    <select id="motivo" name="motivo" aria-required="true">
+                                        <option value="">Selecciona un motivo</option>
+                                        <option value="Solicitar demostración">Solicitar demostración</option>
+                                        <option value="Solicitar cotización">Solicitar cotización</option>
+                                        <option value="Comprar plan">Comprar plan</option>
+                                        <option value="Implementación">Implementación</option>
+                                        <option value="Soporte">Soporte</option>
+                                        <option value="Información general">Información general</option>
+                                    </select>
+                                    <span class="field-error" id="err-motivo">Por favor selecciona un motivo de contacto.</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="mensaje">Mensaje <span class="req">*</span></label>
+                                <textarea id="mensaje" name="mensaje" placeholder="Cuéntanos sobre tu institución y cómo podemos ayudarte..." aria-required="true"></textarea>
+                                <span class="field-error" id="err-mensaje">Por favor escribe un mensaje (mínimo 10 caracteres).</span>
+                            </div>
+
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="privacidad" name="privacidad" aria-required="true" />
+                                <label for="privacidad">He leído y acepto el <a href="#" data-open-legal="data">tratamiento de mis datos personales</a> conforme a la política de privacidad de EduOne.</label>
+                            </div>
+                            <div class="field-error" id="err-privacidad" style="margin-bottom:20px; margin-top:-10px;">Debes aceptar el tratamiento de datos para continuar.</div>
+
+                            <button type="submit" class="form-submit" id="submitBtn">
+                                <i class="fab fa-whatsapp"></i> Enviar por WhatsApp
+                            </button>
+                        </form>
+
+                        <!-- SUCCESS -->
+                        <div class="form-success" id="formSuccess">
+                            <div class="success-icon-wrap" aria-hidden="true">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <h3>¡Solicitud enviada!</h3>
+                            <p>Se abrió WhatsApp con toda tu información. Si no se abrió automáticamente, puedes escribirnos directamente.</p>
+                            <p style="margin-top:12px; font-size:14px;">📱 <strong>317 029 6998</strong></p>
+                            <button type="button" id="resendBtn" class="btn-resend">
+                                Abrir WhatsApp nuevamente
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SIDEBAR -->
+                <div class="contact-sidebar">
+                    <a href="https://wa.me/573170296998" target="_blank" rel="noopener" class="contact-channel">
+                        <span class="channel-icon whatsapp"><i class="fab fa-whatsapp"></i></span>
+                        <div class="channel-info">
+                            <h4>WhatsApp directo</h4>
+                            <p>317 029 6998</p>
+                        </div>
+                    </a>
+
+                    <a href="mailto:contacto@eduone.com.co" class="contact-channel">
+                        <span class="channel-icon email"><i class="fas fa-envelope"></i></span>
+                        <div class="channel-info">
+                            <h4>Correo electrónico</h4>
+                            <p>contacto@eduone.com.co</p>
+                        </div>
+                    </a>
+
+                    <div class="info-card">
+                        <h3>¿Qué puedes solicitar?</h3>
+                        <ul class="info-list">
+                            <li><i class="fas fa-bullseye"></i> Demostración personalizada</li>
+                            <li><i class="fas fa-file-invoice-dollar"></i> Cotización para tu colegio</li>
+                            <li><i class="fas fa-cogs"></i> Servicio de implementación</li>
+                            <li><i class="fas fa-info-circle"></i> Información general</li>
+                            <li><i class="fas fa-headset"></i> Soporte técnico</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>Tiempos de respuesta</h3>
+                        <p style="font-size:14px; color:var(--text-muted); line-height:1.7;">Revisamos todas las solicitudes y te responderemos lo antes posible. Para implementaciones, el proceso toma hasta 7 días hábiles una vez validada la información.</p>
+                    </div>
+
+                    <div class="cta-sidebar">
+                        <h3>¿Ya conoces los planes?</h3>
+                        <p>Revisa nuestros planes anuales y elige el que mejor se adapta al tamaño de tu institución.</p>
+                        <a href="planes.html" class="btn-cta-sidebar">Ver planes <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <div class="footer-brand-logo">
+                        <span class="logo-mark">
+                            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" fill="none">
+                                <defs>
+                                    <linearGradient id="gradCapF" x1="0" y1="0" x2="1" y2="1">
+                                        <stop offset="0%" stop-color="#3b82f6"/><stop offset="55%" stop-color="#22d3ee"/><stop offset="100%" stop-color="#a3e635"/>
+                                    </linearGradient>
+                                </defs>
+                                <path d="M24 6 L44 16 L24 26 L4 16 Z" fill="url(#gradCapF)"/>
+                                <path d="M12 21.5 V30 C12 33.5 17.4 36 24 36 C30.6 36 36 33.5 36 30 V21.5 L24 27.5 Z" fill="url(#gradCapF)" opacity="0.85"/>
+                                <path d="M40 18 V29" stroke="url(#gradCapF)" stroke-width="2.4" stroke-linecap="round"/>
+                                <circle cx="40" cy="30.5" r="2.6" fill="url(#gradCapF)"/>
+                            </svg>
+                        </span>
+                        <span class="logo-text">Edu<span>One</span></span>
+                    </div>
+                    <p>Plataforma tecnológica colombiana para la gestión académica, administrativa, financiera y de convivencia de instituciones educativas.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Navegación</h4>
+                    <ul>
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="sobrenosotros.html">Sobre nosotros</a></li>
+                        <li><a href="funcionalidades.html">Funcionalidades</a></li>
+                        <li><a href="beneficios.html">Beneficios</a></li>
+                        <li><a href="planes.html">Planes</a></li>
+                        <li><a href="implementacion.html">Implementación</a></li>
+                        <li><a href="contacto.html">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><button type="button" class="footer-link-btn" data-open-legal="terms">Términos y condiciones</button></li>
+                        <li><button type="button" class="footer-link-btn" data-open-legal="privacy">Política de privacidad</button></li>
+                        <li><button type="button" class="footer-link-btn" data-open-legal="data">Tratamiento de datos</button></li>
+                        <li><a href="#">Política de cookies</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contacto</h4>
+                    <ul>
+                        <li><a href="https://wa.me/573170296998" target="_blank" rel="noopener">WhatsApp: 317 029 6998</a></li>
+                        <li><a href="mailto:contacto@eduone.com.co">contacto@eduone.com.co</a></li>
+                        <li><a href="#">Neiva, Huila, Colombia</a></li>
+                        <li><a href="#">eduone.com.co</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 EduOne. Todos los derechos reservados.</p>
+                <p>Tecnología educativa desarrollada en Colombia.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- BOTONES FLOTANTES -->
+    <button class="back-to-top" id="backToTop" aria-label="Volver arriba"><i class="fas fa-arrow-up"></i></button>
+
+    <div class="help-fab" id="helpFab">
+        <button class="help-fab-btn" id="helpFabBtn" aria-label="Abrir menú de ayuda" aria-expanded="false">
+            <span class="ico-chat"><i class="fas fa-comment-dots"></i></span>
+            <span class="ico-close"><i class="fas fa-times"></i></span>
+        </button>
+        <div class="help-panel">
+            <div class="help-panel-header">
+                <h3>Hola 👋 Somos EduOne</h3>
+                <p>¿En qué podemos ayudarte?</p>
+            </div>
+            <div class="help-panel-body">
+                <a href="https://wa.me/573170296998" target="_blank" rel="noopener" class="help-option"><span class="emoji">💬</span><span class="lbl"><strong>WhatsApp directo</strong><span>317 029 6998</span></span></a>
+                <a href="#contactForm" class="help-option"><span class="emoji">📅</span><span class="lbl"><strong>Solicitar demostración</strong><span>Conoce la plataforma</span></span></a>
+                <a href="planes.html" class="help-option"><span class="emoji">📋</span><span class="lbl"><strong>Ver planes</strong><span>Conoce nuestros precios</span></span></a>
+                <a href="mailto:contacto@eduone.com.co" class="help-option"><span class="emoji">✉️</span><span class="lbl"><strong>Correo</strong><span>contacto@eduone.com.co</span></span></a>
+            </div>
+        </div>
     </div>
-    <div class="footer-bottom">
-      <p>© 2026 EduOne. Todos los derechos reservados.</p>
-      <p>Desarrollado por Daniel Steven Gutierrez y Camilo Rodriguez.</p>
-      <p>Escuela Tecnológica de Neiva FET.</p>
+
+    <!-- MODAL LEGAL -->
+    <div class="modal-terms" id="modalTerms" role="dialog" aria-modal="true" aria-labelledby="modalTermsTitle">
+        <div class="modal-terms-content">
+            <div class="modal-terms-header">
+                <h2 id="modalTermsTitle"><i class="fas fa-file-contract"></i> Información legal</h2>
+                <button class="modal-terms-close" id="closeTermsModal" aria-label="Cerrar">&times;</button>
+            </div>
+            <div class="modal-terms-tabs">
+                <button class="modal-terms-tab active" data-legal-tab="terms">Términos y condiciones</button>
+                <button class="modal-terms-tab" data-legal-tab="privacy">Política de privacidad</button>
+                <button class="modal-terms-tab" data-legal-tab="data">Tratamiento de datos</button>
+            </div>
+            <div class="modal-terms-body" id="modalTermsBody"></div>
+            <div class="modal-terms-footer">
+                <button type="button" class="btn-close-modal" id="closeTermsBtn">Cerrar</button>
+            </div>
+        </div>
     </div>
-  </div>
-</footer>
 
-<button class="back-to-top" id="backToTop" aria-label="Volver arriba">↑</button>
+    <!-- SCRIPTS -->
+    <script>
+        (function() {
+            'use strict';
 
-<script>
-  const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled', window.scrollY > 20);
-    document.getElementById('backToTop').classList.toggle('visible', window.scrollY > 300);
-  });
-  const hamburger = document.getElementById('hamburger');
-  const navMenu = document.getElementById('nav-menu');
-  function closeMenu() { navMenu.classList.remove('open'); hamburger.classList.remove('open'); hamburger.setAttribute('aria-expanded','false'); }
-  hamburger.addEventListener('click', () => { navMenu.classList.contains('open') ? closeMenu() : (navMenu.classList.add('open'), hamburger.classList.add('open'), hamburger.setAttribute('aria-expanded','true')); });
-  navMenu.querySelectorAll('.nav-link').forEach(l => l.addEventListener('click', closeMenu));
-  document.addEventListener('click', e => { if (!navbar.contains(e.target)) closeMenu(); });
-  document.addEventListener('keydown', e => { if (e.key==='Escape') closeMenu(); });
-  document.getElementById('backToTop').addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
+            // CONFIGURACIÓN WHATSAPP
+            const WHATSAPP_NUMBER = '573170296998';
 
-  // Form validation
-  const form = document.getElementById('contactForm');
-  const successDiv = document.getElementById('formSuccess');
+            // PRELOADER
+            const preloader = document.getElementById('preloader');
+            window.addEventListener('load', () => {
+                setTimeout(() => { if (preloader) preloader.classList.add('hidden'); }, 500);
+            });
+            setTimeout(() => { if (preloader) preloader.classList.add('hidden'); }, 2500);
 
-  function showError(fieldId, errId, show) {
-    const field = document.getElementById(fieldId);
-    const err = document.getElementById('err-' + errId);
-    if (!field || !err) return;
-    if (show) { field.classList.add('error'); err.classList.add('visible'); }
-    else { field.classList.remove('error'); err.classList.remove('visible'); }
-  }
+            // NAVBAR SCROLL + BOTÓN TOP
+            const navbar = document.getElementById('navbar');
+            const backToTop = document.getElementById('backToTop');
+            function onScroll() {
+                const y = window.scrollY;
+                if (navbar) navbar.classList.toggle('scrolled', y > 20);
+                if (backToTop) backToTop.classList.toggle('visible', y > 400);
+            }
+            window.addEventListener('scroll', onScroll, { passive: true });
+            onScroll();
+            if (backToTop) backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-  function validateEmail(email) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  }
-  function validatePhone(tel) {
-    return /^[\d\s\+\-\(\)]{7,}$/.test(tel.trim());
-  }
+            // HAMBURGUESA
+            const hamburger = document.getElementById('hamburger');
+            const navMenu = document.getElementById('nav-menu');
+            if (hamburger && navMenu) {
+                hamburger.addEventListener('click', () => {
+                    const isOpen = navMenu.classList.toggle('open');
+                    hamburger.classList.toggle('open', isOpen);
+                    hamburger.setAttribute('aria-expanded', String(isOpen));
+                });
+                navMenu.querySelectorAll('a').forEach(a => {
+                    a.addEventListener('click', () => {
+                        navMenu.classList.remove('open');
+                        hamburger.classList.remove('open');
+                        hamburger.setAttribute('aria-expanded', 'false');
+                    });
+                });
+            }
 
-  function validateForm() {
-    let valid = true;
-    const nombre = document.getElementById('nombre').value.trim();
-    const colegio = document.getElementById('colegio').value.trim();
-    const cargo = document.getElementById('cargo').value.trim();
-    const ciudad = document.getElementById('ciudad').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const telefono = document.getElementById('telefono').value.trim();
-    const estudiantes = document.getElementById('estudiantes').value;
-    const motivo = document.getElementById('motivo').value;
-    const mensaje = document.getElementById('mensaje').value.trim();
-    const privacidad = document.getElementById('privacidad').checked;
+            // REVEAL OBSERVER
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        revealObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
+            document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-    showError('nombre', 'nombre', !nombre); if (!nombre) valid = false;
-    showError('colegio', 'colegio', !colegio); if (!colegio) valid = false;
-    showError('cargo', 'cargo', !cargo); if (!cargo) valid = false;
-    showError('ciudad', 'ciudad', !ciudad); if (!ciudad) valid = false;
-    showError('email', 'email', !validateEmail(email)); if (!validateEmail(email)) valid = false;
-    showError('telefono', 'telefono', !validatePhone(telefono)); if (!validatePhone(telefono)) valid = false;
-    showError('estudiantes', 'estudiantes', !estudiantes); if (!estudiantes) valid = false;
-    showError('motivo', 'motivo', !motivo); if (!motivo) valid = false;
-    showError('mensaje', 'mensaje', mensaje.length < 10); if (mensaje.length < 10) valid = false;
+            // HELP FAB
+            const helpFab = document.getElementById('helpFab');
+            const helpFabBtn = document.getElementById('helpFabBtn');
+            if (helpFab && helpFabBtn) {
+                helpFabBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    helpFab.classList.toggle('open');
+                });
+                document.addEventListener('click', (e) => {
+                    if (!helpFab.contains(e.target) && helpFab.classList.contains('open')) {
+                        helpFab.classList.remove('open');
+                    }
+                });
+            }
 
-    const errPriv = document.getElementById('err-privacidad');
-    if (!privacidad) { errPriv.classList.add('visible'); valid = false; }
-    else { errPriv.classList.remove('visible'); }
+            // FORMULARIO
+            const form = document.getElementById('contactForm');
+            const successDiv = document.getElementById('formSuccess');
+            const resendBtn = document.getElementById('resendBtn');
+            let lastWhatsAppURL = '';
 
-    return valid;
-  }
+            function showError(fieldId, errId, show) {
+                const field = document.getElementById(fieldId);
+                const err = document.getElementById('err-' + errId);
+                if (!field || !err) return;
+                if (show) {
+                    field.classList.add('error');
+                    err.classList.add('visible');
+                } else {
+                    field.classList.remove('error');
+                    err.classList.remove('visible');
+                }
+            }
 
-  // Clear errors on input
-  ['nombre','colegio','cargo','ciudad','email','telefono','estudiantes','motivo','mensaje'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.addEventListener('input', () => showError(id, id, false));
-  });
-  document.getElementById('privacidad').addEventListener('change', () => {
-    document.getElementById('err-privacidad').classList.remove('visible');
-  });
+            function validateEmail(email) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); }
+            function validatePhone(tel) { return /^[\d\s\+\-\(\)]{7,}$/.test(tel.trim()); }
 
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    if (!validateForm()) return;
-    const btn = document.getElementById('submitBtn');
-    btn.disabled = true;
-    btn.textContent = 'Procesando...';
-    setTimeout(() => {
-      form.style.display = 'none';
-      successDiv.classList.add('visible');
-      successDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }, 800);
-    // TODO: integrate with Firebase or backend service
-  });
+            function validateForm() {
+                let valid = true;
+                const nombre = document.getElementById('nombre').value.trim();
+                const colegio = document.getElementById('colegio').value.trim();
+                const cargo = document.getElementById('cargo').value.trim();
+                const ciudad = document.getElementById('ciudad').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const telefono = document.getElementById('telefono').value.trim();
+                const estudiantes = document.getElementById('estudiantes').value;
+                const motivo = document.getElementById('motivo').value;
+                const mensaje = document.getElementById('mensaje').value.trim();
+                const privacidad = document.getElementById('privacidad').checked;
 
-  const observer = new IntersectionObserver(entries => entries.forEach((e,i) => { if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i*80); }), {threshold:0.08});
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-</script>
+                showError('nombre', 'nombre', !nombre); if (!nombre) valid = false;
+                showError('colegio', 'colegio', !colegio); if (!colegio) valid = false;
+                showError('cargo', 'cargo', !cargo); if (!cargo) valid = false;
+                showError('ciudad', 'ciudad', !ciudad); if (!ciudad) valid = false;
+                showError('email', 'email', !validateEmail(email)); if (!validateEmail(email)) valid = false;
+                showError('telefono', 'telefono', !validatePhone(telefono)); if (!validatePhone(telefono)) valid = false;
+                showError('estudiantes', 'estudiantes', !estudiantes); if (!estudiantes) valid = false;
+                showError('motivo', 'motivo', !motivo); if (!motivo) valid = false;
+                showError('mensaje', 'mensaje', mensaje.length < 10); if (mensaje.length < 10) valid = false;
+
+                const errPriv = document.getElementById('err-privacidad');
+                if (!privacidad) { errPriv.classList.add('visible'); valid = false; }
+                else { errPriv.classList.remove('visible'); }
+
+                return valid;
+            }
+
+            ['nombre','colegio','cargo','ciudad','email','telefono','estudiantes','motivo','mensaje'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.addEventListener('input', () => showError(id, id, false));
+                if (el && el.tagName === 'SELECT') el.addEventListener('change', () => showError(id, id, false));
+            });
+            document.getElementById('privacidad').addEventListener('change', () => {
+                document.getElementById('err-privacidad').classList.remove('visible');
+            });
+
+            function buildWhatsAppMessage() {
+                const nombre = document.getElementById('nombre').value.trim();
+                const colegio = document.getElementById('colegio').value.trim();
+                const cargo = document.getElementById('cargo').value.trim();
+                const ciudad = document.getElementById('ciudad').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const telefono = document.getElementById('telefono').value.trim();
+                const estudiantes = document.getElementById('estudiantes').value;
+                const motivo = document.getElementById('motivo').value;
+                const mensaje = document.getElementById('mensaje').value.trim();
+
+                const text = 
+`🎓 *Nueva solicitud desde EduOne*
+
+👤 *Nombre:* ${nombre}
+🏫 *Colegio:* ${colegio}
+💼 *Cargo:* ${cargo}
+📍 *Ciudad:* ${ciudad}
+📧 *Correo:* ${email}
+📱 *Teléfono:* ${telefono}
+👥 *Estudiantes:* ${estudiantes}
+🎯 *Motivo:* ${motivo}
+
+📝 *Mensaje:*
+${mensaje}
+
+—————————————
+Enviado desde eduone.com.co`;
+
+                return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
+            }
+
+            function openWhatsApp() {
+                lastWhatsAppURL = buildWhatsAppMessage();
+                window.open(lastWhatsAppURL, '_blank', 'noopener');
+            }
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                if (!validateForm()) {
+                    const firstError = document.querySelector('.form-group input.error, .form-group select.error, .form-group textarea.error');
+                    if (firstError) {
+                        const yOffset = -100;
+                        const y = firstError.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                        window.scrollTo({ top: y, behavior: 'smooth' });
+                        firstError.focus({ preventScroll: true });
+                    }
+                    return;
+                }
+
+                const btn = document.getElementById('submitBtn');
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Abriendo WhatsApp...';
+
+                openWhatsApp();
+
+                setTimeout(() => {
+                    form.style.display = 'none';
+                    successDiv.classList.add('visible');
+                    successDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 600);
+            });
+
+            if (resendBtn) {
+                resendBtn.addEventListener('click', () => {
+                    if (lastWhatsAppURL) {
+                        window.open(lastWhatsAppURL, '_blank', 'noopener');
+                    } else {
+                        openWhatsApp();
+                    }
+                });
+            }
+
+            // MODAL LEGAL
+            const modalTerms = document.getElementById('modalTerms');
+            const modalTermsBody = document.getElementById('modalTermsBody');
+            const legalContent = {
+                terms: `
+                    <div class="last-update"><strong>Última actualización:</strong> Enero de 2026 · Versión 2.0</div>
+                    <p>EduOne es una plataforma tecnológica de gestión educativa desarrollada en Colombia, orientada principalmente a instituciones educativas colombianas. Su propósito es facilitar la administración de procesos académicos, administrativos y de comunicación mediante herramientas digitales para rectores, coordinadores, docentes, estudiantes, padres de familia, acudientes y demás usuarios autorizados por cada institución.</p>
+                    <p>El acceso y uso de EduOne implica la aceptación de las condiciones establecidas para el funcionamiento de la plataforma. Cada institución educativa será responsable de la información que registre, de la asignación de usuarios y permisos, de la veracidad de los datos suministrados y del uso que sus funcionarios y miembros de la comunidad educativa hagan de las herramientas disponibles.</p>
+                    <h3>Funcionalidades</h3>
+                    <p>EduOne podrá ofrecer funcionalidades relacionadas con matrículas, estudiantes, personal, grados, cursos, asignaturas, horarios, asistencia, notas, boletines, evaluaciones, actividades, observaciones, comunicaciones, pensiones, reportes, estadísticas, almacenamiento de documentos y demás módulos que sean habilitados de acuerdo con el plan contratado.</p>
+                    <h3>Cuentas de acceso</h3>
+                    <p>Las cuentas de acceso son personales. Los usuarios deberán conservar sus credenciales de forma segura y no compartirlas con terceros. EduOne podrá suspender temporalmente una cuenta cuando detecte posibles accesos no autorizados, uso fraudulento, incumplimiento de las condiciones del servicio, riesgo para la seguridad de la información o solicitud válida de la institución educativa correspondiente.</p>
+                    <h3>Usos prohibidos</h3>
+                    <p>Está prohibido utilizar la plataforma para alterar información académica sin autorización, suplantar usuarios, obtener acceso indebido a datos de otras personas, introducir software malicioso, vulnerar sistemas de seguridad, realizar extracción masiva de información sin autorización o desarrollar cualquier actividad contraria a la legislación colombiana.</p>
+                    <h3>Propiedad de la información</h3>
+                    <p>La información académica, administrativa y personal registrada por cada colegio continuará perteneciendo a la institución o a los titulares correspondientes. EduOne no adquiere propiedad sobre las notas, documentos, registros, fotografías, comunicaciones o información cargada por los usuarios.</p>
+                    <h3>Propiedad intelectual</h3>
+                    <p>El software, diseño, interfaces, estructura tecnológica, código, logotipo, documentación y demás elementos propios de EduOne son desarrollos independientes y están protegidos por las normas de propiedad intelectual aplicables. La contratación del servicio otorga únicamente un derecho de uso limitado durante la vigencia del contrato.</p>
+                    <h3>Independencia del proyecto</h3>
+                    <p>EduOne es un proyecto tecnológico colombiano independiente. No existe afiliación, representación, patrocinio ni relación comercial con otras empresas, plataformas o proyectos de otros países que puedan utilizar denominaciones iguales o similares, salvo que exista un acuerdo formal.</p>
+                    <h3>Alcance territorial</h3>
+                    <p>El servicio se presta principalmente para el mercado colombiano y la relación contractual estará sometida a la legislación de la República de Colombia.</p>
+                    <h3>Disponibilidad del servicio</h3>
+                    <p>EduOne procurará mantener la plataforma disponible y operativa, aunque podrán presentarse interrupciones temporales por mantenimiento, actualizaciones, fallas de proveedores tecnológicos, problemas de conectividad, incidentes de seguridad o circunstancias de fuerza mayor.</p>
+                    <h3>Proveedores tecnológicos</h3>
+                    <p>EduOne podrá utilizar proveedores especializados de alojamiento, almacenamiento, bases de datos, autenticación, correo electrónico, infraestructura en la nube y otros servicios necesarios para el funcionamiento técnico de la plataforma.</p>
+                    <h3>Planes y pagos</h3>
+                    <p>Los precios, planes, límites de estudiantes, módulos incluidos, condiciones de pago y vigencia del servicio serán los informados al momento de contratar. Cuando exista un contrato específico entre EduOne y una institución educativa, dicho contrato prevalecerá sobre estas condiciones.</p>
+                    <h3>Actualizaciones</h3>
+                    <p>EduOne podrá modificar o actualizar sus funcionalidades con el fin de mejorar el servicio, aumentar la seguridad, corregir errores o adaptarse a necesidades técnicas y normativas.</p>
+                    <h3>Marco legal</h3>
+                    <p>Las relaciones comerciales electrónicas y los mensajes de datos utilizados en la prestación del servicio se sujetarán, cuando corresponda, a las disposiciones colombianas aplicables al comercio electrónico, entre ellas la Ley 527 de 1999. Cuando sean aplicables relaciones de consumo, también deberán respetarse los derechos previstos en el Estatuto del Consumidor, Ley 1480 de 2011.</p>
+                `,
+                privacy: `
+                    <h3>Política de privacidad</h3>
+                    <p>EduOne reconoce que la privacidad y la seguridad de la información son elementos fundamentales para la prestación de servicios tecnológicos en el sector educativo. Por esta razón, adopta medidas destinadas a proteger la información personal de estudiantes, padres de familia, acudientes, docentes, administrativos, directivos y demás usuarios de la plataforma.</p>
+                    <p>EduOne opera desde Colombia y realiza el tratamiento de información de acuerdo con la legislación colombiana aplicable en materia de protección de datos personales, especialmente la <strong>Ley Estatutaria 1581 de 2012</strong>.</p>
+                    <h3>Información que se recopila</h3>
+                    <p>La plataforma podrá recopilar y procesar información como nombres y apellidos, documentos de identificación, fecha de nacimiento, datos de contacto, información de matrícula, grado, curso, notas, asistencia, actividades, evaluaciones, observaciones, información de acudientes, fotografías, documentos académicos y otros datos necesarios para la correcta prestación del servicio.</p>
+                    <h3>Uso de la información</h3>
+                    <p>La información recopilada podrá utilizarse para crear y administrar cuentas de usuario, gestionar procesos académicos, generar boletines y reportes, registrar asistencia, administrar actividades y evaluaciones, permitir comunicaciones institucionales, prestar soporte técnico, mejorar la seguridad de la plataforma, atender solicitudes de usuarios, cumplir obligaciones contractuales y dar cumplimiento a requerimientos legales.</p>
+                    <p><strong>EduOne no comercializará ni venderá bases de datos personales</strong> de estudiantes, familias, docentes o instituciones educativas.</p>
+                    <h3>Proveedores tecnológicos</h3>
+                    <p>Los datos podrán ser procesados mediante proveedores tecnológicos necesarios para prestar el servicio, como servicios de nube, bases de datos, almacenamiento, autenticación, alojamiento web, correo electrónico y herramientas de seguridad.</p>
+                    <h3>Control de acceso por roles</h3>
+                    <p>La plataforma implementará controles de acceso basados en roles. Esto significa que cada usuario podrá acceder únicamente a la información necesaria para ejercer sus funciones.</p>
+                    <h3>Seguridad</h3>
+                    <p>EduOne aplicará medidas técnicas y administrativas razonables para disminuir riesgos de pérdida, alteración, acceso no autorizado, divulgación indebida o uso fraudulento de la información. Estas medidas podrán incluir autenticación, contraseñas, conexiones seguras, restricciones de acceso, respaldos, registros de actividad y mecanismos de recuperación de información.</p>
+                    <h3>Protección de menores</h3>
+                    <p>Debido a que EduOne puede procesar información de niños, niñas y adolescentes, estos datos recibirán especial protección. Las instituciones educativas deberán garantizar que el tratamiento se realice respetando el interés superior de los menores.</p>
+                    <h3>Derechos de los titulares</h3>
+                    <p>Los titulares de los datos personales podrán ejercer los derechos reconocidos por la legislación colombiana, incluyendo conocer, actualizar y rectificar su información, solicitar información sobre el uso realizado de sus datos, presentar consultas o reclamos, solicitar la supresión cuando legalmente proceda y revocar autorizaciones en los casos permitidos por la ley.</p>
+                    <h3>Conservación de la información</h3>
+                    <p>La información será conservada durante el tiempo necesario para prestar el servicio, cumplir obligaciones contractuales y satisfacer obligaciones legales.</p>
+                    <h3>Incidentes de seguridad</h3>
+                    <p>Si se llegara a presentar un incidente de seguridad que comprometa información personal, EduOne evaluará la situación, adoptará medidas para contener y corregir el incidente y realizará las actuaciones que sean legalmente exigibles.</p>
+                    <div class="contact-box">
+                        <strong>Contacto de privacidad</strong>
+                        <p>📧 contacto@eduone.com.co</p>
+                        <p>📱 WhatsApp: 317 029 6998</p>
+                        <p>📍 Neiva, Huila, Colombia</p>
+                    </div>
+                `,
+                data: `
+                    <h3>Tratamiento de datos personales</h3>
+                    <p>EduOne adopta esta política para regular el tratamiento de datos personales recolectados, almacenados o procesados mediante la plataforma, el sitio web, formularios, comunicaciones comerciales y demás canales utilizados para prestar sus servicios.</p>
+                    <p>El tratamiento se desarrollará conforme a los principios y obligaciones establecidos por la <strong>Ley 1581 de 2012</strong> y su reglamentación incorporada, entre otras normas, en el <strong>Decreto 1074 de 2015</strong>. La Superintendencia de Industria y Comercio es la autoridad colombiana encargada de vigilar el cumplimiento del régimen general de protección de datos personales.</p>
+                    <h3>Operaciones de tratamiento</h3>
+                    <p>EduOne podrá realizar operaciones de recolección, almacenamiento, organización, consulta, actualización, modificación, transmisión, respaldo, conservación, análisis y eliminación de información personal cuando dichas operaciones sean necesarias para prestar sus servicios.</p>
+                    <h3>Roles jurídicos</h3>
+                    <p>En la prestación del servicio a instituciones educativas podrán existir diferentes roles jurídicos. La institución educativa podrá actuar como <strong>responsable del tratamiento</strong> cuando determine qué información recopila, cuáles son sus finalidades y cómo debe utilizarse. EduOne podrá actuar como <strong>encargado del tratamiento</strong> cuando procese esa información siguiendo las instrucciones de la institución educativa.</p>
+                    <h3>Finalidades del tratamiento</h3>
+                    <p>Los datos podrán ser utilizados para finalidades como matricular y administrar estudiantes, organizar grados y cursos, gestionar personal, registrar calificaciones, generar boletines, administrar asistencia, manejar actividades y evaluaciones, registrar observaciones, facilitar comunicaciones, gestionar pagos cuando corresponda, generar estadísticas y reportes, realizar soporte técnico y garantizar la seguridad del sistema.</p>
+                    <h3>Derechos de los titulares</h3>
+                    <p>Los titulares tendrán derecho a conocer, actualizar y rectificar sus datos, solicitar prueba de la autorización cuando corresponda, conocer el uso que se ha dado a su información, presentar quejas ante la Superintendencia de Industria y Comercio cuando proceda, revocar autorizaciones y solicitar supresión de datos en los casos permitidos por la legislación.</p>
+                    <p>Las solicitudes podrán presentarse a través del correo <strong>contacto@eduone.com.co</strong> o por WhatsApp al <strong>317 029 6998</strong>.</p>
+                    <h3>Datos de menores de edad</h3>
+                    <p>Cuando los datos pertenezcan a estudiantes menores de edad, EduOne y las instituciones educativas deberán aplicar un nivel reforzado de protección y respetar el interés superior de niños, niñas y adolescentes.</p>
+                    <h3>Datos sensibles</h3>
+                    <p>EduOne podrá tratar datos sensibles únicamente cuando exista una base legal adecuada y resulte necesario para una finalidad legítima relacionada con la prestación del servicio. Este tipo de información estará sujeto a controles de acceso reforzados.</p>
+                    <h3>Transferencia internacional</h3>
+                    <p>Cuando sea necesario utilizar proveedores tecnológicos localizados fuera de Colombia, EduOne evaluará las obligaciones aplicables a la transmisión o transferencia internacional de datos.</p>
+                    <h3>Medidas de seguridad</h3>
+                    <p>EduOne adoptará medidas razonables de seguridad orientadas a evitar accesos indebidos, alteraciones, pérdidas, consultas no autorizadas o divulgaciones de información. No obstante, ningún sistema informático puede garantizar riesgo cero.</p>
+                    <h3>Actualizaciones</h3>
+                    <p>La política podrá actualizarse cuando existan cambios legales, tecnológicos, administrativos o funcionales. Las modificaciones relevantes serán publicadas en el sitio web o informadas a través de los canales disponibles.</p>
+                    <div class="contact-box">
+                        <strong>Canal para consultas, solicitudes y reclamos</strong>
+                        <p>📧 contacto@eduone.com.co</p>
+                        <p>📱 WhatsApp: 317 029 6998</p>
+                        <p>📍 Neiva, Huila, Colombia</p>
+                    </div>
+                `
+            };
+
+            function abrirModalLegal(tabId) {
+                document.querySelectorAll('.modal-terms-tab').forEach(t => t.classList.remove('active'));
+                const activeTab = document.querySelector(`.modal-terms-tab[data-legal-tab="${tabId}"]`);
+                if (activeTab) activeTab.classList.add('active');
+                if (modalTermsBody) modalTermsBody.innerHTML = legalContent[tabId] || legalContent.terms;
+                if (modalTerms) modalTerms.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            }
+            function cerrarModalLegal() {
+                if (modalTerms) modalTerms.classList.remove('show');
+                document.body.style.overflow = '';
+            }
+
+            document.querySelectorAll('[data-open-legal]').forEach(btn => {
+                btn.addEventListener('click', (e) => { e.preventDefault(); abrirModalLegal(btn.dataset.openLegal); });
+            });
+            document.querySelectorAll('.modal-terms-tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    document.querySelectorAll('.modal-terms-tab').forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    if (modalTermsBody) modalTermsBody.innerHTML = legalContent[tab.dataset.legalTab] || legalContent.terms;
+                });
+            });
+            const closeTermsModal = document.getElementById('closeTermsModal');
+            const closeTermsBtn = document.getElementById('closeTermsBtn');
+            if (closeTermsModal) closeTermsModal.addEventListener('click', cerrarModalLegal);
+            if (closeTermsBtn) closeTermsBtn.addEventListener('click', cerrarModalLegal);
+            if (modalTerms) modalTerms.addEventListener('click', (e) => { if (e.target === modalTerms) cerrarModalLegal(); });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    cerrarModalLegal();
+                    if (navMenu) navMenu.classList.remove('open');
+                    if (hamburger) { hamburger.classList.remove('open'); hamburger.setAttribute('aria-expanded', 'false'); }
+                    if (helpFab) helpFab.classList.remove('open');
+                }
+            });
+
+        })();
+    </script>
+
 </body>
 </html>

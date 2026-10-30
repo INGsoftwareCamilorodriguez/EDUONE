@@ -1,382 +1,791 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Conoce a EduOne: misión, visión, valores y el equipo detrás de la plataforma de gestión educativa." />
-  <title>Sobre nosotros | EduOne</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --primary: #1a56db; --primary-dark: #1e3a8a; --primary-light: #3b82f6;
-      --secondary: #06b6d4; --background: #f8fafc; --surface: #ffffff;
-      --text: #0f172a; --text-muted: #64748b; --border: #e2e8f0;
-      --success: #10b981; --gradient: linear-gradient(135deg, #1e3a8a 0%, #1a56db 50%, #06b6d4 100%);
-      --radius: 12px; --shadow: 0 4px 24px rgba(26,86,219,0.10); --shadow-lg: 0 8px 48px rgba(26,86,219,0.15);
-    }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', Arial, sans-serif; background: var(--background); color: var(--text); line-height: 1.6; overflow-x: hidden; overflow-wrap: break-word; }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#0a0f1e" />
+    <meta name="description" content="Conoce el propósito, origen y equipo detrás de EduOne, una plataforma tecnológica colombiana para la gestión de instituciones educativas." />
+    <meta name="keywords" content="EduOne, sobre nosotros, equipo, tecnología educativa, Colombia" />
+    <meta name="author" content="EduOne" />
+    <meta property="og:title" content="Sobre nosotros | EduOne" />
+    <meta property="og:description" content="Conoce la historia y el propósito detrás de la plataforma educativa colombiana." />
+    <meta property="og:type" content="website" />
+    <link rel="canonical" href="https://eduone.com.co/sobrenosotros.html" />
+    <title>Sobre nosotros | EduOne</title>
 
-    /* NAVBAR */
-    .navbar { position: sticky; top: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); transition: box-shadow 0.3s; }
-    .navbar.scrolled { box-shadow: 0 2px 24px rgba(26,86,219,0.12); }
-    .nav-container { max-width: 1280px; margin: 0 auto; padding: 0 24px; height: 68px; display: flex; align-items: center; justify-content: space-between; }
-    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
-    .nav-logo-mark { width: 36px; height: 36px; background: var(--gradient); border-radius: 9px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 16px; }
-    .nav-logo-text { font-size: 20px; font-weight: 700; color: var(--primary-dark); letter-spacing: -0.5px; }
-    .nav-menu { display: flex; align-items: center; gap: 4px; list-style: none; }
-    .nav-link { text-decoration: none; color: var(--text-muted); font-size: 14px; font-weight: 500; padding: 8px 12px; border-radius: 8px; transition: color 0.2s, background 0.2s; white-space: nowrap; }
-    .nav-link:hover { color: var(--primary); background: rgba(26,86,219,0.06); }
-    .nav-link.active { color: var(--primary); font-weight: 600; }
-    .nav-link-cta { background: var(--primary); color: white !important; padding: 8px 18px; border-radius: 8px; font-weight: 600; }
-    .nav-link-cta:hover { background: var(--primary-dark) !important; }
-    .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 8px; border-radius: 8px; }
-    .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; transition: transform 0.3s, opacity 0.3s; }
-    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
-    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    <!-- FAVICON -->
+    <link rel="icon" type="image/png" sizes="48x48" href="imagenes/logo.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="imagenes/logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="imagenes/logo.png">
 
-    /* PAGE HERO */
-    .page-hero { background: var(--gradient); padding: 80px 24px; text-align: center; }
-    .page-hero-inner { max-width: 800px; margin: 0 auto; }
-    .page-hero-eyebrow { display: inline-block; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); border-radius: 100px; padding: 6px 18px; font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.85); margin-bottom: 20px; }
-    .page-hero h1 { font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 900; color: white; line-height: 1.15; letter-spacing: -1.5px; margin-bottom: 16px; }
-    .page-hero p { font-size: 17px; color: rgba(255,255,255,0.78); line-height: 1.7; }
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
-    /* SECTIONS */
-    .section { padding: 80px 24px; }
-    .section-inner { max-width: 1280px; margin: 0 auto; }
-    .section-eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--primary); margin-bottom: 12px; }
-    .section-title { font-size: clamp(1.7rem, 3vw, 2.5rem); font-weight: 800; color: var(--text); letter-spacing: -1px; line-height: 1.15; margin-bottom: 16px; }
-    .section-title span { color: var(--primary); }
-    .section-desc { font-size: 16px; color: var(--text-muted); line-height: 1.7; margin-bottom: 40px; }
-    .section-header { text-align: center; margin-bottom: 52px; }
-    .section-header .section-desc { max-width: 580px; margin-left: auto; margin-right: auto; }
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    /* QUIENES SOMOS */
-    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
-    .about-text h2 { font-size: clamp(1.7rem, 3vw, 2.4rem); font-weight: 800; color: var(--text); letter-spacing: -1px; margin-bottom: 20px; }
-    .about-text p { font-size: 16px; color: var(--text-muted); line-height: 1.75; margin-bottom: 16px; }
-    .about-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
-    .tag { background: rgba(26,86,219,0.08); color: var(--primary); padding: 6px 14px; border-radius: 100px; font-size: 13px; font-weight: 600; }
-    .about-visual { background: var(--gradient); border-radius: 20px; padding: 40px; color: white; }
-    .about-stat { padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
-    .about-stat:last-child { border-bottom: none; }
-    .about-stat-num { font-size: 36px; font-weight: 900; letter-spacing: -1.5px; }
-    .about-stat-label { font-size: 14px; opacity: 0.7; font-weight: 500; }
+        :root {
+            --bg-0: #050814;
+            --bg-1: #0a0f1e;
+            --bg-2: #111a30;
+            --primary: #2563eb;
+            --primary-light: #3b82f6;
+            --cyan: #06b6d4;
+            --cyan-light: #22d3ee;
+            --lime: #a3e635;
+            --text-light: #e2e8f0;
+            --text-muted: #94a3b8;
+            --gradient-tech: linear-gradient(135deg, #2563eb 0%, #06b6d4 100%);
+            --gradient-glow: linear-gradient(135deg, #3b82f6 0%, #22d3ee 50%, #a3e635 100%);
+            --radius-sm: 10px;
+            --radius: 18px;
+            --radius-lg: 28px;
+            --radius-pill: 100px;
+            --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            --nav-h: 74px;
+        }
 
-    /* MISSION / VISION */
-    .mv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
-    .mv-card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 40px; }
-    .mv-card.primary { background: var(--gradient); border-color: transparent; color: white; }
-    .mv-card.primary h3 { color: white; }
-    .mv-card.primary p { color: rgba(255,255,255,0.78); }
-    .mv-icon { font-size: 36px; margin-bottom: 20px; }
-    .mv-card h3 { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 16px; color: var(--text); }
-    .mv-card p { font-size: 15px; color: var(--text-muted); line-height: 1.75; }
-    .mv-card p + p { margin-top: 12px; }
+        html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; scroll-padding-top: var(--nav-h); }
 
-    /* OBJECTIVES */
-    .objectives-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
-    .obj-item { display: flex; align-items: flex-start; gap: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; transition: transform 0.2s, box-shadow 0.2s; }
-    .obj-item:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
-    .obj-num { width: 32px; height: 32px; background: var(--gradient); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 13px; font-weight: 700; flex-shrink: 0; }
-    .obj-text { font-size: 14px; color: var(--text); font-weight: 500; line-height: 1.5; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-0);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
 
-    /* VALUES */
-    .values-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
-    .value-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px 20px; text-align: center; transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s; }
-    .value-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: rgba(26,86,219,0.2); }
-    .value-icon { font-size: 32px; margin-bottom: 14px; }
-    .value-card h3 { font-size: 15px; font-weight: 700; color: var(--text); }
+        img { max-width: 100%; height: auto; display: block; }
+        button { font-family: inherit; cursor: pointer; }
+        a { color: inherit; text-decoration: none; }
+        ul { list-style: none; }
 
-    /* CREATORS */
-    .creators-section { background: var(--gradient); border-radius: 24px; padding: 64px 48px; text-align: center; color: white; }
-    .creators-section h2 { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 800; letter-spacing: -1px; margin-bottom: 12px; }
-    .creators-section > p { font-size: 16px; opacity: 0.75; max-width: 600px; margin: 0 auto 40px; line-height: 1.7; }
-    .creator-institution { display: inline-block; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); border-radius: 100px; padding: 6px 18px; font-size: 13px; font-weight: 600; margin-bottom: 40px; }
-    .creators-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 560px; margin: 0 auto; }
-    .creator-card { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 16px; padding: 32px; }
-    .creator-avatar { width: 72px; height: 72px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 800; color: white; margin: 0 auto 16px; letter-spacing: -0.5px; }
-    .creator-name { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
-    .creator-role { font-size: 13px; opacity: 0.65; font-weight: 500; }
+        @keyframes floatY { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        @keyframes pulseGlow { 0%, 100% { box-shadow: 0 0 20px rgba(37,99,235,0.4); } 50% { box-shadow: 0 0 40px rgba(6,182,212,0.7); } }
+        @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        @keyframes spinSlow { to { transform: rotate(360deg); } }
+        @keyframes slideLoadBar { 0% { transform: translateX(-100%); } 100% { transform: translateX(300%); } }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* CARDS shared */
-    .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; transition: transform 0.25s, box-shadow 0.25s; }
-    .card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
-    .card-icon { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 20px; }
-    .icon-blue { background: rgba(26,86,219,0.10); }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+            .reveal, .stagger > * { opacity: 1 !important; transform: none !important; }
+        }
 
-    /* FOOTER */
-    .footer { background: var(--primary-dark); color: white; padding: 64px 24px 32px; }
-    .footer-inner { max-width: 1280px; margin: 0 auto; }
-    .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
-    .footer-brand p { font-size: 14px; color: rgba(255,255,255,0.55); margin-top: 12px; line-height: 1.6; max-width: 300px; }
-    .footer-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
-    .footer-logo-mark { width: 32px; height: 32px; background: rgba(255,255,255,0.15); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; }
-    .footer-logo-text { font-size: 18px; font-weight: 700; }
-    .footer-col h4 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.45); margin-bottom: 16px; }
-    .footer-col ul { list-style: none; }
-    .footer-col li { margin-bottom: 10px; }
-    .footer-col a { text-decoration: none; color: rgba(255,255,255,0.65); font-size: 14px; transition: color 0.2s; }
-    .footer-col a:hover { color: white; }
-    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 28px; text-align: center; }
-    .footer-bottom p { font-size: 13px; color: rgba(255,255,255,0.4); margin-bottom: 4px; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-0); }
+        ::-webkit-scrollbar-thumb { background: var(--gradient-tech); border-radius: 100px; }
 
-    .back-to-top { position: fixed; bottom: 28px; right: 28px; width: 44px; height: 44px; background: var(--primary); color: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; cursor: pointer; border: none; box-shadow: 0 4px 20px rgba(26,86,219,0.35); opacity: 0; pointer-events: none; transition: opacity 0.3s, transform 0.3s; z-index: 999; }
-    .back-to-top.visible { opacity: 1; pointer-events: auto; }
-    .back-to-top:hover { transform: translateY(-3px); }
+        body::before {
+            content: ''; position: fixed; inset: 0; z-index: -2;
+            background: radial-gradient(ellipse 800px 600px at 15% 10%, rgba(37, 99, 235, 0.18) 0%, transparent 60%), radial-gradient(ellipse 700px 500px at 85% 80%, rgba(6, 182, 212, 0.14) 0%, transparent 60%), var(--bg-0);
+            pointer-events: none;
+        }
 
-    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
+        /* PRELOADER */
+        .preloader { position: fixed; inset: 0; z-index: 99999; display: flex; align-items: center; justify-content: center; background: var(--bg-0); transition: opacity 0.5s ease, visibility 0.5s ease; }
+        .preloader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        .preloader-inner { display: flex; flex-direction: column; align-items: center; gap: 24px; }
+        .preloader-logo { font-family: 'Space Grotesk', sans-serif; font-size: 34px; font-weight: 700; background: var(--gradient-glow); background-size: 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: gradientShift 2s infinite; }
+        .preloader-ring { width: 60px; height: 60px; border-radius: 50%; border: 3px solid rgba(37,99,235,0.15); border-top-color: var(--cyan); border-right-color: var(--primary); animation: spinSlow 1s linear infinite; }
+        .preloader-bar { width: 200px; height: 3px; background: rgba(148,163,184,0.15); border-radius: 100px; overflow: hidden; position: relative; }
+        .preloader-bar::after { content: ''; position: absolute; inset: 0; width: 40%; background: var(--gradient-glow); border-radius: 100px; animation: slideLoadBar 1.4s infinite; }
 
-    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 24px; border-radius: 10px; font-weight: 600; font-size: 15px; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s, background 0.2s; cursor: pointer; border: none; font-family: inherit; }
-    .btn:hover { transform: translateY(-2px); }
-    .btn-primary { background: var(--primary); color: white; box-shadow: var(--shadow); }
-    .btn-primary:hover { background: var(--primary-dark); }
+        /* NAVBAR */
+        .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; height: var(--nav-h); background: rgba(10, 15, 30, 0.55); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(148, 163, 184, 0.10); transition: background var(--transition); }
+        .navbar.scrolled { background: rgba(10, 15, 30, 0.88); box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4); border-bottom-color: rgba(37, 99, 235, 0.25); }
+        .nav-container { max-width: 1360px; margin: 0 auto; height: 100%; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+        .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; transition: transform var(--transition); }
+        .nav-logo:hover { transform: scale(1.04); }
+        .logo-mark { width: 40px; height: 40px; display: grid; place-items: center; }
+        .logo-mark svg { width: 100%; height: 100%; filter: drop-shadow(0 0 10px rgba(59,130,246,0.5)); }
+        .logo-text { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700; color: #fff; letter-spacing: -0.8px; }
+        .logo-text span { background: var(--gradient-glow); background-size: 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: gradientShift 4s infinite; }
 
-    @media (max-width: 1024px) {
-      .about-grid { grid-template-columns: 1fr; gap: 40px; }
-      .mv-grid { grid-template-columns: 1fr; }
-      .footer-top { grid-template-columns: 1fr 1fr; }
-    }
-    @media (max-width: 768px) {
-      .nav-menu { display: none; position: absolute; top: 68px; left: 0; right: 0; background: white; border-bottom: 1px solid var(--border); flex-direction: column; padding: 12px; gap: 4px; box-shadow: 0 8px 32px rgba(0,0,0,0.08); align-items: stretch; }
-      .nav-menu.open { display: flex; }
-      .nav-link { padding: 12px 16px; }
-      .nav-hamburger { display: flex; }
-      .section { padding: 56px 20px; }
-      .creators-grid { grid-template-columns: 1fr; }
-      .creators-section { padding: 40px 24px; }
-      .footer-top { grid-template-columns: 1fr; gap: 32px; }
-    }
-  </style>
+        .nav-menu { display: flex; align-items: center; gap: 4px; }
+        .nav-link { text-decoration: none; color: var(--text-light); font-size: 14px; font-weight: 500; padding: 8px 14px; border-radius: var(--radius-sm); position: relative; transition: color var(--transition), background var(--transition); white-space: nowrap; }
+        .nav-link::before { content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 2px; background: var(--gradient-glow); border-radius: 100px; transition: width var(--transition), left var(--transition); }
+        .nav-link:hover, .nav-link.active { color: #fff; }
+        .nav-link:hover::before, .nav-link.active::before { width: 60%; left: 20%; }
+
+        .nav-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+        .btn-nav-demo { display: inline-flex; align-items: center; gap: 7px; padding: 9px 18px; background: var(--gradient-tech); color: #fff; font-size: 13.5px; font-weight: 600; text-decoration: none; border-radius: var(--radius-pill); transition: transform var(--transition), box-shadow var(--transition); box-shadow: 0 4px 20px rgba(37, 99, 235, 0.35); white-space: nowrap; }
+        .btn-nav-demo:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 10px 30px rgba(6, 182, 212, 0.5); }
+        .btn-nav-login { display: inline-flex; align-items: center; gap: 7px; padding: 9px 16px; background: rgba(255,255,255,0.05); border: 1px solid rgba(148, 163, 184, 0.3); color: var(--text-light); font-size: 13.5px; font-weight: 600; text-decoration: none; border-radius: var(--radius-pill); transition: all var(--transition); white-space: nowrap; }
+        .btn-nav-login:hover { background: rgba(255,255,255,0.12); border-color: var(--cyan); color: #fff; transform: translateY(-2px); }
+
+        .nav-hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; padding: 10px; border-radius: 8px; cursor: pointer; }
+        .nav-hamburger span { width: 24px; height: 2.5px; background: #fff; border-radius: 2px; transition: transform var(--transition), opacity var(--transition); }
+        .nav-hamburger.open span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+        .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+        .nav-hamburger.open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+
+        /* HERO SECUNDARIO */
+        .hero-page { padding: calc(var(--nav-h) + 60px) 24px 80px; position: relative; overflow: hidden; text-align: center; border-bottom: 1px solid rgba(59,130,246,0.15); }
+        .hero-page::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 800px 500px at 50% 20%, rgba(37,99,235,0.2), transparent 70%); pointer-events: none; }
+        .hero-inner { max-width: 900px; margin: 0 auto; position: relative; z-index: 2; animation: fadeUp 0.9s ease both; }
+        .hero-badge { display: inline-flex; align-items: center; gap: 8px; padding: 7px 16px; background: rgba(37, 99, 235, 0.15); border: 1px solid rgba(59, 130, 246, 0.4); border-radius: var(--radius-pill); font-size: 12.5px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: var(--cyan-light); margin-bottom: 24px; }
+        .hero-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 700; line-height: 1.15; letter-spacing: -1.5px; margin-bottom: 24px; }
+        .hero-title .gradient-text { background: var(--gradient-glow); background-size: 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: gradientShift 4s infinite; }
+        .hero-desc { font-size: clamp(16px, 1.8vw, 18px); color: rgba(226, 232, 240, 0.85); line-height: 1.7; max-width: 760px; margin: 0 auto 20px; }
+        .hero-tagline { font-size: 15px; color: var(--text-muted); font-style: italic; }
+
+        /* SECCIONES GENERALES */
+        .section { padding: 96px 24px; position: relative; }
+        .section-inner { max-width: 1280px; margin: 0 auto; position: relative; z-index: 2; }
+        .section-header { text-align: center; margin-bottom: 56px; max-width: 800px; margin-left: auto; margin-right: auto; }
+        .section-eyebrow { display: inline-flex; align-items: center; gap: 10px; padding: 7px 16px; background: rgba(37,99,235,0.12); border: 1px solid rgba(59,130,246,0.35); border-radius: var(--radius-pill); font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--cyan-light); margin-bottom: 20px; }
+        .section-eyebrow .dot { width: 6px; height: 6px; background: var(--cyan-light); border-radius: 50%; animation: pulseGlow 1.6s ease infinite; }
+        .section-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 700; color: #fff; letter-spacing: -1.5px; line-height: 1.12; margin-bottom: 18px; }
+        .section-title .grad { background: var(--gradient-glow); background-size: 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: gradientShift 5s infinite; }
+        .section-desc { font-size: 17px; color: var(--text-muted); max-width: 720px; margin: 0 auto; line-height: 1.7; }
+
+        .btn-primary { display: inline-flex; align-items: center; gap: 8px; padding: 14px 30px; background: var(--gradient-tech); color: #fff; font-size: 15px; font-weight: 600; border-radius: var(--radius-pill); box-shadow: 0 8px 30px rgba(37,99,235,0.4); border: none; transition: transform var(--transition), box-shadow var(--transition); }
+        .btn-primary:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 14px 45px rgba(6,182,212,0.55); }
+
+        /* REVEAL */
+        .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.9s ease, transform 0.9s ease; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .stagger > * { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+        .stagger.visible > * { opacity: 1; transform: translateY(0); }
+        .stagger.visible > *:nth-child(1) { transition-delay: 0.05s; }
+        .stagger.visible > *:nth-child(2) { transition-delay: 0.15s; }
+        .stagger.visible > *:nth-child(3) { transition-delay: 0.25s; }
+        .stagger.visible > *:nth-child(4) { transition-delay: 0.35s; }
+        .stagger.visible > *:nth-child(5) { transition-delay: 0.45s; }
+
+        /* CONTENIDO TEXTO */
+        .text-content p { font-size: 16px; color: var(--text-muted); line-height: 1.8; margin-bottom: 20px; }
+        .text-content p:last-child { margin-bottom: 0; }
+        .text-content strong { color: #fff; font-weight: 600; }
+
+        /* PROBLEMA / SOLUCIÓN */
+        .problem-solution-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: stretch; }
+        .col-card { background: rgba(10,15,30,0.6); border: 1px solid rgba(59,130,246,0.18); border-radius: var(--radius); padding: 40px 32px; backdrop-filter: blur(10px); }
+        .col-card.problema { border-top: 3px solid #ef4444; }
+        .col-card.solucion { border-top: 3px solid var(--cyan); background: rgba(6,182,212,0.05); }
+        .col-card h3 { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700; margin-bottom: 24px; display: flex; align-items: center; gap: 10px; color: #fff; }
+        .list-icon li { display: flex; align-items: flex-start; gap: 16px; padding: 14px 0; border-bottom: 1px solid rgba(148,163,184,0.1); font-size: 15px; font-weight: 500; color: var(--text-light); }
+        .list-icon li:last-child { border-bottom: none; }
+        .list-icon i { font-size: 18px; margin-top: 2px; flex-shrink: 0; }
+        .col-card.problema .list-icon i { color: #ef4444; }
+        .col-card.solucion .list-icon i { color: var(--cyan-light); }
+
+        /* MISIÓN Y VISIÓN */
+        .mv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        .mv-card { background: rgba(10,15,30,0.6); border: 1px solid rgba(59,130,246,0.18); border-radius: var(--radius); padding: 48px 40px; backdrop-filter: blur(10px); transition: transform var(--transition), border-color var(--transition); }
+        .mv-card:hover { transform: translateY(-4px); border-color: rgba(34,211,238,0.4); }
+        .mv-card-icon { width: 60px; height: 60px; border-radius: 16px; display: grid; place-items: center; font-size: 24px; margin-bottom: 24px; background: rgba(37,99,235,0.12); color: var(--cyan-light); border: 1px solid rgba(59,130,246,0.3); }
+        .mv-card h3 { font-family: 'Space Grotesk', sans-serif; font-size: 24px; font-weight: 700; margin-bottom: 16px; color: #fff; }
+        .mv-card p { font-size: 16px; color: var(--text-muted); line-height: 1.75; }
+
+        /* PRINCIPIOS */
+        .principles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+        .principle-card { background: rgba(10,15,30,0.6); border: 1px solid rgba(59,130,246,0.18); border-radius: var(--radius); padding: 32px 28px; backdrop-filter: blur(10px); transition: transform var(--transition), border-color var(--transition); }
+        .principle-card:hover { transform: translateY(-4px); border-color: rgba(34,211,238,0.4); }
+        .principle-icon { font-size: 28px; margin-bottom: 16px; color: var(--cyan-light); }
+        .principle-card h4 { font-size: 17px; font-weight: 700; margin-bottom: 8px; color: #fff; }
+        .principle-card p { font-size: 14.5px; color: var(--text-muted); line-height: 1.65; }
+
+        /* EQUIPO */
+        .team-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+        .team-image { border-radius: 20px; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.5); border: 1px solid rgba(59,130,246,0.3); }
+        .team-image img { width: 100%; object-fit: cover; }
+        .team-info .section-title { text-align: left; margin-bottom: 20px; }
+        .team-info p { font-size: 16px; color: var(--text-muted); line-height: 1.75; margin-bottom: 32px; }
+        .team-members { display: flex; flex-direction: column; gap: 16px; }
+        .member { background: rgba(10,15,30,0.6); padding: 20px 24px; border-radius: 12px; border: 1px solid rgba(59,130,246,0.18); display: flex; align-items: center; gap: 16px; transition: border-color var(--transition); }
+        .member:hover { border-color: rgba(34,211,238,0.5); }
+        .member-initials { width: 48px; height: 48px; border-radius: 50%; background: rgba(37,99,235,0.15); color: var(--cyan-light); font-weight: 800; font-size: 18px; display: grid; place-items: center; flex-shrink: 0; border: 1px solid rgba(59,130,246,0.3); }
+        .member-info h4 { font-size: 16px; font-weight: 700; color: #fff; }
+        .member-info p { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+
+        /* COLOMBIA */
+        .colombia-card { background: linear-gradient(135deg, rgba(37,99,235,0.15), rgba(6,182,212,0.10)); border: 1px solid rgba(59,130,246,0.3); border-radius: var(--radius); padding: 48px 40px; max-width: 900px; margin: 0 auto; text-align: center; position: relative; overflow: hidden; }
+        .colombia-card::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 400px 250px at 50% 0%, rgba(6,182,212,0.2), transparent); pointer-events: none; }
+        .colombia-location { display: inline-flex; align-items: center; gap: 8px; background: rgba(10,15,30,0.5); padding: 8px 16px; border-radius: 100px; font-size: 13px; font-weight: 600; color: #fff; margin-bottom: 24px; border: 1px solid rgba(59,130,246,0.4); position: relative; z-index: 1; }
+        .colombia-location i { color: var(--lime); }
+        .colombia-card h2 { font-family: 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 700; margin-bottom: 16px; color: #fff; position: relative; z-index: 1; }
+        .colombia-card p { font-size: 16px; color: var(--text-muted); line-height: 1.75; max-width: 680px; margin: 0 auto; position: relative; z-index: 1; }
+
+        /* PRODUCTO */
+        .product-section { text-align: center; }
+        .product-section h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 700; margin-bottom: 16px; letter-spacing: -1px; color: #fff; }
+        .product-section p { font-size: 17px; color: var(--text-muted); max-width: 640px; margin: 0 auto 48px; line-height: 1.7; }
+        .product-mockup { max-width: 1000px; margin: 0 auto; background: var(--bg-2); border-radius: 16px; overflow: hidden; box-shadow: 0 40px 100px rgba(0,0,0,0.6); border: 1px solid rgba(59,130,246,0.3); }
+        .browser-header { background: rgba(10,15,30,0.8); padding: 12px 16px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid rgba(59,130,246,0.15); }
+        .browser-dots { display: flex; gap: 6px; }
+        .browser-dot { width: 10px; height: 10px; border-radius: 50%; }
+        .dot-red { background: #ef4444; } .dot-yellow { background: #f59e0b; } .dot-green { background: #10b981; }
+        .browser-url { flex: 1; background: rgba(0,0,0,0.4); border-radius: 6px; padding: 4px 12px; font-size: 11px; color: var(--text-muted); display: flex; align-items: center; gap: 6px; }
+        .browser-url i { color: #10b981; font-size: 10px; }
+        .product-mockup img { width: 100%; display: block; }
+        .product-cta { margin-top: 40px; }
+
+        /* ROLES SIMPLE */
+        .roles-simple { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 32px; }
+        .role-pill { background: rgba(10,15,30,0.6); padding: 12px 24px; border-radius: 100px; border: 1px solid rgba(59,130,246,0.25); font-size: 14px; font-weight: 600; color: #fff; display: flex; align-items: center; gap: 8px; transition: all var(--transition); }
+        .role-pill:hover { border-color: rgba(34,211,238,0.6); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(6,182,212,0.15); }
+        .role-pill i { color: var(--cyan-light); }
+
+        /* ENFOQUE */
+        .focus-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .focus-card { background: rgba(10,15,30,0.6); padding: 40px 32px; border-radius: var(--radius); border: 1px solid rgba(59,130,246,0.18); text-align: center; backdrop-filter: blur(10px); }
+        .focus-number { width: 48px; height: 48px; border-radius: 50%; background: var(--gradient-tech); color: #fff; display: grid; place-items: center; font-size: 20px; font-weight: 800; margin: 0 auto 20px; box-shadow: 0 0 20px rgba(6,182,212,0.4); }
+        .focus-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 12px; color: #fff; }
+        .focus-card p { font-size: 15px; color: var(--text-muted); line-height: 1.65; }
+
+        /* CTA FINAL */
+        .cta-banner { background: linear-gradient(135deg, rgba(37,99,235,0.2), rgba(6,182,212,0.15)); border: 1px solid rgba(59,130,246,0.35); border-radius: var(--radius); padding: 64px 48px; text-align: center; color: #fff; position: relative; overflow: hidden; }
+        .cta-banner h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 700; margin-bottom: 12px; letter-spacing: -1px; position: relative; z-index: 1; }
+        .cta-banner p { font-size: 17px; opacity: 0.9; margin-bottom: 32px; position: relative; z-index: 1; }
+        .cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1; }
+        .btn-white { display: inline-flex; align-items: center; justify-content: center; padding: 14px 28px; background: #fff; color: var(--primary); border-radius: var(--radius-pill); font-weight: 700; font-size: 15px; transition: all var(--transition); }
+        .btn-white:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(255,255,255,0.2); }
+        .btn-transparent { display: inline-flex; align-items: center; justify-content: center; padding: 14px 28px; background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.3); border-radius: var(--radius-pill); font-weight: 600; font-size: 15px; transition: all var(--transition); }
+        .btn-transparent:hover { background: rgba(255,255,255,0.12); border-color: #fff; transform: translateY(-3px); }
+
+        /* FOOTER */
+        .footer { background: linear-gradient(180deg, transparent 0%, rgba(5,8,20,0.9) 20%, #02040a 100%); border-top: 1px solid rgba(59,130,246,0.15); padding: 80px 24px 40px; position: relative; }
+        .footer-inner { max-width: 1280px; margin: 0 auto; }
+        .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 56px; }
+        .footer-brand-logo { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+        .footer-brand .logo-mark { width: 44px; height: 44px; }
+        .footer-brand .logo-text { font-size: 24px; }
+        .footer-brand p { font-size: 14px; color: var(--text-muted); line-height: 1.7; max-width: 340px; }
+        .footer-col h4 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.8px; color: rgba(148,163,184,0.5); margin-bottom: 20px; }
+        .footer-col li { margin-bottom: 12px; }
+        .footer-col a { text-decoration: none; color: var(--text-muted); font-size: 14px; transition: color var(--transition), transform var(--transition); }
+        .footer-col a:hover { color: var(--cyan-light); transform: translateX(4px); display: inline-block; }
+        .footer-bottom { border-top: 1px solid rgba(148,163,184,0.1); padding-top: 32px; text-align: center; }
+        .footer-bottom p { font-size: 13px; color: rgba(148,163,184,0.4); margin-bottom: 6px; }
+
+        /* BOTONES FLOTANTES */
+        .back-to-top { position: fixed; bottom: 24px; right: 24px; width: 48px; height: 48px; border-radius: 50%; background: rgba(10,15,30,0.9); border: 1px solid rgba(59,130,246,0.4); color: #fff; display: grid; place-items: center; font-size: 18px; opacity: 0; pointer-events: none; z-index: 999; cursor: pointer; backdrop-filter: blur(14px); transition: all var(--transition); box-shadow: 0 8px 30px rgba(0,0,0,0.5); }
+        .back-to-top.visible { opacity: 1; pointer-events: auto; }
+        .back-to-top:hover { background: var(--gradient-tech); border-color: transparent; transform: translateY(-4px); box-shadow: 0 0 30px rgba(6,182,212,0.7); }
+
+        .help-fab { position: fixed; bottom: 24px; left: 24px; z-index: 998; }
+        .help-fab-btn { width: 56px; height: 56px; border-radius: 50%; background: var(--gradient-tech); border: none; color: #fff; font-size: 22px; display: grid; place-items: center; cursor: pointer; box-shadow: 0 8px 30px rgba(37,99,235,0.5); transition: transform var(--transition), box-shadow var(--transition); }
+        .help-fab-btn:hover { transform: scale(1.1) rotate(5deg); box-shadow: 0 0 40px rgba(6,182,212,0.8); }
+        .help-fab-btn .ico-close { display: none; }
+        .help-fab.open .help-fab-btn .ico-chat { display: none; }
+        .help-fab.open .help-fab-btn .ico-close { display: block; }
+        .help-panel { position: absolute; bottom: 72px; left: 0; width: 320px; background: rgba(10,15,30,0.95); border: 1px solid rgba(59,130,246,0.35); border-radius: var(--radius); overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.6); opacity: 0; visibility: hidden; transform: translateY(12px) scale(0.96); transform-origin: bottom left; transition: all var(--transition); backdrop-filter: blur(20px); }
+        .help-fab.open .help-panel { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
+        .help-panel-header { padding: 20px 22px; background: var(--gradient-tech); }
+        .help-panel-header h3 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+        .help-panel-header p { font-size: 12.5px; opacity: 0.9; }
+        .help-panel-body { padding: 10px; }
+        .help-option { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 10px; text-decoration: none; color: var(--text-light); transition: background var(--transition), transform var(--transition); }
+        .help-option:hover { background: rgba(37,99,235,0.15); transform: translateX(4px); }
+        .help-option .emoji { width: 38px; height: 38px; border-radius: 10px; background: rgba(37,99,235,0.2); display: grid; place-items: center; font-size: 18px; flex-shrink: 0; }
+        .help-option .lbl strong { display: block; font-size: 13.5px; font-weight: 600; color: #fff; margin-bottom: 2px; }
+        .help-option .lbl span { font-size: 11.5px; color: var(--text-muted); }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .problem-solution-grid { grid-template-columns: 1fr; }
+            .mv-grid { grid-template-columns: 1fr; }
+            .team-wrapper { grid-template-columns: 1fr; gap: 40px; }
+            .footer-top { grid-template-columns: 1fr 1fr; }
+            .focus-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 900px) {
+            .nav-container { padding: 0 16px; height: var(--nav-h); }
+            .logo-mark { width: 36px; height: 36px; }
+            .logo-text { font-size: 20px; }
+            .nav-menu { position: fixed; top: var(--nav-h); left: 0; right: 0; background: rgba(10,15,30,0.98); backdrop-filter: blur(20px); flex-direction: column; align-items: stretch; gap: 4px; padding: 20px; border-bottom: 1px solid rgba(59,130,246,0.25); transform: translateY(-120%); transition: transform 0.4s cubic-bezier(0.4,0,0.2,1); max-height: calc(100vh - var(--nav-h)); overflow-y: auto; }
+            .nav-menu.open { transform: translateY(0); }
+            .nav-link { padding: 14px 18px; font-size: 15.5px; }
+            .nav-link::before { display: none; }
+            .nav-link:hover, .nav-link.active { background: rgba(37,99,235,0.15); color: var(--cyan-light); }
+            .nav-actions { display: none; }
+            .nav-menu .nav-actions-mobile { display: flex !important; flex-direction: column; gap: 10px; margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(59,130,246,0.2); }
+            .nav-menu .nav-actions-mobile .btn-nav-demo, .nav-menu .nav-actions-mobile .btn-nav-login { width: 100%; justify-content: center; padding: 13px 20px; font-size: 15px; }
+            .nav-hamburger { display: flex; }
+        }
+        @media (max-width: 768px) {
+            .section { padding: 64px 18px; }
+            .section-header { margin-bottom: 40px; }
+            .hero-page { padding: calc(var(--nav-h) + 40px) 18px 60px; }
+            .hero-title { font-size: 2.2rem; }
+            .mv-card { padding: 32px 24px; }
+            .cta-banner { padding: 48px 24px; }
+            .cta-actions { flex-direction: column; align-items: center; }
+            .cta-actions .btn-white, .cta-actions .btn-transparent { width: 100%; max-width: 320px; }
+            .footer-top { grid-template-columns: 1fr; gap: 36px; text-align: center; }
+            .footer-brand-logo { justify-content: center; }
+            .footer-brand p { margin: 0 auto; }
+            .team-info .section-title { text-align: center; }
+            .team-info .section-eyebrow { justify-content: center !important; }
+            .team-info p { text-align: center; }
+            .back-to-top { bottom: 18px; right: 18px; width: 44px; height: 44px; }
+            .help-fab { bottom: 18px; left: 18px; }
+            .help-fab-btn { width: 52px; height: 52px; }
+            .help-panel { width: 280px; }
+        }
+        @media (max-width: 480px) {
+            .nav-container { padding: 0 14px; }
+            .logo-mark { width: 32px; height: 32px; }
+            .logo-text { font-size: 19px; }
+            .hero-title { font-size: 1.85rem; }
+            .section { padding: 48px 16px; }
+            .col-card { padding: 28px 20px; }
+            .principles-grid { grid-template-columns: 1fr; }
+            .roles-simple { gap: 8px; }
+            .role-pill { font-size: 13px; padding: 10px 16px; }
+            .footer { padding: 40px 16px 20px; }
+            .back-to-top { width: 40px; height: 40px; font-size: 16px; }
+            .help-fab-btn { width: 48px; height: 48px; }
+            .help-panel { width: calc(100vw - 28px); max-width: 300px; }
+        }
+    </style>
 </head>
 <body>
 
-<nav class="navbar" id="navbar">
-  <div class="nav-container">
-    <a href="index.html" class="nav-logo" aria-label="EduOne - Inicio">
-      <div class="nav-logo-mark">E</div>
-      <span class="nav-logo-text">EduOne</span>
-    </a>
-    <button class="nav-hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-menu">
-      <span></span><span></span><span></span>
-    </button>
-    <ul class="nav-menu" id="nav-menu">
-      <li><a href="index.html" class="nav-link">Inicio</a></li>
-      <li><a href="sobrenosotros.html" class="nav-link active" aria-current="page">Sobre nosotros</a></li>
-      <li><a href="funcionalidades.html" class="nav-link">Funcionalidades</a></li>
-      <li><a href="beneficios.html" class="nav-link">Beneficios</a></li>
-      <li><a href="planes.html" class="nav-link">Planes</a></li>
-      <li><a href="implementacion.html" class="nav-link">Implementación</a></li>
-      <li><a href="contacto.html" class="nav-link">Contacto</a></li>
-      <li><a href="login.html" class="nav-link nav-link-cta">Iniciar sesión</a></li>
-    </ul>
-  </div>
-</nav>
-
-<!-- HERO -->
-<section class="page-hero">
-  <div class="page-hero-inner">
-    <div class="page-hero-eyebrow">Nuestra historia</div>
-    <h1>Tecnología creada para transformar la gestión educativa</h1>
-    <p>EduOne es una plataforma tecnológica diseñada para facilitar y modernizar los procesos académicos, administrativos y comunicativos de las instituciones educativas.</p>
-  </div>
-</section>
-
-<!-- QUIÉNES SOMOS -->
-<section class="section" style="background: var(--surface);">
-  <div class="section-inner">
-    <div class="about-grid reveal">
-      <div class="about-text">
-        <div class="section-eyebrow">Quiénes somos</div>
-        <h2>Una herramienta moderna para la educación de hoy</h2>
-        <p>EduOne nace con el propósito de ofrecer a instituciones educativas una herramienta moderna, accesible y sencilla para centralizar sus procesos académicos y administrativos en un solo entorno digital.</p>
-        <p>Nuestra plataforma permite gestionar de manera eficiente todos los aspectos de la vida institucional, desde la matrícula hasta el seguimiento académico, conectando a todos los actores de la comunidad educativa.</p>
-        <div class="about-tags">
-          <span class="tag">Estudiantes</span>
-          <span class="tag">Profesores</span>
-          <span class="tag">Grados y Cursos</span>
-          <span class="tag">Asignaturas</span>
-          <span class="tag">Calificaciones</span>
-          <span class="tag">Tareas</span>
-          <span class="tag">Boletines</span>
-          <span class="tag">Comunicados</span>
-          <span class="tag">Seguimiento académico</span>
+    <!-- PRELOADER -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-inner">
+            <div class="preloader-logo">EduOne</div>
+            <div class="preloader-ring"></div>
+            <div class="preloader-bar"></div>
         </div>
-      </div>
-      <div class="about-visual">
-        <div style="font-size:13px; font-weight:600; color:rgba(255,255,255,0.6); letter-spacing:1px; text-transform:uppercase; margin-bottom:20px;">EduOne en números</div>
-        <div class="about-stat">
-          <div class="about-stat-num">10+</div>
-          <div class="about-stat-label">Módulos disponibles</div>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo" aria-label="EduOne - Inicio">
+                <span class="logo-mark">
+                    <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" fill="none">
+                        <defs>
+                            <linearGradient id="gradCap" x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0%" stop-color="#3b82f6"/><stop offset="55%" stop-color="#22d3ee"/><stop offset="100%" stop-color="#a3e635"/>
+                            </linearGradient>
+                        </defs>
+                        <path d="M24 6 L44 16 L24 26 L4 16 Z" fill="url(#gradCap)"/>
+                        <path d="M12 21.5 V30 C12 33.5 17.4 36 24 36 C30.6 36 36 33.5 36 30 V21.5 L24 27.5 Z" fill="url(#gradCap)" opacity="0.85"/>
+                        <path d="M40 18 V29" stroke="url(#gradCap)" stroke-width="2.4" stroke-linecap="round"/>
+                        <circle cx="40" cy="30.5" r="2.6" fill="url(#gradCap)"/>
+                    </svg>
+                </span>
+                <span class="logo-text">Edu<span>One</span></span>
+            </a>
+
+            <button class="nav-hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-menu">
+                <span></span><span></span><span></span>
+            </button>
+
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="index.html" class="nav-link">Inicio</a></li>
+                <li><a href="sobrenosotros.html" class="nav-link active">Sobre nosotros</a></li>
+                <li><a href="funcionalidades.html" class="nav-link">Funcionalidades</a></li>
+                <li><a href="beneficios.html" class="nav-link">Beneficios</a></li>
+                <li><a href="planes.html" class="nav-link">Planes</a></li>
+                <li><a href="implementacion.html" class="nav-link">Implementación</a></li>
+                <li><a href="contacto.html" class="nav-link">Contacto</a></li>
+                <li class="nav-actions-mobile" style="display:none;">
+                    <a href="contacto.html" class="btn-nav-demo">Solicitar demo</a>
+                    <a href="login.html" class="btn-nav-login"><i class="fas fa-right-to-bracket"></i> Iniciar sesión</a>
+                </li>
+            </ul>
+
+            <div class="nav-actions">
+                <a href="contacto.html" class="btn-nav-demo"><i class="fas fa-rocket"></i> Solicitar demo</a>
+                <a href="login.html" class="btn-nav-login"><i class="fas fa-right-to-bracket"></i> Iniciar sesión</a>
+            </div>
         </div>
-        <div class="about-stat">
-          <div class="about-stat-num">4</div>
-          <div class="about-stat-label">Roles de usuario integrados</div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero-page">
+        <div class="hero-inner">
+            <div class="hero-badge"><span class="dot" style="background:var(--cyan-light);border-radius:50%;width:6px;height:6px;display:inline-block;animation:pulseGlow 1.6s infinite;"></span> Sobre nosotros</div>
+            <h1 class="hero-title">Tecnología educativa creada para <span class="gradient-text">organizar, conectar y acompañar</span></h1>
+            <p class="hero-desc">EduOne nace como una iniciativa colombiana orientada a mejorar la forma en que las instituciones educativas organizan sus procesos académicos, administrativos y de comunicación.</p>
+            <p class="hero-tagline">Creemos que la tecnología debe facilitar el trabajo de las instituciones y fortalecer la relación entre colegio, estudiantes y familias.</p>
         </div>
-        <div class="about-stat">
-          <div class="about-stat-num">100%</div>
-          <div class="about-stat-label">Acceso desde cualquier dispositivo</div>
+    </section>
+
+    <!-- QUIÉNES SOMOS -->
+    <section class="section">
+        <div class="section-inner">
+            <div class="section-header reveal">
+                <div class="section-eyebrow"><span class="dot"></span> Quiénes somos</div>
+                <h2 class="section-title">Una iniciativa enfocada en <span class="grad">la gestión escolar</span></h2>
+            </div>
+            <div class="text-content reveal" style="max-width: 900px; margin: 0 auto; text-align: center;">
+                <p>EduOne es una iniciativa tecnológica colombiana enfocada en el desarrollo de soluciones digitales para instituciones educativas. Nuestra plataforma busca integrar en un solo entorno diferentes procesos académicos, administrativos, financieros y de convivencia, facilitando el trabajo de directivos, docentes, estudiantes, familias y personal administrativo.</p>
+                <p>El proyecto surge de la necesidad de contar con una herramienta más organizada, moderna y accesible para la gestión escolar, evitando que la información quede dispersa entre distintos documentos, sistemas o canales de comunicación.</p>
+                <p>Nuestro enfoque está en construir una plataforma práctica, funcional y adaptable a las necesidades reales de cada institución educativa.</p>
+            </div>
         </div>
-        <div class="about-stat">
-          <div class="about-stat-num">2030</div>
-          <div class="about-stat-label">Meta de consolidación nacional</div>
+    </section>
+
+    <!-- PROBLEMA / SOLUCIÓN -->
+    <section class="section">
+        <div class="section-inner">
+            <div class="section-header reveal">
+                <div class="section-eyebrow"><span class="dot"></span> El origen</div>
+                <h2 class="section-title">¿Por qué nace <span class="grad">EduOne</span>?</h2>
+            </div>
+            <div class="problem-solution-grid reveal">
+                <div class="col-card problema">
+                    <h3><i class="fas fa-exclamation-triangle" style="color: #ef4444;"></i> Situaciones frecuentes</h3>
+                    <ul class="list-icon">
+                        <li><i class="fas fa-times-circle"></i> Información dispersa en múltiples fuentes.</li>
+                        <li><i class="fas fa-times-circle"></i> Procesos manuales y repetitivos.</li>
+                        <li><i class="fas fa-times-circle"></i> Dificultad para hacer seguimiento a los estudiantes.</li>
+                        <li><i class="fas fa-times-circle"></i> Múltiples canales de comunicación desconectados.</li>
+                        <li><i class="fas fa-times-circle"></i> Tiempo administrativo elevado.</li>
+                    </ul>
+                </div>
+                <div class="col-card solucion">
+                    <h3><i class="fas fa-check-circle" style="color: var(--cyan-light);"></i> Respuesta de EduOne</h3>
+                    <ul class="list-icon">
+                        <li><i class="fas fa-check"></i> Centralización de la información.</li>
+                        <li><i class="fas fa-check"></i> Organización de los procesos institucionales.</li>
+                        <li><i class="fas fa-check"></i> Seguimiento claro del desempeño.</li>
+                        <li><i class="fas fa-check"></i> Comunicación unificada.</li>
+                        <li><i class="fas fa-check"></i> Acceso según el rol de cada usuario.</li>
+                    </ul>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- MISIÓN Y VISIÓN -->
-<section class="section" style="background: var(--background);">
-  <div class="section-inner">
-    <div class="section-header reveal">
-      <div class="section-eyebrow">Propósito</div>
-      <h2 class="section-title">Misión y <span>Visión</span></h2>
-    </div>
-    <div class="mv-grid reveal">
-      <div class="mv-card primary">
-        <div class="mv-icon">🎯</div>
-        <h3>Nuestra misión</h3>
-        <p>Desarrollar soluciones tecnológicas educativas accesibles, seguras, confiables y fáciles de utilizar que permitan a las instituciones educativas optimizar sus procesos académicos, administrativos y comunicativos.</p>
-        <p>Fortaleciendo la relación entre directivos, docentes, estudiantes y familias para una educación más conectada y eficiente.</p>
-      </div>
-      <div class="mv-card">
-        <div class="mv-icon">🔭</div>
-        <h3>Nuestra visión</h3>
-        <p>Para el año 2030, EduOne busca consolidarse como una plataforma de gestión educativa reconocida en Colombia por su innovación, facilidad de uso, confiabilidad y capacidad para adaptarse a las necesidades de diferentes instituciones educativas.</p>
-        <p>Contribuir a la transformación digital de la educación mediante soluciones que mejoren la administración, comunicación y seguimiento académico.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- OBJETIVO GENERAL -->
-<section class="section" style="background: var(--surface);">
-  <div class="section-inner">
-    <div class="section-header reveal">
-      <div class="section-eyebrow">Objetivos</div>
-      <h2 class="section-title">Hacia dónde <span>vamos</span></h2>
-      <p class="section-desc">Nuestro objetivo general es desarrollar una plataforma integral de gestión educativa que facilite la administración de los procesos académicos, administrativos y comunicativos mediante herramientas tecnológicas modernas.</p>
-    </div>
-    <div class="objectives-grid reveal">
-      <div class="obj-item"><div class="obj-num">01</div><div class="obj-text">Centralizar la información educativa en un solo entorno digital seguro.</div></div>
-      <div class="obj-item"><div class="obj-num">02</div><div class="obj-text">Facilitar la gestión de estudiantes y profesores de manera eficiente.</div></div>
-      <div class="obj-item"><div class="obj-num">03</div><div class="obj-text">Optimizar el manejo de calificaciones y rendimiento académico.</div></div>
-      <div class="obj-item"><div class="obj-num">04</div><div class="obj-text">Facilitar la generación de boletines académicos por periodo.</div></div>
-      <div class="obj-item"><div class="obj-num">05</div><div class="obj-text">Mejorar la comunicación entre la institución y las familias.</div></div>
-      <div class="obj-item"><div class="obj-num">06</div><div class="obj-text">Facilitar la creación y seguimiento de tareas y actividades.</div></div>
-      <div class="obj-item"><div class="obj-num">07</div><div class="obj-text">Realizar seguimiento académico continuo al rendimiento estudiantil.</div></div>
-      <div class="obj-item"><div class="obj-num">08</div><div class="obj-text">Reducir procesos manuales y documentos físicos innecesarios.</div></div>
-      <div class="obj-item"><div class="obj-num">09</div><div class="obj-text">Mejorar el acceso a la información académica en tiempo real.</div></div>
-      <div class="obj-item"><div class="obj-num">10</div><div class="obj-text">Promover la transformación digital en la educación colombiana.</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- VALORES -->
-<section class="section" style="background: var(--background);">
-  <div class="section-inner">
-    <div class="section-header reveal">
-      <div class="section-eyebrow">Identidad</div>
-      <h2 class="section-title">Nuestros <span>valores</span></h2>
-    </div>
-    <div class="values-grid reveal">
-      <div class="value-card"><div class="value-icon">💡</div><h3>Innovación</h3></div>
-      <div class="value-card"><div class="value-icon">✅</div><h3>Responsabilidad</h3></div>
-      <div class="value-card"><div class="value-icon">🔒</div><h3>Seguridad</h3></div>
-      <div class="value-card"><div class="value-icon">🌐</div><h3>Accesibilidad</h3></div>
-      <div class="value-card"><div class="value-icon">🤝</div><h3>Compromiso</h3></div>
-      <div class="value-card"><div class="value-icon">📚</div><h3>Educación</h3></div>
-      <div class="value-card"><div class="value-icon">📈</div><h3>Mejora continua</h3></div>
-    </div>
-  </div>
-</section>
-
-<!-- CREADORES -->
-<section class="section" style="background: var(--surface);">
-  <div class="section-inner">
-    <div class="creators-section reveal">
-      <h2>Creadores de EduOne</h2>
-      <div class="creator-institution">Escuela Tecnológica de Neiva FET</div>
-      <p>EduOne nace como una iniciativa desarrollada por Daniel Steven Gutierrez y Camilo Rodriguez, estudiantes de la Escuela Tecnológica de Neiva FET, con el propósito de aplicar conocimientos tecnológicos al desarrollo de soluciones que faciliten los procesos educativos y administrativos de las instituciones.</p>
-      <div class="creators-grid">
-        <div class="creator-card">
-          <div class="creator-avatar" aria-label="Iniciales de Daniel Gutierrez">DG</div>
-          <div class="creator-name">Daniel Steven Gutierrez</div>
-          <div class="creator-role">Cofundador y desarrollador de EduOne</div>
+    <!-- MISIÓN Y VISIÓN -->
+    <section class="section">
+        <div class="section-inner">
+            <div class="mv-grid reveal">
+                <div class="mv-card">
+                    <div class="mv-card-icon"><i class="fas fa-bullseye"></i></div>
+                    <h3>Misión</h3>
+                    <p>Desarrollar soluciones tecnológicas que faciliten la gestión de las instituciones educativas, centralizando información y procesos en una plataforma clara, accesible y organizada, que contribuya al trabajo de toda la comunidad educativa.</p>
+                </div>
+                <div class="mv-card">
+                    <div class="mv-card-icon"><i class="fas fa-eye"></i></div>
+                    <h3>Visión</h3>
+                    <p>Consolidar a EduOne como una plataforma tecnológica reconocida por su capacidad para apoyar la transformación digital de instituciones educativas en Colombia, ofreciendo herramientas confiables, modernas y adaptables a diferentes contextos escolares.</p>
+                </div>
+            </div>
         </div>
-        <div class="creator-card">
-          <div class="creator-avatar" aria-label="Iniciales de Camilo Rodriguez">CR</div>
-          <div class="creator-name">Camilo Rodriguez</div>
-          <div class="creator-role">Cofundador y desarrollador de EduOne</div>
+    </section>
+
+    <!-- PRINCIPIOS -->
+    <section class="section">
+        <div class="section-inner">
+            <div class="section-header reveal">
+                <div class="section-eyebrow"><span class="dot"></span> Nuestra identidad</div>
+                <h2 class="section-title">Principios que orientan <span class="grad">EduOne</span></h2>
+            </div>
+            <div class="principles-grid reveal">
+                <div class="principle-card">
+                    <div class="principle-icon"><i class="fas fa-feather-alt"></i></div>
+                    <h4>Simplicidad</h4>
+                    <p>La tecnología debe facilitar el trabajo, no hacerlo más complejo.</p>
+                </div>
+                <div class="principle-card">
+                    <div class="principle-icon"><i class="fas fa-layer-group"></i></div>
+                    <h4>Organización</h4>
+                    <p>La información debe estar disponible de forma clara y estructurada.</p>
+                </div>
+                <div class="principle-card">
+                    <div class="principle-icon"><i class="fas fa-handshake"></i></div>
+                    <h4>Cercanía</h4>
+                    <p>Escuchamos las necesidades reales de las instituciones educativas.</p>
+                </div>
+                <div class="principle-card">
+                    <div class="principle-icon"><i class="fas fa-seedling"></i></div>
+                    <h4>Evolución</h4>
+                    <p>EduOne mejora continuamente de acuerdo con el uso y las necesidades del sector.</p>
+                </div>
+                <div class="principle-card">
+                    <div class="principle-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h4>Confianza</h4>
+                    <p>Buscamos que la información institucional se gestione de forma responsable y ordenada.</p>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- FOOTER -->
-<footer class="footer">
-  <div class="footer-inner">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <div class="footer-logo"><div class="footer-logo-mark">E</div><span class="footer-logo-text">EduOne</span></div>
-        <p>Educación, tecnología y gestión en un solo lugar.</p>
-      </div>
-      <div class="footer-col">
-        <h4>Navegación</h4>
-        <ul>
-          <li><a href="index.html">Inicio</a></li>
-          <li><a href="sobrenosotros.html">Sobre nosotros</a></li>
-          <li><a href="funcionalidades.html">Funcionalidades</a></li>
-          <li><a href="beneficios.html">Beneficios</a></li>
-          <li><a href="planes.html">Planes</a></li>
-          <li><a href="implementacion.html">Implementación</a></li>
-          <li><a href="contacto.html">Contacto</a></li>
-          <li><a href="login.html">Iniciar sesión</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Legal</h4>
-        <ul>
-          <li><a href="#">Política de privacidad</a></li>
-          <li><a href="#">Tratamiento de datos</a></li>
-          <li><a href="#">Términos y condiciones</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>© 2026 EduOne. Todos los derechos reservados.</p>
-      <p>Desarrollado por Daniel Steven Gutierrez y Camilo Rodriguez.</p>
-      <p>Escuela Tecnológica de Neiva FET.</p>
-    </div>
-  </div>
-</footer>
+    <!-- EQUIPO -->
+    <section class="section">
+        <div class="section-inner">
+            <div class="team-wrapper reveal">
+                <div class="team-image">
+                    <img src="imagenes/equipo.jpeg" alt="Daniel y Camilo, fundadores de EduOne" loading="lazy">
+                </div>
+                <div class="team-info">
+                    <div class="section-eyebrow"><span class="dot"></span> Nuestro equipo</div>
+                    <h2 class="section-title">El equipo detrás de <span class="grad">EduOne</span></h2>
+                    <p>EduOne es desarrollado por un equipo joven con interés en la tecnología, el software y la transformación digital de los procesos educativos. El proyecto combina desarrollo tecnológico, análisis de necesidades institucionales y una visión orientada a crear soluciones prácticas para los colegios.</p>
+                    <div class="team-members">
+                        <div class="member">
+                            <div class="member-initials">DG</div>
+                            <div class="member-info">
+                                <h4>Daniel Steven Gutiérrez</h4>
+                                <p>Desarrollador y cofundador</p>
+                            </div>
+                        </div>
+                        <div class="member">
+                            <div class="member-initials">CR</div>
+                            <div class="member-info">
+                                <h4>Camilo Rodríguez Vargas</h4>
+                                <p>Desarrollador y cofundador</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<button class="back-to-top" id="backToTop" aria-label="Volver arriba">↑</button>
+    <!-- COLOMBIA -->
+    <section class="section">
+        <div class="section-inner">
+            <div class="colombia-card reveal">
+                <div class="colombia-location"><i class="fas fa-map-marker-alt"></i> Neiva, Huila, Colombia</div>
+                <h2>Tecnología desarrollada en Colombia</h2>
+                <p>EduOne se desarrolla desde Colombia con una visión cercana a las necesidades de las instituciones educativas del país. Nuestro objetivo es construir una solución que pueda crecer junto con los colegios y adaptarse a diferentes contextos educativos.</p>
+            </div>
+        </div>
+    </section>
 
-<script>
-  const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled', window.scrollY > 20);
-    document.getElementById('backToTop').classList.toggle('visible', window.scrollY > 300);
-  });
-  const hamburger = document.getElementById('hamburger');
-  const navMenu = document.getElementById('nav-menu');
-  function closeMenu() { navMenu.classList.remove('open'); hamburger.classList.remove('open'); hamburger.setAttribute('aria-expanded','false'); }
-  hamburger.addEventListener('click', () => { navMenu.classList.contains('open') ? closeMenu() : (navMenu.classList.add('open'), hamburger.classList.add('open'), hamburger.setAttribute('aria-expanded','true')); });
-  navMenu.querySelectorAll('.nav-link').forEach(l => l.addEventListener('click', closeMenu));
-  document.addEventListener('click', e => { if (!navbar.contains(e.target)) closeMenu(); });
-  document.addEventListener('keydown', e => { if (e.key==='Escape') closeMenu(); });
-  document.getElementById('backToTop').addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
-  const observer = new IntersectionObserver(entries => entries.forEach((e,i) => { if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i*80); }), {threshold:0.08});
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-</script>
+    <!-- PRODUCTO -->
+    <section class="section product-section">
+        <div class="section-inner">
+            <div class="reveal">
+                <h2>Nuestro propósito convertido en una plataforma</h2>
+                <p>EduOne transforma ese propósito en una plataforma donde diferentes roles de la comunidad educativa pueden acceder a las herramientas que necesitan desde un mismo entorno.</p>
+            </div>
+            <div class="product-mockup reveal">
+                <div class="browser-header">
+                    <div class="browser-dots"><span class="browser-dot dot-red"></span><span class="browser-dot dot-yellow"></span><span class="browser-dot dot-green"></span></div>
+                    <div class="browser-url"><i class="fas fa-lock"></i> eduone.com.co/panel</div>
+                </div>
+                <img src="imagenes/panelrector1.png" alt="Panel principal de EduOne para el rector" loading="lazy">
+            </div>
+            <div class="product-cta reveal">
+                <a href="funcionalidades.html" class="btn-primary">Conocer funcionalidades <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- A QUIÉN ACOMPAÑAMOS -->
+    <section class="section">
+        <div class="section-inner">
+            <div class="section-header reveal" style="margin-bottom: 20px;">
+                <div class="section-eyebrow"><span class="dot"></span> Comunidad educativa</div>
+                <h2 class="section-title">A quién <span class="grad">acompañamos</span></h2>
+                <p class="section-desc">EduOne está pensado para acompañar a toda la comunidad educativa, respetando las responsabilidades y necesidades de cada rol dentro de la institución.</p>
+            </div>
+            <div class="roles-simple reveal">
+                <div class="role-pill"><i class="fas fa-school"></i> Directivos</div>
+                <div class="role-pill"><i class="fas fa-user-tie"></i> Coordinadores</div>
+                <div class="role-pill"><i class="fas fa-chalkboard-teacher"></i> Docentes</div>
+                <div class="role-pill"><i class="fas fa-user-graduate"></i> Estudiantes</div>
+                <div class="role-pill"><i class="fas fa-users"></i> Familias</div>
+                <div class="role-pill"><i class="fas fa-folder-open"></i> Administrativos</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ENFOQUE -->
+    <section class="section">
+        <div class="section-inner">
+            <div class="section-header reveal">
+                <div class="section-eyebrow"><span class="dot"></span> Cómo trabajamos</div>
+                <h2 class="section-title">Nuestro <span class="grad">enfoque</span></h2>
+            </div>
+            <div class="focus-grid reveal">
+                <div class="focus-card">
+                    <div class="focus-number">1</div>
+                    <h3>Escuchar</h3>
+                    <p>Conocer cómo trabaja cada institución antes de implementar.</p>
+                </div>
+                <div class="focus-card">
+                    <div class="focus-number">2</div>
+                    <h3>Adaptar</h3>
+                    <p>Configurar la plataforma de acuerdo con la estructura del colegio.</p>
+                </div>
+                <div class="focus-card">
+                    <div class="focus-number">3</div>
+                    <h3>Acompañar</h3>
+                    <p>Facilitar la puesta en marcha y el uso de EduOne.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section class="section" style="padding-bottom: 80px;">
+        <div class="section-inner">
+            <div class="cta-banner reveal">
+                <h2>Conoce cómo EduOne puede acompañar a tu institución</h2>
+                <p>Solicita una demostración y conoce la plataforma en funcionamiento.</p>
+                <div class="cta-actions">
+                    <a href="contacto.html" class="btn-white">Solicitar demostración</a>
+                    <a href="contacto.html" class="btn-transparent">Contactarnos</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <div class="footer-brand-logo">
+                        <span class="logo-mark">
+                            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" fill="none">
+                                <defs>
+                                    <linearGradient id="gradCapF" x1="0" y1="0" x2="1" y2="1">
+                                        <stop offset="0%" stop-color="#3b82f6"/><stop offset="55%" stop-color="#22d3ee"/><stop offset="100%" stop-color="#a3e635"/>
+                                    </linearGradient>
+                                </defs>
+                                <path d="M24 6 L44 16 L24 26 L4 16 Z" fill="url(#gradCapF)"/>
+                                <path d="M12 21.5 V30 C12 33.5 17.4 36 24 36 C30.6 36 36 33.5 36 30 V21.5 L24 27.5 Z" fill="url(#gradCapF)" opacity="0.85"/>
+                                <path d="M40 18 V29" stroke="url(#gradCapF)" stroke-width="2.4" stroke-linecap="round"/>
+                                <circle cx="40" cy="30.5" r="2.6" fill="url(#gradCapF)"/>
+                            </svg>
+                        </span>
+                        <span class="logo-text">Edu<span>One</span></span>
+                    </div>
+                    <p>Plataforma tecnológica colombiana para la gestión académica, administrativa, financiera y de convivencia de instituciones educativas.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Navegación</h4>
+                    <ul>
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="sobrenosotros.html">Sobre nosotros</a></li>
+                        <li><a href="funcionalidades.html">Funcionalidades</a></li>
+                        <li><a href="beneficios.html">Beneficios</a></li>
+                        <li><a href="planes.html">Planes</a></li>
+                        <li><a href="implementacion.html">Implementación</a></li>
+                        <li><a href="contacto.html">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Soporte</h4>
+                    <ul>
+                        <li><a href="#">Centro de ayuda</a></li>
+                        <li><a href="#">Soporte técnico</a></li>
+                        <li><a href="contacto.html">Solicitar demostración</a></li>
+                        <li><a href="contacto.html">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Términos y condiciones</a></li>
+                        <li><a href="#">Política de privacidad</a></li>
+                        <li><a href="#">Tratamiento de datos</a></li>
+                        <li><a href="#">Política de cookies</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 EduOne. Todos los derechos reservados.</p>
+                <p>Tecnología educativa desarrollada en Colombia.</p>
+                <p>contacto@eduone.com.co · Neiva, Huila, Colombia · eduone.com.co</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- BOTONES FLOTANTES -->
+    <button class="back-to-top" id="backToTop" aria-label="Volver arriba"><i class="fas fa-arrow-up"></i></button>
+
+    <div class="help-fab" id="helpFab">
+        <button class="help-fab-btn" id="helpFabBtn" aria-label="Abrir menú de ayuda" aria-expanded="false">
+            <span class="ico-chat"><i class="fas fa-comment-dots"></i></span>
+            <span class="ico-close"><i class="fas fa-times"></i></span>
+        </button>
+        <div class="help-panel">
+            <div class="help-panel-header">
+                <h3>Hola 👋 Somos EduOne</h3>
+                <p>¿En qué podemos ayudarte?</p>
+            </div>
+            <div class="help-panel-body">
+                <a href="contacto.html" class="help-option"><span class="emoji">📅</span><span class="lbl"><strong>Solicitar demostración</strong><span>Conoce la plataforma en acción</span></span></a>
+                <a href="#" class="help-option"><span class="emoji">🛠️</span><span class="lbl"><strong>Soporte</strong><span>Atención técnica</span></span></a>
+                <a href="contacto.html" class="help-option"><span class="emoji">✉️</span><span class="lbl"><strong>Contacto</strong><span>Escríbenos directamente</span></span></a>
+                <a href="#" class="help-option"><span class="emoji">📣</span><span class="lbl"><strong>Novedades</strong><span>Mejoras y actualizaciones</span></span></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script>
+        (function() {
+            'use strict';
+
+            // PRELOADER
+            const preloader = document.getElementById('preloader');
+            if (preloader) {
+                window.addEventListener('load', () => {
+                    setTimeout(() => preloader.classList.add('hidden'), 500);
+                });
+                setTimeout(() => preloader.classList.add('hidden'), 2500);
+            }
+
+            // NAVBAR SCROLL + BACK TO TOP
+            const navbar = document.getElementById('navbar');
+            const backToTop = document.getElementById('backToTop');
+            if(navbar && backToTop) {
+                window.addEventListener('scroll', () => {
+                    const y = window.scrollY;
+                    navbar.classList.toggle('scrolled', y > 20);
+                    backToTop.classList.toggle('visible', y > 400);
+                }, { passive: true });
+                backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+            }
+
+            // HAMBURGER
+            const hamburger = document.getElementById('hamburger');
+            const navMenu = document.getElementById('nav-menu');
+            if(hamburger && navMenu) {
+                hamburger.addEventListener('click', () => {
+                    const isOpen = navMenu.classList.contains('open');
+                    navMenu.classList.toggle('open');
+                    hamburger.classList.toggle('open');
+                    hamburger.setAttribute('aria-expanded', !isOpen);
+                });
+                navMenu.querySelectorAll('a').forEach(a => {
+                    a.addEventListener('click', () => {
+                        navMenu.classList.remove('open');
+                        hamburger.classList.remove('open');
+                        hamburger.setAttribute('aria-expanded', 'false');
+                    });
+                });
+            }
+
+            // HELP FAB
+            const helpFab = document.getElementById('helpFab');
+            const helpFabBtn = document.getElementById('helpFabBtn');
+            if(helpFab && helpFabBtn) {
+                helpFabBtn.addEventListener('click', (e) => { e.stopPropagation(); helpFab.classList.toggle('open'); });
+                document.addEventListener('click', (e) => { if (!helpFab.contains(e.target)) helpFab.classList.remove('open'); });
+            }
+
+            // REVEAL
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        revealObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+            document.querySelectorAll('.reveal, .stagger').forEach(el => revealObserver.observe(el));
+
+        })();
+    </script>
+
 </body>
 </html>

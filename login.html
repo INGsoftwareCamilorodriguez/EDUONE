@@ -2,197 +2,453 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#0a0f1e" />
     <title>EduOne - Iniciar Sesión</title>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <!-- FAVICON (Logo en la pestaña de Google) -->
+    <link rel="icon" type="image/png" sizes="48x48" href="imagenes/logo.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="imagenes/logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="imagenes/logo.png">
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
-            --primary: #4f46e5;
-            --primary-dark: #4338ca;
-            --primary-light: #818cf8;
-            --primary-bg: #eef2ff;
-            --success: #22c55e;
-            --danger: #ef4444;
-            --warning: #f59e0b;
-            --gray-50: #f8fafc;
-            --gray-100: #f1f5f9;
-            --gray-200: #e2e8f0;
-            --gray-300: #cbd5e1;
-            --gray-400: #94a3b8;
-            --gray-500: #64748b;
-            --gray-600: #475569;
-            --gray-700: #334155;
-            --gray-800: #1e293b;
-            --gray-900: #0f172a;
+            --bg-0: #050814;
+            --primary: #2563eb;
+            --primary-light: #3b82f6;
+            --cyan: #06b6d4;
+            --cyan-light: #22d3ee;
+            --text-light: #e2e8f0;
+            --text-muted: #94a3b8;
             --radius: 16px;
-            --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font: 'Inter', sans-serif;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
         }
 
         body {
             font-family: var(--font);
-            background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
-            min-height: 100vh;
+            background-color: var(--bg-0);
+            color: var(--text-light);
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 16px;
-            margin: 0;
             overflow-x: hidden;
-            overflow-wrap: break-word;
+            /* Fondo de la imagen */
+            background-image: url('imagenes/fondologin.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
 
-        .login-container {
+        .main-wrapper {
             width: 100%;
-            max-width: 420px;
-            animation: fadeIn 0.5s ease;
-            padding: 8px;
+            max-width: 1400px;
+            min-height: 100vh;
+            padding: 40px 60px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            position: relative;
+            z-index: 10;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* =========================================
+           COLUMNA IZQUIERDA (Texto informativo)
+        ========================================= */
+        .info-section {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            animation: fadeInLeft 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+            max-width: 550px;
+        }
+
+        .info-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 40px;
+        }
+        
+        .info-logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-light), var(--cyan));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #fff;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        }
+
+        .info-logo-text h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1;
+            margin-bottom: 4px;
+            letter-spacing: -1px;
+        }
+        .info-logo-text h1 span { color: var(--cyan-light); }
+        .info-logo-text p { font-size: 13px; color: var(--text-muted); letter-spacing: 0.5px; }
+
+        .info-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2.5rem, 4vw, 4rem);
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -2px;
+            margin-bottom: 20px;
+        }
+        .info-title span { color: var(--cyan-light); display: block; }
+
+        .info-desc {
+            font-size: 18px;
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 50px;
+            max-width: 90%;
+            opacity: 0.9;
+        }
+
+        .feature-list {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        .feature-icon {
+            width: 54px;
+            height: 54px;
+            background: rgba(15, 25, 50, 0.6);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: var(--cyan-light);
+            flex-shrink: 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .feature-text h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 17px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+        .feature-text p {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* =========================================
+           COLUMNA DERECHA (Panel de Login)
+        ========================================= */
+        .login-section {
+            display: flex;
+            justify-content: flex-end;
+            animation: fadeInRight 1s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
 
         .login-card {
-            background: #ffffff;
-            border-radius: var(--radius);
-            padding: 32px 28px;
-            box-shadow: var(--shadow-lg);
+            width: 100%;
+            max-width: 460px;
+            background: rgba(10, 18, 40, 0.65);
+            border: 1px solid rgba(59, 130, 246, 0.25);
+            border-radius: 24px;
+            padding: 50px 45px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
         }
 
-        .login-header { text-align: center; margin-bottom: 28px; }
-
-        .login-logo {
-            display: flex; align-items: center; justify-content: center;
-            gap: 12px; margin-bottom: 6px;
+        .login-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+            opacity: 0.5;
         }
 
-        .login-logo i { font-size: 2.2rem; color: var(--primary); }
-        .login-logo h1 { font-size: 1.8rem; font-weight: 700; color: var(--gray-900); }
-        .login-subtitle { color: var(--gray-500); font-size: 0.9rem; }
-
-        .form-group { margin-bottom: 18px; }
-        .form-group label {
-            display: block; font-weight: 500; font-size: 0.85rem;
-            color: var(--gray-700); margin-bottom: 5px;
+        .login-header {
+            text-align: center;
+            margin-bottom: 32px;
         }
-        .form-group label i { margin-right: 8px; color: var(--gray-400); width: 18px; }
+
+        .login-card-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .login-card-logo i {
+            font-size: 28px;
+            color: var(--cyan-light);
+        }
+
+        .login-card-logo h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -0.5px;
+        }
+        .login-card-logo h2 span { color: var(--cyan-light); }
+
+        .login-card-subtitle {
+            font-size: 13px;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+            margin-bottom: 30px;
+        }
+
+        .login-title {
+            font-size: 26px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        .login-desc {
+            font-size: 14.5px;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        /* Formulario */
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
 
         .form-control {
-            width: 100%; padding: 12px 16px;
-            border: 2px solid var(--gray-200); border-radius: 10px;
-            font-size: 0.95rem; font-family: var(--font);
-            transition: border-color 0.2s, box-shadow 0.2s;
-            background: var(--gray-50); color: var(--gray-800);
-            -webkit-appearance: none; appearance: none;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 16px 20px;
+            padding-left: 50px;
+            color: #fff;
+            font-size: 15px;
+            font-family: var(--font);
+            transition: all 0.3s ease;
         }
+
+        .form-control::placeholder { color: #64748b; }
+
         .form-control:focus {
-            outline: none; border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
-            background: #fff;
+            outline: none;
+            background: rgba(255, 255, 255, 0.06);
+            border-color: var(--cyan);
+            box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.15);
         }
-        .form-control::placeholder { color: var(--gray-400); }
 
+        .input-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64748b;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        .form-control:focus ~ .input-icon {
+            color: var(--cyan-light);
+        }
+
+        .toggle-eye {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #64748b;
+            cursor: pointer;
+            font-size: 16px;
+            transition: color 0.3s;
+            padding: 5px;
+        }
+        .toggle-eye:hover { color: #fff; }
+
+        /* Opciones */
         .form-options {
-            display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 20px; font-size: 0.85rem;
-            flex-wrap: wrap; gap: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            font-size: 13.5px;
         }
+
         .form-options label {
-            display: flex; align-items: center; gap: 8px;
-            color: var(--gray-600); cursor: pointer;
-        }
-        .form-options label input[type="checkbox"] {
-            width: 16px; height: 16px;
-            accent-color: var(--primary); cursor: pointer; flex-shrink: 0;
-        }
-        .form-options a, .form-options button.link-btn {
-            color: var(--primary); text-decoration: none;
-            font-weight: 500; font-size: 0.85rem;
-            background: none; border: none; cursor: pointer;
-            font-family: var(--font); padding: 0;
-        }
-        .form-options a:hover, .form-options button.link-btn:hover {
-            color: var(--primary-dark); text-decoration: underline;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            cursor: pointer;
+            user-select: none;
         }
 
-        .btn-primary {
-            width: 100%; padding: 14px;
-            background: var(--primary); color: #fff;
-            border: none; border-radius: 10px;
-            font-size: 1rem; font-weight: 600; font-family: var(--font);
+        .form-options input[type="checkbox"] {
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
             cursor: pointer;
-            transition: background 0.2s, transform 0.1s;
-            display: flex; align-items: center; justify-content: center; gap: 10px;
+            position: relative;
+            transition: all 0.2s;
         }
-        .btn-primary:hover { background: var(--primary-dark); }
-        .btn-primary:active { transform: scale(0.98); }
-        .btn-primary:disabled { opacity: 0.7; cursor: not-allowed; }
-        .btn-primary i { font-size: 1.1rem; }
 
-        .btn-back {
-            width: 100%; padding: 14px;
-            background: transparent; color: var(--gray-500);
-            border: 2px solid var(--gray-200); border-radius: 10px;
-            font-size: 1rem; font-weight: 500; font-family: var(--font);
-            cursor: pointer;
-            transition: background 0.2s, border-color 0.2s, color 0.2s;
-            display: flex; align-items: center; justify-content: center; gap: 10px;
+        .form-options input[type="checkbox"]:checked {
+            background: var(--cyan);
+            border-color: var(--cyan);
+        }
+
+        .form-options input[type="checkbox"]:checked::after {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            font-size: 11px;
+            color: #000;
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .link-btn {
+            color: var(--cyan-light);
             text-decoration: none;
+            background: none;
+            border: none;
+            font-family: var(--font);
+            font-size: 13.5px;
+            cursor: pointer;
+            transition: color 0.2s;
         }
-        .btn-back:hover {
-            background: var(--gray-50);
-            border-color: var(--gray-300);
-            color: var(--gray-700);
+        .link-btn:hover { color: #fff; text-decoration: underline; }
+
+        /* Botones */
+        .btn-submit {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(90deg, #2563eb, #06b6d4);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            font-family: var(--font);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 8px 25px rgba(6, 182, 212, 0.3);
         }
-        .btn-back:active { transform: scale(0.98); }
-        .btn-back i { font-size: 1.1rem; color: var(--gray-400); }
-        .btn-back:hover i { color: var(--gray-600); }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(6, 182, 212, 0.5);
+        }
+        .btn-submit:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
 
         .divider {
-            display: flex; align-items: center; gap: 16px;
-            margin: 20px 0; color: var(--gray-400); font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin: 24px 0;
+            color: #475569;
+            font-size: 12px;
         }
         .divider::before, .divider::after {
-            content: ''; flex: 1; height: 1px; background: var(--gray-200);
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-back {
+            width: 100%;
+            padding: 16px;
+            background: transparent;
+            color: var(--text-light);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 500;
+            font-family: var(--font);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .btn-back:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.4);
         }
 
         .login-footer {
-            text-align: center; margin-top: 20px;
-            color: var(--gray-500); font-size: 0.8rem;
+            text-align: center;
+            margin-top: 30px;
+            color: #475569;
+            font-size: 12px;
         }
 
+        /* Alertas */
         .alert {
-            padding: 12px 16px; border-radius: 10px;
-            font-size: 0.9rem; margin-bottom: 16px; display: none;
+            padding: 14px 18px;
+            border-radius: 10px;
+            font-size: 13.5px;
+            margin-bottom: 24px;
+            display: none;
+            align-items: flex-start;
+            gap: 10px;
+            line-height: 1.5;
         }
-        .alert.show { display: block; }
-        .alert-error { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
-        .alert-success { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
-        .alert-info { background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; }
-        .alert-warning { background: #fffbeb; color: #92400e; border: 1px solid #fde68a; }
-        .alert i { margin-right: 8px; }
+        .alert.show { display: flex; }
+        .alert i { margin-top: 2px; }
+        .alert-error { background: rgba(239, 68, 68, 0.1); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.3); }
+        .alert-success { background: rgba(16, 185, 129, 0.1); color: #6ee7b7; border: 1px solid rgba(16, 185, 129, 0.3); }
+        .alert-info { background: rgba(59, 130, 246, 0.1); color: #93c5fd; border: 1px solid rgba(59, 130, 246, 0.3); }
 
-        .password-toggle { position: relative; }
-        .password-toggle .toggle-eye {
-            position: absolute; right: 14px; top: 50%;
-            transform: translateY(-50%); background: none; border: none;
-            color: var(--gray-400); cursor: pointer;
-            font-size: 1.1rem; padding: 4px;
-        }
-        .password-toggle .toggle-eye:hover { color: var(--gray-600); }
-
-        /* ============================================= */
-        /* MODAL: RECUPERAR CONTRASEÑA                  */
-        /* ============================================= */
+        /* Modal Recuperar */
         .modal-recover {
             display: none;
             position: fixed;
@@ -200,169 +456,227 @@
             z-index: 9999;
             align-items: center;
             justify-content: center;
-            background: rgba(15, 23, 42, 0.5);
-            backdrop-filter: blur(4px);
-            padding: 16px;
+            background: rgba(5, 8, 20, 0.8);
+            backdrop-filter: blur(8px);
+            padding: 20px;
         }
         .modal-recover.show { display: flex; }
         .modal-recover-content {
-            background: #fff;
-            border-radius: var(--radius);
-            max-width: 420px;
+            background: rgba(10, 18, 40, 0.95);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 20px;
+            max-width: 440px;
             width: 100%;
-            padding: 28px 24px;
-            box-shadow: var(--shadow-lg);
-            animation: fadeIn 0.25s ease;
+            padding: 36px 32px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8);
+            animation: fadeIn 0.3s ease;
         }
         .modal-recover-content h2 {
-            font-size: 1.2rem;
+            font-size: 22px;
             font-weight: 700;
-            color: var(--gray-900);
-            margin-bottom: 6px;
+            color: #fff;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         .modal-recover-content p {
-            font-size: 0.85rem;
-            color: var(--gray-500);
-            margin-bottom: 20px;
-            line-height: 1.5;
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            line-height: 1.6;
         }
         .modal-recover-content .actions {
             display: flex;
-            gap: 10px;
-            margin-top: 20px;
+            gap: 12px;
+            margin-top: 24px;
         }
         .modal-recover-content .actions button {
             flex: 1;
-            padding: 12px;
+            padding: 14px;
             border-radius: 10px;
             border: none;
             font-family: var(--font);
-            font-size: 0.9rem;
+            font-size: 14px;
             font-weight: 600;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: all 0.2s;
         }
         .modal-recover-content .actions .btn-cancel {
-            background: var(--gray-100);
-            color: var(--gray-700);
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-light);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
-        .modal-recover-content .actions .btn-cancel:hover { background: var(--gray-200); }
+        .modal-recover-content .actions .btn-cancel:hover { background: rgba(255, 255, 255, 0.1); }
+        
         .modal-recover-content .actions .btn-send {
-            background: var(--primary);
-            color: #fff;
+            background: var(--cyan);
+            color: #000;
         }
-        .modal-recover-content .actions .btn-send:hover { background: var(--primary-dark); }
-        .modal-recover-content .actions .btn-send:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-        }
-
-        @media (max-width: 480px) {
-            body { padding: 12px; align-items: flex-start; padding-top: 40px; }
-            .login-container { padding: 0; max-width: 100%; }
-            .login-card { padding: 24px 18px; border-radius: 14px; }
-            .login-logo i { font-size: 1.8rem; }
-            .login-logo h1 { font-size: 1.5rem; }
-            .login-subtitle { font-size: 0.8rem; }
-            .form-control { padding: 11px 14px; font-size: 0.9rem; }
-            .form-group { margin-bottom: 14px; }
-            .form-group label { font-size: 0.8rem; }
-            .form-options { font-size: 0.8rem; flex-direction: row; flex-wrap: wrap; }
-            .btn-primary, .btn-back { padding: 13px; font-size: 0.95rem; }
-            .divider { margin: 16px 0; font-size: 0.75rem; }
-            .login-footer { font-size: 0.7rem; margin-top: 16px; }
-            .alert { padding: 10px 14px; font-size: 0.8rem; }
-        }
-
-        @media (max-width: 360px) {
-            .login-card { padding: 18px 14px; }
-            .login-logo h1 { font-size: 1.3rem; }
-            .form-control { padding: 10px 12px; font-size: 0.85rem; }
-            .btn-primary, .btn-back { padding: 11px; font-size: 0.85rem; }
-            .form-options { font-size: 0.75rem; flex-direction: column; align-items: flex-start; gap: 6px; }
-        }
-
-        @media (min-width: 481px) and (max-width: 768px) {
-            .login-card { padding: 32px 28px; }
-        }
+        .modal-recover-content .actions .btn-send:hover { background: var(--cyan-light); }
+        .modal-recover-content .actions .btn-send:disabled { opacity: 0.7; cursor: not-allowed; }
 
         .spinner {
             display: inline-block; width: 20px; height: 20px;
             border: 3px solid rgba(255, 255, 255, 0.3); border-radius: 50%;
-            border-top-color: #fff;
-            animation: spin 0.8s ease-in-out infinite;
+            border-top-color: #fff; animation: spin 0.8s ease-in-out infinite;
         }
+        
         @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes fadeInLeft { from { opacity: 0; transform: translateX(-40px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes fadeInRight { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* =========================================
+           RESPONSIVE TOTAL
+        ========================================= */
+        @media (max-width: 1024px) {
+            .main-wrapper {
+                grid-template-columns: 1fr;
+                padding: 40px 20px;
+                justify-items: center;
+                align-content: center;
+            }
+            .info-section { display: none; }
+            .login-section { justify-content: center; width: 100%; }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                align-items: flex-start;
+                padding-top: 20px;
+                padding-bottom: 20px;
+                background-attachment: scroll;
+            }
+            .main-wrapper {
+                min-height: auto;
+                padding: 0 16px;
+            }
+            .login-card { padding: 36px 24px; border-radius: 20px; }
+            .login-card-logo h2 { font-size: 24px; }
+            .login-title { font-size: 22px; }
+            .form-options { flex-direction: column; align-items: flex-start; gap: 12px; }
+        }
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <div class="login-card">
 
-            <div class="login-header">
-                <div class="login-logo">
-                    <i class="fas fa-graduation-cap"></i>
-                    <h1>EduOne</h1>
+    <div class="main-wrapper">
+        
+        <!-- COLUMNA IZQUIERDA (Oculta en móviles) -->
+        <div class="info-section">
+            <div class="info-logo">
+                <div class="info-logo-icon"><i class="fas fa-graduation-cap"></i></div>
+                <div class="info-logo-text">
+                    <h1>Edu<span>One</span></h1>
+                    <p>Plataforma de Gestión Escolar</p>
                 </div>
-                <p class="login-subtitle">Plataforma de Gestión Escolar</p>
             </div>
 
-            <div id="alertMessage" class="alert">
-                <i class="fas fa-info-circle"></i>
-                <span id="alertText">Mensaje de error</span>
-            </div>
+            <h2 class="info-title">
+                Tu colegio,<br>
+                <span>en un solo lugar</span>
+            </h2>
+            <p class="info-desc">Una plataforma moderna, segura y fácil de usar para administrar la gestión académica.</p>
 
-            <form id="loginForm" autocomplete="off">
-                <div class="form-group">
-                    <label for="email">
-                        <i class="fas fa-envelope"></i> Correo electrónico
-                    </label>
-                    <input type="email" id="email" class="form-control" placeholder="admin@eduone.com" required autofocus />
+            <div class="feature-list">
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fas fa-book-open"></i></div>
+                    <div class="feature-text">
+                        <h3>Gestión académica</h3>
+                        <p>Notas, cursos y evaluaciones en un solo lugar.</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fas fa-calendar-alt"></i></div>
+                    <div class="feature-text">
+                        <h3>Organización escolar</h3>
+                        <p>Horarios, actividades y calendarios.</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fas fa-comments"></i></div>
+                    <div class="feature-text">
+                        <h3>Comunicación efectiva</h3>
+                        <p>Con docentes, estudiantes y familias.</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fas fa-chart-bar"></i></div>
+                    <div class="feature-text">
+                        <h3>Información en tiempo real</h3>
+                        <p>Reportes y seguimiento académico.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- COLUMNA DERECHA (Panel de Login) -->
+        <div class="login-section">
+            <div class="login-card">
+                
+                <div class="login-header">
+                    <div class="login-card-logo">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h2>Edu<span>One</span></h2>
+                    </div>
+                    <p class="login-card-subtitle">Plataforma de Gestión Escolar</p>
                 </div>
 
-                <div class="form-group">
-                    <label for="password">
-                        <i class="fas fa-lock"></i> Contraseña
-                    </label>
-                    <div class="password-toggle">
-                        <input type="password" id="password" class="form-control" placeholder="••••••••" required />
+                <h3 class="login-title">Iniciar sesión</h3>
+                <p class="login-desc">Ingresa tus credenciales para acceder a tu cuenta.</p>
+
+                <div id="alertMessage" class="alert">
+                    <i class="fas fa-info-circle"></i>
+                    <span id="alertText">Mensaje de error</span>
+                </div>
+
+                <form id="loginForm" autocomplete="off">
+                    <div class="form-group">
+                        <i class="fas fa-envelope input-icon"></i>
+                        <input type="email" id="email" class="form-control" placeholder="Correo electrónico" required autofocus />
+                    </div>
+
+                    <div class="form-group">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input type="password" id="password" class="form-control" placeholder="Contraseña" required />
                         <button type="button" class="toggle-eye" id="togglePassword" aria-label="Mostrar contraseña">
                             <i class="fas fa-eye"></i>
                         </button>
                     </div>
+
+                    <div class="form-options">
+                        <label>
+                            <input type="checkbox" id="rememberMe" />
+                            Recordarme
+                        </label>
+                        <button type="button" class="link-btn" id="btnForgotPassword">¿Olvidaste tu contraseña?</button>
+                    </div>
+
+                    <button type="submit" class="btn-submit" id="loginBtn">
+                        <i class="fas fa-sign-in-alt"></i> Iniciar sesión
+                    </button>
+                </form>
+
+                <div class="divider"><span>o</span></div>
+
+                <a href="index.html" class="btn-back">
+                    <i class="fas fa-arrow-left"></i> Volver al inicio
+                </a>
+
+                <div class="login-footer">
+                    &copy; 2027 EduOne - Todos los derechos reservados
                 </div>
 
-                <div class="form-options">
-                    <label>
-                        <input type="checkbox" id="rememberMe" />
-                        Recordarme
-                    </label>
-                    <button type="button" class="link-btn" id="btnForgotPassword">¿Olvidaste tu contraseña?</button>
-                </div>
-
-                <button type="submit" class="btn-primary" id="loginBtn">
-                    <i class="fas fa-sign-in-alt"></i>
-                    Iniciar sesión
-                </button>
-            </form>
-
-            <div class="divider"><span>o</span></div>
-
-            <a href="index.html" class="btn-back">
-                <i class="fas fa-arrow-left"></i>
-                Volver al inicio
-            </a>
-
-            <div class="login-footer">
-                &copy; 2027 EduOne - Todos los derechos reservados
             </div>
         </div>
+
     </div>
 
-    <!-- ✅ MODAL: Recuperar contraseña -->
+    <!-- MODAL: Recuperar contraseña -->
     <div class="modal-recover" id="modalRecover">
         <div class="modal-recover-content">
-            <h2><i class="fas fa-key" style="color: var(--primary);"></i> Recuperar contraseña</h2>
+            <h2><i class="fas fa-key" style="color: var(--cyan-light);"></i> Recuperar contraseña</h2>
             <p>Escribe tu correo electrónico y te enviaremos un enlace para restablecer tu contraseña.</p>
 
             <div id="recoverAlert" class="alert" style="display: none;">
@@ -370,8 +684,8 @@
                 <span id="recoverAlertText"></span>
             </div>
 
-            <div class="form-group">
-                <label><i class="fas fa-envelope"></i> Correo electrónico</label>
+            <div class="form-group" style="margin-bottom:0;">
+                <i class="fas fa-envelope input-icon"></i>
                 <input type="email" id="recoverEmail" class="form-control" placeholder="tu@correo.com" required />
             </div>
 
@@ -384,6 +698,7 @@
         </div>
     </div>
 
+    <!-- Scripts de Firebase y Lógica -->
     <script type="importmap">
         {
             "imports": {
@@ -428,9 +743,6 @@
         const rememberMe = document.getElementById('rememberMe');
         const togglePasswordBtn = document.getElementById('togglePassword');
 
-        // =============================================
-        // MAPA DE RUTAS POR ROL
-        // =============================================
         const RUTAS = {
             superadmin: 'PanelAdmin/AdminPanel.html',
             rector: 'colegios/colegio.html',
@@ -528,9 +840,6 @@
             }
         });
 
-        // =============================================
-        // LOGIN
-        // =============================================
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             hideAlert();
@@ -609,18 +918,12 @@
             }
         });
 
-        // =============================================
-        // GUARDAR EMAIL
-        // =============================================
         const savedEmail = localStorage.getItem('eduone_email');
         if (savedEmail) {
             emailInput.value = savedEmail;
             rememberMe.checked = true;
         }
 
-        // =============================================
-        // ✅ RECUPERAR CONTRASEÑA
-        // =============================================
         const btnForgotPassword = document.getElementById('btnForgotPassword');
         const modalRecover = document.getElementById('modalRecover');
         const btnCancelRecover = document.getElementById('btnCancelRecover');
@@ -632,23 +935,20 @@
         function showRecoverAlert(msg, type = 'error') {
             recoverAlert.className = `alert alert-${type} show`;
             recoverAlertText.textContent = msg;
-            recoverAlert.style.display = 'block';
+            recoverAlert.style.display = 'flex';
         }
         function hideRecoverAlert() {
             recoverAlert.style.display = 'none';
             recoverAlert.className = 'alert';
         }
 
-        // Abrir modal
         btnForgotPassword.addEventListener('click', () => {
             hideRecoverAlert();
-            // Pre-llenar con el email que el usuario ya escribió
             const emailActual = emailInput.value.trim();
             recoverEmail.value = emailActual || '';
             modalRecover.classList.add('show');
         });
 
-        // Cerrar modal
         btnCancelRecover.addEventListener('click', () => {
             modalRecover.classList.remove('show');
         });
@@ -656,7 +956,6 @@
             if (e.target === modalRecover) modalRecover.classList.remove('show');
         });
 
-        // Enviar correo de recuperación
         btnSendRecover.addEventListener('click', async () => {
             hideRecoverAlert();
 
@@ -680,7 +979,6 @@
 
                 setTimeout(() => {
                     modalRecover.classList.remove('show');
-                    // Limpiar el alert
                     hideRecoverAlert();
                     showAlert('📧 Revisa tu correo para restablecer la contraseña.', 'info');
                 }, 2500);
@@ -707,7 +1005,6 @@
         });
 
         console.log('✅ EduOne - Login cargado correctamente');
-        console.log('📁 Rutas disponibles:', Object.keys(RUTAS));
     </script>
 
 </body>
