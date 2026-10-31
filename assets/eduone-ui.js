@@ -4,13 +4,14 @@
    2) Botón "Activar notificaciones" único para todos los roles
       (responsive: texto en escritorio, solo campana en celular).
    3) Selector de emojis para el chat y los comunicados.
+   5) Botón "Salir" junto a la foto de perfil, en todos los paneles.
    4) Aceptación de Términos y Política de privacidad: si este dispositivo
       no tiene registrada la versión vigente (p. ej. la sesión ya estaba
       abierta y no pasó por el login), se pide antes de usar el panel.
    Se carga con: <script type="module" src="../assets/eduone-ui.js"></script>
    ===================================================================== */
 import { getApps } from 'https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js';
-import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js';
+import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js';
 import { getFirestore, doc, updateDoc, arrayUnion } from 'https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js';
 import { getMessaging, getToken, onMessage, isSupported } from 'https://www.gstatic.com/firebasejs/11.3.1/firebase-messaging.js';
 import { DOCUMENTOS, vigilarCasilla, registrarConsentimiento, yaAceptoEnEsteDispositivo, marcarAceptadoEnEsteDispositivo } from './legal.js';
@@ -76,6 +77,31 @@ function aplicarLogo() {
         document.head.append(el('link', { rel: 'icon', type: 'image/png', href: LOGO_ICON_URL }));
         document.head.append(el('link', { rel: 'apple-touch-icon', href: LOGO_ICON_URL }));
     }
+}
+
+// ---------------------------------------------------------------------
+// 5) BOTÓN SALIR
+// Reutiliza el botón "Cerrar sesión" de la barra lateral de cada panel
+// (#logoutBtn), que ya pide confirmación y redirige al login.
+// ---------------------------------------------------------------------
+function agregarBotonSalir() {
+    const header = document.querySelector('.top-header');
+    const destino = header?.querySelector('.header-right, .edu-user');
+    if (!destino || document.getElementById('eduSalirBtn')) return;
+    const boton = el('button', { type: 'button', id: 'eduSalirBtn', className: 'edu-salir-btn', title: 'Cerrar sesión' }, [
+        el('i', { className: 'fas fa-right-from-bracket' }),
+        el('span', { className: 'edu-salir-text', textContent: 'Salir' })
+    ]);
+    boton.setAttribute('aria-label', 'Cerrar sesión');
+    boton.addEventListener('click', async () => {
+        const original = document.getElementById('logoutBtn');
+        if (original) { original.click(); return; }
+        if (!confirm('¿Seguro que deseas cerrar sesión?')) return;
+        const app = getApps().find(a => a.name === '[DEFAULT]') || getApps()[0];
+        if (app) await signOut(getAuth(app));
+        location.href = new URL('../login.html', import.meta.url).href;
+    });
+    destino.append(boton);
 }
 
 // ---------------------------------------------------------------------
@@ -425,6 +451,7 @@ function buscarCamposEmoji() {
 // ---------------------------------------------------------------------
 function iniciar() {
     aplicarLogo();
+    agregarBotonSalir();
     buscarCamposEmoji();
     let pendiente = false;
     new MutationObserver(() => {

@@ -180,3 +180,28 @@ html.edu-legal-bloqueado, html.edu-legal-bloqueado body { overflow: hidden !impo
   background: var(--primary, #1e3a8a); color: #fff; font: 600 .95rem var(--font, Inter, system-ui, sans-serif);
 }
 .edu-legal-btn:disabled { opacity: .7; cursor: wait; }
+
+/* ---------- Botón Salir (junto a la foto de perfil) ---------- */
+.edu-salir-btn, .top-header .edu-salir-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 7px; flex: 0 0 auto;
+  min-height: 38px; padding: 8px 13px; border-radius: 10px; cursor: pointer; white-space: nowrap;
+  background: #fff !important; color: #b91c1c !important; border: 1px solid #fecaca !important;
+  font: 600 .8rem/1.1 var(--font, Inter, system-ui, sans-serif); transition: background .15s, transform .15s;
+}
+.edu-salir-btn:hover { background: #fef2f2 !important; }
+.edu-salir-btn:active { transform: scale(.97); }
+.edu-salir-btn i { font-size: .95rem; }
+@media (max-width: 1280px) {
+  .edu-salir-btn, .top-header .edu-salir-btn { width: 40px !important; height: 40px !important; min-height: 40px; padding: 0 !important; border-radius: 50% !important; }
+  .edu-salir-btn .edu-salir-text { display: none; }
+}
+@media (max-width: 480px) {
+  .edu-salir-btn, .top-header .edu-salir-btn { width: 36px !important; height: 36px !important; min-height: 36px; }
+}
+/* Estudiante en celular angosto: logo sin el texto "EduOne" para que quepa el botón Salir */
+@media (max-width: 480px) {
+  .edu-top .edu-brand strong { display: none; }
+}
+@media (max-width: 360px) {
+  .edu-top .edu-school { display: none; }
+}
