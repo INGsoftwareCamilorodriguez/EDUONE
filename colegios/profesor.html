@@ -407,6 +407,36 @@ body{display:block;background:#f3f7fc} .sidebar,.sidebar-overlay{display:none!im
 </style>
     <link rel="stylesheet" href="../assets/responsive.css" />
     <script src="../assets/responsive.js" defer></script>
+<style>
+/* Corrección del encabezado: evita crecimiento de imágenes y desbordamientos */
+.top-header{height:72px!important;min-height:72px!important;max-height:72px!important;flex-wrap:nowrap!important;position:sticky;top:0;align-items:center!important;padding:0 22px!important;gap:12px!important;isolation:isolate}
+.top-header .header-left{min-width:0;flex:0 1 auto;display:flex;align-items:center}
+.top-header .header-right{display:flex;align-items:center;flex:0 0 auto;gap:11px;min-width:0}
+.top-header .user-avatar{display:flex!important;align-items:center;justify-content:center;flex:0 0 42px!important;width:42px!important;height:42px!important;max-width:42px!important;max-height:42px!important;overflow:hidden!important;border-radius:50%!important;background:var(--primary-bg);line-height:1!important}
+.top-header .user-avatar img,.top-header img.edu-header-photo,.edu-header-photo{display:block!important;width:42px!important;height:42px!important;min-width:42px!important;min-height:42px!important;max-width:42px!important;max-height:42px!important;object-fit:cover!important;border-radius:50%!important;position:static!important}
+.top-header .user-avatar i{font-size:27px!important}.top-header .notificaciones{flex:0 0 auto}
+.top-header #eduEnablePush{font-size:.7rem;max-width:145px;white-space:normal;line-height:1.2;padding:7px}
+.edu-topnav{flex:1 1 auto;min-width:0;gap:2px}.edu-topnav a,.edu-topnav summary{font-size:.78rem;padding:8px}
+#page-planilla input.nota-input{display:inline-block!important;width:68px!important;height:37px!important;min-height:37px!important;border:1.5px solid var(--gray-300)!important;background:white!important;pointer-events:auto!important;user-select:text!important;opacity:1!important;position:relative;z-index:1;color:var(--text-primary)!important;border-radius:8px!important;text-align:center!important}
+#page-planilla input.nota-input:focus{outline:2px solid var(--primary)!important;border-color:var(--primary)!important}
+#page-planilla .table-responsive{overflow:auto;max-height:67vh}
+#page-entregas .edu-entregas-grid{display:grid;grid-template-columns:minmax(190px,25%) minmax(0,1fr) minmax(215px,24%);align-items:start;gap:14px}
+#page-entregas .edu-entregas-tabs{display:flex;flex-direction:column;gap:9px;min-width:0;padding:12px;background:#fff;border:1px solid var(--border);border-radius:16px;max-height:78vh;overflow:auto}
+#page-entregas .edu-entregas-tabs button{width:100%;text-align:left;border:1px solid var(--border);background:#fff;border-radius:12px;padding:15px 12px;font:600 .81rem var(--font);color:var(--text-primary);display:flex;gap:9px;align-items:center;cursor:pointer;white-space:normal}
+#page-entregas .edu-entregas-tabs button.selected{border-color:var(--primary);background:var(--primary-bg);color:var(--primary)}
+#page-entregas .edu-entregas-detail{min-width:0;background:white;border-radius:16px;overflow:auto;max-height:78vh;border:1px solid var(--border);padding:12px}
+#page-entregas .edu-entregas-detail>.seccion-card{display:none!important;border:0;box-shadow:none}
+#page-entregas .edu-entregas-detail>.seccion-card.edu-visible{display:block!important}
+#page-entregas .edu-entregas-detail .seccion-body{display:block!important;padding:8px!important}
+#page-entregas .edu-entregas-detail .table-responsive{max-height:60vh;overflow:auto}
+#page-entregas .edu-entrega-inspector{background:white;border:1px solid var(--border);border-radius:16px;padding:16px;min-height:260px;position:sticky;top:88px}
+#page-entregas .edu-entrega-inspector h3{font-size:.96rem;margin-bottom:12px;color:var(--text-primary)}
+#page-entregas .edu-entrega-inspector p{font-size:.82rem;color:var(--text-secondary);margin-bottom:12px}
+#page-entregas .edu-entrega-inspector input{max-width:115px}
+#page-entregas .edu-entrega-inspector .btn-primary{margin-top:12px}
+@media(max-width:1150px){#page-entregas .edu-entregas-grid{grid-template-columns:210px minmax(0,1fr)}#page-entregas .edu-entrega-inspector{grid-column:2;position:static}.edu-topnav a,.edu-topnav summary{font-size:.74rem;padding:6px}}
+@media(max-width:850px){.top-header{height:66px!important;min-height:66px!important;max-height:66px!important}.edu-topnav.mobile-open{display:flex!important;position:absolute;top:100%;left:12px;right:12px}.top-header #eduEnablePush{display:none}.top-header .user-info{display:none}#page-entregas .edu-entregas-grid{grid-template-columns:1fr}#page-entregas .edu-entregas-tabs{flex-direction:row;max-height:none;overflow-x:auto}#page-entregas .edu-entregas-tabs button{flex:0 0 190px}#page-entregas .edu-entrega-inspector{grid-column:1}#page-entregas .edu-entregas-detail{max-height:none}}
+</style>
 </head>
 <body>
 <div id="eduGlobalBusy" class="edu-global-busy" role="status" aria-live="polite" hidden><span class="edu-loading-wheel"></span><span data-busy-text>Cargando...</span></div>
@@ -786,12 +816,12 @@ body{display:block;background:#f3f7fc} .sidebar,.sidebar-overlay{display:none!im
                     </div>
                 </div>
 
-                <div id="planillaContainer" style="display: none;">
+                <div id="planillaContainer" style="display: none;"><div id="eduPlanillaHint" role="status"></div>
                     <div class="card">
                         <div class="card-header">
                             <h2 id="planillaTitulo">Planilla de Notas</h2>
                             <div>
-                                <button class="btn-success btn-sm" id="btnGuardarPlanilla">
+                                <button class="btn-success btn-sm" id="btnGuardarPlanilla" type="button">
                                     <i class="fas fa-save"></i> Guardar cambios
                                 </button>
                             </div>
@@ -1448,7 +1478,8 @@ body{display:block;background:#f3f7fc} .sidebar,.sidebar-overlay{display:none!im
                 "firebase/app": "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js",
                 "firebase/auth": "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js",
                 "firebase/firestore": "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js",
-                "firebase/storage": "https://www.gstatic.com/firebasejs/11.3.1/firebase-storage.js"
+                "firebase/storage": "https://www.gstatic.com/firebasejs/11.3.1/firebase-storage.js",
+                "firebase/messaging": "https://www.gstatic.com/firebasejs/11.3.1/firebase-messaging.js"
             }
         }
     </script>
@@ -1459,6 +1490,8 @@ body{display:block;background:#f3f7fc} .sidebar,.sidebar-overlay{display:none!im
         import { getFirestore, doc, getDoc, collection, getDocs, addDoc, updateDoc, deleteDoc,
             query, where, serverTimestamp, orderBy, setDoc, onSnapshot, limit } from "firebase/firestore";
         import { getStorage, ref, uploadBytesResumable, getDownloadURL, deleteObject } from "firebase/storage";
+        import { getMessaging, getToken, onMessage, isSupported } from "firebase/messaging";
+        import { arrayUnion } from "firebase/firestore";
 
         const firebaseConfig = {
             apiKey: "AIzaSyA3U98y5BJWQwpypFCAyNioqSRfXkr9UA0",
@@ -2573,6 +2606,7 @@ body{display:block;background:#f3f7fc} .sidebar,.sidebar-overlay{display:none!im
                     html += `</div>`;
                 }
                 container.innerHTML = html;
+                eduOrganizarEntregas(container);
 
                 window.toggleSeccion = (header) => {
                     const body = header.nextElementSibling;
@@ -3230,18 +3264,19 @@ body{display:block;background:#f3f7fc} .sidebar,.sidebar-overlay{display:none!im
                     });
                 }
 
+                // Consultas paralelas para evitar una espera por cada estudiante.
                 const notasMap = {};
-                for (const docSnap of matSnap.docs) {
-                    const mat = docSnap.data();
-                    const estudianteId = mat.estudianteId;
+                await Promise.all(matSnap.docs.map(async docSnap => {
+                    const estudianteId = docSnap.data().estudianteId;
                     const notasQ = query(collection(db, 'colegios', colegioId, 'notas'), where('estudianteId', '==', estudianteId));
                     const notasSnap = await getDocs(notasQ);
-                    notasMap[estudianteId] = {};
+                    const notasEstudiante = {};
                     notasSnap.forEach(notaDoc => {
                         const nota = notaDoc.data();
-                        if (nota.actividadId) notasMap[estudianteId][nota.actividadId] = parseFloat(nota.valor) || 0;
+                        if (nota.actividadId && nota.valor !== undefined) notasEstudiante[nota.actividadId] = Number(nota.valor);
                     });
-                }
+                    notasMap[estudianteId] = notasEstudiante;
+                }));
 
                 let headerHtml = `<tr><th style="min-width: 40px;">#</th><th style="min-width: 150px;">Estudiante</th>`;
                 for (const seccion of secciones) {
@@ -3292,11 +3327,18 @@ body{display:block;background:#f3f7fc} .sidebar,.sidebar-overlay{display:none!im
                     document.getElementById('porcentajeBadge').style.color = 'var(--primary)';
                 }
 
+                // Cargar estudiantes en paralelo; evita una petición secuencial por fila.
+                const eduEstudiantesPlanilla = new Map(await Promise.all(matSnap.docs.map(async m => {
+                    const id=m.data().estudianteId;
+                    try { return [id,await getDoc(doc(db,'colegios',colegioId,'estudiantes',id))]; }
+                    catch { return [id,null]; }
+                })));
                 let html = '';
                 let rowNum = 1;
                 for (const docSnap of matSnap.docs) {
                     const mat = docSnap.data();
-                    const estDoc = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', mat.estudianteId));
+                    const estDoc = eduEstudiantesPlanilla.get(mat.estudianteId);
+                    if (!estDoc) continue;
                     if (!estDoc.exists()) continue;
                     const estudiante = estDoc.data();
                     const estudianteId = estDoc.id;
@@ -3319,22 +3361,22 @@ body{display:block;background:#f3f7fc} .sidebar,.sidebar-overlay{display:none!im
                         if (totalItems === 0) { html += `<td style="text-align: center;">-</td>`; continue; }
 
                         for (const act of actividadesVisibles) {
-                            let nota = notasEstudiante[act.id] || 0;
+                            let nota = notasEstudiante[act.id];
                             html += `
                                 <td style="text-align: center;">
-                                    <input type="number" class="nota-input" data-estudiante="${estudianteId}" data-actividad="${act.id}"
-                                           value="${nota > 0 ? nota : ''}" min="0" max="5" step="0.1"
+                                    <input type="number" class="nota-input" aria-label="Calificación editable de actividad" data-estudiante="${estudianteId}" data-actividad="${act.id}"
+                                           value="${nota !== undefined && nota !== null ? nota : ''}" min="0" max="5" step="0.1"
                                            style="width: 50px; padding: 4px 6px; border: 1.5px solid var(--border); border-radius: 6px; text-align: center; font-size: 0.8rem;" />
                                 </td>
                             `;
-                            if (nota > 0) { sumaPonderada += nota * pesoPorItem; pesoTotal += pesoPorItem; tieneNotas = true; }
+                            if (nota !== undefined && nota !== null) { sumaPonderada += nota * pesoPorItem; pesoTotal += pesoPorItem; tieneNotas = true; }
                         }
 
                         for (const ev of evalsSeccion) {
-                            let nota = evalNotas[estudianteId]?.[ev.id];
-                            if (nota === undefined || nota === null) nota = notasMap[estudianteId]?.[ev.id];
+                            let nota = notasMap[estudianteId]?.[ev.id];
+                            if (nota === undefined || nota === null) nota = evalNotas[estudianteId]?.[ev.id];
                             const tieneNota = nota !== undefined && nota !== null && Number(nota) > 0;
-                            html += `<td style="text-align: center; font-weight: 600; color: var(--primary);">${tieneNota ? Number(nota).toFixed(1) : '-'}</td>`;
+                            html += `<td style="text-align:center"><input type="number" class="nota-input" data-estudiante="${estudianteId}" data-actividad="${ev.id}" data-evaluacion="true" value="${tieneNota ? Number(nota).toFixed(1) : ''}" min="0" max="5" step="0.1" aria-label="Calificación de evaluación" /></td>`;
                             if (tieneNota) { sumaPonderada += Number(nota) * pesoPorItem; pesoTotal += pesoPorItem; tieneNotas = true; }
                         }
                     }
@@ -3347,12 +3389,15 @@ body{display:block;background:#f3f7fc} .sidebar,.sidebar-overlay{display:none!im
                 }
                 tbody.innerHTML = html;
                 container.style.display = 'block';
+                const info=document.getElementById('eduPlanillaHint');
+                if(info)info.textContent='Escribe las notas en las casillas de las actividades (0,0 a 5,0). Las evaluaciones automáticas aparecen como resultado de solo lectura. Guarda los cambios al terminar.';
             } catch (error) {
                 tbody.innerHTML = `<tr><td colspan="8" class="text-center text-danger">Error: ${error.message}</td></tr>`;
                 container.style.display = 'block';
             }
         }
 
+        document.getElementById('tablaPlanilla')?.addEventListener('input', e => { if (e.target.matches('input.nota-input')) { e.target.dataset.dirty='true'; e.target.classList.add('edu-unsaved'); } });
         document.getElementById('btnGuardarPlanilla')?.addEventListener('click', async () => {
             const inputs = document.querySelectorAll('.nota-input');
             const notasGuardar = [];
@@ -3479,9 +3524,12 @@ body{display:block;background:#f3f7fc} .sidebar,.sidebar-overlay{display:none!im
 
                 let html = '';
 
+                // Secciones consultadas de forma agrupada, sin repetir peticiones por actividad.
+                const eduIds=[...new Set([...actividades.map(a=>a.seccionId),...evaluaciones.map(e=>e.seccionId)].filter(Boolean))];
+                const eduSeccionesMap=new Map(await Promise.all(eduIds.map(async id=>[id,await getDoc(doc(db,'colegios',colegioId,'secciones',id))])));
                 // ✅ Sección de ACTIVIDADES (incluye virtuales con entregas)
                 for (const actividad of actividades) {
-                    const seccionData = await getDoc(doc(db, 'colegios', colegioId, 'secciones', actividad.seccionId));
+                    const seccionData = eduSeccionesMap.get(actividad.seccionId);
                     const seccionNombre = seccionData.exists() ? seccionData.data().nombre : 'Sección';
                     const seccionIcono = seccionData.exists() ? seccionData.data().icono || '📄' : '📄';
 
@@ -3582,7 +3630,7 @@ body{display:block;background:#f3f7fc} .sidebar,.sidebar-overlay{display:none!im
                 for (const ev of evaluaciones) {
                     if (periodoFiltro && Number(ev.periodo) !== parseInt(periodoFiltro)) continue;
 
-                    const seccionData = ev.seccionId ? await getDoc(doc(db, 'colegios', colegioId, 'secciones', ev.seccionId)) : null;
+                    const seccionData = ev.seccionId ? eduSeccionesMap.get(ev.seccionId) : null;
                     const seccionNombre = seccionData?.exists() ? seccionData.data().nombre : 'Sin sección';
 
                     const respQ = query(collection(db, 'colegios', colegioId, 'evaluaciones', ev.id, 'respuestas'));
@@ -4645,7 +4693,7 @@ async function eduShowActivityCourses(){
  }catch(e){host.textContent='No se pudieron obtener los cursos';}
 }
 document.getElementById('eduPhotoFile')?.addEventListener('change',e=>{const file=e.target.files[0];document.getElementById('eduPhotoStatus').textContent=file?file.name:'';if(file&&file.type.startsWith('image/')){const el=document.getElementById('eduAvatarProfile');el.replaceChildren();const im=document.createElement('img');im.alt='Vista previa de foto';im.src=URL.createObjectURL(file);im.onload=()=>URL.revokeObjectURL(im.src);el.append(im)}});
-document.getElementById('eduPhotoForm')?.addEventListener('submit',async e=>{e.preventDefault();const file=document.getElementById('eduPhotoFile').files[0];const status=document.getElementById('eduPhotoStatus'),btn=document.getElementById('eduPhotoSave');if(!file)return status.textContent='Selecciona una foto';if(!['image/jpeg','image/png','image/webp'].includes(file.type)||file.size>3*1024*1024)return status.textContent='Formato JPG, PNG o WebP; máximo 3 MB';btn.disabled=true;status.textContent='Subiendo foto...';try{const uid=eduUid();const path=`colegios/${colegioId}/perfiles/${uid}/${Date.now()}_${file.name.replace(/[^a-zA-Z0-9._-]/g,'_')}`;const storeRef=ref(storage,path);const task=uploadBytesResumable(storeRef,file);await new Promise((ok,no)=>task.on('state_changed',()=>{},no,ok));const url=await getDownloadURL(storeRef);await updateDoc(doc(db,'usuarios',uid),{fotoPerfilUrl:url,fotoPerfilPath:path});usuarioActual.fotoPerfilUrl=url;status.textContent='Fotografía guardada';eduUpdateProfile();}catch(err){status.textContent='No se pudo guardar: '+err.message}finally{btn.disabled=false}});
+document.getElementById('eduPhotoForm')?.addEventListener('submit',async e=>{e.preventDefault();const file=document.getElementById('eduPhotoFile').files[0];const status=document.getElementById('eduPhotoStatus'),btn=document.getElementById('eduPhotoSave');if(!file)return status.textContent='Selecciona una foto';if(!['image/jpeg','image/png','image/webp'].includes(file.type)||file.size>3*1024*1024)return status.textContent='Formato JPG, PNG o WebP; máximo 3 MB';btn.disabled=true;status.textContent='Subiendo foto...';try{const uid=eduUid();const path=`colegios/${colegioId}/perfiles/${uid}/${Date.now()}_${file.name.replace(/[^a-zA-Z0-9._-]/g,'_')}`;const storeRef=ref(storage,path);const task=uploadBytesResumable(storeRef,file);await new Promise((ok,no)=>task.on('state_changed',()=>{},no,ok));const url=await getDownloadURL(storeRef);await updateDoc(doc(db,'usuarios',uid),{fotoPerfilUrl:url,fotoPerfilPath:path});usuarioActual.fotoPerfilUrl=url;eduSyncHeaderAvatar();status.textContent='Fotografía guardada';eduUpdateProfile();}catch(err){status.textContent='No se pudo guardar: '+err.message}finally{btn.disabled=false}});
 
 let eduPendingLoads=0;
 const eduBusyOverlay=()=>document.getElementById('eduGlobalBusy');
@@ -4811,6 +4859,97 @@ async function cargarEstudiantesProfesor(...args){return eduWithLoading('Cargand
         });
 
         console.log('✅ EduOne - Panel del Profesor cargado correctamente');
+
+// Organizar Entregas en un navegador de actividades y un panel de calificación, reutilizando los formularios de Firebase.
+function eduOrganizarEntregas(container){
+ const cards=[...container.querySelectorAll(':scope > .seccion-card')];
+ if(!cards.length)return;
+ const grid=document.createElement('div');grid.className='edu-entregas-grid';
+ const tabs=document.createElement('nav');tabs.className='edu-entregas-tabs';tabs.setAttribute('aria-label','Actividades del curso');
+ const detail=document.createElement('div');detail.className='edu-entregas-detail';
+ cards.forEach((card,i)=>{
+   const header=card.querySelector('.seccion-header h3');const name=header?.textContent.trim()||('Actividad '+(i+1));
+   const button=document.createElement('button');button.type='button';
+   const ico=document.createElement('i');ico.className='fas fa-file-alt';
+   const span=document.createElement('span');span.textContent=name;
+   button.append(ico,span);tabs.append(button);detail.append(card);
+   const select=()=>{cards.forEach(x=>x.classList.remove('edu-visible'));[...tabs.children].forEach(x=>{x.classList.remove('selected');x.setAttribute('aria-selected','false')});card.classList.add('edu-visible');button.classList.add('selected');button.setAttribute('aria-selected','true')};
+   button.addEventListener('click',select);if(i===0)select();
+ });
+ const inspector=document.createElement('aside');inspector.className='edu-entrega-inspector';
+ inspector.innerHTML='<h3><i class="fas fa-user-graduate"></i> Calificación rápida</h3><p>Selecciona un estudiante de la tabla para ver su nota y guardarla sin salir de la actividad.</p><div id="eduInspectorBody">Selecciona una fila</div>';
+ detail.addEventListener('click',ev=>{const tr=ev.target.closest('tbody tr');if(!tr)return;const name=tr.querySelector('td:nth-child(2)')?.textContent?.trim()||'Estudiante';const grade=tr.querySelector('input[type="number"]');const save=tr.querySelector('button.btn-success');const body=inspector.querySelector('#eduInspectorBody');body.replaceChildren();const title=document.createElement('h4');title.textContent=name;body.append(title);if(grade){const label=document.createElement('label');label.textContent='Nota (0 a 5)';label.style.display='block';const input=document.createElement('input');input.type='number';input.className='form-control';input.min=grade.min||'0';input.max=grade.max||'5';input.step=grade.step||'0.1';input.value=grade.value;input.disabled=grade.disabled;input.addEventListener('input',()=>{grade.value=input.value;grade.dispatchEvent(new Event('input',{bubbles:true}))});body.append(label,input);if(save){const b=document.createElement('button');b.className='btn-primary';b.innerHTML='<i class="fas fa-save"></i> Guardar calificación';b.addEventListener('click',()=>save.click());body.append(b)}}else{const p=document.createElement('p');p.textContent='Esta entrega no tiene una casilla editable.';body.append(p)}});
+ grid.append(tabs,detail,inspector);container.replaceChildren(grid);
+}
+
+// Señal de espera local en Asistencia y en todos los formularios de consulta (sin congelar la interfaz).
+const eduLoadTargets=['horarioContainer','tablaCursosProfesor','tablaEstudiantesProfesor','actividadesContainer','seccionesContainer','tablaPlanilla','entregasContainer','evaluacionesContainer','asistenciaContainer','observacionesContainer'];
+const eduLoadingObserver=new MutationObserver(()=>{});
+function eduShowInlineLoading(id,label){const el=document.getElementById(id);if(!el)return;const p=document.createElement('div');p.className='edu-page-load';p.setAttribute('role','status');p.innerHTML='<span class="spinner-dark"></span>';const t=document.createElement('span');t.textContent=label;p.append(t);el.replaceChildren(p)}
+for(const id of ['btnFiltrarEntregas','btnCargarPlanilla','btnCargarAsistencia']){
+ const button=document.getElementById(id);if(!button)continue;
+ button.addEventListener('click',()=>{const target=id==='btnFiltrarEntregas'?'entregasContainer':id==='btnCargarPlanilla'?'tablaPlanilla':'asistenciaContainer';const el=document.getElementById(target);if(!el)return;
+ const note=document.createElement('div');note.className='edu-page-load';note.setAttribute('role','status');note.innerHTML='<span class="spinner-dark"></span><span>Consultando información actualizada...</span>';el.prepend(note);
+ const obs=new MutationObserver(()=>{if(!note.isConnected){obs.disconnect();return}if(el.children.length>1){note.remove();obs.disconnect()}});obs.observe(el,{childList:true});setTimeout(()=>{note.remove();obs.disconnect()},20000);
+ },{capture:true});
+}
+
+// Avatar en encabezado: se obtiene de la cuenta del profesor (sin crear fotos ficticias).
+function eduSyncHeaderAvatar(){
+ const host=document.querySelector('.header-right .user-avatar');if(!host)return;
+ const u=usuarioActual||{};const url=u.fotoPerfilUrl||u.fotoUrl||u.fotografiaUrl||'';
+ if(url){host.replaceChildren();const img=document.createElement('img');img.src=url;img.alt='Foto de perfil';img.className='edu-header-photo';img.onerror=()=>{host.innerHTML='<i class="fas fa-user-circle"></i>'};host.append(img)}
+ else {host.innerHTML='<i class="fas fa-user-circle" aria-hidden="true"></i>'}
+}
+const eduProfileOld=eduUpdateProfile;
+eduUpdateProfile=function(){eduProfileOld();eduSyncHeaderAvatar()};
+
+// Avisos dentro de EduOne en tiempo real; no equivale a FCM cuando el navegador está cerrado.
+let eduNotifWatchers=[];let eduNotifReady=false;
+function eduNotifyLocal(title,body,openPage){
+ const toast=document.createElement('div');toast.className='edu-alert-toast';toast.setAttribute('role','status');
+ const heading=document.createElement('strong');heading.textContent=title;const p=document.createElement('p');p.textContent=body;toast.append(heading,p);toast.onclick=()=>{toast.remove();if(openPage){const a=document.querySelector('.sidebar-nav [data-page="'+openPage+'"]');a?.click()}};
+ document.body.append(toast);setTimeout(()=>toast.remove(),7000);
+ if(document.hidden&&'Notification' in window&&Notification.permission==='granted')try{const n=new Notification(title,{body,tag:'eduone-'+openPage});n.onclick=()=>{window.focus();toast.click();n.close()}}catch(e){}
+}
+function eduStartNotifications(){
+ if(eduNotifReady||!colegioId||!eduUid())return;eduNotifReady=true;
+ const watch=(coll,filter,callback)=>{let initially=true;const unsub=onSnapshot(filter?query(collection(db,'colegios',colegioId,coll),...filter):collection(db,'colegios',colegioId,coll),snapshot=>{
+   if(initially){initially=false;return}
+   for(const ch of snapshot.docChanges()){if(ch.type==='added')callback(ch.doc.data())}
+ },err=>console.warn('Notificaciones: permisos o conexión',err.message));eduNotifWatchers.push(unsub)};
+ watch('comunicados',[orderBy('creadoEn','desc'),limit(8)],d=>eduNotifyLocal('Nuevo comunicado institucional',String(d.texto||'Consulta el comunicado').slice(0,150),'comunicados'));
+ watch('chats',[where('participantes','array-contains',eduUid()),limit(50)],()=>{const b=document.getElementById('notiCount');if(b)b.textContent=String((Number(b.textContent)||0)+1)});
+}
+const eduOldSyncAppearance=eduSyncSchoolAppearance;
+eduSyncSchoolAppearance=async function(...args){const result=await eduOldSyncAppearance(...args);eduSyncHeaderAvatar();eduStartNotifications();return result};
+
+
+// FCM web opt-in: requiere HTTPS, service worker en la raíz y clave VAPID pública del proyecto.
+const EDUONE_FCM_VAPID_KEY=''; // CONFIGURAR: Firebase Console > Cloud Messaging > Web Push certificates.
+let eduFcmBootstrapped=false;
+async function eduRegisterPush(){
+ if(!('Notification' in window)||!('serviceWorker' in navigator))return showToast('Este navegador no admite notificaciones push web','warning');
+ if(!await isSupported())return showToast('Firebase Messaging no está disponible en este navegador','warning');
+ if(!EDUONE_FCM_VAPID_KEY)return showToast('Falta configurar la clave VAPID en el código','warning');
+ try{
+  const perm=await Notification.requestPermission();if(perm!=='granted')return showToast('Notificaciones no autorizadas','warning');
+  const registration=await navigator.serviceWorker.register('/firebase-messaging-sw.js');
+  const token=await getToken(getMessaging(app),{vapidKey:EDUONE_FCM_VAPID_KEY,serviceWorkerRegistration:registration});
+  if(!token)throw Error('No se obtuvo token de dispositivo');
+  await updateDoc(doc(db,'usuarios',eduUid()),{fcmTokens:arrayUnion(token)});
+  showToast('Notificaciones del dispositivo activadas','success');
+ }catch(error){showToast('No se pudieron activar: '+error.message,'error')}
+}
+function eduInitializePushUI(){
+ if(eduFcmBootstrapped||!colegioId)return;eduFcmBootstrapped=true;
+ const b=document.createElement('button');b.type='button';b.id='eduEnablePush';b.className='btn-primary btn-sm';b.innerHTML='<i class="fas fa-bell"></i> Activar avisos en el celular';b.addEventListener('click',eduRegisterPush);
+ const n=document.getElementById('notificacionesBtn');if(n)n.after(b);
+ if(isSupported) isSupported().then(ok=>{if(ok)onMessage(getMessaging(app),p=>{const title=p.notification?.title||'EduOne';const body=p.notification?.body||'Tienes una notificación';eduNotifyLocal(title,body,p.data?.tipo==='comunicado'?'comunicados':'chat')})}).catch(()=>{});
+}
+const eduPreviousPushInit=eduStartNotifications;
+eduStartNotifications=function(){eduPreviousPushInit();eduInitializePushUI()};
+
     </script>
 
 </body>
