@@ -14,7 +14,7 @@ import { getApps } from 'https://www.gstatic.com/firebasejs/11.3.1/firebase-app.
 import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js';
 import { getFirestore, doc, updateDoc, arrayUnion } from 'https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js';
 import { getMessaging, getToken, onMessage, isSupported } from 'https://www.gstatic.com/firebasejs/11.3.1/firebase-messaging.js';
-import { DOCUMENTOS, vigilarCasilla, registrarConsentimiento, yaAceptoEnEsteDispositivo, marcarAceptadoEnEsteDispositivo } from './legal.js';
+import { DOCUMENTOS, vigilarCasilla, registrarConsentimiento, yaAceptoEnEsteDispositivo, marcarAceptadoEnEsteDispositivo } from './legal.js?v=20261031b';
 
 const VAPID_KEY = 'BEZ1FHZlfPST9VbY7GSpEAMzPjTOfmTQKRV6HCCI5esMChTrkeqpX51fM0NRwjbR60qifqoYwh6q2gSfHWsrrcs';
 const SW_URL = '/firebase-messaging-sw.js';
@@ -61,7 +61,13 @@ function logoImg(clase) {
 function aplicarLogo() {
     // Barra lateral y marcas que usaban el icono de birrete
     document.querySelectorAll('.sidebar-header .logo > i.fa-graduation-cap, .edu-brand i.fa-graduation-cap')
-        .forEach(i => i.replaceWith(logoImg('edu-logo-img')));
+        .forEach(i => {
+            // En el profesor la marca es el título (#pageTitle), que se reescribe
+            // al cambiar de sección: el logo va fuera de él para no borrarse
+            const titulo = i.closest('#pageTitle');
+            if (titulo) { i.remove(); titulo.before(logoImg('edu-header-logo')); }
+            else i.replaceWith(logoImg('edu-logo-img'));
+        });
 
     // Encabezados sin marca (acudiente, secretaría, coordinadores, admin, rector)
     const header = document.querySelector('.top-header');
