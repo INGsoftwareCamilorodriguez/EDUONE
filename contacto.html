@@ -175,8 +175,8 @@
         .form-group input.error, .form-group select.error, .form-group textarea.error { border-color: var(--error); }
         .form-group textarea { resize: vertical; min-height: 120px; }
         
-        .form-group .field-error { font-size: 12px; color: var(--error); font-weight: 500; display: none; }
-        .form-group .field-error.visible { display: block; }
+        .field-error { font-size: 12px; color: var(--error); font-weight: 500; display: none; }
+        .field-error.visible { display: block; }
 
         .checkbox-group { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 24px; }
         .checkbox-group input[type="checkbox"] { width: 18px; height: 18px; margin-top: 2px; cursor: pointer; accent-color: var(--cyan); flex-shrink: 0; }
@@ -502,10 +502,15 @@
                             </div>
 
                             <div class="checkbox-group">
-                                <input type="checkbox" id="privacidad" name="privacidad" aria-required="true" />
-                                <label for="privacidad">He leído y acepto el <a href="#" data-open-legal="data">tratamiento de mis datos personales</a> conforme a la política de privacidad de EduOne.</label>
+                                <input type="checkbox" id="aceptaTerminos" name="aceptaTerminos" aria-required="true" />
+                                <label for="aceptaTerminos">He leído y acepto los <a href="terminos.html" target="_blank" rel="noopener">Términos y condiciones</a> de EduOne.</label>
                             </div>
-                            <div class="field-error" id="err-privacidad" style="margin-bottom:20px; margin-top:-10px;">Debes aceptar el tratamiento de datos para continuar.</div>
+                            <div class="field-error" id="err-terminos" style="margin-bottom:20px; margin-top:-10px;">Debes aceptar los Términos y condiciones para continuar.</div>
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="privacidad" name="privacidad" aria-required="true" />
+                                <label for="privacidad">He leído la <a href="privacidad.html" target="_blank" rel="noopener">Política de privacidad</a> y autorizo el tratamiento de mis datos personales.</label>
+                            </div>
+                            <div class="field-error" id="err-privacidad" style="margin-bottom:20px; margin-top:-10px;">Debes autorizar el tratamiento de tus datos para continuar.</div>
 
                             <button type="submit" class="form-submit" id="submitBtn">
                                 <i class="fab fa-whatsapp"></i> Enviar por WhatsApp
@@ -610,10 +615,12 @@
                 <div class="footer-col">
                     <h4>Legal</h4>
                     <ul>
-                        <li><button type="button" class="footer-link-btn" data-open-legal="terms">Términos y condiciones</button></li>
-                        <li><button type="button" class="footer-link-btn" data-open-legal="privacy">Política de privacidad</button></li>
-                        <li><button type="button" class="footer-link-btn" data-open-legal="data">Tratamiento de datos</button></li>
-                        <li><a href="#">Política de cookies</a></li>
+                        <li><a href="terminos.html">Términos y condiciones</a></li>
+                        <li><a href="privacidad.html">Política de privacidad</a></li>
+                        <li><a href="privacidad.html#derechos">Tratamiento de datos</a></li>
+                        <li><a href="cookies.html">Política de cookies</a></li>
+                        <li><a href="reembolsos.html">Política de reembolso</a></li>
+                        <li><a href="#" data-cookies-config>Configurar cookies</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
@@ -629,6 +636,7 @@
             <div class="footer-bottom">
                 <p>© 2026 EduOne. Todos los derechos reservados.</p>
                 <p>Tecnología educativa desarrollada en Colombia.</p>
+                <p class="footer-legal-id"><a href="https://www.sic.gov.co" target="_blank" rel="noopener">Superintendencia de Industria y Comercio (SIC)</a></p>
             </div>
         </div>
     </footer>
@@ -778,6 +786,7 @@
                 const estudiantes = document.getElementById('estudiantes').value;
                 const motivo = document.getElementById('motivo').value;
                 const mensaje = document.getElementById('mensaje').value.trim();
+                const terminos = document.getElementById('aceptaTerminos').checked;
                 const privacidad = document.getElementById('privacidad').checked;
 
                 showError('nombre', 'nombre', !nombre); if (!nombre) valid = false;
@@ -790,6 +799,10 @@
                 showError('motivo', 'motivo', !motivo); if (!motivo) valid = false;
                 showError('mensaje', 'mensaje', mensaje.length < 10); if (mensaje.length < 10) valid = false;
 
+                const errTerm = document.getElementById('err-terminos');
+                if (!terminos) { errTerm.classList.add('visible'); valid = false; }
+                else { errTerm.classList.remove('visible'); }
+
                 const errPriv = document.getElementById('err-privacidad');
                 if (!privacidad) { errPriv.classList.add('visible'); valid = false; }
                 else { errPriv.classList.remove('visible'); }
@@ -801,6 +814,9 @@
                 const el = document.getElementById(id);
                 if (el) el.addEventListener('input', () => showError(id, id, false));
                 if (el && el.tagName === 'SELECT') el.addEventListener('change', () => showError(id, id, false));
+            });
+            document.getElementById('aceptaTerminos').addEventListener('change', () => {
+                document.getElementById('err-terminos').classList.remove('visible');
             });
             document.getElementById('privacidad').addEventListener('change', () => {
                 document.getElementById('err-privacidad').classList.remove('visible');
@@ -860,6 +876,16 @@ Enviado desde eduone.com.co`;
                 btn.disabled = true;
                 btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Abriendo WhatsApp...';
 
+                if (window.eduRegistrarConsentimientoContacto) {
+                    window.eduRegistrarConsentimientoContacto({
+                        nombre: document.getElementById('nombre').value.trim(),
+                        email: document.getElementById('email').value.trim(),
+                        telefono: document.getElementById('telefono').value.trim(),
+                        colegio: document.getElementById('colegio').value.trim(),
+                        cargo: document.getElementById('cargo').value.trim(),
+                        ciudad: document.getElementById('ciudad').value.trim()
+                    });
+                }
                 openWhatsApp();
 
                 setTimeout(() => {
@@ -1015,5 +1041,32 @@ Enviado desde eduone.com.co`;
         })();
     </script>
 
+    <!-- REGISTRO DE ACEPTACIÓN (Términos + Privacidad) -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js';
+        import { getFirestore } from 'https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js';
+        import { vigilarCasilla, registrarConsentimiento } from './assets/legal.js';
+
+        const app = initializeApp({
+            apiKey: "AIzaSyA3U98y5BJWQwpypFCAyNioqSRfXkr9UA0",
+            authDomain: "eduone-5f7cf.firebaseapp.com",
+            projectId: "eduone-5f7cf",
+            storageBucket: "eduone-5f7cf.firebasestorage.app",
+            messagingSenderId: "541282614006",
+            appId: "1:541282614006:web:f8cf617c99f08403df0ad7"
+        });
+        const db = getFirestore(app);
+        const casillas = {
+            terminos: document.getElementById('aceptaTerminos'),
+            privacidad: document.getElementById('privacidad')
+        };
+        vigilarCasilla(casillas.terminos);
+        vigilarCasilla(casillas.privacidad);
+
+        window.eduRegistrarConsentimientoContacto = titular =>
+            registrarConsentimiento(db, { formulario: 'contacto', uid: null, titular, casillas, origen: 'formulario-contacto' })
+                .catch(error => console.error('EduOne: no se pudo registrar la aceptación', error));
+    </script>
+    <script src="assets/cookies.js" defer></script>
 </body>
 </html>

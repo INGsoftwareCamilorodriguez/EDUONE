@@ -4,12 +4,16 @@
    2) Botón "Activar notificaciones" único para todos los roles
       (responsive: texto en escritorio, solo campana en celular).
    3) Selector de emojis para el chat y los comunicados.
+   4) Aceptación de Términos y Política de privacidad: si este dispositivo
+      no tiene registrada la versión vigente (p. ej. la sesión ya estaba
+      abierta y no pasó por el login), se pide antes de usar el panel.
    Se carga con: <script type="module" src="../assets/eduone-ui.js"></script>
    ===================================================================== */
 import { getApps } from 'https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js';
 import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js';
 import { getFirestore, doc, updateDoc, arrayUnion } from 'https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js';
 import { getMessaging, getToken, onMessage, isSupported } from 'https://www.gstatic.com/firebasejs/11.3.1/firebase-messaging.js';
+import { DOCUMENTOS, vigilarCasilla, registrarConsentimiento, yaAceptoEnEsteDispositivo, marcarAceptadoEnEsteDispositivo } from './legal.js';
 
 const VAPID_KEY = 'BEZ1FHZlfPST9VbY7GSpEAMzPjTOfmTQKRV6HCCI5esMChTrkeqpX51fM0NRwjbR60qifqoYwh6q2gSfHWsrrcs';
 const SW_URL = '/firebase-messaging-sw.js';
@@ -216,6 +220,72 @@ async function iniciarPush() {
         crearBotonPush();
         // Con permiso ya concedido se registra en silencio (sin mensajes)
         activarPush(false);
+        pedirAceptacionLegal(user);
+    });
+}
+
+// ---------------------------------------------------------------------
+// 4) ACEPTACIÓN DE DOCUMENTOS LEGALES
+// ---------------------------------------------------------------------
+let modalLegal = null;
+
+function pedirAceptacionLegal(user) {
+    if (modalLegal || yaAceptoEnEsteDispositivo(user.uid)) return;
+
+    const terminos = el('input', { type: 'checkbox', id: 'eduLegalTerminos' });
+    const privacidad = el('input', { type: 'checkbox', id: 'eduLegalPrivacidad' });
+    vigilarCasilla(terminos);
+    vigilarCasilla(privacidad);
+    const enlace = (doc, texto) => el('a', { href: doc.url, target: '_blank', rel: 'noopener', textContent: texto });
+    const error = el('p', { className: 'edu-legal-error', textContent: 'Debes marcar las dos casillas para continuar.' });
+    error.hidden = true;
+    const boton = el('button', { type: 'button', className: 'edu-legal-btn', textContent: 'Aceptar y continuar' });
+
+    modalLegal = el('div', { className: 'edu-legal-overlay' }, [
+        el('div', { className: 'edu-legal-card' }, [
+            el('img', { src: LOGO_URL, alt: 'EduOne', className: 'edu-legal-logo', width: 56, height: 56 }),
+            el('h2', { id: 'eduLegalTitulo', textContent: 'Antes de continuar' }),
+            el('p', { className: 'edu-legal-intro', textContent: 'Para usar EduOne necesitamos que aceptes nuestros documentos legales. Puedes abrirlos y leerlos antes de marcar cada casilla.' }),
+            el('div', { className: 'edu-legal-item' }, [terminos, el('label', { htmlFor: 'eduLegalTerminos' }, ['Acepto los ', enlace(DOCUMENTOS.terminos, 'Términos y condiciones'), ' de EduOne.'])]),
+            el('div', { className: 'edu-legal-item' }, [privacidad, el('label', { htmlFor: 'eduLegalPrivacidad' }, ['He leído la ', enlace(DOCUMENTOS.privacidad, 'Política de privacidad'), ' y autorizo el tratamiento de mis datos personales.'])]),
+            error,
+            boton
+        ])
+    ]);
+    modalLegal.setAttribute('role', 'dialog');
+    modalLegal.setAttribute('aria-modal', 'true');
+    modalLegal.setAttribute('aria-labelledby', 'eduLegalTitulo');
+    document.body.append(modalLegal);
+    document.documentElement.classList.add('edu-legal-bloqueado');
+    [terminos, privacidad].forEach(c => c.addEventListener('change', () => { error.hidden = true; }));
+
+    boton.addEventListener('click', async () => {
+        if (!terminos.checked || !privacidad.checked) {
+            error.textContent = 'Debes marcar las dos casillas para continuar.';
+            error.hidden = false;
+            return;
+        }
+        boton.disabled = true;
+        boton.textContent = 'Guardando...';
+        try {
+            await registrarConsentimiento(getFirestore(appFirebase), {
+                formulario: 'login',
+                uid: user.uid,
+                titular: { email: user.email || null, nombre: user.displayName || null },
+                casillas: { terminos, privacidad },
+                origen: 'confirmacion-panel'
+            });
+            marcarAceptadoEnEsteDispositivo(user.uid);
+            modalLegal.remove();
+            document.documentElement.classList.remove('edu-legal-bloqueado');
+            toast('Gracias. Tu aceptación quedó registrada.', 'success', 3500);
+        } catch (e) {
+            console.error('EduOne: no se pudo registrar la aceptación', e);
+            error.textContent = 'No se pudo guardar. Revisa tu conexión e inténtalo de nuevo.';
+            error.hidden = false;
+            boton.disabled = false;
+            boton.textContent = 'Aceptar y continuar';
+        }
     });
 }
 

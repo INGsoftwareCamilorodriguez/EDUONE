@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#0a0f1e" />
+    <meta name="description" content="Derecho de retracto de cinco (5) días hábiles y condiciones de reembolso de los planes de EduOne." />
+    <meta name="keywords" content="EduOne, Política de reembolso, Colombia" />
+    <meta name="author" content="EduOne" />
+    <meta property="og:title" content="Política de reembolso | EduOne" />
+    <meta property="og:description" content="Derecho de retracto de cinco (5) días hábiles y condiciones de reembolso de los planes de EduOne." />
+    <meta property="og:type" content="website" />
+    <link rel="canonical" href="https://eduone.com.co/reembolsos.html" />
+    <title>Política de reembolso | EduOne</title>
+
+    <!-- FAVICON -->
+    <link rel="icon" type="image/png" sizes="48x48" href="imagenes/logo.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="imagenes/logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="imagenes/logo.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg-0: #050814;
+            --bg-1: #0a0f1e;
+            --bg-2: #111a30;
+            --primary: #2563eb;
+            --primary-light: #3b82f6;
+            --cyan: #06b6d4;
+            --cyan-light: #22d3ee;
+            --lime: #a3e635;
+            --text-light: #e2e8f0;
+            --text-muted: #94a3b8;
+            --gradient-tech: linear-gradient(135deg, #2563eb 0%, #06b6d4 100%);
+            --gradient-glow: linear-gradient(135deg, #3b82f6 0%, #22d3ee 50%, #a3e635 100%);
+            --radius-sm: 10px;
+            --radius: 18px;
+            --radius-lg: 28px;
+            --radius-pill: 100px;
+            --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            --nav-h: 74px;
+        }
+
+        html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; scroll-padding-top: var(--nav-h); }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-0);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        img { max-width: 100%; height: auto; display: block; }
+        button { font-family: inherit; cursor: pointer; }
+        a { color: inherit; text-decoration: none; }
+        ul { list-style: none; }
+
+        @keyframes floatY { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        @keyframes pulseGlow { 0%, 100% { box-shadow: 0 0 20px rgba(37,99,235,0.4); } 50% { box-shadow: 0 0 40px rgba(6,182,212,0.7); } }
+        @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        @keyframes spinSlow { to { transform: rotate(360deg); } }
+        @keyframes slideLoadBar { 0% { transform: translateX(-100%); } 100% { transform: translateX(300%); } }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+            .reveal, .stagger > * { opacity: 1 !important; transform: none !important; }
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-0); }
+        ::-webkit-scrollbar-thumb { background: var(--gradient-tech); border-radius: 100px; }
+
+        body::before {
+            content: ''; position: fixed; inset: 0; z-index: -2;
+            background: radial-gradient(ellipse 800px 600px at 15% 10%, rgba(37, 99, 235, 0.18) 0%, transparent 60%), radial-gradient(ellipse 700px 500px at 85% 80%, rgba(6, 182, 212, 0.14) 0%, transparent 60%), var(--bg-0);
+            pointer-events: none;
+        }
+
+        /* PRELOADER */
+        .preloader { position: fixed; inset: 0; z-index: 99999; display: flex; align-items: center; justify-content: center; background: var(--bg-0); transition: opacity 0.5s ease, visibility 0.5s ease; }
+        .preloader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        .preloader-inner { display: flex; flex-direction: column; align-items: center; gap: 24px; }
+        .preloader-logo { font-family: 'Space Grotesk', sans-serif; font-size: 34px; font-weight: 700; background: var(--gradient-glow); background-size: 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: gradientShift 2s infinite; }
+        .preloader-ring { width: 60px; height: 60px; border-radius: 50%; border: 3px solid rgba(37,99,235,0.15); border-top-color: var(--cyan); border-right-color: var(--primary); animation: spinSlow 1s linear infinite; }
+        .preloader-bar { width: 200px; height: 3px; background: rgba(148,163,184,0.15); border-radius: 100px; overflow: hidden; position: relative; }
+        .preloader-bar::after { content: ''; position: absolute; inset: 0; width: 40%; background: var(--gradient-glow); border-radius: 100px; animation: slideLoadBar 1.4s infinite; }
+
+        /* NAVBAR */
+        .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; height: var(--nav-h); background: rgba(10, 15, 30, 0.55); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(148, 163, 184, 0.10); transition: background var(--transition); }
+        .navbar.scrolled { background: rgba(10, 15, 30, 0.88); box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4); border-bottom-color: rgba(37, 99, 235, 0.25); }
+        .nav-container { max-width: 1360px; margin: 0 auto; height: 100%; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+        .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; transition: transform var(--transition); }
+        .nav-logo:hover { transform: scale(1.04); }
+        .logo-mark { width: 40px; height: 40px; display: grid; place-items: center; }
+        .logo-mark svg { width: 100%; height: 100%; filter: drop-shadow(0 0 10px rgba(59,130,246,0.5)); }
+        .logo-text { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700; color: #fff; letter-spacing: -0.8px; }
+        .logo-text span { background: var(--gradient-glow); background-size: 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: gradientShift 4s infinite; }
+
+        .nav-menu { display: flex; align-items: center; gap: 4px; }
+        .nav-link { text-decoration: none; color: var(--text-light); font-size: 14px; font-weight: 500; padding: 8px 14px; border-radius: var(--radius-sm); position: relative; transition: color var(--transition), background var(--transition); white-space: nowrap; }
+        .nav-link::before { content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 2px; background: var(--gradient-glow); border-radius: 100px; transition: width var(--transition), left var(--transition); }
+        .nav-link:hover, .nav-link.active { color: #fff; }
+        .nav-link:hover::before, .nav-link.active::before { width: 60%; left: 20%; }
+
+        .nav-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+        .btn-nav-demo { display: inline-flex; align-items: center; gap: 7px; padding: 9px 18px; background: var(--gradient-tech); color: #fff; font-size: 13.5px; font-weight: 600; text-decoration: none; border-radius: var(--radius-pill); transition: transform var(--transition), box-shadow var(--transition); box-shadow: 0 4px 20px rgba(37, 99, 235, 0.35); white-space: nowrap; }
+        .btn-nav-demo:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 10px 30px rgba(6, 182, 212, 0.5); }
+        .btn-nav-login { display: inline-flex; align-items: center; gap: 7px; padding: 9px 16px; background: rgba(255,255,255,0.05); border: 1px solid rgba(148, 163, 184, 0.3); color: var(--text-light); font-size: 13.5px; font-weight: 600; text-decoration: none; border-radius: var(--radius-pill); transition: all var(--transition); white-space: nowrap; }
+        .btn-nav-login:hover { background: rgba(255,255,255,0.12); border-color: var(--cyan); color: #fff; transform: translateY(-2px); }
+
+        .nav-hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; padding: 10px; border-radius: 8px; cursor: pointer; }
+        .nav-hamburger span { width: 24px; height: 2.5px; background: #fff; border-radius: 2px; transition: transform var(--transition), opacity var(--transition); }
+        .nav-hamburger.open span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+        .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+        .nav-hamburger.open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+
+        /* HERO SECUNDARIO */
+        .hero-page { padding: calc(var(--nav-h) + 60px) 24px 80px; position: relative; overflow: hidden; text-align: center; border-bottom: 1px solid rgba(59,130,246,0.15); }
+        .hero-page::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 800px 500px at 50% 20%, rgba(37,99,235,0.2), transparent 70%); pointer-events: none; }
+        .hero-inner { max-width: 900px; margin: 0 auto; position: relative; z-index: 2; animation: fadeUp 0.9s ease both; }
+        .hero-badge { display: inline-flex; align-items: center; gap: 8px; padding: 7px 16px; background: rgba(37, 99, 235, 0.15); border: 1px solid rgba(59, 130, 246, 0.4); border-radius: var(--radius-pill); font-size: 12.5px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: var(--cyan-light); margin-bottom: 24px; }
+        .hero-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 700; line-height: 1.15; letter-spacing: -1.5px; margin-bottom: 24px; }
+        .hero-title .gradient-text { background: var(--gradient-glow); background-size: 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: gradientShift 4s infinite; }
+        .hero-desc { font-size: clamp(16px, 1.8vw, 18px); color: rgba(226, 232, 240, 0.85); line-height: 1.7; max-width: 760px; margin: 0 auto 20px; }
+        .hero-tagline { font-size: 15px; color: var(--text-muted); font-style: italic; }
+
+        /* SECCIONES GENERALES */
+        .section { padding: 96px 24px; position: relative; }
+        .section-inner { max-width: 1280px; margin: 0 auto; position: relative; z-index: 2; }
+        .section-header { text-align: center; margin-bottom: 56px; max-width: 800px; margin-left: auto; margin-right: auto; }
+        .section-eyebrow { display: inline-flex; align-items: center; gap: 10px; padding: 7px 16px; background: rgba(37,99,235,0.12); border: 1px solid rgba(59,130,246,0.35); border-radius: var(--radius-pill); font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--cyan-light); margin-bottom: 20px; }
+        .section-eyebrow .dot { width: 6px; height: 6px; background: var(--cyan-light); border-radius: 50%; animation: pulseGlow 1.6s ease infinite; }
+        .section-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 700; color: #fff; letter-spacing: -1.5px; line-height: 1.12; margin-bottom: 18px; }
+        .section-title .grad { background: var(--gradient-glow); background-size: 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: gradientShift 5s infinite; }
+        .section-desc { font-size: 17px; color: var(--text-muted); max-width: 720px; margin: 0 auto; line-height: 1.7; }
+
+        .btn-primary { display: inline-flex; align-items: center; gap: 8px; padding: 14px 30px; background: var(--gradient-tech); color: #fff; font-size: 15px; font-weight: 600; border-radius: var(--radius-pill); box-shadow: 0 8px 30px rgba(37,99,235,0.4); border: none; transition: transform var(--transition), box-shadow var(--transition); }
+        .btn-primary:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 14px 45px rgba(6,182,212,0.55); }
+
+        /* REVEAL */
+        .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.9s ease, transform 0.9s ease; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .stagger > * { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+        .stagger.visible > * { opacity: 1; transform: translateY(0); }
+        .stagger.visible > *:nth-child(1) { transition-delay: 0.05s; }
+        .stagger.visible > *:nth-child(2) { transition-delay: 0.15s; }
+        .stagger.visible > *:nth-child(3) { transition-delay: 0.25s; }
+        .stagger.visible > *:nth-child(4) { transition-delay: 0.35s; }
+        .stagger.visible > *:nth-child(5) { transition-delay: 0.45s; }
+
+        /* CONTENIDO TEXTO */
+        .text-content p { font-size: 16px; color: var(--text-muted); line-height: 1.8; margin-bottom: 20px; }
+        .text-content p:last-child { margin-bottom: 0; }
+        .text-content strong { color: #fff; font-weight: 600; }
+
+        /* PROBLEMA / SOLUCIÓN */
+        .problem-solution-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: stretch; }
+        .col-card { background: rgba(10,15,30,0.6); border: 1px solid rgba(59,130,246,0.18); border-radius: var(--radius); padding: 40px 32px; backdrop-filter: blur(10px); }
+        .col-card.problema { border-top: 3px solid #ef4444; }
+        .col-card.solucion { border-top: 3px solid var(--cyan); background: rgba(6,182,212,0.05); }
+        .col-card h3 { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700; margin-bottom: 24px; display: flex; align-items: center; gap: 10px; color: #fff; }
+        .list-icon li { display: flex; align-items: flex-start; gap: 16px; padding: 14px 0; border-bottom: 1px solid rgba(148,163,184,0.1); font-size: 15px; font-weight: 500; color: var(--text-light); }
+        .list-icon li:last-child { border-bottom: none; }
+        .list-icon i { font-size: 18px; margin-top: 2px; flex-shrink: 0; }
+        .col-card.problema .list-icon i { color: #ef4444; }
+        .col-card.solucion .list-icon i { color: var(--cyan-light); }
+
+        /* MISIÓN Y VISIÓN */
+        .mv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        .mv-card { background: rgba(10,15,30,0.6); border: 1px solid rgba(59,130,246,0.18); border-radius: var(--radius); padding: 48px 40px; backdrop-filter: blur(10px); transition: transform var(--transition), border-color var(--transition); }
+        .mv-card:hover { transform: translateY(-4px); border-color: rgba(34,211,238,0.4); }
+        .mv-card-icon { width: 60px; height: 60px; border-radius: 16px; display: grid; place-items: center; font-size: 24px; margin-bottom: 24px; background: rgba(37,99,235,0.12); color: var(--cyan-light); border: 1px solid rgba(59,130,246,0.3); }
+        .mv-card h3 { font-family: 'Space Grotesk', sans-serif; font-size: 24px; font-weight: 700; margin-bottom: 16px; color: #fff; }
+        .mv-card p { font-size: 16px; color: var(--text-muted); line-height: 1.75; }
+
+        /* PRINCIPIOS */
+        .principles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+        .principle-card { background: rgba(10,15,30,0.6); border: 1px solid rgba(59,130,246,0.18); border-radius: var(--radius); padding: 32px 28px; backdrop-filter: blur(10px); transition: transform var(--transition), border-color var(--transition); }
+        .principle-card:hover { transform: translateY(-4px); border-color: rgba(34,211,238,0.4); }
+        .principle-icon { font-size: 28px; margin-bottom: 16px; color: var(--cyan-light); }
+        .principle-card h4 { font-size: 17px; font-weight: 700; margin-bottom: 8px; color: #fff; }
+        .principle-card p { font-size: 14.5px; color: var(--text-muted); line-height: 1.65; }
+
+        /* EQUIPO */
+        .team-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+        .team-image { border-radius: 20px; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.5); border: 1px solid rgba(59,130,246,0.3); }
+        .team-image img { width: 100%; object-fit: cover; }
+        .team-info .section-title { text-align: left; margin-bottom: 20px; }
+        .team-info p { font-size: 16px; color: var(--text-muted); line-height: 1.75; margin-bottom: 32px; }
+        .team-members { display: flex; flex-direction: column; gap: 16px; }
+        .member { background: rgba(10,15,30,0.6); padding: 20px 24px; border-radius: 12px; border: 1px solid rgba(59,130,246,0.18); display: flex; align-items: center; gap: 16px; transition: border-color var(--transition); }
+        .member:hover { border-color: rgba(34,211,238,0.5); }
+        .member-initials { width: 48px; height: 48px; border-radius: 50%; background: rgba(37,99,235,0.15); color: var(--cyan-light); font-weight: 800; font-size: 18px; display: grid; place-items: center; flex-shrink: 0; border: 1px solid rgba(59,130,246,0.3); }
+        .member-info h4 { font-size: 16px; font-weight: 700; color: #fff; }
+        .member-info p { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+
+        /* COLOMBIA */
+        .colombia-card { background: linear-gradient(135deg, rgba(37,99,235,0.15), rgba(6,182,212,0.10)); border: 1px solid rgba(59,130,246,0.3); border-radius: var(--radius); padding: 48px 40px; max-width: 900px; margin: 0 auto; text-align: center; position: relative; overflow: hidden; }
+        .colombia-card::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 400px 250px at 50% 0%, rgba(6,182,212,0.2), transparent); pointer-events: none; }
+        .colombia-location { display: inline-flex; align-items: center; gap: 8px; background: rgba(10,15,30,0.5); padding: 8px 16px; border-radius: 100px; font-size: 13px; font-weight: 600; color: #fff; margin-bottom: 24px; border: 1px solid rgba(59,130,246,0.4); position: relative; z-index: 1; }
+        .colombia-location i { color: var(--lime); }
+        .colombia-card h2 { font-family: 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 700; margin-bottom: 16px; color: #fff; position: relative; z-index: 1; }
+        .colombia-card p { font-size: 16px; color: var(--text-muted); line-height: 1.75; max-width: 680px; margin: 0 auto; position: relative; z-index: 1; }
+
+        /* PRODUCTO */
+        .product-section { text-align: center; }
+        .product-section h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 700; margin-bottom: 16px; letter-spacing: -1px; color: #fff; }
+        .product-section p { font-size: 17px; color: var(--text-muted); max-width: 640px; margin: 0 auto 48px; line-height: 1.7; }
+        .product-mockup { max-width: 1000px; margin: 0 auto; background: var(--bg-2); border-radius: 16px; overflow: hidden; box-shadow: 0 40px 100px rgba(0,0,0,0.6); border: 1px solid rgba(59,130,246,0.3); }
+        .browser-header { background: rgba(10,15,30,0.8); padding: 12px 16px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid rgba(59,130,246,0.15); }
+        .browser-dots { display: flex; gap: 6px; }
+        .browser-dot { width: 10px; height: 10px; border-radius: 50%; }
+        .dot-red { background: #ef4444; } .dot-yellow { background: #f59e0b; } .dot-green { background: #10b981; }
+        .browser-url { flex: 1; background: rgba(0,0,0,0.4); border-radius: 6px; padding: 4px 12px; font-size: 11px; color: var(--text-muted); display: flex; align-items: center; gap: 6px; }
+        .browser-url i { color: #10b981; font-size: 10px; }
+        .product-mockup img { width: 100%; display: block; }
+        .product-cta { margin-top: 40px; }
+
+        /* ROLES SIMPLE */
+        .roles-simple { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 32px; }
+        .role-pill { background: rgba(10,15,30,0.6); padding: 12px 24px; border-radius: 100px; border: 1px solid rgba(59,130,246,0.25); font-size: 14px; font-weight: 600; color: #fff; display: flex; align-items: center; gap: 8px; transition: all var(--transition); }
+        .role-pill:hover { border-color: rgba(34,211,238,0.6); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(6,182,212,0.15); }
+        .role-pill i { color: var(--cyan-light); }
+
+        /* ENFOQUE */
+        .focus-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .focus-card { background: rgba(10,15,30,0.6); padding: 40px 32px; border-radius: var(--radius); border: 1px solid rgba(59,130,246,0.18); text-align: center; backdrop-filter: blur(10px); }
+        .focus-number { width: 48px; height: 48px; border-radius: 50%; background: var(--gradient-tech); color: #fff; display: grid; place-items: center; font-size: 20px; font-weight: 800; margin: 0 auto 20px; box-shadow: 0 0 20px rgba(6,182,212,0.4); }
+        .focus-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 12px; color: #fff; }
+        .focus-card p { font-size: 15px; color: var(--text-muted); line-height: 1.65; }
+
+        /* CTA FINAL */
+        .cta-banner { background: linear-gradient(135deg, rgba(37,99,235,0.2), rgba(6,182,212,0.15)); border: 1px solid rgba(59,130,246,0.35); border-radius: var(--radius); padding: 64px 48px; text-align: center; color: #fff; position: relative; overflow: hidden; }
+        .cta-banner h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 700; margin-bottom: 12px; letter-spacing: -1px; position: relative; z-index: 1; }
+        .cta-banner p { font-size: 17px; opacity: 0.9; margin-bottom: 32px; position: relative; z-index: 1; }
+        .cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1; }
+        .btn-white { display: inline-flex; align-items: center; justify-content: center; padding: 14px 28px; background: #fff; color: var(--primary); border-radius: var(--radius-pill); font-weight: 700; font-size: 15px; transition: all var(--transition); }
+        .btn-white:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(255,255,255,0.2); }
+        .btn-transparent { display: inline-flex; align-items: center; justify-content: center; padding: 14px 28px; background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.3); border-radius: var(--radius-pill); font-weight: 600; font-size: 15px; transition: all var(--transition); }
+        .btn-transparent:hover { background: rgba(255,255,255,0.12); border-color: #fff; transform: translateY(-3px); }
+
+        /* FOOTER */
+        .footer { background: linear-gradient(180deg, transparent 0%, rgba(5,8,20,0.9) 20%, #02040a 100%); border-top: 1px solid rgba(59,130,246,0.15); padding: 80px 24px 40px; position: relative; }
+        .footer-inner { max-width: 1280px; margin: 0 auto; }
+        .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 56px; }
+        .footer-brand-logo { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+        .footer-brand .logo-mark { width: 44px; height: 44px; }
+        .footer-brand .logo-text { font-size: 24px; }
+        .footer-brand p { font-size: 14px; color: var(--text-muted); line-height: 1.7; max-width: 340px; }
+        .footer-col h4 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.8px; color: rgba(148,163,184,0.5); margin-bottom: 20px; }
+        .footer-col li { margin-bottom: 12px; }
+        .footer-col a { text-decoration: none; color: var(--text-muted); font-size: 14px; transition: color var(--transition), transform var(--transition); }
+        .footer-col a:hover { color: var(--cyan-light); transform: translateX(4px); display: inline-block; }
+        .footer-bottom { border-top: 1px solid rgba(148,163,184,0.1); padding-top: 32px; text-align: center; }
+        .footer-bottom p { font-size: 13px; color: rgba(148,163,184,0.4); margin-bottom: 6px; }
+
+        /* BOTONES FLOTANTES */
+        .back-to-top { position: fixed; bottom: 24px; right: 24px; width: 48px; height: 48px; border-radius: 50%; background: rgba(10,15,30,0.9); border: 1px solid rgba(59,130,246,0.4); color: #fff; display: grid; place-items: center; font-size: 18px; opacity: 0; pointer-events: none; z-index: 999; cursor: pointer; backdrop-filter: blur(14px); transition: all var(--transition); box-shadow: 0 8px 30px rgba(0,0,0,0.5); }
+        .back-to-top.visible { opacity: 1; pointer-events: auto; }
+        .back-to-top:hover { background: var(--gradient-tech); border-color: transparent; transform: translateY(-4px); box-shadow: 0 0 30px rgba(6,182,212,0.7); }
+
+        .help-fab { position: fixed; bottom: 24px; left: 24px; z-index: 998; }
+        .help-fab-btn { width: 56px; height: 56px; border-radius: 50%; background: var(--gradient-tech); border: none; color: #fff; font-size: 22px; display: grid; place-items: center; cursor: pointer; box-shadow: 0 8px 30px rgba(37,99,235,0.5); transition: transform var(--transition), box-shadow var(--transition); }
+        .help-fab-btn:hover { transform: scale(1.1) rotate(5deg); box-shadow: 0 0 40px rgba(6,182,212,0.8); }
+        .help-fab-btn .ico-close { display: none; }
+        .help-fab.open .help-fab-btn .ico-chat { display: none; }
+        .help-fab.open .help-fab-btn .ico-close { display: block; }
+        .help-panel { position: absolute; bottom: 72px; left: 0; width: 320px; background: rgba(10,15,30,0.95); border: 1px solid rgba(59,130,246,0.35); border-radius: var(--radius); overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.6); opacity: 0; visibility: hidden; transform: translateY(12px) scale(0.96); transform-origin: bottom left; transition: all var(--transition); backdrop-filter: blur(20px); }
+        .help-fab.open .help-panel { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
+        .help-panel-header { padding: 20px 22px; background: var(--gradient-tech); }
+        .help-panel-header h3 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+        .help-panel-header p { font-size: 12.5px; opacity: 0.9; }
+        .help-panel-body { padding: 10px; }
+        .help-option { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 10px; text-decoration: none; color: var(--text-light); transition: background var(--transition), transform var(--transition); }
+        .help-option:hover { background: rgba(37,99,235,0.15); transform: translateX(4px); }
+        .help-option .emoji { width: 38px; height: 38px; border-radius: 10px; background: rgba(37,99,235,0.2); display: grid; place-items: center; font-size: 18px; flex-shrink: 0; }
+        .help-option .lbl strong { display: block; font-size: 13.5px; font-weight: 600; color: #fff; margin-bottom: 2px; }
+        .help-option .lbl span { font-size: 11.5px; color: var(--text-muted); }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .problem-solution-grid { grid-template-columns: 1fr; }
+            .mv-grid { grid-template-columns: 1fr; }
+            .team-wrapper { grid-template-columns: 1fr; gap: 40px; }
+            .footer-top { grid-template-columns: 1fr 1fr; }
+            .focus-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 900px) {
+            .nav-container { padding: 0 16px; height: var(--nav-h); }
+            .logo-mark { width: 36px; height: 36px; }
+            .logo-text { font-size: 20px; }
+            .nav-menu { position: fixed; top: var(--nav-h); left: 0; right: 0; background: rgba(10,15,30,0.98); backdrop-filter: blur(20px); flex-direction: column; align-items: stretch; gap: 4px; padding: 20px; border-bottom: 1px solid rgba(59,130,246,0.25); transform: translateY(-120%); transition: transform 0.4s cubic-bezier(0.4,0,0.2,1); max-height: calc(100vh - var(--nav-h)); overflow-y: auto; }
+            .nav-menu.open { transform: translateY(0); }
+            .nav-link { padding: 14px 18px; font-size: 15.5px; }
+            .nav-link::before { display: none; }
+            .nav-link:hover, .nav-link.active { background: rgba(37,99,235,0.15); color: var(--cyan-light); }
+            .nav-actions { display: none; }
+            .nav-menu .nav-actions-mobile { display: flex !important; flex-direction: column; gap: 10px; margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(59,130,246,0.2); }
+            .nav-menu .nav-actions-mobile .btn-nav-demo, .nav-menu .nav-actions-mobile .btn-nav-login { width: 100%; justify-content: center; padding: 13px 20px; font-size: 15px; }
+            .nav-hamburger { display: flex; }
+        }
+        @media (max-width: 768px) {
+            .section { padding: 64px 18px; }
+            .section-header { margin-bottom: 40px; }
+            .hero-page { padding: calc(var(--nav-h) + 40px) 18px 60px; }
+            .hero-title { font-size: 2.2rem; }
+            .mv-card { padding: 32px 24px; }
+            .cta-banner { padding: 48px 24px; }
+            .cta-actions { flex-direction: column; align-items: center; }
+            .cta-actions .btn-white, .cta-actions .btn-transparent { width: 100%; max-width: 320px; }
+            .footer-top { grid-template-columns: 1fr; gap: 36px; text-align: center; }
+            .footer-brand-logo { justify-content: center; }
+            .footer-brand p { margin: 0 auto; }
+            .team-info .section-title { text-align: center; }
+            .team-info .section-eyebrow { justify-content: center !important; }
+            .team-info p { text-align: center; }
+            .back-to-top { bottom: 18px; right: 18px; width: 44px; height: 44px; }
+            .help-fab { bottom: 18px; left: 18px; }
+            .help-fab-btn { width: 52px; height: 52px; }
+            .help-panel { width: 280px; }
+        }
+        @media (max-width: 480px) {
+            .nav-container { padding: 0 14px; }
+            .logo-mark { width: 32px; height: 32px; }
+            .logo-text { font-size: 19px; }
+            .hero-title { font-size: 1.85rem; }
+            .section { padding: 48px 16px; }
+            .col-card { padding: 28px 20px; }
+            .principles-grid { grid-template-columns: 1fr; }
+            .roles-simple { gap: 8px; }
+            .role-pill { font-size: 13px; padding: 10px 16px; }
+            .footer { padding: 40px 16px 20px; }
+            .back-to-top { width: 40px; height: 40px; font-size: 16px; }
+            .help-fab-btn { width: 48px; height: 48px; }
+            .help-panel { width: calc(100vw - 28px); max-width: 300px; }
+        }
+
+        /* ===== Páginas legales ===== */
+        .legal-wrap { max-width: 920px; margin: 0 auto; padding: 0 20px 90px; }
+        .legal-tabs { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 0 auto 34px; }
+        .legal-tabs a { padding: 10px 18px; border-radius: var(--radius-pill); border: 1px solid rgba(148,163,184,.22); color: var(--text-muted); text-decoration: none; font-size: 14px; font-weight: 600; transition: all var(--transition); background: rgba(17,26,48,.6); }
+        .legal-tabs a:hover { color: var(--text-light); border-color: rgba(34,211,238,.5); }
+        .legal-tabs a.active { background: var(--gradient-tech); color: #fff; border-color: transparent; box-shadow: 0 6px 20px rgba(37,99,235,.35); }
+        .legal-doc { background: linear-gradient(180deg, rgba(17,26,48,.92), rgba(10,15,30,.92)); border: 1px solid rgba(148,163,184,.14); border-radius: var(--radius-lg); padding: clamp(22px, 4vw, 48px); box-shadow: 0 20px 60px rgba(0,0,0,.35); }
+        .legal-meta { display: flex; flex-wrap: wrap; gap: 8px 22px; font-size: 13px; color: var(--text-muted); padding-bottom: 20px; margin-bottom: 26px; border-bottom: 1px solid rgba(148,163,184,.14); }
+        .legal-meta b { color: var(--cyan-light); font-weight: 600; }
+        .legal-doc h2 { font-family: 'Space Grotesk', 'Inter', sans-serif; font-size: clamp(19px, 2.4vw, 23px); color: #fff; margin: 34px 0 12px; scroll-margin-top: calc(var(--nav-h) + 16px); }
+        .legal-doc h2:first-of-type { margin-top: 0; }
+        .legal-doc p, .legal-doc li { color: #cbd5e1; font-size: 15.5px; line-height: 1.75; }
+        .legal-doc p { margin-bottom: 12px; }
+        .legal-doc ul, .legal-doc ol { margin: 0 0 14px 22px; }
+        .legal-doc li { margin-bottom: 7px; }
+        .legal-doc b { color: #fff; font-weight: 600; }
+        .legal-doc a { color: var(--cyan-light); text-decoration: none; font-weight: 600; }
+        .legal-doc a:hover { text-decoration: underline; }
+        .legal-box { background: rgba(37,99,235,.10); border: 1px solid rgba(34,211,238,.28); border-radius: var(--radius); padding: 18px 22px; margin: 14px 0 18px; }
+        .legal-box strong { display: block; color: var(--cyan-light); margin-bottom: 8px; font-size: 15px; }
+        .legal-box p { margin-bottom: 4px; font-size: 14.5px; }
+        mark.pendiente { background: #fbbf24; color: #111827; padding: 1px 6px; border-radius: 6px; font-weight: 700; }
+        .legal-table-wrap { overflow-x: auto; margin: 6px 0 16px; border-radius: var(--radius-sm); border: 1px solid rgba(148,163,184,.18); }
+        .legal-table { width: 100%; border-collapse: collapse; min-width: 620px; font-size: 14px; }
+        .legal-table th { text-align: left; background: rgba(37,99,235,.18); color: #fff; padding: 12px 14px; font-weight: 600; }
+        .legal-table td { padding: 12px 14px; color: #cbd5e1; border-top: 1px solid rgba(148,163,184,.12); vertical-align: top; line-height: 1.55; }
+        .legal-table td:first-child { font-family: ui-monospace, Consolas, monospace; font-size: 12.5px; color: var(--cyan-light); word-break: break-word; }
+        .legal-inline-btn { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: var(--radius-pill); border: 1px solid rgba(34,211,238,.45); background: rgba(34,211,238,.10); color: var(--cyan-light); font-family: inherit; font-weight: 600; font-size: 14px; cursor: pointer; }
+        .legal-inline-btn:hover { background: rgba(34,211,238,.2); }
+        .legal-print { margin-top: 30px; display: flex; justify-content: flex-end; }
+        @media (max-width: 600px) {
+            .legal-wrap { padding: 0 14px 70px; }
+            .legal-tabs { gap: 8px; }
+            .legal-tabs a { padding: 8px 13px; font-size: 13px; }
+            .legal-doc p, .legal-doc li { font-size: 15px; }
+        }
+        @media print {
+            .navbar, .footer, .back-to-top, .help-fab, .preloader, .legal-tabs, .legal-print, #eduCookieBanner { display: none !important; }
+            body { background: #fff; color: #000; }
+            .hero-page { padding: 0 !important; min-height: 0 !important; }
+            .legal-doc { box-shadow: none; border: 0; background: #fff; padding: 0; }
+            .legal-doc h2, .legal-doc b, .legal-doc p, .legal-doc li { color: #000 !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PRELOADER -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-inner">
+            <div class="preloader-logo">EduOne</div>
+            <div class="preloader-ring"></div>
+            <div class="preloader-bar"></div>
+        </div>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo" aria-label="EduOne - Inicio">
+                <span class="logo-mark">
+                    <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" fill="none">
+                        <defs>
+                            <linearGradient id="gradCap" x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0%" stop-color="#3b82f6"/><stop offset="55%" stop-color="#22d3ee"/><stop offset="100%" stop-color="#a3e635"/>
+                            </linearGradient>
+                        </defs>
+                        <path d="M24 6 L44 16 L24 26 L4 16 Z" fill="url(#gradCap)"/>
+                        <path d="M12 21.5 V30 C12 33.5 17.4 36 24 36 C30.6 36 36 33.5 36 30 V21.5 L24 27.5 Z" fill="url(#gradCap)" opacity="0.85"/>
+                        <path d="M40 18 V29" stroke="url(#gradCap)" stroke-width="2.4" stroke-linecap="round"/>
+                        <circle cx="40" cy="30.5" r="2.6" fill="url(#gradCap)"/>
+                    </svg>
+                </span>
+                <span class="logo-text">Edu<span>One</span></span>
+            </a>
+
+            <button class="nav-hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-menu">
+                <span></span><span></span><span></span>
+            </button>
+
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="index.html" class="nav-link">Inicio</a></li>
+                <li><a href="sobrenosotros.html" class="nav-link">Sobre nosotros</a></li>
+                <li><a href="funcionalidades.html" class="nav-link">Funcionalidades</a></li>
+                <li><a href="beneficios.html" class="nav-link">Beneficios</a></li>
+                <li><a href="planes.html" class="nav-link">Planes</a></li>
+                <li><a href="implementacion.html" class="nav-link">Implementación</a></li>
+                <li><a href="contacto.html" class="nav-link">Contacto</a></li>
+                <li class="nav-actions-mobile" style="display:none;">
+                    <a href="contacto.html" class="btn-nav-demo">Solicitar demo</a>
+                    <a href="login.html" class="btn-nav-login"><i class="fas fa-right-to-bracket"></i> Iniciar sesión</a>
+                </li>
+            </ul>
+
+            <div class="nav-actions">
+                <a href="contacto.html" class="btn-nav-demo"><i class="fas fa-rocket"></i> Solicitar demo</a>
+                <a href="login.html" class="btn-nav-login"><i class="fas fa-right-to-bracket"></i> Iniciar sesión</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero-page">
+        <div class="hero-inner">
+            <div class="hero-badge"><i class="fas fa-rotate-left" style="color:var(--cyan-light)"></i> Documentos legales</div>
+            <h1 class="hero-title"><span class="gradient-text">Política de reembolso</span></h1>
+            <p class="hero-desc">Derecho de retracto de cinco (5) días hábiles y condiciones de reembolso de los planes de EduOne.</p>
+        </div>
+    </section>
+
+    <!-- DOCUMENTO -->
+    <main class="legal-wrap">
+        <nav class="legal-tabs" aria-label="Documentos legales">
+            <a href="terminos.html">Términos y condiciones</a>
+            <a href="privacidad.html">Política de privacidad</a>
+            <a href="cookies.html">Política de cookies</a>
+            <a href="reembolsos.html" class="active" aria-current="page">Política de reembolso</a>
+        </nav>
+        <article class="legal-doc">
+            <div class="legal-meta">
+                <span><b>Versión:</b> 2026-10-31</span>
+                <span><b>Vigente desde:</b> 31 de octubre de 2026</span>
+                <span><b>Aplica a:</b> eduone.com.co y la plataforma EduOne</span>
+            </div>
+            <h2 id="retracto">1. Derecho de retracto: 5 días hábiles</h2>
+            <p>Usted puede retractarse de la compra de cualquier plan de EduOne dentro de los <b>cinco (5) días hábiles siguientes a la compra</b> (la fecha de celebración del contrato o del pago, lo que ocurra primero), sin dar explicaciones y sin penalidad, conforme al artículo 47 de la Ley 1480 de 2011 (Estatuto del Consumidor).</p>
+            <p>Los días hábiles son de lunes a viernes, sin contar festivos en Colombia.</p>
+            
+            <h2 id="como">2. Cómo solicitar el reembolso</h2>
+            <ol>
+              <li>Escriba a <a href="mailto:contacto@eduone.com.co">contacto@eduone.com.co</a> o por WhatsApp al <a href="https://wa.me/573170296998" target="_blank" rel="noopener">317 029 6998</a> dentro del plazo, con el asunto "Retracto".</li>
+              <li>Incluya: nombre de la institución, NIT, nombre de quien compró, plan adquirido, fecha de compra y número de la factura o del comprobante de pago.</li>
+              <li>EduOne confirmará el recibo de la solicitud y la fecha en que la recibió.</li>
+            </ol>
+            
+            <h2 id="devolucion">3. Cómo y cuándo se devuelve el dinero</h2>
+            <ul>
+              <li>Se devuelve el <b>100&nbsp;% del valor pagado</b>, sin descuentos.</li>
+              <li>El dinero se devuelve en un plazo máximo de <b>treinta (30) días calendario</b> desde la solicitud, por el mismo medio de pago o por transferencia a una cuenta a nombre de quien pagó.</li>
+              <li>Al aceptarse el retracto, se desactivan las cuentas creadas para la institución. Antes de eso, la institución puede pedir una copia de la información que haya cargado.</li>
+            </ul>
+            
+            <h2 id="despues">4. Después de los 5 días hábiles</h2>
+            <p>Pasado el plazo de retracto, el valor del plan no es reembolsable, salvo en los casos de garantía o incumplimiento que la ley reconoce: por ejemplo, si EduOne no presta el servicio contratado o lo presta con fallas que no corrige. Esas solicitudes se tramitan como un reclamo por los canales de esta página.</p>
+            
+            <h2 id="reversion">5. Reversión del pago</h2>
+            <p>Si pagó con tarjeta de crédito, débito u otro instrumento de pago electrónico, también puede pedir la reversión del pago en los casos del artículo 51 de la Ley 1480 de 2011 (fraude, operación no solicitada, servicio no prestado o distinto al ofrecido). Debe pedirla dentro de los cinco (5) días hábiles siguientes a conocer el hecho, ante EduOne y ante la entidad emisora del medio de pago.</p>
+            
+            <h2 id="contacto">6. Quejas</h2>
+            <p>Si no está de acuerdo con la respuesta, puede acudir a la Superintendencia de Industria y Comercio (<a href="https://www.sic.gov.co" target="_blank" rel="noopener">www.sic.gov.co</a>).</p>
+            
+            <div class="legal-box">
+              <strong>Datos de contacto de EduOne</strong>
+              <p><b>Ubicación:</b> Neiva, Huila, Colombia</p>
+              <p><b>Correo:</b> <a href="mailto:contacto@eduone.com.co">contacto@eduone.com.co</a> · <b>WhatsApp:</b> <a href="https://wa.me/573170296998" target="_blank" rel="noopener">317 029 6998</a></p>
+              <p><b>Sitio web:</b> eduone.com.co</p>
+            </div>
+            <div class="legal-print"><button type="button" class="legal-inline-btn" onclick="window.print()"><i class="fas fa-print"></i> Imprimir o guardar en PDF</button></div>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <div class="footer-brand-logo">
+                        <span class="logo-mark">
+                            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" fill="none">
+                                <defs>
+                                    <linearGradient id="gradCapF" x1="0" y1="0" x2="1" y2="1">
+                                        <stop offset="0%" stop-color="#3b82f6"/><stop offset="55%" stop-color="#22d3ee"/><stop offset="100%" stop-color="#a3e635"/>
+                                    </linearGradient>
+                                </defs>
+                                <path d="M24 6 L44 16 L24 26 L4 16 Z" fill="url(#gradCapF)"/>
+                                <path d="M12 21.5 V30 C12 33.5 17.4 36 24 36 C30.6 36 36 33.5 36 30 V21.5 L24 27.5 Z" fill="url(#gradCapF)" opacity="0.85"/>
+                                <path d="M40 18 V29" stroke="url(#gradCapF)" stroke-width="2.4" stroke-linecap="round"/>
+                                <circle cx="40" cy="30.5" r="2.6" fill="url(#gradCapF)"/>
+                            </svg>
+                        </span>
+                        <span class="logo-text">Edu<span>One</span></span>
+                    </div>
+                    <p>Plataforma tecnológica colombiana para la gestión académica, administrativa, financiera y de convivencia de instituciones educativas.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Navegación</h4>
+                    <ul>
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="sobrenosotros.html">Sobre nosotros</a></li>
+                        <li><a href="funcionalidades.html">Funcionalidades</a></li>
+                        <li><a href="beneficios.html">Beneficios</a></li>
+                        <li><a href="planes.html">Planes</a></li>
+                        <li><a href="implementacion.html">Implementación</a></li>
+                        <li><a href="contacto.html">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Soporte</h4>
+                    <ul>
+                        <li><a href="#">Centro de ayuda</a></li>
+                        <li><a href="#">Soporte técnico</a></li>
+                        <li><a href="contacto.html">Solicitar demostración</a></li>
+                        <li><a href="contacto.html">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="terminos.html">Términos y condiciones</a></li>
+                        <li><a href="privacidad.html">Política de privacidad</a></li>
+                        <li><a href="privacidad.html#derechos">Tratamiento de datos</a></li>
+                        <li><a href="cookies.html">Política de cookies</a></li>
+                        <li><a href="reembolsos.html">Política de reembolso</a></li>
+                        <li><a href="#" data-cookies-config>Configurar cookies</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 EduOne. Todos los derechos reservados.</p>
+                <p>Tecnología educativa desarrollada en Colombia.</p>
+                <p>contacto@eduone.com.co · Neiva, Huila, Colombia · eduone.com.co</p>
+                <p class="footer-legal-id"><a href="https://www.sic.gov.co" target="_blank" rel="noopener">Superintendencia de Industria y Comercio (SIC)</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- BOTONES FLOTANTES -->
+    <button class="back-to-top" id="backToTop" aria-label="Volver arriba"><i class="fas fa-arrow-up"></i></button>
+
+    <div class="help-fab" id="helpFab">
+        <button class="help-fab-btn" id="helpFabBtn" aria-label="Abrir menú de ayuda" aria-expanded="false">
+            <span class="ico-chat"><i class="fas fa-comment-dots"></i></span>
+            <span class="ico-close"><i class="fas fa-times"></i></span>
+        </button>
+        <div class="help-panel">
+            <div class="help-panel-header">
+                <h3>Hola 👋 Somos EduOne</h3>
+                <p>¿En qué podemos ayudarte?</p>
+            </div>
+            <div class="help-panel-body">
+                <a href="contacto.html" class="help-option"><span class="emoji">📅</span><span class="lbl"><strong>Solicitar demostración</strong><span>Conoce la plataforma en acción</span></span></a>
+                <a href="#" class="help-option"><span class="emoji">🛠️</span><span class="lbl"><strong>Soporte</strong><span>Atención técnica</span></span></a>
+                <a href="contacto.html" class="help-option"><span class="emoji">✉️</span><span class="lbl"><strong>Contacto</strong><span>Escríbenos directamente</span></span></a>
+                <a href="#" class="help-option"><span class="emoji">📣</span><span class="lbl"><strong>Novedades</strong><span>Mejoras y actualizaciones</span></span></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script>
+        (function() {
+            'use strict';
+
+            // PRELOADER
+            const preloader = document.getElementById('preloader');
+            if (preloader) {
+                window.addEventListener('load', () => {
+                    setTimeout(() => preloader.classList.add('hidden'), 500);
+                });
+                setTimeout(() => preloader.classList.add('hidden'), 2500);
+            }
+
+            // NAVBAR SCROLL + BACK TO TOP
+            const navbar = document.getElementById('navbar');
+            const backToTop = document.getElementById('backToTop');
+            if(navbar && backToTop) {
+                window.addEventListener('scroll', () => {
+                    const y = window.scrollY;
+                    navbar.classList.toggle('scrolled', y > 20);
+                    backToTop.classList.toggle('visible', y > 400);
+                }, { passive: true });
+                backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+            }
+
+            // HAMBURGER
+            const hamburger = document.getElementById('hamburger');
+            const navMenu = document.getElementById('nav-menu');
+            if(hamburger && navMenu) {
+                hamburger.addEventListener('click', () => {
+                    const isOpen = navMenu.classList.contains('open');
+                    navMenu.classList.toggle('open');
+                    hamburger.classList.toggle('open');
+                    hamburger.setAttribute('aria-expanded', !isOpen);
+                });
+                navMenu.querySelectorAll('a').forEach(a => {
+                    a.addEventListener('click', () => {
+                        navMenu.classList.remove('open');
+                        hamburger.classList.remove('open');
+                        hamburger.setAttribute('aria-expanded', 'false');
+                    });
+                });
+            }
+
+            // HELP FAB
+            const helpFab = document.getElementById('helpFab');
+            const helpFabBtn = document.getElementById('helpFabBtn');
+            if(helpFab && helpFabBtn) {
+                helpFabBtn.addEventListener('click', (e) => { e.stopPropagation(); helpFab.classList.toggle('open'); });
+                document.addEventListener('click', (e) => { if (!helpFab.contains(e.target)) helpFab.classList.remove('open'); });
+            }
+
+            // REVEAL
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        revealObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+            document.querySelectorAll('.reveal, .stagger').forEach(el => revealObserver.observe(el));
+
+        })();
+    </script>
+
+    <script src="assets/cookies.js" defer></script>
+</body>
+</html>

@@ -347,6 +347,25 @@
             transform: translate(-50%, -50%);
         }
 
+        /* Aceptación de documentos legales (dos casillas separadas) */
+        .legal-consent { display: flex; flex-direction: column; gap: 12px; margin: -12px 0 26px; }
+        .legal-consent-item { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; line-height: 1.5; color: var(--text-muted); }
+        .legal-consent-item label { cursor: pointer; }
+        .legal-consent-item a { color: var(--cyan-light); font-weight: 600; text-decoration: none; }
+        .legal-consent-item a:hover { text-decoration: underline; }
+        .legal-consent input[type="checkbox"] {
+            appearance: none; flex: 0 0 18px; width: 18px; height: 18px; margin-top: 1px;
+            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px; cursor: pointer; position: relative; transition: all 0.2s;
+        }
+        .legal-consent input[type="checkbox"]:checked { background: var(--cyan); border-color: var(--cyan); }
+        .legal-consent input[type="checkbox"]:checked::after {
+            content: '00c'; font-family: 'Font Awesome 6 Free'; font-weight: 900; font-size: 11px; color: #000;
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+        }
+        .legal-consent input[type="checkbox"]:focus-visible { outline: 2px solid var(--cyan-light); outline-offset: 2px; }
+        .legal-consent.con-error input[type="checkbox"]:not(:checked) { border-color: #f87171; box-shadow: 0 0 0 3px rgba(248,113,113,.18); }
+
         .link-btn {
             color: var(--cyan-light);
             text-decoration: none;
@@ -653,6 +672,17 @@
                         <button type="button" class="link-btn" id="btnForgotPassword">¿Olvidaste tu contraseña?</button>
                     </div>
 
+                    <div class="legal-consent" id="legalConsent">
+                        <div class="legal-consent-item">
+                            <input type="checkbox" id="aceptaTerminos" aria-required="true" />
+                            <label for="aceptaTerminos">Acepto los <a href="terminos.html" target="_blank" rel="noopener">Términos y condiciones</a> de EduOne.</label>
+                        </div>
+                        <div class="legal-consent-item">
+                            <input type="checkbox" id="aceptaPrivacidad" aria-required="true" />
+                            <label for="aceptaPrivacidad">He leído la <a href="privacidad.html" target="_blank" rel="noopener">Política de privacidad</a> y autorizo el tratamiento de mis datos personales.</label>
+                        </div>
+                    </div>
+
                     <button type="submit" class="btn-submit" id="loginBtn">
                         <i class="fas fa-sign-in-alt"></i> Iniciar sesión
                     </button>
@@ -719,6 +749,7 @@
         import {
             getFirestore, doc, getDoc
         } from "firebase/firestore";
+        import { vigilarCasilla, registrarConsentimiento, marcarAceptadoEnEsteDispositivo } from "./assets/legal.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyA3U98y5BJWQwpypFCAyNioqSRfXkr9UA0",
@@ -741,6 +772,14 @@
         const alertMessage = document.getElementById('alertMessage');
         const alertText = document.getElementById('alertText');
         const rememberMe = document.getElementById('rememberMe');
+        const legalConsent = document.getElementById('legalConsent');
+        const casillasLegales = {
+            terminos: document.getElementById('aceptaTerminos'),
+            privacidad: document.getElementById('aceptaPrivacidad')
+        };
+        vigilarCasilla(casillasLegales.terminos);
+        vigilarCasilla(casillasLegales.privacidad);
+        legalConsent.addEventListener('change', () => legalConsent.classList.remove('con-error'));
         const togglePasswordBtn = document.getElementById('togglePassword');
 
         const RUTAS = {
@@ -852,6 +891,12 @@
                 return;
             }
 
+            if (!casillasLegales.terminos.checked || !casillasLegales.privacidad.checked) {
+                legalConsent.classList.add('con-error');
+                showAlert('Para continuar debes aceptar los Términos y condiciones y la Política de privacidad.', 'error');
+                return;
+            }
+
             loginBtn.disabled = true;
             loginBtn.innerHTML = '<span class="spinner"></span> Iniciando sesión...';
 
@@ -885,6 +930,24 @@
                     loginBtn.disabled = false;
                     loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Iniciar sesión';
                     return;
+                }
+
+                // Prueba de la aceptación (fecha del servidor, versión de cada documento y navegador)
+                try {
+                    await Promise.race([
+                        registrarConsentimiento(db, {
+                            formulario: 'login',
+                            uid: user.uid,
+                            titular: { email: user.email, nombre: data.nombre || null, rol: data.rol || null, colegioId: data.colegioId || null },
+                            casillas: casillasLegales,
+                            origen: 'formulario-login'
+                        }),
+                        new Promise((_, rechazar) => setTimeout(() => rechazar(new Error('Tiempo de espera agotado')), 6000))
+                    ]);
+                    marcarAceptadoEnEsteDispositivo(user.uid);
+                } catch (error) {
+                    // Si falla, el panel volverá a pedir la aceptación y la registrará
+                    console.error('EduOne: no se pudo registrar la aceptación', error);
                 }
 
                 showAlert('✅ Inicio de sesión exitoso. Redirigiendo...', 'success');
@@ -1007,5 +1070,6 @@
         console.log('✅ EduOne - Login cargado correctamente');
     </script>
 
+    <script src="assets/cookies.js" defer></script>
 </body>
 </html>

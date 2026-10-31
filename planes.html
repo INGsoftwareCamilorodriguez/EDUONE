@@ -191,6 +191,7 @@
         .plan-price-row { display: flex; align-items: baseline; gap: 4px; margin-bottom: 8px; }
         .plan-price { font-family: 'Space Grotesk', sans-serif; font-size: 32px; font-weight: 700; color: #fff; letter-spacing: -1px; line-height: 1; }
         .plan-period { font-size: 13px; color: var(--text-muted); }
+        .plan-iva { font-size: 12px; color: var(--text-muted); margin: -2px 0 6px; line-height: 1.4; }
         
         .plan-divider { height: 1px; background: rgba(148,163,184,0.15); margin: 24px 0; }
         
@@ -468,9 +469,10 @@
                     <div class="plan-name">EduOne Inicial</div>
                     <div class="plan-students"><i class="fas fa-user-graduate"></i> Hasta 200 estudiantes</div>
                     <div class="plan-price-row">
-                        <span class="plan-price">$2.000.000</span>
+                        <span class="plan-price">$2.380.000</span>
                         <span class="plan-period">/ año</span>
                     </div>
+                    <div class="plan-iva">IVA incluido · $2.000.000 + IVA 19&nbsp;% ($380.000)</div>
                     <div class="plan-divider"></div>
                     <ul class="plan-features">
                         <li><i class="fas fa-check-circle"></i> Acceso total a EduOne</li>
@@ -488,9 +490,10 @@
                     <div class="plan-name">EduOne Esencial</div>
                     <div class="plan-students"><i class="fas fa-user-graduate"></i> Hasta 400 estudiantes</div>
                     <div class="plan-price-row">
-                        <span class="plan-price">$2.800.000</span>
+                        <span class="plan-price">$3.332.000</span>
                         <span class="plan-period">/ año</span>
                     </div>
+                    <div class="plan-iva">IVA incluido · $2.800.000 + IVA 19&nbsp;% ($532.000)</div>
                     <div class="plan-divider"></div>
                     <ul class="plan-features">
                         <li><i class="fas fa-check-circle"></i> Acceso total a EduOne</li>
@@ -507,9 +510,10 @@
                     <div class="plan-name">EduOne Profesional</div>
                     <div class="plan-students"><i class="fas fa-user-graduate"></i> Hasta 600 estudiantes</div>
                     <div class="plan-price-row">
-                        <span class="plan-price">$3.600.000</span>
+                        <span class="plan-price">$4.284.000</span>
                         <span class="plan-period">/ año</span>
                     </div>
+                    <div class="plan-iva">IVA incluido · $3.600.000 + IVA 19&nbsp;% ($684.000)</div>
                     <div class="plan-divider"></div>
                     <ul class="plan-features">
                         <li><i class="fas fa-check-circle"></i> Acceso total a EduOne</li>
@@ -526,9 +530,10 @@
                     <div class="plan-name">EduOne Avanzado</div>
                     <div class="plan-students"><i class="fas fa-user-graduate"></i> Hasta 800 estudiantes</div>
                     <div class="plan-price-row">
-                        <span class="plan-price">$4.800.000</span>
+                        <span class="plan-price">$5.712.000</span>
                         <span class="plan-period">/ año</span>
                     </div>
+                    <div class="plan-iva">IVA incluido · $4.800.000 + IVA 19&nbsp;% ($912.000)</div>
                     <div class="plan-divider"></div>
                     <ul class="plan-features">
                         <li><i class="fas fa-check-circle"></i> Acceso total a EduOne</li>
@@ -596,7 +601,7 @@
                 <div class="faq-item">
                     <button class="faq-question">¿Los planes son mensuales o anuales? <span class="faq-arrow">⌄</span></button>
                     <div class="faq-answer">
-                        <div class="faq-answer-inner">Los planes se contratan de forma anual. La facturación se realiza de manera anual.</div>
+                        <div class="faq-answer-inner">Los planes se contratan de forma anual. La facturación se realiza de manera anual. Los precios publicados incluyen el IVA (19&nbsp;%).</div>
                     </div>
                 </div>
                 <div class="faq-item">
@@ -667,10 +672,12 @@
                 <div class="footer-col">
                     <h4>Legal</h4>
                     <ul>
-                        <li><button type="button" class="footer-link-btn" data-open-legal="terms">Términos y condiciones</button></li>
-                        <li><button type="button" class="footer-link-btn" data-open-legal="privacy">Política de privacidad</button></li>
-                        <li><button type="button" class="footer-link-btn" data-open-legal="data">Tratamiento de datos</button></li>
-                        <li><a href="#">Política de cookies</a></li>
+                        <li><a href="terminos.html">Términos y condiciones</a></li>
+                        <li><a href="privacidad.html">Política de privacidad</a></li>
+                        <li><a href="privacidad.html#derechos">Tratamiento de datos</a></li>
+                        <li><a href="cookies.html">Política de cookies</a></li>
+                        <li><a href="reembolsos.html">Política de reembolso</a></li>
+                        <li><a href="#" data-cookies-config>Configurar cookies</a></li>
                     </ul>
                 </div>
             </div>
@@ -678,6 +685,7 @@
                 <p>© 2026 EduOne. Todos los derechos reservados.</p>
                 <p>Tecnología educativa desarrollada en Colombia.</p>
                 <p>contacto@eduone.com.co · Neiva, Huila, Colombia · eduone.com.co</p>
+                <p class="footer-legal-id"><a href="https://www.sic.gov.co" target="_blank" rel="noopener">Superintendencia de Industria y Comercio (SIC)</a></p>
             </div>
         </div>
     </footer>
@@ -900,5 +908,6 @@
         })();
     </script>
 
+    <script src="assets/cookies.js" defer></script>
 </body>
 </html>

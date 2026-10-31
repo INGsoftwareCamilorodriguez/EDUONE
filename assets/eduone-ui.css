@@ -151,3 +151,32 @@
   .top-header h1.edu-brand span { display: none; }
   .top-header h1.edu-brand .edu-logo-img { margin-right: 0; }
 }
+
+/* ---------- Aceptación de documentos legales (bloquea el panel) ---------- */
+html.edu-legal-bloqueado, html.edu-legal-bloqueado body { overflow: hidden !important; }
+.edu-legal-overlay {
+  position: fixed; inset: 0; z-index: 100100; display: grid; place-items: center; padding: 16px;
+  background: rgba(15, 23, 42, .72); backdrop-filter: blur(4px);
+}
+.edu-legal-card {
+  width: min(480px, 100%); max-height: calc(100vh - 32px); overflow-y: auto; background: #fff; color: #1e293b;
+  border-radius: 18px; padding: 28px 26px 24px; box-shadow: 0 24px 60px rgba(15, 23, 42, .35);
+  font-family: var(--font, Inter, system-ui, sans-serif); text-align: left;
+}
+.edu-legal-logo { width: 56px; height: 56px; border-radius: 50%; display: block; margin: 0 auto 12px; }
+.edu-legal-card h2 { font-size: 1.25rem; font-weight: 700; text-align: center; margin: 0 0 8px; color: #0f172a; }
+.edu-legal-intro { font-size: .9rem; color: #64748b; text-align: center; margin: 0 0 20px; line-height: 1.55; }
+.edu-legal-item {
+  display: flex; align-items: flex-start; gap: 12px; padding: 12px 14px; margin-bottom: 10px;
+  border: 1px solid #e2e8f0; border-radius: 12px; background: #f8fafc; font-size: .9rem; line-height: 1.5;
+}
+.edu-legal-item input { width: 20px; height: 20px; flex: 0 0 20px; margin-top: 1px; accent-color: var(--primary, #1e3a8a); cursor: pointer; }
+.edu-legal-item label { cursor: pointer; }
+.edu-legal-item a { color: var(--primary, #1e3a8a); font-weight: 700; }
+.edu-legal-error { color: #b91c1c; font-size: .85rem; margin: 4px 0 10px; }
+.edu-legal-error[hidden] { display: none; }
+.edu-legal-btn {
+  width: 100%; margin-top: 8px; padding: 13px 18px; border: 0; border-radius: 12px; cursor: pointer;
+  background: var(--primary, #1e3a8a); color: #fff; font: 600 .95rem var(--font, Inter, system-ui, sans-serif);
+}
+.edu-legal-btn:disabled { opacity: .7; cursor: wait; }
