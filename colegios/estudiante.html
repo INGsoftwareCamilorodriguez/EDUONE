@@ -467,9 +467,17 @@ body{display:block!important;background:#f1f5fa!important}
 .edu-com-message img{display:block;max-width:100%;height:auto;object-fit:contain}
 @media(max-width:620px){.edu-com-message{max-width:100%;width:100%}.edu-com-feed{padding:10px}}
 .edu-com-feed{max-height:min(68vh,660px);overflow-y:auto;overscroll-behavior:contain;scroll-behavior:smooth}
-        </style>
+        
+/* Identidad del remitente en conversaciones y grupos */
+.edu-remitente-cabecera{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+.edu-remitente-avatar{display:grid;place-items:center;width:30px;height:30px;min-width:30px;border-radius:50%;overflow:hidden;background:var(--primary-bg);color:var(--primary);font-weight:700;font-size:12px}
+.edu-remitente-avatar img{width:100%;height:100%;object-fit:cover}
+#eduChatForm[hidden]{display:none!important}
+</style>
     <link rel="stylesheet" href="../assets/responsive.css" />
     <script src="../assets/responsive.js" defer></script>
+    <link rel="stylesheet" href="../assets/eduone-ui.css" />
+    <script type="module" src="../assets/eduone-ui.js"></script>
 </head>
 <body>
 
@@ -930,7 +938,8 @@ body{display:block!important;background:#f1f5fa!important}
                 "firebase/app": "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js",
                 "firebase/auth": "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js",
                 "firebase/firestore": "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js",
-                "firebase/storage": "https://www.gstatic.com/firebasejs/11.3.1/firebase-storage.js"
+                "firebase/storage": "https://www.gstatic.com/firebasejs/11.3.1/firebase-storage.js",
+                "firebase/messaging": "https://www.gstatic.com/firebasejs/11.3.1/firebase-messaging.js"
             }
         }
     </script>
@@ -941,7 +950,8 @@ body{display:block!important;background:#f1f5fa!important}
                 "firebase/app": "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js",
                 "firebase/auth": "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js",
                 "firebase/firestore": "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js",
-                "firebase/storage": "https://www.gstatic.com/firebasejs/11.3.1/firebase-storage.js"
+                "firebase/storage": "https://www.gstatic.com/firebasejs/11.3.1/firebase-storage.js",
+                "firebase/messaging": "https://www.gstatic.com/firebasejs/11.3.1/firebase-messaging.js"
             }
         }
     </script>
@@ -969,6 +979,7 @@ body{display:block!important;background:#f1f5fa!important}
         const auth = getAuth(app);
         const db = getFirestore(app);
         const storage = getStorage(app);
+
 
         // =============================================
         // VARIABLES GLOBALES
@@ -3504,7 +3515,7 @@ body{display:block!important;background:#f1f5fa!important}
         eduToggle?.addEventListener('click',()=>{const abierto=eduNav.classList.toggle('edu-mobile-open');eduToggle.setAttribute('aria-expanded',String(abierto));eduCerrarMenus()});
         document.querySelectorAll('.edu-group-toggle').forEach(b=>b.addEventListener('click',(e)=>{e.stopPropagation();const grupo=b.parentElement,abierto=grupo.classList.contains('edu-open');eduCerrarMenus();grupo.classList.toggle('edu-open',!abierto);b.setAttribute('aria-expanded',String(!abierto))}));
         document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>{document.querySelector('.sidebar-nav a[data-page="'+b.dataset.go+'"]')?.click();eduCerrarMenus();eduNav.classList.remove('edu-mobile-open');eduToggle?.setAttribute('aria-expanded','false');document.querySelectorAll('[data-go]').forEach(x=>x.classList.toggle('edu-active',x.dataset.go===b.dataset.go));window.scrollTo({top:0,behavior:'instant'})}));
-        document.addEventListener('click',e=>{if(!e.target.closest('.edu-nav-group'))eduCerrarMenus();if(!e.target.closest('#eduTopNav')&&!e.target.closest('#eduMobileToggle')&&innerWidth<=950){eduNav.classList.remove('edu-mobile-open');eduToggle?.setAttribute('aria-expanded','false')}});
+        document.addEventListener('click',e=>{if(!e.target.closest('.edu-nav-group'))eduCerrarMenus();if(!e.target.closest('#eduTopNav')&&!e.target.closest('#eduMobileToggle')&&innerWidth<=1280){eduNav.classList.remove('edu-mobile-open');eduToggle?.setAttribute('aria-expanded','false')}});
         document.addEventListener('keydown',e=>{if(e.key==='Escape'){eduCerrarMenus();eduNav.classList.remove('edu-mobile-open')}});
         document.getElementById('eduProfileNav')?.addEventListener('click',()=>document.getElementById('userAvatarBtn')?.click());
         document.getElementById('eduLogoutNav')?.addEventListener('click',()=>document.getElementById('logoutBtn')?.click());
@@ -3525,49 +3536,45 @@ body{display:block!important;background:#f1f5fa!important}
         const eduChatEscape=t=>String(t??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
         const eduChatFecha=t=>{try{return t?.toDate?.().toLocaleString('es-CO',{hour:'2-digit',minute:'2-digit',day:'2-digit',month:'short'})||''}catch{return ''}};
         function eduChatItem(nombre,rol,foto,onClick){const b=document.createElement('button');b.className='edu-chat-contact';b.type='button';const a=document.createElement('span');a.className='edu-user-avatar';if(foto){const img=document.createElement('img');img.src=foto;img.alt='';img.onerror=()=>{a.textContent=(nombre||'?')[0]};a.append(img)}else a.textContent=(nombre||'?')[0].toUpperCase();const d=document.createElement('div');d.innerHTML='<strong>'+eduChatEscape(nombre)+'</strong><br><span>'+eduChatEscape(rol)+'</span>';b.append(a,d);b.addEventListener('click',onClick);return b}
+        // Grupos compartidos con el profesor: chatGrupos/curso_{cursoId}.
+        // La pertenencia se otorga exclusivamente por una operación de backend autorizada.
         async function eduCargarChat(){
-          if(!colegioId || !auth.currentUser) return;
+          if(!colegioId || !auth.currentUser)return;
           const uid=auth.currentUser.uid;
           const grupos=document.getElementById('eduChatGrupos');
           const historial=document.getElementById('eduChatHistorial');
-          grupos.textContent='Cargando grupos de tu curso...';
+          grupos.textContent='Consultando el grupo de tu curso...';
           historial.textContent='Cargando conversaciones...';
           try {
-            grupos.replaceChildren();
-            if(!cursoActualId){ grupos.textContent='No tienes un curso matriculado.'; }
+            if(!cursoActualId){ grupos.textContent='Tu matrícula no tiene un curso asignado.'; }
             else {
-              const [cursoDoc,horariosSnap,gruposSnap]=await Promise.all([
-                getDoc(doc(db,'colegios',colegioId,'cursos',cursoActualId)),
-                getDocs(query(collection(db,'colegios',colegioId,'horarios'),where('cursoId','==',cursoActualId))),
-                getDocs(query(collection(db,'colegios',colegioId,'chatGrupos'),where('miembros','array-contains',uid)))
-              ]);
-              const nombreCurso=cursoDoc.exists()?(cursoDoc.data().nombre||cursoDoc.data().cursoNombre||cursoActualId):cursoActualId;
-              const permitidos=new Map(gruposSnap.docs.map(x=>[x.id,x.data()]));
-              const materias=new Map();
-              horariosSnap.forEach(d=>{const h=d.data();if(h.asignaturaId && !materias.has(h.asignaturaId) && h.asignaturaNombre && !/descanso|recreo/i.test(h.asignaturaNombre))materias.set(h.asignaturaId,h.asignaturaNombre)});
-              if(!materias.size) grupos.textContent='El colegio todavía no ha registrado materias para tu curso.';
-              for(const [asignaturaId,nombreMateria] of materias){
-                const id='materia_'+cursoActualId+'_'+asignaturaId;
-                const autorizado=permitidos.has(id);
-                const btn=eduChatItem(nombreMateria+' · '+nombreCurso,autorizado?'Grupo académico':'Aún no habilitado','',()=>eduAbrirChat('grupo',id,nombreMateria+' · '+nombreCurso));
-                btn.disabled=!autorizado;
-                if(!autorizado){btn.title='El grupo estará disponible cuando Firebase sincronice sus integrantes';}
-                grupos.append(btn);
-              }
+              const cursoRef=doc(db,'colegios',colegioId,'cursos',cursoActualId);
+              const cursoSnap=await getDoc(cursoRef);
+              const curso=cursoSnap.exists()?cursoSnap.data():{};
+              const nombreCurso=curso.nombre||curso.cursoNombre||cursoActualId;
+              const groupId='curso_'+cursoActualId;
+              grupos.replaceChildren();
+              const boton=eduChatItem('Grupo · '+nombreCurso,'Mensajes de los profesores · Solo lectura','',()=>eduAbrirChat('grupo',groupId,'Grupo · '+nombreCurso));
+              const detalle=document.createElement('span');detalle.style.cssText='display:block;font-size:11px;color:var(--text-secondary);margin:4px 0 0 8px';
+              // El estudiante usa el grupo del profesor correspondiente a su matrícula.
+              // Firestore determina el acceso: no se consulta ni se exige el arreglo "miembros".
+              // No se otorgan permisos desde el navegador ni se crea otro grupo.
+              detalle.textContent='Mensajes del curso · Solo lectura';
+              grupos.append(boton,detalle);
             }
-          }catch(e){grupos.textContent='No se pudieron cargar los grupos: '+e.message;}
-          try {
-            const [chats,usuarios] = await Promise.all([
+          }catch(e){grupos.textContent='No se pudo identificar el grupo: '+e.message;}
+          try{
+            const [chats,usuarios]=await Promise.all([
               getDocs(query(collection(db,'colegios',colegioId,'chats'),where('participantes','array-contains',uid))),
               getDocs(query(collection(db,'usuarios'),where('colegioId','==',colegioId)))
             ]);
             const personas=new Map(usuarios.docs.map(d=>[d.id,d.data()]));
             historial.replaceChildren();
-            if(chats.empty){historial.textContent='Aún no tienes conversaciones.';return;}
             const registros=chats.docs.map(d=>({id:d.id,...d.data()}));
-            registros.sort((a,b)=>(b.actualizadoEn?.seconds||b.creadoEn?.seconds||0)-(a.actualizadoEn?.seconds||a.creadoEn?.seconds||0));
+            registros.sort((x,y)=>(y.actualizadoEn?.seconds||y.creadoEn?.seconds||0)-(x.actualizadoEn?.seconds||x.creadoEn?.seconds||0));
             for(const c of registros){
-              const otro=(c.participantes||[]).find(x=>x!==uid);if(!otro)continue;
+              const otro=(c.participantes||[]).find(x=>x!==uid);
+              if(!otro)continue;
               const perfil=personas.get(otro)||{};
               const nombre=perfil.nombreCompleto||perfil.nombre||[perfil.nombres,perfil.apellidos].filter(Boolean).join(' ')||c.nombres?.[otro]||c.nombreContacto||'Usuario del colegio';
               const foto=perfil.fotoPerfilUrl||perfil.fotoUrl||'';
@@ -3578,8 +3585,92 @@ body{display:block!important;background:#f1f5fa!important}
         }
         let eduChatBusqueda=0;
         document.getElementById('eduBuscarContacto')?.addEventListener('input',async e=>{const texto=e.target.value.toLowerCase().trim(),n=++eduChatBusqueda,box=document.getElementById('eduChatContactos');box.replaceChildren();if(texto.length<2)return;box.textContent='Buscando...';try{const qs=await getDocs(query(collection(db,'usuarios'),where('colegioId','==',colegioId)));if(n!==eduChatBusqueda)return;box.replaceChildren();let count=0;qs.forEach(d=>{const x=d.data();if(x.colegioId!==colegioId||d.id===auth.currentUser.uid)return;const nom=x.nombreCompleto||x.nombre||((x.nombres||'')+' '+(x.apellidos||''));if(!nom.toLowerCase().includes(texto)||count>=15)return;count++;box.append(eduChatItem(nom,x.rol||'Usuario',x.fotoUrl||x.fotoPerfilUrl||'',async()=>{try{const destinoUid=x.authUid||x.uid||d.id;if(destinoUid!==d.id)throw Error('El contacto tiene un UID distinto del ID de usuarios. Se requiere vincularlos en Firebase.');const ids=[destinoUid,auth.currentUser.uid].sort(),id=ids.join('_');const refChat=doc(db,'colegios',colegioId,'chats',id);const existentes=await getDocs(query(collection(db,'colegios',colegioId,'chats'),where('participantes','array-contains',auth.currentUser.uid)));const yaExiste=existentes.docs.some(c=>c.id===id);if(!yaExiste)await setDoc(refChat,{colegioId,participantes:ids,nombres:{[d.id]:nom,[auth.currentUser.uid]:usuarioActual?.nombre||'Estudiante'},creadoEn:serverTimestamp()});eduAbrirChat('privado',id,nom);eduCargarChat()}catch(er){document.getElementById('eduChatEstado').textContent='No se pudo abrir: '+er.message}}))});if(!count)box.textContent='No hay coincidencias.'}catch(err){box.textContent='No se pudo buscar: '+err.message}});
-        function eduAbrirChat(tipo,id,nombre){if(eduChatUnsub)eduChatUnsub();eduChatTarget={tipo,id};document.getElementById('eduChatTitulo').textContent=nombre;const box=document.getElementById('eduChatMensajes');box.textContent='Cargando mensajes...';const path=tipo==='grupo'?'chatGrupos':'chats';eduChatUnsub=onSnapshot(query(collection(db,'colegios',colegioId,path,id,'mensajes'),orderBy('creadoEn','asc'),limit(100)),snap=>{box.replaceChildren();if(snap.empty)box.textContent='Aún no hay mensajes.';snap.forEach(d=>{const m=d.data();const item=document.createElement('div');item.className='edu-chat-bubble'+(m.remitenteUid===auth.currentUser.uid?' mine':'');const titulo=document.createElement('strong');titulo.textContent=m.remitenteNombre||'Usuario';item.append(titulo);const p=document.createElement('div');p.textContent=m.texto||m.mensaje||'';item.append(p);if(m.imagenUrl){const im=document.createElement('img');im.src=m.imagenUrl;im.loading='lazy';im.alt='Imagen adjunta';im.style.cssText='max-width:250px;width:100%;border-radius:10px;display:block;margin-top:8px';item.append(im)}if(m.archivoUrl){const a=document.createElement('a');a.href=m.archivoUrl;a.target='_blank';a.rel='noopener noreferrer';a.textContent='Ver archivo adjunto';item.append(a)}const f=document.createElement('small');f.textContent=eduChatFecha(m.fecha||m.creadoEn);item.append(f);box.append(item)});box.scrollTop=box.scrollHeight},e=>box.textContent='No se pudo cargar: '+e.message)}
-        document.getElementById('eduChatForm')?.addEventListener('submit',async e=>{e.preventDefault();if(!eduChatTarget)return;const campo=document.getElementById('eduChatTexto'),archivo=document.getElementById('eduChatArchivo'),estado=document.getElementById('eduChatEstado'),txt=campo.value.trim(),file=archivo.files?.[0];if(!txt&&!file)return;const btn=e.target.querySelector('button[type=submit]');btn.disabled=true;estado.textContent='Enviando...';try{const {tipo,id}=eduChatTarget,path=tipo==='grupo'?'chatGrupos':'chats';let url=null;if(file){if(file.size>8*1024*1024)throw Error('Máximo 8 MB');if(!['image/jpeg','image/png','image/webp','application/pdf','application/msword','application/vnd.openxmlformats-officedocument.wordprocessingml.document'].includes(file.type))throw Error('Formato no permitido');const dest=ref(storage,'colegios/'+colegioId+'/chat/'+auth.currentUser.uid+'/'+Date.now()+'_'+file.name.replace(/[^a-zA-Z0-9_.-]/g,'_'));await new Promise((resolve,reject)=>{uploadBytesResumable(dest,file).on('state_changed',undefined,reject,resolve)});url=await getDownloadURL(dest)}const base={colegioId,remitenteUid:auth.currentUser.uid,remitenteNombre:usuarioActual?.nombre||'Estudiante',texto:txt,creadoEn:serverTimestamp()};if(url)base.archivoUrl=url;if(tipo==='grupo'){base.tipo='grupo'}else{const chat=await getDoc(doc(db,'colegios',colegioId,'chats',id));if(!chat.exists())throw Error('La conversación no existe');base.destinatarioUid=chat.data()?.participantes?.find(u=>u!==auth.currentUser.uid)}await addDoc(collection(db,'colegios',colegioId,path,id,'mensajes'),base);campo.value='';archivo.value='';estado.textContent='Enviado'}catch(err){estado.textContent='No se pudo enviar: '+err.message}finally{btn.disabled=false}});
+        // Perfiles reales de remitentes; los mensajes de grupo guardan remitenteUid.
+        const eduPerfilMensajeCache = new Map();
+        async function eduPerfilRemitente(uid) {
+          if (!uid || !colegioId) return null;
+          const cacheKey = colegioId + ':' + uid;
+          if (!eduPerfilMensajeCache.has(cacheKey)) {
+            const pendiente = getDoc(doc(db, 'usuarios', uid)).then(snap => {
+              if (!snap.exists()) return null;
+              const p = snap.data();
+              if (p.colegioId !== colegioId) return null;
+              return {
+                nombre: p.nombreCompleto || p.nombre || [p.nombres, p.apellidos].filter(Boolean).join(' ') || '',
+                foto: p.fotoPerfilUrl || p.fotoUrl || p.foto || ''
+              };
+            }).catch(err => { console.warn('No se pudo consultar el perfil del remitente:', err); return null; });
+            eduPerfilMensajeCache.set(cacheKey, pendiente);
+          }
+          return eduPerfilMensajeCache.get(cacheKey);
+        }
+        function eduAbrirChat(tipo,id,nombre){
+          if(eduChatUnsub) eduChatUnsub();
+          eduChatTarget={tipo,id};
+          const form=document.getElementById('eduChatForm');
+          if(form) form.hidden=(tipo==='grupo');
+          const estado=document.getElementById('eduChatEstado');
+          if(estado) estado.textContent=tipo==='grupo'?'Canal de solo lectura: los mensajes los publica el profesor.':'';
+          document.getElementById('eduChatTitulo').textContent=nombre;
+          const box=document.getElementById('eduChatMensajes');
+          box.textContent='Cargando mensajes...';
+          const path=tipo==='grupo'?'chatGrupos':'chats';
+          eduChatUnsub=onSnapshot(
+            query(collection(db,'colegios',colegioId,path,id,'mensajes'),orderBy('creadoEn','asc'),limit(100)),
+            snap=>{
+              box.replaceChildren();
+              if(snap.empty) box.textContent='Aún no hay mensajes.';
+              snap.forEach(d=>{
+                const m=d.data();
+                const item=document.createElement('div');
+                item.className='edu-chat-bubble'+(m.remitenteUid===auth.currentUser.uid?' mine':'');
+                const cabecera=document.createElement('div');
+                cabecera.className='edu-remitente-cabecera';
+                const avatar=document.createElement('span');
+                avatar.className='edu-remitente-avatar';
+                const titulo=document.createElement('strong');
+                const nombreInicial=m.remitenteNombre||'Usuario';
+                titulo.textContent=nombreInicial;
+                avatar.textContent=nombreInicial.charAt(0).toUpperCase();
+                cabecera.append(avatar,titulo);
+                item.append(cabecera);
+                const p=document.createElement('div');
+                p.textContent=m.texto||m.mensaje||'';
+                item.append(p);
+                if(m.imagenUrl){
+                  const im=document.createElement('img');
+                  im.src=m.imagenUrl;im.loading='lazy';im.alt='Imagen adjunta';
+                  im.style.cssText='max-width:250px;width:100%;border-radius:10px;display:block;margin-top:8px';
+                  item.append(im);
+                }
+                if(m.archivoUrl){
+                  const a=document.createElement('a');a.href=m.archivoUrl;
+                  a.target='_blank';a.rel='noopener noreferrer';a.textContent='Ver archivo adjunto';item.append(a);
+                }
+                const f=document.createElement('small');
+                f.textContent=eduChatFecha(m.fecha||m.creadoEn);item.append(f);
+                box.append(item);
+                // Sin modificar mensajes antiguos: obtiene nombre y fotografía desde usuarios/UID.
+                eduPerfilRemitente(m.remitenteUid).then(perfil=>{
+                  if(!perfil || !item.isConnected) return;
+                  const nombreReal=perfil.nombre||nombreInicial;
+                  titulo.textContent=nombreReal;
+                  avatar.textContent=nombreReal.charAt(0).toUpperCase();
+                  if(perfil.foto){
+                    const img=document.createElement('img');
+                    img.src=perfil.foto;img.alt='Foto de '+nombreReal;
+                    img.loading='lazy';
+                    img.onerror=()=>{avatar.textContent=nombreReal.charAt(0).toUpperCase()};
+                    avatar.replaceChildren(img);
+                  }
+                });
+              });
+              box.scrollTop=box.scrollHeight;
+            },
+            e=>{box.textContent=e.code==='permission-denied'?'Firestore no autorizó la lectura del chat. Revisa los permisos de tu cuenta y curso.':'No se pudo cargar: '+e.message;}
+          );
+        }
+        document.getElementById('eduChatForm')?.addEventListener('submit',async e=>{e.preventDefault();if(!eduChatTarget)return;if(eduChatTarget.tipo==='grupo'){document.getElementById('eduChatEstado').textContent='Los estudiantes solo pueden leer el grupo.';return;}const campo=document.getElementById('eduChatTexto'),archivo=document.getElementById('eduChatArchivo'),estado=document.getElementById('eduChatEstado'),txt=campo.value.trim(),file=archivo.files?.[0];if(!txt&&!file)return;const btn=e.target.querySelector('button[type=submit]');btn.disabled=true;estado.textContent='Enviando...';try{const {tipo,id}=eduChatTarget,path=tipo==='grupo'?'chatGrupos':'chats';let url=null;if(file){if(file.size>8*1024*1024)throw Error('Máximo 8 MB');if(!['image/jpeg','image/png','image/webp','application/pdf','application/msword','application/vnd.openxmlformats-officedocument.wordprocessingml.document'].includes(file.type))throw Error('Formato no permitido');const dest=ref(storage,'colegios/'+colegioId+'/chat/'+auth.currentUser.uid+'/'+Date.now()+'_'+file.name.replace(/[^a-zA-Z0-9_.-]/g,'_'));await new Promise((resolve,reject)=>{uploadBytesResumable(dest,file).on('state_changed',undefined,reject,resolve)});url=await getDownloadURL(dest)}const base={colegioId,remitenteUid:auth.currentUser.uid,remitenteNombre:usuarioActual?.nombre||'Estudiante',texto:txt,creadoEn:serverTimestamp()};if(url)base.archivoUrl=url;if(tipo==='grupo')throw Error('Los estudiantes no pueden publicar en grupos');else{const chat=await getDoc(doc(db,'colegios',colegioId,'chats',id));if(!chat.exists())throw Error('La conversación no existe');base.destinatarioUid=chat.data()?.participantes?.find(u=>u!==auth.currentUser.uid)}await addDoc(collection(db,'colegios',colegioId,path,id,'mensajes'),base);campo.value='';archivo.value='';estado.textContent='Enviado'}catch(err){estado.textContent='No se pudo enviar: '+err.message}finally{btn.disabled=false}});
 
         // =============================================
         // AUTH

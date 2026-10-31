@@ -407,6 +407,8 @@ body{display:block;background:#f3f7fc} .sidebar,.sidebar-overlay{display:none!im
 </style>
     <link rel="stylesheet" href="../assets/responsive.css" />
     <script src="../assets/responsive.js" defer></script>
+    <link rel="stylesheet" href="../assets/eduone-ui.css" />
+    <script type="module" src="../assets/eduone-ui.js"></script>
 <style>
 /* Corrección del encabezado: evita crecimiento de imágenes y desbordamientos */
 .top-header{height:72px!important;min-height:72px!important;max-height:72px!important;flex-wrap:nowrap!important;position:sticky;top:0;align-items:center!important;padding:0 22px!important;gap:12px!important;isolation:isolate}
@@ -415,7 +417,6 @@ body{display:block;background:#f3f7fc} .sidebar,.sidebar-overlay{display:none!im
 .top-header .user-avatar{display:flex!important;align-items:center;justify-content:center;flex:0 0 42px!important;width:42px!important;height:42px!important;max-width:42px!important;max-height:42px!important;overflow:hidden!important;border-radius:50%!important;background:var(--primary-bg);line-height:1!important}
 .top-header .user-avatar img,.top-header img.edu-header-photo,.edu-header-photo{display:block!important;width:42px!important;height:42px!important;min-width:42px!important;min-height:42px!important;max-width:42px!important;max-height:42px!important;object-fit:cover!important;border-radius:50%!important;position:static!important}
 .top-header .user-avatar i{font-size:27px!important}.top-header .notificaciones{flex:0 0 auto}
-.top-header #eduEnablePush{font-size:.7rem;max-width:145px;white-space:normal;line-height:1.2;padding:7px}
 .edu-topnav{flex:1 1 auto;min-width:0;gap:2px}.edu-topnav a,.edu-topnav summary{font-size:.78rem;padding:8px}
 #page-planilla input.nota-input{display:inline-block!important;width:68px!important;height:37px!important;min-height:37px!important;border:1.5px solid var(--gray-300)!important;background:white!important;pointer-events:auto!important;user-select:text!important;opacity:1!important;position:relative;z-index:1;color:var(--text-primary)!important;border-radius:8px!important;text-align:center!important}
 #page-planilla input.nota-input:focus{outline:2px solid var(--primary)!important;border-color:var(--primary)!important}
@@ -435,7 +436,7 @@ body{display:block;background:#f3f7fc} .sidebar,.sidebar-overlay{display:none!im
 #page-entregas .edu-entrega-inspector input{max-width:115px}
 #page-entregas .edu-entrega-inspector .btn-primary{margin-top:12px}
 @media(max-width:1150px){#page-entregas .edu-entregas-grid{grid-template-columns:210px minmax(0,1fr)}#page-entregas .edu-entrega-inspector{grid-column:2;position:static}.edu-topnav a,.edu-topnav summary{font-size:.74rem;padding:6px}}
-@media(max-width:850px){.top-header{height:66px!important;min-height:66px!important;max-height:66px!important}.edu-topnav.mobile-open{display:flex!important;position:absolute;top:100%;left:12px;right:12px}.top-header #eduEnablePush{display:none}.top-header .user-info{display:none}#page-entregas .edu-entregas-grid{grid-template-columns:1fr}#page-entregas .edu-entregas-tabs{flex-direction:row;max-height:none;overflow-x:auto}#page-entregas .edu-entregas-tabs button{flex:0 0 190px}#page-entregas .edu-entrega-inspector{grid-column:1}#page-entregas .edu-entregas-detail{max-height:none}}
+@media(max-width:850px){.top-header{height:66px!important;min-height:66px!important;max-height:66px!important}.edu-topnav.mobile-open{display:flex!important;position:absolute;top:100%;left:12px;right:12px}.top-header .user-info{display:none}#page-entregas .edu-entregas-grid{grid-template-columns:1fr}#page-entregas .edu-entregas-tabs{flex-direction:row;max-height:none;overflow-x:auto}#page-entregas .edu-entregas-tabs button{flex:0 0 190px}#page-entregas .edu-entrega-inspector{grid-column:1}#page-entregas .edu-entregas-detail{max-height:none}}
 </style>
 </head>
 <body>
@@ -1490,7 +1491,6 @@ body{display:block;background:#f3f7fc} .sidebar,.sidebar-overlay{display:none!im
         import { getFirestore, doc, getDoc, collection, getDocs, addDoc, updateDoc, deleteDoc,
             query, where, serverTimestamp, orderBy, setDoc, onSnapshot, limit } from "firebase/firestore";
         import { getStorage, ref, uploadBytesResumable, getDownloadURL, deleteObject } from "firebase/storage";
-        import { getMessaging, getToken, onMessage, isSupported } from "firebase/messaging";
         import { arrayUnion } from "firebase/firestore";
 
         const firebaseConfig = {
@@ -4925,32 +4925,7 @@ const eduOldSyncAppearance=eduSyncSchoolAppearance;
 eduSyncSchoolAppearance=async function(...args){const result=await eduOldSyncAppearance(...args);eduSyncHeaderAvatar();eduStartNotifications();return result};
 
 
-// FCM web opt-in: requiere HTTPS, service worker en la raíz y clave VAPID pública del proyecto.
-const EDUONE_FCM_VAPID_KEY=''; // CONFIGURAR: Firebase Console > Cloud Messaging > Web Push certificates.
-let eduFcmBootstrapped=false;
-async function eduRegisterPush(){
- if(!('Notification' in window)||!('serviceWorker' in navigator))return showToast('Este navegador no admite notificaciones push web','warning');
- if(!await isSupported())return showToast('Firebase Messaging no está disponible en este navegador','warning');
- if(!EDUONE_FCM_VAPID_KEY)return showToast('Falta configurar la clave VAPID en el código','warning');
- try{
-  const perm=await Notification.requestPermission();if(perm!=='granted')return showToast('Notificaciones no autorizadas','warning');
-  const registration=await navigator.serviceWorker.register('/firebase-messaging-sw.js');
-  const token=await getToken(getMessaging(app),{vapidKey:EDUONE_FCM_VAPID_KEY,serviceWorkerRegistration:registration});
-  if(!token)throw Error('No se obtuvo token de dispositivo');
-  await updateDoc(doc(db,'usuarios',eduUid()),{fcmTokens:arrayUnion(token)});
-  showToast('Notificaciones del dispositivo activadas','success');
- }catch(error){showToast('No se pudieron activar: '+error.message,'error')}
-}
-function eduInitializePushUI(){
- if(eduFcmBootstrapped||!colegioId)return;eduFcmBootstrapped=true;
- const b=document.createElement('button');b.type='button';b.id='eduEnablePush';b.className='btn-primary btn-sm';b.innerHTML='<i class="fas fa-bell"></i> Activar avisos en el celular';b.addEventListener('click',eduRegisterPush);
- const n=document.getElementById('notificacionesBtn');if(n)n.after(b);
- if(isSupported) isSupported().then(ok=>{if(ok)onMessage(getMessaging(app),p=>{const title=p.notification?.title||'EduOne';const body=p.notification?.body||'Tienes una notificación';eduNotifyLocal(title,body,p.data?.tipo==='comunicado'?'comunicados':'chat')})}).catch(()=>{});
-}
-const eduPreviousPushInit=eduStartNotifications;
-eduStartNotifications=function(){eduPreviousPushInit();eduInitializePushUI()};
-
     </script>
 
 </body>
-</html> 
+</html>

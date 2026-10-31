@@ -1,0 +1,153 @@
+/* =====================================================================
+   EduOne - eduone-ui.css (estilos de assets/eduone-ui.js)
+   Logo, botón "Activar notificaciones", selector de emojis y avisos.
+   ===================================================================== */
+
+/* ---------- Logo ---------- */
+.edu-logo-img, .edu-header-logo {
+  width: 34px; height: 34px; border-radius: 50%; object-fit: cover; flex: 0 0 auto;
+  box-shadow: 0 2px 8px rgba(30, 64, 175, .25); display: inline-block; vertical-align: middle;
+}
+.sidebar-header .logo .edu-logo-img { width: 32px; height: 32px; }
+.edu-brand .edu-logo-img { margin-right: 6px; }
+.header-left .edu-header-logo { margin-right: 4px; }
+.sidebar.collapsed .sidebar-header .logo .edu-logo-img { margin: 0 auto; }
+
+/* ---------- Botón Activar notificaciones ---------- */
+.edu-push-btn, .top-header .edu-push-btn {
+  position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  flex: 0 0 auto; min-height: 38px; padding: 8px 14px; border: 0; border-radius: 10px;
+  background: var(--primary, #1e3a8a) !important; color: #fff !important; cursor: pointer;
+  font: 600 .8rem/1.1 var(--font, Inter, system-ui, sans-serif); white-space: nowrap;
+  box-shadow: 0 3px 10px rgba(30, 58, 138, .25); transition: filter .15s, transform .15s;
+}
+.edu-push-btn[hidden] { display: none !important; }
+.edu-push-btn:hover { filter: brightness(1.08); }
+.edu-push-btn:active { transform: scale(.97); }
+.edu-push-btn:disabled { opacity: .65; cursor: wait; }
+.edu-push-btn i { font-size: .95rem; }
+/* Punto que indica que falta activar */
+.edu-push-btn::after {
+  content: ""; position: absolute; top: 5px; right: 5px; width: 8px; height: 8px; border-radius: 50%;
+  background: #f59e0b; box-shadow: 0 0 0 2px #fff; display: none;
+}
+
+/* Pantallas medianas y celular (incluye "modo escritorio" del celular):
+   solo campana circular para que el encabezado no se rompa */
+@media (max-width: 1280px) {
+  .edu-push-btn, .top-header .edu-push-btn { width: 40px !important; height: 40px !important; min-height: 40px; padding: 0 !important; border-radius: 50% !important; }
+  .edu-push-btn .edu-push-text { display: none; }
+  .edu-push-btn::after { display: block; }
+}
+@media (max-width: 480px) {
+  .edu-push-btn { width: 36px; height: 36px; min-height: 36px; }
+}
+
+/* ---------- Selector de emojis ---------- */
+.edu-emoji-btn {
+  flex: 0 0 auto; display: inline-grid; place-items: center; width: 42px; height: 42px; padding: 0;
+  border: 1px solid var(--border, #e2e8f0); border-radius: 10px; background: #fff; cursor: pointer;
+  font-size: 1.25rem; line-height: 1; transition: background .15s, transform .15s;
+}
+.edu-emoji-btn:hover, .edu-emoji-btn[aria-expanded="true"] { background: var(--primary-bg, #eef2ff); }
+.edu-emoji-btn:active { transform: scale(.94); }
+.edu-emoji-btn--area { display: flex; width: auto; height: 34px; margin: 6px 0 0 auto; padding: 0 12px; font-size: 1.1rem; }
+
+.edu-emoji-picker {
+  position: fixed; z-index: 100001; width: 330px; max-width: calc(100vw - 16px);
+  background: #fff; border: 1px solid var(--border, #e2e8f0); border-radius: 14px;
+  box-shadow: 0 16px 40px rgba(15, 23, 42, .22); overflow: hidden;
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+}
+.edu-emoji-picker[hidden] { display: none !important; }
+.edu-emoji-tabs { display: flex; gap: 2px; padding: 6px; border-bottom: 1px solid var(--border, #e2e8f0); background: #f8fafc; }
+.edu-emoji-tabs button {
+  flex: 1; border: 0; background: transparent; border-radius: 8px; padding: 6px 0; font-size: 1.2rem; cursor: pointer;
+}
+.edu-emoji-tabs button.active { background: #fff; box-shadow: 0 1px 4px rgba(0, 0, 0, .12); }
+.edu-emoji-grid {
+  display: grid; grid-template-columns: repeat(8, 1fr); gap: 2px; padding: 8px; max-height: 220px; overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.edu-emoji-item {
+  border: 0; background: transparent; border-radius: 8px; font-size: 1.35rem; line-height: 1; aspect-ratio: 1;
+  cursor: pointer; display: grid; place-items: center; padding: 0;
+}
+.edu-emoji-item:hover, .edu-emoji-item:focus-visible { background: var(--primary-bg, #eef2ff); outline: none; }
+
+/* En celular: panel inferior a todo el ancho */
+@media (max-width: 600px) {
+  .edu-emoji-picker {
+    left: 8px !important; right: 8px; top: auto !important; bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+    width: auto; max-width: none;
+  }
+  .edu-emoji-grid { grid-template-columns: repeat(8, 1fr); max-height: 38vh; }
+  .edu-emoji-item { font-size: 1.5rem; }
+  .edu-emoji-btn { width: 40px; height: 40px; }
+}
+
+/* ---------- Aviso ---------- */
+.edu-ui-toast {
+  position: fixed; left: 50%; bottom: 22px; z-index: 100002; transform: translate(-50%, 20px);
+  width: max-content; max-width: min(440px, calc(100vw - 24px)); padding: 13px 18px; border-radius: 12px;
+  background: #172554; color: #fff; font: 500 .88rem/1.4 var(--font, Inter, system-ui, sans-serif);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .25); opacity: 0; pointer-events: none; cursor: pointer;
+  transition: opacity .2s, transform .2s;
+}
+.edu-ui-toast.visible { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
+.edu-ui-toast[data-tipo="success"] { background: #166534; }
+.edu-ui-toast[data-tipo="warning"] { background: #92400e; }
+.edu-ui-toast[data-tipo="error"] { background: #991b1b; }
+
+/* =====================================================================
+   Encabezado en pantallas medianas (851px–1280px)
+   Es el ancho que usa Chrome del celular en "Sitio de escritorio" (~980px)
+   y las laptops pequeñas: el menú completo no cabe junto al usuario, así
+   que se usa el mismo botón "Menú" desplegable del celular.
+   ===================================================================== */
+@media (min-width: 851px) and (max-width: 1280px) {
+  /* Profesor */
+  .top-header #eduMobileMenu.edu-mobile-menu { display: flex; }
+  .top-header #eduTopNav.edu-topnav {
+    display: none !important; position: absolute; top: 100%; left: 12px; right: 12px; width: auto; order: 0;
+    flex-direction: column; align-items: stretch; justify-content: flex-start; gap: 2px; padding: 12px;
+    background: #fff; z-index: 120; border: 1px solid var(--border, #e2e8f0); border-radius: 14px;
+    box-shadow: 0 15px 35px #13274b28; max-height: 75vh; overflow: auto;
+  }
+  .top-header #eduTopNav.edu-topnav.mobile-open { display: flex !important; }
+  .top-header #eduTopNav details { width: 100%; position: static; }
+  .top-header #eduTopNav summary, .top-header #eduTopNav > a { width: 100%; justify-content: space-between; }
+  .top-header #eduTopNav .edu-subnav { position: static; box-shadow: none; min-width: 0; margin: 3px 0 10px 14px; }
+  .top-header #eduTopNav .edu-subnav button { width: 100%; }
+
+  /* Rector */
+  .top-header .edu-mobile-menu-btn { display: block; margin-left: auto; }
+  .top-header .edu-unico-menu {
+    display: none; position: absolute; top: 100%; left: 8px; right: 8px; z-index: 1200; max-height: 75vh; overflow-y: auto;
+    flex-direction: column; align-items: stretch; background: #fff; padding: 13px; box-shadow: 0 12px 35px #0002;
+    border-radius: 0 0 15px 15px; border: 1px solid #e7eaf2;
+  }
+  .top-header .edu-unico-menu.menu-abierto { display: flex; }
+  .top-header .edu-unico-menu > .edu-toplink, .top-header .edu-unico-menu .edu-menu-group summary { width: 100%; text-align: left; padding: 13px; }
+  .top-header .edu-unico-menu .edu-menu-options { position: static; box-shadow: none; border: 0; padding: 5px 12px 10px; min-width: 0; }
+  .top-header .edu-unico-menu ~ .header-right { margin-left: 0; }
+}
+@media (min-width: 951px) and (max-width: 1280px) {
+  /* Estudiante */
+  .edu-top .edu-mobile-toggle { display: block; margin-left: auto; }
+  .edu-top .edu-nav {
+    display: none; position: absolute; top: 70px; left: 12px; right: 12px; background: #fff;
+    border: 1px solid var(--border, #e2e8f0); border-radius: 15px; box-shadow: 0 20px 38px #10284822; padding: 12px;
+    flex-direction: column; align-items: stretch; max-height: calc(100vh - 90px); overflow: auto;
+  }
+  .edu-top .edu-nav.edu-mobile-open { display: flex; }
+  .edu-top .edu-nav button { width: 100%; text-align: left; padding: 12px; font-size: .88rem; }
+  .edu-top .edu-nav-group.edu-open .edu-dropdown { position: static; box-shadow: none; border: 0; background: var(--gray-50, #f8fafc); padding-left: 12px; }
+}
+
+/* Celular angosto: en el profesor solo se ve el logo (el texto "EduOne" se cortaba) */
+@media (max-width: 480px) {
+  .top-header h1.edu-brand { font-size: 0 !important; }
+  .top-header h1.edu-brand span { display: none; }
+  .top-header h1.edu-brand .edu-logo-img { margin-right: 0; }
+}

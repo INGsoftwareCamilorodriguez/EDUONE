@@ -316,6 +316,8 @@ body{background:#f5f8fd;color:var(--ui-ink)}
 </style>
     <link rel="stylesheet" href="../assets/responsive.css" />
     <script src="../assets/responsive.js" defer></script>
+    <link rel="stylesheet" href="../assets/eduone-ui.css" />
+    <script type="module" src="../assets/eduone-ui.js"></script>
 </head>
 <body>
 
@@ -693,16 +695,16 @@ body{background:#f5f8fd;color:var(--ui-ink)}
 <div class="edu-section-head"><span class="edu-hicon"><i class="fas fa-comments"></i></span><div><h2>Chat interno</h2><p>Mensajes, imágenes, documentos y comunicación entre usuarios</p></div></div>
                 <div class="page-header"><h2><i class="fas fa-comments"></i> Chat interno</h2></div>
                 <div class="card"><div class="card-body"><div class="chat-layout">
-                    <aside><label for="chatBuscar">Buscar usuario del colegio</label><input id="chatBuscar" class="form-control" placeholder="Nombre o apellido" autocomplete="off"><div id="chatResultados" class="chat-results"></div></aside>
+                    <aside><h3 style="font-size:.95rem;margin-bottom:9px">Conversaciones recientes</h3><div id="eduChatHistorial" class="chat-results" aria-live="polite">Cargando historial...</div><label for="chatBuscar" style="display:block;margin-top:14px">Buscar usuario del colegio</label><input id="chatBuscar" class="form-control" placeholder="Nombre o apellido" autocomplete="off"><div id="chatResultados" class="chat-results"></div></aside>
                     <section><h3 id="chatContacto">Selecciona una persona</h3><div id="chatMensajes" class="chat-mensajes" aria-live="polite"></div>
-                    <form id="chatForm" class="edu-chat-composer"> <button type="button" class="edu-upload-label" id="eduEmojiChat" title="Insertar emoji">😊</button><input id="chatTexto" class="form-control" maxlength="3000" placeholder="Escribe un mensaje" disabled><label class="edu-file-btn" for="chatAdjunto" title="Adjuntar foto o documento"><i class="fas fa-paperclip"></i><span>Adjuntar</span></label><input class="edu-file-hidden" type="file" id="chatAdjunto" accept="image/jpeg,image/png,image/webp,application/pdf,text/plain,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" aria-label="Adjuntar imagen o documento" disabled><button class="edu-file-btn" type="button" id="chatCamaraBtn" title="Tomar fotografía"><i class="fas fa-camera"></i><span>Cámara</span></button><input class="edu-file-hidden" type="file" id="chatCamara" accept="image/*" capture="environment" aria-label="Tomar foto"> <span class="edu-file-name" id="chatArchivoNombre" aria-live="polite"></span><button id="chatEnviar" class="btn-primary" disabled>Enviar</button></form></section>
+                    <form id="chatForm" class="edu-chat-composer"><input id="chatTexto" class="form-control" maxlength="3000" placeholder="Escribe un mensaje" disabled><label class="edu-file-btn" for="chatAdjunto" title="Adjuntar foto o documento"><i class="fas fa-paperclip"></i><span>Adjuntar</span></label><input class="edu-file-hidden" type="file" id="chatAdjunto" accept="image/jpeg,image/png,image/webp,application/pdf,text/plain,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" aria-label="Adjuntar imagen o documento" disabled><button class="edu-file-btn" type="button" id="chatCamaraBtn" title="Tomar fotografía"><i class="fas fa-camera"></i><span>Cámara</span></button><input class="edu-file-hidden" type="file" id="chatCamara" accept="image/*" capture="environment" aria-label="Tomar foto"> <span class="edu-file-name" id="chatArchivoNombre" aria-live="polite"></span><button id="chatEnviar" class="btn-primary" disabled>Enviar</button></form></section>
                 </div></div></div>
             </div>
             <div id="page-comunicados" class="page-content">
 <div class="edu-section-head"><span class="edu-hicon"><i class="fas fa-bullhorn"></i></span><div><h2>Comunicados institucionales</h2><p>Canal oficial del colegio para estudiantes, familias y personal</p></div></div>
                 <div class="page-header"><h2><i class="fas fa-bullhorn"></i> Comunicados institucionales</h2></div>
                 <div class="card"><div class="card-body"><div id="comunicadosLista" class="chat-mensajes" aria-live="polite"></div>
-                    <form id="comunicadoForm"><button type="button" class="edu-upload-label" id="eduEmojiComunicado" title="Insertar emoji">😊</button><label for="comunicadoTexto">Nuevo comunicado para estudiantes y acudientes</label><textarea id="comunicadoTexto" class="form-control" rows="3" maxlength="6000"></textarea><div class="edu-attach-row"><label class="edu-file-btn" for="comunicadoAdjunto"><i class="fas fa-paperclip"></i> Adjuntar imagen o documento</label><input class="edu-file-hidden" type="file" id="comunicadoAdjunto" accept="image/jpeg,image/png,image/webp,application/pdf,text/plain,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" aria-label="Adjuntar archivo al comunicado"><button type="button" class="edu-file-btn" id="comunicadoCamaraBtn"><i class="fas fa-camera"></i> Tomar foto</button><input class="edu-file-hidden" type="file" id="comunicadoCamara" accept="image/*" capture="environment" aria-label="Tomar fotografía para comunicado"><span class="edu-file-name" id="comunicadoArchivoNombre" aria-live="polite"></span></div><p style="margin-top:12px"><button id="comunicadoPublicar" class="btn-primary">Publicar comunicado</button></p></form>
+                    <form id="comunicadoForm"><label for="comunicadoTexto">Nuevo comunicado para estudiantes y acudientes</label><textarea id="comunicadoTexto" class="form-control" rows="3" maxlength="6000"></textarea><div class="edu-attach-row"><label class="edu-file-btn" for="comunicadoAdjunto"><i class="fas fa-paperclip"></i> Adjuntar imagen o documento</label><input class="edu-file-hidden" type="file" id="comunicadoAdjunto" accept="image/jpeg,image/png,image/webp,application/pdf,text/plain,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" aria-label="Adjuntar archivo al comunicado"><button type="button" class="edu-file-btn" id="comunicadoCamaraBtn"><i class="fas fa-camera"></i> Tomar foto</button><input class="edu-file-hidden" type="file" id="comunicadoCamara" accept="image/*" capture="environment" aria-label="Tomar fotografía para comunicado"><span class="edu-file-name" id="comunicadoArchivoNombre" aria-live="polite"></span></div><p style="margin-top:12px"><button id="comunicadoPublicar" class="btn-primary">Publicar comunicado</button></p></form>
                 </div></div>
             </div>
             <div id="page-perfil" class="page-content">
@@ -1189,7 +1191,8 @@ body{background:#f5f8fd;color:var(--ui-ink)}
                 "firebase/app": "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js",
                 "firebase/auth": "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js",
                 "firebase/firestore": "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js",
-                "firebase/storage": "https://www.gstatic.com/firebasejs/11.3.1/firebase-storage.js"
+                "firebase/storage": "https://www.gstatic.com/firebasejs/11.3.1/firebase-storage.js",
+                "firebase/messaging": "https://www.gstatic.com/firebasejs/11.3.1/firebase-messaging.js"
             }
         }
     </script>
@@ -1197,7 +1200,7 @@ body{background:#f5f8fd;color:var(--ui-ink)}
     <script type="module">
         import { initializeApp, getApps } from "firebase/app";
         import { getAuth, onAuthStateChanged, signOut, createUserWithEmailAndPassword } from "firebase/auth";
-        import { getFirestore, doc, getDoc, collection, getDocs, addDoc, updateDoc, deleteDoc, query, where, serverTimestamp, setDoc, onSnapshot, orderBy, limit } from "firebase/firestore";
+        import { getFirestore, doc, getDoc, collection, getDocs, addDoc, updateDoc, deleteDoc, query, where, serverTimestamp, setDoc, onSnapshot, orderBy, limit, arrayUnion } from "firebase/firestore";
         import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "firebase/storage";
 
         const firebaseConfig = {
@@ -1626,6 +1629,7 @@ body{background:#f5f8fd;color:var(--ui-ink)}
                         // Fallback: si no hay matrícula, usar los campos desnormalizados del estudiante
                         grado = d.gradoNombre || '-';
                         curso = d.cursoNombre || '-';
+                        cursoId = d.cursoId || null;
                     }
 
                     const valorMat = Number(matricula?.valorMatricula) || 0;
@@ -1650,6 +1654,8 @@ body{background:#f5f8fd;color:var(--ui-ink)}
 
                 pagEstudiantes.page = 1;
                 renderEstudiantes();
+                // La vinculación académica se ejecuta con sesión de rector y respeta coincidencias únicas.
+                await eduVincularUsuariosEstudiantes();
             } catch (error) {
                 console.error(error);
                 document.getElementById('tablaEstudiantes').innerHTML = `<tr><td colspan="12" class="text-center text-danger">Error al cargar: ${error.message}</td></tr>`;
@@ -3723,6 +3729,63 @@ body{background:#f5f8fd;color:var(--ui-ink)}
         const chatUid = () => auth.currentUser?.uid || '';
         const edEsc = str => String(str ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
+        // VINCULACIÓN ADMINISTRATIVA: solo el rector puede escribir estos campos en usuarios.
+        // No utilizar nombres como identificador ni vincular correos con duplicados.
+        let eduSyncEnCurso = false;
+        async function eduVincularUsuariosEstudiantes() {
+            if (eduSyncEnCurso || !colegioId || usuarioActual?.rol !== 'rector') return;
+            eduSyncEnCurso = true;
+            try {
+                const usuariosSnap = await getDocs(query(collection(db, 'usuarios'), where('colegioId', '==', colegioId)));
+                const gruposCorreo = new Map();
+                for (const e of estudiantesCache) {
+                    const correo = String(e.correo || e.email || '').trim().toLowerCase();
+                    if (!correo || !correo.includes('@')) continue;
+                    if (!gruposCorreo.has(correo)) gruposCorreo.set(correo, []);
+                    gruposCorreo.get(correo).push(e);
+                }
+                const usuariosCorreo = new Map();
+                usuariosSnap.forEach(u => {
+                    const data = u.data();
+                    const correo = String(data.email || data.correo || '').trim().toLowerCase();
+                    if (!correo) return;
+                    if (!usuariosCorreo.has(correo)) usuariosCorreo.set(correo, []);
+                    usuariosCorreo.get(correo).push({id:u.id, data});
+                });
+                let vinculados = 0, omitidos = 0, fotos = 0;
+                const tareas = [];
+                for (const [correo, fichas] of gruposCorreo) {
+                    const cuentas = (usuariosCorreo.get(correo) || []).filter(u => u.data.rol === 'estudiante');
+                    if (fichas.length !== 1 || cuentas.length !== 1) { omitidos++; continue; }
+                    const ficha = fichas[0], cuenta = cuentas[0];
+                    if (cuenta.data.activo === false) continue;
+                    const curso = ficha.cursoId || ficha.matricula?.cursoId;
+                    if (!curso || ficha.estado !== 'activo') continue;
+                    const rutaCuenta = doc(db, 'usuarios', cuenta.id);
+                    // Evitar asignación si el usuario ya está vinculado a otra ficha: requiere revisión humana.
+                    if (cuenta.data.estudianteId && cuenta.data.estudianteId !== ficha.id) { omitidos++; continue; }
+                    const cambios = {};
+                    if (cuenta.data.estudianteId !== ficha.id) cambios.estudianteId = ficha.id;
+                    if (cuenta.data.cursoId !== curso) cambios.cursoId = curso;
+                    // Mostrar la foto subida desde estudiante aun si todavía no está en la ficha académica.
+                    const fotoCuenta = cuenta.data.fotoPerfilUrl || cuenta.data.fotoUrl || '';
+                    if (fotoCuenta && /^https:\/\//.test(fotoCuenta)) {
+                        ficha.fotoPerfilUrl = fotoCuenta;
+                        if (!ficha.fotoUrl) ficha.fotoUrl = fotoCuenta;
+                        fotos++;
+                    }
+                    if (Object.keys(cambios).length) tareas.push(async () => { await updateDoc(rutaCuenta,cambios); vinculados++; });
+                }
+                // Evitar exceso de operaciones concurrentes, conservar el resto del panel funcional.
+                for (let i=0; i<tareas.length; i+=8) {
+                    await Promise.allSettled(tareas.slice(i,i+8).map(t=>t()));
+                }
+                if (fotos) renderEstudiantes();
+                console.info('EduOne: cuentas estudiantiles vinculadas', {vinculados,omitidos,fotos});
+            } catch(e) { console.warn('No se completó la vinculación de estudiantes:', e.message); }
+            finally { eduSyncEnCurso = false; }
+        }
+
         // Fotos por registro sin crear usuarios duplicados ni alterar la matrícula.
         const eduEsc = v => String(v||'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
         function eduPintarFotosTabla(tipo) {
@@ -3745,7 +3808,16 @@ body{background:#f5f8fd;color:var(--ui-ink)}
                     const ruta=storageRef(edStorage,`colegios/${colegioId}/perfiles/${carpeta}/${id}/${Date.now()}`);
                     await uploadBytes(ruta,archivo,{contentType:archivo.type});
                     const fotoPerfilUrl=await getDownloadURL(ruta);
-                    await updateDoc(doc(db,'colegios',colegioId,carpeta,id),{fotoPerfilUrl});
+                    await updateDoc(doc(db,'colegios',colegioId,carpeta,id),{fotoPerfilUrl,fotoUrl:fotoPerfilUrl});
+                    if(tipo==='estudiante'){
+                        const registro=estudiantesCache.find(v=>v.id===id);
+                        const correo=String(registro?.correo||'').trim().toLowerCase();
+                        if(correo){
+                            const usuarios=await getDocs(query(collection(db,'usuarios'),where('colegioId','==',colegioId)));
+                            const coincidencias=usuarios.docs.filter(u=>u.data().rol==='estudiante'&&String(u.data().email||u.data().correo||'').trim().toLowerCase()===correo);
+                            if(coincidencias.length===1 && (!coincidencias[0].data().estudianteId || coincidencias[0].data().estudianteId===id)) await updateDoc(coincidencias[0].ref,{fotoPerfilUrl,fotoUrl:fotoPerfilUrl});
+                        }
+                    }
                     const cache=tipo==='estudiante'?estudiantesCache:personalCache;const registro=cache.find(v=>v.id===id);if(registro)registro.fotoPerfilUrl=fotoPerfilUrl;
                     if(tipo==='estudiante')renderEstudiantes();else renderPersonal();
                     alert('Fotografía guardada');
@@ -3779,9 +3851,6 @@ body{background:#f5f8fd;color:var(--ui-ink)}
             }
             host.innerHTML=html+'</tbody></table></div><p class="edu-small-note">Los períodos sin notas quedan vacíos. La definitiva es provisional y promedia únicamente los períodos registrados, sin redondear.</p>';
         }
-        function eduAgregarEmoji(id){const el=document.getElementById(id);if(!el)return;const emoji=prompt('Escribe o pega un emoji (por ejemplo: 😊 📚 ✅ 🎓)');if(emoji){el.value+=(el.value?' ':'')+emoji;el.focus();}}
-        document.getElementById('eduEmojiChat')?.addEventListener('click',()=>eduAgregarEmoji('chatTexto'));
-        document.getElementById('eduEmojiComunicado')?.addEventListener('click',()=>eduAgregarEmoji('comunicadoTexto'));
         function eduFileDisplay(id,labelId){const el=document.getElementById(id),label=document.getElementById(labelId);if(el&&label)label.textContent=el.files?.[0]?.name||'';}
         for(const [file,label] of [['chatAdjunto','chatArchivoNombre'],['comunicadoAdjunto','comunicadoArchivoNombre']])document.getElementById(file)?.addEventListener('change',()=>eduFileDisplay(file,label));
         document.getElementById('chatCamaraBtn')?.addEventListener('click',()=>{
@@ -3813,13 +3882,44 @@ body{background:#f5f8fd;color:var(--ui-ink)}
             const s=await getDocs(query(collection(db,'usuarios'),where('colegioId','==',colegioId)));
             chatPersonas=s.docs.filter(d=>d.id!==chatUid() && d.data().activo!==false).map(d=>({id:d.data().uid||d.data().authUid||d.id,documentoUsuarioId:d.id,...d.data()}));
             buscarContactosEdu();
+            eduIniciarHistorialChat();
         }
         function buscarContactosEdu(){
             const filtro=document.getElementById('chatBuscar')?.value.trim().toLocaleLowerCase('es') || '';
             const resultados=chatPersonas.filter(u=>String(u.nombre || `${u.nombres||''} ${u.apellidos||''}`).toLocaleLowerCase('es').includes(filtro)).slice(0,40);
             const host=document.getElementById('chatResultados');if(!host)return;
             host.replaceChildren();
-            for(const u of resultados){const b=document.createElement('button');b.type='button';b.textContent=`${u.nombre || `${u.nombres||''} ${u.apellidos||''}`.trim() || 'Usuario'} · ${u.rol||'Usuario'}`;b.addEventListener('click',()=>seleccionarChatEdu(u));host.append(b);}
+            for(const u of resultados){host.append(eduBotonContacto(u));}
+        }
+        function eduBotonContacto(u) {
+            const b=document.createElement('button');b.type='button';
+            const foto=u.fotoPerfilUrl||u.fotoUrl||'';
+            const avatar=document.createElement('span'); avatar.className='edu-face';
+            avatar.textContent=String(u.nombre||u.nombres||'U').charAt(0).toUpperCase();
+            if(/^https:\/\//.test(foto)){const img=document.createElement('img');img.src=foto;img.alt='';img.className='edu-face';avatar.replaceChildren(img);}
+            const info=document.createElement('span');
+            const nombre=document.createElement('strong');nombre.textContent=u.nombre||`${u.nombres||''} ${u.apellidos||''}`.trim()||'Usuario';
+            const rol=document.createElement('small');rol.style.cssText='display:block;color:var(--text-secondary);font-size:.72rem';rol.textContent=u.rol||'Usuario';
+            info.append(nombre,rol);b.append(avatar,info);b.addEventListener('click',()=>seleccionarChatEdu(u));return b;
+        }
+        let eduDesuscribirHistorial = null;
+        function eduIniciarHistorialChat() {
+            if(!colegioId || !chatUid()) return;
+            if(eduDesuscribirHistorial) eduDesuscribirHistorial();
+            const host=document.getElementById('eduChatHistorial');
+            const q=query(collection(db,'colegios',colegioId,'chats'),where('participantes','array-contains',chatUid()));
+            eduDesuscribirHistorial=onSnapshot(q,snap=>{
+                host.replaceChildren();
+                const chats=snap.docs.map(d=>({id:d.id,...d.data()}))
+                  .sort((a,b)=>(b.actualizadoEn?.toMillis?.()||0)-(a.actualizadoEn?.toMillis?.()||0));
+                for(const chat of chats) {
+                    const otros=(chat.participantes||[]).filter(x=>x!==chatUid());
+                    const u=chatPersonas.find(p=>otros.includes(p.id));
+                    if(u) host.append(eduBotonContacto(u));
+                    else {const b=document.createElement('button');b.type='button';b.textContent='Conversación · usuario no disponible';b.disabled=true;host.append(b);}
+                }
+                if(!chats.length)host.textContent='Aún no hay conversaciones.';
+            },e=>{host.textContent='No se pudo cargar el historial: '+e.message;});
         }
         document.getElementById('chatBuscar')?.addEventListener('input',buscarContactosEdu);
         async function seleccionarChatEdu(u){
@@ -4082,6 +4182,8 @@ body{background:#f5f8fd;color:var(--ui-ink)}
             document.getElementById('eduMobileMenu').setAttribute('aria-expanded',String(open));
         });
         document.querySelectorAll('.edu-menu-group').forEach(group=>group.addEventListener('toggle',()=>{if(group.open)document.querySelectorAll('.edu-menu-group').forEach(other=>{if(other!==group)other.open=false})}));
+
+
 
         console.log('✅ EduOne - Panel del Rector cargado correctamente');
     </script>
