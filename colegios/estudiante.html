@@ -3184,62 +3184,33 @@ body{display:block!important;background:#f1f5fa!important}
         async function cargarComunicados() {
             const container = document.getElementById('comunicadosContainer');
             showLoading('loadingComunicados');
-            container.innerHTML = '';
-
+            container.replaceChildren();
             try {
-                if (!cursoActualId) {
-                    hideLoading('loadingComunicados');
-                    container.innerHTML = `<div class="text-center text-muted" style="padding: 40px 0;"><i class="fas fa-bullhorn" style="font-size: 2rem; display: block; margin-bottom: 12px;"></i>No tienes un curso asignado.</div>`;
-                    return;
+                // Rectoría publica texto, autorNombre y creadoEn. Se leen todos
+                // los comunicados del colegio y se filtran los destinados al curso.
+                const snap = await getDocs(collection(db, 'colegios', colegioId, 'comunicados'));
+                const items = snap.docs.map(d => ({ id: d.id, ...d.data() }))
+                  .filter(c => !c.cursoId || ['todos', 'general'].includes(c.cursoId) || c.cursoId === cursoActualId || c.destinatarios === 'todos')
+                  .sort((a,b) => (a.creadoEn?.seconds ?? a.fecha?.seconds ?? 0) - (b.creadoEn?.seconds ?? b.fecha?.seconds ?? 0));
+                if (!items.length) { container.textContent = 'Todavía no hay comunicados para tu curso.'; return; }
+                for (const c of items) {
+                    const card = document.createElement('article');
+                    card.className='card'; card.style.marginBottom='14px'; card.style.borderLeft='4px solid var(--primary)';
+                    const inner = document.createElement('div'); inner.className='card-body';
+                    const name=document.createElement('strong'); name.textContent = c.autorNombre || c.autor || 'Rectoría';
+                    const date=document.createElement('small'); date.style.cssText='display:block;color:var(--text-secondary);margin:3px 0 10px';
+                    const ts=c.creadoEn || c.fecha;
+                    date.textContent=ts?.toDate?.().toLocaleString('es-CO') || '';
+                    const title=document.createElement('h3'); title.textContent=c.titulo||'Comunicado institucional'; title.style.fontSize='1rem';
+                    const body=document.createElement('p'); body.textContent=c.texto || c.mensaje || ''; body.style.whiteSpace='pre-wrap';
+                    inner.append(name,date,title,body);
+                    if(c.imagenUrl){const img=document.createElement('img');img.src=c.imagenUrl;img.alt='Imagen del comunicado';img.loading='lazy';img.style.cssText='max-width:100%;max-height:340px;object-fit:contain;border-radius:10px;margin-top:10px';inner.append(img)}
+                    if(c.archivoUrl){const link=document.createElement('a');link.href=c.archivoUrl;link.target='_blank';link.rel='noopener noreferrer';link.textContent='📎 '+(c.archivoNombre||'Ver documento');link.style.cssText='display:block;margin-top:10px;color:var(--primary)';inner.append(link)}
+                    card.append(inner);container.append(card);
                 }
-
-                const q1 = query(collection(db, 'colegios', colegioId, 'comunicados'), where('cursoId', '==', cursoActualId));
-                const snap1 = await getDocs(q1);
-                const q2 = query(collection(db, 'colegios', colegioId, 'comunicados'), where('cursoId', '==', 'todos'));
-                const snap2 = await getDocs(q2);
-                const snapGeneral = await getDocs(collection(db, 'colegios', colegioId, 'comunicados'));
-
-                const comunicados = [];
-                snap1.forEach(d => comunicados.push({ id: d.id, ...d.data() }));
-                snap2.forEach(d => comunicados.push({ id: d.id, ...d.data() }));
-                snapGeneral.forEach(d => { const x=d.data(); if(!x.cursoId || x.cursoId==='general' || x.destinatarios==='todos') comunicados.push({id:d.id,...x}); });
-
-                const sinDuplicados = [...new Map(comunicados.map(c=>[c.id,c])).values()];
-                comunicados.length=0; comunicados.push(...sinDuplicados);
-                comunicados.sort((a, b) => {
-                    const fa = a.fecha ? new Date(a.fecha.seconds * 1000) : new Date(0);
-                    const fb = b.fecha ? new Date(b.fecha.seconds * 1000) : new Date(0);
-                    return fb - fa;
-                });
-
-                if (comunicados.length === 0) {
-                    hideLoading('loadingComunicados');
-                    container.innerHTML = `<div class="text-center text-muted" style="padding: 40px 0;"><i class="fas fa-bullhorn" style="font-size: 2rem; display: block; margin-bottom: 12px;"></i>No hay comunicados disponibles.</div>`;
-                    return;
-                }
-
-                let html = '';
-                for (const c of comunicados) {
-                    const fecha = c.fecha ? new Date(c.fecha.seconds * 1000).toLocaleDateString('es-CO') : 'Sin fecha';
-                    html += `
-                        <div class="card" style="margin-bottom: 12px; border-left: 4px solid var(--primary);">
-                            <div class="card-body" style="padding: 16px 20px;">
-                                <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px;">
-                                    <h4 style="font-size: 1rem; font-weight: 600;">${c.titulo || 'Comunicado'}</h4>
-                                    <span style="font-size: 0.75rem; color: var(--gray-400);">${fecha}</span>
-                                </div>
-                                <p style="color: var(--gray-600); margin-top: 4px;">${c.mensaje || ''}</p>
-                                ${c.autor ? `<p style="font-size: 0.75rem; color: var(--gray-400); margin-top: 8px;"><i class="fas fa-user"></i> Enviado por: ${c.autor}</p>` : ''}
-                            </div>
-                        </div>
-                    `;
-                }
-                hideLoading('loadingComunicados');
-                container.innerHTML = html;
             } catch (error) {
-                hideLoading('loadingComunicados');
-                container.innerHTML = `<div class="text-center text-danger">Error: ${error.message}</div>`;
-            }
+                container.textContent = 'No se pudieron consultar los comunicados: ' + error.message;
+            } finally { hideLoading('loadingComunicados'); }
         }
 
         // =============================================
@@ -3545,12 +3516,12 @@ body{display:block!important;background:#f1f5fa!important}
         async function eduCargarChat(){if(!colegioId||!auth.currentUser)return;
           const uid=auth.currentUser.uid,gr=document.getElementById('eduChatGrupos'),hist=document.getElementById('eduChatHistorial');gr.textContent='Cargando grupos...';hist.textContent='Cargando conversaciones...';
           try{const qg=query(collection(db,'colegios',colegioId,'chatGrupos'),where('miembros','array-contains',uid));const grupos=await getDocs(qg);gr.replaceChildren();if(grupos.empty)gr.textContent='Aún no estás inscrito en grupos de materias.';gr.forEach(d=>{const g=d.data();gr.append(eduChatItem(g.nombre||'Grupo de materia',g.asignaturaNombre||'Curso',g.fotoUrl||'',()=>eduAbrirChat('grupo',d.id,g.nombre||'Grupo')))});
-          }catch(e){gr.textContent='No se pudieron consultar grupos: '+e.message}
+          }catch(e){gr.textContent='No se pudieron consultar grupos. Comprueba que tu UID figure en miembros del grupo. Detalle: '+e.message}
           try{const qh=query(collection(db,'colegios',colegioId,'chats'),where('participantes','array-contains',uid));const chats=await getDocs(qh);hist.replaceChildren();if(chats.empty)hist.textContent='Aún no tienes conversaciones.';chats.forEach(d=>{const c=d.data(),dest=c.participantes?.find(x=>x!==uid);hist.append(eduChatItem(c.nombres?.[dest]||'Conversación',c.ultimoMensaje||'Chat privado','',()=>eduAbrirChat('privado',d.id,c.nombres?.[dest]||'Chat')))});
           }catch(e){hist.textContent='No se pudo consultar el historial: '+e.message}
         }
         let eduChatBusqueda=0;
-        document.getElementById('eduBuscarContacto')?.addEventListener('input',async e=>{const texto=e.target.value.toLowerCase().trim(),n=++eduChatBusqueda,box=document.getElementById('eduChatContactos');box.replaceChildren();if(texto.length<2)return;box.textContent='Buscando...';try{const qs=await getDocs(collection(db,'usuarios'));if(n!==eduChatBusqueda)return;box.replaceChildren();let count=0;qs.forEach(d=>{const x=d.data();if(x.colegioId!==colegioId||d.id===auth.currentUser.uid)return;const nom=x.nombreCompleto||x.nombre||((x.nombres||'')+' '+(x.apellidos||''));if(!nom.toLowerCase().includes(texto)||count>=15)return;count++;box.append(eduChatItem(nom,x.rol||'Usuario',x.fotoUrl||x.fotoPerfilUrl||'',async()=>{try{const ids=[d.id,auth.currentUser.uid].sort(),id=ids.join('_');const refChat=doc(db,'colegios',colegioId,'chats',id);const ds=await getDoc(refChat);if(!ds.exists())await setDoc(refChat,{colegioId,participantes:ids,nombres:{[d.id]:nom,[auth.currentUser.uid]:usuarioActual?.nombre||'Estudiante'},creadoEn:serverTimestamp()});eduAbrirChat('privado',id,nom);eduCargarChat()}catch(er){document.getElementById('eduChatEstado').textContent='No se pudo abrir: '+er.message}}))});if(!count)box.textContent='No hay coincidencias.'}catch(err){box.textContent='No se pudo buscar: '+err.message}});
+        document.getElementById('eduBuscarContacto')?.addEventListener('input',async e=>{const texto=e.target.value.toLowerCase().trim(),n=++eduChatBusqueda,box=document.getElementById('eduChatContactos');box.replaceChildren();if(texto.length<2)return;box.textContent='Buscando...';try{const qs=await getDocs(query(collection(db,'usuarios'),where('colegioId','==',colegioId)));if(n!==eduChatBusqueda)return;box.replaceChildren();let count=0;qs.forEach(d=>{const x=d.data();if(x.colegioId!==colegioId||d.id===auth.currentUser.uid)return;const nom=x.nombreCompleto||x.nombre||((x.nombres||'')+' '+(x.apellidos||''));if(!nom.toLowerCase().includes(texto)||count>=15)return;count++;box.append(eduChatItem(nom,x.rol||'Usuario',x.fotoUrl||x.fotoPerfilUrl||'',async()=>{try{const ids=[d.id,auth.currentUser.uid].sort(),id=ids.join('_');const refChat=doc(db,'colegios',colegioId,'chats',id);const ds=await getDoc(refChat);if(!ds.exists())await setDoc(refChat,{colegioId,participantes:ids,nombres:{[d.id]:nom,[auth.currentUser.uid]:usuarioActual?.nombre||'Estudiante'},creadoEn:serverTimestamp()});eduAbrirChat('privado',id,nom);eduCargarChat()}catch(er){document.getElementById('eduChatEstado').textContent='No se pudo abrir: '+er.message}}))});if(!count)box.textContent='No hay coincidencias.'}catch(err){box.textContent='No se pudo buscar: '+err.message}});
         function eduAbrirChat(tipo,id,nombre){if(eduChatUnsub)eduChatUnsub();eduChatTarget={tipo,id};document.getElementById('eduChatTitulo').textContent=nombre;const box=document.getElementById('eduChatMensajes');box.textContent='Cargando mensajes...';const path=tipo==='grupo'?'chatGrupos':'chats';eduChatUnsub=onSnapshot(query(collection(db,'colegios',colegioId,path,id,'mensajes'),orderBy('fecha','asc'),limit(100)),snap=>{box.replaceChildren();if(snap.empty)box.textContent='Aún no hay mensajes.';snap.forEach(d=>{const m=d.data();const item=document.createElement('div');item.className='edu-chat-bubble'+(m.remitenteUid===auth.currentUser.uid?' mine':'');const titulo=document.createElement('strong');titulo.textContent=m.remitenteNombre||'Usuario';item.append(titulo);const p=document.createElement('div');p.textContent=m.texto||m.mensaje||'';item.append(p);if(m.archivoUrl){const a=document.createElement('a');a.href=m.archivoUrl;a.target='_blank';a.rel='noopener noreferrer';a.textContent='Ver archivo adjunto';item.append(a)}const f=document.createElement('small');f.textContent=eduChatFecha(m.fecha);item.append(f);box.append(item)});box.scrollTop=box.scrollHeight},e=>box.textContent='No se pudo cargar: '+e.message)}
         document.getElementById('eduChatForm')?.addEventListener('submit',async e=>{e.preventDefault();if(!eduChatTarget)return;const campo=document.getElementById('eduChatTexto'),archivo=document.getElementById('eduChatArchivo'),estado=document.getElementById('eduChatEstado'),txt=campo.value.trim(),file=archivo.files?.[0];if(!txt&&!file)return;const btn=e.target.querySelector('button[type=submit]');btn.disabled=true;estado.textContent='Enviando...';try{const {tipo,id}=eduChatTarget,path=tipo==='grupo'?'chatGrupos':'chats';let url=null;if(file){if(file.size>8*1024*1024)throw Error('Máximo 8 MB');if(!['image/jpeg','image/png','image/webp','application/pdf','application/msword','application/vnd.openxmlformats-officedocument.wordprocessingml.document'].includes(file.type))throw Error('Formato no permitido');const dest=ref(storage,'colegios/'+colegioId+'/chat/'+auth.currentUser.uid+'/'+Date.now()+'_'+file.name.replace(/[^a-zA-Z0-9_.-]/g,'_'));await new Promise((resolve,reject)=>{uploadBytesResumable(dest,file).on('state_changed',undefined,reject,resolve)});url=await getDownloadURL(dest)}const base={colegioId,remitenteUid:auth.currentUser.uid,remitenteNombre:usuarioActual?.nombre||'Estudiante',texto:txt,fecha:serverTimestamp()};if(url)base.archivoUrl=url;if(tipo==='grupo'){base.tipo='grupo'}else{const chat=await getDoc(doc(db,'colegios',colegioId,'chats',id));base.destinatarioUid=chat.data()?.participantes?.find(u=>u!==auth.currentUser.uid)}await addDoc(collection(db,'colegios',colegioId,path,id,'mensajes'),base);campo.value='';archivo.value='';estado.textContent='Enviado'}catch(err){estado.textContent='No se pudo enviar: '+err.message}finally{btn.disabled=false}});
 
