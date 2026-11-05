@@ -1,0 +1,215 @@
+/* =====================================================================
+   EduOne - eduone-panel.css
+   Diseño 2026 (menú superior, portada del colegio, tarjetas) para los
+   paneles que antes usaban barra lateral: acudiente, coordinadores y
+   secretaría. Se activa con <body class="edu-panel2026">.
+   Lo usa assets/eduone-panel.js, que arma el menú a partir de la barra
+   lateral original (que se conserva oculta para no romper la lógica).
+   ===================================================================== */
+
+body.edu-panel2026 { display: block; background: #f3f7fc; overflow-x: hidden; }
+.edu-panel2026 .sidebar,
+.edu-panel2026 .sidebar-overlay,
+.edu-panel2026 .header-left .hamburger-btn,
+.edu-panel2026 .header-left #pageTitle { display: none !important; }
+.edu-panel2026 .main-content,
+.edu-panel2026 .main-content.expanded,
+.edu-panel2026 .main-content.full { margin-left: 0 !important; width: 100%; min-width: 0; }
+
+/* ---------- Encabezado ---------- */
+.edu-panel2026 .top-header {
+  position: sticky; top: 0; z-index: 60; display: flex; align-items: center; flex-wrap: nowrap;
+  height: 72px; min-height: 72px; padding: 0 clamp(12px, 2.4vw, 34px); gap: 12px;
+  background: #fff; border-bottom: 1px solid var(--border, #e2e8f0); box-shadow: 0 2px 14px #1932560d;
+}
+.edu-panel2026 .header-left { display: flex; align-items: center; gap: 16px; min-width: 0; flex: 0 1 auto; }
+.edu-panel2026 .edu-brand {
+  display: flex; align-items: center; gap: 9px; margin: 0; white-space: nowrap;
+  font: 700 1.3rem/1 var(--font, Inter, system-ui, sans-serif); color: #13264c; text-decoration: none;
+}
+.edu-panel2026 .edu-brand b { color: var(--primary); font-weight: 700; }
+.edu-panel2026 .edu-brand .edu-logo-img { width: 36px; height: 36px; margin: 0; }
+.edu-panel2026 .edu-institution {
+  font-weight: 600; font-size: .83rem; color: var(--gray-600, #475569); padding-left: 14px;
+  border-left: 1px solid var(--border, #e2e8f0); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 220px;
+}
+
+.edu-panel2026 .edu-topnav { display: flex; align-items: center; justify-content: center; gap: 4px; flex: 1 1 auto; min-width: 0; }
+.edu-panel2026 .edu-topnav a,
+.edu-panel2026 .edu-topnav summary {
+  display: flex; align-items: center; gap: 7px; padding: 9px 11px; border-radius: 10px; cursor: pointer;
+  font: 600 .84rem var(--font, Inter, system-ui, sans-serif); color: #33415f; text-decoration: none;
+  white-space: nowrap; list-style: none; user-select: none; transition: background .15s, color .15s;
+}
+.edu-panel2026 .edu-topnav summary::-webkit-details-marker { display: none; }
+.edu-panel2026 .edu-topnav summary .fa-chevron-down { font-size: .62rem; transition: transform .2s; }
+.edu-panel2026 .edu-topnav details[open] summary .fa-chevron-down { transform: rotate(180deg); }
+.edu-panel2026 .edu-topnav a:hover,
+.edu-panel2026 .edu-topnav summary:hover,
+.edu-panel2026 .edu-topnav .selected,
+.edu-panel2026 .edu-topnav details.selected > summary { background: var(--primary-bg); color: var(--primary); }
+.edu-panel2026 .edu-topnav details { position: relative; }
+.edu-panel2026 .edu-subnav {
+  position: absolute; top: calc(100% + 6px); left: 0; z-index: 80; min-width: 230px; padding: 8px;
+  background: #fff; border: 1px solid var(--border, #e2e8f0); border-radius: 13px; box-shadow: 0 14px 40px #243a5c26;
+}
+.edu-panel2026 .edu-subnav button {
+  display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px 12px; border: 0; border-radius: 8px;
+  background: #fff; text-align: left; cursor: pointer; color: var(--gray-700, #334155);
+  font: 600 .84rem var(--font, Inter, system-ui, sans-serif);
+}
+.edu-panel2026 .edu-subnav button i { width: 18px; text-align: center; color: var(--primary); opacity: .85; }
+.edu-panel2026 .edu-subnav button:hover,
+.edu-panel2026 .edu-subnav button.selected { background: var(--primary-bg); color: var(--primary); }
+
+.edu-panel2026 .edu-mobile-menu {
+  display: none; align-items: center; gap: 8px; margin-left: auto; padding: 10px 13px; border-radius: 10px; cursor: pointer;
+  border: 1px solid var(--border, #e2e8f0); background: #fff; color: var(--primary);
+  font: 600 .84rem var(--font, Inter, system-ui, sans-serif);
+}
+.edu-panel2026 .header-right { display: flex; align-items: center; gap: 11px; margin-left: auto; flex: 0 0 auto; min-width: 0; }
+.edu-panel2026 .edu-mobile-menu + .edu-topnav + .header-right,
+.edu-panel2026 .edu-topnav + .header-right { margin-left: 0; }
+.edu-panel2026 .user-info { text-align: right; max-width: 190px; }
+.edu-panel2026 .user-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.edu-panel2026 .top-header .user-avatar {
+  display: flex; align-items: center; justify-content: center; flex: 0 0 42px; width: 42px; height: 42px;
+  border-radius: 50%; overflow: hidden; background: var(--primary-bg); color: var(--primary); line-height: 1;
+}
+.edu-panel2026 .top-header .user-avatar i { font-size: 27px; color: var(--gray-400, #94a3b8); }
+
+/* ---------- Contenido ---------- */
+.edu-panel2026 .content-area { width: 100%; max-width: 1900px; margin: 0 auto; padding: 24px clamp(12px, 2.6vw, 42px) 40px; background: transparent; min-width: 0; }
+.edu-panel2026 .page-content { min-width: 0; }
+.edu-panel2026 .content-area img { max-width: 100%; }
+
+/* Portada / encabezado de cada sección */
+.edu-panel2026 .edu-hero,
+.edu-panel2026 .welcome-banner {
+  position: relative; display: flex; align-items: center; gap: 20px; flex-wrap: nowrap; justify-content: flex-start; text-align: left;
+  min-height: 112px; margin-bottom: 22px; padding: 24px 30px; border-radius: 18px; color: #fff; overflow: hidden;
+  background: linear-gradient(110deg, var(--primary-dark), var(--primary)) !important; box-shadow: 0 8px 24px #223e6d1c;
+}
+.edu-panel2026 .welcome-banner.edu-school-cover {
+  min-height: 200px;
+  background:
+    linear-gradient(95deg, var(--primary-dark) 0%, color-mix(in srgb, var(--primary) 60%, transparent) 70%, color-mix(in srgb, var(--primary) 30%, transparent) 100%),
+    var(--edu-school-image, linear-gradient(120deg, var(--primary-dark), var(--primary))) !important;
+  background-size: cover !important; background-position: center !important;
+}
+.edu-panel2026 .edu-hero h2,
+.edu-panel2026 .welcome-banner h2 { font-size: 1.45rem; line-height: 1.25; margin: 0 0 5px; font-weight: 700; color: #fff; }
+.edu-panel2026 .edu-hero p,
+.edu-panel2026 .welcome-banner p { color: #fff; opacity: .9; font-size: .92rem; margin: 0; }
+.edu-panel2026 .welcome-banner > div { min-width: 0; }
+.edu-panel2026 .welcome-banner .welcome-text { flex: 1; }
+.edu-panel2026 .edu-hero-icon,
+.edu-panel2026 .welcome-banner #bannerLogoContainer {
+  width: 66px; height: 66px; flex: 0 0 66px; display: grid; place-items: center; overflow: hidden;
+  background: #ffffff26; border: 1px solid #ffffff45; border-radius: 17px; font-size: 1.5rem; color: #fff;
+}
+.edu-panel2026 .welcome-banner #bannerLogoContainer i { font-size: 1.6rem !important; }
+.edu-panel2026 .edu-hero-icon img,
+.edu-panel2026 .welcome-banner #bannerLogoContainer img,
+.edu-panel2026 .welcome-banner .logo-colegio { width: 100%; height: 100%; object-fit: contain; border-radius: 14px; padding: 4px; background: #fff; box-shadow: none; }
+.edu-panel2026 .welcome-banner .badge-colegio { margin-left: auto; background: #ffffff2e; border: 1px solid #ffffff40; backdrop-filter: blur(4px); white-space: nowrap; }
+
+/* Tarjetas */
+.edu-panel2026 .card { border-radius: 17px; border: 1px solid #e6edf6; box-shadow: 0 5px 20px #1932560c; overflow: hidden; }
+.edu-panel2026 .card-header { background: #fff; }
+.edu-panel2026 .stat-card,
+.edu-panel2026 .info-estudiante-card { border-radius: 16px; border: 1px solid #e6edf6; box-shadow: 0 5px 20px #1932560c; min-width: 0; }
+.edu-panel2026 .stat-icon,
+.edu-panel2026 .info-estudiante-card .icon { border-radius: 14px; }
+.edu-panel2026 .stat-info, .edu-panel2026 .info-estudiante-card > div:last-child { min-width: 0; }
+.edu-panel2026 .stat-value, .edu-panel2026 .info-estudiante-card .value { overflow-wrap: anywhere; }
+.edu-panel2026 .table-modern thead th { background: var(--primary-bg); color: var(--gray-700, #334155); }
+.edu-panel2026 .table-responsive { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 10px; max-width: 100%; }
+.edu-panel2026 .form-control { min-height: 40px; max-width: 100%; }
+.edu-panel2026 .btn-primary { border-radius: 10px; }
+
+/* Selector de hijo (acudiente) debajo del encabezado */
+.edu-panel2026 .edu-hijo-bar {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; padding: 10px 14px;
+  background: #fff; border: 1px solid #e6edf6; border-radius: 14px; box-shadow: 0 5px 20px #1932560a;
+}
+.edu-panel2026 .edu-hijo-bar[hidden] { display: none; }
+.edu-panel2026 .edu-hijo-bar label { font-weight: 600; font-size: .85rem; color: var(--gray-600, #475569); display: flex; align-items: center; gap: 8px; }
+.edu-panel2026 .edu-hijo-bar label i { color: var(--primary); }
+.edu-panel2026 .edu-hijo-bar .hijo-selector-wrap { flex: 1 1 220px; max-width: 420px; }
+.edu-panel2026 .edu-hijo-bar .hijo-selector-wrap select { width: 100%; min-width: 0; }
+
+/* Ventanas emergentes */
+.edu-panel2026 .modal-content { border-radius: 16px; }
+
+/* =====================================================================
+   Responsive
+   ===================================================================== */
+/* Laptop pequeña, tablet y "sitio de escritorio" en el celular */
+@media (max-width: 1280px) {
+  .edu-panel2026 .edu-mobile-menu { display: flex; }
+  .edu-panel2026 .edu-topnav {
+    display: none !important; position: absolute; top: 100%; left: 12px; right: 12px; z-index: 120;
+    flex-direction: column; align-items: stretch; justify-content: flex-start; gap: 2px; padding: 12px;
+    background: #fff; border: 1px solid var(--border, #e2e8f0); border-radius: 14px; box-shadow: 0 15px 35px #13274b28;
+    max-height: calc(100vh - 90px); overflow: auto; overscroll-behavior: contain;
+  }
+  .edu-panel2026 .edu-topnav.mobile-open { display: flex !important; }
+  .edu-panel2026 .edu-topnav details { width: 100%; position: static; }
+  .edu-panel2026 .edu-topnav summary,
+  .edu-panel2026 .edu-topnav > a { width: 100%; justify-content: flex-start; padding: 12px; font-size: .9rem; }
+  .edu-panel2026 .edu-topnav > a i { width: 18px; text-align: center; }
+  .edu-panel2026 .edu-topnav summary .fa-chevron-down { margin-left: auto; }
+  .edu-panel2026 .edu-subnav { position: static; box-shadow: none; border: 0; min-width: 0; margin: 2px 0 8px 10px; padding: 2px 0 2px 10px; border-left: 2px solid var(--primary-bg); border-radius: 0; }
+  .edu-panel2026 .edu-subnav button { padding: 11px 12px; font-size: .88rem; }
+  .edu-panel2026 .header-right { margin-left: 0; }
+}
+@media (max-width: 992px) {
+  .edu-panel2026 .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .edu-panel2026 .modal-content { width: 96%; max-width: 96%; }
+}
+@media (max-width: 850px) {
+  .edu-panel2026 .top-header { height: 64px; min-height: 64px; gap: 8px; }
+  .edu-panel2026 .edu-institution,
+  .edu-panel2026 .top-header .user-info { display: none; }
+  .edu-panel2026 .header-right { gap: 8px; }
+  .edu-panel2026 .content-area { padding: 14px 12px 32px; }
+  .edu-panel2026 .edu-hero, .edu-panel2026 .welcome-banner { padding: 18px; gap: 14px; min-height: 90px; border-radius: 15px; }
+  .edu-panel2026 .welcome-banner.edu-school-cover { min-height: 150px; }
+  .edu-panel2026 .edu-hero h2, .edu-panel2026 .welcome-banner h2 { font-size: 1.15rem; }
+  .edu-panel2026 .edu-hero p, .edu-panel2026 .welcome-banner p { font-size: .8rem; }
+  .edu-panel2026 .edu-hero-icon, .edu-panel2026 .welcome-banner #bannerLogoContainer { width: 50px; height: 50px; flex-basis: 50px; font-size: 1.2rem; border-radius: 13px; }
+  .edu-panel2026 .welcome-banner .badge-colegio { display: none; }
+  .edu-panel2026 .form-grid, .edu-panel2026 .form-row { grid-template-columns: 1fr !important; }
+  .edu-panel2026 .card-body { padding: 16px; }
+  .edu-panel2026 .card-header { padding: 14px 16px; }
+}
+@media (max-width: 600px) {
+  .edu-panel2026 .edu-mobile-menu { padding: 9px 11px; }
+  .edu-panel2026 .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .edu-panel2026 .stat-card { padding: 14px; gap: 10px; flex-direction: column; align-items: flex-start; }
+  .edu-panel2026 .stat-icon { width: 44px; height: 44px; font-size: 1.1rem; }
+  .edu-panel2026 .stat-value { font-size: 1.3rem; }
+  .edu-panel2026 .page-header { flex-direction: column; align-items: stretch; }
+  .edu-panel2026 .page-header > .btn-primary, .edu-panel2026 .page-header > button { width: 100%; justify-content: center; }
+  .edu-panel2026 .modal-footer { flex-direction: column-reverse; }
+  .edu-panel2026 .modal-footer > button { width: 100%; justify-content: center; }
+  .edu-panel2026 .modal-body { padding: 16px; }
+}
+@media (max-width: 480px) {
+  .edu-panel2026 .top-header { padding: 0 10px; }
+  .edu-panel2026 .edu-brand span { display: none; }
+  .edu-panel2026 .edu-mobile-menu .edu-menu-text { display: none; }
+  .edu-panel2026 .welcome-banner, .edu-panel2026 .edu-hero { flex-direction: row; text-align: left; }
+}
+@media (max-width: 360px) {
+  .edu-panel2026 .stats-grid { grid-template-columns: 1fr; }
+}
+@media print {
+  .edu-panel2026 .top-header, .edu-panel2026 .edu-hijo-bar, .edu-panel2026 .edu-hero { display: none !important; }
+}
+
+/* El título ya aparece en el encabezado de la sección */
+.edu-panel2026 .edu-hero + .page-header > h2:first-child { display: none; }
+.edu-panel2026 .edu-hero + .page-header { justify-content: flex-end; }
+.edu-panel2026 .edu-hero + .page-header:not(:has(> :not(h2))) { display: none; }

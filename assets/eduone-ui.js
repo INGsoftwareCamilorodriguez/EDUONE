@@ -12,7 +12,7 @@
    ===================================================================== */
 import { getApps } from 'https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js';
 import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js';
-import { getFirestore, doc, updateDoc, arrayUnion } from 'https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js';
+import { getFirestore, doc, getDoc, onSnapshot, updateDoc, arrayUnion } from 'https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js';
 import { getMessaging, getToken, onMessage, isSupported } from 'https://www.gstatic.com/firebasejs/11.3.1/firebase-messaging.js';
 import { DOCUMENTOS, vigilarCasilla, registrarConsentimiento, yaAceptoEnEsteDispositivo, marcarAceptadoEnEsteDispositivo } from './legal.js?v=20261031b';
 
@@ -253,6 +253,7 @@ async function iniciarPush() {
         // Con permiso ya concedido se registra en silencio (sin mensajes)
         activarPush(false);
         pedirAceptacionLegal(user);
+        vigilarTemaColegio(user);
     });
 }
 
@@ -451,6 +452,88 @@ function buscarCamposEmoji() {
         }
     });
 }
+
+
+// ---------------------------------------------------------------------
+// 6) COLORES DEL COLEGIO EN TIEMPO REAL
+// Escucha el documento del colegio: cuando el desarrollador (AdminPanel)
+// cambia el color, el logo o la portada, todos los paneles abiertos se
+// actualizan al instante, sin recargar. Además se guarda en el dispositivo
+// para pintar el color correcto desde el primer instante de la carga.
+// ---------------------------------------------------------------------
+const CLAVE_TEMA = 'eduone_tema_colegio';
+function hexRgb(hex) {
+    let h = String(hex || '').trim().replace('#', '');
+    if (h.length === 3) h = h.split('').map(c => c + c).join('');
+    if (!/^[0-9a-f]{6}$/i.test(h)) return null;
+    const n = parseInt(h, 16);
+    return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+}
+const aHex = rgb => '#' + rgb.map(x => Math.max(0, Math.min(255, Math.round(x))).toString(16).padStart(2, '0')).join('');
+const oscuro = (rgb, f) => aHex(rgb.map(c => c * (1 - f)));
+const claro = (rgb, f) => aHex(rgb.map(c => c + (255 - c) * f));
+
+export function aplicarTemaColegio(datos = {}) {
+    const rgb = hexRgb(datos.colorPrimario);
+    if (!rgb) return;
+    const primario = aHex(rgb);
+    const raiz = document.documentElement.style;
+    const vars = {
+        '--primary': primario, '--primary-dark': oscuro(rgb, .2), '--primary-bg': claro(rgb, .9),
+        '--primary-light': claro(rgb, .7), '--sidebar-bg': oscuro(rgb, .75), '--sidebar-hover': oscuro(rgb, .65),
+        '--sidebar-active': primario, '--primary-rgb': rgb.join(',')
+    };
+    const rgb2 = hexRgb(datos.colorSecundario);
+    if (rgb2) vars['--secondary'] = aHex(rgb2);
+    for (const [k, v] of Object.entries(vars)) raiz.setProperty(k, v);
+    // Banners que algunos paneles pintan con estilo en línea
+    if (!document.body?.classList.contains('edu-panel2026')) {
+        document.querySelectorAll('.welcome-banner').forEach(b => {
+            b.style.background = `linear-gradient(135deg, ${primario} 0%, ${vars['--primary-dark']} 100%)`;
+        });
+    }
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', primario);
+}
+
+function temaGuardado() { try { return JSON.parse(localStorage.getItem(CLAVE_TEMA) || 'null'); } catch { return null; } }
+function guardarTema(datos) {
+    try {
+        localStorage.setItem(CLAVE_TEMA, JSON.stringify({
+            colorPrimario: datos.colorPrimario || '', colorSecundario: datos.colorSecundario || ''
+        }));
+    } catch { /* sin storage */ }
+}
+
+let dejarDeVigilarTema = null;
+async function vigilarTemaColegio(user) {
+    dejarDeVigilarTema?.(); dejarDeVigilarTema = null;
+    if (!user) return;
+    try {
+        const db = getFirestore(appFirebase);
+        const perfil = await getDoc(doc(db, 'usuarios', user.uid));
+        const colegioId = perfil.exists() ? perfil.data().colegioId : null;
+        if (!colegioId || !esPanelColegio) return;   // desarrollador / sin colegio
+        let primeraVez = true, colorAnterior = '';
+        dejarDeVigilarTema = onSnapshot(doc(db, 'colegios', colegioId), snap => {
+            if (!snap.exists()) return;
+            const datos = snap.data();
+            aplicarTemaColegio(datos);
+            guardarTema(datos);
+            document.dispatchEvent(new CustomEvent('eduone:colegio', { detail: { id: colegioId, datos, primeraVez } }));
+            const color = (datos.colorPrimario || '') + (datos.colorSecundario || '');
+            if (!primeraVez && color !== colorAnterior) toast('Se actualizaron los colores del colegio', 'info', 3000);
+            colorAnterior = color;
+            primeraVez = false;
+        }, err => console.warn('EduOne: no se pudo escuchar el colegio', err));
+    } catch (e) {
+        console.warn('EduOne: tema del colegio', e);
+    }
+}
+// Color guardado: se aplica de inmediato para no ver el azul por defecto
+// (solo en los paneles de colegio; el panel del desarrollador conserva sus colores)
+const esPanelColegio = /\/colegios\//.test(location.pathname);
+const temaInicial = esPanelColegio ? temaGuardado() : null;
+if (temaInicial) aplicarTemaColegio(temaInicial);
 
 // ---------------------------------------------------------------------
 // Inicio
