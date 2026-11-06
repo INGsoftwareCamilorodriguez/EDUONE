@@ -746,10 +746,22 @@
             .header-search { display: none; }
         }
     </style>
-    <link rel="stylesheet" href="assets/eduone-ui.css?v=20261031b" />
-    <script type="module" src="assets/eduone-ui.js?v=20261031b"></script>
+    <link rel="stylesheet" href="assets/responsive.css?v=20261103" />
+    <script src="assets/responsive.js?v=20261103" defer></script>
+    <link rel="stylesheet" href="assets/eduone-ui.css?v=20261105" />
+    <link rel="stylesheet" href="assets/eduone-panel.css?v=20261105" />
+    <script src="assets/eduone-panel.js?v=20261105" defer></script>
+    <script type="module" src="assets/eduone-ui.js?v=20261105"></script>
+    <style>
+        /* Buscador global: en el diseño 2026 va debajo del menú, dentro del contenido */
+        .edu-panel2026 .contador-busqueda { margin: 0 0 18px; }
+        .edu-panel2026 .contador-busqueda .header-search { display: block !important; position: relative; max-width: 560px; width: 100%; }
+        .edu-panel2026 .contador-busqueda .header-search input { width: 100%; }
+        .pens-mas td { text-align: center; padding: 14px !important; }
+    </style>
+    <script src="assets/eduone-validacion.js?v=20261105" defer></script>
 </head>
-<body>
+<body class="edu-panel2026">
 
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
@@ -824,6 +836,7 @@
         </header>
 
         <section class="content-area" id="contentArea">
+            <div class="contador-busqueda" id="contadorBusqueda"></div>
 
             <div id="loadingState" class="loading-overlay">
                 <div class="spinner"></div>
@@ -1550,7 +1563,7 @@
                 if (window.innerWidth <= 992) closeSidebarMobile();
 
                 if (page === 'movimientos') cargarMovimientos();
-                if (page === 'pensiones') cargarPensiones();
+                if (page === 'pensiones') cargarPensiones(false);
                 if (page === 'estudiantes') cargarEstudiantesContador();
                 if (page === 'cartera') cargarCartera();
                 if (page === 'balance') cargarBalance();
@@ -2016,37 +2029,51 @@
         // =============================================
         // PENSIONES
         // =============================================
-        async function cargarPensiones() {
+        // Rendimiento: las 4 consultas van en paralelo; al volver a la sección se
+        // muestra de inmediato lo que ya estaba cargado (menos de 1 minuto) y se
+        // actualiza por detrás. Después de registrar un pago se recarga siempre.
+        let pensionesCargadasEn = 0;
+        let pensionesLimite = 60;
+        let pensionesCargando = null;
+        async function cargarPensiones(forzar = true) {
             const tbody = document.getElementById('tablaPensiones');
-            try {
-                if (estudiantesCache.length === 0) {
-                    const estSnap = await getDocs(collection(db, 'colegios', colegioId, 'estudiantes'));
-                    estudiantesCache = estSnap.docs.map(d => ({ id: d.id, ...d.data() }));
-                }
-                if (cursosCache.length === 0) {
-                    const cSnap = await getDocs(collection(db, 'colegios', colegioId, 'cursos'));
-                    cursosCache = cSnap.docs.map(d => ({ id: d.id, ...d.data() }));
-                }
-
-                const snap = await getDocs(collection(db, 'colegios', colegioId, 'pensiones'));
-                pensionesCache = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-
-                abonosCache = {};
-                const pagosSnap = await getDocs(collection(db, 'colegios', colegioId, 'pagos_pensiones'));
-                pagosSnap.forEach(d => {
-                    const p = d.data();
-                    const key = p.pensionId;
-                    if (!key) return;
-                    if (!abonosCache[key]) abonosCache[key] = [];
-                    abonosCache[key].push({ id: d.id, ...p });
-                });
-
+            if (pensionesCache.length) {
                 renderPensiones();
-            } catch (e) {
-                console.error(e);
-                tbody.innerHTML = `<tr><td colspan="10" class="text-center text-danger">Error: ${e.message}</td></tr>`;
+                if (!forzar && Date.now() - pensionesCargadasEn < 60000) return;
+            } else {
+                tbody.innerHTML = `<tr><td colspan="10" class="text-center text-muted"><i class="fas fa-spinner fa-spin"></i> Cargando pensiones...</td></tr>`;
             }
+            if (pensionesCargando) return pensionesCargando;
+            pensionesCargando = (async () => {
+                try {
+                    const col = n => getDocs(collection(db, 'colegios', colegioId, n));
+                    const [estSnap, cSnap, snap, pagosSnap] = await Promise.all([
+                        estudiantesCache.length === 0 ? col('estudiantes') : null,
+                        cursosCache.length === 0 ? col('cursos') : null,
+                        col('pensiones'),
+                        col('pagos_pensiones')
+                    ]);
+                    if (estSnap) estudiantesCache = estSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+                    if (cSnap) cursosCache = cSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+                    pensionesCache = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                    abonosCache = {};
+                    pagosSnap.forEach(d => {
+                        const p = d.data();
+                        const key = p.pensionId;
+                        if (!key) return;
+                        if (!abonosCache[key]) abonosCache[key] = [];
+                        abonosCache[key].push({ id: d.id, ...p });
+                    });
+                    pensionesCargadasEn = Date.now();
+                    renderPensiones();
+                } catch (e) {
+                    console.error(e);
+                    tbody.innerHTML = `<tr><td colspan="10" class="text-center text-danger">Error: ${e.message}</td></tr>`;
+                } finally { pensionesCargando = null; }
+            })();
+            return pensionesCargando;
         }
+        window.masPensiones = () => { pensionesLimite += 100; renderPensiones(); };
 
         function renderPensiones() {
             const tbody = document.getElementById('tablaPensiones');
@@ -2084,6 +2111,8 @@
             }
 
             lista.sort((a, b) => (Number(b.p.anio) || 0) - (Number(a.p.anio) || 0) || (Number(b.p.mes) || 0) - (Number(a.p.mes) || 0));
+            const totalLista = lista.length;
+            lista = lista.slice(0, pensionesLimite);
 
             tbody.innerHTML = lista.map((x, i) => {
                 const nombre = `${esc(x.est.nombres || '')} ${esc(x.est.apellidos || '')}`.trim() || 'Sin nombre';
@@ -2121,11 +2150,13 @@
                         </td>
                     </tr>
                 `;
-            }).join('');
+            }).join('') + (totalLista > lista.length
+                ? `<tr class="pens-mas"><td colspan="10"><button class="btn-secondary" onclick="window.masPensiones()"><i class="fas fa-chevron-down"></i> Mostrar más (${totalLista - lista.length} restantes)</button></td></tr>`
+                : '');
         }
 
-        document.getElementById('filtroPensionMes')?.addEventListener('change', renderPensiones);
-        document.getElementById('filtroPensionEstado')?.addEventListener('change', renderPensiones);
+        document.getElementById('filtroPensionMes')?.addEventListener('change', () => { pensionesLimite = 60; renderPensiones(); });
+        document.getElementById('filtroPensionEstado')?.addEventListener('change', () => { pensionesLimite = 60; renderPensiones(); });
 
         // =============================================
         // HISTORIAL DE ABONOS
@@ -3364,5 +3395,17 @@
         console.log('✅ EduOne - Panel del Contador cargado correctamente');
     </script>
 
+    <script type="module" src="assets/eduone-chat.js?v=20261105"></script>
+    <script type="module" src="assets/eduone-orientacion.js?v=20261105"></script>
+    <script>
+        (function () {
+            const mover = () => {
+                const b = document.querySelector('.top-header .header-search');
+                const destino = document.getElementById('contadorBusqueda');
+                if (b && destino && document.body.classList.contains('edu-panel2026')) destino.append(b);
+            };
+            if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mover); else mover();
+        })();
+    </script>
 </body>
 </html>

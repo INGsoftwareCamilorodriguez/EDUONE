@@ -407,8 +407,8 @@ body{display:block;background:#f3f7fc} .sidebar,.sidebar-overlay{display:none!im
 </style>
     <link rel="stylesheet" href="../assets/responsive.css?v=20261103" />
     <script src="../assets/responsive.js?v=20261103" defer></script>
-    <link rel="stylesheet" href="../assets/eduone-ui.css?v=20261103" />
-    <script type="module" src="../assets/eduone-ui.js?v=20261103"></script>
+    <link rel="stylesheet" href="../assets/eduone-ui.css?v=20261105" />
+    <script type="module" src="../assets/eduone-ui.js?v=20261105"></script>
 <style>
 /* Corrección del encabezado: evita crecimiento de imágenes y desbordamientos */
 .top-header{height:72px!important;min-height:72px!important;max-height:72px!important;flex-wrap:nowrap!important;position:sticky;top:0;align-items:center!important;padding:0 22px!important;gap:12px!important;isolation:isolate}
@@ -438,6 +438,12 @@ body{display:block;background:#f3f7fc} .sidebar,.sidebar-overlay{display:none!im
 @media(max-width:1150px){#page-entregas .edu-entregas-grid{grid-template-columns:210px minmax(0,1fr)}#page-entregas .edu-entrega-inspector{grid-column:2;position:static}.edu-topnav a,.edu-topnav summary{font-size:.74rem;padding:6px}}
 @media(max-width:850px){.top-header{height:66px!important;min-height:66px!important;max-height:66px!important}.edu-topnav.mobile-open{display:flex!important;position:absolute;top:100%;left:12px;right:12px}.top-header .user-info{display:none}#page-entregas .edu-entregas-grid{grid-template-columns:1fr}#page-entregas .edu-entregas-tabs{flex-direction:row;max-height:none;overflow-x:auto}#page-entregas .edu-entregas-tabs button{flex:0 0 190px}#page-entregas .edu-entrega-inspector{grid-column:1}#page-entregas .edu-entregas-detail{max-height:none}}
 </style>
+    <style>
+        .obs-reportes { display: flex; flex-direction: column; gap: 6px; }
+        .obs-reportes label { display: flex; align-items: center; gap: 8px; font-weight: 400; cursor: pointer; font-size: .9rem; flex-wrap: wrap; }
+        .obs-reportes small { color: var(--text-secondary, #64748b); }
+    </style>
+    <script src="../assets/eduone-validacion.js?v=20261105" defer></script>
 </head>
 <body>
 <div id="eduGlobalBusy" class="edu-global-busy" role="status" aria-live="polite" hidden><span class="edu-loading-wheel"></span><span data-busy-text>Cargando...</span></div>
@@ -1307,6 +1313,22 @@ body{display:block;background:#f3f7fc} .sidebar,.sidebar-overlay{display:none!im
                                 <option value="negativa">❌ Negativa</option>
                                 <option value="neutral">⚪ Neutral</option>
                             </select>
+                        </div>
+                        <div class="form-group" style="grid-column: 1 / -1;">
+                            <label>Reportar también a</label>
+                            <div class="obs-reportes">
+                                <label><input type="checkbox" id="obsReportarConvivencia" /> Coordinación de convivencia <small>(comportamiento: se abre un caso)</small></label>
+                                <label><input type="checkbox" id="obsReportarAcademico" /> Coordinación académica <small>(bajo rendimiento académico)</small></label>
+                            </div>
+                            <div id="obsGravedadGrupo" style="display:none;margin-top:8px">
+                                <label for="obsGravedad">Gravedad del caso</label>
+                                <select id="obsGravedad" class="form-control" style="max-width:220px">
+                                    <option value="leve">Leve</option>
+                                    <option value="grave">Grave</option>
+                                    <option value="gravisima">Gravísima</option>
+                                </select>
+                            </div>
+                            <small style="color:var(--text-secondary,#64748b)">El estudiante y su acudiente reciben un aviso con esta observación.</small>
                         </div>
                     </div>
                 </div>
@@ -4005,6 +4027,8 @@ window.guardarNotaPresencial = async (estudianteId, actividadId) => {
         document.getElementById('btnCrearObservacion')?.addEventListener('click', async () => {
             document.getElementById('modalCrearObservacion').classList.add('show');
             document.getElementById('observacionAlert').className = 'alert';
+            ['obsReportarConvivencia', 'obsReportarAcademico'].forEach(id => { const c = document.getElementById(id); if (c) c.checked = false; });
+            const gGrav = document.getElementById('obsGravedadGrupo'); if (gGrav) gGrav.style.display = 'none';
 
             const cursoSelect = document.getElementById('observacionCurso');
             const estudianteSelect = document.getElementById('observacionEstudiante');
@@ -4034,6 +4058,9 @@ window.guardarNotaPresencial = async (estudianteId, actividadId) => {
         document.getElementById('closeObservacionModal')?.addEventListener('click', () => {
             document.getElementById('modalCrearObservacion').classList.remove('show');
         });
+        document.getElementById('obsReportarConvivencia')?.addEventListener('change', e => {
+            document.getElementById('obsGravedadGrupo').style.display = e.target.checked ? '' : 'none';
+        });
         document.getElementById('cancelObservacionModal')?.addEventListener('click', () => {
             document.getElementById('modalCrearObservacion').classList.remove('show');
         });
@@ -4058,10 +4085,46 @@ window.guardarNotaPresencial = async (estudianteId, actividadId) => {
             btnGuardar.innerHTML = '<span class="spinner-sm"></span> Guardando...';
 
             try {
+                const aConvivencia = document.getElementById('obsReportarConvivencia')?.checked;
+                const aAcademico = document.getElementById('obsReportarAcademico')?.checked;
                 await addDoc(collection(db, 'colegios', colegioId, 'observaciones'), {
-                    estudianteId, cursoId, texto, tipo, profesorId, fecha: serverTimestamp()
+                    estudianteId, cursoId, texto, tipo, profesorId, fecha: serverTimestamp(),
+                    reportadaA: [aConvivencia && 'convivencia', aAcademico && 'academico'].filter(Boolean)
                 });
-                showToast('✅ Observación creada', 'success');
+                // Reportes a coordinación y aviso a la familia
+                const extras = [];
+                try {
+                    const [estSnap, cursoSnap] = await Promise.all([
+                        getDoc(doc(db, 'colegios', colegioId, 'estudiantes', estudianteId)),
+                        getDoc(doc(db, 'colegios', colegioId, 'cursos', cursoId))
+                    ]);
+                    const estNombre = estSnap.exists() ? `${estSnap.data().nombres || ''} ${estSnap.data().apellidos || ''}`.trim() : 'Estudiante';
+                    const cursoNombre = cursoSnap.data()?.nombre || '-';
+                    const profNombre = usuarioActual?.nombre || 'Profesor(a)';
+                    const base = { estudianteId, estudianteNombre: estNombre, cursoId, cursoNombre, descripcion: texto,
+                        registradoPor: profNombre, registradoPorRol: 'profesor', registradoPorUid: auth.currentUser?.uid || null, fechaRegistro: serverTimestamp() };
+                    if (aConvivencia) {
+                        await addDoc(collection(db, 'colegios', colegioId, 'convivencia_casos'), {
+                            ...base, categoria: 'comportamiento', tipo: 'reporte_docente',
+                            gravedad: document.getElementById('obsGravedad')?.value || 'leve', estado: 'abierto'
+                        });
+                        extras.push('convivencia');
+                    }
+                    if (aAcademico) {
+                        await addDoc(collection(db, 'colegios', colegioId, 'situaciones_academicas'), {
+                            ...base, alcance: 'individual', tipo: 'bajo_rendimiento', estado: 'abierta', informadoFamilia: false
+                        });
+                        extras.push('coordinación académica');
+                    }
+                    const { notificarFamilia } = await import('../assets/eduone-comun.js?v=20261105');
+                    const icono = { positiva: '🌟', negativa: '⚠️', neutral: '📝' }[tipo] || '📝';
+                    await notificarFamilia(estudianteId, `${icono} Observación de ${profNombre}`,
+                        `${estNombre}: ${texto}${extras.length ? ' (Reportado a ' + extras.join(' y ') + ')' : ''}`, 'observacion');
+                } catch (errExtra) {
+                    console.warn('Reporte/aviso de la observación:', errExtra);
+                    showToast('⚠️ La observación se guardó, pero no se pudo enviar el reporte o el aviso: ' + errExtra.message, 'warning');
+                }
+                showToast(extras.length ? `✅ Observación creada y reportada a ${extras.join(' y ')}` : '✅ Observación creada', 'success');
                 setTimeout(() => {
                     document.getElementById('modalCrearObservacion').classList.remove('show');
                     cargarObservaciones();
@@ -4648,7 +4711,7 @@ async function eduLoadContacts(){
  const host=document.getElementById('eduChatContacts');host.textContent='Buscando usuarios...';
  try{
   const snap=await getDocs(query(collection(db,'usuarios'),where('colegioId','==',colegioId)));
-  const contacts=snap.docs.map(d=>({...d.data(),id:d.id,uid:d.data().authUid||d.data().uid||d.id})).filter(x=>x.uid!==eduUid()&&x.activo!==false);eduChatKnownContacts=contacts;eduLoadChatHistory();
+  const contacts=snap.docs.map(d=>({...d.data(),id:d.id,uid:d.data().authUid||d.data().uid||d.id})).filter(x=>x.uid!==eduUid()&&x.activo!==false&&(window.EduOne?.chatPermitido?.('profesor',x.rol)??true));eduChatKnownContacts=contacts;eduLoadChatHistory();
   const render=()=>{host.replaceChildren();const v=document.getElementById('eduChatSearch').value.toLowerCase().trim();let visibles=v.length>=2?contacts.filter(x=>`${x.nombre||''} ${x.rol||''}`.toLowerCase().includes(v)).slice(0,30):[];if(!visibles.length)host.textContent=v.length<2?'Escribe al menos 2 letras para buscar':'No hay contactos para esta búsqueda';for(const x of visibles){const btn=document.createElement('button');btn.appendChild(eduAvatar(x.nombre,x.fotoUrl||x.fotoPerfilUrl));const label=document.createElement('span');label.textContent=`${x.nombre||'Usuario'} · ${x.rol||'Usuario'}`;btn.appendChild(label);btn.addEventListener('click',()=>eduOpenChat(x));host.appendChild(btn)}};
   document.getElementById('eduChatSearch').oninput=render;render();
  }catch(e){host.textContent='No se pudo consultar usuarios: '+e.message}
@@ -4927,5 +4990,7 @@ eduSyncSchoolAppearance=async function(...args){const result=await eduOldSyncApp
 
     </script>
 
+    <script type="module" src="../assets/eduone-comun.js?v=20261105"></script>
+    <script type="module" src="../assets/eduone-orientacion.js?v=20261105"></script>
 </body>
 </html>

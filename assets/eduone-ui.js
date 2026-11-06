@@ -531,7 +531,7 @@ async function vigilarTemaColegio(user) {
 }
 // Color guardado: se aplica de inmediato para no ver el azul por defecto
 // (solo en los paneles de colegio; el panel del desarrollador conserva sus colores)
-const esPanelColegio = /\/colegios\//.test(location.pathname);
+const esPanelColegio = /\/colegios\/|\/contador\.html/.test(location.pathname);
 const temaInicial = esPanelColegio ? temaGuardado() : null;
 if (temaInicial) aplicarTemaColegio(temaInicial);
 

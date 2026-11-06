@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+<html lang="es" data-edu-orientador="1">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>EduOne - Orientación Escolar</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #2563EB;
+            --primary-dark: #1E40AF;
+            --primary-light: #EFF6FF;
+            --primary-bg: #EFF6FF;
+            --sidebar-bg: #1E293B;
+            --sidebar-text: #FFFFFF;
+            --sidebar-active: #2563EB;
+            --sidebar-hover: #334155;
+            --topbar-bg: #FFFFFF;
+            --bg: #F1F5F9;
+            --card-bg: #FFFFFF;
+            --border: #E2E8F0;
+            --text-primary: #0F172A;
+            --text-secondary: #64748B;
+            --success: #16A34A;
+            --danger: #DC2626;
+            --warning: #D97706;
+            --info: #0284C7;
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #E2E8F0;
+            --gray-300: #cbd5e1;
+            --gray-400: #94A3B8;
+            --gray-500: #64748B;
+            --gray-600: #475569;
+            --gray-700: #334155;
+            --gray-800: #1e293b;
+            --gray-900: #0F172A;
+            --sidebar-width: 250px;
+            --sidebar-collapsed: 64px;
+            --header-height: 56px;
+            --radius: 10px;
+            --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+            --shadow-lg: 0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.05);
+            --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        html { font-size: 16px; }
+
+        body {
+            font-family: var(--font);
+            background-color: var(--bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; padding: 0; }
+
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: var(--gray-100); }
+        ::-webkit-scrollbar-thumb { background: var(--gray-300); border-radius: 8px; }
+
+        .text-center { text-align: center; }
+        .text-muted { color: var(--gray-500); }
+        .text-success { color: var(--success); }
+        .text-danger { color: var(--danger); }
+        .text-warning { color: var(--warning); }
+
+        .btn-primary {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 10px 20px; background: var(--primary); color: #fff;
+            border: none; border-radius: 8px; font-size: 0.9rem; font-weight: 600;
+            font-family: var(--font); cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+        }
+        .btn-primary:hover { background: var(--primary-dark); }
+        .btn-primary:active { transform: scale(0.97); }
+        .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        .btn-secondary {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 10px 20px; background: var(--gray-200); color: var(--gray-700);
+            border: none; border-radius: 8px; font-size: 0.9rem; font-weight: 600;
+            font-family: var(--font); cursor: pointer;
+        }
+        .btn-secondary:hover { background: var(--gray-300); }
+        .tab-btn.active { background: var(--primary); color: #fff; }
+        .timeline-item { border-left: 3px solid var(--primary); padding: 4px 0 16px 16px; margin-left: 6px; position: relative; }
+        .timeline-item::before { content: ''; position: absolute; left: -7px; top: 6px; width: 11px; height: 11px; border-radius: 50%; background: var(--primary); }
+        .timeline-item .timeline-meta { font-size: 0.75rem; color: var(--gray-500); margin-bottom: 2px; }
+        .timeline-item .timeline-title { font-weight: 600; font-size: 0.9rem; color: var(--gray-800); }
+        .timeline-item .timeline-desc { font-size: 0.85rem; color: var(--gray-600); margin-top: 2px; }
+        .bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+        .bar-row .bar-label { width: 130px; font-size: 0.82rem; color: var(--gray-700); flex-shrink: 0; }
+        .bar-row .bar-track { flex: 1; background: var(--gray-100); border-radius: 6px; height: 18px; overflow: hidden; }
+        .bar-row .bar-fill { height: 100%; border-radius: 6px; background: var(--primary); }
+        .bar-row .bar-count { width: 30px; text-align: right; font-size: 0.82rem; font-weight: 600; color: var(--gray-700); }
+
+        .btn-success {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 8px 14px; background: var(--success); color: #fff;
+            border: none; border-radius: 6px; font-size: 0.8rem; font-weight: 500;
+            font-family: var(--font); cursor: pointer;
+        }
+        .btn-success:hover { background: #16a34a; }
+
+        .btn-danger {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 8px 14px; background: var(--danger); color: #fff;
+            border: none; border-radius: 6px; font-size: 0.8rem; font-weight: 500;
+            font-family: var(--font); cursor: pointer;
+        }
+        .btn-danger:hover { background: #dc2626; }
+
+        .btn-info {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 8px 14px; background: var(--info); color: #fff;
+            border: none; border-radius: 6px; font-size: 0.8rem; font-weight: 500;
+            font-family: var(--font); cursor: pointer;
+        }
+        .btn-info:hover { background: #0369A1; }
+
+        .btn-warning {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 8px 14px; background: var(--warning); color: #fff;
+            border: none; border-radius: 6px; font-size: 0.8rem; font-weight: 500;
+            font-family: var(--font); cursor: pointer;
+        }
+        .btn-warning:hover { background: #d97706; }
+
+        .btn-sm { padding: 6px 12px; font-size: 0.75rem; border-radius: 6px; }
+
+        .badge {
+            display: inline-block; padding: 4px 12px; border-radius: 50px;
+            font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .badge-success { background: #dcfce7; color: #166534; }
+        .badge-danger { background: #fecaca; color: #991b1b; }
+        .badge-warning { background: #fef3c7; color: #92400e; }
+        .badge-info { background: #dbeafe; color: #1e40af; }
+        .badge-gray { background: var(--gray-200); color: var(--gray-600); }
+
+        .badge-rol {
+            display: inline-block; padding: 3px 10px; border-radius: 50px;
+            font-size: 0.68rem; font-weight: 600;
+        }
+        .badge-rol.profesor { background: #dbeafe; color: #1e40af; }
+        .badge-rol.coord_academico { background: #ede9fe; color: #6d28d9; }
+        .badge-rol.coord_convivencia { background: #ffedd5; color: #c2410c; }
+        .badge-rol.secretaria { background: #fce7f3; color: #be185d; }
+        .badge-rol.orientador { background: #ccfbf1; color: #0f766e; }
+        .badge-rol.contador { background: #dcfce7; color: #166534; }
+
+        .card {
+            background: #fff; border-radius: var(--radius);
+            box-shadow: var(--shadow); overflow: hidden; margin-bottom: 24px;
+        }
+        .card-header {
+            padding: 18px 22px; border-bottom: 1px solid var(--gray-200);
+            display: flex; justify-content: space-between; align-items: center;
+            flex-wrap: wrap; gap: 8px;
+        }
+        .card-header h2 { font-size: 1.05rem; font-weight: 600; color: var(--gray-800); }
+        .card-body { padding: 22px; }
+
+        .table-responsive { overflow-x: auto; }
+        .table-modern { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+        .table-modern thead th {
+            background: var(--primary-bg); color: var(--text-secondary);
+            font-weight: 600; font-size: 0.72rem; text-transform: uppercase;
+            letter-spacing: 0.5px; padding: 12px 16px; text-align: left;
+            border-bottom: 2px solid var(--border);
+        }
+        .table-modern tbody td {
+            padding: 12px 16px; border-bottom: 1px solid var(--border);
+            vertical-align: middle;
+        }
+        .table-modern tbody tr:nth-child(even) { background: #FAFAFA; }
+        .table-modern tbody tr:hover { background: var(--gray-50); }
+        .table-modern tbody tr:last-child td { border-bottom: none; }
+
+        .form-group { margin-bottom: 18px; }
+        .form-group label {
+            display: block; font-weight: 500; font-size: 0.85rem;
+            color: var(--gray-700); margin-bottom: 4px;
+        }
+        .form-control {
+            width: 100%; padding: 10px 14px;
+            border: 1.5px solid var(--gray-200); border-radius: 8px;
+            font-size: 0.9rem; font-family: var(--font);
+            transition: border-color 0.2s, box-shadow 0.2s;
+            background: #fff; color: var(--gray-800);
+        }
+        .form-control:focus {
+            outline: none; border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        }
+        .form-control::placeholder { color: var(--gray-400); }
+        select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23475569' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-position: right 14px center;
+            padding-right: 36px;
+        }
+
+        .modal {
+            display: none; position: fixed; inset: 0; z-index: 9999;
+            align-items: center; justify-content: center;
+        }
+        .modal.show { display: flex; }
+        .modal-overlay {
+            position: absolute; inset: 0; background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+        }
+        .modal-content {
+            position: relative; background: #fff; border-radius: var(--radius);
+            max-width: 780px; width: 94%; max-height: 90vh; overflow-y: auto;
+            box-shadow: var(--shadow-lg); animation: modalFade 0.25s ease;
+        }
+        @keyframes modalFade {
+            from { opacity: 0; transform: scale(0.95) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .modal-header {
+            padding: 20px 24px; border-bottom: 1px solid var(--gray-200);
+            display: flex; justify-content: space-between; align-items: center;
+            position: sticky; top: 0; background: #fff; z-index: 1;
+        }
+        .modal-header h2 { font-size: 1.1rem; font-weight: 600; }
+        .modal-close {
+            background: none; border: none; font-size: 1.8rem;
+            color: var(--gray-400); cursor: pointer; padding: 0 6px;
+            line-height: 1; transition: color 0.2s;
+        }
+        .modal-close:hover { color: var(--gray-700); }
+        .modal-body { padding: 22px; }
+        .modal-footer {
+            padding: 16px 22px; border-top: 1px solid var(--gray-200);
+            display: flex; justify-content: flex-end; gap: 12px; flex-wrap: wrap;
+        }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+        .alert {
+            padding: 12px 16px; border-radius: 10px; font-size: 0.9rem;
+            margin-bottom: 16px; display: none;
+        }
+        .alert.show { display: block; }
+        .alert-error { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+        .alert-success { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
+        .alert-info { background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: var(--sidebar-width); height: 100vh;
+            background: var(--sidebar-bg);
+            display: flex; flex-direction: column;
+            position: fixed; top: 0; left: 0; flex-shrink: 0;
+            transition: transform var(--transition), width var(--transition), background var(--transition);
+            z-index: 1000; overflow: hidden;
+        }
+        .sidebar.closed { transform: translateX(-100%); }
+        .sidebar.collapsed { width: var(--sidebar-collapsed); }
+        .sidebar.collapsed .logo span,
+        .sidebar.collapsed .sidebar-nav ul li a span,
+        .sidebar.collapsed .sidebar-nav .nav-section,
+        .sidebar.collapsed .colegio-info-text,
+        .sidebar.collapsed .btn-logout span { display: none; }
+        .sidebar.collapsed .sidebar-nav ul li a { justify-content: center; padding: 12px; }
+        .sidebar.collapsed .sidebar-nav ul li a i { margin: 0; font-size: 1.3rem; }
+        .sidebar.collapsed .btn-logout { justify-content: center; padding: 12px; }
+        .sidebar.collapsed .sidebar-colegio { padding: 12px 8px; justify-content: center; }
+
+        .sidebar-header {
+            padding: 16px 18px; border-bottom: 1px solid rgba(255,255,255,0.08);
+            display: flex; align-items: center; justify-content: space-between;
+            min-height: var(--header-height); flex-shrink: 0;
+        }
+        .sidebar-header .logo {
+            display: flex; align-items: center; gap: 10px;
+            font-weight: 700; font-size: 1.15rem; color: #FFFFFF;
+            white-space: nowrap;
+        }
+        .sidebar-header .logo i {
+            color: #FFFFFF; font-size: 1.3rem;
+            background: rgba(255,255,255,0.12);
+            width: 34px; height: 34px;
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        .sidebar-toggle {
+            background: none; border: none; font-size: 1.1rem;
+            color: rgba(255,255,255,0.7); cursor: pointer;
+            padding: 4px 8px; border-radius: 6px;
+            transition: background 0.2s;
+        }
+        .sidebar-toggle:hover { background: rgba(255,255,255,0.1); }
+
+        .sidebar-close-mobile {
+            display: none; background: none; border: none; font-size: 1.4rem;
+            color: rgba(255,255,255,0.7); cursor: pointer; padding: 4px 8px;
+        }
+
+        .sidebar-colegio {
+            padding: 12px 18px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            flex-shrink: 0;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .sidebar-colegio .colegio-logo {
+            width: 34px; height: 34px; border-radius: 8px;
+            object-fit: cover; background: #fff; padding: 2px;
+            flex-shrink: 0;
+        }
+        .sidebar-colegio .colegio-logo-placeholder {
+            width: 34px; height: 34px; border-radius: 8px;
+            background: rgba(255,255,255,0.15); color: #fff;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1rem; flex-shrink: 0;
+        }
+        .sidebar-colegio .colegio-info-text { flex: 1; min-width: 0; }
+        .sidebar-colegio .colegio-nombre {
+            font-weight: 600; font-size: 0.85rem; color: #FFFFFF;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .sidebar-colegio .colegio-rol {
+            font-size: 0.68rem; color: rgba(255,255,255,0.65);
+            text-transform: uppercase; letter-spacing: 0.5px;
+        }
+
+        .sidebar-nav { flex: 1; padding: 10px 10px; overflow-y: auto; }
+        .sidebar-nav::-webkit-scrollbar { width: 4px; }
+        .sidebar-nav::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 4px; }
+        .sidebar-nav .nav-section {
+            font-size: 0.62rem; text-transform: uppercase;
+            letter-spacing: 0.8px; color: rgba(255,255,255,0.4);
+            font-weight: 600; padding: 12px 12px 5px;
+        }
+        .sidebar-nav ul li { margin-bottom: 2px; }
+        .sidebar-nav ul li a {
+            display: flex; align-items: center; gap: 12px;
+            padding: 9px 12px; border-radius: 8px;
+            color: rgba(255,255,255,0.85); font-weight: 500; font-size: 0.85rem;
+            transition: background 0.15s, color 0.15s;
+            cursor: pointer; white-space: nowrap;
+        }
+        .sidebar-nav ul li a i {
+            width: 20px; font-size: 0.95rem; text-align: center; flex-shrink: 0;
+        }
+        .sidebar-nav ul li a span { flex: 1; }
+        .sidebar-nav ul li a:hover { background: var(--sidebar-hover); color: #FFFFFF; }
+        .sidebar-nav ul li.active a {
+            background: var(--sidebar-active); color: #FFFFFF; font-weight: 600;
+        }
+
+        .sidebar-footer {
+            padding: 12px 14px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            flex-shrink: 0;
+        }
+        .btn-logout {
+            display: flex; align-items: center; gap: 12px; width: 100%;
+            padding: 9px 12px; border: none; border-radius: 8px;
+            background: transparent; color: rgba(255,255,255,0.85);
+            font-weight: 500; font-size: 0.85rem; font-family: var(--font);
+            cursor: pointer; transition: background 0.15s, color 0.15s;
+        }
+        .btn-logout:hover { background: rgba(220,38,38,0.2); color: #FCA5A5; }
+        .btn-logout i { width: 20px; font-size: 0.95rem; text-align: center; }
+
+        .sidebar-overlay {
+            display: none; position: fixed; inset: 0;
+            background: rgba(0, 0, 0, 0.5); z-index: 999;
+            backdrop-filter: blur(2px);
+        }
+        .sidebar-overlay.active { display: block; }
+
+        .main-content {
+            flex: 1; min-height: 100vh; display: flex; flex-direction: column;
+            margin-left: var(--sidebar-width);
+            transition: margin-left var(--transition); width: 100%;
+        }
+        .main-content.expanded { margin-left: var(--sidebar-collapsed); }
+
+        .top-header {
+            height: var(--header-height); background: var(--topbar-bg);
+            border-bottom: 1px solid var(--border); padding: 0 24px;
+            display: flex; align-items: center; justify-content: space-between;
+            position: sticky; top: 0; z-index: 50;
+            flex-shrink: 0; box-shadow: var(--shadow);
+        }
+        .header-left { display: flex; align-items: center; gap: 16px; }
+        .header-left .hamburger-btn {
+            display: none; background: none; border: none; font-size: 1.4rem;
+            color: var(--text-secondary); cursor: pointer; padding: 4px 8px;
+            border-radius: 6px;
+        }
+        .header-left .hamburger-btn:hover { background: var(--gray-100); }
+        .header-left h1 { font-size: 1.1rem; font-weight: 600; color: var(--text-primary); }
+
+        .header-right { display: flex; align-items: center; gap: 14px; }
+        .user-info { text-align: right; }
+        .user-name {
+            display: block; font-weight: 600; font-size: 0.85rem;
+            color: var(--text-primary);
+        }
+        .user-role {
+            display: block; font-size: 0.7rem;
+            color: var(--text-secondary); text-transform: capitalize;
+        }
+        .user-avatar { font-size: 2rem; color: var(--gray-400); }
+
+        .content-area { flex: 1; padding: 24px 28px; }
+
+        .page-content { display: none; animation: fadeIn 0.3s ease; }
+        .page-content.active { display: block; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .stats-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 18px; margin-bottom: 22px;
+        }
+        .stat-card {
+            background: #fff; border-radius: var(--radius);
+            padding: 18px 22px; box-shadow: var(--shadow);
+            display: flex; align-items: center; gap: 16px;
+            transition: box-shadow 0.2s;
+        }
+        .stat-card:hover { box-shadow: var(--shadow-lg); }
+        .stat-icon {
+            width: 48px; height: 48px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.3rem; flex-shrink: 0;
+        }
+        .stat-info { flex: 1; }
+        .stat-label {
+            display: block; font-size: 0.7rem; color: var(--gray-500);
+            font-weight: 500; text-transform: uppercase; letter-spacing: 0.3px;
+        }
+        .stat-value {
+            display: block; font-size: 1.5rem; font-weight: 700;
+            color: var(--gray-900); line-height: 1.2;
+        }
+
+        .info-colegio-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px; margin-bottom: 24px;
+        }
+        .info-colegio-card {
+            background: #fff; border-radius: var(--radius);
+            padding: 14px 18px; box-shadow: var(--shadow);
+            display: flex; align-items: center; gap: 14px;
+        }
+        .info-colegio-card .icon {
+            width: 40px; height: 40px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem; flex-shrink: 0;
+        }
+        .info-colegio-card .label {
+            font-size: 0.65rem; color: var(--gray-500); font-weight: 500;
+            text-transform: uppercase; letter-spacing: 0.3px;
+        }
+        .info-colegio-card .value {
+            font-size: 0.95rem; font-weight: 600; color: var(--gray-900);
+        }
+
+        .welcome-banner {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: var(--radius); padding: 24px 28px; color: #fff;
+            margin-bottom: 24px; display: flex; justify-content: space-between;
+            align-items: center; flex-wrap: wrap; gap: 16px;
+            transition: background 0.3s;
+        }
+        .welcome-banner .welcome-text { flex: 1; min-width: 200px; }
+        .welcome-banner h2 { font-size: 1.25rem; font-weight: 600; }
+        .welcome-banner p { opacity: 0.9; margin-top: 2px; font-size: 0.9rem; }
+        .welcome-banner .badge-colegio {
+            background: rgba(255, 255, 255, 0.2); padding: 6px 18px;
+            border-radius: 50px; font-size: 0.8rem; font-weight: 500;
+        }
+        .welcome-banner .logo-colegio {
+            width: 56px; height: 56px; border-radius: 12px;
+            object-fit: cover; background: #fff; padding: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+        .estado-activo { color: #4ade80; }
+        .estado-inactivo { color: #fca5a5; }
+
+        .loading-overlay {
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: center; min-height: 400px; gap: 16px;
+        }
+        .loading-overlay .spinner {
+            width: 48px; height: 48px; border: 4px solid var(--gray-200);
+            border-top-color: var(--primary); border-radius: 50%;
+            animation: spin 0.8s ease-in-out infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .page-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 20px; flex-wrap: wrap; gap: 12px;
+        }
+        .page-header h2 {
+            font-size: 1.1rem; font-weight: 600; color: var(--gray-800);
+        }
+
+        .plan-card {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: var(--radius); padding: 22px;
+            color: #fff; margin-bottom: 22px;
+            box-shadow: var(--shadow-lg);
+        }
+        .plan-card .plan-header {
+            display: flex; justify-content: space-between; align-items: flex-start;
+            flex-wrap: wrap; gap: 12px; margin-bottom: 14px;
+        }
+        .plan-card .plan-info h3 { font-size: 1.3rem; font-weight: 700; margin-bottom: 2px; }
+        .plan-card .plan-info p { opacity: 0.9; font-size: 0.85rem; }
+        .plan-card .plan-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 6px 14px; border-radius: 50px;
+            font-size: 0.72rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        .plan-card .plan-progress-header {
+            display: flex; justify-content: space-between;
+            align-items: center; margin-bottom: 8px; font-size: 0.85rem;
+        }
+        .plan-card .plan-progress-header strong { font-size: 1rem; }
+        .plan-card .plan-progress-bar {
+            width: 100%; height: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 100px; overflow: hidden;
+        }
+        .plan-card .plan-progress-fill {
+            height: 100%; border-radius: 100px;
+            transition: width 0.4s ease;
+            background: #4ade80;
+        }
+        .plan-card .plan-progress-fill.warning { background: #fbbf24; }
+        .plan-card .plan-progress-fill.danger { background: #f87171; }
+
+        .section-form-title {
+            font-size: 0.9rem;
+            color: var(--gray-600);
+            margin: 20px 0 12px;
+            padding-top: 16px;
+            border-top: 2px dashed var(--gray-200);
+            font-weight: 600;
+        }
+
+        .mov-row-ingreso { color: var(--success); font-weight: 600; }
+        .mov-row-egreso { color: var(--danger); font-weight: 600; }
+
+        .eco-filtros {
+            display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px;
+        }
+        .eco-filtros select, .eco-filtros input { max-width: 220px; }
+
+        @media (max-width: 992px) {
+            .sidebar { transform: translateX(-100%); width: var(--sidebar-width); }
+            .sidebar.open { transform: translateX(0); }
+            .sidebar .logo span { display: inline !important; color: #FFFFFF; }
+            .sidebar .sidebar-nav ul li a span { display: inline !important; }
+            .sidebar .sidebar-nav .nav-section { display: block !important; }
+            .sidebar .colegio-info-text { display: block !important; }
+            .sidebar .btn-logout span { display: inline !important; }
+            .sidebar .btn-logout { justify-content: flex-start; padding: 9px 12px; }
+            .sidebar .sidebar-nav ul li a { justify-content: flex-start; padding: 9px 12px; }
+            .sidebar .sidebar-nav ul li a i { font-size: 0.95rem; }
+            .sidebar .sidebar-toggle { display: none; }
+            .sidebar .sidebar-close-mobile { display: block; }
+            .sidebar-overlay.active { display: block; }
+            .main-content { margin-left: 0 !important; }
+            .header-left .hamburger-btn { display: block; }
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid { grid-template-columns: 1fr 1fr; }
+            .info-colegio-grid { grid-template-columns: 1fr 1fr; }
+            .form-grid { grid-template-columns: 1fr; }
+            .top-header { padding: 0 16px; }
+            .content-area { padding: 16px; }
+            .modal-content { width: 96%; margin: 10px; }
+            .user-info { display: none; }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid { grid-template-columns: 1fr; }
+            .info-colegio-grid { grid-template-columns: 1fr; }
+            .top-header { padding: 0 12px; height: 60px; }
+            .content-area { padding: 12px; }
+            .welcome-banner { flex-direction: column; text-align: center; }
+            .modal-footer { flex-direction: column; }
+            .modal-footer .btn-primary, .modal-footer .btn-secondary {
+                width: 100%; justify-content: center;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="../assets/responsive.css?v=20261103" />
+    <script src="../assets/responsive.js?v=20261103" defer></script>
+    <link rel="stylesheet" href="../assets/eduone-ui.css?v=20261105" />
+    <link rel="stylesheet" href="../assets/eduone-panel.css?v=20261105" />
+    <script src="../assets/eduone-panel.js?v=20261105" defer></script>
+    <script type="module" src="../assets/eduone-ui.js?v=20261105"></script>
+    <script src="../assets/eduone-validacion.js?v=20261105" defer></script>
+</head>
+<body class="edu-panel2026">
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>EduOne</span>
+            </div>
+            <button class="sidebar-close-mobile" id="sidebarCloseMobile">
+                <i class="fas fa-times"></i>
+            </button>
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <div class="sidebar-colegio">
+            <div class="colegio-logo-placeholder" id="colegioLogoPlaceholder">
+                <i class="fas fa-school"></i>
+            </div>
+            <img class="colegio-logo" id="colegioLogoImg" style="display: none;" alt="Logo" />
+            <div class="colegio-info-text">
+                <div class="colegio-nombre" id="colegioNombreSidebar">Cargando...</div>
+                <div class="colegio-rol">Orientación Escolar</div>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <ul>
+                <li class="active"><a href="#" data-page="inicio"><i class="fas fa-home"></i><span>Inicio</span></a></li>
+            </ul>
+
+            <div class="nav-section">ORIENTACIÓN</div>
+            <ul>
+                <li><a href="#" data-page="citas"><i class="fas fa-calendar-check"></i><span>Citas</span></a></li>
+                <li><a href="#" data-page="horario"><i class="fas fa-calendar-week"></i><span>Horario y agenda</span></a></li>
+                <li><a href="#" data-page="libreta"><i class="fas fa-book"></i><span>Libreta de apuntes</span></a></li>
+            </ul>
+        </nav>
+
+        <div class="sidebar-footer">
+            <button id="logoutBtn" class="btn-logout">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Cerrar sesión</span>
+            </button>
+        </div>
+    </aside>
+
+    <main class="main-content" id="mainContent">
+        <header class="top-header">
+            <div class="header-left">
+                <button class="hamburger-btn" id="hamburgerBtn" aria-label="Abrir menú">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1 id="pageTitle">Inicio</h1>
+            </div>
+            <div class="header-right">
+                <div class="user-info">
+                    <span class="user-name" id="userName">Cargando...</span>
+                    <span class="user-role" id="userRole">Orientación escolar</span>
+                </div>
+                <div class="user-avatar">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+            </div>
+        </header>
+
+        <section class="content-area" id="contentArea">
+
+            <div id="loadingState" class="loading-overlay">
+                <div class="spinner"></div>
+                <p>Cargando información del colegio...</p>
+            </div>
+
+            <!-- INICIO -->
+            <div id="page-inicio" class="page-content active">
+                <div class="welcome-banner" id="welcomeBanner">
+                    <div style="display: flex; align-items: center; gap: 16px; flex: 1; min-width: 200px;">
+                        <div id="bannerLogoContainer">
+                            <i class="fas fa-graduation-cap" style="font-size: 2.5rem;" id="bannerLogoIcon"></i>
+                        </div>
+                        <div class="welcome-text">
+                            <h2 id="bienvenidaNombre">Bienvenido(a)</h2>
+                            <p id="bienvenidaColegio">Colegio: Cargando...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header"><h2>Resumen de orientación</h2></div>
+                    <div class="card-body">
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-icon" style="background: #dbeafe; color: #2563eb;"><i class="fas fa-calendar-day"></i></div>
+                                <div class="stat-info"><span class="stat-label">Citas de hoy</span><span class="stat-value" id="statHoy">0</span></div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon" style="background: #fef3c7; color: #d97706;"><i class="fas fa-hourglass-half"></i></div>
+                                <div class="stat-info"><span class="stat-label">Por confirmar</span><span class="stat-value" id="statPendientes">0</span></div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon" style="background: #ede9fe; color: #6d28d9;"><i class="fas fa-calendar-week"></i></div>
+                                <div class="stat-info"><span class="stat-label">Próximos 7 días</span><span class="stat-value" id="statSemana">0</span></div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon" style="background: #dcfce7; color: #16a34a;"><i class="fas fa-user-graduate"></i></div>
+                                <div class="stat-info"><span class="stat-label">Remisiones de estudiantes</span><span class="stat-value" id="statRemisiones">0</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header" style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+                        <h2>Próximas citas</h2>
+                        <button type="button" class="btn-primary" data-nueva-cita><i class="fas fa-plus"></i> Nueva cita</button>
+                    </div>
+                    <div class="card-body"><div class="edu-or-lista" id="listaProximas"></div></div>
+                </div>
+            </div>
+
+            <!-- CITAS -->
+            <div id="page-citas" class="page-content">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="or-filtros">
+                            <div class="form-group">
+                                <label for="filtroCitaEstado">Estado</label>
+                                <select id="filtroCitaEstado" class="form-control">
+                                    <option value="">Todos</option>
+                                    <option value="pendiente">Pendientes</option>
+                                    <option value="confirmada">Confirmadas</option>
+                                    <option value="realizada">Realizadas</option>
+                                    <option value="no_asistio">No asistió</option>
+                                    <option value="cancelada">Canceladas</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="filtroCitaCuando">Fecha</label>
+                                <select id="filtroCitaCuando" class="form-control">
+                                    <option value="proximas">Próximas</option>
+                                    <option value="pasadas">Pasadas</option>
+                                    <option value="todas">Todas</option>
+                                </select>
+                            </div>
+                            <div class="form-group" style="flex:2">
+                                <label for="filtroCitaTexto">Buscar</label>
+                                <input type="search" id="filtroCitaTexto" class="form-control" placeholder="Nombre, curso o motivo" maxlength="60" />
+                            </div>
+                            <div class="form-group" style="align-self:flex-end">
+                                <button type="button" class="btn-primary" data-nueva-cita style="width:100%"><i class="fas fa-plus"></i> Nueva cita</button>
+                            </div>
+                        </div>
+                        <div class="edu-or-lista" id="listaCitas"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- HORARIO -->
+            <div id="page-horario" class="page-content">
+                <div class="card">
+                    <div class="card-header" style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+                        <h2><i class="fas fa-calendar-week" style="color:var(--primary)"></i> Agenda semanal</h2>
+                        <div class="or-semana-nav">
+                            <button type="button" class="btn-secondary" id="semanaAnterior" aria-label="Semana anterior"><i class="fas fa-chevron-left"></i></button>
+                            <span id="semanaTexto"></span>
+                            <button type="button" class="btn-secondary" id="semanaSiguiente" aria-label="Semana siguiente"><i class="fas fa-chevron-right"></i></button>
+                            <button type="button" class="btn-secondary" id="semanaHoy">Hoy</button>
+                        </div>
+                    </div>
+                    <div class="card-body"><div class="or-agenda" id="agendaSemanal"></div></div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header"><h2><i class="fas fa-clock" style="color:var(--primary)"></i> Mi horario de atención</h2></div>
+                    <div class="card-body">
+                        <p class="or-ayuda">Los coordinadores, profesores y demás personal verán estas franjas para agendar citas contigo. Las franjas ya ocupadas no se muestran.</p>
+                        <div id="dispAlert" class="alert" style="display:none"></div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="dispDuracion">Duración de cada cita</label>
+                                <select id="dispDuracion" class="form-control">
+                                    <option value="20">20 minutos</option>
+                                    <option value="30">30 minutos</option>
+                                    <option value="45">45 minutos</option>
+                                    <option value="60">1 hora</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table-modern">
+                                <thead><tr><th>Día</th><th>Desde</th><th>Hasta</th><th></th></tr></thead>
+                                <tbody id="tablaBloques"></tbody>
+                            </table>
+                        </div>
+                        <button type="button" class="btn-secondary" id="btnAgregarBloque" style="margin-top:10px"><i class="fas fa-plus"></i> Agregar franja</button>
+
+                        <div class="form-group" style="margin-top:18px">
+                            <label for="dispNoDisponible">Días en que NO atenderé (vacaciones, permisos)</label>
+                            <div style="display:flex;gap:8px;flex-wrap:wrap">
+                                <input type="date" id="dispNoDisponible" class="form-control" style="max-width:220px" />
+                                <button type="button" class="btn-secondary" id="btnAgregarNoDisp"><i class="fas fa-plus"></i> Agregar</button>
+                            </div>
+                            <div id="listaNoDisp" class="or-chips"></div>
+                        </div>
+                        <div style="display:flex;justify-content:flex-end;margin-top:12px">
+                            <button type="button" class="btn-primary" id="btnGuardarDisp"><i class="fas fa-save"></i> Guardar horario</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LIBRETA -->
+            <div id="page-libreta" class="page-content">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="or-filtros">
+                            <div class="form-group" style="flex:2">
+                                <label for="filtroNotaTexto">Buscar en mis apuntes</label>
+                                <input type="search" id="filtroNotaTexto" class="form-control" placeholder="Título, estudiante o contenido" maxlength="60" />
+                            </div>
+                            <div class="form-group">
+                                <label for="filtroNotaEtiqueta">Etiqueta</label>
+                                <select id="filtroNotaEtiqueta" class="form-control">
+                                    <option value="">Todas</option>
+                                    <option value="sesion">Sesión</option>
+                                    <option value="seguimiento">Seguimiento</option>
+                                    <option value="recordatorio">Recordatorio</option>
+                                    <option value="otro">Otro</option>
+                                </select>
+                            </div>
+                            <div class="form-group" style="align-self:flex-end">
+                                <button type="button" class="btn-primary" id="btnNuevaNota" style="width:100%"><i class="fas fa-plus"></i> Nuevo apunte</button>
+                            </div>
+                        </div>
+                        <p class="or-ayuda"><i class="fas fa-lock"></i> Tus apuntes son privados: solo tú puedes verlos.</p>
+                        <div class="or-notas" id="listaNotas"></div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- MODAL: Nueva cita -->
+    <div class="modal" id="modalCita">
+        <div class="modal-overlay" data-cerrar></div>
+        <div class="modal-content" style="max-width: 720px;">
+            <div class="modal-header">
+                <h2><i class="fas fa-calendar-plus" style="color: var(--primary);"></i> Nueva cita</h2>
+                <button class="modal-close" data-cerrar aria-label="Cerrar">&times;</button>
+            </div>
+            <form id="formCita" novalidate>
+                <div class="modal-body">
+                    <div id="citaAlert" class="alert" style="display: none;"></div>
+                    <div class="form-group">
+                        <label>¿Con quién es la cita?</label>
+                        <div class="edu-or-radios" id="citaParaRadios">
+                            <label><input type="radio" name="citaPara" value="estudiante" checked /> Estudiante</label>
+                            <label><input type="radio" name="citaPara" value="funcionario" /> Docente o funcionario</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="citaPersona" id="citaPersonaLabel">Estudiante *</label>
+                        <div><input type="text" id="citaPersona" class="form-control" placeholder="Escribe al menos 2 letras del nombre..." maxlength="80" /></div>
+                        <span class="edu-or-error" id="citaPersonaErr" hidden></span>
+                    </div>
+                    <div class="form-group">
+                        <label>Horario disponible *</label>
+                        <div id="citaFranjas"></div>
+                        <div class="edu-or-sel-resumen" id="citaResumen" hidden></div>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="citaModalidad">Modalidad</label>
+                            <select id="citaModalidad" class="form-control">
+                                <option value="presencial">Presencial</option>
+                                <option value="virtual">Virtual</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="citaMotivo">Motivo *</label>
+                        <textarea id="citaMotivo" class="form-control" rows="3" minlength="10" maxlength="600" placeholder="Motivo de la cita"></textarea>
+                        <span class="edu-or-error" id="citaMotivoErr" hidden></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" data-cerrar>Cancelar</button>
+                    <button type="submit" class="btn-primary" id="btnGuardarCita"><i class="fas fa-save"></i> Agendar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: Detalle de cita -->
+    <div class="modal" id="modalDetalleCita">
+        <div class="modal-overlay" data-cerrar></div>
+        <div class="modal-content" style="max-width: 620px;">
+            <div class="modal-header">
+                <h2><i class="fas fa-calendar-check" style="color: var(--primary);"></i> Detalle de la cita</h2>
+                <button class="modal-close" data-cerrar aria-label="Cerrar">&times;</button>
+            </div>
+            <div class="modal-body" id="detalleCitaBody"></div>
+            <div class="modal-footer" id="detalleCitaFooter"></div>
+        </div>
+    </div>
+
+    <!-- MODAL: Apunte -->
+    <div class="modal" id="modalNota">
+        <div class="modal-overlay" data-cerrar></div>
+        <div class="modal-content" style="max-width: 680px;">
+            <div class="modal-header">
+                <h2><i class="fas fa-book" style="color: var(--primary);"></i> <span id="notaTitulo">Nuevo apunte</span></h2>
+                <button class="modal-close" data-cerrar aria-label="Cerrar">&times;</button>
+            </div>
+            <form id="formNota" novalidate>
+                <div class="modal-body">
+                    <div id="notaAlert" class="alert" style="display: none;"></div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="notaTituloInput">Título *</label>
+                            <input type="text" id="notaTituloInput" class="form-control" minlength="3" maxlength="120" placeholder="Ej: Sesión inicial" />
+                            <span class="edu-or-error" id="notaTituloErr" hidden></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="notaEtiqueta">Etiqueta</label>
+                            <select id="notaEtiqueta" class="form-control">
+                                <option value="sesion">Sesión</option>
+                                <option value="seguimiento">Seguimiento</option>
+                                <option value="recordatorio">Recordatorio</option>
+                                <option value="otro">Otro</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="notaEstudiante">Estudiante relacionado (opcional)</label>
+                        <div><input type="text" id="notaEstudiante" class="form-control" placeholder="Escribe al menos 2 letras del nombre..." maxlength="80" /></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="notaContenido">Apunte *</label>
+                        <textarea id="notaContenido" class="form-control" rows="8" maxlength="5000" placeholder="Escribe tus observaciones..."></textarea>
+                        <small class="or-ayuda" id="notaContador">0 / 5000</small>
+                        <span class="edu-or-error" id="notaContenidoErr" hidden></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" data-cerrar>Cancelar</button>
+                    <button type="submit" class="btn-primary" id="btnGuardarNota"><i class="fas fa-save"></i> Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <style>
+        .or-filtros { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+        .or-filtros .form-group { flex: 1; min-width: 160px; margin-bottom: 0; }
+        .or-ayuda { font-size: .8rem; color: var(--text-secondary); margin: 4px 0 12px; display: block; }
+        .or-semana-nav { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+        .or-semana-nav span { font-weight: 600; font-size: .9rem; min-width: 170px; text-align: center; }
+        .or-agenda { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; }
+        .or-agenda-dia { border: 1px solid var(--border); border-radius: 14px; padding: 10px; min-height: 160px; background: #fff; }
+        .or-agenda-dia.hoy { border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-bg); }
+        .or-agenda-dia h4 { font-size: .8rem; margin-bottom: 8px; display: flex; justify-content: space-between; gap: 6px; }
+        .or-agenda-dia h4 small { color: var(--text-secondary); font-weight: 500; }
+        .or-agenda-item { display: block; width: 100%; text-align: left; border: 0; border-left: 4px solid var(--primary); background: var(--primary-bg); border-radius: 8px; padding: 6px 8px; margin-bottom: 6px; font: inherit; font-size: .76rem; cursor: pointer; color: inherit; }
+        .or-agenda-item strong { display: block; font-size: .78rem; }
+        .or-agenda-libre { font-size: .72rem; color: var(--text-secondary); border: 1px dashed var(--border); border-radius: 8px; padding: 5px 8px; margin-bottom: 6px; }
+        .or-chips { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+        .or-chips span { background: var(--gray-100, #f1f5f9); border-radius: 999px; padding: 4px 6px 4px 12px; font-size: .78rem; display: inline-flex; align-items: center; gap: 6px; }
+        .or-chips button { border: 0; background: transparent; cursor: pointer; color: #dc2626; font-size: .9rem; }
+        .or-notas { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+        .or-nota { border: 1px solid var(--border); border-radius: 14px; padding: 14px; background: #fffdf5; display: flex; flex-direction: column; gap: 6px; }
+        .or-nota h4 { font-size: .95rem; }
+        .or-nota p { font-size: .84rem; color: var(--text-primary); white-space: pre-wrap; word-break: break-word; display: -webkit-box; -webkit-line-clamp: 6; -webkit-box-orient: vertical; overflow: hidden; }
+        .or-nota small { color: var(--text-secondary); font-size: .74rem; }
+        .or-nota .acciones { display: flex; gap: 6px; margin-top: auto; padding-top: 6px; }
+        .or-nota .acciones button { flex: 1; }
+        .or-detalle dt { font-size: .75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: .04em; margin-top: 10px; }
+        .or-detalle dd { font-size: .92rem; margin: 2px 0 0; white-space: pre-wrap; word-break: break-word; }
+        .bloque-input { min-width: 0; }
+        @media (max-width: 1100px) { .or-agenda { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+        @media (max-width: 640px) {
+            .or-agenda { grid-template-columns: 1fr; }
+            .or-agenda-dia { min-height: 0; }
+            .or-semana-nav { width: 100%; justify-content: space-between; }
+            .or-semana-nav span { min-width: 0; flex: 1; }
+            #tablaBloques td { padding: 6px 4px; }
+        }
+    </style>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "firebase/app": "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js",
+                "firebase/auth": "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js",
+                "firebase/firestore": "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js"
+            }
+        }
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "firebase/app";
+        import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+        import {
+            getFirestore, doc, getDoc, getDocs, collection, addDoc, updateDoc, deleteDoc,
+            query, where, onSnapshot, serverTimestamp
+        } from "firebase/firestore";
+        import {
+            DIAS, DIAS_CORTOS, aMin, aHora, ymd, deYmd, fechaLarga, hora12, ESTADOS_CITA, ORIGEN_CITA,
+            CSS_ORIENTACION, leerDisponibilidad, guardarDisponibilidad, franjasOcupadas, generarFranjas,
+            agendarCita, cambiarEstadoCita, listarEstudiantes, selectorFranjas, buscadorConSugerencias, chipEstado
+        } from "../assets/eduone-orientacion.js?v=20261105";
+        import { el, agregarEstilos } from "../assets/eduone-secciones.js?v=20261105";
+        import { nombreDe, uidDe, ROL_LABEL } from "../assets/eduone-comun.js?v=20261105";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyA3U98y5BJWQwpypFCAyNioqSRfXkr9UA0",
+            authDomain: "eduone-5f7cf.firebaseapp.com",
+            projectId: "eduone-5f7cf",
+            storageBucket: "eduone-5f7cf.firebasestorage.app",
+            messagingSenderId: "541282614006",
+            appId: "1:541282614006:web:f8cf617c99f08403df0ad7"
+        };
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        agregarEstilos('eduOrientacionCss', CSS_ORIENTACION);
+
+        let colegioId = null, usuarioActual = null, miUid = null, isLoggingOut = false;
+        let citas = [];
+        let estudiantes = null, funcionarios = null;
+        const col = (...p) => collection(db, 'colegios', colegioId, ...p);
+        const ref = (...p) => doc(db, 'colegios', colegioId, ...p);
+
+        // =============================================
+        // SIDEBAR Y NAVEGACIÓN
+        // =============================================
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const cerrarSidebar = () => { sidebar.classList.remove('open'); sidebarOverlay.classList.remove('active'); document.body.style.overflow = ''; };
+        document.getElementById('hamburgerBtn')?.addEventListener('click', () => { sidebar.classList.remove('collapsed'); sidebar.classList.add('open'); sidebarOverlay.classList.add('active'); document.body.style.overflow = 'hidden'; });
+        document.getElementById('sidebarCloseMobile')?.addEventListener('click', cerrarSidebar);
+        sidebarOverlay?.addEventListener('click', cerrarSidebar);
+        document.getElementById('sidebarToggle')?.addEventListener('click', () => {
+            if (window.innerWidth > 992) { sidebar.classList.toggle('collapsed'); document.getElementById('mainContent').classList.toggle('expanded'); }
+        });
+        window.addEventListener('resize', () => { if (window.innerWidth > 992) cerrarSidebar(); });
+
+        const pageNames = { inicio: 'Inicio', citas: 'Citas', horario: 'Horario y agenda', libreta: 'Libreta de apuntes' };
+        document.querySelectorAll('.sidebar-nav a[data-page]').forEach(link => {
+            if (!pageNames[link.dataset.page]) return;   // secciones agregadas por módulos (chat)
+            link.addEventListener('click', e => {
+                e.preventDefault();
+                const page = link.dataset.page;
+                document.querySelectorAll('.sidebar-nav li').forEach(li => li.classList.remove('active'));
+                link.closest('li').classList.add('active');
+                document.querySelectorAll('.page-content').forEach(p => p.classList.toggle('active', p.id === 'page-' + page));
+                document.getElementById('pageTitle').textContent = pageNames[page];
+                if (window.innerWidth <= 992) cerrarSidebar();
+                if (page === 'horario') pintarAgenda();
+                if (page === 'libreta') pintarNotas();
+            });
+        });
+        const irA = page => document.querySelector(`.sidebar-nav a[data-page="${page}"]`)?.click();
+
+        // Modales
+        const abrirModal = id => document.getElementById(id).classList.add('show');
+        const cerrarModal = id => document.getElementById(id).classList.remove('show');
+        document.querySelectorAll('.modal').forEach(m => m.addEventListener('click', e => { if (e.target.closest('[data-cerrar]')) m.classList.remove('show'); }));
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') document.querySelectorAll('.modal.show').forEach(m => m.classList.remove('show')); });
+        const alerta = (id, txt, ok) => { const a = document.getElementById(id); a.className = 'alert ' + (ok ? 'alert-success' : 'alert-error') + ' show'; a.textContent = txt; a.style.display = 'block'; };
+        const errorCampo = (id, txt) => { const e = document.getElementById(id); e.textContent = txt || ''; e.hidden = !txt; return !txt; };
+
+        // =============================================
+        // COLEGIO
+        // =============================================
+        async function cargarColegio() {
+            const snap = await getDoc(doc(db, 'colegios', colegioId));
+            if (!snap.exists()) throw new Error('Colegio no existe');
+            const d = snap.data();
+            document.getElementById('colegioNombreSidebar').textContent = d.nombre || 'Colegio';
+            document.getElementById('bienvenidaNombre').textContent = `Bienvenido(a), ${usuarioActual?.nombre || 'Orientación escolar'}`;
+            document.getElementById('bienvenidaColegio').textContent = `Colegio: ${d.nombre || 'Sin nombre'}`;
+            if (d.logoUrl) {
+                document.getElementById('colegioLogoPlaceholder').style.display = 'none';
+                const img = document.getElementById('colegioLogoImg'); img.src = d.logoUrl; img.style.display = 'block';
+                document.getElementById('bannerLogoContainer').replaceChildren(el('img', { src: d.logoUrl, class: 'logo-colegio', alt: 'Logo' }));
+            }
+        }
+
+        // =============================================
+        // CITAS (tiempo real)
+        // =============================================
+        const personaCita = c => c.estudianteNombre
+            ? `${c.estudianteNombre}${c.cursoNombre ? ' · ' + c.cursoNombre : ''}`
+            : c.participanteNombre
+                ? `${c.participanteNombre} · ${ROL_LABEL[c.participanteRol] || ''}`
+                : `${c.solicitanteNombre || 'Funcionario'} · ${ROL_LABEL[c.solicitanteRol] || 'Cita personal'}`;
+
+        function escucharCitas() {
+            onSnapshot(query(col('orientacion_citas'), where('orientadorUid', '==', miUid)), snap => {
+                citas = snap.docs.map(d => ({ id: d.id, ...d.data() }))
+                    .sort((a, b) => `${a.fecha}${a.hora}`.localeCompare(`${b.fecha}${b.hora}`));
+                pintarResumen();
+                pintarCitas();
+                if (document.getElementById('page-horario').classList.contains('active')) pintarAgenda();
+            }, e => {
+                document.getElementById('listaCitas').replaceChildren(el('div', { class: 'edu-or-vacio', text: 'No se pudieron cargar las citas: ' + e.message }));
+            });
+        }
+
+        function tarjetaCita(c, conEstado = true) {
+            const activa = ['pendiente', 'confirmada'].includes(c.estado);
+            const sel = el('select', { class: 'form-control', 'aria-label': 'Cambiar estado', style: 'max-width:170px;padding:6px 10px;font-size:.8rem' },
+                ...Object.entries(ESTADOS_CITA).map(([k, v]) => el('option', { value: k, text: v.txt, selected: c.estado === k })));
+            sel.addEventListener('change', async () => {
+                const nuevo = sel.value;
+                if (nuevo === 'cancelada' && !confirm('¿Cancelar la cita? La franja quedará libre.')) { sel.value = c.estado; return; }
+                sel.disabled = true;
+                try { await cambiarEstadoCita(c, nuevo); }
+                catch (e) { alert('No se pudo actualizar: ' + e.message); sel.value = c.estado; }
+                finally { sel.disabled = false; }
+            });
+            return el('div', { class: 'edu-or-cita' },
+                el('div', { style: 'min-width:0;flex:1' },
+                    el('strong', { text: `${fechaLarga(c.fecha)} · ${hora12(c.hora)} – ${hora12(c.fin || c.hora)}` }),
+                    el('small', { text: personaCita(c) }),
+                    el('small', { text: `${ORIGEN_CITA[c.origen] || 'Solicitud'} · ${c.modalidad || 'presencial'}${c.solicitanteNombre && c.origen !== 'orientacion' ? ' · Solicitó: ' + c.solicitanteNombre : ''}` })),
+                el('div', { class: 'acciones', style: 'display:flex;gap:8px;align-items:center;flex-wrap:wrap' },
+                    conEstado && activa ? sel : chipEstado(c.estado),
+                    el('button', { type: 'button', class: 'btn-secondary', onclick: () => verCita(c) }, el('i', { class: 'fas fa-eye' }), ' Ver')));
+        }
+
+        function pintarResumen() {
+            const hoy = ymd(new Date());
+            const en7 = ymd(new Date(Date.now() + 7 * 864e5));
+            const activas = citas.filter(c => ['pendiente', 'confirmada'].includes(c.estado));
+            document.getElementById('statHoy').textContent = activas.filter(c => c.fecha === hoy).length;
+            document.getElementById('statPendientes').textContent = activas.filter(c => c.estado === 'pendiente' && c.fecha >= hoy).length;
+            document.getElementById('statSemana').textContent = activas.filter(c => c.fecha >= hoy && c.fecha <= en7).length;
+            document.getElementById('statRemisiones').textContent = activas.filter(c => c.estudianteId && c.fecha >= hoy).length;
+            const prox = activas.filter(c => c.fecha >= hoy).slice(0, 6);
+            const host = document.getElementById('listaProximas');
+            host.replaceChildren(...prox.map(c => tarjetaCita(c)));
+            if (!prox.length) host.append(el('div', { class: 'edu-or-vacio', text: 'No tienes citas próximas.' }));
+        }
+
+        function pintarCitas() {
+            const estado = document.getElementById('filtroCitaEstado').value;
+            const cuando = document.getElementById('filtroCitaCuando').value;
+            const texto = document.getElementById('filtroCitaTexto').value.trim().toLocaleLowerCase('es');
+            const hoy = ymd(new Date());
+            let lista = citas.filter(c =>
+                (!estado || c.estado === estado) &&
+                (cuando === 'todas' || (cuando === 'proximas' ? c.fecha >= hoy : c.fecha < hoy)) &&
+                (!texto || `${personaCita(c)} ${c.motivo || ''} ${c.solicitanteNombre || ''}`.toLocaleLowerCase('es').includes(texto)));
+            if (cuando !== 'proximas') lista = lista.reverse();
+            const host = document.getElementById('listaCitas');
+            host.replaceChildren(...lista.map(c => tarjetaCita(c)));
+            if (!lista.length) host.append(el('div', { class: 'edu-or-vacio', text: 'No hay citas con estos filtros.' }));
+        }
+        ['filtroCitaEstado', 'filtroCitaCuando'].forEach(id => document.getElementById(id).addEventListener('change', pintarCitas));
+        document.getElementById('filtroCitaTexto').addEventListener('input', pintarCitas);
+
+        function verCita(c) {
+            const dl = el('dl', { class: 'or-detalle' });
+            const fila = (t, v) => v ? dl.append(el('dt', { text: t }), el('dd', { text: v })) : null;
+            fila('Fecha y hora', `${fechaLarga(c.fecha)}, ${hora12(c.hora)} – ${hora12(c.fin || c.hora)}`);
+            fila('Con', personaCita(c));
+            fila('Origen', ORIGEN_CITA[c.origen] || 'Solicitud');
+            fila('Solicitada por', c.solicitanteNombre ? `${c.solicitanteNombre} (${ROL_LABEL[c.solicitanteRol] || c.solicitanteRol || ''})` : '');
+            fila('Modalidad', c.modalidad || 'presencial');
+            fila('Motivo', c.motivo || '-');
+            fila('Estado', (ESTADOS_CITA[c.estado] || {}).txt || c.estado);
+            if (c.canceladoPor) fila('Cancelada por', c.canceladoPor);
+            document.getElementById('detalleCitaBody').replaceChildren(dl);
+            document.getElementById('detalleCitaFooter').replaceChildren(
+                el('button', { type: 'button', class: 'btn-secondary', 'data-cerrar': true, text: 'Cerrar' }),
+                el('button', {
+                    type: 'button', class: 'btn-primary', onclick: () => {
+                        cerrarModal('modalDetalleCita');
+                        abrirNota(null, { titulo: `Sesión ${fechaLarga(c.fecha)}`, estudianteId: c.estudianteId, estudianteNombre: c.estudianteNombre, citaId: c.id });
+                    }
+                }, el('i', { class: 'fas fa-pen' }), ' Anotar en mi libreta'));
+            abrirModal('modalDetalleCita');
+        }
+
+        // =============================================
+        // NUEVA CITA (agendada por orientación)
+        // =============================================
+        let citaFranja = null, citaPersona = null;
+        async function personasPara(tipo) {
+            if (tipo === 'estudiante') {
+                if (!estudiantes) estudiantes = await listarEstudiantes();
+                return estudiantes.map(e => ({ id: e.id, texto: e.nombreCompleto, sub: e.cursoNombre, e }));
+            }
+            if (!funcionarios) {
+                const s = await getDocs(query(collection(db, 'usuarios'), where('colegioId', '==', colegioId)));
+                funcionarios = s.docs.map(d => ({ id: uidDe(d), ...d.data() }))
+                    .filter(u => u.activo !== false && u.id !== miUid && !['estudiante', 'acudiente', 'superadmin'].includes(u.rol))
+                    .sort((a, b) => nombreDe(a).localeCompare(nombreDe(b), 'es'));
+            }
+            return funcionarios.map(u => ({ id: u.id, texto: nombreDe(u), sub: ROL_LABEL[u.rol] || u.rol, u }));
+        }
+        let itemsPersona = [];
+        const tipoCita = () => document.querySelector('input[name="citaPara"]:checked').value;
+        buscadorConSugerencias(document.getElementById('citaPersona'), () => itemsPersona, i => { citaPersona = i; errorCampo('citaPersonaErr', ''); });
+        document.getElementById('citaParaRadios').addEventListener('change', async () => {
+            const t = tipoCita();
+            document.getElementById('citaPersonaLabel').textContent = t === 'estudiante' ? 'Estudiante *' : 'Docente o funcionario *';
+            document.getElementById('citaPersona').value = ''; citaPersona = null;
+            itemsPersona = await personasPara(t).catch(() => []);
+        });
+
+        async function abrirNuevaCita() {
+            document.getElementById('formCita').reset();
+            document.getElementById('citaAlert').style.display = 'none';
+            ['citaPersonaErr', 'citaMotivoErr'].forEach(id => errorCampo(id, ''));
+            citaPersona = null; citaFranja = null;
+            document.getElementById('citaPersonaLabel').textContent = 'Estudiante *';
+            abrirModal('modalCita');
+            const host = document.getElementById('citaFranjas');
+            host.replaceChildren(el('div', { class: 'edu-or-vacio', text: 'Cargando tu disponibilidad...' }));
+            try {
+                itemsPersona = await personasPara('estudiante');
+                const [disp, ocupadas] = await Promise.all([leerDisponibilidad(miUid), franjasOcupadas(miUid)]);
+                if (!disp.bloques.length) {
+                    host.replaceChildren(el('div', { class: 'edu-or-vacio' }, 'Primero configura tu horario de atención en ', el('a', { href: '#', text: 'Horario y agenda', onclick: e => { e.preventDefault(); cerrarModal('modalCita'); irA('horario'); } }), '.'));
+                    return;
+                }
+                selectorFranjas(host, generarFranjas(disp, ocupadas, 21), f => {
+                    citaFranja = f;
+                    const r = document.getElementById('citaResumen');
+                    r.hidden = !f;
+                    if (f) r.textContent = `Seleccionaste: ${fechaLarga(f.fecha)}, de ${hora12(f.hora)} a ${hora12(f.fin)}`;
+                });
+            } catch (e) {
+                host.replaceChildren(el('div', { class: 'edu-or-vacio', text: 'Error: ' + e.message }));
+            }
+        }
+        document.querySelectorAll('[data-nueva-cita]').forEach(b => b.addEventListener('click', abrirNuevaCita));
+
+        document.getElementById('formCita').addEventListener('submit', async e => {
+            e.preventDefault();
+            const motivo = document.getElementById('citaMotivo').value.trim();
+            let ok = errorCampo('citaPersonaErr', citaPersona ? '' : 'Elige una persona de la lista.');
+            ok = errorCampo('citaMotivoErr', motivo.length >= 10 ? '' : 'Escribe un motivo de al menos 10 caracteres.') && ok;
+            if (!citaFranja) { alerta('citaAlert', 'Elige un horario disponible.'); ok = false; }
+            if (!ok) return;
+            const btn = document.getElementById('btnGuardarCita');
+            btn.disabled = true;
+            try {
+                const esEst = tipoCita() === 'estudiante';
+                await agendarCita({
+                    orientador: { ...usuarioActual, id: miUid }, franja: citaFranja, motivo,
+                    modalidad: document.getElementById('citaModalidad').value,
+                    tipo: esEst ? 'estudiante' : 'personal', origen: 'orientacion',
+                    estudiante: esEst ? citaPersona.e : null,
+                    participante: esEst ? null : citaPersona.u
+                });
+                alerta('citaAlert', esEst ? '✅ Cita agendada. Se avisó al estudiante y a su acudiente.' : '✅ Cita agendada.', true);
+                setTimeout(() => cerrarModal('modalCita'), 1100);
+            } catch (err) {
+                alerta('citaAlert', '❌ ' + err.message);
+            } finally { btn.disabled = false; }
+        });
+
+        // =============================================
+        // HORARIO: agenda semanal + horario de atención
+        // =============================================
+        let inicioSemana = lunesDe(new Date());
+        let disponibilidad = null;
+        function lunesDe(d) { const x = new Date(d.getFullYear(), d.getMonth(), d.getDate()); const dia = (x.getDay() + 6) % 7; x.setDate(x.getDate() - dia); return x; }
+
+        function pintarAgenda() {
+            const host = document.getElementById('agendaSemanal');
+            const fin = new Date(inicioSemana); fin.setDate(fin.getDate() + 5);
+            document.getElementById('semanaTexto').textContent =
+                `${inicioSemana.getDate()} ${inicioSemana.toLocaleDateString('es-CO', { month: 'short' })} – ${fin.getDate()} ${fin.toLocaleDateString('es-CO', { month: 'short', year: 'numeric' })}`;
+            const hoy = ymd(new Date());
+            host.replaceChildren();
+            for (let i = 0; i < 6; i++) {
+                const d = new Date(inicioSemana); d.setDate(d.getDate() + i);
+                const f = ymd(d);
+                const delDia = citas.filter(c => c.fecha === f && c.estado !== 'cancelada');
+                const caja = el('div', { class: 'or-agenda-dia' + (f === hoy ? ' hoy' : '') },
+                    el('h4', {}, `${DIAS_CORTOS[d.getDay()]} ${d.getDate()}`, el('small', { text: delDia.length ? `${delDia.length} cita${delDia.length > 1 ? 's' : ''}` : '' })));
+                const bloques = (disponibilidad?.bloques || []).filter(b => Number(b.dia) === d.getDay());
+                if ((disponibilidad?.noDisponible || []).includes(f)) caja.append(el('div', { class: 'or-agenda-libre', text: 'No disponible' }));
+                else bloques.forEach(b => caja.append(el('div', { class: 'or-agenda-libre', text: `Atención ${hora12(b.inicio)} – ${hora12(b.fin)}` })));
+                delDia.forEach(c => {
+                    const est = ESTADOS_CITA[c.estado] || ESTADOS_CITA.pendiente;
+                    caja.append(el('button', { type: 'button', class: 'or-agenda-item', style: `border-left-color:${est.color}`, onclick: () => verCita(c) },
+                        el('strong', { text: `${hora12(c.hora)} · ${est.txt}` }), personaCita(c)));
+                });
+                if (!delDia.length && !bloques.length) caja.append(el('div', { class: 'or-ayuda', text: 'Sin citas' }));
+                host.append(caja);
+            }
+        }
+        document.getElementById('semanaAnterior').addEventListener('click', () => { inicioSemana.setDate(inicioSemana.getDate() - 7); pintarAgenda(); });
+        document.getElementById('semanaSiguiente').addEventListener('click', () => { inicioSemana.setDate(inicioSemana.getDate() + 7); pintarAgenda(); });
+        document.getElementById('semanaHoy').addEventListener('click', () => { inicioSemana = lunesDe(new Date()); pintarAgenda(); });
+
+        let bloquesEdit = [], noDispEdit = [];
+        function filaBloque(b, i) {
+            const dia = el('select', { class: 'form-control bloque-input', 'aria-label': 'Día' },
+                ...[1, 2, 3, 4, 5, 6, 0].map(n => el('option', { value: String(n), text: DIAS[n], selected: Number(b.dia) === n })));
+            const ini = el('input', { type: 'time', class: 'form-control bloque-input', value: b.inicio, step: '300', 'aria-label': 'Desde' });
+            const fin = el('input', { type: 'time', class: 'form-control bloque-input', value: b.fin, step: '300', 'aria-label': 'Hasta' });
+            dia.addEventListener('change', () => { b.dia = Number(dia.value); });
+            ini.addEventListener('change', () => { b.inicio = ini.value; });
+            fin.addEventListener('change', () => { b.fin = fin.value; });
+            return el('tr', {}, el('td', {}, dia), el('td', {}, ini), el('td', {}, fin),
+                el('td', {}, el('button', { type: 'button', class: 'btn-secondary', 'aria-label': 'Quitar franja', onclick: () => { bloquesEdit.splice(i, 1); pintarBloques(); } }, el('i', { class: 'fas fa-trash' }))));
+        }
+        function pintarBloques() {
+            const tb = document.getElementById('tablaBloques');
+            tb.replaceChildren(...bloquesEdit.map(filaBloque));
+            if (!bloquesEdit.length) tb.append(el('tr', {}, el('td', { colspan: '4', class: 'text-center', style: 'color:var(--text-secondary);text-align:center', text: 'Aún no has agregado franjas de atención' })));
+            const lista = document.getElementById('listaNoDisp');
+            lista.replaceChildren(...noDispEdit.sort().map((f, i) => el('span', {}, fechaLarga(f),
+                el('button', { type: 'button', 'aria-label': 'Quitar fecha', onclick: () => { noDispEdit.splice(i, 1); pintarBloques(); } }, '×'))));
+        }
+        document.getElementById('btnAgregarBloque').addEventListener('click', () => {
+            const ult = bloquesEdit[bloquesEdit.length - 1];
+            bloquesEdit.push({ dia: ult ? (Number(ult.dia) % 6) + 1 : 1, inicio: '08:00', fin: '12:00' });
+            pintarBloques();
+        });
+        document.getElementById('btnAgregarNoDisp').addEventListener('click', () => {
+            const v = document.getElementById('dispNoDisponible').value;
+            if (!v) return;
+            if (v < ymd(new Date())) { alerta('dispAlert', 'Elige una fecha de hoy en adelante.'); return; }
+            if (!noDispEdit.includes(v)) noDispEdit.push(v);
+            document.getElementById('dispNoDisponible').value = '';
+            pintarBloques();
+        });
+        document.getElementById('btnGuardarDisp').addEventListener('click', async () => {
+            const dur = Number(document.getElementById('dispDuracion').value);
+            for (const b of bloquesEdit) {
+                if (!b.inicio || !b.fin) return alerta('dispAlert', 'Completa la hora de inicio y fin de todas las franjas.');
+                if (aMin(b.fin) - aMin(b.inicio) < dur) return alerta('dispAlert', `La franja del ${DIAS[b.dia]} (${b.inicio}–${b.fin}) debe durar al menos ${dur} minutos.`);
+            }
+            for (const a of bloquesEdit) for (const b of bloquesEdit) {
+                if (a !== b && Number(a.dia) === Number(b.dia) && aMin(a.inicio) < aMin(b.fin) && aMin(b.inicio) < aMin(a.fin)) {
+                    return alerta('dispAlert', `Hay franjas que se cruzan el ${DIAS[a.dia]}. Corrígelas antes de guardar.`);
+                }
+            }
+            const btn = document.getElementById('btnGuardarDisp');
+            btn.disabled = true;
+            try {
+                const hoy = ymd(new Date());
+                await guardarDisponibilidad({ duracion: dur, bloques: bloquesEdit.map(b => ({ dia: Number(b.dia), inicio: b.inicio, fin: b.fin })), noDisponible: noDispEdit.filter(f => f >= hoy) });
+                disponibilidad = await leerDisponibilidad(miUid);
+                alerta('dispAlert', '✅ Horario guardado. Ya está visible para agendar citas.', true);
+                pintarAgenda();
+            } catch (e) { alerta('dispAlert', '❌ ' + e.message); }
+            finally { btn.disabled = false; }
+        });
+        async function cargarDisponibilidad() {
+            disponibilidad = await leerDisponibilidad(miUid);
+            document.getElementById('dispDuracion').value = String(disponibilidad.duracion || 30);
+            bloquesEdit = (disponibilidad.bloques || []).map(b => ({ ...b }));
+            noDispEdit = [...(disponibilidad.noDisponible || [])];
+            pintarBloques();
+        }
+
+        // =============================================
+        // LIBRETA DE APUNTES (privada)
+        // =============================================
+        let notas = [], notaEditando = null, notaEstudiante = null;
+        const ETIQUETAS = { sesion: 'Sesión', seguimiento: 'Seguimiento', recordatorio: 'Recordatorio', otro: 'Otro' };
+        function escucharNotas() {
+            onSnapshot(query(col('orientacion_notas'), where('autorUid', '==', miUid)), snap => {
+                notas = snap.docs.map(d => ({ id: d.id, ...d.data() }))
+                    .sort((a, b) => (b.actualizadoEn?.toMillis?.() || b.creadoEn?.toMillis?.() || 0) - (a.actualizadoEn?.toMillis?.() || a.creadoEn?.toMillis?.() || 0));
+                pintarNotas();
+            }, e => document.getElementById('listaNotas').replaceChildren(el('div', { class: 'edu-or-vacio', text: 'No se pudieron cargar los apuntes: ' + e.message })));
+        }
+        function pintarNotas() {
+            const t = document.getElementById('filtroNotaTexto').value.trim().toLocaleLowerCase('es');
+            const et = document.getElementById('filtroNotaEtiqueta').value;
+            const lista = notas.filter(n => (!et || n.etiqueta === et) && (!t || `${n.titulo} ${n.contenido} ${n.estudianteNombre || ''}`.toLocaleLowerCase('es').includes(t)));
+            const host = document.getElementById('listaNotas');
+            host.replaceChildren(...lista.map(n => el('article', { class: 'or-nota' },
+                el('small', { text: `${ETIQUETAS[n.etiqueta] || 'Apunte'} · ${(n.actualizadoEn || n.creadoEn)?.toDate?.().toLocaleString('es-CO', { dateStyle: 'medium', timeStyle: 'short' }) || 'Ahora'}` }),
+                el('h4', { text: n.titulo }),
+                n.estudianteNombre ? el('small', {}, el('i', { class: 'fas fa-user-graduate' }), ' ' + n.estudianteNombre) : null,
+                el('p', { text: n.contenido }),
+                el('div', { class: 'acciones' },
+                    el('button', { type: 'button', class: 'btn-secondary', onclick: () => abrirNota(n) }, el('i', { class: 'fas fa-pen' }), ' Editar'),
+                    el('button', {
+                        type: 'button', class: 'btn-secondary', onclick: async () => {
+                            if (!confirm('¿Eliminar este apunte? No se puede deshacer.')) return;
+                            try { await deleteDoc(ref('orientacion_notas', n.id)); } catch (e) { alert('No se pudo eliminar: ' + e.message); }
+                        }
+                    }, el('i', { class: 'fas fa-trash' }), ' Eliminar')))));
+            if (!lista.length) host.append(el('div', { class: 'edu-or-vacio', style: 'grid-column:1/-1', text: notas.length ? 'No hay apuntes con estos filtros.' : 'Aún no tienes apuntes. Crea el primero con "Nuevo apunte".' }));
+        }
+        document.getElementById('filtroNotaTexto').addEventListener('input', pintarNotas);
+        document.getElementById('filtroNotaEtiqueta').addEventListener('change', pintarNotas);
+        document.getElementById('btnNuevaNota').addEventListener('click', () => abrirNota(null));
+
+        const contenidoNota = document.getElementById('notaContenido');
+        contenidoNota.addEventListener('input', () => { document.getElementById('notaContador').textContent = `${contenidoNota.value.length} / 5000`; });
+        buscadorConSugerencias(document.getElementById('notaEstudiante'),
+            () => (estudiantes || []).map(e => ({ id: e.id, texto: e.nombreCompleto, sub: e.cursoNombre, e })),
+            i => { notaEstudiante = i ? { id: i.id, nombre: i.texto } : null; });
+
+        async function abrirNota(n, previo = {}) {
+            notaEditando = n;
+            document.getElementById('formNota').reset();
+            document.getElementById('notaAlert').style.display = 'none';
+            ['notaTituloErr', 'notaContenidoErr'].forEach(id => errorCampo(id, ''));
+            document.getElementById('notaTitulo').textContent = n ? 'Editar apunte' : 'Nuevo apunte';
+            document.getElementById('notaTituloInput').value = n?.titulo || previo.titulo || '';
+            document.getElementById('notaEtiqueta').value = n?.etiqueta || (previo.citaId ? 'sesion' : 'seguimiento');
+            contenidoNota.value = n?.contenido || '';
+            contenidoNota.dispatchEvent(new Event('input'));
+            const estId = n?.estudianteId || previo.estudianteId, estNom = n?.estudianteNombre || previo.estudianteNombre;
+            notaEstudiante = estId ? { id: estId, nombre: estNom } : null;
+            document.getElementById('notaEstudiante').value = estNom || '';
+            notaEditando = n ? n : (previo.citaId ? { nuevo: true, citaId: previo.citaId } : null);
+            abrirModal('modalNota');
+            if (!estudiantes) estudiantes = await listarEstudiantes().catch(() => []);
+        }
+        document.getElementById('formNota').addEventListener('submit', async e => {
+            e.preventDefault();
+            const titulo = document.getElementById('notaTituloInput').value.trim();
+            const contenido = contenidoNota.value.trim();
+            let ok = errorCampo('notaTituloErr', titulo.length >= 3 ? '' : 'El título debe tener al menos 3 caracteres.');
+            ok = errorCampo('notaContenidoErr', contenido ? '' : 'Escribe el contenido del apunte.') && ok;
+            if (!ok) return;
+            // Si borraron el nombre del estudiante, se desvincula
+            if (!document.getElementById('notaEstudiante').value.trim()) notaEstudiante = null;
+            const datos = {
+                titulo, contenido, etiqueta: document.getElementById('notaEtiqueta').value,
+                estudianteId: notaEstudiante?.id || null, estudianteNombre: notaEstudiante?.nombre || null,
+                actualizadoEn: serverTimestamp()
+            };
+            const btn = document.getElementById('btnGuardarNota');
+            btn.disabled = true;
+            try {
+                if (notaEditando?.id) await updateDoc(ref('orientacion_notas', notaEditando.id), datos);
+                else await addDoc(col('orientacion_notas'), { ...datos, autorUid: miUid, citaId: notaEditando?.citaId || null, creadoEn: serverTimestamp() });
+                cerrarModal('modalNota');
+            } catch (err) { alerta('notaAlert', '❌ ' + err.message); }
+            finally { btn.disabled = false; }
+        });
+
+        // =============================================
+        // AUTH
+        // =============================================
+        let authEnCurso = false;
+        onAuthStateChanged(auth, async (user) => {
+            if (authEnCurso || isLoggingOut) return;
+            authEnCurso = true;
+            if (!user) { window.location.href = '../login.html'; return; }
+            try {
+                const userDoc = await getDoc(doc(db, 'usuarios', user.uid));
+                if (!userDoc.exists()) { await signOut(auth); window.location.href = '../login.html'; return; }
+                const data = userDoc.data();
+                if (data.rol !== 'orientador') {
+                    const rutas = {
+                        superadmin: '../PanelAdmin/AdminPanel.html', rector: 'colegio.html', admin_colegio: 'colegio.html',
+                        admin_auxiliar: 'colegio.html', profesor: 'profesor.html', estudiante: 'estudiante.html',
+                        acudiente: 'acudiente.html', coord_academico: 'coordinador-academico.html',
+                        coord_convivencia: 'coordinador-convivencia.html', secretaria: 'secretaria.html', contador: '../contador.html'
+                    };
+                    window.location.href = rutas[data.rol] || '../login.html';
+                    return;
+                }
+                if (data.activo === false || !data.colegioId) {
+                    alert('⛔ Cuenta inactiva o sin colegio asignado.');
+                    await signOut(auth); window.location.href = '../login.html'; return;
+                }
+                colegioId = data.colegioId; usuarioActual = data; miUid = user.uid;
+                document.getElementById('userName').textContent = data.nombre || user.email;
+                await cargarColegio();
+                escucharCitas();
+                escucharNotas();
+                await cargarDisponibilidad();
+                document.getElementById('loadingState').style.display = 'none';
+            } catch (error) {
+                console.error(error);
+                document.getElementById('loadingState').replaceChildren(
+                    el('div', { style: 'color: var(--danger); font-size: 2rem;' }, el('i', { class: 'fas fa-exclamation-circle' })),
+                    el('h3', { text: 'Error al cargar el panel' }), el('p', { text: error.message }),
+                    el('button', { class: 'btn-primary', onclick: () => location.reload(), text: 'Reintentar' }));
+            } finally { authEnCurso = false; }
+        });
+
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            if (!confirm('¿Cerrar sesión?')) return;
+            try { isLoggingOut = true; await signOut(auth); window.location.href = '../login.html'; }
+            catch (e) { alert('Error al cerrar sesión'); isLoggingOut = false; }
+        });
+    </script>
+    <script type="module" src="../assets/eduone-chat.js?v=20261105"></script>
+</body>
+</html>

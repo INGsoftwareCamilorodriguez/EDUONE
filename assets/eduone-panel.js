@@ -37,7 +37,16 @@
         acudientes: 'Padres de familia y acudientes',
         certificados: 'Certificados de estudio y notas',
         documentos: 'Genera documentos institucionales',
-        traslados: 'Traslados y retiros de estudiantes'
+        traslados: 'Traslados y retiros de estudiantes',
+        // Contador
+        movimientos: 'Ingresos y egresos del colegio',
+        pensiones: 'Pensiones mensuales, abonos y recibos',
+        cartera: 'Estudiantes con saldos pendientes',
+        balance: 'Resumen financiero del periodo',
+        // Orientación escolar
+        citas: 'Citas agendadas y su estado',
+        horario: 'Agenda semanal y horario de atención',
+        libreta: 'Apuntes privados de orientación'
     };
 
     const $ = (s, r = document) => r.querySelector(s);
@@ -92,7 +101,9 @@
             titulo = null;
         }
         const total = grupos.reduce((n, g) => n + g.links.length, 0);
-        const plano = total <= 6;
+        // Con más de 5 secciones se agrupan en menús desplegables; así queda
+        // espacio para Chat y Orientación escolar (que se agregan después)
+        const plano = total <= 5;
 
         const nav = h('nav', { class: 'edu-topnav', id: 'eduPanelNav', 'aria-label': 'Menú principal' });
         const botonMenu = h('button', {

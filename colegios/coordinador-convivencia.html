@@ -612,13 +612,17 @@
                 width: 100%; justify-content: center;
             }
         }
+        .cit-invitados { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 6px; max-height: 180px; overflow-y: auto; border: 1px solid var(--border); border-radius: 10px; padding: 8px; margin-bottom: 4px; }
+        .cit-invitados label { display: flex; align-items: center; gap: 8px; font-size: .85rem; font-weight: 400; cursor: pointer; padding: 4px; border-radius: 6px; }
+        .cit-invitados label:hover { background: var(--primary-bg); }
     </style>
     <link rel="stylesheet" href="../assets/responsive.css?v=20261103" />
     <script src="../assets/responsive.js?v=20261103" defer></script>
-    <link rel="stylesheet" href="../assets/eduone-ui.css?v=20261103" />
-    <link rel="stylesheet" href="../assets/eduone-panel.css?v=20261103" />
-    <script src="../assets/eduone-panel.js?v=20261103" defer></script>
-    <script type="module" src="../assets/eduone-ui.js?v=20261103"></script>
+    <link rel="stylesheet" href="../assets/eduone-ui.css?v=20261105" />
+    <link rel="stylesheet" href="../assets/eduone-panel.css?v=20261105" />
+    <script src="../assets/eduone-panel.js?v=20261105" defer></script>
+    <script type="module" src="../assets/eduone-ui.js?v=20261105"></script>
+    <script src="../assets/eduone-validacion.js?v=20261105" defer></script>
 </head>
 <body class="edu-panel2026">
 
@@ -1044,9 +1048,15 @@
                             </select>
                         </div>
                         <div class="form-group"><label>Fecha *</label><input type="date" id="citFecha" class="form-control" required /></div>
+                        <div class="form-group"><label>Hora</label><input type="time" id="citHora" class="form-control" /></div>
                     </div>
-                    <div class="form-group"><label>Motivo *</label><input type="text" id="citMotivo" class="form-control" required placeholder="Motivo del contacto" /></div>
-                    <div class="form-group"><label>Notas adicionales</label><textarea id="citNotas" class="form-control" rows="2" placeholder="Detalles de la comunicación (opcional)"></textarea></div>
+                    <div class="form-group"><label>Motivo *</label><input type="text" id="citMotivo" class="form-control" required minlength="5" maxlength="200" placeholder="Motivo del contacto" /></div>
+                    <div class="form-group"><label>Notas adicionales</label><textarea id="citNotas" class="form-control" rows="2" maxlength="1000" placeholder="Detalles de la comunicación (opcional)"></textarea></div>
+                    <div class="form-group">
+                        <label>Citar también a (opcional)</label>
+                        <div id="citInvitados" class="cit-invitados"><span class="text-muted">Cargando personal...</span></div>
+                        <small class="text-muted">A cada persona elegida le llega un mensaje por el chat. El estudiante y su acudiente siempre reciben el aviso.</small>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn-secondary" id="cancelCitacionModal">Cancelar</button>
@@ -1132,6 +1142,13 @@
 
         let colegioId = null;
         let usuarioActual = null;
+
+        // Avisos automáticos (estudiante + acudiente) y mensajes por chat
+        const eduComun = () => import('../assets/eduone-comun.js?v=20261105');
+        async function avisarFamilia(estudianteId, titulo, mensaje, tipo = 'convivencia') {
+            try { await (await eduComun()).notificarFamilia(estudianteId, titulo, mensaje, tipo); return true; }
+            catch (e) { console.warn('No se pudo avisar a la familia:', e); return false; }
+        }
         let isLoggingOut = false;
         let authCheckInProgress = false;
 
@@ -1436,7 +1453,8 @@
         // =============================================
         const tipoCasoLabels = {
             conflicto_companeros: 'Conflicto entre compañeros', incumplimiento_normas: 'Incumplimiento del manual',
-            agresion: 'Agresión física o verbal', acoso_escolar: 'Acoso escolar', ausentismo: 'Ausentismo', otro: 'Otro'
+            agresion: 'Agresión física o verbal', acoso_escolar: 'Acoso escolar', ausentismo: 'Ausentismo', otro: 'Otro',
+            reporte_docente: 'Reporte de profesor'
         };
         const gravedadLabels = { leve: 'Leve', grave: 'Grave', gravisima: 'Gravísima' };
         const categoriaLabels = { queja: 'Queja', incidente: 'Incidente', comportamiento: 'Comportamiento' };
@@ -1522,16 +1540,19 @@
             try {
                 const estDoc = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', estudianteId));
                 const cursoDoc = await getDoc(doc(db, 'colegios', colegioId, 'cursos', cursoId));
+                const estNombreCaso = estDoc.exists() ? `${estDoc.data().nombres || ''} ${estDoc.data().apellidos || ''}`.trim() : '-';
                 await addDoc(collection(db, 'colegios', colegioId, 'convivencia_casos'), {
                     estudianteId,
-                    estudianteNombre: estDoc.exists() ? `${estDoc.data().nombres || ''} ${estDoc.data().apellidos || ''}` : '-',
+                    estudianteNombre: estNombreCaso,
                     cursoId, cursoNombre: cursoDoc.data()?.nombre || '-',
                     categoria, tipo, gravedad, descripcion, estado: 'abierto',
                     registradoPor: usuarioActual?.nombre || '',
                     fechaRegistro: serverTimestamp()
                 });
+                const avisado = await avisarFamilia(estudianteId, '⚠️ Reporte de convivencia',
+                    `Coordinación de convivencia registró un caso (${categoriaLabels[categoria] || categoria}, gravedad ${gravedadLabels[gravedad] || gravedad}) de ${estNombreCaso}: ${descripcion}`);
                 alertBox.className = 'alert alert-success show';
-                alertText.textContent = '✅ Caso registrado';
+                alertText.textContent = avisado ? '✅ Caso registrado. Se avisó al estudiante y a su acudiente.' : '✅ Caso registrado';
                 alertBox.style.display = 'flex';
                 setTimeout(() => {
                     document.getElementById('modalCaso').classList.remove('show');
@@ -1613,6 +1634,8 @@
                     fechaRegistro: serverTimestamp()
                 });
                 document.getElementById('formNuevoSeguimiento').reset();
+                avisarFamilia(casoGestionActual.estudianteId, '📝 Seguimiento de convivencia',
+                    `Nuevo seguimiento al caso de ${casoGestionActual.estudianteNombre || 'el estudiante'}: ${nota}`);
                 await cargarSeguimientosDeCaso(casoGestionActual.id);
             } catch (err) {
                 alert('❌ ' + err.message);
@@ -1666,6 +1689,8 @@
                     fechaRegistro: serverTimestamp()
                 });
                 document.getElementById('formNuevoCompromiso').reset();
+                avisarFamilia(casoGestionActual.estudianteId, '🤝 Nuevo compromiso de convivencia',
+                    `${casoGestionActual.estudianteNombre || 'El estudiante'} adquirió el compromiso: ${descripcion}${fechaLimite ? ' (fecha límite: ' + fechaLimite + ')' : ''}`);
                 await cargarCompromisosDeCaso(casoGestionActual.id);
                 cargarDashboard();
             } catch (err) {
@@ -1767,7 +1792,7 @@
                         <td>${c.cursoNombre || '-'}</td>
                         <td>${tipoContactoLabels[c.tipo] || 'Citación presencial'}</td>
                         <td>${c.motivo || '-'}</td>
-                        <td>${c.fecha || '-'}</td>
+                        <td>${c.fecha || '-'}${c.hora ? ' ' + c.hora : ''}</td>
                         <td><span style="color: ${estadoColor[c.estado] || 'var(--gray-500)'}; font-weight: 600;">${estadoLabels[c.estado] || c.estado}</span></td>
                         <td>
                             <select class="form-control" style="padding: 4px 8px; font-size: 0.75rem;" onchange="window.actualizarCitacion('${c.id}', this.value)">
@@ -1794,6 +1819,7 @@
             document.getElementById('citacionAlert').style.display = 'none';
             await cargarFiltros('citGrado', 'citCurso', 'citEstudiante');
             document.getElementById('modalCitacion').classList.add('show');
+            cargarInvitadosCitacion();
         });
         document.getElementById('closeCitacionModal')?.addEventListener('click', () => document.getElementById('modalCitacion').classList.remove('show'));
         document.getElementById('cancelCitacionModal')?.addEventListener('click', () => document.getElementById('modalCitacion').classList.remove('show'));
@@ -1805,6 +1831,8 @@
             const fecha = document.getElementById('citFecha').value;
             const motivo = document.getElementById('citMotivo').value.trim();
             const notas = document.getElementById('citNotas').value.trim();
+            const hora = document.getElementById('citHora').value;
+            const invitados = [...document.querySelectorAll('#citInvitados input:checked')].map(i => personalCitable.find(p => p.uid === i.value)).filter(Boolean);
             const alertBox = document.getElementById('citacionAlert');
             const alertText = document.getElementById('citacionAlertText');
             if (!cursoId || !estudianteId || !tipo || !fecha || !motivo) {
@@ -1819,16 +1847,31 @@
             try {
                 const estDoc = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', estudianteId));
                 const cursoDoc = await getDoc(doc(db, 'colegios', colegioId, 'cursos', cursoId));
+                const estNombreCit = estDoc.exists() ? `${estDoc.data().nombres || ''} ${estDoc.data().apellidos || ''}`.trim() : '-';
                 await addDoc(collection(db, 'colegios', colegioId, 'citaciones'), {
                     estudianteId,
-                    estudianteNombre: estDoc.exists() ? `${estDoc.data().nombres || ''} ${estDoc.data().apellidos || ''}` : '-',
+                    estudianteNombre: estNombreCit,
                     cursoId, cursoNombre: cursoDoc.data()?.nombre || '-',
-                    tipo, fecha, motivo, notas, estado: 'pendiente',
+                    tipo, fecha, hora: hora || null, motivo, notas, estado: 'pendiente',
+                    invitados: invitados.map(p => ({ uid: p.uid, nombre: p.nombre, rol: p.rol })),
                     registradoPor: usuarioActual?.nombre || '',
                     fechaRegistro: serverTimestamp()
                 });
+                const cuando = `el ${fecha}${hora ? ' a las ' + hora : ''}`;
+                const tipoTxt = tipoContactoLabels[tipo] || 'Citación';
+                const avisado = await avisarFamilia(estudianteId, '📅 ' + tipoTxt + ' de convivencia',
+                    `Coordinación de convivencia cita al acudiente de ${estNombreCit} ${cuando}. Motivo: ${motivo}${invitados.length ? '. También asistirá: ' + invitados.map(p => p.nombre).join(', ') : ''}`, 'citacion');
+                let fallidos = 0;
+                for (const p of invitados) {
+                    try {
+                        const ok = await (await eduComun()).enviarMensajeDirecto(p.uid,
+                            `📅 Citación de convivencia: ${estNombreCit} (${cursoDoc.data()?.nombre || '-'}) ${cuando}. Motivo: ${motivo}. Te esperamos.`, p.rol);
+                        if (!ok) fallidos++;
+                    } catch (er) { console.warn(er); fallidos++; }
+                }
                 alertBox.className = 'alert alert-success show';
-                alertText.textContent = '✅ Citación registrada';
+                alertText.textContent = '✅ Citación registrada' + (avisado ? '. Se avisó al estudiante y a su acudiente' : '') +
+                    (invitados.length ? `. Mensaje enviado a ${invitados.length - fallidos} de ${invitados.length} invitados` : '') + '.';
                 alertBox.style.display = 'flex';
                 setTimeout(() => {
                     document.getElementById('modalCitacion').classList.remove('show');
@@ -1845,6 +1888,30 @@
                 btn.innerHTML = '<i class="fas fa-save"></i> Guardar';
             }
         });
+
+        // Personal que se puede citar: profesores, rectoría, orientación y coordinación académica
+        let personalCitable = [];
+        async function cargarInvitadosCitacion() {
+            const host = document.getElementById('citInvitados');
+            try {
+                if (!personalCitable.length) {
+                    const { chatPermitido } = await eduComun();
+                    const snap = await getDocs(query(collection(db, 'usuarios'), where('colegioId', '==', colegioId)));
+                    const etiquetas = { profesor: 'Profesor(a)', rector: 'Rector(a)', orientador: 'Orientación', coord_academico: 'Coord. académico', admin_colegio: 'Administrador' };
+                    personalCitable = snap.docs.map(d => ({ ...d.data(), uid: d.data().uid || d.data().authUid || d.id }))
+                        .filter(u => etiquetas[u.rol] && u.activo !== false && chatPermitido('coord_convivencia', u.rol))
+                        .map(u => ({ uid: u.uid, nombre: u.nombre || `${u.nombres || ''} ${u.apellidos || ''}`.trim() || u.email, rol: u.rol, etiqueta: etiquetas[u.rol] }))
+                        .sort((a, b) => a.etiqueta.localeCompare(b.etiqueta, 'es') || a.nombre.localeCompare(b.nombre, 'es'));
+                }
+                host.replaceChildren(...personalCitable.map(p => {
+                    const l = document.createElement('label');
+                    const c = document.createElement('input'); c.type = 'checkbox'; c.value = p.uid;
+                    const t = document.createElement('span'); t.textContent = `${p.nombre} · ${p.etiqueta}`;
+                    l.append(c, t); return l;
+                }));
+                if (!personalCitable.length) host.textContent = 'No hay personal disponible para citar.';
+            } catch (e) { host.textContent = 'No se pudo cargar el personal: ' + e.message; }
+        }
 
         // =============================================
         // REPORTES DE CONVIVENCIA
@@ -2020,5 +2087,7 @@
         console.log('✅ EduOne - Panel de Coordinación de Convivencia cargado');
     </script>
 
+    <script type="module" src="../assets/eduone-chat.js?v=20261105"></script>
+    <script type="module" src="../assets/eduone-orientacion.js?v=20261105"></script>
 </body>
 </html>

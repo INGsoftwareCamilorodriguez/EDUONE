@@ -1,0 +1,1060 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ==========================================
+    // FUNCIONES GENERALES
+    // ==========================================
+
+    function autenticado() {
+      return request.auth != null;
+    }
+
+    function existeUsuario() {
+      return autenticado() &&
+        exists(
+          /databases/$(database)/documents/usuarios/$(request.auth.uid)
+        );
+    }
+
+    function usuario() {
+      return get(
+        /databases/$(database)/documents/usuarios/$(request.auth.uid)
+      ).data;
+    }
+
+    function rol() {
+      return usuario().get('rol', '');
+    }
+
+    function colegioUsuario() {
+      return usuario().get('colegioId', '');
+    }
+
+    function superadmin() {
+      return existeUsuario() &&
+        rol() == 'superadmin';
+    }
+
+    function rector() {
+      return existeUsuario() &&
+        rol() == 'rector';
+    }
+
+    function profesor() {
+      return existeUsuario() &&
+        rol() == 'profesor';
+    }
+
+    function estudiante() {
+      return existeUsuario() &&
+        rol() == 'estudiante';
+    }
+
+    function acudiente() {
+      return existeUsuario() &&
+        rol() == 'acudiente';
+    }
+
+    function contador() {
+      return existeUsuario() &&
+        rol() == 'contador';
+    }
+
+    function administrador() {
+      return existeUsuario() &&
+        rol() in [
+          'rector',
+          'admin_colegio',
+          'admin_auxiliar',
+          'coord_academico',
+          'coord_convivencia',
+          'secretaria',
+          'orientador'
+        ];
+    }
+
+    function mismoColegio(colegioId) {
+      return existeUsuario() &&
+        colegioUsuario() == colegioId;
+    }
+
+    function administraColegio(colegioId) {
+      return superadmin() ||
+        (
+          mismoColegio(colegioId) &&
+          administrador()
+        );
+    }
+
+    function gestionaAcademico(colegioId) {
+      return superadmin() ||
+        (
+          mismoColegio(colegioId) &&
+          (
+            administrador() ||
+            profesor()
+          )
+        );
+    }
+
+    // ==========================================
+    // LIMITACIONES DE CHAT POR ROL
+    // (igual a CHAT_BLOQUEOS en assets/eduone-chat.js)
+    // ==========================================
+
+    function bloqueaChat(a, b) {
+      return (a == 'contador' &&
+          !(b in ['secretaria', 'rector', 'admin_colegio', 'admin_auxiliar'])) ||
+        (a == 'coord_academico' &&
+          b in ['secretaria', 'contador', 'rector', 'admin_colegio', 'admin_auxiliar']) ||
+        (a == 'coord_convivencia' &&
+          b in ['contador', 'secretaria']) ||
+        (a == 'acudiente' &&
+          b in ['contador', 'estudiante', 'acudiente']) ||
+        (a == 'orientador' && b == 'contador');
+    }
+
+    function chatPermitido(uidA, uidB) {
+      return !bloqueaChat(
+          get(/databases/$(database)/documents/usuarios/$(uidA)).data.get('rol', ''),
+          get(/databases/$(database)/documents/usuarios/$(uidB)).data.get('rol', '')
+        ) &&
+        !bloqueaChat(
+          get(/databases/$(database)/documents/usuarios/$(uidB)).data.get('rol', ''),
+          get(/databases/$(database)/documents/usuarios/$(uidA)).data.get('rol', '')
+        );
+    }
+
+    // ==========================================
+    // USUARIOS
+    // ==========================================
+
+    match /usuarios/{uid} {
+
+      allow get: if autenticado() &&
+        (
+          request.auth.uid == uid ||
+          superadmin() ||
+          (
+            existeUsuario() &&
+            resource.data.get('colegioId', '') ==
+              colegioUsuario()
+          )
+        );
+
+      allow list: if superadmin() ||
+        (
+          existeUsuario() &&
+          resource.data.get('colegioId', '') ==
+            colegioUsuario()
+        );
+
+      allow create: if superadmin() ||
+        (
+          rector() &&
+          request.resource.data.get('colegioId', '') ==
+            colegioUsuario() &&
+          request.resource.data.get('rol', '') !=
+            'superadmin'
+        );
+
+      // El usuario modifica solamente su perfil.
+      // No puede modificar cursoId, estudianteId,
+      // colegioId ni rol.
+
+      allow update: if superadmin() ||
+
+        (
+          autenticado() &&
+          request.auth.uid == uid &&
+          request.resource.data.diff(resource.data)
+            .affectedKeys().hasOnly([
+              'fotoUrl',
+              'fotoPerfilUrl',
+              'fotoPerfilPath',
+              'fcmTokens'
+            ])
+        ) ||
+
+        // Rector: puede sincronizar los estudiantes
+        // antiguos y nuevos de su propio colegio.
+
+        (
+          rector() &&
+          resource.data.get('colegioId', '') ==
+            colegioUsuario() &&
+          request.resource.data.get('colegioId', '') ==
+            resource.data.get('colegioId', '') &&
+          request.resource.data.get('rol', '') ==
+            resource.data.get('rol', '') &&
+          resource.data.get('rol', '') !=
+            'superadmin'
+        );
+
+      allow delete: if superadmin() ||
+        (
+          rector() &&
+          resource.data.get('colegioId', '') ==
+            colegioUsuario() &&
+          resource.data.get('rol', '') !=
+            'superadmin'
+        );
+    }
+
+    // ==========================================
+    // COLEGIOS
+    // ==========================================
+
+    match /colegios/{colegioId} {
+
+      allow read: if superadmin() ||
+        mismoColegio(colegioId);
+
+      allow create: if superadmin();
+
+      allow update, delete: if
+        administraColegio(colegioId);
+
+      // ========================================
+      // PROFESORES
+      // ========================================
+
+      match /profesores/{profesorId} {
+        allow read: if superadmin() ||
+          mismoColegio(colegioId);
+
+        allow write: if administraColegio(colegioId);
+      }
+
+      // ========================================
+      // ESTUDIANTES
+      // ========================================
+
+      match /estudiantes/{estudianteId} {
+
+        allow read: if superadmin() ||
+          mismoColegio(colegioId);
+
+        allow create, delete: if
+          administraColegio(colegioId);
+
+        allow update: if
+          administraColegio(colegioId) ||
+
+          (
+            mismoColegio(colegioId) &&
+            (
+              resource.data.get('authUid', '') ==
+                request.auth.uid ||
+              resource.data.get('uid', '') ==
+                request.auth.uid ||
+              resource.data.get('usuarioUid', '') ==
+                request.auth.uid
+            ) &&
+            request.resource.data.diff(resource.data)
+              .affectedKeys().hasOnly([
+                'fotoUrl',
+                'fotoPerfilUrl',
+                'fotoPerfilPath'
+              ])
+          );
+      }
+
+      // ========================================
+      // CURSOS
+      // ========================================
+
+      match /cursos/{cursoId} {
+        allow read: if superadmin() ||
+          mismoColegio(colegioId);
+
+        allow write: if administraColegio(colegioId);
+      }
+
+      // ========================================
+      // GRADOS
+      // ========================================
+
+      match /grados/{gradoId} {
+        allow read: if superadmin() ||
+          mismoColegio(colegioId);
+
+        allow write: if administraColegio(colegioId);
+      }
+
+      // ========================================
+      // ASIGNATURAS
+      // ========================================
+
+      match /asignaturas/{asignaturaId} {
+        allow read: if superadmin() ||
+          mismoColegio(colegioId);
+
+        allow write: if administraColegio(colegioId);
+      }
+
+      // ========================================
+      // HORARIOS
+      // ========================================
+
+      match /horarios/{horarioId} {
+        allow read: if superadmin() ||
+          mismoColegio(colegioId);
+
+        allow write: if gestionaAcademico(colegioId);
+      }
+
+      // ========================================
+      // MATRÍCULAS
+      // ========================================
+
+      match /matriculas/{matriculaId} {
+        allow read: if superadmin() ||
+          mismoColegio(colegioId);
+
+        allow write: if administraColegio(colegioId);
+      }
+
+      // ========================================
+      // SECCIONES
+      // ========================================
+
+      match /secciones/{seccionId} {
+        allow read: if superadmin() ||
+          mismoColegio(colegioId);
+
+        allow write: if gestionaAcademico(colegioId);
+      }
+
+      // ========================================
+      // ACTIVIDADES
+      // ========================================
+
+      match /actividades/{actividadId} {
+        allow read: if superadmin() ||
+          mismoColegio(colegioId);
+
+        allow write: if gestionaAcademico(colegioId);
+      }
+
+      // ========================================
+      // EVALUACIONES
+      // ========================================
+
+      match /evaluaciones/{evaluacionId} {
+
+        allow read: if superadmin() ||
+          mismoColegio(colegioId);
+
+        allow write: if gestionaAcademico(colegioId);
+
+        match /preguntas/{preguntaId} {
+          allow read: if superadmin() ||
+            mismoColegio(colegioId);
+
+          allow write: if
+            gestionaAcademico(colegioId);
+        }
+
+        match /respuestas/{respuestaId} {
+
+          allow read: if superadmin() ||
+            mismoColegio(colegioId);
+
+          allow create, update: if
+            gestionaAcademico(colegioId) ||
+            (
+              mismoColegio(colegioId) &&
+              estudiante()
+            );
+
+          allow delete: if
+            gestionaAcademico(colegioId);
+        }
+      }
+
+      // ========================================
+      // ENTREGAS
+      // ========================================
+
+      match /entregas/{entregaId} {
+
+        allow read: if superadmin() ||
+          mismoColegio(colegioId);
+
+        allow create, update: if
+          gestionaAcademico(colegioId) ||
+          (
+            mismoColegio(colegioId) &&
+            estudiante()
+          );
+
+        allow delete: if
+          gestionaAcademico(colegioId);
+      }
+
+      // ========================================
+      // NOTAS
+      // ========================================
+
+      match /notas/{notaId} {
+        allow read: if superadmin() ||
+          mismoColegio(colegioId);
+
+        allow write: if gestionaAcademico(colegioId);
+      }
+
+      // ========================================
+      // ASISTENCIA
+      // ========================================
+
+      match /asistencias/{asistenciaId} {
+        allow read: if superadmin() ||
+          mismoColegio(colegioId);
+
+        allow write: if gestionaAcademico(colegioId);
+      }
+
+      // ========================================
+      // OBSERVACIONES
+      // ========================================
+
+      match /observaciones/{observacionId} {
+        allow read: if superadmin() ||
+          mismoColegio(colegioId);
+
+        allow write: if gestionaAcademico(colegioId);
+      }
+
+      // ========================================
+      // NOTIFICACIONES
+      // ========================================
+
+      match /notificaciones/{notificacionId} {
+        allow read: if superadmin() ||
+          mismoColegio(colegioId);
+
+        allow create: if superadmin() ||
+          mismoColegio(colegioId);
+
+        allow update, delete: if superadmin() ||
+          mismoColegio(colegioId);
+      }
+
+      // ========================================
+      // COORDINACIÓN Y SECRETARÍA
+      // ========================================
+
+      // Personal del colegio: directivos, coordinadores,
+      // secretaría, orientación y profesores.
+      function personalColegio() {
+        return administraColegio(colegioId) ||
+          (
+            mismoColegio(colegioId) &&
+            profesor()
+          );
+      }
+
+      // El estudiante dueño del registro o su acudiente
+      // (vinculado por acudienteEmail en el estudiante).
+      function familiaDe(estId) {
+        return mismoColegio(colegioId) &&
+          estId is string &&
+          estId != '' &&
+          (
+            (
+              estudiante() &&
+              usuario().get('estudianteId', '') == estId
+            ) ||
+            (
+              acudiente() &&
+              exists(
+                /databases/$(database)/documents/colegios/$(colegioId)/estudiantes/$(estId)
+              ) &&
+              get(
+                /databases/$(database)/documents/colegios/$(colegioId)/estudiantes/$(estId)
+              ).data.get('acudienteEmail', '').lower() ==
+                request.auth.token.get('email', '').lower()
+            )
+          );
+      }
+
+      match /citaciones/{citacionId} {
+        allow read: if administraColegio(colegioId) ||
+          familiaDe(resource.data.get('estudianteId', ''));
+
+        allow write: if
+          administraColegio(colegioId);
+      }
+
+      // ========================================
+      // CONVIVENCIA (coordinador de convivencia)
+      // ========================================
+
+      match /convivencia_casos/{casoId} {
+        allow read: if personalColegio() ||
+          familiaDe(resource.data.get('estudianteId', ''));
+
+        allow create: if personalColegio();
+
+        allow update, delete: if
+          administraColegio(colegioId);
+      }
+
+      match /convivencia_seguimientos/{seguimientoId} {
+        allow read: if personalColegio() ||
+          familiaDe(resource.data.get('estudianteId', ''));
+
+        allow create: if personalColegio();
+
+        allow update, delete: if
+          administraColegio(colegioId);
+      }
+
+      match /convivencia_compromisos/{compromisoId} {
+        allow read: if personalColegio() ||
+          familiaDe(resource.data.get('estudianteId', ''));
+
+        allow create: if personalColegio();
+
+        allow update, delete: if
+          administraColegio(colegioId);
+      }
+
+      // ========================================
+      // SITUACIONES ACADÉMICAS (coordinador académico)
+      // ========================================
+
+      match /situaciones_academicas/{situacionId} {
+        allow read: if personalColegio() ||
+          familiaDe(resource.data.get('estudianteId', ''));
+
+        allow create: if personalColegio();
+
+        allow update, delete: if
+          administraColegio(colegioId);
+      }
+
+      // ========================================
+      // ORIENTACIÓN ESCOLAR (psicología)
+      // ========================================
+
+      function orientadorColegio() {
+        return mismoColegio(colegioId) &&
+          rol() == 'orientador';
+      }
+
+      // Quién puede pedir citas: personal del colegio y contador
+      function puedeAgendarOrientacion() {
+        return personalColegio() ||
+          (mismoColegio(colegioId) && contador());
+      }
+
+      // Horario de atención semanal de cada orientador(a).
+      match /orientacion_disponibilidad/{orientadorUid} {
+        allow read: if superadmin() ||
+          mismoColegio(colegioId);
+
+        allow write: if orientadorColegio() &&
+          request.auth.uid == orientadorUid;
+      }
+
+      // Franjas ocupadas (sin datos sensibles). El id es
+      // orientadorUid_fecha_hora, así una franja no se agenda dos veces.
+      match /orientacion_agenda/{franjaId} {
+        allow read: if superadmin() ||
+          mismoColegio(colegioId);
+
+        allow create: if puedeAgendarOrientacion() &&
+          request.resource.data.solicitanteUid ==
+            request.auth.uid &&
+          franjaId ==
+            request.resource.data.orientadorUid + '_' +
+            request.resource.data.fecha + '_' +
+            request.resource.data.hora;
+
+        allow update: if false;
+
+        allow delete: if orientadorColegio() ||
+          (
+            mismoColegio(colegioId) &&
+            resource.data.get('solicitanteUid', '') ==
+              request.auth.uid
+          );
+      }
+
+      match /orientacion_citas/{citaId} {
+        allow read: if superadmin() ||
+          orientadorColegio() ||
+          (
+            mismoColegio(colegioId) &&
+            (
+              resource.data.get('solicitanteUid', '') ==
+                request.auth.uid ||
+              request.auth.uid in
+                resource.data.get('participantesUid', [])
+            )
+          ) ||
+          familiaDe(resource.data.get('estudianteId', ''));
+
+        allow create: if puedeAgendarOrientacion() &&
+          request.resource.data.colegioId == colegioId &&
+          request.resource.data.solicitanteUid ==
+            request.auth.uid;
+
+        allow update: if orientadorColegio() ||
+          (
+            mismoColegio(colegioId) &&
+            resource.data.get('solicitanteUid', '') ==
+              request.auth.uid &&
+            request.resource.data.diff(resource.data)
+              .affectedKeys().hasOnly([
+                'estado', 'actualizadoEn', 'canceladoPor'
+              ]) &&
+            request.resource.data.estado == 'cancelada'
+          );
+
+        allow delete: if false;
+      }
+
+      // Libreta personal: solo la ve quien la escribe.
+      match /orientacion_notas/{notaId} {
+        allow read, update, delete: if orientadorColegio() &&
+          resource.data.get('autorUid', '') ==
+            request.auth.uid;
+
+        allow create: if orientadorColegio() &&
+          request.resource.data.autorUid ==
+            request.auth.uid;
+      }
+
+      match /recuperaciones/{recuperacionId} {
+        allow read: if administraColegio(colegioId) ||
+          (mismoColegio(colegioId) && profesor()) ||
+          familiaDe(resource.data.get('estudianteId', ''));
+
+        allow write: if
+          administraColegio(colegioId);
+      }
+
+      match /traslados/{trasladoId} {
+        allow read, write: if
+          administraColegio(colegioId);
+      }
+
+      // ========================================
+      // COMUNICADOS
+      // ========================================
+
+      match /comunicados/{comunicadoId} {
+
+        allow read: if superadmin() ||
+          mismoColegio(colegioId);
+
+        allow create: if superadmin() ||
+          (
+            mismoColegio(colegioId) &&
+            rol() in [
+              'rector',
+              'coord_academico',
+              'coord_convivencia'
+            ] &&
+            request.resource.data.colegioId ==
+              colegioId &&
+            request.resource.data.autorUid ==
+              request.auth.uid
+          );
+
+        allow update, delete: if superadmin() ||
+          (
+            mismoColegio(colegioId) &&
+            rector()
+          );
+      }
+
+      // ========================================
+      // CHAT PRIVADO
+      // ========================================
+
+      function integranteChat(chatId) {
+        return mismoColegio(colegioId) &&
+          exists(
+            /databases/$(database)/documents/colegios/$(colegioId)/chats/$(chatId)
+          ) &&
+          request.auth.uid in get(
+            /databases/$(database)/documents/colegios/$(colegioId)/chats/$(chatId)
+          ).data.get('participantes', []);
+      }
+
+      match /chats/{chatId} {
+
+        allow get, list: if superadmin() ||
+          (
+            mismoColegio(colegioId) &&
+            request.auth.uid in
+              resource.data.get('participantes', [])
+          );
+
+        allow create: if
+          mismoColegio(colegioId) &&
+          request.resource.data.colegioId ==
+            colegioId &&
+          request.resource.data.participantes
+            is list &&
+          request.resource.data.participantes.size()
+            == 2 &&
+          request.auth.uid in
+            request.resource.data.participantes &&
+          request.resource.data.participantes[0] !=
+            request.resource.data.participantes[1] &&
+          exists(
+            /databases/$(database)/documents/usuarios/$(request.resource.data.participantes[0])
+          ) &&
+          exists(
+            /databases/$(database)/documents/usuarios/$(request.resource.data.participantes[1])
+          ) &&
+          get(
+            /databases/$(database)/documents/usuarios/$(request.resource.data.participantes[0])
+          ).data.colegioId == colegioId &&
+          get(
+            /databases/$(database)/documents/usuarios/$(request.resource.data.participantes[1])
+          ).data.colegioId == colegioId &&
+          chatPermitido(
+            request.resource.data.participantes[0],
+            request.resource.data.participantes[1]
+          );
+
+        allow update: if
+          mismoColegio(colegioId) &&
+          request.auth.uid in
+            resource.data.get('participantes', []) &&
+          request.resource.data.participantes ==
+            resource.data.participantes &&
+          request.resource.data.colegioId ==
+            colegioId;
+
+        allow delete: if false;
+
+        match /mensajes/{mensajeId} {
+
+          allow read: if integranteChat(chatId);
+
+          allow create: if
+            integranteChat(chatId) &&
+            request.resource.data.colegioId ==
+              colegioId &&
+            request.resource.data.remitenteUid ==
+              request.auth.uid &&
+            request.resource.data.destinatarioUid !=
+              request.auth.uid &&
+            request.resource.data.destinatarioUid in
+              get(
+                /databases/$(database)/documents/colegios/$(colegioId)/chats/$(chatId)
+              ).data.get('participantes', []) &&
+            chatPermitido(
+              request.auth.uid,
+              request.resource.data.destinatarioUid
+            );
+
+          allow update, delete: if false;
+        }
+      }
+
+      // ========================================
+      // GRUPOS ACADÉMICOS POR CURSO
+      // ========================================
+
+      // El profesor utiliza:
+      // chatGrupos/curso_IDDEL CURSO
+      //
+      // Los estudiantes leen automáticamente
+      // cuando su cursoId coincide.
+      //
+      // No pueden enviar mensajes al grupo.
+
+      function existeGrupo(grupoId) {
+        return exists(
+          /databases/$(database)/documents/colegios/$(colegioId)/chatGrupos/$(grupoId)
+        );
+      }
+
+      function datosGrupo(grupoId) {
+        return get(
+          /databases/$(database)/documents/colegios/$(colegioId)/chatGrupos/$(grupoId)
+        ).data;
+      }
+
+      function cursoEstudianteValido(grupoId) {
+        return mismoColegio(colegioId) &&
+          estudiante() &&
+          usuario().get('cursoId', '') is string &&
+          usuario().get('cursoId', '') != '' &&
+          usuario().get('estudianteId', '') is string &&
+          usuario().get('estudianteId', '') != '' &&
+          exists(
+            /databases/$(database)/documents/colegios/$(colegioId)/estudiantes/$(usuario().get('estudianteId', ''))
+          ) &&
+          get(
+            /databases/$(database)/documents/colegios/$(colegioId)/estudiantes/$(usuario().get('estudianteId', ''))
+          ).data.get('cursoId', '') ==
+            usuario().get('cursoId', '') &&
+          get(
+            /databases/$(database)/documents/colegios/$(colegioId)/estudiantes/$(usuario().get('estudianteId', ''))
+          ).data.get('estado', '') == 'activo' &&
+          datosGrupo(grupoId).get('cursoId', '') ==
+            usuario().get('cursoId', '') &&
+          grupoId ==
+            'curso_' + usuario().get('cursoId', '');
+      }
+
+      function integranteGrupo(grupoId) {
+        return mismoColegio(colegioId) &&
+          existeGrupo(grupoId) &&
+          (
+            request.auth.uid in
+              datosGrupo(grupoId).get('profesores', []) ||
+            request.auth.uid in
+              datosGrupo(grupoId).get('miembros', []) ||
+            cursoEstudianteValido(grupoId)
+          );
+      }
+
+      function publicaEnGrupo(grupoId) {
+        return mismoColegio(colegioId) &&
+          profesor() &&
+          existeGrupo(grupoId) &&
+          request.auth.uid in
+            datosGrupo(grupoId).get('profesores', []);
+      }
+
+      match /chatGrupos/{grupoId} {
+
+        allow get: if superadmin() ||
+          integranteGrupo(grupoId) ||
+          (
+            mismoColegio(colegioId) &&
+            profesor() &&
+            grupoId.matches('curso_.*')
+          );
+
+        allow list: if superadmin() ||
+          (
+            mismoColegio(colegioId) &&
+            (
+              request.auth.uid in
+                resource.data.get('profesores', []) ||
+              request.auth.uid in
+                resource.data.get('miembros', [])
+            )
+          );
+
+        allow create: if
+          mismoColegio(colegioId) &&
+          profesor() &&
+          request.resource.data.colegioId ==
+            colegioId &&
+          request.resource.data.cursoId is string &&
+          request.resource.data.profesores ==
+            [request.auth.uid] &&
+          grupoId ==
+            'curso_' +
+            request.resource.data.cursoId;
+
+        allow update, delete: if false;
+
+        match /mensajes/{mensajeId} {
+
+          allow read: if superadmin() ||
+            integranteGrupo(grupoId);
+
+          allow create: if
+            publicaEnGrupo(grupoId) &&
+            request.resource.data.colegioId ==
+              colegioId &&
+            request.resource.data.remitenteUid ==
+              request.auth.uid &&
+            request.resource.data.tipo ==
+              'grupo';
+
+          allow update, delete: if false;
+        }
+      }
+
+      // ========================================
+      // PENSIONES
+      // ========================================
+
+      match /configuracion_pensiones/{configId} {
+
+        allow read: if superadmin() ||
+          mismoColegio(colegioId);
+
+        allow create, update: if superadmin() ||
+          (
+            mismoColegio(colegioId) &&
+            rector() &&
+            request.resource.data.colegioId ==
+              colegioId &&
+            request.resource.data.valor is number &&
+            request.resource.data.valor >= 0
+          );
+
+        allow delete: if superadmin() ||
+          (
+            mismoColegio(colegioId) &&
+            rector()
+          );
+      }
+
+      match /pensiones/{pensionId} {
+        allow read: if superadmin() ||
+          mismoColegio(colegioId);
+
+        allow write: if superadmin() ||
+          (
+            mismoColegio(colegioId) &&
+            (
+              administrador() ||
+              contador()
+            )
+          );
+      }
+
+      match /pagos_pensiones/{pagoId} {
+        allow read: if superadmin() ||
+          mismoColegio(colegioId);
+
+        allow write: if superadmin() ||
+          (
+            mismoColegio(colegioId) &&
+            (
+              administrador() ||
+              contador()
+            )
+          );
+      }
+
+      match /pagos_matriculas/{pagoId} {
+        allow read: if superadmin() ||
+          mismoColegio(colegioId);
+
+        allow write: if superadmin() ||
+          (
+            mismoColegio(colegioId) &&
+            (
+              administrador() ||
+              contador()
+            )
+          );
+      }
+
+      // ========================================
+      // CONTABILIDAD
+      // ========================================
+
+      match /movimientos/{movId} {
+        allow read: if superadmin() ||
+          mismoColegio(colegioId);
+
+        allow write: if superadmin() ||
+          (
+            mismoColegio(colegioId) &&
+            (
+              administrador() ||
+              contador()
+            )
+          );
+      }
+
+      match /egresos/{egresoId} {
+        allow read: if superadmin() ||
+          mismoColegio(colegioId);
+
+        allow write: if superadmin() ||
+          (
+            mismoColegio(colegioId) &&
+            (
+              administrador() ||
+              contador()
+            )
+          );
+      }
+
+      // ========================================
+      // OTRAS COLECCIONES DEL COLEGIO
+      // ========================================
+
+      match /{document=**} {
+        allow read, write: if superadmin();
+      }
+    }
+
+    // ==========================================
+    // MOVIMIENTOS GLOBALES
+    // ==========================================
+
+    match /movimientos/{movId} {
+      allow read, write: if superadmin();
+    }
+
+    // ==========================================
+    // CONSENTIMIENTOS LEGALES
+    // ==========================================
+
+    match /consentimientos/{id} {
+
+      allow create: if
+        request.resource.data.keys().hasOnly([
+          'formulario',
+          'uid',
+          'titular',
+          'documentos',
+          'contexto',
+          'fechaCliente',
+          'creadoEn'
+        ]) &&
+        request.resource.data.creadoEn ==
+          request.time &&
+        request.resource.data.formulario in [
+          'contacto',
+          'login'
+        ] &&
+        request.resource.data.documentos.terminos.aceptado ==
+          true &&
+        request.resource.data.documentos.privacidad.aceptado ==
+          true &&
+        request.resource.data.documentos.terminos.version
+          is string &&
+        request.resource.data.documentos.privacidad.version
+          is string &&
+        (
+          (
+            request.resource.data.formulario ==
+              'login' &&
+            autenticado() &&
+            request.resource.data.uid ==
+              request.auth.uid
+          ) ||
+          (
+            request.resource.data.formulario ==
+              'contacto' &&
+            request.resource.data.uid == null
+          )
+        );
+
+      allow read: if superadmin();
+
+      allow update, delete: if false;
+    }
+
+    // ==========================================
+    // BLOQUEO GENERAL
+    // ==========================================
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

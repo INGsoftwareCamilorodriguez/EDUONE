@@ -335,13 +335,19 @@
             .modal-footer { flex-direction: column; }
             .modal-footer .btn-primary, .modal-footer .btn-secondary { width: 100%; justify-content: center; }
         }
+        .horario-acciones { display: flex; gap: 10px; flex-wrap: wrap; }
+        .horario-acciones button { flex: 0 1 auto; }
+        @media (max-width: 520px) { .horario-acciones button { flex: 1 1 100%; justify-content: center; } }
+        .sit-check { display: flex; align-items: center; gap: 8px; font-size: .88rem; cursor: pointer; margin-top: 4px; }
+        .sit-informar { margin-top: 6px; padding: 4px 10px; font-size: .75rem; }
     </style>
     <link rel="stylesheet" href="../assets/responsive.css?v=20261103" />
     <script src="../assets/responsive.js?v=20261103" defer></script>
-    <link rel="stylesheet" href="../assets/eduone-ui.css?v=20261103" />
-    <link rel="stylesheet" href="../assets/eduone-panel.css?v=20261103" />
-    <script src="../assets/eduone-panel.js?v=20261103" defer></script>
-    <script type="module" src="../assets/eduone-ui.js?v=20261103"></script>
+    <link rel="stylesheet" href="../assets/eduone-ui.css?v=20261105" />
+    <link rel="stylesheet" href="../assets/eduone-panel.css?v=20261105" />
+    <script src="../assets/eduone-panel.js?v=20261105" defer></script>
+    <script type="module" src="../assets/eduone-ui.js?v=20261105"></script>
+    <script src="../assets/eduone-validacion.js?v=20261105" defer></script>
 </head>
 <body class="edu-panel2026">
 
@@ -593,10 +599,14 @@
                                 <select id="horarioCurso" class="form-control"><option value="">Seleccionar curso</option></select>
                             </div>
                         </div>
-                        <button class="btn-primary" id="btnCargarHorario"><i class="fas fa-search"></i> Cargar horario</button>
-                        <button class="btn-success" id="btnAgregarHorario" style="margin-left: 10px;"><i class="fas fa-plus"></i> Agregar clase</button>
+                        <div class="horario-acciones">
+                            <button class="btn-primary" id="btnCargarHorario"><i class="fas fa-search"></i> Horario del curso (salón)</button>
+                            <button class="btn-secondary" id="btnHorarioGrado"><i class="fas fa-layer-group"></i> Ver todo el grado</button>
+                            <button class="btn-success" id="btnAgregarHorario"><i class="fas fa-plus"></i> Agregar clase</button>
+                        </div>
                     </div>
                 </div>
+                <div id="horarioGradoVista" style="display: none;"></div>
                 <div id="horarioVista" style="display: none;">
                     <div class="card">
                         <div class="card-header"><h2 id="horarioTitulo">Horario</h2></div>
@@ -614,6 +624,38 @@
                 <div class="page-header">
                     <h2><i class="fas fa-redo" style="color: var(--primary);"></i> Recuperaciones</h2>
                     <button class="btn-primary" id="btnRegistrarRecuperacion"><i class="fas fa-plus"></i> Registrar recuperación</button>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h2><i class="fas fa-robot" style="color: var(--primary);"></i> Detección automática: materias que se van perdiendo</h2></div>
+                    <div class="card-body">
+                        <p class="text-muted" style="font-size:.85rem;margin-bottom:12px">
+                            EduOne calcula el promedio ponderado de cada materia (escala 1.0 – 5.0).
+                            <strong style="color:var(--danger)">Perdiendo</strong>: promedio menor a 3.0 → puedes <em>activar la recuperación</em> de esa materia.
+                            <strong style="color:var(--warning)">En riesgo</strong>: entre 3.0 y 3.4 → puedes enviar una <em>alerta temprana</em> al estudiante y su acudiente.
+                        </p>
+                        <div class="form-grid" style="margin-bottom: 12px;">
+                            <div class="form-group"><label>Grado</label><select id="riesgoGrado" class="form-control"><option value="">Seleccionar</option></select></div>
+                            <div class="form-group"><label>Curso</label><select id="riesgoCurso" class="form-control"><option value="">Seleccionar</option></select></div>
+                            <div class="form-group">
+                                <label>Periodo</label>
+                                <select id="riesgoPeriodo" class="form-control">
+                                    <option value="1">Periodo 1</option><option value="2">Periodo 2</option>
+                                    <option value="3">Periodo 3</option><option value="4">Periodo 4</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="horario-acciones">
+                            <button class="btn-primary" id="btnAnalizarRiesgo"><i class="fas fa-magnifying-glass-chart"></i> Analizar curso</button>
+                            <button class="btn-success" id="btnActivarTodas" style="display:none"><i class="fas fa-bolt"></i> Activar todas las recuperaciones</button>
+                        </div>
+                        <div id="riesgoEstado" class="text-muted" style="margin:10px 0;font-size:.85rem"></div>
+                        <div class="table-responsive">
+                            <table class="table-modern">
+                                <thead><tr><th>Estudiante</th><th>Materia</th><th>Promedio</th><th>Estado</th><th>Acción</th></tr></thead>
+                                <tbody id="tablaRiesgo"><tr><td colspan="5" class="text-center text-muted">Elige un curso y un periodo, y pulsa "Analizar curso".</td></tr></tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
                 <div class="card">
                     <div class="card-body">
@@ -757,7 +799,14 @@
                     <div class="form-grid">
                         <div class="form-group"><label>Grado *</label><select id="sitGrado" class="form-control" required><option value="">Seleccionar</option></select></div>
                         <div class="form-group"><label>Curso *</label><select id="sitCurso" class="form-control" required><option value="">Seleccionar</option></select></div>
-                        <div class="form-group"><label>Estudiante *</label><select id="sitEstudiante" class="form-control" required><option value="">Seleccionar</option></select></div>
+                        <div class="form-group">
+                            <label for="sitAlcance">Enviar a *</label>
+                            <select id="sitAlcance" class="form-control">
+                                <option value="individual">Un estudiante</option>
+                                <option value="curso">Todo el curso (salón)</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="sitEstudianteGrupo"><label>Estudiante *</label><select id="sitEstudiante" class="form-control"><option value="">Seleccionar</option></select></div>
                         <div class="form-group">
                             <label>Tipo *</label>
                             <select id="sitTipo" class="form-control" required>
@@ -770,7 +819,9 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group"><label>Descripción *</label><textarea id="sitDescripcion" class="form-control" rows="3" required placeholder="Describe la situación académica del estudiante"></textarea></div>
+                    <div class="form-group"><label>Descripción *</label><textarea id="sitDescripcion" class="form-control" rows="3" required minlength="10" maxlength="1500" placeholder="Describe la situación académica"></textarea></div>
+                    <label class="sit-check"><input type="checkbox" id="sitInformar" checked /> Informar al estudiante y a su acudiente (les llega como anuncio)</label>
+                    <label class="sit-check"><input type="checkbox" id="sitProfesores" /> Enviar también a los profesores del curso (por chat)</label>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn-secondary" id="cancelSituacionModal">Cancelar</button>
@@ -812,6 +863,13 @@
 
         let colegioId = null;
         let usuarioActual = null;
+
+        // Avisos automáticos (estudiante + acudiente)
+        const eduComun = () => import('../assets/eduone-comun.js?v=20261105');
+        async function avisarFamilia(estudianteId, titulo, mensaje, tipo = 'academico') {
+            try { await (await eduComun()).notificarFamilia(estudianteId, titulo, mensaje, tipo); return true; }
+            catch (e) { console.warn('No se pudo avisar a la familia:', e); return false; }
+        }
         let isLoggingOut = false;
         let cursoActual = null;
         let authCheckInProgress = false;
@@ -1257,7 +1315,7 @@
                         ? seccionesDetalle.filter(s => s.promedio > 0).reduce((a, s) => a + s.promedio, 0) / seccionesDetalle.filter(s => s.promedio > 0).length
                         : 0);
                 const estado = promedioFinal >= 3.0 ? 'Aprobado' : (promedioFinal > 0 ? 'Reprobado' : 'Sin nota');
-                resultado.push({ asignaturaNombre: asig.nombre, secciones: seccionesDetalle, promedio: promedioFinal, estado });
+                resultado.push({ asignaturaId: asigKey, asignaturaNombre: asig.nombre, secciones: seccionesDetalle, promedio: promedioFinal, estado });
             }
 
             resultado.sort((a, b) => a.asignaturaNombre.localeCompare(b.asignaturaNombre));
@@ -1447,9 +1505,65 @@
             profSnap.forEach(d => { profSelect.innerHTML += `<option value="${d.id}">${d.data().nombre || ''}</option>`; });
         }
 
+        // Bloques de 1 hora a partir de los registros de horario
+        function bloquesHorario(docs) {
+            const clases = [];
+            docs.forEach(d => {
+                const h = d.data();
+                let hi = h.horaInicio, hf = h.horaFin;
+                if ((!hi || !hf) && h.hora) { const p = String(h.hora).split('-').map(x => x.trim()); if (p.length === 2) { hi = p[0]; hf = p[1]; } }
+                if (!hi || !hf) return;
+                const aMin = t => { const [a, b] = t.split(':').map(Number); return a * 60 + (b || 0); };
+                const aH = m => `${String(Math.floor(m / 60)).padStart(2, '0')}:${String(m % 60).padStart(2, '0')}`;
+                for (let c = aMin(hi), fin = aMin(hf); c < fin; c = Math.min(c + 60, fin)) {
+                    clases.push({ dia: h.dia, hi: aH(c), hf: aH(Math.min(c + 60, fin)), asignaturaNombre: h.asignaturaNombre || '', profesorNombre: h.profesorNombre || '' });
+                }
+            });
+            return clases;
+        }
+        const escH = t => String(t ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+        function gridHorarioSoloLectura(clases) {
+            const dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+            let html = '<div class="hg-cell hg-header">Hora</div>' + dias.map(d => `<div class="hg-cell hg-header">${d}</div>`).join('');
+            const franjas = [...new Set(clases.map(c => `${c.hi}|${c.hf}`))].sort();
+            if (!franjas.length) return '<p class="text-muted" style="padding:12px">Este curso aún no tiene clases en el horario.</p>';
+            franjas.forEach(fr => {
+                const [hi, hf] = fr.split('|');
+                html += `<div class="hg-cell hg-hora">${hi} - ${hf}</div>`;
+                dias.forEach(dia => {
+                    const c = clases.find(x => x.dia === dia && x.hi === hi && x.hf === hf);
+                    html += c ? `<div class="hg-cell hg-clase" style="cursor:default"><div class="asig">${escH(c.asignaturaNombre)}</div><div class="prof">${escH(c.profesorNombre)}</div></div>` : '<div class="hg-cell hg-vacio"></div>';
+                });
+            });
+            return `<div class="horario-grid-wrap"><div class="horario-grid">${html}</div></div>`;
+        }
+        document.getElementById('btnHorarioGrado')?.addEventListener('click', async () => {
+            const gradoSel = document.getElementById('horarioGrado');
+            if (!gradoSel.value) { alert('Selecciona un grado'); return; }
+            const vista = document.getElementById('horarioGradoVista');
+            document.getElementById('horarioVista').style.display = 'none';
+            vista.style.display = 'block';
+            vista.innerHTML = '<div class="card"><div class="card-body text-center text-muted"><i class="fas fa-spinner fa-spin"></i> Cargando horarios del grado...</div></div>';
+            try {
+                const cursosSnap = await getDocs(query(collection(db, 'colegios', colegioId, 'cursos'), where('gradoId', '==', gradoSel.value)));
+                const cursos = cursosSnap.docs.map(d => ({ id: d.id, ...d.data() })).sort((a, b) => String(a.nombre || '').localeCompare(String(b.nombre || ''), 'es'));
+                if (!cursos.length) { vista.innerHTML = '<div class="card"><div class="card-body text-muted">Este grado no tiene cursos.</div></div>'; return; }
+                const horarios = await Promise.all(cursos.map(c => getDocs(query(collection(db, 'colegios', colegioId, 'horarios'), where('cursoId', '==', c.id)))));
+                const nombreGrado = gradoSel.options[gradoSel.selectedIndex].text;
+                vista.innerHTML = `<div class="page-header" style="margin-top:6px"><h2 style="font-size:1.05rem">Horarios de ${escH(nombreGrado)} · ${cursos.length} curso(s)</h2></div>` +
+                    cursos.map((c, i) => `<div class="card"><div class="card-header"><h2>${escH(c.nombre || 'Curso')}</h2></div><div class="card-body">${gridHorarioSoloLectura(bloquesHorario(horarios[i].docs))}</div></div>`).join('');
+            } catch (e) {
+                vista.innerHTML = `<div class="card"><div class="card-body text-danger">Error: ${escH(e.message)}</div></div>`;
+            }
+        });
+
         document.getElementById('btnCargarHorario')?.addEventListener('click', async () => {
             const cursoId = document.getElementById('horarioCurso').value;
-            if (!cursoId) { alert('Selecciona un curso'); return; }
+            document.getElementById('horarioGradoVista').style.display = 'none';
+            if (!cursoId) {
+                if (document.getElementById('horarioGrado').value) { document.getElementById('btnHorarioGrado').click(); return; }
+                alert('Selecciona un grado y un curso'); return;
+            }
             cursoActual = cursoId;
             const cursoDoc = await getDoc(doc(db, 'colegios', colegioId, 'cursos', cursoId));
             document.getElementById('horarioTitulo').textContent = `Horario - ${cursoDoc.data()?.nombre || 'Curso'}`;
@@ -1602,6 +1716,7 @@
         // RECUPERACIONES
         // =============================================
         async function cargarRecuperaciones() {
+            prepararFiltrosRiesgo().catch(e => console.warn('Filtros de riesgo:', e));
             const tbody = document.getElementById('tablaRecuperaciones');
             const filtroEstado = document.getElementById('filtroEstadoRecuperacion').value;
             try {
@@ -1654,6 +1769,116 @@
             }
         }
         document.getElementById('filtroEstadoRecuperacion')?.addEventListener('change', cargarRecuperaciones);
+
+        // ---------- Detección automática de materias perdidas ----------
+        let riesgoFiltrosListos = false;
+        let riesgoFilas = [];
+        async function prepararFiltrosRiesgo() {
+            if (riesgoFiltrosListos) return;
+            riesgoFiltrosListos = true;
+            const g = document.getElementById('riesgoGrado'), c = document.getElementById('riesgoCurso');
+            const gs = await getDocs(collection(db, 'colegios', colegioId, 'grados'));
+            gs.forEach(d => g.add(new Option(d.data().nombre || 'Grado', d.id)));
+            g.onchange = async () => {
+                c.innerHTML = '<option value="">Seleccionar</option>';
+                if (!g.value) return;
+                const cs = await getDocs(query(collection(db, 'colegios', colegioId, 'cursos'), where('gradoId', '==', g.value)));
+                cs.forEach(d => c.add(new Option(d.data().nombre || 'Curso', d.id)));
+            };
+        }
+        async function enLotes(items, tam, fn) {
+            const out = [];
+            for (let i = 0; i < items.length; i += tam) out.push(...await Promise.all(items.slice(i, i + tam).map(fn)));
+            return out;
+        }
+        function pintarRiesgo() {
+            const tbody = document.getElementById('tablaRiesgo');
+            const pendientes = riesgoFilas.filter(r => r.nivel === 'perdiendo' && !r.activada);
+            document.getElementById('btnActivarTodas').style.display = pendientes.length > 1 ? '' : 'none';
+            if (!riesgoFilas.length) { tbody.innerHTML = '<tr><td colspan="5" class="text-center" style="color:var(--success)">✅ Ningún estudiante de este curso va perdiendo materias en este periodo.</td></tr>'; return; }
+            tbody.innerHTML = riesgoFilas.map((r, i) => `<tr>
+                <td>${escH(r.estudianteNombre)}</td>
+                <td>${escH(r.asignaturaNombre)}</td>
+                <td><strong style="color:${r.nivel === 'perdiendo' ? 'var(--danger)' : 'var(--warning)'}">${r.promedio.toFixed(1)}</strong></td>
+                <td>${r.nivel === 'perdiendo' ? '<span style="color:var(--danger);font-weight:600">Perdiendo</span>' : '<span style="color:var(--warning);font-weight:600">En riesgo</span>'}</td>
+                <td>${r.nivel === 'perdiendo'
+                    ? (r.activada ? '<span style="color:var(--success)">✓ Recuperación activada</span>' : `<button class="btn-primary btn-sm" onclick="window.activarRecuperacion(${i})"><i class="fas fa-bolt"></i> Activar recuperación</button>`)
+                    : (r.alertada ? '<span style="color:var(--success)">✓ Alerta enviada</span>' : `<button class="btn-secondary btn-sm" onclick="window.alertaTemprana(${i})"><i class="fas fa-bell"></i> Alerta temprana</button>`)}</td>
+            </tr>`).join('');
+        }
+        document.getElementById('btnAnalizarRiesgo')?.addEventListener('click', async () => {
+            const cursoSel = document.getElementById('riesgoCurso');
+            const cursoId = cursoSel.value, periodo = parseInt(document.getElementById('riesgoPeriodo').value);
+            if (!cursoId) { alert('Selecciona un curso'); return; }
+            const estado = document.getElementById('riesgoEstado');
+            const btn = document.getElementById('btnAnalizarRiesgo');
+            btn.disabled = true;
+            document.getElementById('tablaRiesgo').innerHTML = '<tr><td colspan="5" class="text-center text-muted"><i class="fas fa-spinner fa-spin"></i> Analizando notas...</td></tr>';
+            try {
+                const [mats, recs] = await Promise.all([
+                    getDocs(query(collection(db, 'colegios', colegioId, 'matriculas'), where('cursoId', '==', cursoId), where('estado', '==', 'activo'))),
+                    getDocs(query(collection(db, 'colegios', colegioId, 'recuperaciones'), where('cursoId', '==', cursoId)))
+                ]);
+                const yaActivadas = new Set(recs.docs.map(d => d.data()).filter(r => parseInt(r.periodo) === periodo).map(r => `${r.estudianteId}|${r.asignaturaId}`));
+                const ids = [...new Set(mats.docs.map(m => m.data().estudianteId).filter(Boolean))];
+                let hechos = 0;
+                const porEstudiante = await enLotes(ids, 5, async id => {
+                    const [est, resumen] = await Promise.all([
+                        getDoc(doc(db, 'colegios', colegioId, 'estudiantes', id)),
+                        obtenerResumenNotasEstudiante(id, periodo).catch(() => [])
+                    ]);
+                    estado.textContent = `Analizando ${++hechos} de ${ids.length} estudiantes...`;
+                    const nombre = est.exists() ? `${est.data().nombres || ''} ${est.data().apellidos || ''}`.trim() : 'Estudiante';
+                    return resumen.filter(r => r.promedio > 0 && r.promedio < 3.5 && String(r.asignaturaNombre).toLowerCase() !== 'descanso')
+                        .map(r => ({ estudianteId: id, estudianteNombre: nombre, asignaturaId: r.asignaturaId, asignaturaNombre: r.asignaturaNombre,
+                            promedio: r.promedio, nivel: r.promedio < 3.0 ? 'perdiendo' : 'riesgo', activada: yaActivadas.has(`${id}|${r.asignaturaId}`) }));
+                });
+                riesgoFilas = porEstudiante.flat().sort((a, b) => (a.nivel === b.nivel ? a.promedio - b.promedio : a.nivel === 'perdiendo' ? -1 : 1));
+                riesgoFilas.cursoId = cursoId; riesgoFilas.cursoNombre = cursoSel.options[cursoSel.selectedIndex].text; riesgoFilas.periodo = periodo;
+                const perdiendo = riesgoFilas.filter(r => r.nivel === 'perdiendo').length;
+                estado.textContent = `${ids.length} estudiantes analizados · ${perdiendo} materia(s) perdiéndose · ${riesgoFilas.length - perdiendo} en riesgo.`;
+                pintarRiesgo();
+            } catch (e) {
+                document.getElementById('tablaRiesgo').innerHTML = `<tr><td colspan="5" class="text-center text-danger">Error: ${escH(e.message)}</td></tr>`;
+            } finally { btn.disabled = false; }
+        });
+        async function activarRecuperacionFila(r) {
+            await addDoc(collection(db, 'colegios', colegioId, 'recuperaciones'), {
+                estudianteId: r.estudianteId, estudianteNombre: r.estudianteNombre,
+                cursoId: riesgoFilas.cursoId, cursoNombre: riesgoFilas.cursoNombre,
+                asignaturaId: r.asignaturaId, asignaturaNombre: r.asignaturaNombre,
+                periodo: riesgoFilas.periodo, promedio: Number(r.promedio.toFixed(2)),
+                motivo: `Promedio ${r.promedio.toFixed(1)} en el periodo ${riesgoFilas.periodo} (mínimo para aprobar: 3.0)`,
+                fechaLimite: null, estado: 'pendiente', origen: 'automatica',
+                registradoPor: usuarioActual?.nombre || '', fechaRegistro: serverTimestamp()
+            });
+            r.activada = true;
+            await avisarFamilia(r.estudianteId, '📕 Recuperación activada · ' + r.asignaturaNombre,
+                `${r.estudianteNombre} va perdiendo ${r.asignaturaNombre} en el periodo ${riesgoFilas.periodo} (promedio ${r.promedio.toFixed(1)}). Se activó un plan de recuperación; el profesor indicará las actividades y fechas.`, 'recuperacion');
+        }
+        window.activarRecuperacion = async (i) => {
+            const r = riesgoFilas[i];
+            if (!r || r.activada) return;
+            try { await activarRecuperacionFila(r); pintarRiesgo(); cargarRecuperaciones(); cargarDashboard(); }
+            catch (e) { alert('No se pudo activar: ' + e.message); }
+        };
+        window.alertaTemprana = async (i) => {
+            const r = riesgoFilas[i];
+            if (!r || r.alertada) return;
+            const ok = await avisarFamilia(r.estudianteId, '🔔 Alerta temprana · ' + r.asignaturaNombre,
+                `${r.estudianteNombre} tiene un promedio de ${r.promedio.toFixed(1)} en ${r.asignaturaNombre} (periodo ${riesgoFilas.periodo}). Está cerca del mínimo para aprobar (3.0): es buen momento para reforzar.`, 'academico');
+            if (ok) { r.alertada = true; pintarRiesgo(); } else alert('No se pudo enviar la alerta.');
+        };
+        document.getElementById('btnActivarTodas')?.addEventListener('click', async () => {
+            const pend = riesgoFilas.filter(r => r.nivel === 'perdiendo' && !r.activada);
+            if (!pend.length || !confirm(`¿Activar ${pend.length} recuperaciones y avisar a cada estudiante y su acudiente?`)) return;
+            const btn = document.getElementById('btnActivarTodas'); btn.disabled = true;
+            let fallas = 0;
+            for (const r of pend) { try { await activarRecuperacionFila(r); } catch (e) { console.warn(e); fallas++; } }
+            btn.disabled = false;
+            pintarRiesgo(); cargarRecuperaciones(); cargarDashboard();
+            if (fallas) alert(`${fallas} recuperación(es) no se pudieron activar.`);
+        });
 
         document.getElementById('btnRegistrarRecuperacion')?.addEventListener('click', async () => {
             document.getElementById('formRecuperacion').reset();
@@ -1727,6 +1952,7 @@
             bajo_rendimiento: 'Bajo rendimiento', repitencia: 'Riesgo de repitencia',
             promocion_anticipada: 'Promoción anticipada', compromiso_academico: 'Compromiso académico', otro: 'Otro'
         };
+        const escSit = t => String(t ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
         async function cargarSituaciones() {
             const tbody = document.getElementById('tablaSituaciones');
             const filtroEstado = document.getElementById('filtroEstadoSituacion').value;
@@ -1750,7 +1976,8 @@
                         <td>${s.estudianteNombre || '-'}</td>
                         <td>${s.cursoNombre || '-'}</td>
                         <td>${tipoSituacionLabels[s.tipo] || s.tipo || '-'}</td>
-                        <td>${s.descripcion || '-'}</td>
+                        <td>${escSit(s.descripcion || '-')}${s.registradoPor ? `<br><small class="text-muted">Reportó: ${escSit(s.registradoPor)}${s.registradoPorRol === 'profesor' ? ' (profesor)' : ''}</small>` : ''}
+                            ${s.estudianteId && !s.informadoFamilia ? `<br><button type="button" class="btn-secondary sit-informar" onclick="window.informarSituacion('${s.id}')"><i class="fas fa-bullhorn"></i> Informar a la familia</button>` : (s.informadoFamilia ? '<br><small style="color:var(--success)">✓ Familia informada</small>' : '')}</td>
                         <td><span style="color: ${estadoColor[s.estado] || 'var(--gray-500)'}; font-weight: 600;">${estadoLabels[s.estado] || s.estado}</span></td>
                         <td>
                             <select class="form-control" style="padding: 4px 8px; font-size: 0.75rem;" onchange="window.actualizarSituacion('${s.id}', this.value)">
@@ -1762,6 +1989,15 @@
                     </tr>`;
                 });
                 tbody.innerHTML = html;
+                window.informarSituacion = async (id) => {
+                    const s = items.find(x => x.id === id);
+                    if (!s || !confirm(`¿Enviar esta situación a ${s.estudianteNombre} y su acudiente?`)) return;
+                    const ok = await avisarFamilia(s.estudianteId, '📚 Situación académica · ' + (tipoSituacionLabels[s.tipo] || 'Aviso'),
+                        `Coordinación académica informa sobre ${s.estudianteNombre}: ${s.descripcion}`);
+                    if (!ok) { alert('No se pudo enviar el aviso. Intenta de nuevo.'); return; }
+                    await updateDoc(doc(db, 'colegios', colegioId, 'situaciones_academicas', id), { informadoFamilia: true });
+                    cargarSituaciones();
+                };
                 window.actualizarSituacion = async (id, estado) => {
                     await updateDoc(doc(db, 'colegios', colegioId, 'situaciones_academicas', id), { estado });
                     cargarDashboard();
@@ -1772,6 +2008,9 @@
         }
         document.getElementById('filtroEstadoSituacion')?.addEventListener('change', cargarSituaciones);
 
+        document.getElementById('btnRegistrarSituacion')?.addEventListener('click', () => {
+            document.getElementById('sitEstudianteGrupo').style.display = '';
+        });
         document.getElementById('btnRegistrarSituacion')?.addEventListener('click', async () => {
             document.getElementById('formSituacion').reset();
             document.getElementById('situacionAlert').style.display = 'none';
@@ -1781,17 +2020,28 @@
         document.getElementById('closeSituacionModal')?.addEventListener('click', () => document.getElementById('modalSituacion').classList.remove('show'));
         document.getElementById('cancelSituacionModal')?.addEventListener('click', () => document.getElementById('modalSituacion').classList.remove('show'));
 
+        document.getElementById('sitAlcance')?.addEventListener('change', (e) => {
+            document.getElementById('sitEstudianteGrupo').style.display = e.target.value === 'curso' ? 'none' : '';
+        });
         document.getElementById('formSituacion')?.addEventListener('submit', async (e) => {
             e.preventDefault();
             const cursoId = document.getElementById('sitCurso').value;
-            const estudianteId = document.getElementById('sitEstudiante').value;
+            const alcance = document.getElementById('sitAlcance').value;
+            const estudianteId = alcance === 'curso' ? null : document.getElementById('sitEstudiante').value;
             const tipo = document.getElementById('sitTipo').value;
             const descripcion = document.getElementById('sitDescripcion').value.trim();
+            const informar = document.getElementById('sitInformar').checked;
             const alertBox = document.getElementById('situacionAlert');
             const alertText = document.getElementById('situacionAlertText');
-            if (!cursoId || !estudianteId || !tipo || !descripcion) {
+            if (!cursoId || (alcance !== 'curso' && !estudianteId) || !tipo || !descripcion) {
                 alertBox.className = 'alert alert-error show';
                 alertText.textContent = 'Completa todos los campos obligatorios';
+                alertBox.style.display = 'flex';
+                return;
+            }
+            if (descripcion.length < 10) {
+                alertBox.className = 'alert alert-error show';
+                alertText.textContent = 'La descripción debe tener al menos 10 caracteres';
                 alertBox.style.display = 'flex';
                 return;
             }
@@ -1799,18 +2049,46 @@
             btn.disabled = true;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
             try {
-                const estDoc = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', estudianteId));
                 const cursoDoc = await getDoc(doc(db, 'colegios', colegioId, 'cursos', cursoId));
+                const cursoNombre = cursoDoc.data()?.nombre || '-';
+                let destinatarios = [];   // [{ id, nombre }]
+                if (alcance === 'curso') {
+                    const mats = await getDocs(query(collection(db, 'colegios', colegioId, 'matriculas'), where('cursoId', '==', cursoId), where('estado', '==', 'activo')));
+                    destinatarios = mats.docs.map(m => ({ id: m.data().estudianteId, nombre: '' })).filter(x => x.id);
+                } else {
+                    const estDoc = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', estudianteId));
+                    destinatarios = [{ id: estudianteId, nombre: estDoc.exists() ? `${estDoc.data().nombres || ''} ${estDoc.data().apellidos || ''}`.trim() : '-' }];
+                }
                 await addDoc(collection(db, 'colegios', colegioId, 'situaciones_academicas'), {
-                    estudianteId,
-                    estudianteNombre: estDoc.exists() ? `${estDoc.data().nombres || ''} ${estDoc.data().apellidos || ''}` : '-',
-                    cursoId, cursoNombre: cursoDoc.data()?.nombre || '-',
+                    estudianteId: estudianteId || null,
+                    estudianteNombre: alcance === 'curso' ? `Todo el curso (${destinatarios.length} estudiantes)` : destinatarios[0].nombre,
+                    alcance, cursoId, cursoNombre,
                     tipo, descripcion, estado: 'abierta',
+                    informadoFamilia: informar,
                     registradoPor: usuarioActual?.nombre || '',
+                    registradoPorRol: 'coord_academico',
                     fechaRegistro: serverTimestamp()
                 });
+                let avisados = 0;
+                if (informar) {
+                    const titulo = '📚 Situación académica · ' + (tipoSituacionLabels[tipo] || 'Aviso');
+                    const resultados = await Promise.all(destinatarios.map(d => avisarFamilia(d.id, titulo,
+                        alcance === 'curso' ? `Coordinación académica informa al curso ${cursoNombre}: ${descripcion}` : `Coordinación académica informa sobre ${d.nombre}: ${descripcion}`)));
+                    avisados = resultados.filter(Boolean).length;
+                }
+                let profesAvisados = 0;
+                if (document.getElementById('sitProfesores').checked) {
+                    try {
+                        const hs = await getDocs(query(collection(db, 'colegios', colegioId, 'horarios'), where('cursoId', '==', cursoId)));
+                        const profes = [...new Set(hs.docs.map(h => h.data().profesorId).filter(Boolean))];
+                        const { enviarMensajeDirecto } = await eduComun();
+                        const texto = `📚 Situación académica (${tipoSituacionLabels[tipo] || 'Aviso'}) · ${cursoNombre}${alcance === 'curso' ? '' : ' · ' + destinatarios[0].nombre}: ${descripcion}`;
+                        for (const p of profes) { if (await enviarMensajeDirecto(p, texto, 'profesor').catch(() => false)) profesAvisados++; }
+                    } catch (er) { console.warn('Aviso a profesores:', er); }
+                }
                 alertBox.className = 'alert alert-success show';
-                alertText.textContent = '✅ Situación registrada';
+                alertText.textContent = '✅ Situación registrada' + (informar ? `. Aviso enviado a ${avisados} estudiante(s) y sus acudientes` : '') +
+                    (document.getElementById('sitProfesores').checked ? `. Mensaje a ${profesAvisados} profesor(es)` : '') + '.';
                 alertBox.style.display = 'flex';
                 setTimeout(() => {
                     document.getElementById('modalSituacion').classList.remove('show');
@@ -1885,5 +2163,7 @@
         console.log('✅ EduOne - Panel de Coordinación Académica cargado');
     </script>
 
+    <script type="module" src="../assets/eduone-chat.js?v=20261105"></script>
+    <script type="module" src="../assets/eduone-orientacion.js?v=20261105"></script>
 </body>
 </html>

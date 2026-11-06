@@ -476,8 +476,9 @@ body{display:block!important;background:#f1f5fa!important}
 </style>
     <link rel="stylesheet" href="../assets/responsive.css?v=20261103" />
     <script src="../assets/responsive.js?v=20261103" defer></script>
-    <link rel="stylesheet" href="../assets/eduone-ui.css?v=20261103" />
-    <script type="module" src="../assets/eduone-ui.js?v=20261103"></script>
+    <link rel="stylesheet" href="../assets/eduone-ui.css?v=20261105" />
+    <script type="module" src="../assets/eduone-ui.js?v=20261105"></script>
+    <script src="../assets/eduone-validacion.js?v=20261105" defer></script>
 </head>
 <body>
 
@@ -3584,7 +3585,7 @@ body{display:block!important;background:#f1f5fa!important}
           }catch(e){historial.textContent='No se pudo consultar el historial: '+e.message;}
         }
         let eduChatBusqueda=0;
-        document.getElementById('eduBuscarContacto')?.addEventListener('input',async e=>{const texto=e.target.value.toLowerCase().trim(),n=++eduChatBusqueda,box=document.getElementById('eduChatContactos');box.replaceChildren();if(texto.length<2)return;box.textContent='Buscando...';try{const qs=await getDocs(query(collection(db,'usuarios'),where('colegioId','==',colegioId)));if(n!==eduChatBusqueda)return;box.replaceChildren();let count=0;qs.forEach(d=>{const x=d.data();if(x.colegioId!==colegioId||d.id===auth.currentUser.uid)return;const nom=x.nombreCompleto||x.nombre||((x.nombres||'')+' '+(x.apellidos||''));if(!nom.toLowerCase().includes(texto)||count>=15)return;count++;box.append(eduChatItem(nom,x.rol||'Usuario',x.fotoUrl||x.fotoPerfilUrl||'',async()=>{try{const destinoUid=x.authUid||x.uid||d.id;if(destinoUid!==d.id)throw Error('El contacto tiene un UID distinto del ID de usuarios. Se requiere vincularlos en Firebase.');const ids=[destinoUid,auth.currentUser.uid].sort(),id=ids.join('_');const refChat=doc(db,'colegios',colegioId,'chats',id);const existentes=await getDocs(query(collection(db,'colegios',colegioId,'chats'),where('participantes','array-contains',auth.currentUser.uid)));const yaExiste=existentes.docs.some(c=>c.id===id);if(!yaExiste)await setDoc(refChat,{colegioId,participantes:ids,nombres:{[d.id]:nom,[auth.currentUser.uid]:usuarioActual?.nombre||'Estudiante'},creadoEn:serverTimestamp()});eduAbrirChat('privado',id,nom);eduCargarChat()}catch(er){document.getElementById('eduChatEstado').textContent='No se pudo abrir: '+er.message}}))});if(!count)box.textContent='No hay coincidencias.'}catch(err){box.textContent='No se pudo buscar: '+err.message}});
+        document.getElementById('eduBuscarContacto')?.addEventListener('input',async e=>{const texto=e.target.value.toLowerCase().trim(),n=++eduChatBusqueda,box=document.getElementById('eduChatContactos');box.replaceChildren();if(texto.length<2)return;box.textContent='Buscando...';try{const qs=await getDocs(query(collection(db,'usuarios'),where('colegioId','==',colegioId)));if(n!==eduChatBusqueda)return;box.replaceChildren();let count=0;qs.forEach(d=>{const x=d.data();if(x.colegioId!==colegioId||d.id===auth.currentUser.uid||(window.EduOne&&!window.EduOne.chatPermitido('estudiante',x.rol)))return;const nom=x.nombreCompleto||x.nombre||((x.nombres||'')+' '+(x.apellidos||''));if(!nom.toLowerCase().includes(texto)||count>=15)return;count++;box.append(eduChatItem(nom,x.rol||'Usuario',x.fotoUrl||x.fotoPerfilUrl||'',async()=>{try{const destinoUid=x.authUid||x.uid||d.id;if(destinoUid!==d.id)throw Error('El contacto tiene un UID distinto del ID de usuarios. Se requiere vincularlos en Firebase.');const ids=[destinoUid,auth.currentUser.uid].sort(),id=ids.join('_');const refChat=doc(db,'colegios',colegioId,'chats',id);const existentes=await getDocs(query(collection(db,'colegios',colegioId,'chats'),where('participantes','array-contains',auth.currentUser.uid)));const yaExiste=existentes.docs.some(c=>c.id===id);if(!yaExiste)await setDoc(refChat,{colegioId,participantes:ids,nombres:{[d.id]:nom,[auth.currentUser.uid]:usuarioActual?.nombre||'Estudiante'},creadoEn:serverTimestamp()});eduAbrirChat('privado',id,nom);eduCargarChat()}catch(er){document.getElementById('eduChatEstado').textContent='No se pudo abrir: '+er.message}}))});if(!count)box.textContent='No hay coincidencias.'}catch(err){box.textContent='No se pudo buscar: '+err.message}});
         // Perfiles reales de remitentes; los mensajes de grupo guardan remitenteUid.
         const eduPerfilMensajeCache = new Map();
         async function eduPerfilRemitente(uid) {
@@ -3771,5 +3772,6 @@ body{display:block!important;background:#f1f5fa!important}
 
         console.log('✅ EduOne - Panel del Estudiante cargado');
     </script>
+    <script type="module" src="../assets/eduone-comun.js?v=20261105"></script>
 </body>
 </html>

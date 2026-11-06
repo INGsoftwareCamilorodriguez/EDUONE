@@ -316,8 +316,9 @@ body{background:#f5f8fd;color:var(--ui-ink)}
 </style>
     <link rel="stylesheet" href="../assets/responsive.css?v=20261103" />
     <script src="../assets/responsive.js?v=20261103" defer></script>
-    <link rel="stylesheet" href="../assets/eduone-ui.css?v=20261103" />
-    <script type="module" src="../assets/eduone-ui.js?v=20261103"></script>
+    <link rel="stylesheet" href="../assets/eduone-ui.css?v=20261105" />
+    <script type="module" src="../assets/eduone-ui.js?v=20261105"></script>
+    <script src="../assets/eduone-validacion.js?v=20261105" defer></script>
 </head>
 <body>
 
@@ -3880,7 +3881,7 @@ body{background:#f5f8fd;color:var(--ui-ink)}
         async function cargarContactosEdu() {
             if(!colegioId)return;
             const s=await getDocs(query(collection(db,'usuarios'),where('colegioId','==',colegioId)));
-            chatPersonas=s.docs.filter(d=>d.id!==chatUid() && d.data().activo!==false).map(d=>({id:d.data().uid||d.data().authUid||d.id,documentoUsuarioId:d.id,...d.data()}));
+            chatPersonas=s.docs.filter(d=>d.id!==chatUid() && d.data().activo!==false && (window.EduOne?.chatPermitido?.(usuarioActual?.rol||'rector', d.data().rol) ?? true)).map(d=>({id:d.data().uid||d.data().authUid||d.id,documentoUsuarioId:d.id,...d.data()}));
             buscarContactosEdu();
             eduIniciarHistorialChat();
         }
@@ -4051,7 +4052,7 @@ body{background:#f5f8fd;color:var(--ui-ink)}
                         'profesor': 'profesor.html',
                         'estudiante': 'estudiante.html',
                         'acudiente': 'acudiente.html',
-                        'contador': 'contabilidad.html',
+                        'contador': '../contador.html',
                         'coord_academico': 'coordinador-academico.html',
                         'coord_convivencia': 'coordinador-convivencia.html',
                         'secretaria': 'secretaria.html',
@@ -4187,5 +4188,7 @@ body{background:#f5f8fd;color:var(--ui-ink)}
 
         console.log('✅ EduOne - Panel del Rector cargado correctamente');
     </script>
+    <script type="module" src="../assets/eduone-comun.js?v=20261105"></script>
+    <script type="module" src="../assets/eduone-orientacion.js?v=20261105"></script>
 </body>
 </html>
