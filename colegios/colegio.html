@@ -313,6 +313,36 @@ body{background:#f5f8fd;color:var(--ui-ink)}
 #chatForm .edu-file-btn{flex-shrink:0}
 #page-comunicados #comunicadosLista{overflow-y:auto;display:flex;flex-direction:column;gap:7px}
 @media(max-width:600px){.edu-file-btn span{display:none}.edu-file-btn{padding:10px}.edu-attach-row .edu-file-btn{font-size:.78rem}.edu-chat-composer #chatTexto{min-width:100%}}
+
+        /* EduOne: pensiones diferenciadas y chat móvil de dos pantallas */
+        .edu-grado-tarifas{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin-top:18px}
+        .edu-grado-tarifa{display:flex;flex-direction:column;gap:5px;padding:10px;background:#f8faff;border:1px solid #e3e9f2;border-radius:12px;font-size:.83rem;font-weight:600}
+        #page-chat .chat-layout{min-height:500px}
+        #page-chat .chat-layout>aside{min-width:0}
+        #page-chat .edu-chat-conversacion{display:flex;flex-direction:column;min-width:0;min-height:480px}
+        #page-chat .edu-chat-bar{display:flex;align-items:center;gap:10px;padding:10px 12px;background:#f8faff;border:1px solid #e5eaf5;border-radius:12px}
+        #page-chat .edu-chat-bar h3{font-size:.95rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+        #page-chat .edu-chat-volver{display:none;border:0;background:transparent;color:var(--primary);padding:8px;cursor:pointer}
+        #page-chat .chat-mensajes{flex:1;height: min(58vh,620px);min-height:300px;background:#eef3fa;overflow-y:auto}
+        #page-chat .chat-burbuja{width:fit-content;max-width:82%;background:#fff;border:1px solid #e5e9f2;padding:10px 13px;box-shadow:0 2px 7px #17213a0a}
+        #page-chat .chat-burbuja.propia{background:#dcfce7;border-color:#c6f3d5;margin-left:auto}
+        #page-chat #eduChatHistorial button,#page-chat #chatResultados button{min-height:68px;text-align:left;transition:background .15s}
+        #page-chat #eduChatHistorial button:hover,#page-chat #chatResultados button:hover{background:#eff6ff}
+        #page-chat #chatForm{padding:9px 0;gap:8px}
+        @media(max-width:700px){
+            #page-chat .card-body{padding:10px}
+            #page-chat .chat-layout{display:block;min-height:0}
+            #page-chat .chat-layout>aside{display:block}
+            #page-chat .chat-layout>.edu-chat-conversacion{display:none}
+            #page-chat .chat-layout.chat-abierto>aside{display:none}
+            #page-chat .chat-layout.chat-abierto>.edu-chat-conversacion{display:flex;height:calc(100dvh - 150px);min-height:480px}
+            #page-chat .edu-chat-volver{display:inline-flex}
+            #page-chat .chat-mensajes{height:auto;min-height:0;flex:1;margin:8px 0}
+            #page-chat #eduChatHistorial{max-height:none}
+            #page-chat #chatResultados{max-height:40vh}
+            #page-chat .edu-chat-composer #chatTexto{min-width:0!important;flex:1 1 100%}
+            #page-chat .edu-chat-bar{position:sticky;top:0;z-index:1}
+        }
 </style>
     <link rel="stylesheet" href="../assets/responsive.css?v=20261103" />
     <script src="../assets/responsive.js?v=20261103" defer></script>
@@ -671,7 +701,9 @@ body{background:#f5f8fd;color:var(--ui-ink)}
                     <div><label for="pensValorGlobal">Valor general (COP)</label><input class="form-control" id="pensValorGlobal" type="number" min="0" step="1" placeholder="Ej. 180000" /></div>
                     <button type="button" class="btn-primary" id="pensGuardarGlobal">Guardar valor del mes</button>
                     <button type="button" class="btn-success" id="pensGenerarMes">Generar obligaciones</button>
-                  </div><div id="pensConfigEstado" role="status" style="margin-top:12px"></div>
+                  </div><div id="pensValoresGrado" class="edu-grado-tarifas" aria-label="Valores de pensión por grado"></div>
+                  <p class="edu-small-note">Cada grado puede tener un valor diferente. Los importes ya registrados no se modificarán.</p>
+                  <div id="pensConfigEstado" role="status" style="margin-top:12px"></div>
                 </div></div>
                 <div class="card"><div class="card-body" style="display:flex;gap:12px;flex-wrap:wrap;align-items:end"><div><label>Mes</label><select id="pensMesFiltro" class="form-control"></select></div><div><label>Año</label><input id="pensAnioFiltro" type="number" class="form-control" min="2020" max="2100"></div><div><label>Estado</label><select id="pensEstadoFiltro" class="form-control"><option value="todos">Todos</option><option value="debe">Con saldo pendiente</option><option value="pagado">Pagados</option></select></div><button id="pensAplicarFiltro" class="btn-primary" type="button">Filtrar</button><div id="pensPaginaInfo" aria-live="polite"></div><button type="button" id="pensAnterior" class="btn-secondary">Anterior</button><button type="button" id="pensSiguiente" class="btn-secondary">Siguiente</button></div></div>
                 <div class="page-header">
@@ -694,9 +726,9 @@ body{background:#f5f8fd;color:var(--ui-ink)}
             <div id="page-chat" class="page-content">
 <div class="edu-section-head"><span class="edu-hicon"><i class="fas fa-comments"></i></span><div><h2>Chat interno</h2><p>Mensajes, imágenes, documentos y comunicación entre usuarios</p></div></div>
                 <div class="page-header"><h2><i class="fas fa-comments"></i> Chat interno</h2></div>
-                <div class="card"><div class="card-body"><div class="chat-layout">
+                <div class="card"><div class="card-body"><div class="chat-layout" id="eduChatLayout">
                     <aside><h3 style="font-size:.95rem;margin-bottom:9px">Conversaciones recientes</h3><div id="eduChatHistorial" class="chat-results" aria-live="polite">Cargando historial...</div><label for="chatBuscar" style="display:block;margin-top:14px">Buscar usuario del colegio</label><input id="chatBuscar" class="form-control" placeholder="Nombre o apellido" autocomplete="off"><div id="chatResultados" class="chat-results"></div></aside>
-                    <section><h3 id="chatContacto">Selecciona una persona</h3><div id="chatMensajes" class="chat-mensajes" aria-live="polite"></div>
+                    <section class="edu-chat-conversacion"><div class="edu-chat-bar"><button type="button" id="eduChatVolver" class="edu-chat-volver" aria-label="Volver a conversaciones"><i class="fas fa-arrow-left"></i></button><h3 id="chatContacto">Selecciona una persona</h3></div><div id="chatMensajes" class="chat-mensajes" aria-live="polite"></div>
                     <form id="chatForm" class="edu-chat-composer"><input id="chatTexto" class="form-control" maxlength="3000" placeholder="Escribe un mensaje" disabled><label class="edu-file-btn" for="chatAdjunto" title="Adjuntar foto o documento"><i class="fas fa-paperclip"></i><span>Adjuntar</span></label><input class="edu-file-hidden" type="file" id="chatAdjunto" accept="image/jpeg,image/png,image/webp,application/pdf,text/plain,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" aria-label="Adjuntar imagen o documento" disabled><button class="edu-file-btn" type="button" id="chatCamaraBtn" title="Tomar fotografía"><i class="fas fa-camera"></i><span>Cámara</span></button><input class="edu-file-hidden" type="file" id="chatCamara" accept="image/*" capture="environment" aria-label="Tomar foto"> <span class="edu-file-name" id="chatArchivoNombre" aria-live="polite"></span><button id="chatEnviar" class="btn-primary" disabled>Enviar</button></form></section>
                 </div></div></div>
             </div>
@@ -778,16 +810,16 @@ body{background:#f5f8fd;color:var(--ui-ink)}
                     <div class="form-grid">
                         <div class="form-group"><label>Nombres *</label><input type="text" id="estNombres" class="form-control" required /></div>
                         <div class="form-group"><label>Apellidos *</label><input type="text" id="estApellidos" class="form-control" required /></div>
-                        <div class="form-group"><label>Documento *</label><input type="text" id="estDocumento" class="form-control" required /></div>
+                        <div class="form-group"><label>Documento *</label><input type="text" id="estDocumento" class="form-control" inputmode="numeric" pattern="[0-9]+" title="Solo se permiten números" required /></div>
                         <div class="form-group"><label>Correo</label><input type="email" id="estCorreo" class="form-control" /></div>
                         <div class="form-group"><label>Fecha de nacimiento</label><input type="date" id="estFechaNacimiento" class="form-control" /></div>
                         <div class="form-group"><label>Dirección</label><input type="text" id="estDireccion" class="form-control" /></div>
-                        <div class="form-group"><label>Teléfono</label><input type="text" id="estTelefono" class="form-control" /></div>
+                        <div class="form-group"><label>Teléfono</label><input type="text" id="estTelefono" class="form-control" inputmode="numeric" pattern="[0-9]+" title="Solo se permiten números" /></div>
                     </div>
                     <h3 class="section-form-title"><i class="fas fa-user-friends"></i> Acudiente</h3>
                     <div class="form-grid">
                         <div class="form-group"><label>Nombre del acudiente *</label><input type="text" id="estAcudiente" class="form-control" required /></div>
-                        <div class="form-group"><label>Teléfono</label><input type="text" id="estAcudienteTelefono" class="form-control" /></div>
+                        <div class="form-group"><label>Teléfono</label><input type="text" id="estAcudienteTelefono" class="form-control" inputmode="numeric" pattern="[0-9]+" title="Solo se permiten números" /></div>
                         <div class="form-group"><label>Correo del acudiente *</label><input type="email" id="estAcudienteEmail" class="form-control" required /></div>
                         <div class="form-group"><label>Contraseña acudiente *</label><input type="text" id="estAcudientePassword" class="form-control" required minlength="6" /></div>
                     </div>
@@ -899,9 +931,9 @@ body{background:#f5f8fd;color:var(--ui-ink)}
                     <div class="form-grid">
                         <div class="form-group"><label>Nombres *</label><input type="text" id="personalNombres" class="form-control" required /></div>
                         <div class="form-group"><label>Apellidos *</label><input type="text" id="personalApellidos" class="form-control" required /></div>
-                        <div class="form-group"><label>Documento *</label><input type="text" id="personalDocumento" class="form-control" required /></div>
+                        <div class="form-group"><label>Documento *</label><input type="text" id="personalDocumento" class="form-control" inputmode="numeric" pattern="[0-9]+" title="Solo se permiten números" required /></div>
                         <div class="form-group"><label>Correo *</label><input type="email" id="personalCorreo" class="form-control" required /></div>
-                        <div class="form-group"><label>Teléfono</label><input type="text" id="personalTelefono" class="form-control" /></div>
+                        <div class="form-group"><label>Teléfono</label><input type="text" id="personalTelefono" class="form-control" inputmode="numeric" pattern="[0-9]+" title="Solo se permiten números" /></div>
                         <div class="form-group"><label>Contraseña *</label><input type="text" id="personalPassword" class="form-control" required minlength="6" /></div>
                     </div>
                 </div>
@@ -1927,6 +1959,7 @@ body{background:#f5f8fd;color:var(--ui-ink)}
             const nombres = document.getElementById('estNombres').value.trim();
             const apellidos = document.getElementById('estApellidos').value.trim();
             const documento = document.getElementById('estDocumento').value.trim();
+            if(!/^\d+$/.test(documento)){showEstudianteAlert('El documento debe contener únicamente números.','error');return;}
             const correo = document.getElementById('estCorreo').value.trim();
             const fechaNacimiento = document.getElementById('estFechaNacimiento').value;
             const direccion = document.getElementById('estDireccion').value.trim();
@@ -2313,6 +2346,7 @@ body{background:#f5f8fd;color:var(--ui-ink)}
             const nombres = document.getElementById('personalNombres').value.trim();
             const apellidos = document.getElementById('personalApellidos').value.trim();
             const documento = document.getElementById('personalDocumento').value.trim();
+            if(!/^\d+$/.test(documento)){showPersonalAlert('El documento debe contener únicamente números.','error');return;}
             const correo = document.getElementById('personalCorreo').value.trim();
             const telefono = document.getElementById('personalTelefono').value.trim();
             const password = document.getElementById('personalPassword').value;
@@ -3213,17 +3247,48 @@ body{background:#f5f8fd;color:var(--ui-ink)}
         const pensionMesSeleccionado = () => Number(document.getElementById('pensMesFiltro').value || new Date().getMonth()+1);
         const pensionAnioSeleccionado = () => Number(document.getElementById('pensAnioFiltro').value || new Date().getFullYear());
         const pensionConfigId = () => `${pensionAnioSeleccionado()}-${String(pensionMesSeleccionado()).padStart(2,'0')}`;
+        let tarifasGradosEdu = [];
+        async function eduCargarGradosPensiones() {
+            const snap=await getDocs(collection(db,'colegios',colegioId,'grados'));
+            tarifasGradosEdu=snap.docs.map(d=>({id:d.id,...d.data()}))
+                .sort((a,b)=>Number(a.orden||0)-Number(b.orden||0));
+            return tarifasGradosEdu;
+        }
         async function consultarValorPensionGlobal() {
             if(!colegioId)return;
             const d=await getDoc(doc(db,'colegios',colegioId,'configuracion_pensiones',pensionConfigId()));
-            document.getElementById('pensValorGlobal').value=d.exists()?d.data().valor:'';
-            return d.exists()?Number(d.data().valor):null;
+            const conf=d.exists()?d.data():{};
+            document.getElementById('pensValorGlobal').value=conf.valor ?? '';
+            if(!tarifasGradosEdu.length)await eduCargarGradosPensiones();
+            const host=document.getElementById('pensValoresGrado');host.replaceChildren();
+            for(const g of tarifasGradosEdu){
+                const fila=document.createElement('label');fila.className='edu-grado-tarifa';
+                const nombre=document.createElement('span');nombre.textContent=g.nombre||'Grado';
+                const input=document.createElement('input');input.type='number';input.min='0';input.step='1';
+                input.className='form-control';input.dataset.gradoId=g.id;
+                input.placeholder='Usar valor general';input.value=conf.valoresPorGrado?.[g.id] ?? '';
+                fila.append(nombre,input);host.append(fila);
+            }
+            return Number(conf.valor)||0;
+        }
+        async function eduGradoEstudiantePension(estudianteId, estudiante, matriculasPorEstudiante) {
+            return estudiante.gradoId||matriculasPorEstudiante.get(estudianteId)?.gradoId||'';
         }
         async function registrarObligacionesPension() {
             if(!colegioId)throw new Error('No se encontró el colegio');
             const valorGlobal=await consultarValorPensionGlobal();
-            if(!(valorGlobal>0))throw new Error('Primero configura un valor mensual mayor que cero');
-            const estudiantes=await getDocs(collection(db,'colegios',colegioId,'estudiantes'));
+            const configuracion=await getDoc(doc(db,'colegios',colegioId,'configuracion_pensiones',pensionConfigId()));
+            const valoresPorGrado=configuracion.exists()?configuracion.data().valoresPorGrado||{}:{};
+            if(!(valorGlobal>0) && !Object.values(valoresPorGrado).some(v=>Number(v)>0))throw new Error('Configura valores de pensión para generar obligaciones');
+            const [estudiantes,matriculasSnap]=await Promise.all([
+                getDocs(collection(db,'colegios',colegioId,'estudiantes')),
+                getDocs(collection(db,'colegios',colegioId,'matriculas'))
+            ]);
+            const matriculasPorEstudiante=new Map();
+            matriculasSnap.forEach(d=>{const m=d.data();if(m.estudianteId && m.estado!=='inactivo' && m.estado!=='retirado'){
+                const actual=matriculasPorEstudiante.get(m.estudianteId);
+                if(!actual || Number(m.anio||m.anioEscolar||0)>=Number(actual.anio||actual.anioEscolar||0)) matriculasPorEstudiante.set(m.estudianteId,m);
+            }});
             const existentes=await getDocs(collection(db,'colegios',colegioId,'pensiones'));
             const ya=new Set(existentes.docs.filter(d=>Number(d.data().mes)===pensionMesSeleccionado() && Number(d.data().anio)===pensionAnioSeleccionado()).map(d=>d.data().estudianteId));
             let creadas=0, omitidas=0;
@@ -3232,7 +3297,10 @@ body{background:#f5f8fd;color:var(--ui-ink)}
                 if(est.activo===false || est.estado==='inactivo'||est.estado==='retirado'){omitidas++;continue;}
                 if(ya.has(e.id)){omitidas++;continue;}
                 const individual=Number(est.valorPension ?? est.pensionMensual ?? 0);
-                const valor=individual>0?individual:valorGlobal;
+                const gradoId=await eduGradoEstudiantePension(e.id,est,matriculasPorEstudiante);
+                const valorGrado=Number(valoresPorGrado[gradoId]||0);
+                const valor=individual>0?individual:(valorGrado>0?valorGrado:valorGlobal);
+                if(!(valor>0)){omitidas++;continue;}
                 // Documento único: dos clics no producen dos obligaciones.
                 const ref=doc(db,'colegios',colegioId,'pensiones',`${pensionConfigId()}_${e.id}`);
                 const existe=await getDoc(ref);
@@ -3246,8 +3314,16 @@ body{background:#f5f8fd;color:var(--ui-ink)}
             const btn=document.getElementById('pensGuardarGlobal');edEstado(btn,true,'Guardar valor del mes');
             try{
                 const valor=Number(document.getElementById('pensValorGlobal').value);
-                if(!Number.isFinite(valor)||valor<=0)throw new Error('Ingresa un valor válido mayor que cero');
-                await setDoc(doc(db,'colegios',colegioId,'configuracion_pensiones',pensionConfigId()),{colegioId,mes:pensionMesSeleccionado(),anio:pensionAnioSeleccionado(),valor,actualizadoEn:serverTimestamp()});
+                const valoresPorGrado={};
+                document.querySelectorAll('#pensValoresGrado [data-grado-id]').forEach(el=>{
+                    if(el.value.trim()!==''){
+                        const v=Number(el.value);
+                        if(!Number.isFinite(v)||v<0)throw new Error('Revisa el valor de cada grado');
+                        if(v>0)valoresPorGrado[el.dataset.gradoId]=v;
+                    }
+                });
+                if((!Number.isFinite(valor)||valor<=0) && !Object.keys(valoresPorGrado).length) throw new Error('Indica un valor general o al menos un valor por grado');
+                await setDoc(doc(db,'colegios',colegioId,'configuracion_pensiones',pensionConfigId()),{colegioId,mes:pensionMesSeleccionado(),anio:pensionAnioSeleccionado(),valor:Number.isFinite(valor)&&valor>0?valor:0,valoresPorGrado,actualizadoEn:serverTimestamp()});
                 document.getElementById('pensConfigEstado').textContent='Valor mensual guardado. Ahora puedes generar las obligaciones.';
             }catch(e){document.getElementById('pensConfigEstado').textContent='Error: '+e.message;}
             finally{edEstado(btn,false,'Guardar valor del mes');}
@@ -3268,7 +3344,7 @@ body{background:#f5f8fd;color:var(--ui-ink)}
             try {
                 const [snap, estSnap] = await Promise.all([getDocs(collection(db, 'colegios', colegioId, 'pensiones')),getDocs(collection(db, 'colegios', colegioId, 'estudiantes'))]);
                 const estudiantesPorId = new Map(estSnap.docs.map(d=>[d.id,d.data()]));
-                if (snap.empty) { tbody.innerHTML = `<tr><td colspan="9" class="text-center text-muted">No hay obligaciones de pensión generadas. Los estudiantes sin obligación creada no aparecen automáticamente como deudores.</td></tr>`; return; }
+                if (snap.empty) { tbody.innerHTML = `<tr><td colspan="9" class="text-center text-muted">Aún no hay obligaciones registradas. Configura los valores y pulsa Generar obligaciones.</td></tr>`; filtrarPensionesEdu(); return; }
                 let html = '', i = 1;
                 for (const docSnap of snap.docs) {
                     const p = docSnap.data();
@@ -3886,10 +3962,11 @@ body{background:#f5f8fd;color:var(--ui-ink)}
         }
         function buscarContactosEdu(){
             const filtro=document.getElementById('chatBuscar')?.value.trim().toLocaleLowerCase('es') || '';
-            const resultados=chatPersonas.filter(u=>String(u.nombre || `${u.nombres||''} ${u.apellidos||''}`).toLocaleLowerCase('es').includes(filtro)).slice(0,40);
+            const resultados=(!filtro?[]:chatPersonas.filter(u=>String(u.nombre || `${u.nombres||''} ${u.apellidos||''}`).toLocaleLowerCase('es').includes(filtro)).slice(0,20));
             const host=document.getElementById('chatResultados');if(!host)return;
             host.replaceChildren();
             for(const u of resultados){host.append(eduBotonContacto(u));}
+            if(filtro && !resultados.length)host.textContent='No se encontraron usuarios con ese nombre.';
         }
         function eduBotonContacto(u) {
             const b=document.createElement('button');b.type='button';
@@ -3922,19 +3999,19 @@ body{background:#f5f8fd;color:var(--ui-ink)}
             },e=>{host.textContent='No se pudo cargar el historial: '+e.message;});
         }
         document.getElementById('chatBuscar')?.addEventListener('input',buscarContactosEdu);
+        document.getElementById('eduChatVolver')?.addEventListener('click',()=>{
+            document.getElementById('eduChatLayout')?.classList.remove('chat-abierto');
+        });
         async function seleccionarChatEdu(u){
             chatDestino=u;const uid=chatUid();if(!uid)return;
+            document.getElementById('eduChatLayout')?.classList.add('chat-abierto');
             const chatId=[uid,u.id].sort().join('_');
             document.getElementById('chatContacto').textContent=`${u.nombre||u.nombres||'Usuario'} · ${u.rol||'Usuario'}`;
             document.getElementById('chatTexto').disabled=false;document.getElementById('chatAdjunto').disabled=false;document.getElementById('chatEnviar').disabled=false;
             if(unsubscribeChat)unsubscribeChat();
             const hostMensajes=document.getElementById('chatMensajes');
             hostMensajes.textContent='Cargando conversación...';
-            try {
-                const parentRef=doc(db,'colegios',colegioId,'chats',chatId);
-                const existente=await getDoc(parentRef);
-                if(!existente.exists()) await setDoc(parentRef,{colegioId,participantes:[uid,u.id],actualizadoEn:serverTimestamp()});
-            } catch(err) { hostMensajes.textContent='No se pudo abrir el chat: '+err.message+'. Comprueba que los participantes tengan cuenta en Authentication y documento usuarios/{uid} del mismo colegio, y que las reglas de chats estén publicadas.'; return; }
+            // Abrir un chat no crea documentos vacíos; la conversación se registra al enviar el primer mensaje.
             if(chatDestino?.id!==u.id) return;
             const q=query(collection(db,'colegios',colegioId,'chats',chatId,'mensajes'),orderBy('creadoEn','asc'),limit(150));
             unsubscribeChat=onSnapshot(q,snap=>{
@@ -4014,14 +4091,26 @@ body{background:#f5f8fd;color:var(--ui-ink)}
                 return (!mes||mesFila===mes)&&(!anio||anioFila===anio)&&(estado==='todos'||(estado==='debe'?saldo>0:saldo===0));
             });const total=Math.max(1,Math.ceil(visibles.length/10));pensPaginaActual=Math.min(Math.max(1,pensPaginaActual),total);
             filas.forEach(tr=>tr.style.display='none');visibles.slice((pensPaginaActual-1)*10,pensPaginaActual*10).forEach(tr=>tr.style.display='');
-            document.getElementById('pensPaginaInfo').textContent=`Página ${pensPaginaActual} de ${total} · ${visibles.length} pensiones`;
+            document.getElementById('pensPaginaInfo').textContent=visibles.length
+                ?`Página ${pensPaginaActual} de ${total} · ${visibles.length} pensiones`
+                :`Sin obligaciones registradas para ${MESES[mes-1]||'el período'} ${anio||''}. Genera las obligaciones del mes si corresponde.`;
             document.getElementById('pensAnterior').disabled=pensPaginaActual===1;
             document.getElementById('pensSiguiente').disabled=pensPaginaActual===total;
         }
-        document.getElementById('pensAplicarFiltro')?.addEventListener('click',()=>{pensPaginaActual=1;filtrarPensionesEdu();});
+        document.getElementById('pensAplicarFiltro')?.addEventListener('click',async()=>{
+            pensPaginaActual=1;
+            await consultarValorPensionGlobal().catch(console.warn);
+            await cargarPensiones().catch(console.error);
+            filtrarPensionesEdu();
+        });
         document.getElementById('pensAnterior')?.addEventListener('click',()=>{pensPaginaActual--;filtrarPensionesEdu();});
         document.getElementById('pensSiguiente')?.addEventListener('click',()=>{pensPaginaActual++;filtrarPensionesEdu();});
         new MutationObserver(()=>{if(document.getElementById('tablaPensiones').children.length)filtrarPensionesEdu();}).observe(document.getElementById('tablaPensiones'),{childList:true});
+        // Validación amigable de documentos y teléfonos: la lógica de guardado valida nuevamente.
+        ['estDocumento','personalDocumento','estTelefono','estAcudienteTelefono','personalTelefono'].forEach(id=>{
+            const campo=document.getElementById(id);if(!campo)return;
+            campo.addEventListener('input',()=>{const limpio=campo.value.replace(/\D/g,'');if(campo.value!==limpio)campo.value=limpio;});
+        });
         // =============================================
         // AUTH
         // =============================================
