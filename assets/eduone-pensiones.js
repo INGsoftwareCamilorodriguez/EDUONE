@@ -55,13 +55,25 @@ let estudiantes = [];
 let cursos = new Map();
 let estSel = null;
 let pensionesEst = new Map();   // "anio-mes" -> { id, ...datos }
-let configValores = new Map();  // "AAAA-MM" -> valor
+let configValores = new Map();  // "AAAA-MM" -> { valor, valoresPorGrado }
+let gradoPorCurso = new Map();  // cursoId -> gradoId
+let matriculaPorEst = new Map(); // estudianteId -> matrícula vigente
 
+// Mismo orden que rectoría (colegio.html): valor individual del estudiante,
+// luego el valor de su grado en ese mes y por último el valor general del mes.
+function gradoDe(est) {
+    const m = matriculaPorEst.get(est.id);
+    return est.gradoId || m?.gradoId || gradoPorCurso.get(est.cursoId) || gradoPorCurso.get(m?.cursoId) || '';
+}
 function valorDelMes(est, anio, mes) {
     const p = pensionesEst.get(`${anio}-${mes}`);
     if (p) return Number(p.valorPension) || 0;
     const individual = Number(est.valorPension ?? est.pensionMensual ?? 0);
-    return individual > 0 ? individual : (configValores.get(idMes(anio, mes)) || 0);
+    if (individual > 0) return individual;
+    const conf = configValores.get(idMes(anio, mes));
+    if (!conf) return 0;
+    const porGrado = Number(conf.valoresPorGrado?.[gradoDe(est)] || 0);
+    return porGrado > 0 ? porGrado : (Number(conf.valor) || 0);
 }
 
 async function montar() {
@@ -97,13 +109,22 @@ async function montar() {
 
     // Datos base
     try {
-        const [e, cs, cfg] = await Promise.all([
+        const [e, cs, cfg, mats] = await Promise.all([
             getDocs(collection(c.db, 'colegios', c.colegioId, 'estudiantes')),
             getDocs(collection(c.db, 'colegios', c.colegioId, 'cursos')),
-            getDocs(collection(c.db, 'colegios', c.colegioId, 'configuracion_pensiones'))
+            getDocs(collection(c.db, 'colegios', c.colegioId, 'configuracion_pensiones')),
+            getDocs(collection(c.db, 'colegios', c.colegioId, 'matriculas'))
         ]);
         cursos = new Map(cs.docs.map(d => [d.id, d.data().nombre || '']));
-        configValores = new Map(cfg.docs.map(d => [d.id, Number(d.data().valor) || 0]));
+        gradoPorCurso = new Map(cs.docs.map(d => [d.id, d.data().gradoId || '']));
+        configValores = new Map(cfg.docs.map(d => [d.id, { valor: Number(d.data().valor) || 0, valoresPorGrado: d.data().valoresPorGrado || {} }]));
+        matriculaPorEst = new Map();
+        mats.forEach(d => {
+            const m = d.data();
+            if (!m.estudianteId || ['inactivo', 'retirado'].includes(m.estado)) return;
+            const actual = matriculaPorEst.get(m.estudianteId);
+            if (!actual || Number(m.anio || m.anioEscolar || 0) >= Number(actual.anio || actual.anioEscolar || 0)) matriculaPorEst.set(m.estudianteId, m);
+        });
         estudiantes = e.docs.map(d => ({ id: d.id, ...d.data() }))
             .filter(x => !['retirado', 'inactivo'].includes(x.estado) && x.activo !== false)
             .map(x => ({ ...x, nombreCompleto: `${x.nombres || ''} ${x.apellidos || ''}`.trim() || 'Estudiante' }))

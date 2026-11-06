@@ -730,8 +730,12 @@ service cloud.firestore {
           mismoColegio(colegioId) &&
           request.auth.uid in
             resource.data.get('participantes', []) &&
-          request.resource.data.participantes ==
-            resource.data.participantes &&
+          // Los mismos dos participantes (el orden puede variar:
+          // algunos paneles los guardan [yo, otro] y otros ordenados)
+          request.resource.data.participantes is list &&
+          request.resource.data.participantes.size() == 2 &&
+          request.resource.data.participantes.toSet() ==
+            resource.data.participantes.toSet() &&
           request.resource.data.colegioId ==
             colegioId;
 

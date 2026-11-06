@@ -359,10 +359,19 @@
             border-radius: 4px; cursor: pointer; position: relative; transition: all 0.2s;
         }
         .legal-consent input[type="checkbox"]:checked { background: var(--cyan); border-color: var(--cyan); }
-        .legal-consent input[type="checkbox"]:checked::after {
-            content: '00c'; font-family: 'Font Awesome 6 Free'; font-weight: 900; font-size: 11px; color: #000;
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-        }
+        
+.legal-consent input[type="checkbox"]:checked::after {
+    content: "\f00c";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    font-size: 11px;
+    color: #000;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
         .legal-consent input[type="checkbox"]:focus-visible { outline: 2px solid var(--cyan-light); outline-offset: 2px; }
         .legal-consent.con-error input[type="checkbox"]:not(:checked) { border-color: #f87171; box-shadow: 0 0 0 3px rgba(248,113,113,.18); }
 
