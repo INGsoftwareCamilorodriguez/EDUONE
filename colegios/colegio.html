@@ -346,9 +346,10 @@ body{background:#f5f8fd;color:var(--ui-ink)}
 </style>
     <link rel="stylesheet" href="../assets/responsive.css?v=20261103" />
     <script src="../assets/responsive.js?v=20261103" defer></script>
-    <link rel="stylesheet" href="../assets/eduone-ui.css?v=20261105" />
-    <script type="module" src="../assets/eduone-ui.js?v=20261105"></script>
-    <script src="../assets/eduone-validacion.js?v=20261105" defer></script>
+    <link rel="stylesheet" href="../assets/eduone-ui.css?v=20261107" />
+    <link rel="stylesheet" href="../assets/eduone-encabezado.css?v=20261107" />
+    <script type="module" src="../assets/eduone-ui.js?v=20261107"></script>
+    <script src="../assets/eduone-validacion.js?v=20261107" defer></script>
 </head>
 <body>
 
@@ -3266,7 +3267,7 @@ body{background:#f5f8fd;color:var(--ui-ink)}
                 const fila=document.createElement('label');fila.className='edu-grado-tarifa';
                 const nombre=document.createElement('span');nombre.textContent=g.nombre||'Grado';
                 const input=document.createElement('input');input.type='number';input.min='0';input.step='1';
-                input.className='form-control';input.dataset.gradoId=g.id;
+                input.className='form-control edu-monto';input.dataset.gradoId=g.id;
                 input.placeholder='Usar valor general';input.value=conf.valoresPorGrado?.[g.id] ?? '';
                 fila.append(nombre,input);host.append(fila);
             }
@@ -4225,7 +4226,7 @@ body{background:#f5f8fd;color:var(--ui-ink)}
             portada.style.setProperty('--inicio-foto',foto && /^https:\/\//i.test(foto) ? `url("${foto.replace(/["\\]/g,'')}")` : 'none');
             const logo=document.getElementById('inicioLogoBox');
             logo.replaceChildren();
-            if(data.logoUrl && /^https:\/\//i.test(data.logoUrl)) {
+            if(data.logoUrl && (/^https:\/\//i.test(data.logoUrl) || /^data:image\//i.test(data.logoUrl))) {
                 const img=document.createElement('img'); img.alt='Logo del colegio'; img.src=data.logoUrl;
                 img.onerror=()=>{logo.textContent='🏫'}; logo.append(img);
             } else {const i=document.createElement('i');i.className='fas fa-school';logo.append(i)}
@@ -4278,7 +4279,10 @@ body{background:#f5f8fd;color:var(--ui-ink)}
 
         console.log('✅ EduOne - Panel del Rector cargado correctamente');
     </script>
-    <script type="module" src="../assets/eduone-comun.js?v=20261105"></script>
-    <script type="module" src="../assets/eduone-orientacion.js?v=20261105"></script>
+    <script type="module" src="../assets/eduone-comun.js?v=20261107"></script>
+    <script type="module" src="../assets/eduone-orientacion.js?v=20261107"></script>
+    <script type="module" src="../assets/eduone-pensiones.js?v=20261107"></script>
+    <script type="module" src="../assets/eduone-registros.js?v=20261107"></script>
+    <script type="module" src="../assets/eduone-familia.js?v=20261107"></script>
 </body>
 </html>

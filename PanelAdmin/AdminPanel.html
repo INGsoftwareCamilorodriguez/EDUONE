@@ -389,11 +389,11 @@
     </style>
     <link rel="stylesheet" href="../assets/responsive.css?v=20261103" />
     <script src="../assets/responsive.js?v=20261103" defer></script>
-    <link rel="stylesheet" href="../assets/eduone-ui.css?v=20261105" />
-    <script type="module" src="../assets/eduone-ui.js?v=20261105"></script>
+    <link rel="stylesheet" href="../assets/eduone-ui.css?v=20261107" />
+    <script type="module" src="../assets/eduone-ui.js?v=20261107"></script>
     <!-- SheetJS para leer archivos Excel -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    <script src="../assets/eduone-validacion.js?v=20261105" defer></script>
+    <script src="../assets/eduone-validacion.js?v=20261107" defer></script>
 </head>
 <body>
 
@@ -1649,23 +1649,47 @@
             } else credencialesBox.classList.remove('show');
         }
 
+        // Reduce la imagen (lado mayor = maxLado) y la devuelve como Blob y como data URL.
+        async function reducirImagen(file, maxLado, calidad = 0.9) {
+            const url = URL.createObjectURL(file);
+            try {
+                const img = await new Promise((ok, mal) => { const i = new Image(); i.onload = () => ok(i); i.onerror = () => mal(new Error('La imagen no se pudo leer')); i.src = url; });
+                const escala = Math.min(1, maxLado / Math.max(img.naturalWidth, img.naturalHeight));
+                const canvas = document.createElement('canvas');
+                canvas.width = Math.max(1, Math.round(img.naturalWidth * escala));
+                canvas.height = Math.max(1, Math.round(img.naturalHeight * escala));
+                canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+                const tipo = 'image/webp';
+                const blob = await new Promise(ok => canvas.toBlob(ok, tipo, calidad));
+                return { blob, dataUrl: canvas.toDataURL(tipo, calidad), tipo };
+            } finally { URL.revokeObjectURL(url); }
+        }
+
+        // Sube el logo del colegio. Si Storage no lo permite (reglas sin desplegar,
+        // storage/unauthorized), el logo se guarda reducido dentro del documento del
+        // colegio para que el cambio no falle. Todos los paneles lo toman en vivo.
         async function subirLogo(colegioId, file) {
-            return new Promise((resolve) => {
-                const nombreLimpio = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
-                const ruta = `colegios/${colegioId}/logo/${Date.now()}_${nombreLimpio}`;
-                const storageRef = ref(storage, ruta);
-                const task = uploadBytesResumable(storageRef, file);
-                task.on('state_changed',
-                    null,
-                    (error) => resolve({ success: false, error: error.message }),
-                    async () => {
-                        try {
-                            const url = await getDownloadURL(storageRef);
-                            resolve({ success: true, url, path: ruta });
-                        } catch (e) { resolve({ success: false, error: e.message }); }
-                    }
-                );
-            });
+            if (!/^image\/(png|jpe?g|webp|gif|svg\+xml)$/i.test(file.type)) return { success: false, error: 'Usa una imagen PNG, JPG o WebP' };
+            let reducido = null;
+            try { reducido = await reducirImagen(file, 512); } catch (e) { console.warn('Logo sin reducir:', e.message); }
+            const subir = reducido?.blob || file;
+            const tipo = reducido?.blob ? reducido.tipo : file.type;
+            const ruta = `colegios/${colegioId}/logo/logo_${Date.now()}.${tipo.split('/')[1].replace('svg+xml', 'svg').replace('jpeg', 'jpg')}`;
+            const storageRef = ref(storage, ruta);
+            try {
+                await new Promise((ok, mal) => uploadBytesResumable(storageRef, subir, { contentType: tipo, cacheControl: 'public,max-age=31536000' }).on('state_changed', null, mal, ok));
+                const url = await getDownloadURL(storageRef);
+                return { success: true, url, path: ruta };
+            } catch (error) {
+                console.warn('Logo en Storage no permitido, se guarda en el colegio:', error.code || error.message);
+                try {
+                    const pequeno = await reducirImagen(file, 256, 0.85);
+                    if (pequeno.dataUrl.length > 300000) throw new Error('El logo es muy pesado incluso reducido');
+                    return { success: true, url: pequeno.dataUrl, path: '', enDocumento: true };
+                } catch (e2) {
+                    return { success: false, error: (error.code || error.message) + ' / ' + e2.message };
+                }
+            }
         }
 
         // =============================================

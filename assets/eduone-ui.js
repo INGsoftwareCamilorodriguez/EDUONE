@@ -519,6 +519,7 @@ async function vigilarTemaColegio(user) {
             const datos = snap.data();
             aplicarTemaColegio(datos);
             guardarTema(datos);
+            window.__eduColegioDatos = datos;
             document.dispatchEvent(new CustomEvent('eduone:colegio', { detail: { id: colegioId, datos, primeraVez } }));
             const color = (datos.colorPrimario || '') + (datos.colorSecundario || '');
             if (!primeraVez && color !== colorAnterior) toast('Se actualizaron los colores del colegio', 'info', 3000);
@@ -541,6 +542,12 @@ if (temaInicial) aplicarTemaColegio(temaInicial);
 function iniciar() {
     aplicarLogo();
     agregarBotonSalir();
+    // Encabezado común (logo + nombre del colegio) solo en paneles de colegio
+    if (esPanelColegio) import('./eduone-encabezado.js?v=20261107').catch(e => console.warn('EduOne encabezado:', e));
+    // Filtros con el mismo diseño y buscador en todas las tablas con datos
+    if (esPanelColegio) import('./eduone-filtros.js?v=20261107').catch(e => console.warn('EduOne filtros:', e));
+    // Un mismo envío no se procesa dos veces (dos clics, dos pestañas o dos dispositivos)
+    import('./eduone-envio-unico.js?v=20261107').catch(e => console.warn('EduOne envío único:', e));
     buscarCamposEmoji();
     let pendiente = false;
     new MutationObserver(() => {

@@ -13,8 +13,8 @@ import {
     collection, doc, getDoc, getDocs, setDoc, addDoc, updateDoc, deleteDoc,
     query, where, onSnapshot, serverTimestamp
 } from 'https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js';
-import { obtenerContexto, notificarFamilia, nombreDe, uidDe, ROL_LABEL, esc } from './eduone-comun.js?v=20261105';
-import { el, agregarEstilos, agregarSeccion, marcarSeccion } from './eduone-secciones.js?v=20261105';
+import { obtenerContexto, notificarFamilia, nombreDe, uidDe, ROL_LABEL, esc } from './eduone-comun.js?v=20261107';
+import { el, agregarEstilos, agregarSeccion, marcarSeccion } from './eduone-secciones.js?v=20261107';
 
 // ---------------------------------------------------------------------
 // Utilidades de fechas (hora local del colegio)
@@ -272,13 +272,13 @@ export function chipEstado(estado) {
 // ---------------------------------------------------------------------
 // Sección "Orientación escolar" para los demás roles
 // ---------------------------------------------------------------------
-const ROLES_AGENDAN = ['profesor', 'coord_academico', 'coord_convivencia', 'contador', 'rector', 'admin_colegio', 'admin_auxiliar', 'secretaria'];
+const ROLES_AGENDAN = ['profesor', 'coord_academico', 'coord_convivencia', 'contador', 'rector', 'admin_colegio', 'admin_auxiliar', 'secretaria', 'estudiante'];
 const ROLES_REMITEN_ESTUDIANTE = { coord_academico: 'academico', coord_convivencia: 'convivencia', rector: 'rectoria', admin_colegio: 'rectoria' };
 
 async function montarSeccionAgendar() {
     const c = await obtenerContexto();
     if (!ROLES_AGENDAN.includes(c.rol) || !c.colegioId) return;
-    const seccion = agregarSeccion({ id: 'orientacion', icono: 'fas fa-brain', texto: 'Orientación escolar', grupo: 'COMUNICACIÓN', titulo: 'Citas con Orientación escolar' });
+    const seccion = agregarSeccion({ id: 'orientacion', icono: 'fas fa-brain', texto: 'Orientación escolar', grupo: 'COMUNICACIÓN', titulo: 'Citas con Orientación escolar', principal: true });
     if (!seccion) return;
     agregarEstilos('eduOrientacionCss', CSS_ORIENTACION);
     const puedeRemitir = !!ROLES_REMITEN_ESTUDIANTE[c.rol];

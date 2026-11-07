@@ -618,11 +618,12 @@
     </style>
     <link rel="stylesheet" href="../assets/responsive.css?v=20261103" />
     <script src="../assets/responsive.js?v=20261103" defer></script>
-    <link rel="stylesheet" href="../assets/eduone-ui.css?v=20261105" />
-    <link rel="stylesheet" href="../assets/eduone-panel.css?v=20261105" />
-    <script src="../assets/eduone-panel.js?v=20261105" defer></script>
-    <script type="module" src="../assets/eduone-ui.js?v=20261105"></script>
-    <script src="../assets/eduone-validacion.js?v=20261105" defer></script>
+    <link rel="stylesheet" href="../assets/eduone-ui.css?v=20261107" />
+    <link rel="stylesheet" href="../assets/eduone-encabezado.css?v=20261107" />
+    <link rel="stylesheet" href="../assets/eduone-panel.css?v=20261107" />
+    <script src="../assets/eduone-panel.js?v=20261107" defer></script>
+    <script type="module" src="../assets/eduone-ui.js?v=20261107"></script>
+    <script src="../assets/eduone-validacion.js?v=20261107" defer></script>
 </head>
 <body class="edu-panel2026">
 
@@ -1144,7 +1145,7 @@
         let usuarioActual = null;
 
         // Avisos automáticos (estudiante + acudiente) y mensajes por chat
-        const eduComun = () => import('../assets/eduone-comun.js?v=20261105');
+        const eduComun = () => import('../assets/eduone-comun.js?v=20261107');
         async function avisarFamilia(estudianteId, titulo, mensaje, tipo = 'convivencia') {
             try { await (await eduComun()).notificarFamilia(estudianteId, titulo, mensaje, tipo); return true; }
             catch (e) { console.warn('No se pudo avisar a la familia:', e); return false; }
@@ -1365,52 +1366,88 @@
         // =============================================
         // ESTUDIANTES (consulta)
         // =============================================
+        // Se cargan todos los datos una sola vez (en paralelo) y el filtro de
+        // grado / curso se aplica en el navegador. Antes cada cambio de filtro
+        // lanzaba una consulta nueva y una carga lenta anterior podía pisar el
+        // resultado (se veían estudiantes de otros cursos).
+        let consultaEst = { grados: {}, cursos: {}, gradoDeCurso: {}, filas: [] };
+        let filtrosEstListos = false;
+        const escEst = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
         async function cargarEstudiantes() {
-            await cargarFiltros('estGrado', 'estCurso', null);
-            document.getElementById('estCurso').addEventListener('change', pintarEstudiantesPorFiltro);
-            await pintarEstudiantes();
-        }
-        async function pintarEstudiantesPorFiltro() {
-            await pintarEstudiantes(document.getElementById('estCurso').value);
-        }
-        async function pintarEstudiantes(cursoIdFiltro) {
             const tbody = document.getElementById('tablaEstudiantes');
             tbody.innerHTML = `<tr><td colspan="6" class="text-center text-muted"><i class="fas fa-spinner fa-spin"></i> Cargando...</td></tr>`;
             try {
-                const cursosSnap = await getDocs(collection(db, 'colegios', colegioId, 'cursos'));
-                const cursos = {};
-                cursosSnap.forEach(d => cursos[d.id] = d.data().nombre || 'Curso');
-
-                let matSnap;
-                if (cursoIdFiltro) {
-                    matSnap = await getDocs(query(collection(db, 'colegios', colegioId, 'matriculas'), where('cursoId', '==', cursoIdFiltro), where('estado', '==', 'activo')));
-                } else {
-                    matSnap = await getDocs(query(collection(db, 'colegios', colegioId, 'matriculas'), where('estado', '==', 'activo')));
-                }
-                if (matSnap.empty) {
-                    tbody.innerHTML = `<tr><td colspan="6" class="text-center text-muted">No hay estudiantes matriculados</td></tr>`;
-                    return;
-                }
-                let html = '';
-                let i = 1;
-                for (const mDoc of matSnap.docs) {
+                const [gradosSnap, cursosSnap, matSnap, estSnap] = await Promise.all([
+                    getDocs(collection(db, 'colegios', colegioId, 'grados')),
+                    getDocs(collection(db, 'colegios', colegioId, 'cursos')),
+                    getDocs(query(collection(db, 'colegios', colegioId, 'matriculas'), where('estado', '==', 'activo'))),
+                    getDocs(collection(db, 'colegios', colegioId, 'estudiantes'))
+                ]);
+                const grados = {}, cursos = {}, gradoDeCurso = {};
+                gradosSnap.forEach(d => { grados[d.id] = d.data().nombre || 'Grado'; });
+                cursosSnap.forEach(d => { cursos[d.id] = d.data().nombre || 'Curso'; gradoDeCurso[d.id] = d.data().gradoId || ''; });
+                const estudiantes = new Map(estSnap.docs.map(d => [d.id, d.data()]));
+                const vistos = new Set();
+                const filas = [];
+                matSnap.forEach(mDoc => {
                     const m = mDoc.data();
-                    const estDoc = await getDoc(doc(db, 'colegios', colegioId, 'estudiantes', m.estudianteId));
-                    if (!estDoc.exists()) continue;
-                    const e = estDoc.data();
-                    html += `<tr>
-                        <td>${i++}</td>
-                        <td>${e.nombres || ''} ${e.apellidos || ''}</td>
-                        <td>${e.documento || '-'}</td>
-                        <td>${cursos[m.cursoId] || '-'}</td>
-                        <td>${e.acudienteNombre || '-'}</td>
-                        <td>${e.acudienteTelefono || '-'}</td>
-                    </tr>`;
+                    const e = estudiantes.get(m.estudianteId);
+                    if (!e || vistos.has(m.estudianteId)) return;
+                    vistos.add(m.estudianteId);
+                    const cursoId = m.cursoId || e.cursoId || '';
+                    filas.push({
+                        nombre: `${e.nombres || ''} ${e.apellidos || ''}`.trim() || 'Estudiante',
+                        documento: e.documento || '-', cursoId,
+                        gradoId: m.gradoId || e.gradoId || gradoDeCurso[cursoId] || '',
+                        acudiente: e.acudiente || e.acudienteNombre || '-',
+                        telefono: e.acudienteTelefono || '-'
+                    });
+                });
+                filas.sort((a, b) => a.nombre.localeCompare(b.nombre, 'es'));
+                consultaEst = { grados, cursos, gradoDeCurso, filas };
+
+                const gradoSel = document.getElementById('estGrado');
+                const cursoSel = document.getElementById('estCurso');
+                const gradoActual = gradoSel.value, cursoActual = cursoSel.value;
+                gradoSel.innerHTML = '<option value="">Todos los grados</option>' +
+                    Object.entries(grados).sort((a, b) => a[1].localeCompare(b[1], 'es', { numeric: true }))
+                        .map(([id, n]) => `<option value="${escEst(id)}">${escEst(n)}</option>`).join('');
+                gradoSel.value = grados[gradoActual] ? gradoActual : '';
+                llenarCursosEst(cursoActual);
+                if (!filtrosEstListos) {
+                    filtrosEstListos = true;
+                    gradoSel.addEventListener('change', () => { llenarCursosEst(''); pintarEstudiantes(); });
+                    cursoSel.addEventListener('change', pintarEstudiantes);
                 }
-                tbody.innerHTML = html || `<tr><td colspan="6" class="text-center text-muted">No hay estudiantes</td></tr>`;
+                pintarEstudiantes();
             } catch (e) {
-                tbody.innerHTML = `<tr><td colspan="6" class="text-center text-danger">Error: ${e.message}</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="6" class="text-center text-danger">Error: ${escEst(e.message)}</td></tr>`;
             }
+        }
+        function llenarCursosEst(seleccion) {
+            const gradoId = document.getElementById('estGrado').value;
+            const cursoSel = document.getElementById('estCurso');
+            const { cursos, gradoDeCurso } = consultaEst;
+            const lista = Object.entries(cursos).filter(([id]) => !gradoId || gradoDeCurso[id] === gradoId)
+                .sort((a, b) => a[1].localeCompare(b[1], 'es', { numeric: true }));
+            cursoSel.innerHTML = '<option value="">Todos los cursos</option>' + lista.map(([id, n]) => `<option value="${escEst(id)}">${escEst(n)}</option>`).join('');
+            cursoSel.value = lista.some(([id]) => id === seleccion) ? seleccion : '';
+        }
+        function pintarEstudiantes() {
+            const tbody = document.getElementById('tablaEstudiantes');
+            const gradoId = document.getElementById('estGrado').value;
+            const cursoId = document.getElementById('estCurso').value;
+            const filas = consultaEst.filas.filter(f => (!gradoId || f.gradoId === gradoId) && (!cursoId || f.cursoId === cursoId));
+            tbody.innerHTML = filas.length
+                ? filas.map((f, i) => `<tr>
+                        <td>${i + 1}</td>
+                        <td>${escEst(f.nombre)}</td>
+                        <td>${escEst(f.documento)}</td>
+                        <td>${escEst(consultaEst.cursos[f.cursoId] || '-')}</td>
+                        <td>${escEst(f.acudiente)}</td>
+                        <td>${escEst(f.telefono)}</td>
+                    </tr>`).join('')
+                : `<tr><td colspan="6" class="text-center text-muted">No hay estudiantes ${cursoId || gradoId ? 'con ese filtro' : 'matriculados'}</td></tr>`;
         }
 
         // =============================================
@@ -2087,7 +2124,7 @@
         console.log('✅ EduOne - Panel de Coordinación de Convivencia cargado');
     </script>
 
-    <script type="module" src="../assets/eduone-chat.js?v=20261105"></script>
-    <script type="module" src="../assets/eduone-orientacion.js?v=20261105"></script>
+    <script type="module" src="../assets/eduone-chat.js?v=20261107"></script>
+    <script type="module" src="../assets/eduone-orientacion.js?v=20261107"></script>
 </body>
 </html>

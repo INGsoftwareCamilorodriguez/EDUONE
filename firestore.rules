@@ -546,10 +546,10 @@ service cloud.firestore {
           rol() == 'orientador';
       }
 
-      // Quién puede pedir citas: personal del colegio y contador
+      // Quién puede pedir citas: personal del colegio, contador y estudiantes
       function puedeAgendarOrientacion() {
         return personalColegio() ||
-          (mismoColegio(colegioId) && contador());
+          (mismoColegio(colegioId) && (contador() || estudiante()));
       }
 
       // Horario de atención semanal de cada orientador(a).
@@ -912,63 +912,165 @@ service cloud.firestore {
           );
       }
 
+      // La secretaría maneja los cobros y pagos (también rectoría).
+      // El contador solo consulta y verifica: no registra pagos.
+      function cobrador() {
+        return superadmin() ||
+          (
+            mismoColegio(colegioId) &&
+            rol() in ['secretaria', 'rector', 'admin_colegio', 'admin_auxiliar']
+          );
+      }
+
+      function directivoColegio() {
+        return superadmin() ||
+          (
+            mismoColegio(colegioId) &&
+            rol() in ['rector', 'admin_colegio']
+          );
+      }
+
       match /pensiones/{pensionId} {
         allow read: if superadmin() ||
           mismoColegio(colegioId);
 
-        allow write: if superadmin() ||
-          (
-            mismoColegio(colegioId) &&
-            (
-              administrador() ||
-              contador()
-            )
-          );
+        allow write: if cobrador() ||
+          (mismoColegio(colegioId) && administrador());
       }
 
       match /pagos_pensiones/{pagoId} {
         allow read: if superadmin() ||
           mismoColegio(colegioId);
 
-        allow write: if superadmin() ||
-          (
-            mismoColegio(colegioId) &&
-            (
-              administrador() ||
-              contador()
-            )
-          );
+        allow create: if cobrador();
+        allow update, delete: if directivoColegio();
       }
 
       match /pagos_matriculas/{pagoId} {
         allow read: if superadmin() ||
           mismoColegio(colegioId);
 
-        allow write: if superadmin() ||
+        allow create: if cobrador();
+        allow update, delete: if directivoColegio();
+      }
+
+      // Política de cobro (pensión del mes de ingreso, día límite,
+      // meses de cobro) y habilitación de boletines por periodo.
+      match /configuracion_cobros/{configId} {
+        allow read: if superadmin() ||
+          mismoColegio(colegioId);
+
+        allow write: if directivoColegio();
+      }
+
+      // Cobro automático del mes: un solo documento por mes.
+      match /cobros_mensuales/{mesId} {
+        allow read: if cobrador() ||
+          (mismoColegio(colegioId) && contador());
+
+        allow create, update: if cobrador() &&
+          request.resource.data.colegioId == colegioId;
+
+        allow delete: if false;
+      }
+
+      // Recordatorio de pago: uno por estudiante y por día
+      // (id = estudianteId_AAAA-MM-DD; no se puede repetir ni modificar).
+      match /recordatorios_pago/{recordatorioId} {
+        allow read: if cobrador() ||
+          (mismoColegio(colegioId) && contador());
+
+        allow create: if cobrador() &&
+          request.resource.data.por == request.auth.uid &&
+          recordatorioId == request.resource.data.estudianteId + '_' + request.resource.data.fecha;
+
+        allow update, delete: if false;
+      }
+
+      // Eventos de pago (jean day, feria...) y lo que paga cada estudiante
+      match /eventos_cobro/{eventoId} {
+        allow read: if superadmin() ||
+          mismoColegio(colegioId);
+
+        allow create, update: if cobrador();
+        allow delete: if directivoColegio();
+      }
+
+      match /cargos_eventos/{cargoId} {
+        allow read: if superadmin() ||
+          mismoColegio(colegioId);
+
+        allow write: if cobrador();
+      }
+
+      match /pagos_eventos/{pagoId} {
+        allow read: if superadmin() ||
+          mismoColegio(colegioId);
+
+        allow create: if cobrador();
+        allow update, delete: if directivoColegio();
+      }
+
+      // Estudiantes nuevos registrados por secretaría: rectoría les
+      // asigna correo y contraseña.
+      match /solicitudes_registro/{solicitudId} {
+        allow read: if cobrador();
+
+        allow create: if cobrador() &&
+          request.resource.data.estado == 'pendiente' &&
+          request.resource.data.creadoPor == request.auth.uid &&
+          request.resource.data.colegioId == colegioId;
+
+        allow update: if directivoColegio() ||
           (
-            mismoColegio(colegioId) &&
-            (
-              administrador() ||
-              contador()
-            )
+            cobrador() &&
+            resource.data.get('estado', '') == 'rechazada' &&
+            request.resource.data.estado == 'pendiente' &&
+            request.resource.data.creadoPor == request.auth.uid
           );
+
+        allow delete: if false;
       }
 
       // ========================================
       // CONTABILIDAD
       // ========================================
 
+      // Los ingresos por pensión, matrícula y eventos los genera
+      // secretaría al registrar el pago; el contador registra egresos
+      // y otros ingresos del colegio.
+      function movimientoDePago(datos) {
+        return datos.get('tipo', '') == 'ingreso' &&
+          datos.get('categoria', '') in ['Pensión', 'Matrícula', 'Evento'];
+      }
+
       match /movimientos/{movId} {
         allow read: if superadmin() ||
           mismoColegio(colegioId);
 
-        allow write: if superadmin() ||
+        allow create: if superadmin() ||
+          (mismoColegio(colegioId) && administrador()) ||
           (
             mismoColegio(colegioId) &&
-            (
-              administrador() ||
-              contador()
-            )
+            contador() &&
+            !movimientoDePago(request.resource.data)
+          );
+
+        allow update: if superadmin() ||
+          (mismoColegio(colegioId) && administrador()) ||
+          (
+            mismoColegio(colegioId) &&
+            contador() &&
+            !movimientoDePago(resource.data) &&
+            !movimientoDePago(request.resource.data)
+          );
+
+        allow delete: if superadmin() ||
+          (mismoColegio(colegioId) && administrador()) ||
+          (
+            mismoColegio(colegioId) &&
+            contador() &&
+            !movimientoDePago(resource.data)
           );
       }
 
@@ -1001,6 +1103,33 @@ service cloud.firestore {
 
     match /movimientos/{movId} {
       allow read, write: if superadmin();
+    }
+
+    // ==========================================
+    // ENVÍO ÚNICO (assets/eduone-envio-unico.js)
+    // Candado por contenido: el mismo envío del mismo usuario solo
+    // se acepta una vez cada 20 segundos, aunque llegue desde dos
+    // pestañas o dos dispositivos al mismo tiempo.
+    // ==========================================
+
+    match /envios/{envioId} {
+
+      allow get: if autenticado() &&
+        resource.data.uid == request.auth.uid;
+
+      allow create: if autenticado() &&
+        request.resource.data.keys().hasOnly(['uid', 'en', 'ruta']) &&
+        request.resource.data.uid == request.auth.uid &&
+        request.resource.data.en == request.time;
+
+      allow update: if autenticado() &&
+        resource.data.uid == request.auth.uid &&
+        request.resource.data.keys().hasOnly(['uid', 'en', 'ruta']) &&
+        request.resource.data.uid == request.auth.uid &&
+        request.resource.data.en == request.time &&
+        request.time > resource.data.en + duration.value(20, 's');
+
+      allow list, delete: if false;
     }
 
     // ==========================================

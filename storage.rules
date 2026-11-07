@@ -1,0 +1,118 @@
+rules_version = '2';
+
+// =====================================================================
+// EduOne - Reglas de Firebase Storage
+// Cubre todas las rutas que usan los paneles. Se despliegan con:
+//   firebase deploy --only storage
+// La primera vez Firebase pide autorizar que Storage lea Firestore
+// (para conocer el rol y el colegio del usuario): acéptalo.
+// =====================================================================
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    function autenticado() {
+      return request.auth != null;
+    }
+
+    function perfil() {
+      return firestore.get(/databases/(default)/documents/usuarios/$(request.auth.uid)).data;
+    }
+
+    function rol() {
+      return perfil().get('rol', '');
+    }
+
+    function superadmin() {
+      return autenticado() && rol() == 'superadmin';
+    }
+
+    function delColegio(cid) {
+      return autenticado() && (superadmin() || perfil().get('colegioId', '') == cid);
+    }
+
+    function directivo(cid) {
+      return superadmin() ||
+        (delColegio(cid) && rol() in ['rector', 'admin_colegio', 'admin_auxiliar']);
+    }
+
+    function docente(cid) {
+      return superadmin() ||
+        (delColegio(cid) && rol() in ['profesor', 'rector', 'admin_colegio', 'admin_auxiliar', 'coord_academico']);
+    }
+
+    function imagen(maxMb) {
+      return request.resource.size < maxMb * 1024 * 1024 &&
+        request.resource.contentType.matches('image/.*');
+    }
+
+    function archivo(maxMb) {
+      return request.resource.size < maxMb * 1024 * 1024;
+    }
+
+    // Logo del colegio (panel del desarrollador; también el rector)
+    match /colegios/{cid}/logo/{ruta=**} {
+      allow read: if delColegio(cid);
+      allow create, update: if directivo(cid) && imagen(5);
+      allow delete: if directivo(cid);
+    }
+
+    // Fotografía de portada del colegio (rector)
+    match /colegios/{cid}/portada/{ruta=**} {
+      allow read: if delColegio(cid);
+      allow create, update: if directivo(cid) && imagen(5);
+      allow delete: if directivo(cid);
+    }
+
+    // Fotos de perfil
+    match /colegios/{cid}/perfiles/{ruta=**} {
+      allow read: if delColegio(cid);
+      allow create, update: if delColegio(cid) && imagen(5);
+      allow delete: if delColegio(cid);
+    }
+
+    // Adjuntos del chat (cada usuario escribe solo en su carpeta)
+    match /colegios/{cid}/chat/{uid}/{ruta=**} {
+      allow read: if delColegio(cid);
+      allow create, update: if delColegio(cid) && request.auth.uid == uid && archivo(10);
+      allow delete: if delColegio(cid) && request.auth.uid == uid;
+    }
+
+    match /colegios/{cid}/chats/{chatId}/{uid}/{ruta=**} {
+      allow read: if delColegio(cid);
+      allow create, update: if delColegio(cid) && request.auth.uid == uid && archivo(10);
+      allow delete: if delColegio(cid) && request.auth.uid == uid;
+    }
+
+    // Adjuntos de comunicados
+    match /colegios/{cid}/comunicados/{uid}/{ruta=**} {
+      allow read: if delColegio(cid);
+      allow create, update: if delColegio(cid) && request.auth.uid == uid && archivo(10);
+      allow delete: if delColegio(cid) && request.auth.uid == uid;
+    }
+
+    // Entregas de tareas de los estudiantes
+    match /entregas/{cid}/{ruta=**} {
+      allow read: if delColegio(cid);
+      allow create, update: if delColegio(cid) && archivo(25);
+      allow delete: if delColegio(cid);
+    }
+
+    // Material de actividades y evaluaciones (profesores)
+    match /actividades/{cid}/{ruta=**} {
+      allow read: if delColegio(cid);
+      allow create, update: if docente(cid) && archivo(25);
+      allow delete: if docente(cid);
+    }
+
+    match /evaluaciones/{cid}/{ruta=**} {
+      allow read: if delColegio(cid);
+      allow create, update: if docente(cid) && archivo(10);
+      allow delete: if docente(cid);
+    }
+
+    // Todo lo demás: cerrado
+    match /{ruta=**} {
+      allow read, write: if false;
+    }
+  }
+}

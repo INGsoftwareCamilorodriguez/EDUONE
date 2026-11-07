@@ -75,16 +75,104 @@
             mensaje: 'Escribe un correo válido, por ejemplo nombre@dominio.com.'
         },
         monto: {
-            detectar: el => el.type === 'number' && /monto|valor|abono|precio|pago|pension|matricula/i.test(el.id + ' ' + el.name) && !/anio|año|porcentaje|orden/i.test(el.id),
-            preparar(el) {
-                if (el.min === '') el.min = '0';
-                el.inputMode = 'numeric';
-                if (!el.step || el.step === 'any') el.step = '1';
-            },
+            // Dinero: el campo pasa a ser de texto con formato colombiano (450.000),
+            // pero el código del panel sigue leyendo .value como número ("450000").
+            detectar: el => !!el.dataset.eduMonto || el.classList.contains('edu-monto') ||
+                (el.type === 'number' && /monto|valor|abono|precio|pago|pension|matricula|saldo|costo|cobro|tarifa/i.test(el.id + ' ' + el.name) &&
+                    !/anio|año|porcentaje|orden|nota|pregunta|puntaje|tiempo|peso|cantidad|dia/i.test(el.id + ' ' + el.name)),
+            preparar: el => convertirMonto(el),
             limpiar: v => v,
-            mensaje: 'Escribe un valor numérico mayor o igual a cero.'
+            mensaje: 'Escribe un valor válido, solo números (por ejemplo 450.000).'
         }
     };
+
+    // -----------------------------------------------------------------
+    // Dinero (COP): lee "450.000", "450,000", "450000", "450.000,50"...
+    // -----------------------------------------------------------------
+    const gruposMiles = (s, sep) => { const g = s.split(sep); return /^\d{1,3}$/.test(g[0]) && g.slice(1).every(x => /^\d{3}$/.test(x)); };
+    /** Devuelve el número, null si está vacío o NaN si el formato no es válido. */
+    function parsearMonto(texto) {
+        if (typeof texto === 'number') return Number.isFinite(texto) ? texto : NaN;
+        const s = String(texto ?? '').replace(/\s/g, '').replace(/^\$/, '').replace(/cop$/i, '');
+        if (s === '') return null;
+        if (!/^[0-9.,]+$/.test(s)) return NaN;
+        const puntos = (s.match(/\./g) || []).length, comas = (s.match(/,/g) || []).length;
+        let entero = s, decimal = '';
+        if (puntos && comas) {
+            // El último separador es el decimal; el otro, el de miles
+            const sepDec = s.lastIndexOf(',') > s.lastIndexOf('.') ? ',' : '.';
+            const sepMil = sepDec === ',' ? '.' : ',';
+            const partes = s.split(sepDec);
+            if (partes.length !== 2 || !gruposMiles(partes[0], sepMil)) return NaN;
+            entero = partes[0].split(sepMil).join('');
+            decimal = partes[1];
+        } else if (puntos || comas) {
+            const sep = puntos ? '.' : ',';
+            const partes = s.split(sep);
+            if (partes.length > 2) {                       // 1.450.000 -> miles
+                if (!gruposMiles(s, sep)) return NaN;
+                entero = partes.join('');
+            } else if (partes[1].length === 3 && /^\d{1,3}$/.test(partes[0])) {
+                entero = partes.join('');                  // 450.000 / 450,000 -> miles
+            } else if (partes[1].length <= 2) {
+                entero = partes[0]; decimal = partes[1];   // 450,5 / 450.50 -> decimales
+            } else return NaN;
+        }
+        if (!/^\d+$/.test(entero) || (decimal && !/^\d{1,2}$/.test(decimal))) return NaN;
+        return Number(entero + (decimal ? '.' + decimal : ''));
+    }
+    const formatearMonto = n => Number(n).toLocaleString('es-CO', { maximumFractionDigits: 2 });
+    const VALOR_NATIVO = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value');
+    const textoDe = el => VALOR_NATIVO.get.call(el);
+
+    function convertirMonto(el) {
+        if (el.dataset.eduMontoListo) return;
+        el.dataset.eduMontoListo = '1';
+        el.dataset.eduMonto = '1';
+        const inicial = textoDe(el);
+        const min = el.getAttribute('min');
+        if (min !== null && el.dataset.min === undefined) el.dataset.min = min;
+        if (el.getAttribute('max') !== null && el.dataset.max === undefined) el.dataset.max = el.getAttribute('max');
+        if (el.type !== 'text') el.type = 'text';
+        ['min', 'max', 'step', 'pattern'].forEach(a => el.removeAttribute(a));
+        el.inputMode = 'decimal';
+        el.autocomplete = 'off';
+        el.maxLength = 18;
+        if (!el.placeholder || /^ej[:.]?\s*\d+$/i.test(el.placeholder.trim())) el.placeholder = 'Ej: 450.000';
+        el.title = 'Solo números. Puedes usar puntos para los miles y coma para decimales (450.000 o 450.000,50).';
+        // El código del panel lee y escribe .value como siempre:
+        //  - lectura: número sin formato ("450000"), o "" si no es válido
+        //  - escritura: se muestra con formato ("450.000")
+        Object.defineProperty(el, 'value', {
+            configurable: true,
+            get() { const n = parsearMonto(textoDe(this)); return n == null || Number.isNaN(n) ? '' : String(n); },
+            set(v) {
+                const n = parsearMonto(v);
+                VALOR_NATIVO.set.call(this, n == null || Number.isNaN(n) ? String(v ?? '') : formatearMonto(n));
+            }
+        });
+        Object.defineProperty(el, 'valueAsNumber', {
+            configurable: true,
+            get() { const n = parsearMonto(textoDe(this)); return n == null ? NaN : n; },
+            set(v) { this.value = v; }
+        });
+        if (inicial) el.value = inicial;
+    }
+
+    function errorMonto(el) {
+        const texto = textoDe(el).trim();
+        if (!texto) return el.required ? 'Escribe el valor.' : '';
+        const n = parsearMonto(texto);
+        if (Number.isNaN(n)) return 'Valor no válido. Usa solo números, por ejemplo 450.000 (sin letras ni signos).';
+        const min = el.dataset.min !== undefined && el.dataset.min !== '' ? Number(el.dataset.min) : 0;
+        if (n < min) return min > 0 ? `El valor mínimo es ${formatearMonto(min)}.` : 'El valor no puede ser negativo.';
+        if (el.dataset.max !== undefined && el.dataset.max !== '' && n > Number(el.dataset.max)) {
+            return `El valor máximo permitido es $${formatearMonto(Number(el.dataset.max))}.`;
+        }
+        return '';
+    }
+
+    window.EduMonto = { parsear: parsearMonto, formatear: formatearMonto, convertir: convertirMonto };
 
     function reglaDe(el) {
         if (el.dataset.validar === 'no') return null;
@@ -104,6 +192,13 @@
 
     function limpiar(el) {
         const regla = reglaDe(el);
+        if (regla === REGLAS.monto) {
+            convertirMonto(el);
+            const n = parsearMonto(textoDe(el));
+            if (n != null && !Number.isNaN(n)) VALOR_NATIVO.set.call(el, formatearMonto(n));
+            el.setCustomValidity('');
+            return;
+        }
         if (regla && el.value) {
             const nuevo = regla.limpiar(el.value);
             if (nuevo !== el.value) el.value = nuevo;
@@ -115,6 +210,11 @@
         const regla = reglaDe(el);
         if (!regla) return true;
         el.setCustomValidity('');
+        if (regla === REGLAS.monto) {
+            const error = errorMonto(el);
+            el.setCustomValidity(error);
+            return !error;
+        }
         if (el.value && !el.checkValidity()) {
             el.setCustomValidity(regla.mensaje);
             return false;
@@ -132,7 +232,18 @@
         if (!(el instanceof HTMLInputElement)) return;
         preparar(el);
         const regla = reglaDe(el);
-        if (!regla || regla.alSalir || regla === REGLAS.monto) { if (regla) el.setCustomValidity(''); return; }
+        if (regla === REGLAS.monto) {
+            // Solo números, puntos y comas (sin letras, signos ni espacios)
+            const texto = textoDe(el), limpio = texto.replace(/[^0-9.,]/g, '');
+            if (limpio !== texto) {
+                const pos = Math.max(0, (el.selectionStart ?? texto.length) - (texto.length - limpio.length));
+                VALOR_NATIVO.set.call(el, limpio);
+                try { el.setSelectionRange(pos, pos); } catch { /* sin selección */ }
+            }
+            el.setCustomValidity('');
+            return;
+        }
+        if (!regla || regla.alSalir) { if (regla) el.setCustomValidity(''); return; }
         const pos = el.selectionStart, antes = el.value.length;
         limpiar(el);
         if (pos != null && el.type !== 'email' && el.type !== 'number') {
@@ -175,7 +286,7 @@
     document.addEventListener('submit', e => {
         const form = e.target;
         antesDeEnviar(form);
-        const malos = [...form.querySelectorAll('input[data-edu-valida]')].filter(el => el.value && !el.checkValidity() && el.offsetParent !== null);
+        const malos = [...form.querySelectorAll('input[data-edu-valida]')].filter(el => el.offsetParent !== null && !revisar(el));
         if (malos.length) {
             e.preventDefault();
             e.stopImmediatePropagation();

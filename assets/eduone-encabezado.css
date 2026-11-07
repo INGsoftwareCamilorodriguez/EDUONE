@@ -1,0 +1,196 @@
+/* =====================================================================
+   EduOne - eduone-encabezado.css
+   Encabezado igual en todos los paneles de colegio (rector, profesor,
+   estudiante, acudiente, coordinadores, secretaría, contador, orientación):
+   - Logo + nombre del colegio a la izquierda (sin "EduOne" ni la sección actual).
+   - Botones del menú con el mismo tamaño, letra, icono y color de selección.
+   Lo complementa assets/eduone-encabezado.js.
+   ===================================================================== */
+
+/* ---------- Lo que ya no se muestra ---------- */
+.top-header .edu-brand,
+.top-header .edu-institution,
+.top-header .edu-school,
+.top-header .edu-school-mini,
+.top-header .edu-header-logo,
+.top-header #pageTitle,
+.top-header #eduLogoutTop,
+.top-header #eduLogoutNav { display: none !important; }
+
+/* ---------- Marca: logo + nombre del colegio ---------- */
+.top-header .header-left { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.top-header .edu-marca {
+  display: flex; align-items: center; gap: 11px; min-width: 0; max-width: 280px; flex: 0 1 auto;
+  margin: 0; padding: 0; text-decoration: none;
+}
+.top-header .edu-marca-logo {
+  display: grid; place-items: center; flex: 0 0 42px; width: 42px; height: 42px; overflow: hidden;
+  border-radius: 12px; background: #fff; border: 1px solid var(--border, #e2e8f0); box-shadow: 0 2px 8px #1932560f;
+}
+.top-header .edu-marca-logo img { width: 100%; height: 100%; max-width: none; object-fit: contain; padding: 3px; margin: 0; border-radius: 0; }
+.top-header .edu-marca-nombre {
+  font: 700 1.04rem/1.2 var(--font, Inter, system-ui, sans-serif); color: #13264c; letter-spacing: -.01em;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0;
+}
+
+/* ---------- Botones del menú (todos los diseños) ---------- */
+.top-header .edu-topnav,
+.top-header .edu-unico-menu,
+.top-header .edu-nav { gap: 2px; }
+
+.top-header .edu-topnav > a,
+.top-header .edu-topnav > details > summary,
+.top-header .edu-unico-menu > .edu-toplink,
+.top-header .edu-unico-menu > details > summary,
+.top-header .edu-nav > button,
+.top-header .edu-nav > .edu-nav-group > .edu-group-toggle {
+  display: flex !important; align-items: center; gap: 7px; min-height: 40px; margin: 0;
+  padding: 0 clamp(7px, .75vw, 12px) !important; border: 0; border-radius: 10px !important;
+  background: transparent; box-shadow: none !important; list-style: none; text-decoration: none; cursor: pointer;
+  font: 600 clamp(.76rem, .55rem + .3vw, .85rem)/1.1 var(--font, Inter, system-ui, sans-serif) !important;
+  color: #33415f !important; white-space: nowrap; user-select: none; transition: background .15s, color .15s;
+}
+.top-header .edu-topnav > a > i:first-child,
+.top-header .edu-topnav > details > summary > i:first-child,
+.top-header .edu-unico-menu > .edu-toplink > i:first-child,
+.top-header .edu-unico-menu > details > summary > i:first-child,
+.top-header .edu-nav > button > i:first-child,
+.top-header .edu-nav > .edu-nav-group > .edu-group-toggle > i:first-child {
+  width: 16px; margin: 0 !important; text-align: center; font-size: .9rem !important; opacity: .9;
+}
+.top-header .edu-topnav .fa-chevron-down,
+.top-header .edu-unico-menu .fa-chevron-down,
+.top-header .edu-nav .fa-chevron-down { font-size: .58rem !important; margin: 0 0 0 1px !important; opacity: .75; }
+
+.top-header .edu-topnav > a:hover,
+.top-header .edu-topnav > a.selected,
+.top-header .edu-topnav > details > summary:hover,
+.top-header .edu-topnav > details[open] > summary,
+.top-header .edu-topnav > details.selected > summary,
+.top-header .edu-unico-menu > .edu-toplink:hover,
+.top-header .edu-unico-menu > .edu-toplink.active,
+.top-header .edu-unico-menu > details > summary:hover,
+.top-header .edu-unico-menu > details[open] > summary,
+.top-header .edu-unico-menu > details.selected > summary,
+.top-header .edu-nav > button:hover,
+.top-header .edu-nav > button.edu-active,
+.top-header .edu-nav > .edu-nav-group > .edu-group-toggle:hover,
+.top-header .edu-nav > .edu-nav-group.edu-open > .edu-group-toggle,
+.top-header .edu-nav > .edu-nav-group.edu-active > .edu-group-toggle {
+  background: var(--primary-bg, #eff6ff) !important; color: var(--primary, #2563eb) !important;
+}
+
+/* Opciones dentro de los menús desplegables */
+.top-header .edu-subnav,
+.top-header .edu-menu-options,
+.top-header .edu-dropdown { min-width: 230px; padding: 8px; border-radius: 13px; }
+.top-header .edu-subnav button,
+.top-header .edu-menu-options button,
+.top-header .edu-dropdown button {
+  display: flex !important; align-items: center; gap: 10px; width: 100%; padding: 10px 12px !important;
+  border: 0; border-radius: 8px; background: transparent; text-align: left; cursor: pointer;
+  font: 600 .84rem/1.2 var(--font, Inter, system-ui, sans-serif) !important; color: var(--gray-700, #334155) !important;
+}
+.top-header .edu-subnav button i,
+.top-header .edu-menu-options button i,
+.top-header .edu-dropdown button i { width: 18px; text-align: center; color: var(--primary, #2563eb); opacity: .85; }
+.top-header .edu-subnav button:hover,
+.top-header .edu-subnav button.selected,
+.top-header .edu-menu-options button:hover,
+.top-header .edu-menu-options button.active,
+.top-header .edu-dropdown button:hover,
+.top-header .edu-dropdown button.edu-active { background: var(--primary-bg, #eff6ff) !important; color: var(--primary, #2563eb) !important; }
+
+/* ---------- Celular / tableta ---------- */
+@media (max-width: 1280px) {
+  .top-header .edu-marca { max-width: 220px; }
+}
+@media (max-width: 850px) {
+  .top-header .edu-marca { max-width: 190px; gap: 8px; }
+  .top-header .edu-marca-logo { flex-basis: 36px; width: 36px; height: 36px; border-radius: 10px; }
+  .top-header .edu-marca-nombre { font-size: .9rem; }
+  /* En el menú desplegable del celular los botones ocupan todo el ancho */
+  .top-header .edu-topnav > a,
+  .top-header .edu-topnav > details > summary,
+  .top-header .edu-unico-menu > .edu-toplink,
+  .top-header .edu-unico-menu > details > summary,
+  .top-header .edu-nav > button,
+  .top-header .edu-nav > .edu-nav-group > .edu-group-toggle { width: 100%; justify-content: flex-start; min-height: 44px; font-size: .9rem !important; }
+  .top-header .edu-topnav .fa-chevron-down,
+  .top-header .edu-unico-menu .fa-chevron-down,
+  .top-header .edu-nav .fa-chevron-down { margin-left: auto !important; }
+}
+@media (max-width: 480px) {
+  .top-header .edu-marca { max-width: 150px; }
+  .top-header .edu-marca-nombre { font-size: .82rem; }
+}
+
+/* =====================================================================
+   Barra de filtros y búsqueda (mismo diseño que el panel del rector)
+   La arma assets/eduone-filtros.js en todas las tablas con datos.
+   ===================================================================== */
+.edu-sr { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+.edu-oculta-filtro { display: none !important; }
+
+.page-content .edu-filtros {
+  display: flex !important; flex-wrap: wrap; align-items: center; gap: 12px;
+  grid-template-columns: none !important; margin: 0 0 16px !important; padding: 0; background: none; border: 0;
+}
+.page-content .edu-filtros > .form-group { margin: 0 !important; flex: 0 1 220px; min-width: 170px; }
+.page-content .edu-filtros > .form-group > .form-control,
+.page-content .edu-filtros > .form-group > select,
+.page-content .edu-filtros > .form-group > input { width: 100%; }
+.page-content .edu-filtros .form-control,
+.page-content .edu-filtros > select,
+.page-content .edu-filtros > input:not([type="checkbox"]) {
+  height: 46px; min-height: 46px; padding: 0 14px; border: 1.5px solid #dfe6f0; border-radius: 11px; background-color: #fff;
+  font: 500 .92rem var(--font, Inter, system-ui, sans-serif); color: var(--gray-800, #1e293b); box-shadow: none;
+}
+.page-content .edu-filtros select { cursor: pointer; padding-right: 34px; }
+.page-content .edu-filtros > select,
+.page-content .edu-filtros > input[type="month"],
+.page-content .edu-filtros > input[type="date"] { flex: 0 1 220px; min-width: 160px; width: auto; max-width: none; }
+.page-content .edu-filtros .form-control:focus { border-color: var(--primary, #2563eb); box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary, #2563eb) 14%, transparent); outline: none; }
+.page-content .edu-filtros .edu-buscar,
+.page-content .edu-filtros .search-box,
+.page-content .edu-filtros .search-page-input-wrap { position: relative; flex: 1 1 300px; min-width: 220px; max-width: none; }
+.page-content .edu-filtros .edu-buscar > i,
+.page-content .edu-filtros .search-box > i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--gray-400, #94a3b8); font-size: .92rem; pointer-events: none; }
+.page-content .edu-filtros .edu-buscar input,
+.page-content .edu-filtros .search-box input { width: 100%; padding-left: 42px !important; }
+.page-content .edu-filtros > button,
+.page-content .edu-filtros > .btn-primary,
+.page-content .edu-filtros > .btn-secondary { height: 46px; flex: 0 0 auto; white-space: nowrap; border-radius: 11px; }
+.page-content .edu-filtros [hidden] { display: none !important; }
+.page-content tr.edu-sin-resultados td { padding: 22px 12px; }
+
+@media (max-width: 700px) {
+  .page-content .edu-filtros { gap: 10px; }
+  .page-content .edu-filtros > *,
+  .page-content .edu-filtros > .form-group,
+  .page-content .edu-filtros > select,
+  .page-content .edu-filtros .edu-buscar { flex: 1 1 100% !important; min-width: 0 !important; }
+  .page-content .edu-filtros > button { width: 100%; justify-content: center; }
+}
+
+/* =====================================================================
+   Encabezado de las secciones nuevas (cobros, registros, boletines,
+   orientación, chat...): mismo aspecto en todos los paneles.
+   ===================================================================== */
+.page-content > .edu-sec-hero {
+  display: flex; align-items: center; gap: 18px; min-height: 104px; margin: 0 0 20px; padding: 22px 28px;
+  border-radius: 18px; color: #fff; background: linear-gradient(110deg, var(--primary-dark, #1e3a8a), var(--primary, #2563eb));
+  box-shadow: 0 8px 24px #223e6d1c;
+}
+.page-content > .edu-sec-hero h2 { margin: 0 0 4px; font: 700 1.4rem/1.25 var(--font, Inter, system-ui, sans-serif); color: #fff; }
+.page-content > .edu-sec-hero p { margin: 0; font-size: .92rem; color: #fff; opacity: .9; }
+.page-content > .edu-sec-hero .edu-sec-hero-icon {
+  display: grid; place-items: center; flex: 0 0 62px; width: 62px; height: 62px; border-radius: 16px;
+  background: #ffffff26; border: 1px solid #ffffff45; font-size: 1.45rem; color: #fff;
+}
+@media (max-width: 600px) {
+  .page-content > .edu-sec-hero { padding: 16px 18px; gap: 12px; min-height: 84px; border-radius: 15px; }
+  .page-content > .edu-sec-hero h2 { font-size: 1.12rem; }
+  .page-content > .edu-sec-hero p { font-size: .8rem; }
+  .page-content > .edu-sec-hero .edu-sec-hero-icon { flex-basis: 46px; width: 46px; height: 46px; font-size: 1.1rem; border-radius: 12px; }
+}
