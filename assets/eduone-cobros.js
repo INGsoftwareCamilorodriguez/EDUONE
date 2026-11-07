@@ -16,7 +16,7 @@
 import {
     collection, doc, getDoc, getDocs, setDoc, query, where, runTransaction, writeBatch, serverTimestamp
 } from 'https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js';
-import { nombreDe } from './eduone-comun.js?v=20261107';
+import { nombreDe } from './eduone-comun.js?v=20261108';
 
 export const MESES = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 export const COP = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 });

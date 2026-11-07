@@ -13,8 +13,8 @@ import {
     collection, doc, getDoc, getDocs, setDoc, addDoc, updateDoc, deleteDoc,
     query, where, onSnapshot, serverTimestamp
 } from 'https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js';
-import { obtenerContexto, notificarFamilia, nombreDe, uidDe, ROL_LABEL, esc } from './eduone-comun.js?v=20261107';
-import { el, agregarEstilos, agregarSeccion, marcarSeccion } from './eduone-secciones.js?v=20261107';
+import { obtenerContexto, notificarFamilia, notificarUsuario, nombreDe, uidDe, ROL_LABEL, esc } from './eduone-comun.js?v=20261108';
+import { el, agregarEstilos, agregarSeccion, marcarSeccion } from './eduone-secciones.js?v=20261108';
 
 // ---------------------------------------------------------------------
 // Utilidades de fechas (hora local del colegio)
@@ -145,6 +145,11 @@ export async function agendarCita({ orientador, franja, motivo, modalidad = 'pre
     } catch (e) {
         await deleteDoc(agendaRef).catch(() => { });
         throw e;
+    }
+    if (orientador.id !== c.uid) {
+        notificarUsuario({ uid: orientador.id }, '🧠 Nueva cita agendada',
+            `${nombreDe(c.perfil)} agendó una cita para el ${fechaLarga(franja.fecha)} a las ${hora12(franja.hora)} (${modalidad}). Motivo: ${String(motivo).trim().slice(0, 200)}`,
+            'orientacion', { citaId: citaRef.id }).catch(e => console.warn('Aviso al orientador:', e.message));
     }
     if (estudiante?.id) {
         await notificarFamilia(estudiante.id, '🧠 Cita con Orientación escolar',

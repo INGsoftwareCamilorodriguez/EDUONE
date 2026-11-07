@@ -21,12 +21,12 @@
 import {
     collection, doc, getDoc, getDocs, addDoc, query, where, runTransaction, serverTimestamp, onSnapshot, writeBatch
 } from 'https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js';
-import { obtenerContexto, notificarFamilia, nombreDe } from './eduone-comun.js?v=20261107';
-import { el, agregarEstilos, agregarSeccion } from './eduone-secciones.js?v=20261107';
+import { obtenerContexto, notificarFamilia, nombreDe } from './eduone-comun.js?v=20261108';
+import { el, agregarEstilos, agregarSeccion } from './eduone-secciones.js?v=20261108';
 import {
     MESES, COP, idMes, ymd, norm, cargarDatosCobro, estadoCuenta, textoEstado, gradoDe, generarCobroMensual,
     recordatoriosDeHoy, enviarRecordatorio, leerPolitica, guardarPolitica, valorPension
-} from './eduone-cobros.js?v=20261107';
+} from './eduone-cobros.js?v=20261108';
 
 const METODOS = { efectivo: 'Efectivo', transferencia: 'Transferencia', consignacion: 'Consignación', tarjeta: 'Tarjeta débito/crédito', nequi: 'Nequi / Daviplata' };
 const ROLES = ['secretaria', 'rector', 'admin_colegio', 'admin_auxiliar'];

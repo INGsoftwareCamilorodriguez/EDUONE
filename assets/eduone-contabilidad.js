@@ -16,9 +16,9 @@
    Se carga con: <script type="module" src="assets/eduone-contabilidad.js"></script>
    ===================================================================== */
 import { collection, getDocs } from 'https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js';
-import { obtenerContexto } from './eduone-comun.js?v=20261107';
-import { el, agregarEstilos, agregarSeccion } from './eduone-secciones.js?v=20261107';
-import { MESES, COP } from './eduone-cobros.js?v=20261107';
+import { obtenerContexto } from './eduone-comun.js?v=20261108';
+import { el, agregarEstilos, agregarSeccion } from './eduone-secciones.js?v=20261108';
+import { MESES, COP } from './eduone-cobros.js?v=20261108';
 
 const CATEGORIAS_PAGO = ['Pensión', 'Matrícula', 'Evento'];
 const AVISO = 'Los pagos y abonos los registra la secretaría. Como contador puedes consultarlos y verificarlos en "Ganancias y pérdidas".';

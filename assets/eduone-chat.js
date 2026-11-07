@@ -10,8 +10,8 @@
 import {
     getDocs, collection, query, where, orderBy, limit, onSnapshot, doc, getDoc
 } from 'https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js';
-import { el, agregarEstilos, agregarSeccion, marcarSeccion } from './eduone-secciones.js?v=20261107';
-import { obtenerContexto, chatPermitido, enviarMensajeDirecto, ROL_LABEL, CHAT_BLOQUEOS, nombreDe, uidDe } from './eduone-comun.js?v=20261107';
+import { el, agregarEstilos, agregarSeccion, marcarSeccion } from './eduone-secciones.js?v=20261108';
+import { obtenerContexto, chatPermitido, enviarMensajeDirecto, ROL_LABEL, CHAT_BLOQUEOS, nombreDe, uidDe } from './eduone-comun.js?v=20261108';
 
 let ctx = null;
 const fecha = t => t?.toDate ? t.toDate().toLocaleString('es-CO', { dateStyle: 'short', timeStyle: 'short' }) : '';

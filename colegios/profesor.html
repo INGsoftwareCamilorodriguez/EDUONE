@@ -407,9 +407,9 @@ body{display:block;background:#f3f7fc} .sidebar,.sidebar-overlay{display:none!im
 </style>
     <link rel="stylesheet" href="../assets/responsive.css?v=20261103" />
     <script src="../assets/responsive.js?v=20261103" defer></script>
-    <link rel="stylesheet" href="../assets/eduone-ui.css?v=20261107" />
-    <link rel="stylesheet" href="../assets/eduone-encabezado.css?v=20261107" />
-    <script type="module" src="../assets/eduone-ui.js?v=20261107"></script>
+    <link rel="stylesheet" href="../assets/eduone-ui.css?v=20261108" />
+    <link rel="stylesheet" href="../assets/eduone-encabezado.css?v=20261108" />
+    <script type="module" src="../assets/eduone-ui.js?v=20261108"></script>
 <style>
 /* Corrección del encabezado: evita crecimiento de imágenes y desbordamientos */
 .top-header{height:72px!important;min-height:72px!important;max-height:72px!important;flex-wrap:nowrap!important;position:sticky;top:0;align-items:center!important;padding:0 22px!important;gap:12px!important;isolation:isolate}
@@ -444,7 +444,7 @@ body{display:block;background:#f3f7fc} .sidebar,.sidebar-overlay{display:none!im
         .obs-reportes label { display: flex; align-items: center; gap: 8px; font-weight: 400; cursor: pointer; font-size: .9rem; flex-wrap: wrap; }
         .obs-reportes small { color: var(--text-secondary, #64748b); }
     </style>
-    <script src="../assets/eduone-validacion.js?v=20261107" defer></script>
+    <script src="../assets/eduone-validacion.js?v=20261108" defer></script>
 </head>
 <body>
 <div id="eduGlobalBusy" class="edu-global-busy" role="status" aria-live="polite" hidden><span class="edu-loading-wheel"></span><span data-busy-text>Cargando...</span></div>
@@ -4117,7 +4117,7 @@ window.guardarNotaPresencial = async (estudianteId, actividadId) => {
                         });
                         extras.push('coordinación académica');
                     }
-                    const { notificarFamilia } = await import('../assets/eduone-comun.js?v=20261107');
+                    const { notificarFamilia } = await import('../assets/eduone-comun.js?v=20261108');
                     const icono = { positiva: '🌟', negativa: '⚠️', neutral: '📝' }[tipo] || '📝';
                     await notificarFamilia(estudianteId, `${icono} Observación de ${profNombre}`,
                         `${estNombre}: ${texto}${extras.length ? ' (Reportado a ' + extras.join(' y ') + ')' : ''}`, 'observacion');
@@ -4991,7 +4991,7 @@ eduSyncSchoolAppearance=async function(...args){const result=await eduOldSyncApp
 
     </script>
 
-    <script type="module" src="../assets/eduone-comun.js?v=20261107"></script>
-    <script type="module" src="../assets/eduone-orientacion.js?v=20261107"></script>
+    <script type="module" src="../assets/eduone-comun.js?v=20261108"></script>
+    <script type="module" src="../assets/eduone-orientacion.js?v=20261108"></script>
 </body>
 </html>

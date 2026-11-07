@@ -138,7 +138,7 @@ function crearBotonPush() {
     pushBtn.setAttribute('aria-label', 'Activar notificaciones');
     pushBtn.hidden = true;
     pushBtn.addEventListener('click', () => activarPush(true));
-    const campana = destino.querySelector('#notificacionesBtn');
+    const campana = destino.querySelector('#notificacionesBtn, .edu-campana-wrap');
     if (campana) campana.after(pushBtn); else destino.prepend(pushBtn);
     return pushBtn;
 }
@@ -543,11 +543,13 @@ function iniciar() {
     aplicarLogo();
     agregarBotonSalir();
     // Encabezado común (logo + nombre del colegio) solo en paneles de colegio
-    if (esPanelColegio) import('./eduone-encabezado.js?v=20261107').catch(e => console.warn('EduOne encabezado:', e));
+    if (esPanelColegio) import('./eduone-encabezado.js?v=20261108').catch(e => console.warn('EduOne encabezado:', e));
     // Filtros con el mismo diseño y buscador en todas las tablas con datos
-    if (esPanelColegio) import('./eduone-filtros.js?v=20261107').catch(e => console.warn('EduOne filtros:', e));
+    if (esPanelColegio) import('./eduone-filtros.js?v=20261108').catch(e => console.warn('EduOne filtros:', e));
+    // Campana de notificaciones en todos los roles
+    if (esPanelColegio) import('./eduone-campana.js?v=20261108').catch(e => console.warn('EduOne campana:', e));
     // Un mismo envío no se procesa dos veces (dos clics, dos pestañas o dos dispositivos)
-    import('./eduone-envio-unico.js?v=20261107').catch(e => console.warn('EduOne envío único:', e));
+    import('./eduone-envio-unico.js?v=20261108').catch(e => console.warn('EduOne envío único:', e));
     buscarCamposEmoji();
     let pendiente = false;
     new MutationObserver(() => {

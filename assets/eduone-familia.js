@@ -18,9 +18,9 @@ import {
 } from 'https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js';
 import { getAuth } from 'https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js';
 import { getApps } from 'https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js';
-import { obtenerContexto, nombreDe } from './eduone-comun.js?v=20261107';
-import { el, agregarEstilos, agregarSeccion } from './eduone-secciones.js?v=20261107';
-import { COP, cargarDatosCobro, estadoCuenta, detalleDeuda, leerHabilitacionBoletines } from './eduone-cobros.js?v=20261107';
+import { obtenerContexto, nombreDe } from './eduone-comun.js?v=20261108';
+import { el, agregarEstilos, agregarSeccion } from './eduone-secciones.js?v=20261108';
+import { COP, cargarDatosCobro, estadoCuenta, detalleDeuda, leerHabilitacionBoletines } from './eduone-cobros.js?v=20261108';
 
 const PERIODOS = [1, 2, 3, 4];
 const MSG_NO_HABILITADO = 'No está habilitada la entrega de boletines';

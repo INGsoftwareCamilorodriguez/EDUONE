@@ -19,9 +19,9 @@ import { getAuth, createUserWithEmailAndPassword, signOut } from 'https://www.gs
 import {
     collection, doc, getDoc, getDocs, setDoc, addDoc, updateDoc, query, where, runTransaction, onSnapshot, serverTimestamp, getCountFromServer
 } from 'https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js';
-import { obtenerContexto, nombreDe } from './eduone-comun.js?v=20261107';
-import { el, agregarEstilos, agregarSeccion, marcarSeccion } from './eduone-secciones.js?v=20261107';
-import { COP, ymd, norm } from './eduone-cobros.js?v=20261107';
+import { obtenerContexto, nombreDe, notificarUsuario } from './eduone-comun.js?v=20261108';
+import { el, agregarEstilos, agregarSeccion, marcarSeccion } from './eduone-secciones.js?v=20261108';
+import { COP, ymd, norm } from './eduone-cobros.js?v=20261108';
 
 const TIPOS_DOC = { TI: 'Tarjeta de identidad', RC: 'Registro civil', CC: 'Cédula de ciudadanía', CE: 'Cédula de extranjería', PEP: 'PEP / PPT', PA: 'Pasaporte' };
 const PARENTESCOS = ['Madre', 'Padre', 'Abuelo(a)', 'Tío(a)', 'Hermano(a)', 'Otro'];
@@ -216,6 +216,9 @@ async function montarSecretaria() {
                     creadoPor: c.uid, creadoPorNombre: nombreDe(c.perfil), creadoEn: serverTimestamp()
                 });
             });
+            notificarUsuario({ rol: 'rector' }, '🧑‍🎓 Estudiante nuevo por crear cuenta',
+                `${nombreDe(c.perfil)} registró a ${v('nombres')} ${v('apellidos')} (${grado?.nombre || ''} ${curso?.nombre || ''}). Falta asignar el correo y la contraseña en Gestión → Cuentas de acceso.${excede ? ' Atención: el colegio superó el cupo de su plan.' : ''}`,
+                'registro').catch(er => console.warn('Aviso a rectoría:', er.message));
             form.reset();
             llenarCursos();
             mensajes.replaceChildren(excede
@@ -322,6 +325,7 @@ async function montarRector() {
                         if (!d.exists() || d.data().estado !== 'pendiente') throw new Error('Este registro ya fue procesado.');
                         tx.update(r, { estado: 'rechazada', motivoRechazo: motivo.trim().slice(0, 200), procesadoPor: c.uid, procesadoPorNombre: nombreDe(c.perfil), procesadoEn: serverTimestamp() });
                     });
+                    if (s.creadoPor) notificarUsuario({ uid: s.creadoPor }, '❌ Registro rechazado', `Rectoría rechazó el registro de ${s.estudiante?.nombres || ''} ${s.estudiante?.apellidos || ''}.${motivo.trim() ? ' Motivo: ' + motivo.trim().slice(0, 200) : ''}`, 'registro').catch(() => {});
                 } catch (e) { alert(e.message); rechazar.disabled = false; }
             });
             const m = s.matricula || {};
@@ -474,6 +478,7 @@ function modalCuentas() {
                 procesadoPor: c.uid, procesadoPorNombre: nombreDe(c.perfil), procesadoEn: serverTimestamp(), uidEstudiante: uidEst, uidAcudiente: uidAcu
             });
             tomada = false;
+            if (s.creadoPor && s.creadoPor !== c.uid) notificarUsuario({ uid: s.creadoPor }, '✅ Cuentas creadas', `Rectoría creó las cuentas de ${nombreEst} y de su acudiente.`, 'registro').catch(() => {});
             const cred = `Estudiante: ${nombreEst}\n  Correo: ${emailEst}\n  Contraseña: ${passEst.value}\n\nAcudiente: ${s.acudiente.nombre}\n  Correo: ${emailAcu}\n  Contraseña: ${acudienteExistente ? '(la que ya tenía)' : passAcu.value}`;
             const copiar = el('button', { type: 'button', class: 'btn-secondary', onclick: () => navigator.clipboard?.writeText(cred) }, el('i', { class: 'fas fa-copy' }), ' Copiar datos');
             mensajes.replaceChildren(alerta('ok', '✅ Cuentas creadas. Entrega estos datos al acudiente (no se volverán a mostrar).'), el('div', { class: 'reg-cred', text: cred }), copiar);

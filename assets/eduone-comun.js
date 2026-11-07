@@ -86,6 +86,21 @@ export async function notificarFamilia(estudianteId, titulo, mensaje, tipo = 'av
     });
 }
 
+/**
+ * Aviso a una persona del colegio (destino.uid) o a todos los de un rol
+ * (destino.rol). Aparece en la campana de notificaciones de su panel.
+ */
+export async function notificarUsuario(destino, titulo, mensaje, tipo = 'aviso', extra = {}) {
+    if (!destino?.uid && !destino?.rol) return;
+    const c = await obtenerContexto();
+    await addDoc(collection(c.db, 'colegios', c.colegioId, 'notificaciones'), {
+        destinatarioUid: destino.uid || null, destinatarioRol: destino.rol || null,
+        titulo: String(titulo).slice(0, 140), mensaje: String(mensaje).slice(0, 1000), tipo, leida: false, leidoPor: [],
+        remitenteUid: c.uid, remitenteNombre: nombreDe(c.perfil), remitenteRol: c.rol,
+        fecha: serverTimestamp(), ...extra
+    });
+}
+
 /** Mensaje privado (crea el chat si no existe). Devuelve false si el rol no lo permite. */
 export async function enviarMensajeDirecto(destUid, texto, rolDestino) {
     const c = await obtenerContexto();
@@ -111,4 +126,4 @@ export async function enviarMensajeDirecto(destUid, texto, rolDestino) {
     return true;
 }
 
-window.EduOne = Object.assign(window.EduOne || {}, { chatPermitido, enviarMensajeDirecto, notificarFamilia, obtenerContexto, ROL_LABEL });
+window.EduOne = Object.assign(window.EduOne || {}, { chatPermitido, enviarMensajeDirecto, notificarFamilia, notificarUsuario, obtenerContexto, ROL_LABEL });
